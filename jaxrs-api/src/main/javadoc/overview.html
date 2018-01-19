@@ -1,0 +1,96 @@
+<!--
+
+    Copyright (c) 2013, 2017 Oracle and/or its affiliates. All rights reserved.
+
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Public License v. 2.0, which is available at
+    http://www.eclipse.org/legal/epl-2.0.
+
+    This Source Code may also be made available under the following Secondary
+    Licenses when the conditions for such availability set forth in the
+    Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
+    version 2 with the GNU Classpath Exception, which is available at
+    https://www.gnu.org/software/classpath/license.html.
+
+    SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+
+-->
+
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<body>
+<p>The Java API for RESTful Web Services provides portable APIs for developing, exposing and accessing
+    Web applications designed and implemented in compliance with principles of REST architectural style.</p>
+
+<h2>Web resources</h2>
+
+<p>JAX-RS core APIs enable developers to rapidly build Web applications in Java that are characteristic
+    of the best designed parts of the Web. The API brings in support for designing and implementing
+    Web resources and application that follow principles of
+    <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">REST (Representational
+        State Transfer)</a> architectural style to the Java Platform.</p>
+
+<p>In JAX-RS, Java POJOs can be exposed as RESTful Web resources independent of the underlying technology
+    using a high level easy-to-use declarative annotation-based API. E.g.:</p>
+
+<pre>
+&#64;Path("widgets/{widgetid}")
+&#64;Consumes("application/widgets+xml")
+&#64;Produces("application/widgets+xml")
+public class WidgetResource {
+
+    &#64;GET
+    public String getWidget(&#64;PathParam("widgetid") String id) {
+        return getWidgetAsXml(id);
+    }
+
+    &#64;PUT
+    public void updateWidget(&#64;PathParam("widgetid") String id,
+                             Source update) {
+       updateWidgetFromXml(id, update);
+    }
+
+    ...
+}
+</pre>
+
+<h2>Web resource clients</h2>
+
+<p>JAX-RS client API is a Java based API used to access resources on the Web. It is not restricted
+    to resources implemented using JAX-RS. It provides a higher-level abstraction compared to a
+    {@link java.net.HttpURLConnection plain HTTP communication API} as well as integration with the
+    JAX-RS extension providers, in order to enable concise and efficient implementation of
+    reusable client-side solutions that leverage existing and well
+    established client-side implementations of HTTP-based communication.</p>
+
+<p>The JAX-RS Client API also encapsulates the Uniform Interface Constraint &ndash;
+    a key constraint of the REST architectural style &ndash; and associated data
+    elements as client-side Java artifacts and supports a pluggable architecture
+    by defining multiple extension points.</p>
+
+<p>Following example demonstrates a simple JAX-RS client API usage scenario:</p>
+
+<pre>
+    Client client = ClientBuilder.newClient();
+
+    client.property("MyProperty", "MyValue")
+          .register(MyProvider.class)
+          .enable(MyFeature.class);
+
+    Response res = client.target("http://example.org/hello").request("text/plain").get();
+    String message = res.readEntity(String.class);
+ </pre>
+
+<h2>Provider extensions</h2>
+
+<p>JAX-RS applications may provide custom extensions to the client and server runtime using the
+    common extension APIs defined in <a href="javax/ws/rs/ext/package-summary.html">javax.ws.rs.ext</a>
+    package, namely entity providers and entity provider interceptors. Additionally, request and
+    response processing chains on client as well as server side can be further customized by
+    implemening custom request and response filters - see the
+    <a href="javax/ws/rs/client/ClientRequestFilter.html">ClientRequestFilter</a>,
+    <a href="javax/ws/rs/client/ClientResponseFilter.html">ClientResponseFilter</a>,
+    <a href="javax/ws/rs/container/ContainerRequestFilter.html">ContainerRequestFilter</a>,
+    <a href="javax/ws/rs/container/ContainerResponseFilter.html">ContainerResponseFilter</a>
+    APIs.</p>
+</body>
+</html>

@@ -16,6 +16,7 @@
 
 package javax.ws.rs.core;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +31,7 @@ import java.util.Set;
  * @param <V> the type of mapped values.
  * @author Marek Potociar
  */
-public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, V> {
+public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, V>, Serializable {
 
     /**
      * Backing store for the [key, multi-value] pairs.

@@ -792,6 +792,21 @@ public abstract class Response implements AutoCloseable {
     }
 
     /**
+     * Create a new ResponseBuilder for a permanent redirection.
+     *
+     * @param location the redirection URI. If a relative URI is
+     *                 supplied it will be converted into an absolute URI by resolving it
+     *                 relative to the base URI of the application (see
+     *                 {@link UriInfo#getBaseUri}).
+     * @return a new response builder.
+     * @throws java.lang.IllegalArgumentException
+     *          if location is {@code null}.
+     */
+    public static ResponseBuilder permanentRedirect(URI location) {
+        return status(Status.PERMANENT_REDIRECT).location(location);
+    }
+
+    /**
      * Create a new ResponseBuilder for a not acceptable response.
      *
      * @param variants list of variants that were available, a null value is
@@ -1296,6 +1311,10 @@ public abstract class Response implements AutoCloseable {
          * 307 Temporary Redirect, see {@link <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.8">HTTP/1.1 documentation</a>}.
          */
         TEMPORARY_REDIRECT(307, "Temporary Redirect"),
+        /**
+         * 308 Permanent Redirect, see {@link <a href="https://tools.ietf.org/html/rfc7538">HTTP/1.1 documentation</a>}.
+         */
+        PERMANENT_REDIRECT(308, "Permanent Redirect"),
         /**
          * 400 Bad Request, see {@link <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">HTTP/1.1 documentation</a>}.
          */

@@ -135,7 +135,7 @@
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
         <module name="LineLength">
-            <property name="max" value="120"/>
+            <property name="max" value="160"/>
             <property name="ignorePattern" value="@version|@see|@todo|TODO"/>
         </module>
         <module name="MethodLength"/>
@@ -163,7 +163,7 @@
                 LITERAL_TRY, LITERAL_WHILE, LOR, LT, MINUS, MINUS_ASSIGN, MOD,
                 MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, SL,
                 SLIST, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN,
-                TYPE_EXTENSION_AND, GENERIC_START, GENERIC_END" /> <!-- RCURLY removed -->
+                TYPE_EXTENSION_AND" /> <!-- RCURLY removed -->
         </module>
 
 
@@ -201,9 +201,6 @@
             <property name="ignoreHashCodeMethod" value="true"/>
         </module-->
         <module name="MissingSwitchDefault"/>
-        <module name="RedundantThrows">
-            <property name="allowUnchecked" value="true"/>
-        </module>
         <module name="SimplifyBooleanExpression"/>
         <module name="SimplifyBooleanReturn"/>
 
@@ -224,7 +221,6 @@
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
         <module name="ArrayTypeStyle"/>
-        <module name="FinalParameters"/>
         <module name="TodoComment"/>
         <module name="UpperEll"/>
     </module>

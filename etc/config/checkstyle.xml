@@ -201,9 +201,6 @@
             <property name="ignoreHashCodeMethod" value="true"/>
         </module-->
         <module name="MissingSwitchDefault"/>
-        <module name="RedundantThrows">
-            <property name="allowUnchecked" value="true"/>
-        </module>
         <module name="SimplifyBooleanExpression"/>
         <module name="SimplifyBooleanReturn"/>
 

@@ -43,7 +43,6 @@ public abstract class RuntimeDelegate {
      * to be returned from {@link RuntimeDelegate#getInstance()}.
      */
     public static final String JAXRS_RUNTIME_DELEGATE_PROPERTY = "javax.ws.rs.ext.RuntimeDelegate";
-    private static final String JAXRS_DEFAULT_RUNTIME_DELEGATE = "org.glassfish.jersey.internal.RuntimeDelegateImpl";
     private static final Object RD_LOCK = new Object();
     private static ReflectPermission suppressAccessChecksPermission = new ReflectPermission("suppressAccessChecks");
     private static volatile RuntimeDelegate cachedDelegate;
@@ -111,7 +110,7 @@ public abstract class RuntimeDelegate {
         try {
             Object delegate = FactoryFinder.find(
                     JAXRS_RUNTIME_DELEGATE_PROPERTY,
-                    JAXRS_DEFAULT_RUNTIME_DELEGATE,
+                    null,
                     RuntimeDelegate.class);
             if (!(delegate instanceof RuntimeDelegate)) {
                 Class pClass = RuntimeDelegate.class;

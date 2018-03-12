@@ -17,3 +17,9 @@
 # JAX-RS API
 
 This repository contains JAX-RS API source code.
+
+Contributions are welcome, please sign the Eclipse Contributor Agreement before submitting PRs: https://www.eclipse.org/contribute/cla
+
+Project page: https://projects.eclipse.org/projects/ee4j.jaxrs
+
+Mailinglist: https://accounts.eclipse.org/mailing-list/jaxrs-dev

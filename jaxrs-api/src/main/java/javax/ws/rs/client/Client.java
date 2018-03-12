@@ -40,7 +40,7 @@ import javax.net.ssl.SSLContext;
  * @see javax.ws.rs.core.Configurable
  * @since 2.0
  */
-public interface Client extends Configurable<Client> {
+public interface Client extends Configurable<Client>, AutoCloseable {
 
     /**
      * Close client instance and all it's associated resources. Subsequent calls
@@ -52,6 +52,7 @@ public interface Client extends Configurable<Client> {
      * produced by the client instance. Invoking any method on such targets once the client
      * is closed would result in an {@link IllegalStateException} being thrown.
      */
+    @Override
     public void close();
 
     /**

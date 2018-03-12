@@ -22,10 +22,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.*;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
-public class MultivaluedMapTest {
+public class MultivaluedHashMapTest {
 
     @Before
     public void setUp() throws Exception {
@@ -95,5 +98,24 @@ public class MultivaluedMapTest {
         mvm2.addAll("foo1", "bar2", "bar1");
         assertFalse(mvm1.equalsIgnoreValueOrder(mvm2));
         assertFalse(mvm2.equalsIgnoreValueOrder(mvm1));
+    }
+
+    @Test
+    public void testSerialization() throws IOException, ClassNotFoundException {
+        MultivaluedHashMap<String, String> mvm = new MultivaluedHashMap<String, String>();
+        mvm.addAll("foo1", "bar1", "bar2", "bar1");
+
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream();
+             ObjectOutputStream objOut = new ObjectOutputStream(out)) {
+
+            objOut.writeObject(mvm);
+
+            try (ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+                 ObjectInputStream objIn = new ObjectInputStream(in)) {
+
+                assertEquals(mvm, objIn.readObject());
+            }
+        }
+
     }
 }

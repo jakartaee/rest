@@ -32,7 +32,7 @@ import javax.xml.namespace.QName;
 /**
  * <p>Class representing hypermedia links. A hypermedia link may include additional
  * parameters beyond its underlying URI. Parameters such as {@code rel} or {@code type}
- * provide additional meta-data. Links in responses can be <emph>followed</emph> by
+ * provide additional meta-data. Links in responses can be <em>followed</em> by
  * creating an {@link javax.ws.rs.client.Invocation.Builder} or a
  * {@link javax.ws.rs.client.WebTarget}.</p>
  *

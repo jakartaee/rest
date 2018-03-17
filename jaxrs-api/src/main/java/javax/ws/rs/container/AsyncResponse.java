@@ -37,7 +37,6 @@ import java.util.concurrent.TimeUnit;
  * <li>resuming the suspended request processing</li>
  * <li>canceling the suspended request processing</li>
  * </ul>
- * </p>
  * <p>
  * Following example demonstrates the use of the {@code AsyncResponse} for asynchronous
  * HTTP request processing:

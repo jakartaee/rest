@@ -103,7 +103,7 @@ public class EntityTag {
             return false;
         }
         if (!(obj instanceof EntityTag)) {
-            return super.equals(obj);
+            return false;
         }
         EntityTag other = (EntityTag) obj;
         if (value.equals(other.getValue()) && weak == other.isWeak()) {

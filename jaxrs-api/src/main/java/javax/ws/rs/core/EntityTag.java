@@ -29,7 +29,10 @@ import javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
  * @since 1.0
  */
 public class EntityTag {
-
+    /**
+     * @deprecated This field will be removed in version 3.0. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
+     */
+    @Deprecated
     private static final HeaderDelegate<EntityTag> HEADER_DELEGATE =
             RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class);
     private String value;
@@ -67,7 +70,10 @@ public class EntityTag {
      * @return the newly created entity tag.
      * @throws IllegalArgumentException if the supplied string cannot be parsed
      *                                  or is {@code null}.
+     * @deprecated This method will be removed in version 3.0. Please use
+     *   RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class).fromString(value) instead.
      */
+    @Deprecated
     public static EntityTag valueOf(final String value) {
         return HEADER_DELEGATE.fromString(value);
     }
@@ -130,8 +136,12 @@ public class EntityTag {
      * corresponding HTTP header.
      *
      * @return a string version of the entity tag.
+     * @deprecated The format of the toString() method is subject to change in version 3.0. Please use
+     * RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class).toString(value) instead if you rely on
+     * the format of this method.
      */
     @Override
+    @Deprecated
     public String toString() {
         return HEADER_DELEGATE.toString(this);
     }

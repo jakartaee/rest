@@ -35,6 +35,10 @@ public class Cookie {
      * Cookies using the default version correspond to RFC 2109.
      */
     public static final int DEFAULT_VERSION = 1;
+    /**
+     * @deprecated This field will be removed in version 3.0. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
+     */
+    @Deprecated
     private static final HeaderDelegate<Cookie> HEADER_DELEGATE =
             RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class);
     private final String name;
@@ -98,7 +102,10 @@ public class Cookie {
      * @return the newly created {@code Cookie}.
      * @throws IllegalArgumentException if the supplied string cannot be parsed
      *                                  or is {@code null}.
+     * @deprecated This method will be removed in version 3.0. Please use
+     *   RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class).fromString(value) instead.
      */
+    @Deprecated
     public static Cookie valueOf(final String value) {
         return HEADER_DELEGATE.fromString(value);
     }
@@ -153,8 +160,12 @@ public class Cookie {
      * corresponding HTTP header.
      *
      * @return a stringified cookie.
+     * @deprecated The format of the toString() method is subject to change in version 3.0. Please use
+     * RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class).toString(value) instead if you rely on
+     * the format of this method.
      */
     @Override
+    @Deprecated
     public String toString() {
         return HEADER_DELEGATE.toString(this);
     }

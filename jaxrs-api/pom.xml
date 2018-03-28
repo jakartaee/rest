@@ -20,19 +20,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>net.java</groupId>
-        <artifactId>jvnet-parent</artifactId>
-        <version>5</version>
-    </parent>
-
     <groupId>javax.ws.rs</groupId>
     <artifactId>javax.ws.rs-api</artifactId>
     <version>2.2-SNAPSHOT</version>
     <packaging>${packaging.type}</packaging>
     <name>javax.ws.rs-api</name>
 
-    <url>https://github.com/jax-rs/api</url>
+    <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
 
     <organization>
         <name>Oracle Corporation</name>
@@ -41,13 +35,13 @@
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/jax-rs/api/issues</url>
+        <url>https://github.com/eclipse-ee4j/jaxrs-api/issues</url>
     </issueManagement>
 
     <mailingLists>
         <mailingList>
-            <name>JAX-RS Discussion Group </name>
-            <archive>jaxrs-spec@javaee.groups.io</archive>
+            <name>JAX-RS Developer Discussions</name>
+            <archive>jaxrs-dev@eclipse.org</archive>
         </mailingList>
     </mailingLists>
 
@@ -65,24 +59,10 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/jax-rs/api.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:jax-rs/api.git</developerConnection>
-        <url>https://github.com/jax-rs/api</url>
+        <connection>scm:git:https://github.com/eclipse-ee4j/jaxrs-api</connection>
+        <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
         <tag>HEAD</tag>
     </scm>
-
-    <developers>
-        <developer>
-            <email>santiago.pericasgeertsen@oracle.com</email>
-            <id>Santiago</id>
-            <name>Santiago Pericas-Geertsen</name>
-            <organization>Oracle</organization>
-            <roles>
-                <role>JAX-RS Spec Lead</role>
-            </roles>
-            <timezone>EST</timezone>
-        </developer>
-    </developers>
 
     <profiles>
         <profile>
@@ -107,64 +87,6 @@
             <properties>
                 <skip.release.tests>true</skip.release.tests>
             </properties>
-        </profile>
-        <profile>
-            <id>release</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <!-- Enables step-by-step staging deployment -->
-                            <groupId>org.sonatype.plugins</groupId>
-                            <artifactId>nexus-staging-maven-plugin</artifactId>
-                            <version>1.6.7</version>
-                        </plugin>
-                        <plugin>
-                            <!-- Newer version then in parent -->
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-gpg-plugin</artifactId>
-                            <version>1.6</version>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-release-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-deploy-plugin</artifactId>
-                        <configuration>
-                            <skip>true</skip> <!-- To prefer nexus-staging-maven-plugin -->
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>default-deploy</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>deploy</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <serverId>jvnet-nexus-staging</serverId>
-                            <nexusUrl>https://maven.java.net/</nexusUrl>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
         <profile>
             <id>jdk9+</id>
@@ -220,7 +142,6 @@
                 </pluginManagement>
             </build>
         </profile>
-
         <profile>
             <id>jdk8-</id>
             <activation>

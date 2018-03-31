@@ -14,6 +14,6 @@
 
 ---
 
-# JAX-RS API
+# JAX-RS API [![Build Status](https://travis-ci.org/eclipse-ee4j/jaxrs-api.svg?branch=master)](https://travis-ci.org/eclipse-ee4j/jaxrs-api)
 
 This repository contains JAX-RS API source code.

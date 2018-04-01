@@ -16,6 +16,8 @@
 
 package javax.ws.rs.core;
 
+import static org.junit.Assert.assertEquals;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -23,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 /**
  * Type literal construction unit tests.

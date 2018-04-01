@@ -16,8 +16,9 @@
 
 package javax.ws.rs.core;
 
-import org.junit.Test;
 import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
 
 /**
  * Variant regression unit tests.

@@ -16,14 +16,15 @@
 
 package javax.ws.rs;
 
+import static javax.ws.rs.core.HttpHeaders.WWW_AUTHENTICATE;
+import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
-import static javax.ws.rs.core.HttpHeaders.WWW_AUTHENTICATE;
-import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
 /**
  * A runtime exception indicating request authorization failure caused by one of the following

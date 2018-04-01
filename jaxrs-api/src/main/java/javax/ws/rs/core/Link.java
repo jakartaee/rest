@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.ws.rs.ext.RuntimeDelegate;
-
 import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.adapters.XmlAdapter;

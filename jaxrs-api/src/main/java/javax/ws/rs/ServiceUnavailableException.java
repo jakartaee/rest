@@ -16,13 +16,14 @@
 
 package javax.ws.rs;
 
+import static javax.ws.rs.core.HttpHeaders.RETRY_AFTER;
+import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
+
 import java.util.Date;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.RuntimeDelegate;
-import static javax.ws.rs.core.HttpHeaders.RETRY_AFTER;
-import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 
 /**
  * A runtime exception indicating that the requested resource

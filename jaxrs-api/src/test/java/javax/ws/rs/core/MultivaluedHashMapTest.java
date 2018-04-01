@@ -16,17 +16,21 @@
 
 package javax.ws.rs.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import javax.ws.rs.ext.RuntimeDelegate;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 public class MultivaluedHashMapTest {
 

@@ -18,7 +18,10 @@ package javax.ws.rs.ext;
 
 import java.lang.reflect.ReflectPermission;
 import java.net.URL;
+import java.util.concurrent.CompletionStage;
 
+import javax.ws.rs.JAXRS;
+import javax.ws.rs.JAXRS.Instance;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -246,4 +249,32 @@ public abstract class RuntimeDelegate {
      * @see javax.ws.rs.core.Link.Builder
      */
     public abstract Link.Builder createLinkBuilder();
+
+    /**
+     * Create a new instance of a {@link javax.ws.rs.JAXRS.Configuration.Builder}.
+     * <p>
+     * <em>This method is not intended to be invoked by applications. Call
+     * {@link JAXRS.Configuration#builder()} instead.</em>
+     * </p>
+     *
+     * @return new {@code JAXRS.Configuration.Builder} instance.
+     * @see JAXRS.Configuration.Builder
+     */
+    public abstract JAXRS.Configuration.Builder createConfigurationBuilder();
+
+    /**
+     * Perform startup of the application in Java SE environments.
+     * <p>
+     * <em>This method is not intended to be invoked by applications. Call
+     * {@link JAXRS#start(Application, Configuration)} instead.</em>
+     * </p>
+     *
+     * @param application
+     *            The application to start up.
+     * @param configuration
+     *            The bootstrap configuration.
+     * @return {@code CompletionStage} asynchronously producing handle of the
+     *         running application {@link JAXRS.Instance instance}.
+     */
+    public abstract CompletionStage<Instance> bootstrap(Application application, JAXRS.Configuration configuration);
 }

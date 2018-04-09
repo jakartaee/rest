@@ -16,6 +16,11 @@
 
 package javax.ws.rs.core;
 
+import java.util.concurrent.CompletionStage;
+
+import javax.ws.rs.JAXRS;
+import javax.ws.rs.JAXRS.Configuration;
+import javax.ws.rs.JAXRS.Instance;
 import javax.ws.rs.core.Link.Builder;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Variant.VariantListBuilder;
@@ -51,5 +56,15 @@ public class RuntimeDelegateStub extends RuntimeDelegate {
     @Override
     public Builder createLinkBuilder() {
         return null;
+    }
+
+    @Override
+    public Configuration.Builder createConfigurationBuilder() {
+	return null;
+    }
+
+    @Override
+    public CompletionStage<Instance> bootstrap(final Application application, final JAXRS.Configuration configuration) {
+	return null;
     }
 }

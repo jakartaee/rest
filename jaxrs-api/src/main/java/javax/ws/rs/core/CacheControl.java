@@ -36,7 +36,7 @@ import javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
 public class CacheControl {
 
     /**
-     * @deprecated This field will be removed in version 3.0. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
+     * @deprecated This field will be removed in a future version. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
      */
     @Deprecated
     private static final HeaderDelegate<CacheControl> HEADER_DELEGATE =
@@ -87,7 +87,7 @@ public class CacheControl {
      *
      * @throws IllegalArgumentException if the supplied string cannot be parsed
      *                                  or is null
-     * @deprecated This method will be removed in version 3.0. Please use
+     * @deprecated This method will be removed in a future version. Please use
      *   RuntimeDelegate.getInstance().createHeaderDelegate(CacheControl.class).fromString(value) instead.
      */
     @Deprecated
@@ -336,7 +336,7 @@ public class CacheControl {
      * corresponding HTTP header.
      *
      * @return a stringified cache control
-     * @deprecated The format of the toString() method is subject to change in version 3.0. Please use
+     * @deprecated The format of the toString() method is subject to change in a future version. Please use
      * RuntimeDelegate.getInstance().createHeaderDelegate(CacheControl.class).toString(value) instead if you rely on
      * the format of this method.
      */

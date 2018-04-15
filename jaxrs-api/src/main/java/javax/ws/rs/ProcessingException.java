@@ -64,9 +64,10 @@ public class ProcessingException extends RuntimeException {
     }
 
     /**
+     * <p>
      * Constructs a new JAX-RS runtime processing exception with the specified detail
      * message and cause.
-     * <p/>
+     * </p>
      * Note that the detail message associated with {@code cause} is <i>not</i>
      * automatically incorporated in this runtime exception's detail message.
      *

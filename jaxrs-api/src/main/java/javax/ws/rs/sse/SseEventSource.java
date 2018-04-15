@@ -34,7 +34,7 @@ import javax.ws.rs.client.WebTarget;
  * Once a {@link SseEventSource} is created, it can be used to {@link #open open a connection}
  * to the associated {@link WebTarget web target}. After establishing the connection, the event source starts
  * processing any incoming inbound events. Whenever a new event is received, an
- * {@link Consumer#accept(Object) Consumer<InboundSseEvent>#accept(InboundSseEvent)} method is invoked on any registered event consumers.
+ * {@link Consumer#accept(Object) Consumer&lt;InboundSseEvent&gt;#accept(InboundSseEvent)} method is invoked on any registered event consumers.
  * <h3>Reconnect support</h3>
  * <p>
  * The {@code SseEventSource} supports automated recuperation from a connection loss, including

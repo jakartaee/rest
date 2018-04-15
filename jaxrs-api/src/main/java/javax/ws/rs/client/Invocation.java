@@ -82,7 +82,7 @@ public interface Invocation {
      *   WebTarget resourceTarget = client.target("http://examples.jaxrs.com/");
      *
      *   // Build and invoke the get request asynchronously in a single step
-     *   Future<String> response = resourceTarget.request("text/plain")
+     *   Future&lt;String&gt; response = resourceTarget.request("text/plain")
      *           .header("Foo", "bar").async().get(String.class);
      * </pre>
      */

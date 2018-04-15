@@ -47,7 +47,7 @@ public @interface ApplicationPath {
      *
      * <p>The supplied value is automatically percent
      * encoded to conform to the {@code path} production of
-     * {@link <a href="http://tools.ietf.org/html/rfc3986#section-3.3">RFC 3986 section 3.3</a>}.
+     * <a href="http://tools.ietf.org/html/rfc3986#section-3.3">RFC 3986 section 3.3</a>.
      * Note that percent encoded values are allowed in the value, an
      * implementation will recognize such values and will not double
      * encode the '%' character.</p>

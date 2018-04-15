@@ -279,12 +279,12 @@ public interface AsyncResponse {
      * The time-out handler will be invoked when the suspend period of this
      * asynchronous response times out. The job of the time-out handler is to
      * resolve the time-out situation by either
+     * </p>
      * <ul>
      * <li>resuming the suspended response</li>
      * <li>cancelling the suspended response</li>
      * <li>extending the suspend period by setting a new suspend time-out</li>
      * </ul>
-     * </p>
      * <p>
      * Note that in case the response is suspended {@link #NO_TIMEOUT indefinitely},
      * the time-out handler may never be invoked.

@@ -123,7 +123,7 @@ public abstract class Link {
      * All link params are serialized as link-param="value" where value
      * is a quoted-string. For example,
      *
-     * <http://foo.bar/employee/john>; title="employee"; rel="manager friend"
+     * &lt;http://foo.bar/employee/john&gt;; title="employee"; rel="manager friend"
      *
      * @return string link header representation for this link.
      */
@@ -133,7 +133,7 @@ public abstract class Link {
     /**
      * Simple parser to convert link header string representations into a link.
      * <pre>
-     * link ::= '<' uri '>' (';' link-param)*
+     * link ::= '&lt;' uri 'gt;' (';' link-param)*
      * link-param ::= name '=' quoted-string
      * </pre>
      *
@@ -276,7 +276,7 @@ public abstract class Link {
          * Initialize builder using another link represented as a string. Uses
          * simple parser to convert string representation into a link.
          * <pre>
-         * link ::= '<' uri '>' (';' link-param)*
+         * link ::= '&lt;' uri 'gt;' (';' link-param)*
          * link-param ::= name '=' quoted-string
          * </pre>
          *

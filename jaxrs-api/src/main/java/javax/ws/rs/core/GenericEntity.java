@@ -169,7 +169,7 @@ public class GenericEntity<T> {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         boolean result = this == obj;
         if (!result && obj instanceof GenericEntity) {
             // Compare inner type for equality

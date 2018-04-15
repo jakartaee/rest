@@ -103,12 +103,12 @@ public class RxClientTest {
     public static class CompletionStageRxInvokerProvider implements RxInvokerProvider<CompletionStageRxInvoker> {
 
         @Override
-        public boolean isProviderFor(Class<?> clazz) {
+        public boolean isProviderFor(final Class<?> clazz) {
             return CompletionStageRxInvoker.class.equals(clazz);
         }
 
         @Override
-        public CompletionStageRxInvoker getRxInvoker(SyncInvoker syncInvoker, ExecutorService executorService) {
+        public CompletionStageRxInvoker getRxInvoker(final SyncInvoker syncInvoker, final ExecutorService executorService) {
             return null;
         }
     }

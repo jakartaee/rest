@@ -41,7 +41,7 @@ public class NoContentException extends IOException {
      * @param message the detail message (which is saved for later retrieval
      *                by the {@link #getMessage()} method).
      */
-    public NoContentException(String message) {
+    public NoContentException(final String message) {
         super(message);
     }
 
@@ -52,7 +52,7 @@ public class NoContentException extends IOException {
      *                by the {@link #getMessage()} method).
      * @param cause   the underlying cause of the exception.
      */
-    public NoContentException(String message, Throwable cause) {
+    public NoContentException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
@@ -61,7 +61,7 @@ public class NoContentException extends IOException {
      *
      * @param cause the underlying cause of the exception.
      */
-    public NoContentException(Throwable cause) {
+    public NoContentException(final Throwable cause) {
         super(cause);
     }
 }

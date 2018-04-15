@@ -144,7 +144,7 @@ public abstract class Link {
      * @throws IllegalArgumentException if a syntax error is found.
      * @see Link.Builder#link(java.lang.String)
      */
-    public static Link valueOf(String value) {
+    public static Link valueOf(final String value) {
         Builder b = RuntimeDelegate.getInstance().createLinkBuilder();
         b.link(value);
         return b.build();
@@ -157,7 +157,7 @@ public abstract class Link {
      * @return a new builder.
      * @throws IllegalArgumentException if uri is {@code null}.
      */
-    public static Builder fromUri(URI uri) {
+    public static Builder fromUri(final URI uri) {
         Builder b = RuntimeDelegate.getInstance().createLinkBuilder();
         b.uri(uri);
         return b;
@@ -170,7 +170,7 @@ public abstract class Link {
      * @return a new builder.
      * @throws IllegalArgumentException if uri is {@code null}.
      */
-    public static Builder fromUri(String uri) {
+    public static Builder fromUri(final String uri) {
         Builder b = RuntimeDelegate.getInstance().createLinkBuilder();
         b.uri(uri);
         return b;
@@ -182,7 +182,7 @@ public abstract class Link {
      * @param uriBuilder instance of URI builder.
      * @return a new builder.
      */
-    public static Builder fromUriBuilder(UriBuilder uriBuilder) {
+    public static Builder fromUriBuilder(final UriBuilder uriBuilder) {
         Builder b = RuntimeDelegate.getInstance().createLinkBuilder();
         b.uriBuilder(uriBuilder);
         return b;
@@ -194,7 +194,7 @@ public abstract class Link {
      * @param link other link used for initialization.
      * @return a new builder.
      */
-    public static Builder fromLink(Link link) {
+    public static Builder fromLink(final Link link) {
         Builder b = RuntimeDelegate.getInstance().createLinkBuilder();
         b.link(link);
         return b;
@@ -209,7 +209,7 @@ public abstract class Link {
      * @return a new Link.Builder.
      * @throws IllegalArgumentException if path is {@code null}.
      */
-    public static Builder fromPath(String path) {
+    public static Builder fromPath(final String path) {
         return fromUriBuilder(UriBuilder.fromPath(path));
     }
 
@@ -229,7 +229,7 @@ public abstract class Link {
      *                                  or resource is {@code null}.
      * @see UriInfo#getBaseUri()
      */
-    public static Builder fromResource(Class<?> resource) {
+    public static Builder fromResource(final Class<?> resource) {
         return fromUriBuilder(UriBuilder.fromResource(resource));
     }
 
@@ -251,7 +251,7 @@ public abstract class Link {
      *                                  {@link javax.ws.rs.Path}.
      * @see UriInfo#getBaseUri()
      */
-    public static Builder fromMethod(Class<?> resource, String method) {
+    public static Builder fromMethod(final Class<?> resource, final String method) {
         return fromUriBuilder(UriBuilder.fromMethod(resource, method));
     }
 
@@ -442,7 +442,7 @@ public abstract class Link {
          *
          * @param uri underlying URI.
          */
-        public JaxbLink(URI uri) {
+        public JaxbLink(final URI uri) {
             this.uri = uri;
         }
 
@@ -452,7 +452,7 @@ public abstract class Link {
          * @param uri    underlying URI.
          * @param params parameters of this link.
          */
-        public JaxbLink(URI uri, Map<QName, Object> params) {
+        public JaxbLink(final URI uri, final Map<QName, Object> params) {
             this.uri = uri;
             this.params = params;
         }
@@ -485,7 +485,7 @@ public abstract class Link {
          *
          * This setter is needed for JAXB unmarshalling.
          */
-        void setUri(URI uri) {
+        void setUri(final URI uri) {
             this.uri = uri;
         }
 
@@ -494,12 +494,12 @@ public abstract class Link {
          *
          * This setter is needed for JAXB unmarshalling.
          */
-        void setParams(Map<QName, Object> params) {
+        void setParams(final Map<QName, Object> params) {
             this.params = params;
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             if (this == o) return true;
             if (!(o instanceof JaxbLink)) return false;
 
@@ -566,7 +566,7 @@ public abstract class Link {
          * @return mapped instance of type {@link JaxbLink}
          */
         @Override
-        public Link unmarshal(JaxbLink v) {
+        public Link unmarshal(final JaxbLink v) {
             Link.Builder lb = Link.fromUri(v.getUri());
             for (Entry<QName, Object> e : v.getParams().entrySet()) {
                 lb.param(e.getKey().getLocalPart(), e.getValue().toString());
@@ -581,7 +581,7 @@ public abstract class Link {
          * @return mapped instance of type {@link JaxbLink}.
          */
         @Override
-        public JaxbLink marshal(Link v) {
+        public JaxbLink marshal(final Link v) {
             JaxbLink jl = new JaxbLink(v.getUri());
             for (Entry<String, String> e : v.getParams().entrySet()) {
                 final String name = e.getKey();

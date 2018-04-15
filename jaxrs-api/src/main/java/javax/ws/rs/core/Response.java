@@ -543,7 +543,7 @@ public abstract class Response implements AutoCloseable {
      * @return a new response builder.
      * @since 2.0
      */
-    public static ResponseBuilder fromResponse(Response response) {
+    public static ResponseBuilder fromResponse(final Response response) {
         ResponseBuilder b = status(response.getStatus());
         if (response.hasEntity()) {
             b.entity(response.getEntity());
@@ -564,7 +564,7 @@ public abstract class Response implements AutoCloseable {
      * @return a new response builder.
      * @throws IllegalArgumentException if status is {@code null}.
      */
-    public static ResponseBuilder status(StatusType status) {
+    public static ResponseBuilder status(final StatusType status) {
         return ResponseBuilder.newInstance().status(status);
     }
 
@@ -575,7 +575,7 @@ public abstract class Response implements AutoCloseable {
      * @return a new response builder.
      * @throws IllegalArgumentException if status is {@code null}.
      */
-    public static ResponseBuilder status(Status status) {
+    public static ResponseBuilder status(final Status status) {
         return status((StatusType) status);
     }
 
@@ -587,7 +587,7 @@ public abstract class Response implements AutoCloseable {
      * @throws IllegalArgumentException if status is less than {@code 100} or greater
      *                                  than {@code 599}.
      */
-    public static ResponseBuilder status(int status) {
+    public static ResponseBuilder status(final int status) {
         return ResponseBuilder.newInstance().status(status);
     }
 
@@ -601,7 +601,7 @@ public abstract class Response implements AutoCloseable {
      *                                  than {@code 599}.
      * @since 2.1
      */
-    public static ResponseBuilder status(int status, String reasonPhrase) {
+    public static ResponseBuilder status(final int status, final String reasonPhrase) {
         return ResponseBuilder.newInstance().status(status, reasonPhrase);
     }
 
@@ -622,7 +622,7 @@ public abstract class Response implements AutoCloseable {
      * @param entity the representation entity data.
      * @return a new response builder.
      */
-    public static ResponseBuilder ok(Object entity) {
+    public static ResponseBuilder ok(final Object entity) {
         ResponseBuilder b = ok();
         b.entity(entity);
         return b;
@@ -637,7 +637,7 @@ public abstract class Response implements AutoCloseable {
      * @param type   the media type of the entity.
      * @return a new response builder.
      */
-    public static ResponseBuilder ok(Object entity, MediaType type) {
+    public static ResponseBuilder ok(final Object entity, final MediaType type) {
         return ok().entity(entity).type(type);
     }
 
@@ -650,7 +650,7 @@ public abstract class Response implements AutoCloseable {
      * @param type   the media type of the entity.
      * @return a new response builder.
      */
-    public static ResponseBuilder ok(Object entity, String type) {
+    public static ResponseBuilder ok(final Object entity, final String type) {
         return ok().entity(entity).type(type);
     }
 
@@ -663,7 +663,7 @@ public abstract class Response implements AutoCloseable {
      * @param variant representation metadata.
      * @return a new response builder.
      */
-    public static ResponseBuilder ok(Object entity, Variant variant) {
+    public static ResponseBuilder ok(final Object entity, final Variant variant) {
         return ok().entity(entity).variant(variant);
     }
 
@@ -687,7 +687,7 @@ public abstract class Response implements AutoCloseable {
      * @throws java.lang.IllegalArgumentException
      *          if location is {@code null}.
      */
-    public static ResponseBuilder created(URI location) {
+    public static ResponseBuilder created(final URI location) {
         return status(Status.CREATED).location(location);
     }
 
@@ -710,7 +710,7 @@ public abstract class Response implements AutoCloseable {
      * @return a new response builder.
      * @since 2.0
      */
-    public static ResponseBuilder accepted(Object entity) {
+    public static ResponseBuilder accepted(final Object entity) {
         return accepted().entity(entity);
     }
 
@@ -740,7 +740,7 @@ public abstract class Response implements AutoCloseable {
      * @throws java.lang.IllegalArgumentException
      *          if tag is {@code null}.
      */
-    public static ResponseBuilder notModified(EntityTag tag) {
+    public static ResponseBuilder notModified(final EntityTag tag) {
         return notModified().tag(tag);
     }
 
@@ -756,7 +756,7 @@ public abstract class Response implements AutoCloseable {
      * @throws IllegalArgumentException if tag is {@code null}.
      */
     @SuppressWarnings("HtmlTagCanBeJavadocTag")
-    public static ResponseBuilder notModified(String tag) {
+    public static ResponseBuilder notModified(final String tag) {
         return notModified().tag(tag);
     }
 
@@ -772,7 +772,7 @@ public abstract class Response implements AutoCloseable {
      * @throws java.lang.IllegalArgumentException
      *          if location is {@code null}.
      */
-    public static ResponseBuilder seeOther(URI location) {
+    public static ResponseBuilder seeOther(final URI location) {
         return status(Status.SEE_OTHER).location(location);
     }
 
@@ -787,7 +787,7 @@ public abstract class Response implements AutoCloseable {
      * @throws java.lang.IllegalArgumentException
      *          if location is {@code null}.
      */
-    public static ResponseBuilder temporaryRedirect(URI location) {
+    public static ResponseBuilder temporaryRedirect(final URI location) {
         return status(Status.TEMPORARY_REDIRECT).location(location);
     }
 
@@ -798,7 +798,7 @@ public abstract class Response implements AutoCloseable {
      *                 equivalent to an empty list.
      * @return a new response builder.
      */
-    public static ResponseBuilder notAcceptable(List<Variant> variants) {
+    public static ResponseBuilder notAcceptable(final List<Variant> variants) {
         return status(Status.NOT_ACCEPTABLE).variants(variants);
     }
 
@@ -890,7 +890,7 @@ public abstract class Response implements AutoCloseable {
          * @throws IllegalArgumentException if status is {@code null}.
          * @since 1.1
          */
-        public ResponseBuilder status(StatusType status) {
+        public ResponseBuilder status(final StatusType status) {
             if (status == null) {
                 throw new IllegalArgumentException();
             }
@@ -904,7 +904,7 @@ public abstract class Response implements AutoCloseable {
          * @return the updated response builder.
          * @throws IllegalArgumentException if status is {@code null}.
          */
-        public ResponseBuilder status(Status status) {
+        public ResponseBuilder status(final Status status) {
             return status((StatusType) status);
         }
 

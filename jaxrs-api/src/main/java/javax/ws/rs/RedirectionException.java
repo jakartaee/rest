@@ -40,7 +40,7 @@ public class RedirectionException extends WebApplicationException {
      *                                  {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code
      *                                  family.
      */
-    public RedirectionException(Response.Status status, URI location) {
+    public RedirectionException(final Response.Status status, final URI location) {
         super((Throwable) null, validate(Response.status(status).location(location).build(), Response.Status.Family.REDIRECTION));
     }
 
@@ -55,7 +55,7 @@ public class RedirectionException extends WebApplicationException {
      *                                  {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code
      *                                  family.
      */
-    public RedirectionException(String message, Response.Status status, URI location) {
+    public RedirectionException(final String message, final Response.Status status, final URI location) {
         super(message, null, validate(Response.status(status).location(location).build(), Response.Status.Family.REDIRECTION));
     }
 
@@ -68,7 +68,7 @@ public class RedirectionException extends WebApplicationException {
      *                                  if it is not from the {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION}
      *                                  status code family.
      */
-    public RedirectionException(int status, URI location) {
+    public RedirectionException(final int status, final URI location) {
         super((Throwable) null, validate(Response.status(status).location(location).build(), Response.Status.Family.REDIRECTION));
     }
 
@@ -83,7 +83,7 @@ public class RedirectionException extends WebApplicationException {
      *                                  if it is not from the {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION}
      *                                  status code family.
      */
-    public RedirectionException(String message, int status, URI location) {
+    public RedirectionException(final String message, final int status, final URI location) {
         super(message, null, validate(Response.status(status).location(location).build(), Response.Status.Family.REDIRECTION));
     }
 
@@ -95,7 +95,7 @@ public class RedirectionException extends WebApplicationException {
      * @throws IllegalArgumentException in case the response status code is not from the
      *                                  {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code family.
      */
-    public RedirectionException(Response response) {
+    public RedirectionException(final Response response) {
         super((Throwable) null, validate(response, Response.Status.Family.REDIRECTION));
     }
 
@@ -109,7 +109,7 @@ public class RedirectionException extends WebApplicationException {
      * @throws IllegalArgumentException in case the response status code is not from the
      *                                  {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code family.
      */
-    public RedirectionException(String message, Response response) {
+    public RedirectionException(final String message, final Response response) {
         super(message, null, validate(response, Response.Status.Family.REDIRECTION));
     }
 

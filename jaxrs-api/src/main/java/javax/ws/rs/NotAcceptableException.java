@@ -44,7 +44,7 @@ public class NotAcceptableException extends ClientErrorException {
      * @param message the detail message (which is saved for later retrieval
      *                by the {@link #getMessage()} method).
      */
-    public NotAcceptableException(String message) {
+    public NotAcceptableException(final String message) {
         super(message, Response.Status.NOT_ACCEPTABLE);
     }
 
@@ -55,7 +55,7 @@ public class NotAcceptableException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 406}.
      */
-    public NotAcceptableException(Response response) {
+    public NotAcceptableException(final Response response) {
         super(validate(response, Response.Status.NOT_ACCEPTABLE));
     }
 
@@ -68,7 +68,7 @@ public class NotAcceptableException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 406}.
      */
-    public NotAcceptableException(String message, Response response) {
+    public NotAcceptableException(final String message, final Response response) {
         super(message, validate(response, Response.Status.NOT_ACCEPTABLE));
     }
 
@@ -77,7 +77,7 @@ public class NotAcceptableException extends ClientErrorException {
      *
      * @param cause the underlying cause of the exception.
      */
-    public NotAcceptableException(Throwable cause) {
+    public NotAcceptableException(final Throwable cause) {
         super(Response.Status.NOT_ACCEPTABLE, cause);
     }
 
@@ -88,7 +88,7 @@ public class NotAcceptableException extends ClientErrorException {
      *                by the {@link #getMessage()} method).
      * @param cause   the underlying cause of the exception.
      */
-    public NotAcceptableException(String message, Throwable cause) {
+    public NotAcceptableException(final String message, final Throwable cause) {
         super(message, Response.Status.NOT_ACCEPTABLE, cause);
     }
 
@@ -100,7 +100,7 @@ public class NotAcceptableException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 406}.
      */
-    public NotAcceptableException(Response response, Throwable cause) {
+    public NotAcceptableException(final Response response, final Throwable cause) {
         super(validate(response, Response.Status.NOT_ACCEPTABLE), cause);
     }
 
@@ -114,7 +114,7 @@ public class NotAcceptableException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 406}.
      */
-    public NotAcceptableException(String message, Response response, Throwable cause) {
+    public NotAcceptableException(final String message, final Response response, final Throwable cause) {
         super(message, validate(response, Response.Status.NOT_ACCEPTABLE), cause);
     }
 }

@@ -43,7 +43,7 @@ public class InternalServerErrorException extends ServerErrorException {
      * @param message the detail message (which is saved for later retrieval
      *                by the {@link #getMessage()} method).
      */
-    public InternalServerErrorException(String message) {
+    public InternalServerErrorException(final String message) {
         super(message, Response.Status.INTERNAL_SERVER_ERROR);
     }
 
@@ -54,7 +54,7 @@ public class InternalServerErrorException extends ServerErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 500}.
      */
-    public InternalServerErrorException(Response response) {
+    public InternalServerErrorException(final Response response) {
         super(validate(response, Response.Status.INTERNAL_SERVER_ERROR));
     }
 
@@ -67,7 +67,7 @@ public class InternalServerErrorException extends ServerErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 500}.
      */
-    public InternalServerErrorException(String message, Response response) {
+    public InternalServerErrorException(final String message, final Response response) {
         super(message, validate(response, Response.Status.INTERNAL_SERVER_ERROR));
     }
 
@@ -76,7 +76,7 @@ public class InternalServerErrorException extends ServerErrorException {
      *
      * @param cause the underlying cause of the exception.
      */
-    public InternalServerErrorException(Throwable cause) {
+    public InternalServerErrorException(final Throwable cause) {
         super(Response.Status.INTERNAL_SERVER_ERROR, cause);
     }
 
@@ -87,7 +87,7 @@ public class InternalServerErrorException extends ServerErrorException {
      *                by the {@link #getMessage()} method).
      * @param cause   the underlying cause of the exception.
      */
-    public InternalServerErrorException(String message, Throwable cause) {
+    public InternalServerErrorException(final String message, final Throwable cause) {
         super(message, Response.Status.INTERNAL_SERVER_ERROR, cause);
     }
 
@@ -99,7 +99,7 @@ public class InternalServerErrorException extends ServerErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 500}.
      */
-    public InternalServerErrorException(Response response, Throwable cause) {
+    public InternalServerErrorException(final Response response, final Throwable cause) {
         super(validate(response, Response.Status.INTERNAL_SERVER_ERROR), cause);
     }
 
@@ -113,7 +113,7 @@ public class InternalServerErrorException extends ServerErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 500}.
      */
-    public InternalServerErrorException(String message, Response response, Throwable cause) {
+    public InternalServerErrorException(final String message, final Response response, final Throwable cause) {
         super(message, validate(response, Response.Status.INTERNAL_SERVER_ERROR), cause);
     }
 }

@@ -118,7 +118,7 @@ public class MultivaluedHashMap<K, V> extends AbstractMultivaluedMap<K, V> imple
      * @param initialCapacity the initial capacity.
      * @throws IllegalArgumentException if the initial capacity is negative.
      */
-    public MultivaluedHashMap(int initialCapacity) {
+    public MultivaluedHashMap(final int initialCapacity) {
         super(new HashMap<K, List<V>>(initialCapacity));
     }
 
@@ -131,7 +131,7 @@ public class MultivaluedHashMap<K, V> extends AbstractMultivaluedMap<K, V> imple
      * @throws IllegalArgumentException if the initial capacity is negative
      *                                  or the load factor is nonpositive
      */
-    public MultivaluedHashMap(int initialCapacity, float loadFactor) {
+    public MultivaluedHashMap(final int initialCapacity, final float loadFactor) {
         super(new HashMap<K, List<V>>(initialCapacity, loadFactor));
     }
 
@@ -144,7 +144,7 @@ public class MultivaluedHashMap<K, V> extends AbstractMultivaluedMap<K, V> imple
      *            multivalued map.
      * @throws NullPointerException if the specified map is {@code null}
      */
-    public MultivaluedHashMap(MultivaluedMap<? extends K, ? extends V> map) {
+    public MultivaluedHashMap(final MultivaluedMap<? extends K, ? extends V> map) {
         this();
         putAll(map);
     }
@@ -157,7 +157,7 @@ public class MultivaluedHashMap<K, V> extends AbstractMultivaluedMap<K, V> imple
      * @param <U> any subclass of V
      * @param map the map
      */
-    private <T extends K, U extends V> void putAll(MultivaluedMap<T, U> map) {
+    private <T extends K, U extends V> void putAll(final MultivaluedMap<T, U> map) {
         for (Entry<T, List<U>> e : map.entrySet()) {
             store.put(e.getKey(), new ArrayList<V>(e.getValue()));
         }
@@ -171,7 +171,7 @@ public class MultivaluedHashMap<K, V> extends AbstractMultivaluedMap<K, V> imple
      *            multivalued map.
      * @throws NullPointerException if the specified map is {@code null}
      */
-    public MultivaluedHashMap(Map<? extends K, ? extends V> map) {
+    public MultivaluedHashMap(final Map<? extends K, ? extends V> map) {
         this();
         for (Entry<? extends K, ? extends V> e : map.entrySet()) {
             this.putSingle(e.getKey(), e.getValue());

@@ -44,7 +44,7 @@ public interface Sse {
      * @return created {@code OutboundSseEvent}.
      * @throws IllegalArgumentException when data is {@code null}.
      */
-    default OutboundSseEvent newEvent(String data) {
+    default OutboundSseEvent newEvent(final String data) {
         if (data == null) {
             throw new IllegalArgumentException("Parameter 'data' must not be null.");
         }
@@ -60,7 +60,7 @@ public interface Sse {
      * @return created {@code OutboundSseEvent}.
      * @throws IllegalArgumentException when name or data is {@code null}.
      */
-    default OutboundSseEvent newEvent(String name, String data) {
+    default OutboundSseEvent newEvent(final String name, final String data) {
         if (data == null) {
             throw new IllegalArgumentException("Parameter 'data' must not be null.");
         }

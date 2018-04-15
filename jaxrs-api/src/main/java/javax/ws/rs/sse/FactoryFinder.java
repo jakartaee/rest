@@ -116,7 +116,7 @@ final class FactoryFinder {
      * @throws ClassNotFoundException if the given class could not be found
      *                                or could not be instantiated.
      */
-    static <T> Object find(final String factoryId, final String fallbackClassName, Class<T> service) throws ClassNotFoundException {
+    static <T> Object find(final String factoryId, final String fallbackClassName, final Class<T> service) throws ClassNotFoundException {
         ClassLoader classLoader = getContextClassLoader();
 
         try {

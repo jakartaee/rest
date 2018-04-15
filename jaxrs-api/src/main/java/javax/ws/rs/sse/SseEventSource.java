@@ -211,7 +211,7 @@ public interface SseEventSource extends AutoCloseable {
      * @return a builder of a new event source instance pointing at the specified SSE streaming endpoint.
      * @throws NullPointerException in case the supplied web target is {@code null}.
      */
-    static Builder target(WebTarget endpoint) {
+    static Builder target(final WebTarget endpoint) {
         return Builder.newBuilder().target(endpoint);
     }
 

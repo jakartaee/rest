@@ -47,7 +47,7 @@ public class ResponseProcessingException extends ProcessingException {
      *              {@link #getCause()} method). (A {@code null} value is permitted,
      *              and indicates that the cause is nonexistent or unknown.)
      */
-    public ResponseProcessingException(Response response, Throwable cause) {
+    public ResponseProcessingException(final Response response, final Throwable cause) {
         super(cause);
         this.response = response;
     }
@@ -66,7 +66,7 @@ public class ResponseProcessingException extends ProcessingException {
      *                {@link #getCause()} method). (A {@code null} value is permitted,
      *                and indicates that the cause is nonexistent or unknown.)
      */
-    public ResponseProcessingException(Response response, String message, Throwable cause) {
+    public ResponseProcessingException(final Response response, final String message, final Throwable cause) {
         super(message, cause);
         this.response = response;
     }
@@ -80,7 +80,7 @@ public class ResponseProcessingException extends ProcessingException {
      * @param message the detail message (which is saved for later retrieval
      *                by the {@link #getMessage()} method).
      */
-    public ResponseProcessingException(Response response, String message) {
+    public ResponseProcessingException(final Response response, final String message) {
         super(message);
         this.response = response;
     }

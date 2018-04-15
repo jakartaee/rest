@@ -79,7 +79,7 @@ public abstract class UriBuilder {
      * @return a new UriBuilder.
      * @throws IllegalArgumentException if uri is {@code null}.
      */
-    public static UriBuilder fromUri(URI uri) {
+    public static UriBuilder fromUri(final URI uri) {
         return newInstance().uri(uri);
     }
 
@@ -92,7 +92,7 @@ public abstract class UriBuilder {
      * @throws IllegalArgumentException if {@code uriTemplate} is not a valid URI template or
      *                                  is {@code null}.
      */
-    public static UriBuilder fromUri(String uriTemplate) {
+    public static UriBuilder fromUri(final String uriTemplate) {
         return newInstance().uri(uriTemplate);
     }
 
@@ -105,7 +105,7 @@ public abstract class UriBuilder {
      * @throws IllegalArgumentException if link is {@code null}
      * @since 2.0
      */
-    public static UriBuilder fromLink(Link link) {
+    public static UriBuilder fromLink(final Link link) {
         if (link == null) {
             throw new IllegalArgumentException("The provider 'link' parameter value is 'null'.");
         }
@@ -121,7 +121,7 @@ public abstract class UriBuilder {
      * @return a new UriBuilder.
      * @throws IllegalArgumentException if path is {@code null}.
      */
-    public static UriBuilder fromPath(String path) throws IllegalArgumentException {
+    public static UriBuilder fromPath(final String path) throws IllegalArgumentException {
         return newInstance().path(path);
     }
 
@@ -135,7 +135,7 @@ public abstract class UriBuilder {
      * @throws IllegalArgumentException if resource is not annotated with
      *                                  {@link javax.ws.rs.Path} or resource is {@code null}.
      */
-    public static UriBuilder fromResource(Class<?> resource) {
+    public static UriBuilder fromResource(final Class<?> resource) {
         return newInstance().path(resource);
     }
 
@@ -155,7 +155,7 @@ public abstract class UriBuilder {
      *                                  {@link javax.ws.rs.Path}.
      * @since 2.0
      */
-    public static UriBuilder fromMethod(Class<?> resource, String method) {
+    public static UriBuilder fromMethod(final Class<?> resource, final String method) {
         return newInstance().path(resource, method);
     }
 

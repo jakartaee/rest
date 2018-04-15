@@ -37,7 +37,7 @@ public class ServerErrorException extends WebApplicationException {
      *                                  {@link javax.ws.rs.core.Response.Status.Family#SERVER_ERROR} status code
      *                                  family.
      */
-    public ServerErrorException(Response.Status status) {
+    public ServerErrorException(final Response.Status status) {
         super((Throwable) null, validate(Response.status(status).build(), Response.Status.Family.SERVER_ERROR));
     }
 
@@ -51,7 +51,7 @@ public class ServerErrorException extends WebApplicationException {
      *                                  {@link javax.ws.rs.core.Response.Status.Family#SERVER_ERROR} status code
      *                                  family.
      */
-    public ServerErrorException(String message, Response.Status status) {
+    public ServerErrorException(final String message, final Response.Status status) {
         super(message, null, validate(Response.status(status).build(), Response.Status.Family.SERVER_ERROR));
     }
 
@@ -63,7 +63,7 @@ public class ServerErrorException extends WebApplicationException {
      *                                  if it is not from the {@link javax.ws.rs.core.Response.Status.Family#SERVER_ERROR}
      *                                  status code family.
      */
-    public ServerErrorException(int status) {
+    public ServerErrorException(final int status) {
         super((Throwable) null, validate(Response.status(status).build(), Response.Status.Family.SERVER_ERROR));
     }
 
@@ -77,7 +77,7 @@ public class ServerErrorException extends WebApplicationException {
      *                                  if it is not from the {@link javax.ws.rs.core.Response.Status.Family#SERVER_ERROR}
      *                                  status code family.
      */
-    public ServerErrorException(String message, int status) {
+    public ServerErrorException(final String message, final int status) {
         super(message, null, validate(Response.status(status).build(), Response.Status.Family.SERVER_ERROR));
     }
 
@@ -89,7 +89,7 @@ public class ServerErrorException extends WebApplicationException {
      * @throws IllegalArgumentException in case the response status code is not from the
      *                                  {@link javax.ws.rs.core.Response.Status.Family#SERVER_ERROR} status code family.
      */
-    public ServerErrorException(Response response) {
+    public ServerErrorException(final Response response) {
         super((Throwable) null, validate(response, Response.Status.Family.SERVER_ERROR));
     }
 
@@ -103,7 +103,7 @@ public class ServerErrorException extends WebApplicationException {
      * @throws IllegalArgumentException in case the response status code is not from the
      *                                  {@link javax.ws.rs.core.Response.Status.Family#SERVER_ERROR} status code family.
      */
-    public ServerErrorException(String message, Response response) {
+    public ServerErrorException(final String message, final Response response) {
         super(message, null, validate(response, Response.Status.Family.SERVER_ERROR));
     }
 
@@ -116,7 +116,7 @@ public class ServerErrorException extends WebApplicationException {
      *                                  {@link javax.ws.rs.core.Response.Status.Family#SERVER_ERROR} status code
      *                                  family.
      */
-    public ServerErrorException(Response.Status status, Throwable cause) {
+    public ServerErrorException(final Response.Status status, final Throwable cause) {
         super(cause, validate(Response.status(status).build(), Response.Status.Family.SERVER_ERROR));
     }
 
@@ -131,7 +131,7 @@ public class ServerErrorException extends WebApplicationException {
      *                                  {@link javax.ws.rs.core.Response.Status.Family#SERVER_ERROR} status code
      *                                  family.
      */
-    public ServerErrorException(String message, Response.Status status, Throwable cause) {
+    public ServerErrorException(final String message, final Response.Status status, final Throwable cause) {
         super(message, cause, validate(Response.status(status).build(), Response.Status.Family.SERVER_ERROR));
     }
 
@@ -144,7 +144,7 @@ public class ServerErrorException extends WebApplicationException {
      *                                  if it is not from the {@link javax.ws.rs.core.Response.Status.Family#SERVER_ERROR}
      *                                  status code family.
      */
-    public ServerErrorException(int status, Throwable cause) {
+    public ServerErrorException(final int status, final Throwable cause) {
         super(cause, validate(Response.status(status).build(), Response.Status.Family.SERVER_ERROR));
     }
 
@@ -159,7 +159,7 @@ public class ServerErrorException extends WebApplicationException {
      *                                  if it is not from the {@link javax.ws.rs.core.Response.Status.Family#SERVER_ERROR}
      *                                  status code family.
      */
-    public ServerErrorException(String message, int status, Throwable cause) {
+    public ServerErrorException(final String message, final int status, final Throwable cause) {
         super(message, cause, validate(Response.status(status).build(), Response.Status.Family.SERVER_ERROR));
     }
 
@@ -172,7 +172,7 @@ public class ServerErrorException extends WebApplicationException {
      * @throws IllegalArgumentException in case the response status code is not from the
      *                                  {@link javax.ws.rs.core.Response.Status.Family#SERVER_ERROR} status code family.
      */
-    public ServerErrorException(Response response, Throwable cause) {
+    public ServerErrorException(final Response response, final Throwable cause) {
         super(cause, validate(response, Response.Status.Family.SERVER_ERROR));
     }
 
@@ -187,7 +187,7 @@ public class ServerErrorException extends WebApplicationException {
      * @throws IllegalArgumentException in case the response status code is not from the
      *                                  {@link javax.ws.rs.core.Response.Status.Family#SERVER_ERROR} status code family.
      */
-    public ServerErrorException(String message, Response response, Throwable cause) {
+    public ServerErrorException(final String message, final Response response, final Throwable cause) {
         super(message, cause, validate(response, Response.Status.Family.SERVER_ERROR));
     }
 }

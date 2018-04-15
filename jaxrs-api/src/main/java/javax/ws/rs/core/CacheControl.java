@@ -419,7 +419,7 @@ public class CacheControl {
      * @return {@code true} if the two collections are not equal, {@code false} if the two collections are equal
      * (or one of them is {@code null} and the other one is empty).
      */
-    private static boolean notEqual(Collection<?> first, Collection<?> second) {
+    private static boolean notEqual(final Collection<?> first, final Collection<?> second) {
         if (first == second) {
             return false;
         }
@@ -445,7 +445,7 @@ public class CacheControl {
      * @return {@code true} if the two maps are not equal, {@code false} if the two maps are equal
      * (or one of them is {@code null} and the other one is empty).
      */
-    private static boolean notEqual(Map<?, ?> first, Map<?, ?> second) {
+    private static boolean notEqual(final Map<?, ?> first, final Map<?, ?> second) {
         if (first == second) {
             return false;
         }
@@ -470,7 +470,7 @@ public class CacheControl {
      * @param instance collection, may be {@code null}.
      * @return hash code for the collection, if {@code null} or empty, the returned hash code is {@code 0} (zero).
      */
-    private static int hashCodeOf(Collection<?> instance) {
+    private static int hashCodeOf(final Collection<?> instance) {
         return (instance == null || instance.isEmpty()) ? 0 : instance.hashCode();
     }
 
@@ -483,7 +483,7 @@ public class CacheControl {
      * @param instance map, may be {@code null}.
      * @return hash code for the map, if {@code null} or empty, the returned hash code is {@code 0} (zero).
      */
-    private static int hashCodeOf(Map<?, ?> instance) {
+    private static int hashCodeOf(final Map<?, ?> instance) {
         return (instance == null || instance.isEmpty()) ? 0 : instance.hashCode();
     }
 }

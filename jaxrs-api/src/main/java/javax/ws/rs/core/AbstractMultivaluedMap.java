@@ -47,7 +47,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
      * @throws NullPointerException in case the underlying {@code store} parameter
      *                              is {@code null}.
      */
-    public AbstractMultivaluedMap(Map<K, List<V>> store) {
+    public AbstractMultivaluedMap(final Map<K, List<V>> store) {
         if (store == null) {
             throw new NullPointerException("Underlying store must not be 'null'.");
         }
@@ -69,7 +69,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
      *              will be ignored.
      */
     @Override
-    public final void putSingle(K key, V value) {
+    public final void putSingle(final K key, final V value) {
         List<V> values = getValues(key);
 
         values.clear();
@@ -91,7 +91,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
      *               requested.
      */
     @SuppressWarnings("UnusedParameters")
-    protected void addNull(List<V> values) {
+    protected void addNull(final List<V> values) {
         // do nothing in the default implementation; ignore the null value
     }
 
@@ -107,7 +107,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
      *               requested.
      */
     @SuppressWarnings("UnusedParameters")
-    protected void addFirstNull(List<V> values) {
+    protected void addFirstNull(final List<V> values) {
         // do nothing in the default implementation; ignore the null value
     }
 
@@ -123,7 +123,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
      * @param value the value to be added.
      */
     @Override
-    public final void add(K key, V value) {
+    public final void add(final K key, final V value) {
         List<V> values = getValues(key);
 
         if (value != null) {
@@ -149,7 +149,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
      * @throws NullPointerException if the supplied array of new values is {@code null}.
      */
     @Override
-    public final void addAll(K key, V... newValues) {
+    public final void addAll(final K key, final V... newValues) {
         if (newValues == null) {
             throw new NullPointerException("Supplied array of values must not be null.");
         }
@@ -184,7 +184,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
      * @throws NullPointerException if the supplied value list is {@code null}.
      */
     @Override
-    public final void addAll(K key, List<V> valueList) {
+    public final void addAll(final K key, final List<V> valueList) {
         if (valueList == null) {
             throw new NullPointerException("Supplied list of values must not be null.");
         }
@@ -204,7 +204,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
     }
 
     @Override
-    public final V getFirst(K key) {
+    public final V getFirst(final K key) {
         List<V> values = store.get(key);
         if (values != null && values.size() > 0) {
             return values.get(0);
@@ -226,7 +226,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
      * @param value the value to be added.
      */
     @Override
-    public final void addFirst(K key, V value) {
+    public final void addFirst(final K key, final V value) {
         List<V> values = getValues(key);
 
         if (value != null) {
@@ -248,7 +248,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
      * @return value list registered with the key. The method is guaranteed to never
      *         return {@code null}.
      */
-    protected final List<V> getValues(K key) {
+    protected final List<V> getValues(final K key) {
         List<V> l = store.get(key);
         if (l == null) {
             l = new LinkedList<V>();
@@ -286,7 +286,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
      */
     @Override
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return store.equals(o);
     }
 
@@ -301,17 +301,17 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
     }
 
     @Override
-    public List<V> remove(Object key) {
+    public List<V> remove(final Object key) {
         return store.remove(key);
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends List<V>> m) {
+    public void putAll(final Map<? extends K, ? extends List<V>> m) {
         store.putAll(m);
     }
 
     @Override
-    public List<V> put(K key, List<V> value) {
+    public List<V> put(final K key, final List<V> value) {
         return store.put(key, value);
     }
 
@@ -326,7 +326,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
     }
 
     @Override
-    public List<V> get(Object key) {
+    public List<V> get(final Object key) {
         return store.get(key);
     }
 
@@ -336,12 +336,12 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
     }
 
     @Override
-    public boolean containsValue(Object value) {
+    public boolean containsValue(final Object value) {
         return store.containsValue(value);
     }
 
     @Override
-    public boolean containsKey(Object key) {
+    public boolean containsKey(final Object key) {
         return store.containsKey(key);
     }
 
@@ -351,7 +351,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
     }
 
     @Override
-    public boolean equalsIgnoreValueOrder(MultivaluedMap<K, V> omap) {
+    public boolean equalsIgnoreValueOrder(final MultivaluedMap<K, V> omap) {
         if (this == omap) {
             return true;
         }

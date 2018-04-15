@@ -127,7 +127,7 @@ public class GenericType<T> {
      *                                  {@code Class} or {@link ParameterizedType} whose raw
      *                                  type is an instance of {@code Class}.
      */
-    public GenericType(Type genericType) {
+    public GenericType(final Type genericType) {
         if (genericType == null) {
             throw new IllegalArgumentException("Type must not be null");
         }
@@ -163,7 +163,7 @@ public class GenericType<T> {
      * @param type {@code Type} to inspect.
      * @return the class or interface that declared the supplied {@code type}.
      */
-    private static Class getClass(Type type) {
+    private static Class getClass(final Type type) {
         if (type instanceof Class) {
             return (Class) type;
         } else if (type instanceof ParameterizedType) {
@@ -186,7 +186,7 @@ public class GenericType<T> {
      * @param c the component class of the array
      * @return the array class.
      */
-    private static Class getArrayClass(Class c) {
+    private static Class getArrayClass(final Class c) {
         try {
             Object o = Array.newInstance(c, 0);
             return o.getClass();
@@ -202,7 +202,7 @@ public class GenericType<T> {
      * @param baseClass base class having the type parameter the value of which we need to retrieve
      * @return the parameterized type of {@code GenericType<T>} (aka T)
      */
-    static Type getTypeArgument(Class<?> clazz, Class<?> baseClass) {
+    static Type getTypeArgument(final Class<?> clazz, final Class<?> baseClass) {
         // collect superclasses
         Stack<Type> superclasses = new Stack<Type>();
         Type currentType;
@@ -247,7 +247,7 @@ public class GenericType<T> {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         boolean result = this == obj;
         if (!result && obj instanceof GenericType) {
             // Compare inner type for equality

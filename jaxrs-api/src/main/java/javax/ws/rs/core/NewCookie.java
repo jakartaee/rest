@@ -52,7 +52,7 @@ public class NewCookie extends Cookie {
      * @param value the value of the cookie.
      * @throws IllegalArgumentException if name is {@code null}.
      */
-    public NewCookie(String name, String value) {
+    public NewCookie(final String name, final String value) {
         this(name, value, null, null, DEFAULT_VERSION, null, DEFAULT_MAX_AGE, null, false, false);
     }
 
@@ -68,13 +68,13 @@ public class NewCookie extends Cookie {
      * @param secure  specifies whether the cookie will only be sent over a secure connection.
      * @throws IllegalArgumentException if name is {@code null}.
      */
-    public NewCookie(String name,
-                     String value,
-                     String path,
-                     String domain,
-                     String comment,
-                     int maxAge,
-                     boolean secure) {
+    public NewCookie(final String name,
+                     final String value,
+                     final String path,
+                     final String domain,
+                     final String comment,
+                     final int maxAge,
+                     final boolean secure) {
         this(name, value, path, domain, DEFAULT_VERSION, comment, maxAge, null, secure, false);
     }
 
@@ -92,14 +92,14 @@ public class NewCookie extends Cookie {
      * @throws IllegalArgumentException if name is {@code null}.
      * @since 2.0
      */
-    public NewCookie(String name,
-                     String value,
-                     String path,
-                     String domain,
-                     String comment,
-                     int maxAge,
-                     boolean secure,
-                     boolean httpOnly) {
+    public NewCookie(final String name,
+                     final String value,
+                     final String path,
+                     final String domain,
+                     final String comment,
+                     final int maxAge,
+                     final boolean secure,
+                     final boolean httpOnly) {
         this(name, value, path, domain, DEFAULT_VERSION, comment, maxAge, null, secure, httpOnly);
     }
 
@@ -116,14 +116,14 @@ public class NewCookie extends Cookie {
      * @param secure  specifies whether the cookie will only be sent over a secure connection
      * @throws IllegalArgumentException if name is {@code null}.
      */
-    public NewCookie(String name,
-                     String value,
-                     String path,
-                     String domain,
-                     int version,
-                     String comment,
-                     int maxAge,
-                     boolean secure) {
+    public NewCookie(final String name,
+                     final String value,
+                     final String path,
+                     final String domain,
+                     final int version,
+                     final String comment,
+                     final int maxAge,
+                     final boolean secure) {
         this(name, value, path, domain, version, comment, maxAge, null, secure, false);
     }
 
@@ -143,16 +143,16 @@ public class NewCookie extends Cookie {
      * @throws IllegalArgumentException if name is {@code null}.
      * @since 2.0
      */
-    public NewCookie(String name,
-                     String value,
-                     String path,
-                     String domain,
-                     int version,
-                     String comment,
-                     int maxAge,
-                     Date expiry,
-                     boolean secure,
-                     boolean httpOnly) {
+    public NewCookie(final String name,
+                     final String value,
+                     final String path,
+                     final String domain,
+                     final int version,
+                     final String comment,
+                     final int maxAge,
+                     final Date expiry,
+                     final boolean secure,
+                     final boolean httpOnly) {
         super(name, value, path, domain, version);
         this.comment = comment;
         this.maxAge = maxAge;
@@ -167,7 +167,7 @@ public class NewCookie extends Cookie {
      * @param cookie the cookie to clone.
      * @throws IllegalArgumentException if cookie is {@code null}.
      */
-    public NewCookie(Cookie cookie) {
+    public NewCookie(final Cookie cookie) {
         this(cookie, null, DEFAULT_MAX_AGE, null, false, false);
     }
 
@@ -180,7 +180,7 @@ public class NewCookie extends Cookie {
      * @param secure  specifies whether the cookie will only be sent over a secure connection.
      * @throws IllegalArgumentException if cookie is {@code null}.
      */
-    public NewCookie(Cookie cookie, String comment, int maxAge, boolean secure) {
+    public NewCookie(final Cookie cookie, final String comment, final int maxAge, final boolean secure) {
         this(cookie, comment, maxAge, null, secure, false);
     }
 
@@ -196,7 +196,7 @@ public class NewCookie extends Cookie {
      * @throws IllegalArgumentException if cookie is {@code null}.
      * @since 2.0
      */
-    public NewCookie(Cookie cookie, String comment, int maxAge, Date expiry, boolean secure, boolean httpOnly) {
+    public NewCookie(final Cookie cookie, final String comment, final int maxAge, final Date expiry, final boolean secure, final boolean httpOnly) {
         super(cookie == null ? null : cookie.getName(),
                 cookie == null ? null : cookie.getValue(),
                 cookie == null ? null : cookie.getPath(),
@@ -217,7 +217,7 @@ public class NewCookie extends Cookie {
      * @throws IllegalArgumentException if the supplied string cannot be parsed
      *                                  or is {@code null}.
      */
-    public static NewCookie valueOf(String value) {
+    public static NewCookie valueOf(final String value) {
         return delegate.fromString(value);
     }
 
@@ -342,7 +342,7 @@ public class NewCookie extends Cookie {
      */
     @SuppressWarnings({"StringEquality", "RedundantIfStatement"})
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }

@@ -53,9 +53,9 @@ public class ResponseProcessingException extends ProcessingException {
     }
 
     /**
-     * Constructs a new JAX-RS runtime response processing exception with the specified detail
+     * <p>Constructs a new JAX-RS runtime response processing exception with the specified detail
      * message and cause.
-     * <p/>
+     * </p>
      * Note that the detail message associated with {@code cause} is <i>not</i>
      * automatically incorporated in this runtime exception's detail message.
      *

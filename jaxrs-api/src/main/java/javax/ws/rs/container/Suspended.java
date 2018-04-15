@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  * as a custom {@link TimeoutHandler timeout handler} can be specified programmatically
  * using the {@link AsyncResponse#setTimeout(long, TimeUnit)} and
  * {@link AsyncResponse#setTimeoutHandler(TimeoutHandler)} methods. For example:
- * <p/>
+ * </p>
  * <pre>
  *  &#64;Stateless
  *  &#64;Path("/")

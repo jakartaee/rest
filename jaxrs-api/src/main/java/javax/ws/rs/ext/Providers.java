@@ -43,7 +43,7 @@ public interface Providers {
      * {@code type} is assignable to the generic type of the reader, and
      * eliminating those that do not match.
      * The list of matching readers is then ordered with those with the best
-     * matching values of {@link javax.ws.rs.Consumes} (x/y > x&#47;* > *&#47;*)
+     * matching values of {@link javax.ws.rs.Consumes} (x/y &gt; x&#47;* &gt; *&#47;*)
      * sorted first. Finally, the
      * {@link MessageBodyReader#isReadable(Class, Type, Annotation[], MediaType)}
      * method is called on each reader in order using the supplied criteria and
@@ -75,7 +75,7 @@ public interface Providers {
      * {@code type} is assignable to the generic type of the reader, and
      * eliminating those that do not match.
      * The list of matching writers is then ordered with those with the best
-     * matching values of {@link javax.ws.rs.Produces} (x/y > x&#47;* > *&#47;*)
+     * matching values of {@link javax.ws.rs.Produces} (x/y &gt; x&#47;* &gt; *&#47;*)
      * sorted first. Finally, the
      * {@link MessageBodyWriter#isWriteable(Class, Type, Annotation[], MediaType)}
      * method is called on each writer in order using the supplied criteria and
@@ -119,7 +119,7 @@ public interface Providers {
      * eliminating those that do not match. If only one resolver matches the
      * criteria then it is returned. If more than one resolver matches then the
      * list of matching resolvers is ordered with those with the best
-     * matching values of {@link javax.ws.rs.Produces} (x/y > x&#47;* > *&#47;*)
+     * matching values of {@link javax.ws.rs.Produces} (x/y &gt; x&#47;* &gt; *&#47;*)
      * sorted first. A proxy is returned that delegates calls to
      * {@link ContextResolver#getContext(java.lang.Class)} to each matching context
      * resolver in order and returns the first non-null value it obtains or null

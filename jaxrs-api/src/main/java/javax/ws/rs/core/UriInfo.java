@@ -232,6 +232,7 @@ public interface UriInfo {
      * the method is called from are:</p>
      *
      * <table border="1">
+     * <caption></caption>
      * <tr>
      * <th>Request</th>
      * <th>Called from</th>
@@ -308,6 +309,7 @@ public interface UriInfo {
      * the method is called from are:</p>
      *
      * <table border="1">
+     * <caption></caption>
      * <tr>
      * <th>Request</th>
      * <th>Called from</th>
@@ -349,7 +351,7 @@ public interface UriInfo {
     public URI resolve(URI uri);
 
     /**
-     * <p>Relativize a URI with respect to the current request URI. Relativization
+     * Relativize a URI with respect to the current request URI. Relativization
      * works as follows:
      * <ol>
      * <li>If the URI to relativize is already relative, it is first resolved using
@@ -358,17 +360,16 @@ public interface UriInfo {
      * URI. If the two URIs do not share a prefix, the URI computed in
      * step 1 is returned.</li>
      * </ol>
-     * </p>
      *
      * <p>Examples (for base URI {@code http://example.com:8080/app/root/}):
-     * <br/>
-     * <br/><b>Request URI:</b> <tt>http://example.com:8080/app/root/a/b/c/resource.html</tt>
-     * <br/><b>Supplied URI:</b> <tt>a/b/c/d/file.txt</tt>
-     * <br/><b>Returned URI:</b> <tt>d/file.txt</tt>
-     * <br/>
-     * <br/><b>Request URI:</b> <tt>http://example.com:8080/app/root/a/b/c/resource.html</tt>
-     * <br/><b>Supplied URI:</b> <tt>http://example2.com:9090/app2/root2/a/d/file.txt</tt>
-     * <br/><b>Returned URI:</b> <tt>http://example2.com:9090/app2/root2/a/d/file.txt</tt>
+     * <br>
+     * <br><b>Request URI:</b> <tt>http://example.com:8080/app/root/a/b/c/resource.html</tt>
+     * <br><b>Supplied URI:</b> <tt>a/b/c/d/file.txt</tt>
+     * <br><b>Returned URI:</b> <tt>d/file.txt</tt>
+     * <br>
+     * <br><b>Request URI:</b> <tt>http://example.com:8080/app/root/a/b/c/resource.html</tt>
+     * <br><b>Supplied URI:</b> <tt>http://example2.com:9090/app2/root2/a/d/file.txt</tt>
+     * <br><b>Returned URI:</b> <tt>http://example2.com:9090/app2/root2/a/d/file.txt</tt>
      * </p>
      *
      * <p>In the second example, the supplied URI is returned given that it is absolute

@@ -58,11 +58,11 @@ import java.util.Map;
  * </p>
  * <p>
  * For example:
+ * </p>
  * <pre>
  * config.register(HtmlDocumentReader.class);
  * config.register(new HtmlDocumentWriter(writerConfig));
  * </pre>
- * </p>
  * <p>
  * In some situations a JAX-RS component class or instance may implement multiple
  * provider contracts recognized by a JAX-RS implementation (e.g. filter, interceptor or entity provider).
@@ -71,6 +71,7 @@ import java.util.Map;
  * </p>
  * <p>
  * For example:
+ * </p>
  * <pre>
  * &#64;Priority(ENTITY_CODER)
  * public class GzipInterceptor
@@ -82,7 +83,6 @@ import java.util.Map;
  * // as well as a WriterInterceptor
  * config.register(GzipInterceptor.class);
  * </pre>
- * </p>
  * <p>
  * There are however situations when the default registration of a JAX-RS component to all the
  * recognized provider contracts is not desirable. In such cases users may use other versions of the
@@ -92,6 +92,7 @@ import java.util.Map;
  * </p>
  * <p>
  * For example:
+ * </p>
  * <pre>
  * &#64;Priority(USER)
  * public class ClientLoggingFilter
@@ -110,7 +111,6 @@ import java.util.Map;
  * // and both of it's provider contracts
  * config.register(GzipInterceptor.class, 6500);
  * </pre>
- * </p>
  * <p>
  * As a general rule, for each JAX-RS component class there can be at most one registration
  * &mdash; class-based or instance-based &mdash; configured at any given moment. Implementations
@@ -120,6 +120,7 @@ import java.util.Map;
  * </p>
  * <p>
  * For example:
+ * </p>
  * <pre>
  * config.register(GzipInterceptor.class, WriterInterceptor.class);
  * config.register(GzipInterceptor.class);       // Rejected by runtime.
@@ -131,7 +132,6 @@ import java.util.Map;
  * config.register(ClientLoggingFilter.class,
  *                 ClientResponseFilter.class);  // Rejected by runtime.
  * </pre>
- * </p>
  *
  * @author Marek Potociar
  * @since 2.0

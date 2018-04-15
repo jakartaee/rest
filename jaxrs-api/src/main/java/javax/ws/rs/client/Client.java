@@ -25,9 +25,10 @@ import javax.ws.rs.core.Link;
 import javax.ws.rs.core.UriBuilder;
 
 /**
+ * <p>
  * Client is the main entry point to the fluent API used to build and execute client
  * requests in order to consume responses returned.
- * <p/>
+ * </p>
  * Clients are heavy-weight objects that manage the client-side communication
  * infrastructure. Initialization as well as disposal of a {@code Client} instance
  * may be a rather expensive operation. It is therefore advised to construct only
@@ -42,11 +43,12 @@ import javax.ws.rs.core.UriBuilder;
 public interface Client extends Configurable<Client>, AutoCloseable {
 
     /**
+     * <p>
      * Close client instance and all it's associated resources. Subsequent calls
      * have no effect and are ignored. Once the client is closed, invoking any
      * other method on the client instance would result in an {@link IllegalStateException}
      * being thrown.
-     * <p/>
+     * </p>
      * Calling this method effectively invalidates all {@link WebTarget resource targets}
      * produced by the client instance. Invoking any method on such targets once the client
      * is closed would result in an {@link IllegalStateException} being thrown.

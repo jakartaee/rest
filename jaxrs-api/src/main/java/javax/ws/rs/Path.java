@@ -77,7 +77,7 @@ public @interface Path {
      * name = (ALPHA / DIGIT / "_")*(ALPHA / DIGIT / "." / "_" / "-" ) ; \w[\w\.-]*
      * regex = *( nonbrace / "{" *nonbrace "}" ) ; where nonbrace is any char other than "{" and "}"</pre>
      *
-     * <p>See {@link <a href="http://tools.ietf.org/html/rfc5234">RFC 5234</a>}
+     * <p>See <a href="http://tools.ietf.org/html/rfc5234">RFC 5234</a>
      * for a description of the syntax used above and the expansions of
      * {@code WSP}, {@code ALPHA} and {@code DIGIT}. In the above {@code name}
      * is the template parameter name and the optional {@code regex} specifies
@@ -88,17 +88,17 @@ public @interface Path {
      * will not escape literal characters in regex automatically, therefore any
      * literals in {@code regex} should be escaped by the author according to
      * the rules of
-     * {@link <a href="http://tools.ietf.org/html/rfc3986#section-3.3">RFC 3986 section 3.3</a>}.
+     * <a href="http://tools.ietf.org/html/rfc3986#section-3.3">RFC 3986 section 3.3</a>.
      * Caution is recommended in the use of {@code regex}, incorrect use can
      * lead to a template parameter matching unexpected URI paths. See
-     * {@link <a href="http://download.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html">Pattern</a>}
+     * <a href="http://download.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html">Pattern</a>
      * for further information on the syntax of regular expressions.
      * Values of template parameters may be extracted using {@link PathParam}.</p>
      *
      * <p>The literal part of the supplied value (those characters
      * that are not part of a template parameter) is automatically percent
      * encoded to conform to the {@code path} production of
-     * {@link <a href="http://tools.ietf.org/html/rfc3986#section-3.3">RFC 3986 section 3.3</a>}.
+     * <a href="http://tools.ietf.org/html/rfc3986#section-3.3">RFC 3986 section 3.3</a>.
      * Note that percent encoded values are allowed in the literal part of the
      * value, an implementation will recognize such values and will not double
      * encode the '%' character.</p>

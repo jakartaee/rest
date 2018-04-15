@@ -58,9 +58,9 @@ import java.lang.reflect.Type;
  * <pre>Method method = ...;
  * GenericEntity&lt;Object&gt; entity = new GenericEntity&lt;Object&gt;(
  *    method.invoke(...), method.getGenericReturnType());
- * Response response = Response.ok(entity).build();</pre></li>
+ * Response response = Response.ok(entity).build();</pre>
  * <p>The above obtains the generic type from the return type of the method,
- * the raw type is the class of entity.</p>
+ * the raw type is the class of entity.</p></li>
  * </ol>
  *
  * @param <T> response entity instance type

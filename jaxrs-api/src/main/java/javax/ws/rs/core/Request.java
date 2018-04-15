@@ -123,11 +123,11 @@ public interface Request {
 
     /**
      * Evaluate request preconditions for a resource that does not currently
-     * exist. The primary use of this method is to support the {@link <a
+     * exist. The primary use of this method is to support the <a
      * href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24">
-     * If-Match: *</a>} and {@link <a
+     * If-Match: *</a> and <a
      * href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26">
-     * If-None-Match: *</a>} preconditions.
+     * If-None-Match: *</a> preconditions.
      *
      * <p>Note that both preconditions {@code If-None-Match: *} and
      * <code>If-None-Match: <i>something</i></code> will always be considered to

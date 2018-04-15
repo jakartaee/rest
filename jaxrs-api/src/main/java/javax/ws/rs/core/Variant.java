@@ -305,7 +305,7 @@ public class Variant {
          * then a variant will be generated for each possible combination. E.g.
          * in the following {@code list} would have five (4 + 1) members:
          * </p>
-         * <pre>List<Variant> list = VariantListBuilder.newInstance()
+         * <pre>List&lt;Variant&gt; list = VariantListBuilder.newInstance()
          *         .languages(Locale.ENGLISH, Locale.FRENCH).encodings("zip", "identity").add()
          *         .languages(Locale.GERMAN).mediaTypes(MediaType.TEXT_PLAIN_TYPE).add()
          *         .build()</pre>
@@ -314,7 +314,7 @@ public class Variant {
          * the build method is called. E.g. the resulting list produced in the example above
          * would be identical to the list produced by the following code:
          * </p>
-         * <pre>List<Variant> list = VariantListBuilder.newInstance()
+         * <pre>List&lt;Variant&gt; list = VariantListBuilder.newInstance()
          *         .languages(Locale.ENGLISH, Locale.FRENCH).encodings("zip", "identity").add()
          *         .languages(Locale.GERMAN).mediaTypes(MediaType.TEXT_PLAIN_TYPE)
          *         .build()</pre>

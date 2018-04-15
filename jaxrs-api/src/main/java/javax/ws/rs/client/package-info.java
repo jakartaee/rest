@@ -16,7 +16,7 @@
 
 /**
  * <h1>The JAX-RS client API</h1>
- *
+ * <p>
  * The JAX-RS client API is a Java based API used to access Web resources.
  * It is not restricted to resources implemented using JAX-RS.
  * It provides a higher-level abstraction compared to a {@link java.net.HttpURLConnection
@@ -24,7 +24,7 @@
  * providers, in order to enable concise and efficient implementation of
  * reusable client-side solutions that leverage existing and well
  * established client-side implementations of HTTP-based communication.
- * <p />
+ * </p>
  * The JAX-RS Client API encapsulates the Uniform Interface Constraint &ndash;
  * a key constraint of the REST architectural style &ndash; and associated data
  * elements as client-side Java artifacts and supports a pluggable architecture
@@ -96,9 +96,9 @@
  *       .queryParam("card", "111122223333").queryParam("pin", "9876")
  *       .request().buildPost(text("50.0")));
  *
- *   Collection<Invocation> invs = Arrays.asList(inv1, inv2);
+ *   Collection&lt;Invocation&gt; invs = Arrays.asList(inv1, inv2);
  *   // Executed by the submitter
- *   Collection<Response> ress = Collections.transform(invs, new F<Invocation, Response>() {
+ *   Collection&lt;Response&gt; ress = Collections.transform(invs, new F&lt;Invocation, Response&gt;() {
  *      public Response apply(Invocation inv) {return inv.invoke(); }
  *   });
  * </pre>

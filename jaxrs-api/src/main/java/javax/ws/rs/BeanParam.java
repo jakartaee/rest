@@ -32,9 +32,8 @@ import java.lang.annotation.Target;
  * annotation. For the POJO classes same instantiation and injection rules apply as in case of instantiation
  * and injection of request-scoped root resource classes.
  * </p>
- * <p>
  * For example:
- * <pre>
+ * <PRE>
  * public class MyBean {
  *   &#64;FormParam("myData")
  *   private String data;
@@ -56,8 +55,7 @@ import java.lang.annotation.Target;
  *
  *   ...
  * }
- * </pre>
- * </p>
+ * </PRE>
  * <p>
  * Because injection occurs at object creation time, use of this annotation on resource
  * class fields and bean properties is only supported for the default per-request resource

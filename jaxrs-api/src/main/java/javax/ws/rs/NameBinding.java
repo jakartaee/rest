@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 /**
  * Meta-annotation used to create name binding annotations for filters
  * and interceptors.
- * <p>
+ *
  * Name binding via annotations is only supported as part of the Server API.
  * In name binding, a <i>name-binding</i> annotation is first defined using the
  * {@code @NameBinding} meta-annotation:
@@ -77,7 +77,6 @@ import java.lang.annotation.Target;
  *      ...
  *  }
  * </pre>
- * </p>
  *
  * @author Santiago Pericas-Geertsen
  * @author Marek Potociar

@@ -153,9 +153,10 @@ public interface Configuration {
     public Map<Class<?>, Integer> getContracts(Class<?> componentClass);
 
     /**
-     * Get the immutable set of registered JAX-RS component (such as provider or
+     * Get the immutable set of registered JAX-RS component (such as provider, root resource or
      * {@link Feature feature}) classes to be instantiated, injected and utilized in the scope
-     * of the configurable instance.
+     * of the configurable instance. In contrast to {@link Application#getClasses()} this method
+     * returns a complete runtime view and therefore also includes auto-discovered components.
      * <p>
      * For each component type, there can be only a single class-based or instance-based registration
      * present in the configuration context at any given time.

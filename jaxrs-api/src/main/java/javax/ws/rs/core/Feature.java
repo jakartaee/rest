@@ -29,6 +29,12 @@ package javax.ws.rs.core;
  * for the facility or conceptual domain it represents, such as registering additional contract providers,
  * including nested features and/or specifying domain-specific properties.
  * </p>
+ * <p>
+ * Features implementing this interface MAY be annotated with the {@link javax.ws.rs.ext.Provider &#64;Provider}
+ * annotation in order to be discovered by the JAX-RS runtime when scanning for resources and providers.
+ * Please note that this will only work for server side features. Features for the JAX-RS client must
+ * be registered programmatically.
+ * </p>
  *
  * @author Marek Potociar
  * @since 2.0

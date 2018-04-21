@@ -164,7 +164,6 @@
                                 and/or its affiliates. All Rights Reserved.
                                 ]]>
                             </bottom>
-                            <doclint>none</doclint>
                             <!--javaApiLinks>
                                 <property>
                                     <name>api_1.3</name>
@@ -313,7 +312,6 @@
                                 and/or its affiliates. All Rights Reserved.
                             ]]>
                         </bottom>
-                        <doclint>none</doclint>
                         <!--javaApiLinks>
                             <property>
                                 <name>api_1.3</name>

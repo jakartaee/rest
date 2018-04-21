@@ -48,7 +48,7 @@ public class Variant {
      *          if all the parameters are {@code null}.
      * @since 2.0
      */
-    public Variant(MediaType mediaType, String language, String encoding) {
+    public Variant(final MediaType mediaType, final String language, final String encoding) {
         if (mediaType == null && language == null && encoding == null) {
             throw new IllegalArgumentException("mediaType, language, encoding all null");
         }
@@ -70,7 +70,7 @@ public class Variant {
      *          if all the parameters are {@code null}.
      * @since 2.0
      */
-    public Variant(MediaType mediaType, String language, String country, String encoding) {
+    public Variant(final MediaType mediaType, final String language, final String country, final String encoding) {
         if (mediaType == null && language == null && encoding == null) {
             throw new IllegalArgumentException("mediaType, language, encoding all null");
         }
@@ -96,7 +96,7 @@ public class Variant {
      *          if all the parameters are {@code null}.
      * @since 2.0
      */
-    public Variant(MediaType mediaType, String language, String country, String languageVariant, String encoding) {
+    public Variant(final MediaType mediaType, final String language, final String country, final String languageVariant, final String encoding) {
         if (mediaType == null && language == null && encoding == null) {
             throw new IllegalArgumentException("mediaType, language, encoding all null");
         }
@@ -114,7 +114,7 @@ public class Variant {
      * @throws java.lang.IllegalArgumentException
      *          if all the parameters are {@code null}.
      */
-    public Variant(MediaType mediaType, Locale language, String encoding) {
+    public Variant(final MediaType mediaType, final Locale language, final String encoding) {
         if (mediaType == null && language == null && encoding == null) {
             throw new IllegalArgumentException("mediaType, language, encoding all null");
         }
@@ -174,7 +174,7 @@ public class Variant {
      *          if mediaTypes is null or
      *          contains no elements.
      */
-    public static VariantListBuilder mediaTypes(MediaType... mediaTypes) {
+    public static VariantListBuilder mediaTypes(final MediaType... mediaTypes) {
         VariantListBuilder b = VariantListBuilder.newInstance();
         b.mediaTypes(mediaTypes);
         return b;
@@ -190,7 +190,7 @@ public class Variant {
      *          if languages is null or
      *          contains no elements.
      */
-    public static VariantListBuilder languages(Locale... languages) {
+    public static VariantListBuilder languages(final Locale... languages) {
         VariantListBuilder b = VariantListBuilder.newInstance();
         b.languages(languages);
         return b;
@@ -206,7 +206,7 @@ public class Variant {
      *          if encodings is null or
      *          contains no elements.
      */
-    public static VariantListBuilder encodings(String... encodings) {
+    public static VariantListBuilder encodings(final String... encodings) {
         VariantListBuilder b = VariantListBuilder.newInstance();
         b.encodings(encodings);
         return b;
@@ -234,7 +234,7 @@ public class Variant {
      * @return true if the two variants are the same, false otherwise.
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }

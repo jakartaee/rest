@@ -16,9 +16,9 @@
 
 package javax.ws.rs.core;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.fail;
+
+import org.junit.Test;
 
 /**
  * AbstractMultivaluedMap unit tests.

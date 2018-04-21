@@ -18,6 +18,7 @@ package javax.ws.rs.core;
 
 import javax.ws.rs.ext.RuntimeDelegate;
 import javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
+import java.util.Objects;
 
 /**
  * An abstraction for the value of a HTTP Entity Tag, used as the value
@@ -105,17 +106,12 @@ public class EntityTag {
      */
     @Override
     public boolean equals(final Object obj) {
-        if (obj == null) {
+        if (!(obj instanceof EntityTag)) {
             return false;
         }
-        if (!(obj instanceof EntityTag)) {
-            return super.equals(obj);
-        }
+        
         EntityTag other = (EntityTag) obj;
-        if (value.equals(other.getValue()) && weak == other.isWeak()) {
-            return true;
-        }
-        return false;
+        return Objects.equals(value, other.getValue()) && weak == other.isWeak();
     }
 
     /**
@@ -125,10 +121,7 @@ public class EntityTag {
      */
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 17 * hash + (this.value != null ? this.value.hashCode() : 0);
-        hash = 17 * hash + (this.weak ? 1 : 0);
-        return hash;
+        return Objects.hash(this.value, this.weak);
     }
 
     /**

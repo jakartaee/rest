@@ -41,7 +41,7 @@ public class NotAllowedException extends ClientErrorException {
      * @param moreAllowed more allowed request methods.
      * @throws NullPointerException in case the allowed method is {@code null}.
      */
-    public NotAllowedException(String allowed, String... moreAllowed) {
+    public NotAllowedException(final String allowed, final String... moreAllowed) {
         super(validateAllow(createNotAllowedResponse(allowed, moreAllowed)));
     }
 
@@ -54,11 +54,11 @@ public class NotAllowedException extends ClientErrorException {
      * @param moreAllowed more allowed request methods.
      * @throws NullPointerException in case the allowed method is {@code null}.
      */
-    public NotAllowedException(String message, String allowed, String... moreAllowed) {
+    public NotAllowedException(final String message, final String allowed, final String... moreAllowed) {
         super(message, validateAllow(createNotAllowedResponse(allowed, moreAllowed)));
     }
 
-    private static Response createNotAllowedResponse(String allowed, String... moreAllowed) {
+    private static Response createNotAllowedResponse(final String allowed, final String... moreAllowed) {
         if (allowed == null) {
             throw new NullPointerException("No allowed method specified.");
         }
@@ -87,7 +87,7 @@ public class NotAllowedException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 405}.
      */
-    public NotAllowedException(Response response) {
+    public NotAllowedException(final Response response) {
         super(validate(response, Response.Status.METHOD_NOT_ALLOWED));
     }
 
@@ -106,7 +106,7 @@ public class NotAllowedException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 405}.
      */
-    public NotAllowedException(String message, Response response) {
+    public NotAllowedException(final String message, final Response response) {
         super(message, validate(response, Response.Status.METHOD_NOT_ALLOWED));
     }
 
@@ -117,7 +117,7 @@ public class NotAllowedException extends ClientErrorException {
      * @param allowedMethods allowed request methods.
      * @throws IllegalArgumentException in case the allowed methods varargs are {@code null}.
      */
-    public NotAllowedException(Throwable cause, String... allowedMethods) {
+    public NotAllowedException(final Throwable cause, final String... allowedMethods) {
         super(validateAllow(Response.status(Response.Status.METHOD_NOT_ALLOWED).allow(allowedMethods).build()), cause);
     }
 
@@ -130,7 +130,7 @@ public class NotAllowedException extends ClientErrorException {
      * @param allowedMethods allowed request methods.
      * @throws IllegalArgumentException in case the allowed methods varargs are {@code null}.
      */
-    public NotAllowedException(String message, Throwable cause, String... allowedMethods) {
+    public NotAllowedException(final String message, final Throwable cause, final String... allowedMethods) {
         super(message, validateAllow(Response.status(Response.Status.METHOD_NOT_ALLOWED).allow(allowedMethods).build()), cause);
     }
 
@@ -143,7 +143,7 @@ public class NotAllowedException extends ClientErrorException {
      *                                  is not HTTP {@code 405} or does not contain
      *                                  an HTTP {@code Allow} header.
      */
-    public NotAllowedException(Response response, Throwable cause) {
+    public NotAllowedException(final Response response, final Throwable cause) {
         super(validateAllow(validate(response, Response.Status.METHOD_NOT_ALLOWED)), cause);
     }
 
@@ -158,7 +158,7 @@ public class NotAllowedException extends ClientErrorException {
      *                                  is not HTTP {@code 405} or does not contain
      *                                  an HTTP {@code Allow} header.
      */
-    public NotAllowedException(String message, Response response, Throwable cause) {
+    public NotAllowedException(final String message, final Response response, final Throwable cause) {
         super(message, validateAllow(validate(response, Response.Status.METHOD_NOT_ALLOWED)), cause);
     }
 

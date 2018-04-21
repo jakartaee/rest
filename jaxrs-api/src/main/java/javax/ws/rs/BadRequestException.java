@@ -43,7 +43,7 @@ public class BadRequestException extends ClientErrorException {
      * @param message the detail message (which is saved for later retrieval
      *                by the {@link #getMessage()} method).
      */
-    public BadRequestException(String message) {
+    public BadRequestException(final String message) {
         super(message, Response.Status.BAD_REQUEST);
     }
 
@@ -54,7 +54,7 @@ public class BadRequestException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 400}.
      */
-    public BadRequestException(Response response) {
+    public BadRequestException(final Response response) {
         super(validate(response, Response.Status.BAD_REQUEST));
     }
 
@@ -67,7 +67,7 @@ public class BadRequestException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 400}.
      */
-    public BadRequestException(String message, Response response) {
+    public BadRequestException(final String message, final Response response) {
         super(message, validate(response, Response.Status.BAD_REQUEST));
     }
 
@@ -76,7 +76,7 @@ public class BadRequestException extends ClientErrorException {
      *
      * @param cause the underlying cause of the exception.
      */
-    public BadRequestException(Throwable cause) {
+    public BadRequestException(final Throwable cause) {
         super(Response.Status.BAD_REQUEST, cause);
     }
 
@@ -87,7 +87,7 @@ public class BadRequestException extends ClientErrorException {
      *                by the {@link #getMessage()} method).
      * @param cause   the underlying cause of the exception.
      */
-    public BadRequestException(String message, Throwable cause) {
+    public BadRequestException(final String message, final Throwable cause) {
         super(message, Response.Status.BAD_REQUEST, cause);
     }
 
@@ -99,7 +99,7 @@ public class BadRequestException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 400}.
      */
-    public BadRequestException(Response response, Throwable cause) {
+    public BadRequestException(final Response response, final Throwable cause) {
         super(validate(response, Response.Status.BAD_REQUEST), cause);
     }
 
@@ -113,7 +113,7 @@ public class BadRequestException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 400}.
      */
-    public BadRequestException(String message, Response response, Throwable cause) {
+    public BadRequestException(final String message, final Response response, final Throwable cause) {
         super(message, validate(response, Response.Status.BAD_REQUEST), cause);
     }
 }

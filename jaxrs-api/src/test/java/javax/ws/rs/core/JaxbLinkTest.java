@@ -16,6 +16,10 @@
 
 package javax.ws.rs.core;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
+
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URI;
@@ -30,9 +34,6 @@ import javax.xml.namespace.QName;
 import javax.xml.transform.stream.StreamSource;
 
 import org.junit.Test;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
 
 /**
  * Unit test for JAX-RS Link marshalling and unmarshalling via JAXB.

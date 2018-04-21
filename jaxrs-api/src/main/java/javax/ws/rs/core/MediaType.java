@@ -168,15 +168,15 @@ public class MediaType {
      * @throws IllegalArgumentException if the supplied string cannot be parsed
      *                                  or is {@code null}.
      */
-    public static MediaType valueOf(String type){
+    public static MediaType valueOf(final String type){
         return RuntimeDelegate.getInstance().createHeaderDelegate(MediaType.class).fromString(type);
     }
 
-    private static TreeMap<String, String> createParametersMap(Map<String, String> initialValues) {
+    private static TreeMap<String, String> createParametersMap(final Map<String, String> initialValues) {
         final TreeMap<String, String> map = new TreeMap<String, String>(new Comparator<String>() {
 
             @Override
-            public int compare(String o1, String o2) {
+            public int compare(final String o1, final String o2) {
                 return o1.compareToIgnoreCase(o2);
             }
         });
@@ -199,7 +199,7 @@ public class MediaType {
      * @param parameters a map of media type parameters, {@code null} is the same as an
      *                   empty map.
      */
-    public MediaType(String type, String subtype, Map<String, String> parameters) {
+    public MediaType(final String type, final String subtype, final Map<String, String> parameters) {
         this(type, subtype, null, createParametersMap(parameters));
     }
 
@@ -211,7 +211,7 @@ public class MediaType {
      * @param subtype the subtype, {@code null} is equivalent to
      *                {@link #MEDIA_TYPE_WILDCARD}
      */
-    public MediaType(String type, String subtype) {
+    public MediaType(final String type, final String subtype) {
         this(type, subtype, null, null);
     }
 
@@ -226,7 +226,7 @@ public class MediaType {
      * @param charset the {@value #CHARSET_PARAMETER} parameter value. If {@code null} or empty
      *                the {@value #CHARSET_PARAMETER} parameter will not be set.
      */
-    public MediaType(String type, String subtype, String charset) {
+    public MediaType(final String type, final String subtype, final String charset) {
         this(type, subtype, charset, null);
     }
 
@@ -238,7 +238,7 @@ public class MediaType {
         this(MEDIA_TYPE_WILDCARD, MEDIA_TYPE_WILDCARD, null, null);
     }
 
-    private MediaType(String type, String subtype, String charset, Map<String, String> parameterMap) {
+    private MediaType(final String type, final String subtype, final String charset, Map<String, String> parameterMap) {
 
         this.type = type == null ? MEDIA_TYPE_WILDCARD : type;
         this.subtype = subtype == null ? MEDIA_TYPE_WILDCARD : subtype;
@@ -247,7 +247,7 @@ public class MediaType {
             parameterMap = new TreeMap<String, String>(new Comparator<String>() {
 
                 @Override
-                public int compare(String o1, String o2) {
+                public int compare(final String o1, final String o2) {
                     return o1.compareToIgnoreCase(o2);
                 }
             });
@@ -314,7 +314,7 @@ public class MediaType {
      *         parameter set to the supplied value.
      * @since 2.0
      */
-    public MediaType withCharset(String charset) {
+    public MediaType withCharset(final String charset) {
         return new MediaType(this.type, this.subtype, charset, createParametersMap(this.parameters));
     }
 
@@ -326,7 +326,7 @@ public class MediaType {
      * @param other the media type to compare with.
      * @return true if the types are compatible, false otherwise.
      */
-    public boolean isCompatible(MediaType other) {
+    public boolean isCompatible(final MediaType other) {
         return other != null && // return false if other is null, else
                 (type.equals(MEDIA_TYPE_WILDCARD) || other.type.equals(MEDIA_TYPE_WILDCARD) || // both are wildcard types, or
                         (type.equalsIgnoreCase(other.type) && (subtype.equals(MEDIA_TYPE_WILDCARD)
@@ -354,7 +354,7 @@ public class MediaType {
      */
     @SuppressWarnings("UnnecessaryJavaDocLink")
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (!(obj instanceof MediaType)) {
             return false;
         }

@@ -43,7 +43,7 @@ public class ForbiddenException extends ClientErrorException {
      * @param message the detail message (which is saved for later retrieval
      *                by the {@link #getMessage()} method).
      */
-    public ForbiddenException(String message) {
+    public ForbiddenException(final String message) {
         super(message, Response.Status.FORBIDDEN);
     }
 
@@ -54,7 +54,7 @@ public class ForbiddenException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 403}.
      */
-    public ForbiddenException(Response response) {
+    public ForbiddenException(final Response response) {
         super(validate(response, Response.Status.FORBIDDEN));
     }
 
@@ -67,7 +67,7 @@ public class ForbiddenException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 403}.
      */
-    public ForbiddenException(String message, Response response) {
+    public ForbiddenException(final String message, final Response response) {
         super(message, validate(response, Response.Status.FORBIDDEN));
     }
 
@@ -76,7 +76,7 @@ public class ForbiddenException extends ClientErrorException {
      *
      * @param cause the underlying cause of the exception.
      */
-    public ForbiddenException(Throwable cause) {
+    public ForbiddenException(final Throwable cause) {
         super(Response.Status.FORBIDDEN, cause);
     }
 
@@ -87,7 +87,7 @@ public class ForbiddenException extends ClientErrorException {
      *                by the {@link #getMessage()} method).
      * @param cause   the underlying cause of the exception.
      */
-    public ForbiddenException(String message, Throwable cause) {
+    public ForbiddenException(final String message, final Throwable cause) {
         super(message, Response.Status.FORBIDDEN, cause);
     }
 
@@ -99,7 +99,7 @@ public class ForbiddenException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 403}.
      */
-    public ForbiddenException(Response response, Throwable cause) {
+    public ForbiddenException(final Response response, final Throwable cause) {
         super(validate(response, Response.Status.FORBIDDEN), cause);
     }
 
@@ -113,7 +113,7 @@ public class ForbiddenException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 403}.
      */
-    public ForbiddenException(String message, Response response, Throwable cause) {
+    public ForbiddenException(final String message, final Response response, final Throwable cause) {
         super(message, validate(response, Response.Status.FORBIDDEN), cause);
     }
 }

@@ -80,8 +80,8 @@ public interface MessageBodyWriter<T> {
      * @param mediaType   the media type of the HTTP entity.
      * @return length in bytes or -1 if the length cannot be determined in advance.
      */
-    public default long getSize(T t, Class<?> type, Type genericType, Annotation[] annotations,
-                        MediaType mediaType) {
+    public default long getSize(final T t, final Class<?> type, final Type genericType, final Annotation[] annotations,
+                        final MediaType mediaType) {
         return -1L;
     }
 

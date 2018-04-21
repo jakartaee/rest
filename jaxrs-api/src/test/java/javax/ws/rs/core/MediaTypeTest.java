@@ -16,10 +16,11 @@
 
 package javax.ws.rs.core;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Map;
 
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 /**
  * {@link MediaType} unit test.

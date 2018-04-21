@@ -39,12 +39,12 @@ public class RuntimeDelegateStub extends RuntimeDelegate {
     }
 
     @Override
-    public <T> T createEndpoint(Application application, Class<T> endpointType) throws IllegalArgumentException, UnsupportedOperationException {
+    public <T> T createEndpoint(final Application application, final Class<T> endpointType) throws IllegalArgumentException, UnsupportedOperationException {
         return null;
     }
 
     @Override
-    public <T> HeaderDelegate<T> createHeaderDelegate(Class<T> type) {
+    public <T> HeaderDelegate<T> createHeaderDelegate(final Class<T> type) {
         return null;
     }
 

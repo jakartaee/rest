@@ -16,14 +16,15 @@
 
 package javax.ws.rs;
 
+import static javax.ws.rs.core.HttpHeaders.WWW_AUTHENTICATE;
+import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
-import static javax.ws.rs.core.HttpHeaders.WWW_AUTHENTICATE;
-import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
 /**
  * A runtime exception indicating request authorization failure caused by one of the following
@@ -59,7 +60,7 @@ public class NotAuthorizedException extends ClientErrorException {
      *                       requested resource.
      * @throws NullPointerException in case the {@code challenge} parameter is {@code null}.
      */
-    public NotAuthorizedException(Object challenge, Object... moreChallenges) {
+    public NotAuthorizedException(final Object challenge, final Object... moreChallenges) {
         super(createUnauthorizedResponse(challenge, moreChallenges));
         this.challenges = cacheChallenges(challenge, moreChallenges);
     }
@@ -75,7 +76,7 @@ public class NotAuthorizedException extends ClientErrorException {
      *                       requested resource.
      * @throws NullPointerException in case the {@code challenge} parameter is {@code null}.
      */
-    public NotAuthorizedException(String message, Object challenge, Object... moreChallenges) {
+    public NotAuthorizedException(final String message, final Object challenge, final Object... moreChallenges) {
         super(message, createUnauthorizedResponse(challenge, moreChallenges));
         this.challenges = cacheChallenges(challenge, moreChallenges);
     }
@@ -87,7 +88,7 @@ public class NotAuthorizedException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 401}.
      */
-    public NotAuthorizedException(Response response) {
+    public NotAuthorizedException(final Response response) {
         super(validate(response, UNAUTHORIZED));
     }
 
@@ -100,7 +101,7 @@ public class NotAuthorizedException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 401}.
      */
-    public NotAuthorizedException(String message, Response response) {
+    public NotAuthorizedException(final String message, final Response response) {
         super(message, validate(response, UNAUTHORIZED));
     }
 
@@ -112,7 +113,7 @@ public class NotAuthorizedException extends ClientErrorException {
      * @param moreChallenges additional authorization challenge applicable to the
      *                       requested resource.
      */
-    public NotAuthorizedException(Throwable cause, Object challenge, Object... moreChallenges) {
+    public NotAuthorizedException(final Throwable cause, final Object challenge, final Object... moreChallenges) {
         super(createUnauthorizedResponse(challenge, moreChallenges), cause);
         this.challenges = cacheChallenges(challenge, moreChallenges);
     }
@@ -127,7 +128,7 @@ public class NotAuthorizedException extends ClientErrorException {
      * @param moreChallenges additional authorization challenge applicable to the
      *                       requested resource.
      */
-    public NotAuthorizedException(String message, Throwable cause, Object challenge, Object... moreChallenges) {
+    public NotAuthorizedException(final String message, final Throwable cause, final Object challenge, final Object... moreChallenges) {
         super(message, createUnauthorizedResponse(challenge, moreChallenges), cause);
         this.challenges = cacheChallenges(challenge, moreChallenges);
     }
@@ -140,7 +141,7 @@ public class NotAuthorizedException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 401}.
      */
-    public NotAuthorizedException(Response response, Throwable cause) {
+    public NotAuthorizedException(final Response response, final Throwable cause) {
         super(validate(response, UNAUTHORIZED), cause);
     }
 
@@ -154,7 +155,7 @@ public class NotAuthorizedException extends ClientErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 401}.
      */
-    public NotAuthorizedException(String message, Response response, Throwable cause) {
+    public NotAuthorizedException(final String message, final Response response, final Throwable cause) {
         super(message, validate(response, UNAUTHORIZED), cause);
     }
 
@@ -172,7 +173,7 @@ public class NotAuthorizedException extends ClientErrorException {
         return challenges;
     }
 
-    private static Response createUnauthorizedResponse(Object challenge, Object[] otherChallenges) {
+    private static Response createUnauthorizedResponse(final Object challenge, final Object[] otherChallenges) {
         if (challenge == null) {
             throw new NullPointerException("Primary challenge parameter must not be null.");
         }
@@ -189,7 +190,7 @@ public class NotAuthorizedException extends ClientErrorException {
         return builder.build();
     }
 
-    private static List<Object> cacheChallenges(Object challenge, Object[] moreChallenges) {
+    private static List<Object> cacheChallenges(final Object challenge, final Object[] moreChallenges) {
         List<Object> temp = new ArrayList<Object>(1 + ((moreChallenges == null) ? 0 : moreChallenges.length));
         temp.add(challenge);
         if (moreChallenges != null) {

@@ -16,13 +16,14 @@
 
 package javax.ws.rs;
 
+import static javax.ws.rs.core.HttpHeaders.RETRY_AFTER;
+import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
+
 import java.util.Date;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.RuntimeDelegate;
-import static javax.ws.rs.core.HttpHeaders.RETRY_AFTER;
-import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 
 /**
  * A runtime exception indicating that the requested resource
@@ -50,7 +51,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      * @param message the detail message (which is saved for later retrieval
      *                by the {@link #getMessage()} method).
      */
-    public ServiceUnavailableException(String message) {
+    public ServiceUnavailableException(final String message) {
         super(message, Response.status(SERVICE_UNAVAILABLE).build());
     }
 
@@ -60,7 +61,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      *
      * @param retryAfter decimal interval in seconds after which the failed request may be retried.
      */
-    public ServiceUnavailableException(Long retryAfter) {
+    public ServiceUnavailableException(final Long retryAfter) {
         super(Response.status(SERVICE_UNAVAILABLE).header(RETRY_AFTER, retryAfter).build());
     }
 
@@ -72,7 +73,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      *                   by the {@link #getMessage()} method).
      * @param retryAfter decimal interval in seconds after which the failed request may be retried.
      */
-    public ServiceUnavailableException(String message, Long retryAfter) {
+    public ServiceUnavailableException(final String message, final Long retryAfter) {
         super(message, Response.status(SERVICE_UNAVAILABLE).header(RETRY_AFTER, retryAfter).build());
     }
 
@@ -82,7 +83,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      *
      * @param retryAfter a date/time after which the failed request may be retried.
      */
-    public ServiceUnavailableException(Date retryAfter) {
+    public ServiceUnavailableException(final Date retryAfter) {
         super(Response.status(SERVICE_UNAVAILABLE).header(RETRY_AFTER, retryAfter).build());
     }
 
@@ -94,7 +95,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      *                   by the {@link #getMessage()} method).
      * @param retryAfter a date/time after which the failed request may be retried.
      */
-    public ServiceUnavailableException(String message, Date retryAfter) {
+    public ServiceUnavailableException(final String message, final Date retryAfter) {
         super(message, Response.status(SERVICE_UNAVAILABLE).header(RETRY_AFTER, retryAfter).build());
     }
 
@@ -105,7 +106,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 503}.
      */
-    public ServiceUnavailableException(Response response) {
+    public ServiceUnavailableException(final Response response) {
         super(validate(response, SERVICE_UNAVAILABLE));
     }
 
@@ -118,7 +119,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 503}.
      */
-    public ServiceUnavailableException(String message, Response response) {
+    public ServiceUnavailableException(final String message, final Response response) {
         super(message, validate(response, SERVICE_UNAVAILABLE));
     }
 
@@ -130,7 +131,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      * @param retryAfter a date/time after which the failed request may be retried.
      * @param cause      the underlying cause of the exception.
      */
-    public ServiceUnavailableException(Date retryAfter, Throwable cause) {
+    public ServiceUnavailableException(final Date retryAfter, final Throwable cause) {
         super(Response.status(SERVICE_UNAVAILABLE).header(RETRY_AFTER, retryAfter).build(), cause);
     }
 
@@ -144,7 +145,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      * @param retryAfter a date/time after which the failed request may be retried.
      * @param cause      the underlying cause of the exception.
      */
-    public ServiceUnavailableException(String message, Date retryAfter, Throwable cause) {
+    public ServiceUnavailableException(final String message, final Date retryAfter, final Throwable cause) {
         super(message, Response.status(SERVICE_UNAVAILABLE).header(RETRY_AFTER, retryAfter).build(), cause);
     }
 
@@ -156,7 +157,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      * @param retryAfter decimal interval in seconds after which the failed request may be retried.
      * @param cause      the underlying cause of the exception.
      */
-    public ServiceUnavailableException(Long retryAfter, Throwable cause) {
+    public ServiceUnavailableException(final Long retryAfter, final Throwable cause) {
         super(Response.status(SERVICE_UNAVAILABLE).header(RETRY_AFTER, retryAfter).build(), cause);
     }
 
@@ -170,7 +171,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      * @param retryAfter decimal interval in seconds after which the failed request may be retried.
      * @param cause      the underlying cause of the exception.
      */
-    public ServiceUnavailableException(String message, Long retryAfter, Throwable cause) {
+    public ServiceUnavailableException(final String message, final Long retryAfter, final Throwable cause) {
         super(message, Response.status(SERVICE_UNAVAILABLE).header(RETRY_AFTER, retryAfter).build(), cause);
     }
 
@@ -182,7 +183,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 503}.
      */
-    public ServiceUnavailableException(Response response, Throwable cause) {
+    public ServiceUnavailableException(final Response response, final Throwable cause) {
         super(validate(response, SERVICE_UNAVAILABLE), cause);
     }
 
@@ -196,7 +197,7 @@ public class ServiceUnavailableException extends ServerErrorException {
      * @throws IllegalArgumentException in case the status code set in the response
      *                                  is not HTTP {@code 503}.
      */
-    public ServiceUnavailableException(String message, Response response, Throwable cause) {
+    public ServiceUnavailableException(final String message, final Response response, final Throwable cause) {
         super(message, validate(response, SERVICE_UNAVAILABLE), cause);
     }
 

@@ -23,13 +23,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Configurable;
 import javax.ws.rs.core.Configuration;
 import javax.ws.rs.sse.SseEventSource;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
 
 /**
  * Main entry point to the client API used to bootstrap {@link javax.ws.rs.client.Client}
@@ -243,7 +242,7 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
      * Provided executor service will be used for executing scheduled asynchronous tasks.
      * <p>
      * When running in a Java EE container, implementations are required to use the container-managed
-     * scheduled executor service by default.  In Java SE the default is implementation-specific.  In 
+     * scheduled executor service by default.  In Java SE the default is implementation-specific.  In
      * either case, calling this method will override the default.
      *
      * @param scheduledExecutorService executor service to be used for scheduled async invocations.

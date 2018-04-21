@@ -18,12 +18,11 @@ package javax.ws.rs.client;
 
 import java.net.URI;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
 import javax.ws.rs.core.Configurable;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.UriBuilder;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
 
 /**
  * Client is the main entry point to the fluent API used to build and execute client

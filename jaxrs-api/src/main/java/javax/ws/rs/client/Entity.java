@@ -59,7 +59,7 @@ public final class Entity<T> {
      * @param annotations entity annotations.
      * @return entity instance.
      */
-    public static <T> Entity<T> entity(final T entity, final MediaType mediaType, Annotation[] annotations) {
+    public static <T> Entity<T> entity(final T entity, final MediaType mediaType, final Annotation[] annotations) {
         return new Entity<T>(entity, mediaType, annotations);
     }
 
@@ -98,7 +98,7 @@ public final class Entity<T> {
      * @param annotations entity annotations.
      * @return entity instance.
      */
-    public static <T> Entity<T> entity(final T entity, final Variant variant, Annotation[] annotations) {
+    public static <T> Entity<T> entity(final T entity, final Variant variant, final Annotation[] annotations) {
         return new Entity<T>(entity, variant, annotations);
     }
 
@@ -190,11 +190,11 @@ public final class Entity<T> {
         this(entity, variant, null);
     }
 
-    private Entity(final T entity, final MediaType mediaType, Annotation[] annotations) {
+    private Entity(final T entity, final MediaType mediaType, final Annotation[] annotations) {
         this(entity, new Variant(mediaType, (Locale) null, null), annotations);
     }
 
-    private Entity(final T entity, final Variant variant, Annotation[] annotations) {
+    private Entity(final T entity, final Variant variant, final Annotation[] annotations) {
         this.entity = entity;
         this.variant = variant;
 
@@ -257,7 +257,7 @@ public final class Entity<T> {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (!(o instanceof Entity)) return false;
 

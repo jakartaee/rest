@@ -51,6 +51,8 @@ public @interface ApplicationPath {
      * Note that percent encoded values are allowed in the value, an
      * implementation will recognize such values and will not double
      * encode the '%' character.</p>
+     * 
+     * @return base URI.
      */
     String value();
 }

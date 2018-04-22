@@ -62,6 +62,8 @@ public @interface DefaultValue {
 
     /**
      * The specified default value.
+     *
+     * @return default value.
      */
     String value();
 }

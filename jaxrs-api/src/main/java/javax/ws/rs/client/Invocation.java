@@ -279,6 +279,7 @@ public interface Invocation {
          * This method is an extension point for JAX-RS implementations to support other types
          * representing asynchronous computations.
          *
+         * @param <T> generic invoker type.
          * @param clazz {@link RxInvoker} subclass.
          * @return reactive invoker instance.
          * @throws IllegalStateException when provider for given class is not registered.

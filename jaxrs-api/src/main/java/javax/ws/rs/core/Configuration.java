@@ -145,6 +145,7 @@ public interface Configuration {
      * For component classes that are not configured in this configuration context the method returns
      * an empty {@code Map}. Method does not return {@code null}.
      *
+     * @param componentClass a component class for which to get contracts.
      * @return map of extension contracts and their priorities for which the component class
      *         is registered.
      *         May return an empty map in case the component has not been registered for any

@@ -47,6 +47,7 @@ public interface InboundSseEvent extends SseEvent {
     /**
      * Read event data as a given Java type.
      *
+     * @param <T> generic event data type
      * @param type Java type to be used for event data de-serialization.
      * @return event data de-serialized as an instance of a given type.
      * @throws javax.ws.rs.ProcessingException when provided type can't be read. The thrown exception wraps the original cause.
@@ -56,6 +57,7 @@ public interface InboundSseEvent extends SseEvent {
     /**
      * Read event data as a given generic type.
      *
+     * @param <T> generic event data type
      * @param type generic type to be used for event data de-serialization.
      * @return event data de-serialized as an instance of a given type.
      * @throws javax.ws.rs.ProcessingException when provided type can't be read. The thrown exception wraps the original cause.
@@ -65,6 +67,7 @@ public interface InboundSseEvent extends SseEvent {
     /**
      * Read event data as a given Java type.
      *
+     * @param <T> generic event data type
      * @param messageType Java type to be used for event data de-serialization.
      * @param mediaType   {@link MediaType media type} to be used for event data de-serialization.
      * @return event data de-serialized as an instance of a given type.
@@ -75,6 +78,7 @@ public interface InboundSseEvent extends SseEvent {
     /**
      * Read event data as a given generic type.
      *
+     * @param <T> generic event data type
      * @param type      generic type to be used for event data de-serialization.
      * @param mediaType {@link MediaType media type} to be used for event data de-serialization.
      * @return event data de-serialized as an instance of a given type.

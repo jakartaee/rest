@@ -68,6 +68,8 @@ public @interface HeaderParam {
      * Defines the name of the HTTP header whose value will be used
      * to initialize the value of the annotated method argument, class field or
      * bean property. Case insensitive.
+     * 
+     * @return HTTP header name.
      */
     String value();
 }

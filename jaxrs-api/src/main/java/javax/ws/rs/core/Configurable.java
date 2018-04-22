@@ -132,7 +132,8 @@ import java.util.Map;
  * config.register(ClientLoggingFilter.class,
  *                 ClientResponseFilter.class);  // Rejected by runtime.
  * </pre>
- *
+ * 
+ * @param <C> generic configurable Java type
  * @author Marek Potociar
  * @since 2.0
  */

@@ -78,6 +78,8 @@ public @interface HttpMethod {
 
     /**
      * Specifies the name of a HTTP method. E.g. "GET".
+     * 
+     * @return HTTP method name.
      */
     String value();
 }

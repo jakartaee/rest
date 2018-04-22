@@ -53,6 +53,8 @@ public @interface Consumes {
      * </pre>
      * Use of the comma-separated form allows definition of a common string constant
      * for use on multiple targets.
+     * 
+     * @return media types to accept.
      */
     String[] value() default "*/*";
 }

@@ -232,7 +232,7 @@ public interface UriInfo {
      * the method is called from are:</p>
      *
      * <table border="1">
-     * <caption></caption>
+     * <caption>Matched URIs from requests</caption>
      * <tr>
      * <th>Request</th>
      * <th>Called from</th>
@@ -309,7 +309,7 @@ public interface UriInfo {
      * the method is called from are:</p>
      *
      * <table border="1">
-     * <caption></caption>
+     * <caption>Matched resources from requests</caption>
      * <tr>
      * <th>Request</th>
      * <th>Called from</th>

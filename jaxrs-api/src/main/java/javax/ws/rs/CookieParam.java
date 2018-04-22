@@ -66,6 +66,8 @@ public @interface CookieParam {
      * Defines the name of the HTTP cookie whose value will be used
      * to initialize the value of the annotated method argument, class field or
      * bean property.
+     * 
+     * @return HTTP cookie name.
      */
     String value();
 }

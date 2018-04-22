@@ -87,6 +87,8 @@ public @interface PathParam {
      * <p>E.g. a class annotated with: {@code @Path("widgets/{id}")}
      * can have methods annotated whose arguments are annotated
      * with {@code @PathParam("id")}.
+     * 
+     * @return resource URI template parameter name.
      */
     String value();
 }

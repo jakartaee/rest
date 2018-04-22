@@ -76,6 +76,8 @@ public @interface ConstrainedTo {
 
     /**
      * Define the {@link RuntimeType constraint type} to be placed on a JAX-RS provider.
+     * 
+     * @return applicable run-time context.
      */
     RuntimeType value();
 }

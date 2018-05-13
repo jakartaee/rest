@@ -134,7 +134,7 @@
                         <plugin>
                             <artifactId>maven-surefire-plugin</artifactId>
                             <configuration>
-                                <argLine>--add-modules java.xml.bind</argLine>
+                                <argLine>--add-modules java.xml.bind --add-opens java.ws.rs/javax.ws.rs.core=java.xml.bind</argLine>
                             </configuration>
                         </plugin>
                     </plugins>

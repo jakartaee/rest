@@ -23,7 +23,7 @@
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-api</artifactId>
     <version>2.1.2-SNAPSHOT</version>
-    <packaging>${packaging.type}</packaging>
+    <packaging>bundle</packaging>
     <name>javax.ws.rs-api</name>
     <description>Java API for RESTful Web Services</description>
 
@@ -188,10 +188,6 @@
             <activation>
                 <jdk>[9,)</jdk>
             </activation>
-            <properties>
-                <!-- TODO: maven-bundle-plugin doesn't understand module-info yet. -->
-                <packaging.type>jar</packaging.type>
-            </properties>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -242,9 +238,6 @@
             <activation>
                 <jdk>(,9)</jdk>
             </activation>
-            <properties>
-                <packaging.type>bundle</packaging.type>
-            </properties>
             <build>
                 <plugins>
                     <plugin>

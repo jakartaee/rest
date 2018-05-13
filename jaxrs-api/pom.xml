@@ -24,14 +24,36 @@
     <artifactId>javax.ws.rs-api</artifactId>
     <version>2.2-SNAPSHOT</version>
     <packaging>bundle</packaging>
+
+    <parent>
+        <groupId>org.eclipse.ee4j</groupId>
+        <artifactId>project</artifactId>
+        <version>1.0</version>
+    </parent>
+
     <name>javax.ws.rs-api</name>
+    <description>JAX-RS: Java API for RESTful Web Services (JAX-RS) is a Java programming language API spec that provides support in creating web services according to the Representational State Transfer (REST) architectural pattern.</description>
+    <inceptionYear>2007</inceptionYear>
 
     <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
 
-    <organization>
-        <name>Eclipse Foundation</name>
-        <url>https://www.eclipse.org/org/foundation/</url>
-    </organization>
+    <developers>
+        <developer>
+           <id>mkarg</id>
+           <name>Markus KARG</name>
+           <email>markus@headcrashing.eu</email>
+           <url>http://www.headcrashing.eu</url>
+           <organization>Head Crashing Informatics</organization>
+           <organizationUrl>http://www.headcrashing.eu</organizationUrl>
+           <roles>
+               <role>Committer</role>
+           </roles>
+           <timezone>Europe/Berlin</timezone>
+           <properties>
+               <picUrl>https://avatars0.githubusercontent.com/u/1701815</picUrl>
+           </properties>
+        </developer>
+    </developers>
 
     <issueManagement>
         <system>Github</system>
@@ -44,19 +66,6 @@
             <archive>jaxrs-dev@eclipse.org</archive>
         </mailingList>
     </mailingLists>
-
-    <licenses>
-        <license>
-            <name>EPL 2.0</name>
-            <url>http://www.eclipse.org/legal/epl-2.0</url>
-            <distribution>repo</distribution>
-        </license>
-        <license>
-            <name>GPL2 w/ CPE</name>
-            <url>https://www.gnu.org/software/classpath/license.html</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
 
     <scm>
         <connection>scm:git:https://github.com/eclipse-ee4j/jaxrs-api</connection>

@@ -317,7 +317,7 @@ public class NewCookie extends Cookie {
      *
      * @return a stringified cookie.
      * @deprecated The format of the toString() method is subject to change in a future version. Please use
-     * RuntimeDelegate.getInstance().createHeaderDelegate(CacheControl.class).toString(value) instead if you rely on
+     * RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class).toString(value) instead if you rely on
      * the format of this method.
      */
     @Override

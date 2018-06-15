@@ -36,6 +36,10 @@ public class NewCookie extends Cookie {
      */
     public static final int DEFAULT_MAX_AGE = -1;
 
+    /**
+     * @deprecated This field will be removed in a future version. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
+     */
+    @Deprecated
     private static final HeaderDelegate<NewCookie> delegate =
             RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class);
 
@@ -216,7 +220,10 @@ public class NewCookie extends Cookie {
      * @return the newly created {@code NewCookie}.
      * @throws IllegalArgumentException if the supplied string cannot be parsed
      *                                  or is {@code null}.
+     * @deprecated This method will be removed in a future version. Please use
+     *   RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class).fromString(value) instead.
      */
+    @Deprecated
     public static NewCookie valueOf(final String value) {
         return delegate.fromString(value);
     }
@@ -309,8 +316,12 @@ public class NewCookie extends Cookie {
      * corresponding HTTP header.
      *
      * @return a stringified cookie.
+     * @deprecated The format of the toString() method is subject to change in a future version. Please use
+     * RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class).toString(value) instead if you rely on
+     * the format of this method.
      */
     @Override
+    @Deprecated
     public String toString() {
         return delegate.toString(this);
     }

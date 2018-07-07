@@ -5,6 +5,10 @@ sudo: false
 jdk:
   - oraclejdk8
   - oraclejdk9
+  - oraclejdk10
+  - openjdk8
+  - openjdk9
+  - openjdk10
 
 install:
   - cd $TRAVIS_BUILD_DIR/jaxrs-api

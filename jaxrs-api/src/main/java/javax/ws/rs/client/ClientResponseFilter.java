@@ -35,7 +35,7 @@ public interface ClientResponseFilter {
     /**
      * Filter method called after a response has been provided for a request
      * (either by a {@link ClientRequestFilter request filter} or when the
-     * HTTP invocation returns.
+     * HTTP invocation returns).
      *
      * Filters in the filter chain are ordered according to their {@code javax.annotation.Priority}
      * class-level annotation value.

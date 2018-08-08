@@ -1,5 +1,8 @@
 pipeline {
 	agent any
+	triggers {
+		pollSCM('H H * * *')
+	}
 	tools {
 		jdk 'jdk1.8.0-latest'
 		maven 'apache-maven-latest'
@@ -10,7 +13,10 @@ pipeline {
 	stages {
 		stage('Nightly Build') {
 			when {
-				branch 'master'
+				anyOf {
+					branch 'EE4J_8'
+					branch 'master'
+				}
 			}
 			steps {
 				dir ('jaxrs-api') {

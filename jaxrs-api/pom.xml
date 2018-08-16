@@ -28,7 +28,7 @@
 
     <groupId>javax.ws.rs</groupId>
     <artifactId>javax.ws.rs-api</artifactId>
-    <version>2.1.1-SNAPSHOT</version>
+    <version>2.1.1</version>
     <packaging>${packaging.type}</packaging>
     <name>javax.ws.rs-api</name>
 

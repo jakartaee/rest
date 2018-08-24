@@ -25,6 +25,7 @@
     <version>2.2-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <name>javax.ws.rs-api</name>
+    <description>Java API for RESTful Web Services</description>
 
     <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
 

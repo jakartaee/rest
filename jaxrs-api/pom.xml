@@ -34,6 +34,15 @@
         <url>https://www.eclipse.org/org/foundation/</url>
     </organization>
 
+    <developers>
+        <developer>
+            <id>developers</id>
+            <name>JAX-RS API Developers</name>
+            <email>jaxrs-dev@eclipse.org</email>
+            <url>https://github.com/eclipse-ee4j/jaxrs-api/graphs/contributors</url>
+        </developer>
+    </developers>
+
     <issueManagement>
         <system>Github</system>
         <url>https://github.com/eclipse-ee4j/jaxrs-api/issues</url>

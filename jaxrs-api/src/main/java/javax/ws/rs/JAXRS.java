@@ -291,6 +291,14 @@ public interface JAXRS {
 
         /**
          * Special value for {@link #PORT} property indicating that the implementation
+         * MUST scan for a free port.
+         *
+         * @since 2.2
+         */
+        static final int FREE_PORT = 0;
+
+        /**
+         * Special value for {@link #PORT} property indicating that the implementation
          * MUST use its default port.
          *
          * @since 2.2

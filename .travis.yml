@@ -6,9 +6,11 @@ jdk:
   - oraclejdk8
   - oraclejdk9
   - oraclejdk10
+  - oraclejdk11
   - openjdk8
   - openjdk9
   - openjdk10
+  - openjdk11
 
 install:
   - cd $TRAVIS_BUILD_DIR/jaxrs-api

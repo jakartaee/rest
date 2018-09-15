@@ -184,9 +184,78 @@
             </distributionManagement>
         </profile>
         <profile>
-            <id>jdk9+</id>
+            <id>jdk11+</id>
             <activation>
-                <jdk>[9,)</jdk>
+                <jdk>[11,)</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                    <version>${jaxb.api.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>javax.activation-api</artifactId>
+                    <version>${activation.api.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.glassfish.jaxb</groupId>
+                    <artifactId>jaxb-runtime</artifactId>
+                    <version>${jaxb.impl.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <artifactId>maven-compiler-plugin</artifactId>
+                            <version>${maven.compiler.plugin.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>default-compile</id>
+                                    <configuration>
+                                        <!-- compile everything to ensure module-info contains right entries -->
+                                        <release>9</release>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>base-compile</id>
+                                    <goals>
+                                        <goal>compile</goal>
+                                    </goals>
+                                    <!-- recompile everything for target VM except the module-info.java -->
+                                    <configuration>
+                                        <excludes>
+                                            <exclude>module-info.java</exclude>
+                                        </excludes>
+                                        <source>${java.version}</source>
+                                        <target>${java.version}</target>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <source>${java.version}</source>
+                                <target>${java.version}</target>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <artifactId>maven-surefire-plugin</artifactId>
+                            <configuration>
+                                <argLine>--add-opens java.ws.rs/javax.ws.rs.core=java.xml.bind</argLine>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>jdk9-jdk10</id>
+            <activation>
+                <jdk>[9,11)</jdk>
             </activation>
             <build>
                 <pluginManagement>
@@ -579,7 +648,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>2.16.0</version>
+            <version>2.22.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -601,6 +670,10 @@
         <skip.release.tests>false</skip.release.tests>
         <spec.version>${last.final.spec.version}</spec.version>
         <spec.version.revision /> <!-- e.g. (Rev a) -->
+
+        <jaxb.api.version>2.3.0</jaxb.api.version>
+        <jaxb.impl.version>2.3.0.1</jaxb.impl.version>
+        <activation.api.version>1.2.0</activation.api.version>
     </properties>
 
     <distributionManagement>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2018 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -27,4 +27,7 @@ module java.ws.rs {
     exports javax.ws.rs.ext;
     exports javax.ws.rs.sse;
 
+    uses javax.ws.rs.client.ClientBuilder;
+    uses javax.ws.rs.ext.RuntimeDelegate;
+    uses javax.ws.rs.sse.SseEventSource.Builder;
 }

@@ -28,26 +28,37 @@
 
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-api</artifactId>
-    <version>2.2-SNAPSHOT</version>
+    <version>2.1.1</version>
+
     <packaging>${packaging.type}</packaging>
     <name>javax.ws.rs-api</name>
+    <description>Java API for RESTful Web Services</description>
 
-    <url>https://github.com/jax-rs/api</url>
+    <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
 
     <organization>
-        <name>Oracle Corporation</name>
-        <url>http://www.oracle.com/</url>
+        <name>Eclipse Foundation</name>
+        <url>https://www.eclipse.org/org/foundation/</url>
     </organization>
+
+    <developers>
+        <developer>
+            <id>developers</id>
+            <name>JAX-RS API Developers</name>
+            <email>jaxrs-dev@eclipse.org</email>
+            <url>https://github.com/eclipse-ee4j/jaxrs-api/graphs/contributors</url>
+        </developer>
+    </developers>
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/jax-rs/api/issues</url>
+        <url>https://github.com/eclipse-ee4j/jaxrs-api/issues</url>
     </issueManagement>
 
     <mailingLists>
         <mailingList>
-            <name>JAX-RS Discussion Group </name>
-            <archive>jaxrs-spec@javaee.groups.io</archive>
+            <name>JAX-RS Developer Discussions</name>
+            <archive>jaxrs-dev@eclipse.org</archive>
         </mailingList>
     </mailingLists>
 
@@ -65,24 +76,10 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/jax-rs/api.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:jax-rs/api.git</developerConnection>
-        <url>https://github.com/jax-rs/api</url>
+        <connection>scm:git:https://github.com/eclipse-ee4j/jaxrs-api</connection>
+        <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
         <tag>HEAD</tag>
     </scm>
-
-    <developers>
-        <developer>
-            <email>santiago.pericasgeertsen@oracle.com</email>
-            <id>Santiago</id>
-            <name>Santiago Pericas-Geertsen</name>
-            <organization>Oracle</organization>
-            <roles>
-                <role>JAX-RS Spec Lead</role>
-            </roles>
-            <timezone>EST</timezone>
-        </developer>
-    </developers>
 
     <profiles>
         <profile>
@@ -140,6 +137,17 @@
                         <artifactId>maven-release-plugin</artifactId>
                     </plugin>
                     <plugin>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-release</id>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-deploy-plugin</artifactId>
                         <configuration>
@@ -149,6 +157,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <extensions>true</extensions>
                         <executions>
                             <execution>
                                 <id>default-deploy</id>
@@ -159,12 +168,27 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <serverId>jvnet-nexus-staging</serverId>
-                            <nexusUrl>https://maven.java.net/</nexusUrl>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
+
+            <distributionManagement>
+                <repository>
+                    <id>ossrh</id>
+                    <name>Sonatype Nexus Releases</name>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+                </repository>
+
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <name>Sonatype Nexus Snapshots</name>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
         </profile>
         <profile>
             <id>jdk9+</id>
@@ -220,7 +244,6 @@
                 </pluginManagement>
             </build>
         </profile>
-
         <profile>
             <id>jdk8-</id>
             <activation>
@@ -604,5 +627,19 @@
         <spec.version>${last.final.spec.version}</spec.version>
         <spec.version.revision /> <!-- e.g. (Rev a) -->
     </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>repo.eclipse.org</id>
+            <name>JAX-RS API Repository - Releases</name>
+            <url>https://repo.eclipse.org/content/repositories/jax-rs-api-releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>repo.eclipse.org</id>
+            <name>JAX-RS API Repository - Snapshots</name>
+	    <url>https://repo.eclipse.org/content/repositories/jax-rs-api-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

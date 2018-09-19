@@ -23,7 +23,7 @@
 
     <groupId>javax.ws.rs</groupId>
     <artifactId>javax.ws.rs-examples</artifactId>
-    <version>2.2-SNAPSHOT</version>
+    <version>2.1.1</version>
     <packaging>jar</packaging>
     <name>javax.ws.rs-examples</name>
 
@@ -260,7 +260,7 @@
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.2-SNAPSHOT</version>
+            <version>2.1.1</version>
         </dependency>
 
         <dependency>
@@ -270,4 +270,17 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>repo.eclipse.org</id>
+            <name>JAX-RS API Repository - Releases</name>
+            <url>https://repo.eclipse.org/content/repositories/jax-rs-api-releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>repo.eclipse.org</id>
+            <name>JAX-RS API Repository - Snapshots</name>
+            <url>https://repo.eclipse.org/content/repositories/jax-rs-api-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

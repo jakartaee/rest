@@ -36,31 +36,43 @@ import jakarta.ws.rs.client.WebTarget;
  * Consumer&lt;InboundSseEvent&gt;#accept(InboundSseEvent)} method is invoked on any registered event consumers.
  * <h2>Reconnect support</h2>
  * <p>
- * The {@code SseEventSource} supports automated recuperation from a connection loss, including negotiation of delivery
- * of any missed events based on the last received SSE event {@code id} field value, provided this field is set by the
- * server and the negotiation facility is supported by the server. In case of a connection loss, the last received SSE
- * event {@code id} field value is send in the <code>{@value jakarta.ws.rs.core.HttpHeaders#LAST_EVENT_ID_HEADER}</code> HTTP
- * request header as part of a new connection request sent to the SSE endpoint. Upon a receipt of such reconnect
- * request, the SSE endpoint that supports this negotiation facility is expected to replay all missed events. Note
- * however, that this is a best-effort mechanism which does not provide any guaranty that all events would be delivered
- * without a loss. You should therefore not rely on receiving every single event and design your client application code
- * accordingly.
+ * The {@code SseEventSource} supports automated recuperation from a connection loss, including
+ * negotiation of delivery of any missed events based on the last received  SSE event {@code id} field value, provided
+ * this field is set by the server and the negotiation facility is supported by the server. In case of a connection loss,
+ * the last received SSE event {@code id} field value is sent in the
+ * <code>{@value jakarta.ws.rs.core.HttpHeaders#LAST_EVENT_ID_HEADER}</code> HTTP
+ * request header as part of a new connection request sent to the SSE endpoint. Upon a receipt of such reconnect request, the SSE
+ * endpoint that supports this negotiation facility is expected to replay all missed events. Note however, that this is a
+ * best-effort mechanism which does not provide any guaranty that all events would be delivered without a loss. You should
+ * therefore not rely on receiving every single event and design your client application code accordingly.
  * <p>
- * By default, when a connection the the SSE endpoint is lost, the event source will wait 500&nbsp;ms before attempting
- * to reconnect to the SSE endpoint. The SSE endpoint can however control the client-side retry delay by including a
- * special {@code retry} field value in the any send event. JAX-RS {@code SseEventSource} tracks any received SSE event
- * {@code retry} field values set by the endpoint and adjusts the reconnect delay accordingly, using the last received
- * {@code retry} field value as the reconnect delay.
+ * By default, when a connection to the SSE endpoint is lost, the event source will wait 500&nbsp;ms
+ * before attempting to reconnect to the SSE endpoint. The SSE endpoint can however control the client-side retry delay
+ * by including a special {@code retry} field value in any sent event. JAX-RS {@code SseEventSource} tracks any
+ * received SSE event {@code retry} field values set by the endpoint and adjusts the reconnect delay accordingly,
+ * using the last received {@code retry} field value as the reconnect delay.
  * <p>
- * In addition to handling the standard connection loss failures, JAX-RS {@code SseEventSource} automatically deals with
- * any {@code HTTP 503 Service Unavailable} responses from an SSE endpoint, that contain a
- * <code>{@value jakarta.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> HTTP header with a valid value. The
- * <code>HTTP 503 + {@value jakarta.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> technique is often used by HTTP endpoints as a
- * means of connection and traffic throttling. In case a
- * <code>HTTP 503 + {@value jakarta.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> response is received in return to a connection
- * request, JAX-RS SSE event source will automatically schedule a new reconnect attempt and use the received
- * <code>{@value jakarta.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> HTTP header value as a one-time override of the reconnect
- * delay.
+ * In addition to handling the standard connection loss failures, JAX-RS {@code SseEventSource} behaves differently to various
+ * HTTP response status codes and headers:
+ * <ul>
+ * <li>200 - with <code>{@value jakarta.ws.rs.core.HttpHeaders#CONTENT_TYPE}</code> header of "text/event-stream": This is normal
+ * operation. <code>onEvent</code> is invoked for each event.  <code>onComplete</code> is invoked when there are no more
+ * events. <code>onError</code> is invoked only if a non-recoverable error occurs during processing.</li>
+ * <li>200 - with unsupported or missing <code>{@value jakarta.ws.rs.core.HttpHeaders#CONTENT_TYPE}</code> header: This is an
+ * error condition. <code>onError</code> and <code>onComplete</code> are invoked.</li>
+ * <li>204 - This indicates that server has no events to send. Only <code>onComplete</code> is invoked.</li>
+ * <li>503 - with <code>{@value jakarta.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> header set to a valid value: This indicates
+ * that the server is unavailable, but that the client should reconnect later. No consumers are invoked unless the client
+ * event source is closed, prior to reconnecting (resulting in <code>onComplete</code> invocation). After the specified
+ * delay, the client should automatically attempt to reconnect which will result in a new response.</li>
+ * <li>503 - with invalid or missing <code>{@value jakarta.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> header: This is an error
+ * condition. <code>onError</code> and <code>onComplete</code> are invoked.</li>
+ * <li>Any other status code: This is an error condition. <code>onError</code> and <code>onComplete</code> are invoked.</li>
+ * </ul>
+ * <p>
+ * In the case of an error condition response, the <code>Throwable</code> passed to the <code>onError</code> consumer
+ * <i>should</i>
+ * be a WebApplicationException containing the invalid <code>Response</code> object.
  *
  * @author Marek Potociar
  * @since 2.1

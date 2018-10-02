@@ -404,17 +404,17 @@
                     <!-- This plugin generates the spec.* properties used in maven-bundle-plugin -->
                     <groupId>org.glassfish.build</groupId>
                     <artifactId>spec-version-maven-plugin</artifactId>
-                    <version>1.4</version>
+                    <version>1.5</version>
                     <configuration>
+                        <specMode>jakarta</specMode>
                         <spec>
-                            <groupIdPrefix>jakarta.</groupIdPrefix>
                             <nonFinal>${non.final}</nonFinal>
                             <jarType>api</jarType>
                             <specVersion>${spec.version}</specVersion>
                             <newSpecVersion>${new.spec.version}</newSpecVersion>
                             <specBuild>${milestone.number}</specBuild>
                             <specImplVersion>${project.version}</specImplVersion>
-                            <apiPackage>${project.groupId}</apiPackage>
+                            <apiPackage>${api.package}</apiPackage>
                         </spec>
                     </configuration>
                     <executions>
@@ -662,6 +662,7 @@
         <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
         <maven.javadoc.plugin.version>3.0.0</maven.javadoc.plugin.version>
 
+        <api.package>javax.ws.rs</api.package>
         <last.final.spec.version>2.1</last.final.spec.version>
         <milestone.number>01</milestone.number>
         <next.final.spec.version>2.2</next.final.spec.version>

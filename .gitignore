@@ -1,22 +1,9 @@
-# maven noise
-target
-
-# osx noise
-.DS_Store
-profile
-
-#IntelliJ Idea noise
-.idea
-*.iws
-*.ipr
+target/
+.classpath
+.project
+.settings/
 *.iml
-
-# TeX build noise
-*.aux
-*.bbl
-*.blg
-*.log
-*.out
-*.tex~
-*.thm
-*.toc
+*nbactions.xml
+.vscode/
+.idea
+nb-configuration.xml

@@ -47,9 +47,9 @@ import javax.ws.rs.client.WebTarget;
  * best-effort mechanism which does not provide any guaranty that all events would be delivered without a loss. You should
  * therefore not rely on receiving every single event and design your client application code accordingly.
  * <p>
- * By default, when a connection the the SSE endpoint is lost, the event source will wait 500&nbsp;ms
+ * By default, when a connection to the SSE endpoint is lost, the event source will wait 500&nbsp;ms
  * before attempting to reconnect to the SSE endpoint. The SSE endpoint can however control the client-side retry delay
- * by including a special {@code retry} field value in the any send event. JAX-RS {@code SseEventSource} tracks any
+ * by including a special {@code retry} field value in any send event. JAX-RS {@code SseEventSource} tracks any
  * received SSE event {@code retry} field values set by the endpoint and adjusts the reconnect delay accordingly,
  * using the last received {@code retry} field value as the reconnect delay.
  * <p>

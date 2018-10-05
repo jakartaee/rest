@@ -22,7 +22,7 @@ import javax.validation.Payload;
 
 public class ValidatorExample {
 
-    @java.lang.annotation.Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
+    @java.lang.annotation.Target({ ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER })
     @Retention(RetentionPolicy.RUNTIME)
     @Constraint(validatedBy = EmailValidator.class)
     public @interface Email {

@@ -23,11 +23,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Associates the name of a HTTP method with an annotation. A Java method annotated
- * with a runtime annotation that is itself annotated with this annotation will
- * be used to handle HTTP requests of the indicated HTTP method. It is an error
- * for a method to be annotated with more than one annotation that is annotated
- * with {@code HttpMethod}.
+ * Associates the name of a HTTP method with an annotation. A Java method annotated with a runtime annotation that is
+ * itself annotated with this annotation will be used to handle HTTP requests of the indicated HTTP method. It is an
+ * error for a method to be annotated with more than one annotation that is annotated with {@code HttpMethod}.
  *
  * @author Paul Sandoz
  * @author Marc Hadley
@@ -40,7 +38,7 @@ import java.lang.annotation.Target;
  * @see OPTIONS
  * @since 1.0
  */
-@Target({ElementType.ANNOTATION_TYPE})
+@Target({ ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface HttpMethod {
@@ -78,7 +76,7 @@ public @interface HttpMethod {
 
     /**
      * Specifies the name of a HTTP method. E.g. "GET".
-     * 
+     *
      * @return HTTP method name.
      */
     String value();

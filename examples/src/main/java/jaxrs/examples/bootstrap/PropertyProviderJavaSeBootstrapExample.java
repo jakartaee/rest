@@ -29,16 +29,14 @@ import org.eclipse.microprofile.config.ConfigProvider;
 /**
  * Java SE bootstrap example utilizing a property provider.
  * <p>
- * This example demonstrates bootstrapping on Java SE platforms using values
- * explicitly bulk-loaded from a property provider plus statically overridden
- * properties. In particular, this demo first uses Eclipse Microprofile Config
- * as a property provider for all properties supported by the implementation,
- * but then explicitly enforces HTTPS within the bootstrap code.
+ * This example demonstrates bootstrapping on Java SE platforms using values explicitly bulk-loaded from a property
+ * provider plus statically overridden properties. In particular, this demo first uses Eclipse Microprofile Config as a
+ * property provider for all properties supported by the implementation, but then explicitly enforces HTTPS within the
+ * bootstrap code.
  * </p>
  * <p>
- * To actually run this example, an implementation of Eclipse Microprofile
- * Config has to be added to the classpath, and the configuration options to be
- * customized have to be provided, e. g. as environment variables:
+ * To actually run this example, an implementation of Eclipse Microprofile Config has to be added to the classpath, and
+ * the configuration options to be customized have to be provided, e. g. as environment variables:
  * </p>
  *
  * <pre>
@@ -46,17 +44,15 @@ import org.eclipse.microprofile.config.ConfigProvider;
  * java -Djavax.ws.rs.JAXRS.Host=127.0.0.1 PropertyProviderJavaSeBootstrapExample;
  * </pre>
  * <p>
- * Thanks to the <em>explicit</em> use of Microprofile Config in the
- * application, this example is completely portable.
+ * Thanks to the <em>explicit</em> use of Microprofile Config in the application, this example is completely portable.
  * </p>
  * <p>
  * This example uses some basic <em>external</em> JSSE configuration:
  * </p>
  * <ul>
- * <li>{@code javax.net.ssl.keyStore=~/.keystore} - HTTPS: Path to a keystore
- * holding an X.509 certificate for {@code CN=localhost}</li>
- * <li>{@code javax.net.ssl.keyStorePassword=...} - HTTPS: Password of that
- * keystore</li>
+ * <li>{@code javax.net.ssl.keyStore=~/.keystore} - HTTPS: Path to a keystore holding an X.509 certificate for
+ * {@code CN=localhost}</li>
+ * <li>{@code javax.net.ssl.keyStorePassword=...} - HTTPS: Password of that keystore</li>
  * </ul>
  *
  * @author Markus KARG (markus@headcrashing.eu)
@@ -67,10 +63,8 @@ public final class PropertyProviderJavaSeBootstrapExample {
     /**
      * Runs this example.
      *
-     * @param args
-     *            unused command line arguments
-     * @throws InterruptedException
-     *             when process is killed
+     * @param args unused command line arguments
+     * @throws InterruptedException when process is killed
      */
     public static final void main(final String[] args) throws InterruptedException {
         final Application application = new HelloWorld();

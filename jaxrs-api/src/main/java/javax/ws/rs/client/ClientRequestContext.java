@@ -36,9 +36,8 @@ import javax.ws.rs.ext.MessageBodyWriter;
 /**
  * Client request filter context.
  *
- * A mutable class that provides request-specific information for the filter,
- * such as request URI, message headers, message entity or request-scoped
- * properties. The exposed setters allow modification of the exposed request-specific
+ * A mutable class that provides request-specific information for the filter, such as request URI, message headers,
+ * message entity or request-scoped properties. The exposed setters allow modification of the exposed request-specific
  * information.
  *
  * @author Marek Potociar
@@ -47,31 +46,29 @@ import javax.ws.rs.ext.MessageBodyWriter;
 public interface ClientRequestContext {
 
     /**
-     * Returns the property with the given name registered in the current request/response
-     * exchange context, or {@code null} if there is no property by that name.
+     * Returns the property with the given name registered in the current request/response exchange context, or {@code null}
+     * if there is no property by that name.
      * <p>
-     * A property allows a JAX-RS filters and interceptors to exchange
-     * additional custom information not already provided by this interface.
+     * A property allows a JAX-RS filters and interceptors to exchange additional custom information not already provided by
+     * this interface.
      * </p>
      * <p>
-     * A list of supported properties can be retrieved using {@link #getPropertyNames()}.
-     * Custom property names should follow the same convention as package names.
+     * A list of supported properties can be retrieved using {@link #getPropertyNames()}. Custom property names should
+     * follow the same convention as package names.
      * </p>
      *
      * @param name a {@code String} specifying the name of the property.
-     * @return an {@code Object} containing the value of the property, or
-     *         {@code null} if no property exists matching the given name.
+     * @return an {@code Object} containing the value of the property, or {@code null} if no property exists matching the
+     * given name.
      * @see #getPropertyNames()
      */
     public Object getProperty(String name);
 
-
     /**
-     * Returns an immutable {@link Collection collection} containing the property names
-     * available within the context of the current request/response exchange context.
+     * Returns an immutable {@link Collection collection} containing the property names available within the context of the
+     * current request/response exchange context.
      * <p>
-     * Use the {@link #getProperty} method with a property name to get the value of
-     * a property.
+     * Use the {@link #getProperty} method with a property name to get the value of a property.
      * </p>
      *
      * @return an immutable {@link Collection collection} of property names.
@@ -79,33 +76,29 @@ public interface ClientRequestContext {
      */
     public Collection<String> getPropertyNames();
 
-
     /**
-     * Binds an object to a given property name in the current request/response
-     * exchange context. If the name specified is already used for a property,
-     * this method will replace the value of the property with the new value.
+     * Binds an object to a given property name in the current request/response exchange context. If the name specified is
+     * already used for a property, this method will replace the value of the property with the new value.
      * <p>
-     * A property allows a JAX-RS filters and interceptors to exchange
-     * additional custom information not already provided by this interface.
+     * A property allows a JAX-RS filters and interceptors to exchange additional custom information not already provided by
+     * this interface.
      * </p>
      * <p>
-     * A list of supported properties can be retrieved using {@link #getPropertyNames()}.
-     * Custom property names should follow the same convention as package names.
+     * A list of supported properties can be retrieved using {@link #getPropertyNames()}. Custom property names should
+     * follow the same convention as package names.
      * </p>
      * <p>
-     * If a {@code null} value is passed, the effect is the same as calling the
-     * {@link #removeProperty(String)} method.
+     * If a {@code null} value is passed, the effect is the same as calling the {@link #removeProperty(String)} method.
      * </p>
      *
-     * @param name   a {@code String} specifying the name of the property.
+     * @param name a {@code String} specifying the name of the property.
      * @param object an {@code Object} representing the property to be bound.
      */
     public void setProperty(String name, Object object);
 
     /**
-     * Removes a property with the given name from the current request/response
-     * exchange context. After removal, subsequent calls to {@link #getProperty}
-     * to retrieve the property value will return {@code null}.
+     * Removes a property with the given name from the current request/response exchange context. After removal, subsequent
+     * calls to {@link #getProperty} to retrieve the property value will return {@code null}.
      *
      * @param name a {@code String} specifying the name of the property to be removed.
      */
@@ -153,14 +146,12 @@ public interface ClientRequestContext {
     /**
      * Get a string view of header values associated with the message.
      *
-     * Changes in the underlying {@link #getHeaders() headers map} are reflected
-     * in this view.
+     * Changes in the underlying {@link #getHeaders() headers map} are reflected in this view.
      * <p>
      * The method converts the non-string header values to strings using a
      * {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one is available via
-     * {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the
-     * class of the value or using the values {@code toString} method if a header delegate is
-     * not available.
+     * {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the class of the value or using the
+     * values {@code toString} method if a header delegate is not available.
      * </p>
      *
      * @return response headers as a string view of header values.
@@ -172,18 +163,14 @@ public interface ClientRequestContext {
     /**
      * Get a message header as a single string value.
      *
-     * Each single header value is converted to String using a
-     * {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one is available
-     * via {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)}
-     * for the header value class or using its {@code toString} method  if a header
-     * delegate is not available.
+     * Each single header value is converted to String using a {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one
+     * is available via {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the header value
+     * class or using its {@code toString} method if a header delegate is not available.
      *
      * @param name the message header.
-     * @return the message header value. If the message header is not present then
-     *         {@code null} is returned. If the message header is present but has no
-     *         value then the empty string is returned. If the message header is present
-     *         more than once then the values of joined together and separated by a ','
-     *         character.
+     * @return the message header value. If the message header is not present then {@code null} is returned. If the message
+     * header is present but has no value then the empty string is returned. If the message header is present more than once
+     * then the values of joined together and separated by a ',' character.
      * @see #getHeaders()
      * @see #getStringHeaders()
      */
@@ -206,24 +193,22 @@ public interface ClientRequestContext {
     /**
      * Get the media type of the entity.
      *
-     * @return the media type or {@code null} if not specified (e.g. there's no
-     *         request entity).
+     * @return the media type or {@code null} if not specified (e.g. there's no request entity).
      */
     public MediaType getMediaType();
 
     /**
      * Get a list of media types that are acceptable for the response.
      *
-     * @return a read-only list of requested response media types sorted according
-     *         to their q-value, with highest preference first.
+     * @return a read-only list of requested response media types sorted according to their q-value, with highest preference
+     * first.
      */
     public List<MediaType> getAcceptableMediaTypes();
 
     /**
      * Get a list of languages that are acceptable for the response.
      *
-     * @return a read-only list of acceptable languages sorted according
-     *         to their q-value, with highest preference first.
+     * @return a read-only list of acceptable languages sorted according to their q-value, with highest preference first.
      */
     public List<Locale> getAcceptableLanguages();
 
@@ -237,11 +222,9 @@ public interface ClientRequestContext {
     /**
      * Check if there is an entity available in the request.
      *
-     * The method returns {@code true} if the entity is present, returns
-     * {@code false} otherwise.
+     * The method returns {@code true} if the entity is present, returns {@code false} otherwise.
      *
-     * @return {@code true} if there is an entity present in the message,
-     *         {@code false} otherwise.
+     * @return {@code true} if there is an entity present in the message, {@code false} otherwise.
      */
     public boolean hasEntity();
 
@@ -250,8 +233,7 @@ public interface ClientRequestContext {
      *
      * Returns {@code null} if the message does not contain an entity.
      *
-     * @return the message entity or {@code null} if message does not contain an
-     *         entity body.
+     * @return the message entity or {@code null} if message does not contain an entity body.
      */
     public Object getEntity();
 
@@ -270,12 +252,11 @@ public interface ClientRequestContext {
     public Type getEntityType();
 
     /**
-     * Set a new message entity. The existing entity {@link #getEntityAnnotations() annotations}
-     * and {@link #getMediaType() media type} are preserved.
+     * Set a new message entity. The existing entity {@link #getEntityAnnotations() annotations} and {@link #getMediaType()
+     * media type} are preserved.
      * <p>
-     * It is the callers responsibility to wrap the actual entity with
-     * {@link javax.ws.rs.core.GenericEntity} if preservation of its generic
-     * type is required.
+     * It is the callers responsibility to wrap the actual entity with {@link javax.ws.rs.core.GenericEntity} if
+     * preservation of its generic type is required.
      * </p>
      *
      * @param entity entity object.
@@ -287,14 +268,13 @@ public interface ClientRequestContext {
     /**
      * Set a new message entity, including the attached annotations and the media type.
      * <p>
-     * It is the callers responsibility to wrap the actual entity with
-     * {@link javax.ws.rs.core.GenericEntity} if preservation of its generic
-     * type is required.
+     * It is the callers responsibility to wrap the actual entity with {@link javax.ws.rs.core.GenericEntity} if
+     * preservation of its generic type is required.
      * </p>
      *
-     * @param entity      entity object.
+     * @param entity entity object.
      * @param annotations annotations attached to the entity instance.
-     * @param mediaType   entity media type.
+     * @param mediaType entity media type.
      * @see #setEntity(Object)
      * @see MessageBodyWriter
      */
@@ -306,29 +286,25 @@ public interface ClientRequestContext {
     /**
      * Get the annotations attached to the entity instance.
      * <p>
-     * Note that the returned annotations array contains only those annotations
-     * explicitly attached to entity instance (such as the ones attached using
-     * {@link Entity#Entity(Object, javax.ws.rs.core.MediaType, java.lang.annotation.Annotation[])} method).
-     * The entity instance annotations array does not include annotations declared on the entity
-     * implementation class or its ancestors.
+     * Note that the returned annotations array contains only those annotations explicitly attached to entity instance (such
+     * as the ones attached using
+     * {@link Entity#Entity(Object, javax.ws.rs.core.MediaType, java.lang.annotation.Annotation[])} method). The entity
+     * instance annotations array does not include annotations declared on the entity implementation class or its ancestors.
      * </p>
      *
      * @return annotations attached to the entity instance.
      */
     public Annotation[] getEntityAnnotations();
 
-
     /**
-     * Get the entity output stream. The JAX-RS runtime is responsible for
-     * closing the output stream.
+     * Get the entity output stream. The JAX-RS runtime is responsible for closing the output stream.
      *
      * @return entity output stream.
      */
     public OutputStream getEntityStream();
 
     /**
-     * Set a new entity output stream. The JAX-RS runtime is responsible for
-     * closing the output stream.
+     * Set a new entity output stream. The JAX-RS runtime is responsible for closing the output stream.
      *
      * @param outputStream new entity output stream.
      */
@@ -351,9 +327,8 @@ public interface ClientRequestContext {
     /**
      * Abort the filter chain with a response.
      *
-     * This method breaks the filter chain processing and returns the provided
-     * response back to the client. The provided response goes through the
-     * chain of applicable response filters.
+     * This method breaks the filter chain processing and returns the provided response back to the client. The provided
+     * response goes through the chain of applicable response filters.
      *
      * @param response response to be sent back to the client.
      */

@@ -21,8 +21,7 @@ import java.net.URI;
 import javax.ws.rs.core.Response;
 
 /**
- * A runtime application exception indicating a request redirection
- * (HTTP {@code 3xx} status codes).
+ * A runtime application exception indicating a request redirection (HTTP {@code 3xx} status codes).
  *
  * @author Marek Potociar
  * @since 2.0
@@ -34,11 +33,10 @@ public class RedirectionException extends WebApplicationException {
     /**
      * Construct a new redirection exception.
      *
-     * @param status   redirection status. Must be a {@code 3xx} redirection code.
+     * @param status redirection status. Must be a {@code 3xx} redirection code.
      * @param location redirection URI placed into the response {@code Location} header.
      * @throws IllegalArgumentException in case the status code is {@code null} or is not from
-     *                                  {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code
-     *                                  family.
+     * {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code family.
      */
     public RedirectionException(final Response.Status status, final URI location) {
         super((Throwable) null, validate(Response.status(status).location(location).build(), Response.Status.Family.REDIRECTION));
@@ -47,13 +45,11 @@ public class RedirectionException extends WebApplicationException {
     /**
      * Construct a new redirection exception.
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
-     * @param status   redirection status. Must be a {@code 3xx} redirection code.
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+     * @param status redirection status. Must be a {@code 3xx} redirection code.
      * @param location redirection URI placed into the response {@code Location} header.
      * @throws IllegalArgumentException in case the status code is {@code null} or is not from
-     *                                  {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code
-     *                                  family.
+     * {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code family.
      */
     public RedirectionException(final String message, final Response.Status status, final URI location) {
         super(message, null, validate(Response.status(status).location(location).build(), Response.Status.Family.REDIRECTION));
@@ -62,11 +58,10 @@ public class RedirectionException extends WebApplicationException {
     /**
      * Construct a new redirection exception.
      *
-     * @param status   redirection status. Must be a {@code 3xx} redirection code.
+     * @param status redirection status. Must be a {@code 3xx} redirection code.
      * @param location redirection URI placed into the response {@code Location} header.
-     * @throws IllegalArgumentException in case the status code is not a valid HTTP status code or
-     *                                  if it is not from the {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION}
-     *                                  status code family.
+     * @throws IllegalArgumentException in case the status code is not a valid HTTP status code or if it is not from the
+     * {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code family.
      */
     public RedirectionException(final int status, final URI location) {
         super((Throwable) null, validate(Response.status(status).location(location).build(), Response.Status.Family.REDIRECTION));
@@ -75,13 +70,11 @@ public class RedirectionException extends WebApplicationException {
     /**
      * Construct a new redirection exception.
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
-     * @param status   redirection status. Must be a {@code 3xx} redirection code.
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+     * @param status redirection status. Must be a {@code 3xx} redirection code.
      * @param location redirection URI placed into the response {@code Location} header.
-     * @throws IllegalArgumentException in case the status code is not a valid HTTP status code or
-     *                                  if it is not from the {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION}
-     *                                  status code family.
+     * @throws IllegalArgumentException in case the status code is not a valid HTTP status code or if it is not from the
+     * {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code family.
      */
     public RedirectionException(final String message, final int status, final URI location) {
         super(message, null, validate(Response.status(status).location(location).build(), Response.Status.Family.REDIRECTION));
@@ -90,10 +83,9 @@ public class RedirectionException extends WebApplicationException {
     /**
      * Construct a new redirection exception.
      *
-     * @param response redirection response. Must have a status code set to a {@code 3xx}
-     *                 redirection code.
+     * @param response redirection response. Must have a status code set to a {@code 3xx} redirection code.
      * @throws IllegalArgumentException in case the response status code is not from the
-     *                                  {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code family.
+     * {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code family.
      */
     public RedirectionException(final Response response) {
         super((Throwable) null, validate(response, Response.Status.Family.REDIRECTION));
@@ -102,12 +94,10 @@ public class RedirectionException extends WebApplicationException {
     /**
      * Construct a new redirection exception.
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
-     * @param response redirection response. Must have a status code set to a {@code 3xx}
-     *                 redirection code.
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+     * @param response redirection response. Must have a status code set to a {@code 3xx} redirection code.
      * @throws IllegalArgumentException in case the response status code is not from the
-     *                                  {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code family.
+     * {@link javax.ws.rs.core.Response.Status.Family#REDIRECTION} status code family.
      */
     public RedirectionException(final String message, final Response response) {
         super(message, null, validate(response, Response.Status.Family.REDIRECTION));

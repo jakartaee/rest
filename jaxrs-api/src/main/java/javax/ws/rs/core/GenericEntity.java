@@ -27,40 +27,45 @@ import java.lang.reflect.Type;
 /**
  * Represents a message entity of a generic type {@code T}.
  * <p>
- * Normally type erasure removes generic type information such that a
- * {@link Response} instance that contains, e.g., an entity of type
- * {@code List<String>} appears to contain a raw {@code List<?>} at runtime.
- * When the generic type is required to select a suitable
- * {@link javax.ws.rs.ext.MessageBodyWriter}, this class may be used to wrap the
- * entity and capture its generic type.
+ * Normally type erasure removes generic type information such that a {@link Response} instance that contains, e.g., an
+ * entity of type {@code List<String>} appears to contain a raw {@code List<?>} at runtime. When the generic type is
+ * required to select a suitable {@link javax.ws.rs.ext.MessageBodyWriter}, this class may be used to wrap the entity
+ * and capture its generic type.
  * </p>
  * <p>
  * There are two ways to create an instance:
  * </p>
  * <ol>
- * <li>Create a (typically anonymous) subclass of this
- * class which enables retrieval of the type information at runtime despite
- * type erasure. For example, the following code shows how to create a
- * {@link Response} containing an entity of type {@code List<String>} whose
- * generic type will be available at runtime for selection of a suitable
+ * <li>Create a (typically anonymous) subclass of this class which enables retrieval of the type information at runtime
+ * despite type erasure. For example, the following code shows how to create a {@link Response} containing an entity of
+ * type {@code List<String>} whose generic type will be available at runtime for selection of a suitable
  * {@link javax.ws.rs.ext.MessageBodyWriter}:
  *
- * <pre>List&lt;String&gt; list = new ArrayList&lt;String&gt;();
- * GenericEntity&lt;List&lt;String&gt;&gt; entity = new GenericEntity&lt;List&lt;String&gt;&gt;(list) {};
- * Response response = Response.ok(entity).build();</pre>
+ * <pre>
+ * List&lt;String&gt; list = new ArrayList&lt;String&gt;();
+ * GenericEntity&lt;List&lt;String&gt;&gt; entity = new GenericEntity&lt;List&lt;String&gt;&gt;(list) {
+ * };
+ * Response response = Response.ok(entity).build();
+ * </pre>
  *
- * <p>where {@code list} is the instance of {@code List<String>}
- * that will form the response body and entity is an instance of an anonymous
- * subclass of {@code GenericEntity}.</p></li>
- * <li>Create an instance directly by supplying the generic type information
- * with the entity. For example the following code shows how to create
- * a response containing the result of a method invoked via reflection:
- * <pre>Method method = ...;
+ * <p>
+ * where {@code list} is the instance of {@code List<String>} that will form the response body and entity is an instance
+ * of an anonymous subclass of {@code GenericEntity}.
+ * </p>
+ * </li>
+ * <li>Create an instance directly by supplying the generic type information with the entity. For example the following
+ * code shows how to create a response containing the result of a method invoked via reflection:
+ *
+ * <pre>
+ * Method method = ...;
  * GenericEntity&lt;Object&gt; entity = new GenericEntity&lt;Object&gt;(
  *    method.invoke(...), method.getGenericReturnType());
- * Response response = Response.ok(entity).build();</pre>
- * <p>The above obtains the generic type from the return type of the method,
- * the raw type is the class of entity.</p></li>
+ * Response response = Response.ok(entity).build();
+ * </pre>
+ * <p>
+ * The above obtains the generic type from the return type of the method, the raw type is the class of entity.
+ * </p>
+ * </li>
  * </ol>
  *
  * @param <T> response entity instance type
@@ -76,9 +81,8 @@ public class GenericEntity<T> {
     private final T entity;
 
     /**
-     * Constructs a new generic entity. Derives represented class from type
-     * parameter. Note that this constructor is protected, users should create
-     * a (usually anonymous) subclass as shown above.
+     * Constructs a new generic entity. Derives represented class from type parameter. Note that this constructor is
+     * protected, users should create a (usually anonymous) subclass as shown above.
      *
      * @param entity the entity instance, must not be {@code null}.
      * @throws IllegalArgumentException if entity is {@code null}.
@@ -93,18 +97,15 @@ public class GenericEntity<T> {
     }
 
     /**
-     * Create a new instance of GenericEntity, supplying the generic type information.
-     * The entity must be assignable to a variable of the
-     * supplied generic type, e.g. if {@code entity} is an instance of
-     * {@code ArrayList<String>} then {@code genericType} could
-     * be the same or a superclass of {@code ArrayList} with the same generic
-     * type like {@code List<String>}.
+     * Create a new instance of GenericEntity, supplying the generic type information. The entity must be assignable to a
+     * variable of the supplied generic type, e.g. if {@code entity} is an instance of {@code ArrayList<String>} then
+     * {@code genericType} could be the same or a superclass of {@code ArrayList} with the same generic type like
+     * {@code List<String>}.
      *
-     * @param entity      the entity instance, must not be {@code null}.
+     * @param entity the entity instance, must not be {@code null}.
      * @param genericType the generic type, must not be {@code null}.
-     * @throws IllegalArgumentException if the entity is not assignable to
-     *                                  a variable of the supplied generic type or if entity or genericType
-     *                                  is null.
+     * @throws IllegalArgumentException if the entity is not assignable to a variable of the supplied generic type or if
+     * entity or genericType is null.
      */
     public GenericEntity(final T entity, final Type genericType) {
         if (entity == null || genericType == null) {
@@ -137,9 +138,8 @@ public class GenericEntity<T> {
     }
 
     /**
-     * Gets the raw type of the enclosed entity. Note that this is the raw type of
-     * the instance, not the raw type of the type parameter. I.e. in the example
-     * in the introduction, the raw type is {@code ArrayList} not {@code List}.
+     * Gets the raw type of the enclosed entity. Note that this is the raw type of the instance, not the raw type of the
+     * type parameter. I.e. in the example in the introduction, the raw type is {@code ArrayList} not {@code List}.
      *
      * @return the raw type.
      */
@@ -148,10 +148,8 @@ public class GenericEntity<T> {
     }
 
     /**
-     * Gets underlying {@code Type} instance. Note that this is derived from the
-     * type parameter, not the enclosed instance. I.e. in the example
-     * in the introduction, the type is {@code List<String>} not
-     * {@code ArrayList<String>}.
+     * Gets underlying {@code Type} instance. Note that this is derived from the type parameter, not the enclosed instance.
+     * I.e. in the example in the introduction, the type is {@code List<String>} not {@code ArrayList<String>}.
      *
      * @return the type
      */

@@ -24,19 +24,18 @@ import java.lang.annotation.Target;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Inject a suspended {@link AsyncResponse} into a parameter of an invoked
- * JAX-RS {@link javax.ws.rs.HttpMethod resource or sub-resource method}.
+ * Inject a suspended {@link AsyncResponse} into a parameter of an invoked JAX-RS {@link javax.ws.rs.HttpMethod resource
+ * or sub-resource method}.
  *
- * The injected {@code AsyncResponse} instance is bound to the processing
- * of the active request and can be used to resume the request processing when
- * a response is available.
+ * The injected {@code AsyncResponse} instance is bound to the processing of the active request and can be used to
+ * resume the request processing when a response is available.
  * <p>
- * By default there is {@link AsyncResponse#NO_TIMEOUT no suspend timeout set} and
- * the asynchronous response is suspended indefinitely. The suspend timeout as well
- * as a custom {@link TimeoutHandler timeout handler} can be specified programmatically
- * using the {@link AsyncResponse#setTimeout(long, TimeUnit)} and
+ * By default there is {@link AsyncResponse#NO_TIMEOUT no suspend timeout set} and the asynchronous response is
+ * suspended indefinitely. The suspend timeout as well as a custom {@link TimeoutHandler timeout handler} can be
+ * specified programmatically using the {@link AsyncResponse#setTimeout(long, TimeUnit)} and
  * {@link AsyncResponse#setTimeoutHandler(TimeoutHandler)} methods. For example:
  * </p>
+ *
  * <pre>
  *  &#64;Stateless
  *  &#64;Path("/")
@@ -55,14 +54,13 @@ import java.util.concurrent.TimeUnit;
  *  }
  * </pre>
  * <p>
- * A resource or sub-resource method that injects a suspended instance of an
- * {@code AsyncResponse} using the {@code @Suspended} annotation is expected
- * be declared to return {@code void} type. Methods that inject asynchronous
- * response instance using the {@code @Suspended} annotation and declare a
- * return type other than {@code void} MUST be detected by the JAX-RS runtime and
- * a warning message MUST be logged. Any response value returned from such resource
+ * A resource or sub-resource method that injects a suspended instance of an {@code AsyncResponse} using the
+ * {@code @Suspended} annotation is expected be declared to return {@code void} type. Methods that inject asynchronous
+ * response instance using the {@code @Suspended} annotation and declare a return type other than {@code void} MUST be
+ * detected by the JAX-RS runtime and a warning message MUST be logged. Any response value returned from such resource
  * or sub-resource method MUST be ignored by the framework:
  * </p>
+ *
  * <pre>
  * &#64;Path("/messages/next")
  * public class MessagingResource {
@@ -79,7 +77,7 @@ import java.util.concurrent.TimeUnit;
  * @author Marek Potociar
  * @since 2.0
  */
-@Target({ElementType.PARAMETER})
+@Target({ ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Suspended {

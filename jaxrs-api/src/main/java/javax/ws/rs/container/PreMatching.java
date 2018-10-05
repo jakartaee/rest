@@ -23,20 +23,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Global binding annotation that can be applied to a {@link ContainerRequestFilter
- * container request filter} to indicate that such filter should be applied globally
- * on all resources in the application before the actual resource matching occurs.
+ * Global binding annotation that can be applied to a {@link ContainerRequestFilter container request filter} to
+ * indicate that such filter should be applied globally on all resources in the application before the actual resource
+ * matching occurs.
  * <p>
- * The JAX-RS runtime will apply the filters marked with the {@code @PreMatching}
- * annotation globally to all resources, before the incoming request has been matched
- * to a particular resource method.
- * Any {@link javax.ws.rs.NameBinding named binding annotations} will be ignored on
- * a component annotated with the {@code @PreMatching} annotation.
+ * The JAX-RS runtime will apply the filters marked with the {@code @PreMatching} annotation globally to all resources,
+ * before the incoming request has been matched to a particular resource method. Any {@link javax.ws.rs.NameBinding
+ * named binding annotations} will be ignored on a component annotated with the {@code @PreMatching} annotation.
  * </p>
  *
  * @author Marek Potociar
  */
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface PreMatching {

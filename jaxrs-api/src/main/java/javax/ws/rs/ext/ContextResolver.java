@@ -17,17 +17,14 @@
 package javax.ws.rs.ext;
 
 /**
- * Contract for a provider that supplies context information to resource
- * classes and other providers.
+ * Contract for a provider that supplies context information to resource classes and other providers.
  *
- * A {@code ContextResolver} implementation may be annotated
- * with {@link javax.ws.rs.Produces} to restrict the media types for
- * which it will be considered suitable.
+ * A {@code ContextResolver} implementation may be annotated with {@link javax.ws.rs.Produces} to restrict the media
+ * types for which it will be considered suitable.
  * <p>
- * Providers implementing {@code ContextResolver} contract must be either programmatically
- * registered in a JAX-RS runtime or must be annotated with
- * {@link javax.ws.rs.ext.Provider &#64;Provider} annotation to be automatically discovered
- * by the JAX-RS runtime during a provider scanning phase.
+ * Providers implementing {@code ContextResolver} contract must be either programmatically registered in a JAX-RS
+ * runtime or must be annotated with {@link javax.ws.rs.ext.Provider &#64;Provider} annotation to be automatically
+ * discovered by the JAX-RS runtime during a provider scanning phase.
  * </p>
  *
  * @param <T> type of the context
@@ -42,12 +39,11 @@ package javax.ws.rs.ext;
 public interface ContextResolver<T> {
 
     /**
-     * Get a context of type {@code T} that is applicable to the supplied
-     * type.
+     * Get a context of type {@code T} that is applicable to the supplied type.
      *
      * @param type the class of object for which a context is desired
-     * @return a context for the supplied type or {@code null} if a
-     *         context for the supplied type is not available from this provider.
+     * @return a context for the supplied type or {@code null} if a context for the supplied type is not available from this
+     * provider.
      */
     T getContext(Class<?> type);
 }

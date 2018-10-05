@@ -59,9 +59,8 @@ public class GenericTypeTest {
 
     @Test
     public void testParameterizedSubclass2() {
-        ParameterizedSubclass2<String, ArrayList<String>> ps =
-                new ParameterizedSubclass2<String, ArrayList<String>>() {
-                };
+        ParameterizedSubclass2<String, ArrayList<String>> ps = new ParameterizedSubclass2<String, ArrayList<String>>() {
+        };
 
         assertEquals(arrayListOfStringsType, ps.getType());
         assertEquals(ArrayList.class, ps.getRawType());
@@ -73,7 +72,7 @@ public class GenericTypeTest {
         GenericType type = new GenericType(new ParameterizedType() {
             @Override
             public Type[] getActualTypeArguments() {
-                return new Type[]{String.class};
+                return new Type[] { String.class };
             }
 
             @Override
@@ -128,6 +127,7 @@ public class GenericTypeTest {
     // Regression test for JAX_RS_SPEC-274
     @Test
     public void testGenericTypeOfNonGenericArray() {
-        assertEquals(String[].class, new GenericType<String[]>(){}.getRawType());
+        assertEquals(String[].class, new GenericType<String[]>() {
+        }.getRawType());
     }
 }

@@ -15,8 +15,8 @@
  */
 
 /**
- * High-level interfaces and annotations used to create RESTful service
- * resources. For example:
+ * High-level interfaces and annotations used to create RESTful service resources. For example:
+ *
  * <pre>
  * &#064;Path("widgets/{widgetid}")
  * &#064;Consumes("application/widgets+xml")

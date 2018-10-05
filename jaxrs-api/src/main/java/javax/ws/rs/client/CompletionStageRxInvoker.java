@@ -105,4 +105,3 @@ public interface CompletionStageRxInvoker extends RxInvoker<CompletionStage> {
     @Override
     public <T> CompletionStage<T> method(String name, Entity<?> entity, GenericType<T> responseType);
 }
-

@@ -165,10 +165,9 @@ public class MediaType {
      *
      * @param type the media type string.
      * @return the newly created MediaType.
-     * @throws IllegalArgumentException if the supplied string cannot be parsed
-     *                                  or is {@code null}.
+     * @throws IllegalArgumentException if the supplied string cannot be parsed or is {@code null}.
      */
-    public static MediaType valueOf(final String type){
+    public static MediaType valueOf(final String type) {
         return RuntimeDelegate.getInstance().createHeaderDelegate(MediaType.class).fromString(type);
     }
 
@@ -189,15 +188,11 @@ public class MediaType {
     }
 
     /**
-     * Creates a new instance of {@code MediaType} with the supplied type, subtype and
-     * parameters.
+     * Creates a new instance of {@code MediaType} with the supplied type, subtype and parameters.
      *
-     * @param type       the primary type, {@code null} is equivalent to
-     *                   {@link #MEDIA_TYPE_WILDCARD}.
-     * @param subtype    the subtype, {@code null} is equivalent to
-     *                   {@link #MEDIA_TYPE_WILDCARD}.
-     * @param parameters a map of media type parameters, {@code null} is the same as an
-     *                   empty map.
+     * @param type the primary type, {@code null} is equivalent to {@link #MEDIA_TYPE_WILDCARD}.
+     * @param subtype the subtype, {@code null} is equivalent to {@link #MEDIA_TYPE_WILDCARD}.
+     * @param parameters a map of media type parameters, {@code null} is the same as an empty map.
      */
     public MediaType(final String type, final String subtype, final Map<String, String> parameters) {
         this(type, subtype, null, createParametersMap(parameters));
@@ -206,33 +201,29 @@ public class MediaType {
     /**
      * Creates a new instance of {@code MediaType} with the supplied type and subtype.
      *
-     * @param type    the primary type, {@code null} is equivalent to
-     *                {@link #MEDIA_TYPE_WILDCARD}
-     * @param subtype the subtype, {@code null} is equivalent to
-     *                {@link #MEDIA_TYPE_WILDCARD}
+     * @param type the primary type, {@code null} is equivalent to {@link #MEDIA_TYPE_WILDCARD}
+     * @param subtype the subtype, {@code null} is equivalent to {@link #MEDIA_TYPE_WILDCARD}
      */
     public MediaType(final String type, final String subtype) {
         this(type, subtype, null, null);
     }
 
     /**
-     * Creates a new instance of {@code MediaType} with the supplied type, subtype and
-     * {@value #CHARSET_PARAMETER} parameter.
+     * Creates a new instance of {@code MediaType} with the supplied type, subtype and {@value #CHARSET_PARAMETER}
+     * parameter.
      *
-     * @param type    the primary type, {@code null} is equivalent to
-     *                {@link #MEDIA_TYPE_WILDCARD}
-     * @param subtype the subtype, {@code null} is equivalent to
-     *                {@link #MEDIA_TYPE_WILDCARD}
-     * @param charset the {@value #CHARSET_PARAMETER} parameter value. If {@code null} or empty
-     *                the {@value #CHARSET_PARAMETER} parameter will not be set.
+     * @param type the primary type, {@code null} is equivalent to {@link #MEDIA_TYPE_WILDCARD}
+     * @param subtype the subtype, {@code null} is equivalent to {@link #MEDIA_TYPE_WILDCARD}
+     * @param charset the {@value #CHARSET_PARAMETER} parameter value. If {@code null} or empty the
+     * {@value #CHARSET_PARAMETER} parameter will not be set.
      */
     public MediaType(final String type, final String subtype, final String charset) {
         this(type, subtype, charset, null);
     }
 
     /**
-     * Creates a new instance of {@code MediaType}, both type and subtype are wildcards.
-     * Consider using the constant {@link #WILDCARD_TYPE} instead.
+     * Creates a new instance of {@code MediaType}, both type and subtype are wildcards. Consider using the constant
+     * {@link #WILDCARD_TYPE} instead.
      */
     public MediaType() {
         this(MEDIA_TYPE_WILDCARD, MEDIA_TYPE_WILDCARD, null, null);
@@ -305,13 +296,13 @@ public class MediaType {
     }
 
     /**
-     * Create a new {@code MediaType} instance with the same type, subtype and parameters
-     * copied from the original instance and the supplied {@value #CHARSET_PARAMETER} parameter.
+     * Create a new {@code MediaType} instance with the same type, subtype and parameters copied from the original instance
+     * and the supplied {@value #CHARSET_PARAMETER} parameter.
      *
-     * @param charset the {@value #CHARSET_PARAMETER} parameter value. If {@code null} or empty
-     *                the {@value #CHARSET_PARAMETER} parameter will not be set or updated.
-     * @return copy of the current {@code MediaType} instance with the {@value #CHARSET_PARAMETER}
-     *         parameter set to the supplied value.
+     * @param charset the {@value #CHARSET_PARAMETER} parameter value. If {@code null} or empty the
+     * {@value #CHARSET_PARAMETER} parameter will not be set or updated.
+     * @return copy of the current {@code MediaType} instance with the {@value #CHARSET_PARAMETER} parameter set to the
+     * supplied value.
      * @since 2.0
      */
     public MediaType withCharset(final String charset) {
@@ -319,9 +310,8 @@ public class MediaType {
     }
 
     /**
-     * Check if this media type is compatible with another media type. E.g.
-     * image/* is compatible with image/jpeg, image/png, etc. Media type
-     * parameters are ignored. The function is commutative.
+     * Check if this media type is compatible with another media type. E.g. image/* is compatible with image/jpeg,
+     * image/png, etc. Media type parameters are ignored. The function is commutative.
      *
      * @param other the media type to compare with.
      * @return true if the types are compatible, false otherwise.
@@ -330,24 +320,22 @@ public class MediaType {
         return other != null && // return false if other is null, else
                 (type.equals(MEDIA_TYPE_WILDCARD) || other.type.equals(MEDIA_TYPE_WILDCARD) || // both are wildcard types, or
                         (type.equalsIgnoreCase(other.type) && (subtype.equals(MEDIA_TYPE_WILDCARD)
-                                || other.subtype.equals(MEDIA_TYPE_WILDCARD))) || // same types, wildcard sub-types, or
+                                || other.subtype.equals(MEDIA_TYPE_WILDCARD)))
+                        || // same types, wildcard sub-types, or
                         (type.equalsIgnoreCase(other.type) && this.subtype.equalsIgnoreCase(other.subtype))); // same types & sub-types
     }
 
     /**
-     * <p>Compares {@code obj} to this media type to see if they are the same by comparing
-     * type, subtype and parameters. Note that the case-sensitivity of parameter
-     * values is dependent on the semantics of the parameter name, see
-     * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.7">HTTP/1.1</a>.
-     * This method assumes that values are case-sensitive.
+     * <p>
+     * Compares {@code obj} to this media type to see if they are the same by comparing type, subtype and parameters. Note
+     * that the case-sensitivity of parameter values is dependent on the semantics of the parameter name, see
+     * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.7">HTTP/1.1</a>. This method assumes that values
+     * are case-sensitive.
      * </p>
-     * Note that the {@code equals(...)} implementation does not perform
-     * a class equality check ({@code this.getClass() == obj.getClass()}). Therefore
-     * any class that extends from {@code MediaType} class and needs to override
-     * one of the {@code equals(...)} and {@link #hashCode()} methods must
-     * always override both methods to ensure the contract between
-     * {@link Object#equals(java.lang.Object)} and {@link Object#hashCode()} does
-     * not break.
+     * Note that the {@code equals(...)} implementation does not perform a class equality check
+     * ({@code this.getClass() == obj.getClass()}). Therefore any class that extends from {@code MediaType} class and needs
+     * to override one of the {@code equals(...)} and {@link #hashCode()} methods must always override both methods to
+     * ensure the contract between {@link Object#equals(java.lang.Object)} and {@link Object#hashCode()} does not break.
      *
      * @param obj the object to compare to.
      * @return true if the two media types are the same, false otherwise.
@@ -366,15 +354,13 @@ public class MediaType {
     }
 
     /**
-     * <p>Generate a hash code from the type, subtype and parameters.
+     * <p>
+     * Generate a hash code from the type, subtype and parameters.
      * </p>
-     * Note that the {@link #equals(java.lang.Object)} implementation does not perform
-     * a class equality check ({@code this.getClass() == obj.getClass()}). Therefore
-     * any class that extends from {@code MediaType} class and needs to override
-     * one of the {@link #equals(Object)} and {@code hashCode()} methods must
-     * always override both methods to ensure the contract between
-     * {@link Object#equals(java.lang.Object)} and {@link Object#hashCode()} does
-     * not break.
+     * Note that the {@link #equals(java.lang.Object)} implementation does not perform a class equality check
+     * ({@code this.getClass() == obj.getClass()}). Therefore any class that extends from {@code MediaType} class and needs
+     * to override one of the {@link #equals(Object)} and {@code hashCode()} methods must always override both methods to
+     * ensure the contract between {@link Object#equals(java.lang.Object)} and {@link Object#hashCode()} does not break.
      *
      * @return a generated hash code.
      */
@@ -385,8 +371,7 @@ public class MediaType {
     }
 
     /**
-     * Convert the media type to a string suitable for use as the value of a
-     * corresponding HTTP header.
+     * Convert the media type to a string suitable for use as the value of a corresponding HTTP header.
      *
      * @return a string version of the media type.
      */

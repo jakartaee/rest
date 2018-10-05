@@ -26,22 +26,19 @@ import javax.ws.rs.core.UriBuilder;
 /**
  * Java SE bootstrap example using HTTPS.
  * <p>
- * This example demonstrates bootstrapping on Java SE platforms using HTTPS. It
- * relies mostly on defaults but explicitly sets the protocol to HTTPS. The
- * example will effectively startup the {@link HelloWorld} application at the
- * URL {@code https://localhost/} on an implementation-specific default IP port
- * (e. g. 443, 8443, or someting completely different). The actual configuration
- * needs to be queried after bootstrapping, otherwise callers would be unaware
- * of the actual chosen port.
+ * This example demonstrates bootstrapping on Java SE platforms using HTTPS. It relies mostly on defaults but explicitly
+ * sets the protocol to HTTPS. The example will effectively startup the {@link HelloWorld} application at the URL
+ * {@code https://localhost/} on an implementation-specific default IP port (e. g. 443, 8443, or someting completely
+ * different). The actual configuration needs to be queried after bootstrapping, otherwise callers would be unaware of
+ * the actual chosen port.
  * </p>
  * <p>
  * This example uses some basic <em>external</em> JSSE configuration:
  * </p>
  * <ul>
- * <li>{@code javax.net.ssl.keyStore=~/.keystore} - HTTPS: Path to a keystore
- * holding an X.509 certificate for {@code CN=localhost}</li>
- * <li>{@code javax.net.ssl.keyStorePassword=...} - HTTPS: Password of that
- * keystore</li>
+ * <li>{@code javax.net.ssl.keyStore=~/.keystore} - HTTPS: Path to a keystore holding an X.509 certificate for
+ * {@code CN=localhost}</li>
+ * <li>{@code javax.net.ssl.keyStorePassword=...} - HTTPS: Password of that keystore</li>
  * </ul>
  * </p>
  *
@@ -53,10 +50,8 @@ public final class HttpsJavaSeBootstrapExample {
     /**
      * Runs this example.
      *
-     * @param args
-     *            unused command line arguments
-     * @throws InterruptedException
-     *             when process is killed
+     * @param args unused command line arguments
+     * @throws InterruptedException when process is killed
      */
     public static final void main(final String[] args) throws InterruptedException {
         final Application application = new HelloWorld();

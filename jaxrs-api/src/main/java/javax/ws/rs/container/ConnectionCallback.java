@@ -17,8 +17,8 @@
 package javax.ws.rs.container;
 
 /**
- * Asynchronous request processing lifecycle callback that receives connection
- * related {@link AsyncResponse asynchronous response} lifecycle events.
+ * Asynchronous request processing lifecycle callback that receives connection related {@link AsyncResponse asynchronous
+ * response} lifecycle events.
  * <p>
  * Support for this type of callback by JAX-RS runtime is OPTIONAL.
  * </p>
@@ -28,12 +28,10 @@ package javax.ws.rs.container;
  */
 public interface ConnectionCallback {
     /**
-     * This callback notification method is invoked in case the container detects
-     * that the remote client connection associated with the asynchronous response
-     * has been disconnected.
+     * This callback notification method is invoked in case the container detects that the remote client connection
+     * associated with the asynchronous response has been disconnected.
      *
-     * @param disconnected asynchronous response for which the remote client connection
-     *                     has been lost.
+     * @param disconnected asynchronous response for which the remote client connection has been lost.
      */
     public void onDisconnect(AsyncResponse disconnected);
 }

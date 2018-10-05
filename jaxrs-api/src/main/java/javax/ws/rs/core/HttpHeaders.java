@@ -22,9 +22,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * An injectable interface that provides access to HTTP header information.
- * All methods throw {@link java.lang.IllegalStateException} if called outside the
- * scope of a request (e.g. from a provider constructor).
+ * An injectable interface that provides access to HTTP header information. All methods throw
+ * {@link java.lang.IllegalStateException} if called outside the scope of a request (e.g. from a provider constructor).
  *
  * @author Paul Sandoz
  * @author Marc Hadley
@@ -34,72 +33,63 @@ import java.util.Map;
 public interface HttpHeaders {
 
     /**
-     * Get the values of a HTTP request header. The returned List is read-only.
-     * This is a shortcut for {@code getRequestHeaders().get(name)}.
+     * Get the values of a HTTP request header. The returned List is read-only. This is a shortcut for
+     * {@code getRequestHeaders().get(name)}.
      *
      * @param name the header name, case insensitive.
      * @return a read-only list of header values.
-     * @throws java.lang.IllegalStateException
-     *          if called outside the scope of a request.
+     * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
     public List<String> getRequestHeader(String name);
 
     /**
-     * <p>Get a HTTP header as a single string value.
+     * <p>
+     * Get a HTTP header as a single string value.
      * </p>
-     * Each single header value is converted to String using a
-     * {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one is available
-     * via {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)}
-     * for the header value class or using its {@code toString} method  if a header
-     * delegate is not available.
+     * Each single header value is converted to String using a {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one
+     * is available via {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the header value
+     * class or using its {@code toString} method if a header delegate is not available.
      *
      * @param name the HTTP header.
-     * @return the HTTP header value. If the HTTP header is not present then
-     *         {@code null} is returned. If the HTTP header is present but has no
-     *         value then the empty string is returned. If the HTTP header is present
-     *         more than once then the values of joined together and separated by a ','
-     *         character.
+     * @return the HTTP header value. If the HTTP header is not present then {@code null} is returned. If the HTTP header is
+     * present but has no value then the empty string is returned. If the HTTP header is present more than once then the
+     * values of joined together and separated by a ',' character.
      * @see #getRequestHeader(java.lang.String)
      * @since 2.0
      */
     public String getHeaderString(String name);
 
-
     /**
-     * Get the values of HTTP request headers. The returned Map is case-insensitive
-     * wrt. keys and is read-only. The method never returns {@code null}.
+     * Get the values of HTTP request headers. The returned Map is case-insensitive wrt. keys and is read-only. The method
+     * never returns {@code null}.
      *
      * @return a read-only map of header names and values.
-     * @throws java.lang.IllegalStateException
-     *          if called outside the scope of a request.
+     * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
     public MultivaluedMap<String, String> getRequestHeaders();
 
     /**
-     * <p>Get a list of media types that are acceptable for the response.
+     * <p>
+     * Get a list of media types that are acceptable for the response.
      * </p>
-     * If no acceptable media types are specified, a read-only list containing
-     * a single {@link javax.ws.rs.core.MediaType#WILDCARD_TYPE wildcard media type}
-     * instance is returned.
+     * If no acceptable media types are specified, a read-only list containing a single
+     * {@link javax.ws.rs.core.MediaType#WILDCARD_TYPE wildcard media type} instance is returned.
      *
-     * @return a read-only list of requested response media types sorted according
-     *         to their q-value, with highest preference first.
-     * @throws java.lang.IllegalStateException
-     *          if called outside the scope of a request.
+     * @return a read-only list of requested response media types sorted according to their q-value, with highest preference
+     * first.
+     * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
     public List<MediaType> getAcceptableMediaTypes();
 
     /**
-     * <p>Get a list of languages that are acceptable for the response.
+     * <p>
+     * Get a list of languages that are acceptable for the response.
      * </p>
-     * If no acceptable languages are specified, a read-only list containing
-     * a single wildcard {@link java.util.Locale} instance (with language field
-     * set to "{@code *}") is returned.
+     * If no acceptable languages are specified, a read-only list containing a single wildcard {@link java.util.Locale}
+     * instance (with language field set to "{@code *}") is returned.
      *
-     * @return a read-only list of acceptable languages sorted according
-     *         to their q-value, with highest preference first.
-     * @throws java.lang.IllegalStateException
-     *          if called outside the scope of a request.
+     * @return a read-only list of acceptable languages sorted according to their q-value, with highest preference first.
+     * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
     public List<Locale> getAcceptableLanguages();
 
@@ -107,8 +97,7 @@ public interface HttpHeaders {
      * Get the media type of the request entity.
      *
      * @return the media type or {@code null} if there is no request entity.
-     * @throws java.lang.IllegalStateException
-     *          if called outside the scope of a request.
+     * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
     public MediaType getMediaType();
 
@@ -116,8 +105,7 @@ public interface HttpHeaders {
      * Get the language of the request entity.
      *
      * @return the language of the entity or {@code null} if not specified.
-     * @throws java.lang.IllegalStateException
-     *          if called outside the scope of a request.
+     * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
     public Locale getLanguage();
 
@@ -125,8 +113,7 @@ public interface HttpHeaders {
      * Get any cookies that accompanied the request.
      *
      * @return a read-only map of cookie name (String) to Cookie.
-     * @throws java.lang.IllegalStateException
-     *          if called outside the scope of a request
+     * @throws java.lang.IllegalStateException if called outside the scope of a request
      */
     public Map<String, Cookie> getCookies();
 
@@ -141,8 +128,7 @@ public interface HttpHeaders {
     /**
      * Get Content-Length value.
      *
-     * @return Content-Length as integer if present and valid number. In other
-     *         cases returns -1.
+     * @return Content-Length as integer if present and valid number. In other cases returns -1.
      * @since 2.0
      */
     public int getLength();

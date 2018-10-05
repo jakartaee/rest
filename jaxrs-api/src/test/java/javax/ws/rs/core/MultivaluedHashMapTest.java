@@ -110,12 +110,12 @@ public class MultivaluedHashMapTest {
         mvm.addAll("foo1", "bar1", "bar2", "bar1");
 
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-             ObjectOutputStream objOut = new ObjectOutputStream(out)) {
+                ObjectOutputStream objOut = new ObjectOutputStream(out)) {
 
             objOut.writeObject(mvm);
 
             try (ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-                 ObjectInputStream objIn = new ObjectInputStream(in)) {
+                    ObjectInputStream objIn = new ObjectInputStream(in)) {
 
                 assertEquals(mvm, objIn.readObject());
             }

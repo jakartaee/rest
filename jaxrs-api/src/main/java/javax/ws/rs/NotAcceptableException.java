@@ -19,9 +19,8 @@ package javax.ws.rs;
 import javax.ws.rs.core.Response;
 
 /**
- * A runtime exception indicating that a client request is
- * {@link javax.ws.rs.core.Response.Status#NOT_ACCEPTABLE not acceptable}
- * by the server.
+ * A runtime exception indicating that a client request is {@link javax.ws.rs.core.Response.Status#NOT_ACCEPTABLE not
+ * acceptable} by the server.
  *
  * @author Sergey Beryozkin
  * @author Marek Potociar
@@ -41,8 +40,7 @@ public class NotAcceptableException extends ClientErrorException {
     /**
      * Construct a new "request not acceptable" exception.
      *
-     * @param message the detail message (which is saved for later retrieval
-     *                by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      */
     public NotAcceptableException(final String message) {
         super(message, Response.Status.NOT_ACCEPTABLE);
@@ -52,8 +50,7 @@ public class NotAcceptableException extends ClientErrorException {
      * Construct a new "request not acceptable" exception.
      *
      * @param response error response.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 406}.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 406}.
      */
     public NotAcceptableException(final Response response) {
         super(validate(response, Response.Status.NOT_ACCEPTABLE));
@@ -62,11 +59,9 @@ public class NotAcceptableException extends ClientErrorException {
     /**
      * Construct a new "request not acceptable" exception.
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param response error response.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 406}.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 406}.
      */
     public NotAcceptableException(final String message, final Response response) {
         super(message, validate(response, Response.Status.NOT_ACCEPTABLE));
@@ -84,9 +79,8 @@ public class NotAcceptableException extends ClientErrorException {
     /**
      * Construct a new "request not acceptable" exception.
      *
-     * @param message the detail message (which is saved for later retrieval
-     *                by the {@link #getMessage()} method).
-     * @param cause   the underlying cause of the exception.
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+     * @param cause the underlying cause of the exception.
      */
     public NotAcceptableException(final String message, final Throwable cause) {
         super(message, Response.Status.NOT_ACCEPTABLE, cause);
@@ -96,9 +90,8 @@ public class NotAcceptableException extends ClientErrorException {
      * Construct a new "request not acceptable" exception.
      *
      * @param response error response.
-     * @param cause    the underlying cause of the exception.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 406}.
+     * @param cause the underlying cause of the exception.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 406}.
      */
     public NotAcceptableException(final Response response, final Throwable cause) {
         super(validate(response, Response.Status.NOT_ACCEPTABLE), cause);
@@ -107,12 +100,10 @@ public class NotAcceptableException extends ClientErrorException {
     /**
      * Construct a new "request not acceptable" exception.
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param response error response.
-     * @param cause    the underlying cause of the exception.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 406}.
+     * @param cause the underlying cause of the exception.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 406}.
      */
     public NotAcceptableException(final String message, final Response response, final Throwable cause) {
         super(message, validate(response, Response.Status.NOT_ACCEPTABLE), cause);

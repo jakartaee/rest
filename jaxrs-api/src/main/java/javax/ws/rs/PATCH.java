@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * @see HttpMethod
  * @since 2.1
  */
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @HttpMethod(HttpMethod.PATCH)
 @Documented

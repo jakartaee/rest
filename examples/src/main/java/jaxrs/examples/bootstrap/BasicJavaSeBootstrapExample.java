@@ -26,12 +26,10 @@ import javax.ws.rs.core.UriBuilder;
 /**
  * Basic Java SE bootstrap example.
  * <p>
- * This example demonstrates bootstrapping on Java SE platforms solely using
- * defaults. It will effectively startup the {@link HelloWorld} application at
- * the URL {@code http://localhost/} on an implementation-specific default IP
- * port (e. g. 80, 8080, or something completely different). The actual
- * configuration needs to be queried after bootstrapping, otherwise callers
- * would be unaware of the actual chosen port.
+ * This example demonstrates bootstrapping on Java SE platforms solely using defaults. It will effectively startup the
+ * {@link HelloWorld} application at the URL {@code http://localhost/} on an implementation-specific default IP port (e.
+ * g. 80, 8080, or something completely different). The actual configuration needs to be queried after bootstrapping,
+ * otherwise callers would be unaware of the actual chosen port.
  * </p>
  *
  * @author Markus KARG (markus@headcrashing.eu)
@@ -42,10 +40,8 @@ public final class BasicJavaSeBootstrapExample {
     /**
      * Runs this example.
      *
-     * @param args
-     *            unused command line arguments
-     * @throws InterruptedException
-     *             when process is killed
+     * @param args unused command line arguments
+     * @throws InterruptedException when process is killed
      */
     public static final void main(final String[] args) throws InterruptedException {
         final Application application = new HelloWorld();

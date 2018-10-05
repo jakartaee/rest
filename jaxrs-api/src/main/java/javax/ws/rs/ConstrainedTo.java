@@ -23,15 +23,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicates the run-time context in which an annotated JAX-RS provider
- * is applicable. If a {@code @ConstrainedTo} annotation is not
- * present on a JAX-RS provider type declaration, the declared provider
- * may be used in any run-time context. If such a annotation is present,
- * the JAX-RS runtime will enforce the specified usage restriction.
+ * Indicates the run-time context in which an annotated JAX-RS provider is applicable. If a {@code @ConstrainedTo}
+ * annotation is not present on a JAX-RS provider type declaration, the declared provider may be used in any run-time
+ * context. If such a annotation is present, the JAX-RS runtime will enforce the specified usage restriction.
  * <p>
- * The following example illustrates restricting a {@link javax.ws.rs.ext.MessageBodyReader}
- * provider implementation to run only as part of a {@link RuntimeType#CLIENT JAX-RS client run-time}:
+ * The following example illustrates restricting a {@link javax.ws.rs.ext.MessageBodyReader} provider implementation to
+ * run only as part of a {@link RuntimeType#CLIENT JAX-RS client run-time}:
  * </p>
+ *
  * <pre>
  *  &#064;ConstrainedTo(RuntimeType.CLIENT)
  *  public class MyReader implements MessageBodyReader {
@@ -39,9 +38,10 @@ import java.lang.annotation.Target;
  *  }
  * </pre>
  * <p>
- * The following example illustrates restricting a {@link javax.ws.rs.ext.WriterInterceptor}
- * provider implementation to run only as part of a {@link RuntimeType#SERVER JAX-RS server run-time}:
+ * The following example illustrates restricting a {@link javax.ws.rs.ext.WriterInterceptor} provider implementation to
+ * run only as part of a {@link RuntimeType#SERVER JAX-RS server run-time}:
  * </p>
+ *
  * <pre>
  *  &#064;ConstrainedTo(RuntimeType.SERVER)
  *  public class MyWriterInterceptor implements WriterInterceptor {
@@ -49,15 +49,15 @@ import java.lang.annotation.Target;
  *  }
  * </pre>
  * <p>
- * It is a configuration error to constraint a JAX-RS provider implementation to
- * a run-time context in which the provider cannot be applied. In such case a JAX-RS
- * runtime SHOULD inform a user about the issue and ignore the provider implementation in further
- * processing.
+ * It is a configuration error to constraint a JAX-RS provider implementation to a run-time context in which the
+ * provider cannot be applied. In such case a JAX-RS runtime SHOULD inform a user about the issue and ignore the
+ * provider implementation in further processing.
  * </p>
  * <p>
- * For example, the following restriction of a {@link javax.ws.rs.client.ClientRequestFilter}
- * to run only as part of a JAX-RS server run-time would be considered invalid:
+ * For example, the following restriction of a {@link javax.ws.rs.client.ClientRequestFilter} to run only as part of a
+ * JAX-RS server run-time would be considered invalid:
  * </p>
+ *
  * <pre>
  *  // reported as invalid and ignored by JAX-RS runtime
  *  &#064;ConstrainedTo(RuntimeType.SERVER)
@@ -76,9 +76,8 @@ public @interface ConstrainedTo {
 
     /**
      * Define the {@link RuntimeType constraint type} to be placed on a JAX-RS provider.
-     * 
+     *
      * @return applicable run-time context.
      */
     RuntimeType value();
 }
-

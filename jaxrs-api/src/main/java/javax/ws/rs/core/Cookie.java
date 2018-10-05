@@ -20,8 +20,7 @@ import javax.ws.rs.ext.RuntimeDelegate;
 import javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
 
 /**
- * Represents the value of a HTTP cookie, transferred in a request.
- * RFC 2109 specifies the legal characters for name,
+ * Represents the value of a HTTP cookie, transferred in a request. RFC 2109 specifies the legal characters for name,
  * value, path and domain. The default version of 1 corresponds to RFC 2109.
  *
  * @author Paul Sandoz
@@ -39,8 +38,7 @@ public class Cookie {
      * @deprecated This field will be removed in a future version. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
      */
     @Deprecated
-    private static final HeaderDelegate<Cookie> HEADER_DELEGATE =
-            RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class);
+    private static final HeaderDelegate<Cookie> HEADER_DELEGATE = RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class);
     private final String name;
     private final String value;
     private final int version;
@@ -50,10 +48,10 @@ public class Cookie {
     /**
      * Create a new instance.
      *
-     * @param name    the name of the cookie.
-     * @param value   the value of the cookie.
-     * @param path    the URI path for which the cookie is valid.
-     * @param domain  the host domain for which the cookie is valid.
+     * @param name the name of the cookie.
+     * @param value the value of the cookie.
+     * @param path the URI path for which the cookie is valid.
+     * @param domain the host domain for which the cookie is valid.
      * @param version the version of the specification to which the cookie complies.
      * @throws IllegalArgumentException if name is {@code null}.
      */
@@ -72,9 +70,9 @@ public class Cookie {
     /**
      * Create a new instance.
      *
-     * @param name   the name of the cookie.
-     * @param value  the value of the cookie.
-     * @param path   the URI path for which the cookie is valid.
+     * @param name the name of the cookie.
+     * @param value the value of the cookie.
+     * @param path the URI path for which the cookie is valid.
      * @param domain the host domain for which the cookie is valid.
      * @throws IllegalArgumentException if name is {@code null}.
      */
@@ -86,7 +84,7 @@ public class Cookie {
     /**
      * Create a new instance.
      *
-     * @param name  the name of the cookie.
+     * @param name the name of the cookie.
      * @param value the value of the cookie.
      * @throws IllegalArgumentException if name is {@code null}.
      */
@@ -100,10 +98,9 @@ public class Cookie {
      *
      * @param value the cookie string.
      * @return the newly created {@code Cookie}.
-     * @throws IllegalArgumentException if the supplied string cannot be parsed
-     *                                  or is {@code null}.
+     * @throws IllegalArgumentException if the supplied string cannot be parsed or is {@code null}.
      * @deprecated This method will be removed in a future version. Please use
-     *   RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class).fromString(value) instead.
+     * RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class).fromString(value) instead.
      */
     @Deprecated
     public static Cookie valueOf(final String value) {
@@ -156,13 +153,12 @@ public class Cookie {
     }
 
     /**
-     * Convert the cookie to a string suitable for use as the value of the
-     * corresponding HTTP header.
+     * Convert the cookie to a string suitable for use as the value of the corresponding HTTP header.
      *
      * @return a stringified cookie.
      * @deprecated The format of the toString() method is subject to change in a future version. Please use
-     * RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class).toString(value) instead if you rely on
-     * the format of this method.
+     * RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class).toString(value) instead if you rely on the format of
+     * this method.
      */
     @Override
     @Deprecated
@@ -190,10 +186,10 @@ public class Cookie {
      * Compare for equality.
      *
      * @param obj the object to compare to.
-     * @return {@code true}, if the object is a {@code Cookie} with the same
-     *         value for all properties, {@code false} otherwise.
+     * @return {@code true}, if the object is a {@code Cookie} with the same value for all properties, {@code false}
+     * otherwise.
      */
-    @SuppressWarnings({"StringEquality", "RedundantIfStatement"})
+    @SuppressWarnings({ "StringEquality", "RedundantIfStatement" })
     @Override
     public boolean equals(final Object obj) {
         if (obj == null) {

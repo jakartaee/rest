@@ -61,8 +61,7 @@ public class ItemStoreResource {
         this.sse = sse;
         this.broadcaster = sse.newBroadcaster();
 
-        broadcaster.onError((subscriber, e) ->
-                LOGGER.log(Level.WARNING, "An exception has been thrown while broadcasting to an event output.", e));
+        broadcaster.onError((subscriber, e) -> LOGGER.log(Level.WARNING, "An exception has been thrown while broadcasting to an event output.", e));
 
         broadcaster.onClose(subscriber -> LOGGER.log(Level.INFO, "SSE event output has been closed."));
     }
@@ -92,10 +91,8 @@ public class ItemStoreResource {
      * <ul>
      * <li><b>disconnect</b> - disconnect all registered event streams.</li>
      * <li><b>reconnect now</b> - enable client reconnecting.</li>
-     * <li><b>reconnect &lt;seconds&gt;</b> - disable client reconnecting.
-     * Reconnecting clients will receive a HTTP 503 response with
-     * {@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER} set to the amount of
-     * milliseconds specified.</li>
+     * <li><b>reconnect &lt;seconds&gt;</b> - disable client reconnecting. Reconnecting clients will receive a HTTP 503
+     * response with {@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER} set to the amount of milliseconds specified.</li>
      * </ul>
      *
      * @param command command to be processed.
@@ -128,11 +125,11 @@ public class ItemStoreResource {
     /**
      * Connect or re-connect to SSE event stream.
      *
-     * @param lastEventId Value of custom SSE HTTP <tt>{@value javax.ws.rs.core.HttpHeaders#LAST_EVENT_ID_HEADER}</tt> header.
-     *                    Defaults to {@code -1} if not set.
+     * @param lastEventId Value of custom SSE HTTP <tt>{@value javax.ws.rs.core.HttpHeaders#LAST_EVENT_ID_HEADER}</tt>
+     * header. Defaults to {@code -1} if not set.
      * @param serverSink new SSE server sink stream representing the (re-)established SSE client connection.
      * @throws InternalServerErrorException in case replaying missed events to the reconnected output stream fails.
-     * @throws ServiceUnavailableException  in case the reconnect delay is set to a positive value.
+     * @throws ServiceUnavailableException in case the reconnect delay is set to a positive value.
      */
     @GET
     @Path("events")
@@ -211,7 +208,7 @@ public class ItemStoreResource {
 
     private OutboundSseEvent createItemEvent(final int eventId, final String name) {
         Logger.getLogger(ItemStoreResource.class.getName())
-              .info("Creating event id [" + eventId + "] name [" + name + "]");
+                .info("Creating event id [" + eventId + "] name [" + name + "]");
         return sse.newEventBuilder().id("" + eventId).data(String.class, name).build();
     }
 }

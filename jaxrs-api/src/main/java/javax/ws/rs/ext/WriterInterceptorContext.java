@@ -23,9 +23,8 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MultivaluedMap;
 
 /**
- * Context class used by {@link javax.ws.rs.ext.WriterInterceptor}
- * to intercept calls to {@link javax.ws.rs.ext.MessageBodyWriter#writeTo}.
- * The getters and setters in this context class correspond to the
+ * Context class used by {@link javax.ws.rs.ext.WriterInterceptor} to intercept calls to
+ * {@link javax.ws.rs.ext.MessageBodyWriter#writeTo}. The getters and setters in this context class correspond to the
  * parameters of the intercepted method.
  *
  * @author Santiago Pericas-Geertsen
@@ -39,14 +38,12 @@ public interface WriterInterceptorContext extends InterceptorContext {
     /**
      * Proceed to the next interceptor in the chain.
      *
-     * Interceptors MUST explicitly call this method to continue the execution chain;
-     * the call to this method in the last interceptor of the chain will invoke
-     * the wrapped {@link javax.ws.rs.ext.MessageBodyWriter#writeTo} method.
+     * Interceptors MUST explicitly call this method to continue the execution chain; the call to this method in the last
+     * interceptor of the chain will invoke the wrapped {@link javax.ws.rs.ext.MessageBodyWriter#writeTo} method.
      *
-     * @throws java.io.IOException if an IO error arises or is thrown by the wrapped
-     *                             {@code MessageBodyWriter.writeTo} method.
-     * @throws javax.ws.rs.WebApplicationException
-     *                             thrown by the wrapped {@code MessageBodyWriter.writeTo} method.
+     * @throws java.io.IOException if an IO error arises or is thrown by the wrapped {@code MessageBodyWriter.writeTo}
+     * method.
+     * @throws javax.ws.rs.WebApplicationException thrown by the wrapped {@code MessageBodyWriter.writeTo} method.
      */
     void proceed() throws IOException, WebApplicationException;
 
@@ -65,17 +62,15 @@ public interface WriterInterceptorContext extends InterceptorContext {
     void setEntity(Object entity);
 
     /**
-     * Get the output stream for the object to be written. The JAX-RS runtime
-     * is responsible for closing the output stream.
+     * Get the output stream for the object to be written. The JAX-RS runtime is responsible for closing the output stream.
      *
      * @return output stream for the object to be written.
      */
     OutputStream getOutputStream();
 
     /**
-     * Set a new output stream for the object to be written. For example, by wrapping
-     * it with another output stream. The JAX-RS runtime is responsible for closing
-     * the output stream that is set.
+     * Set a new output stream for the object to be written. For example, by wrapping it with another output stream. The
+     * JAX-RS runtime is responsible for closing the output stream that is set.
      *
      * @param os new output stream for the object to be written.
      */

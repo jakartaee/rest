@@ -40,8 +40,7 @@ public class NotSupportedException extends ClientErrorException {
     /**
      * Construct a new unsupported media type exception.
      *
-     * @param message the detail message (which is saved for later retrieval
-     *                by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      */
     public NotSupportedException(final String message) {
         super(message, Response.Status.UNSUPPORTED_MEDIA_TYPE);
@@ -51,8 +50,7 @@ public class NotSupportedException extends ClientErrorException {
      * Construct a new unsupported media type exception.
      *
      * @param response error response.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 415}.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 415}.
      */
     public NotSupportedException(final Response response) {
         super(validate(response, Response.Status.UNSUPPORTED_MEDIA_TYPE));
@@ -61,11 +59,9 @@ public class NotSupportedException extends ClientErrorException {
     /**
      * Construct a new unsupported media type exception.
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param response error response.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 415}.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 415}.
      */
     public NotSupportedException(final String message, final Response response) {
         super(message, validate(response, Response.Status.UNSUPPORTED_MEDIA_TYPE));
@@ -83,9 +79,8 @@ public class NotSupportedException extends ClientErrorException {
     /**
      * Construct a new unsupported media type exception.
      *
-     * @param message the detail message (which is saved for later retrieval
-     *                by the {@link #getMessage()} method).
-     * @param cause   the underlying cause of the exception.
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+     * @param cause the underlying cause of the exception.
      */
     public NotSupportedException(final String message, final Throwable cause) {
         super(message, Response.Status.UNSUPPORTED_MEDIA_TYPE, cause);
@@ -95,9 +90,8 @@ public class NotSupportedException extends ClientErrorException {
      * Construct a new unsupported media type exception.
      *
      * @param response error response.
-     * @param cause    the underlying cause of the exception.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 415}.
+     * @param cause the underlying cause of the exception.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 415}.
      */
     public NotSupportedException(final Response response, final Throwable cause) {
         super(validate(response, Response.Status.UNSUPPORTED_MEDIA_TYPE), cause);
@@ -106,12 +100,10 @@ public class NotSupportedException extends ClientErrorException {
     /**
      * Construct a new unsupported media type exception.
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param response error response.
-     * @param cause    the underlying cause of the exception.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 415}.
+     * @param cause the underlying cause of the exception.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 415}.
      */
     public NotSupportedException(final String message, final Response response, final Throwable cause) {
         super(message, validate(response, Response.Status.UNSUPPORTED_MEDIA_TYPE), cause);

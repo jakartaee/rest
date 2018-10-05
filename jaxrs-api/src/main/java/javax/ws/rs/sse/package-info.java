@@ -17,7 +17,7 @@
 /**
  * Server-Sent Events related API.
  *
- * This package provides support for providing event streams from the server
- * and also for processing then on the client side.
+ * This package provides support for providing event streams from the server and also for processing then on the client
+ * side.
  */
 package javax.ws.rs.sse;

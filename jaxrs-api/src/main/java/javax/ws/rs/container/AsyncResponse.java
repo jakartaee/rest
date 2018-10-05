@@ -22,30 +22,26 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * An injectable JAX-RS asynchronous response that provides means for asynchronous server side
- * response processing.
+ * An injectable JAX-RS asynchronous response that provides means for asynchronous server side response processing.
  * <p>
- * A new instance of {@code AsyncResponse} may be injected into a
- * {@link javax.ws.rs.HttpMethod resource or sub-resource method} parameter using
- * the {@link Suspended &#64;Suspended} annotation.
+ * A new instance of {@code AsyncResponse} may be injected into a {@link javax.ws.rs.HttpMethod resource or sub-resource
+ * method} parameter using the {@link Suspended &#64;Suspended} annotation.
  * </p>
- * Each asynchronous response instance is bound to the running request and can be used to
- * asynchronously provide the request processing result or otherwise manipulate the suspended
- * client connection. The available operations include:
+ * Each asynchronous response instance is bound to the running request and can be used to asynchronously provide the
+ * request processing result or otherwise manipulate the suspended client connection. The available operations include:
  * <ul>
  * <li>updating suspended state data (time-out value, response ...)</li>
  * <li>resuming the suspended request processing</li>
  * <li>canceling the suspended request processing</li>
  * </ul>
  * <p>
- * Following example demonstrates the use of the {@code AsyncResponse} for asynchronous
- * HTTP request processing:
+ * Following example demonstrates the use of the {@code AsyncResponse} for asynchronous HTTP request processing:
  * </p>
+ *
  * <pre>
  * &#64;Path("/messages/next")
  * public class MessagingResource {
- *     private static final BlockingQueue&lt;AsyncResponse&gt; suspended =
- *             new ArrayBlockingQueue&lt;AsyncResponse&gt;(5);
+ *     private static final BlockingQueue&lt;AsyncResponse&gt; suspended = new ArrayBlockingQueue&lt;AsyncResponse&gt;(5);
  *
  *     &#64;GET
  *     public void readMessage(&#64;Suspended AsyncResponse ar) throws InterruptedException {
@@ -61,16 +57,15 @@ import java.util.concurrent.TimeUnit;
  * }
  * </pre>
  * <p>
- * If the asynchronous response was suspended with a positive timeout value, and has
- * not been explicitly resumed before the timeout has expired, the processing
- * will be resumed once the specified timeout threshold is reached, provided a positive
- * timeout value was set on the response.
+ * If the asynchronous response was suspended with a positive timeout value, and has not been explicitly resumed before
+ * the timeout has expired, the processing will be resumed once the specified timeout threshold is reached, provided a
+ * positive timeout value was set on the response.
  * </p>
  * <p>
- * By default a timed-out asynchronous response is resumed with a {@link javax.ws.rs.WebApplicationException}
- * that has {@link javax.ws.rs.core.Response.Status#SERVICE_UNAVAILABLE HTTP 503 (Service unavailable)}
- * error response status code set. This default behavior may be overridden by
- * {@link AsyncResponse#setTimeoutHandler(TimeoutHandler) setting} a custom {@link TimeoutHandler time-out handler}.
+ * By default a timed-out asynchronous response is resumed with a {@link javax.ws.rs.WebApplicationException} that has
+ * {@link javax.ws.rs.core.Response.Status#SERVICE_UNAVAILABLE HTTP 503 (Service unavailable)} error response status
+ * code set. This default behavior may be overridden by {@link AsyncResponse#setTimeoutHandler(TimeoutHandler) setting}
+ * a custom {@link TimeoutHandler time-out handler}.
  * </p>
  *
  * @author Marek Potociar
@@ -85,26 +80,23 @@ public interface AsyncResponse {
     /**
      * Resume the suspended request processing using the provided response data.
      *
-     * The provided response data can be of any Java type that can be
-     * returned from a {@link javax.ws.rs.HttpMethod JAX-RS resource method}.
+     * The provided response data can be of any Java type that can be returned from a {@link javax.ws.rs.HttpMethod JAX-RS
+     * resource method}.
      * <p>
-     * The asynchronous response must be still in a {@link #isSuspended() suspended} state
-     * for this method to succeed.
+     * The asynchronous response must be still in a {@link #isSuspended() suspended} state for this method to succeed.
      * </p>
      * <p>
-     * By executing this method, the request is guaranteed to complete either successfully or
-     * with an error. The data processing by the JAX-RS runtime follows the same path
-     * as it would for the response data returned synchronously by a JAX-RS resource,
-     * except that unmapped exceptions are not re-thrown by JAX-RS runtime to be handled by
-     * a hosting I/O container. Instead, any unmapped exceptions are propagated to the hosting
-     * I/O container via a container-specific callback mechanism. Depending on the container
-     * implementation, propagated unmapped exceptions typically result in an error status
-     * being sent to the client and/or the connection being closed.
+     * By executing this method, the request is guaranteed to complete either successfully or with an error. The data
+     * processing by the JAX-RS runtime follows the same path as it would for the response data returned synchronously by a
+     * JAX-RS resource, except that unmapped exceptions are not re-thrown by JAX-RS runtime to be handled by a hosting I/O
+     * container. Instead, any unmapped exceptions are propagated to the hosting I/O container via a container-specific
+     * callback mechanism. Depending on the container implementation, propagated unmapped exceptions typically result in an
+     * error status being sent to the client and/or the connection being closed.
      * </p>
      *
      * @param response data to be sent back in response to the suspended request.
-     * @return {@code true} if the request processing has been resumed, returns {@code false} in case
-     *         the request processing is not {@link #isSuspended() suspended} and could not be resumed.
+     * @return {@code true} if the request processing has been resumed, returns {@code false} in case the request processing
+     * is not {@link #isSuspended() suspended} and could not be resumed.
      * @see #resume(Throwable)
      */
     public boolean resume(Object response);
@@ -112,23 +104,20 @@ public interface AsyncResponse {
     /**
      * Resume the suspended request processing using the provided throwable.
      *
-     * For the provided throwable same rules apply as for an exception thrown
-     * by a {@link javax.ws.rs.HttpMethod JAX-RS resource method}.
+     * For the provided throwable same rules apply as for an exception thrown by a {@link javax.ws.rs.HttpMethod JAX-RS
+     * resource method}.
      * <p>
-     * By executing this method, the request is guaranteed to complete either successfully or
-     * with an error. The throwable processing by the JAX-RS runtime follows the same path
-     * as it would for the response data returned synchronously by a JAX-RS resource,
-     * except that unmapped exceptions are not re-thrown by JAX-RS runtime to be handled by
-     * a hosting I/O container. Instead, any unmapped exceptions are propagated to the hosting
-     * I/O container via a container-specific callback mechanism. Depending on the container
-     * implementation, propagated unmapped exceptions typically result in an error status
-     * being sent to the client and/or the connection being closed.
+     * By executing this method, the request is guaranteed to complete either successfully or with an error. The throwable
+     * processing by the JAX-RS runtime follows the same path as it would for the response data returned synchronously by a
+     * JAX-RS resource, except that unmapped exceptions are not re-thrown by JAX-RS runtime to be handled by a hosting I/O
+     * container. Instead, any unmapped exceptions are propagated to the hosting I/O container via a container-specific
+     * callback mechanism. Depending on the container implementation, propagated unmapped exceptions typically result in an
+     * error status being sent to the client and/or the connection being closed.
      * </p>
      *
-     * @param response an exception to be raised in response to the suspended
-     *                 request.
-     * @return {@code true} if the response has been resumed, returns {@code false} in case
-     *         the response is not {@link #isSuspended() suspended} and could not be resumed.
+     * @param response an exception to be raised in response to the suspended request.
+     * @return {@code true} if the response has been resumed, returns {@code false} in case the response is not
+     * {@link #isSuspended() suspended} and could not be resumed.
      * @see #resume(Object)
      */
     public boolean resume(Throwable response);
@@ -136,23 +125,21 @@ public interface AsyncResponse {
     /**
      * Cancel the suspended request processing.
      * <p>
-     * When a request processing is cancelled using this method, the JAX-RS implementation
-     * MUST indicate to the client that the request processing has been cancelled by sending
-     * back a {@link javax.ws.rs.core.Response.Status#SERVICE_UNAVAILABLE HTTP 503 (Service unavailable)}
-     * error response.
+     * When a request processing is cancelled using this method, the JAX-RS implementation MUST indicate to the client that
+     * the request processing has been cancelled by sending back a
+     * {@link javax.ws.rs.core.Response.Status#SERVICE_UNAVAILABLE HTTP 503 (Service unavailable)} error response.
      * </p>
      * <p>
-     * Invoking a {@code cancel(...)} method multiple times to cancel request processing has the same
-     * effect as canceling the request processing only once. Invoking a {@code cancel(...)} method on
-     * an asynchronous response instance that has already been cancelled or resumed has no effect and the
-     * method call is ignored while returning {@code true}, in case the request has been cancelled previously.
-     * Otherwise, in case the request has been resumed regularly (using a {@code resume(...) method}) or
-     * resumed due to a time-out, method returns {@code false}.
+     * Invoking a {@code cancel(...)} method multiple times to cancel request processing has the same effect as canceling
+     * the request processing only once. Invoking a {@code cancel(...)} method on an asynchronous response instance that has
+     * already been cancelled or resumed has no effect and the method call is ignored while returning {@code true}, in case
+     * the request has been cancelled previously. Otherwise, in case the request has been resumed regularly (using a
+     * {@code resume(...) method}) or resumed due to a time-out, method returns {@code false}.
      * </p>
      *
-     * @return {@code true} if the request processing has been cancelled, returns {@code false} in case
-     *         the request processing is not {@link #isSuspended() suspended} and could not be cancelled
-     *         and is not {@link #isCancelled() cancelled} already.
+     * @return {@code true} if the request processing has been cancelled, returns {@code false} in case the request
+     * processing is not {@link #isSuspended() suspended} and could not be cancelled and is not {@link #isCancelled()
+     * cancelled} already.
      * @see #cancel(int)
      * @see #cancel(java.util.Date)
      */
@@ -161,27 +148,24 @@ public interface AsyncResponse {
     /**
      * Cancel the suspended request processing.
      * <p>
-     * When a request processing is cancelled using this method, the JAX-RS implementation
-     * MUST indicate to the client that the request processing has been cancelled by sending
-     * back a {@link javax.ws.rs.core.Response.Status#SERVICE_UNAVAILABLE HTTP 503 (Service unavailable)}
-     * error response with a {@code Retry-After} header set to the value provided by the method
-     * parameter.
+     * When a request processing is cancelled using this method, the JAX-RS implementation MUST indicate to the client that
+     * the request processing has been cancelled by sending back a
+     * {@link javax.ws.rs.core.Response.Status#SERVICE_UNAVAILABLE HTTP 503 (Service unavailable)} error response with a
+     * {@code Retry-After} header set to the value provided by the method parameter.
      * </p>
      * <p>
-     * Invoking a {@code cancel(...)} method multiple times to cancel request processing has the same
-     * effect as canceling the request processing only once. Invoking a {@code cancel(...)} method on
-     * an asynchronous response instance that has already been cancelled or resumed has no effect and the
-     * method call is ignored while returning {@code true}, in case the request has been cancelled previously.
-     * Otherwise, in case the request has been resumed regularly (using a {@code resume(...) method}) or
-     * resumed due to a time-out, method returns {@code false}.
+     * Invoking a {@code cancel(...)} method multiple times to cancel request processing has the same effect as canceling
+     * the request processing only once. Invoking a {@code cancel(...)} method on an asynchronous response instance that has
+     * already been cancelled or resumed has no effect and the method call is ignored while returning {@code true}, in case
+     * the request has been cancelled previously. Otherwise, in case the request has been resumed regularly (using a
+     * {@code resume(...) method}) or resumed due to a time-out, method returns {@code false}.
      * </p>
      *
-     * @param retryAfter a decimal integer number of seconds after the response is sent to the client that
-     *                   indicates how long the service is expected to be unavailable to the requesting
-     *                   client.
-     * @return {@code true} if the request processing has been cancelled, returns {@code false} in case
-     *         the request processing is not {@link #isSuspended() suspended} and could not be cancelled
-     *         and is not {@link #isCancelled() cancelled} already.
+     * @param retryAfter a decimal integer number of seconds after the response is sent to the client that indicates how
+     * long the service is expected to be unavailable to the requesting client.
+     * @return {@code true} if the request processing has been cancelled, returns {@code false} in case the request
+     * processing is not {@link #isSuspended() suspended} and could not be cancelled and is not {@link #isCancelled()
+     * cancelled} already.
      * @see #cancel
      * @see #cancel(java.util.Date)
      */
@@ -190,26 +174,23 @@ public interface AsyncResponse {
     /**
      * Cancel the suspended request processing.
      * <p>
-     * When a request processing is cancelled using this method, the JAX-RS implementation
-     * MUST indicate to the client that the request processing has been cancelled by sending
-     * back a {@link javax.ws.rs.core.Response.Status#SERVICE_UNAVAILABLE HTTP 503 (Service unavailable)}
-     * error response with a {@code Retry-After} header set to the value provided by the method
-     * parameter.
+     * When a request processing is cancelled using this method, the JAX-RS implementation MUST indicate to the client that
+     * the request processing has been cancelled by sending back a
+     * {@link javax.ws.rs.core.Response.Status#SERVICE_UNAVAILABLE HTTP 503 (Service unavailable)} error response with a
+     * {@code Retry-After} header set to the value provided by the method parameter.
      * </p>
      * <p>
-     * Invoking a {@code cancel(...)} method multiple times to cancel request processing has the same
-     * effect as canceling the request processing only once. Invoking a {@code cancel(...)} method on
-     * an asynchronous response instance that has already been cancelled or resumed has no effect and the
-     * method call is ignored while returning {@code true}, in case the request has been cancelled previously.
-     * Otherwise, in case the request has been resumed regularly (using a {@code resume(...) method}) or
-     * resumed due to a time-out, method returns {@code false}.
+     * Invoking a {@code cancel(...)} method multiple times to cancel request processing has the same effect as canceling
+     * the request processing only once. Invoking a {@code cancel(...)} method on an asynchronous response instance that has
+     * already been cancelled or resumed has no effect and the method call is ignored while returning {@code true}, in case
+     * the request has been cancelled previously. Otherwise, in case the request has been resumed regularly (using a
+     * {@code resume(...) method}) or resumed due to a time-out, method returns {@code false}.
      * </p>
      *
-     * @param retryAfter a date that indicates how long the service is expected to be unavailable to the
-     *                   requesting client.
-     * @return {@code true} if the request processing has been cancelled, returns {@code false} in case
-     *         the request processing is not {@link #isSuspended() suspended} and could not be cancelled
-     *         and is not {@link #isCancelled() cancelled} already.
+     * @param retryAfter a date that indicates how long the service is expected to be unavailable to the requesting client.
+     * @return {@code true} if the request processing has been cancelled, returns {@code false} in case the request
+     * processing is not {@link #isSuspended() suspended} and could not be cancelled and is not {@link #isCancelled()
+     * cancelled} already.
      * @see #cancel
      * @see #cancel(int)
      */
@@ -218,11 +199,10 @@ public interface AsyncResponse {
     /**
      * Check if the asynchronous response instance is in a suspended state.
      *
-     * Method returns {@code true} if this asynchronous response is still suspended and has
-     * not finished processing yet (either by resuming or canceling the response).
+     * Method returns {@code true} if this asynchronous response is still suspended and has not finished processing yet
+     * (either by resuming or canceling the response).
      *
-     * @return {@code true} if this asynchronous response is in a suspend state, {@code false}
-     *         otherwise.
+     * @return {@code true} if this asynchronous response is in a suspend state, {@code false} otherwise.
      * @see #isCancelled()
      * @see #isDone()
      */
@@ -231,8 +211,7 @@ public interface AsyncResponse {
     /**
      * Check if the asynchronous response instance has been cancelled.
      *
-     * Method returns {@code true} if this asynchronous response has been canceled before
-     * completion.
+     * Method returns {@code true} if this asynchronous response has been canceled before completion.
      *
      * @return {@code true} if this task was canceled before completion.
      * @see #isSuspended()
@@ -241,14 +220,12 @@ public interface AsyncResponse {
     public boolean isCancelled();
 
     /**
-     * Check if the processing of a request this asynchronous response instance belongs to
-     * has finished.
+     * Check if the processing of a request this asynchronous response instance belongs to has finished.
      *
-     * Method returns {@code true} if the processing of a request this asynchronous response
-     * is bound to is finished.
+     * Method returns {@code true} if the processing of a request this asynchronous response is bound to is finished.
      * <p>
-     * The request processing may be finished due to a normal termination, a suspend timeout, or
-     * cancellation -- in all of these cases, this method will return {@code true}.
+     * The request processing may be finished due to a normal termination, a suspend timeout, or cancellation -- in all of
+     * these cases, this method will return {@code true}.
      * </p>
      *
      * @return {@code true} if this execution context has finished processing.
@@ -260,25 +237,23 @@ public interface AsyncResponse {
     /**
      * Set/update the suspend timeout.
      * <p>
-     * The new suspend timeout values override any timeout value previously specified.
-     * The asynchronous response must be still in a {@link #isSuspended() suspended} state
-     * for this method to succeed.
+     * The new suspend timeout values override any timeout value previously specified. The asynchronous response must be
+     * still in a {@link #isSuspended() suspended} state for this method to succeed.
      * </p>
      *
-     * @param time suspend timeout value in the give time {@code unit}. Value lower
-     *             or equal to 0 causes the context to suspend indefinitely.
+     * @param time suspend timeout value in the give time {@code unit}. Value lower or equal to 0 causes the context to
+     * suspend indefinitely.
      * @param unit suspend timeout value time unit.
-     * @return {@code true} if the suspend time out has been set, returns {@code false} in case
-     *         the request processing is not in the {@link #isSuspended() suspended} state.
+     * @return {@code true} if the suspend time out has been set, returns {@code false} in case the request processing is
+     * not in the {@link #isSuspended() suspended} state.
      */
     public boolean setTimeout(long time, TimeUnit unit);
 
     /**
      * Set/replace a time-out handler for the suspended asynchronous response.
      * <p>
-     * The time-out handler will be invoked when the suspend period of this
-     * asynchronous response times out. The job of the time-out handler is to
-     * resolve the time-out situation by either
+     * The time-out handler will be invoked when the suspend period of this asynchronous response times out. The job of the
+     * time-out handler is to resolve the time-out situation by either
      * </p>
      * <ul>
      * <li>resuming the suspended response</li>
@@ -286,8 +261,8 @@ public interface AsyncResponse {
      * <li>extending the suspend period by setting a new suspend time-out</li>
      * </ul>
      * <p>
-     * Note that in case the response is suspended {@link #NO_TIMEOUT indefinitely},
-     * the time-out handler may never be invoked.
+     * Note that in case the response is suspended {@link #NO_TIMEOUT indefinitely}, the time-out handler may never be
+     * invoked.
      * </p>
      *
      * @param handler response time-out handler.
@@ -295,52 +270,49 @@ public interface AsyncResponse {
     public void setTimeoutHandler(TimeoutHandler handler);
 
     /**
-     * Register an asynchronous processing lifecycle callback class to receive lifecycle
-     * events for the asynchronous response based on the implemented callback interfaces.
+     * Register an asynchronous processing lifecycle callback class to receive lifecycle events for the asynchronous
+     * response based on the implemented callback interfaces.
      *
      * @param callback callback class.
-     * @return collection of registered callback interfaces. If the callback class does not
-     *         implement any recognized callback interfaces, the returned collection will be
-     *         empty.
+     * @return collection of registered callback interfaces. If the callback class does not implement any recognized
+     * callback interfaces, the returned collection will be empty.
      * @throws NullPointerException in case the callback class is {@code null}.
      */
     public Collection<Class<?>> register(Class<?> callback);
 
     /**
-     * Register asynchronous processing lifecycle callback classes to receive lifecycle
-     * events for the asynchronous response based on the implemented callback interfaces.
+     * Register asynchronous processing lifecycle callback classes to receive lifecycle events for the asynchronous response
+     * based on the implemented callback interfaces.
      *
-     * @param callback  callback class.
+     * @param callback callback class.
      * @param callbacks additional callback classes.
-     * @return map of registered classes and the callback interfaces registered for each class.
-     *         If a callback class does not implement any recognized callback interfaces, the
-     *         associated collection of registered interfaces for the class will be empty.
+     * @return map of registered classes and the callback interfaces registered for each class. If a callback class does not
+     * implement any recognized callback interfaces, the associated collection of registered interfaces for the class will
+     * be empty.
      * @throws NullPointerException in case any of the callback classes is {@code null}.
      */
     public Map<Class<?>, Collection<Class<?>>> register(Class<?> callback, Class<?>... callbacks);
 
     /**
-     * Register an asynchronous processing lifecycle callback instance to receive lifecycle
-     * events for the asynchronous response based on the implemented callback interfaces.
+     * Register an asynchronous processing lifecycle callback instance to receive lifecycle events for the asynchronous
+     * response based on the implemented callback interfaces.
      *
-     * @param callback callback instance implementing one or more of the recognized callback
-     *                 interfaces.
-     * @return collection of registered callback interfaces. If the callback class does not
-     *         implement any recognized callback interfaces, the returned collection will be
-     *         empty.
+     * @param callback callback instance implementing one or more of the recognized callback interfaces.
+     * @return collection of registered callback interfaces. If the callback class does not implement any recognized
+     * callback interfaces, the returned collection will be empty.
      * @throws NullPointerException in case the callback instance is {@code null}.
      */
     public Collection<Class<?>> register(Object callback);
 
     /**
-     * Register an asynchronous processing lifecycle callback instances to receive lifecycle
-     * events for the asynchronous response based on the implemented callback interfaces.
+     * Register an asynchronous processing lifecycle callback instances to receive lifecycle events for the asynchronous
+     * response based on the implemented callback interfaces.
      *
-     * @param callback  callback instance.
+     * @param callback callback instance.
      * @param callbacks additional callback instances.
-     * @return map of registered classes and the callback interfaces registered for each class.
-     *         If a callback class does not implement any recognized callback interfaces, the
-     *         associated collection of registered interfaces for the class will be empty.
+     * @return map of registered classes and the callback interfaces registered for each class. If a callback class does not
+     * implement any recognized callback interfaces, the associated collection of registered interfaces for the class will
+     * be empty.
      * @throws NullPointerException in case any of the callback instances is {@code null}.
      */
     public Map<Class<?>, Collection<Class<?>>> register(Object callback, Object... callbacks);

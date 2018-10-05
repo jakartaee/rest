@@ -40,8 +40,7 @@ public class NewCookie extends Cookie {
      * @deprecated This field will be removed in a future version. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
      */
     @Deprecated
-    private static final HeaderDelegate<NewCookie> delegate =
-            RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class);
+    private static final HeaderDelegate<NewCookie> delegate = RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class);
 
     private final String comment;
     private final int maxAge;
@@ -52,7 +51,7 @@ public class NewCookie extends Cookie {
     /**
      * Create a new instance.
      *
-     * @param name  the name of the cookie.
+     * @param name the name of the cookie.
      * @param value the value of the cookie.
      * @throws IllegalArgumentException if name is {@code null}.
      */
@@ -63,100 +62,100 @@ public class NewCookie extends Cookie {
     /**
      * Create a new instance.
      *
-     * @param name    the name of the cookie.
-     * @param value   the value of the cookie.
-     * @param path    the URI path for which the cookie is valid.
-     * @param domain  the host domain for which the cookie is valid.
+     * @param name the name of the cookie.
+     * @param value the value of the cookie.
+     * @param path the URI path for which the cookie is valid.
+     * @param domain the host domain for which the cookie is valid.
      * @param comment the comment.
-     * @param maxAge  the maximum age of the cookie in seconds.
-     * @param secure  specifies whether the cookie will only be sent over a secure connection.
+     * @param maxAge the maximum age of the cookie in seconds.
+     * @param secure specifies whether the cookie will only be sent over a secure connection.
      * @throws IllegalArgumentException if name is {@code null}.
      */
     public NewCookie(final String name,
-                     final String value,
-                     final String path,
-                     final String domain,
-                     final String comment,
-                     final int maxAge,
-                     final boolean secure) {
+            final String value,
+            final String path,
+            final String domain,
+            final String comment,
+            final int maxAge,
+            final boolean secure) {
         this(name, value, path, domain, DEFAULT_VERSION, comment, maxAge, null, secure, false);
     }
 
     /**
      * Create a new instance.
      *
-     * @param name     the name of the cookie.
-     * @param value    the value of the cookie.
-     * @param path     the URI path for which the cookie is valid.
-     * @param domain   the host domain for which the cookie is valid.
-     * @param comment  the comment.
-     * @param maxAge   the maximum age of the cookie in seconds.
-     * @param secure   specifies whether the cookie will only be sent over a secure connection.
+     * @param name the name of the cookie.
+     * @param value the value of the cookie.
+     * @param path the URI path for which the cookie is valid.
+     * @param domain the host domain for which the cookie is valid.
+     * @param comment the comment.
+     * @param maxAge the maximum age of the cookie in seconds.
+     * @param secure specifies whether the cookie will only be sent over a secure connection.
      * @param httpOnly if {@code true} make the cookie HTTP only, i.e. only visible as part of an HTTP request.
      * @throws IllegalArgumentException if name is {@code null}.
      * @since 2.0
      */
     public NewCookie(final String name,
-                     final String value,
-                     final String path,
-                     final String domain,
-                     final String comment,
-                     final int maxAge,
-                     final boolean secure,
-                     final boolean httpOnly) {
+            final String value,
+            final String path,
+            final String domain,
+            final String comment,
+            final int maxAge,
+            final boolean secure,
+            final boolean httpOnly) {
         this(name, value, path, domain, DEFAULT_VERSION, comment, maxAge, null, secure, httpOnly);
     }
 
     /**
      * Create a new instance.
      *
-     * @param name    the name of the cookie
-     * @param value   the value of the cookie
-     * @param path    the URI path for which the cookie is valid
-     * @param domain  the host domain for which the cookie is valid
+     * @param name the name of the cookie
+     * @param value the value of the cookie
+     * @param path the URI path for which the cookie is valid
+     * @param domain the host domain for which the cookie is valid
      * @param version the version of the specification to which the cookie complies
      * @param comment the comment
-     * @param maxAge  the maximum age of the cookie in seconds
-     * @param secure  specifies whether the cookie will only be sent over a secure connection
+     * @param maxAge the maximum age of the cookie in seconds
+     * @param secure specifies whether the cookie will only be sent over a secure connection
      * @throws IllegalArgumentException if name is {@code null}.
      */
     public NewCookie(final String name,
-                     final String value,
-                     final String path,
-                     final String domain,
-                     final int version,
-                     final String comment,
-                     final int maxAge,
-                     final boolean secure) {
+            final String value,
+            final String path,
+            final String domain,
+            final int version,
+            final String comment,
+            final int maxAge,
+            final boolean secure) {
         this(name, value, path, domain, version, comment, maxAge, null, secure, false);
     }
 
     /**
      * Create a new instance.
      *
-     * @param name     the name of the cookie
-     * @param value    the value of the cookie
-     * @param path     the URI path for which the cookie is valid
-     * @param domain   the host domain for which the cookie is valid
-     * @param version  the version of the specification to which the cookie complies
-     * @param comment  the comment
-     * @param maxAge   the maximum age of the cookie in seconds
-     * @param expiry   the cookie expiry date.
-     * @param secure   specifies whether the cookie will only be sent over a secure connection
+     * @param name the name of the cookie
+     * @param value the value of the cookie
+     * @param path the URI path for which the cookie is valid
+     * @param domain the host domain for which the cookie is valid
+     * @param version the version of the specification to which the cookie complies
+     * @param comment the comment
+     * @param maxAge the maximum age of the cookie in seconds
+     * @param expiry the cookie expiry date.
+     * @param secure specifies whether the cookie will only be sent over a secure connection
      * @param httpOnly if {@code true} make the cookie HTTP only, i.e. only visible as part of an HTTP request.
      * @throws IllegalArgumentException if name is {@code null}.
      * @since 2.0
      */
     public NewCookie(final String name,
-                     final String value,
-                     final String path,
-                     final String domain,
-                     final int version,
-                     final String comment,
-                     final int maxAge,
-                     final Date expiry,
-                     final boolean secure,
-                     final boolean httpOnly) {
+            final String value,
+            final String path,
+            final String domain,
+            final int version,
+            final String comment,
+            final int maxAge,
+            final Date expiry,
+            final boolean secure,
+            final boolean httpOnly) {
         super(name, value, path, domain, version);
         this.comment = comment;
         this.maxAge = maxAge;
@@ -178,10 +177,10 @@ public class NewCookie extends Cookie {
     /**
      * Create a new instance supplementing the information in the supplied cookie.
      *
-     * @param cookie  the cookie to clone.
+     * @param cookie the cookie to clone.
      * @param comment the comment.
-     * @param maxAge  the maximum age of the cookie in seconds.
-     * @param secure  specifies whether the cookie will only be sent over a secure connection.
+     * @param maxAge the maximum age of the cookie in seconds.
+     * @param secure specifies whether the cookie will only be sent over a secure connection.
      * @throws IllegalArgumentException if cookie is {@code null}.
      */
     public NewCookie(final Cookie cookie, final String comment, final int maxAge, final boolean secure) {
@@ -191,11 +190,11 @@ public class NewCookie extends Cookie {
     /**
      * Create a new instance supplementing the information in the supplied cookie.
      *
-     * @param cookie   the cookie to clone.
-     * @param comment  the comment.
-     * @param maxAge   the maximum age of the cookie in seconds.
-     * @param expiry   the cookie expiry date.
-     * @param secure   specifies whether the cookie will only be sent over a secure connection.
+     * @param cookie the cookie to clone.
+     * @param comment the comment.
+     * @param maxAge the maximum age of the cookie in seconds.
+     * @param expiry the cookie expiry date.
+     * @param secure specifies whether the cookie will only be sent over a secure connection.
      * @param httpOnly if {@code true} make the cookie HTTP only, i.e. only visible as part of an HTTP request.
      * @throws IllegalArgumentException if cookie is {@code null}.
      * @since 2.0
@@ -218,10 +217,9 @@ public class NewCookie extends Cookie {
      *
      * @param value the cookie string.
      * @return the newly created {@code NewCookie}.
-     * @throws IllegalArgumentException if the supplied string cannot be parsed
-     *                                  or is {@code null}.
+     * @throws IllegalArgumentException if the supplied string cannot be parsed or is {@code null}.
      * @deprecated This method will be removed in a future version. Please use
-     *   RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class).fromString(value) instead.
+     * RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class).fromString(value) instead.
      */
     @Deprecated
     public static NewCookie valueOf(final String value) {
@@ -238,15 +236,13 @@ public class NewCookie extends Cookie {
     }
 
     /**
-     * Get the maximum age of the the cookie in seconds. Cookies older than
-     * the maximum age are discarded. A cookie can be unset by sending a new
-     * cookie with maximum age of 0 since it will overwrite any existing cookie
-     * and then be immediately discarded. The default value of {@code -1} indicates
-     * that the cookie will be discarded at the end of the browser/application session.
+     * Get the maximum age of the the cookie in seconds. Cookies older than the maximum age are discarded. A cookie can be
+     * unset by sending a new cookie with maximum age of 0 since it will overwrite any existing cookie and then be
+     * immediately discarded. The default value of {@code -1} indicates that the cookie will be discarded at the end of the
+     * browser/application session.
      * <p>
-     * Note that it is recommended to use {@code Max-Age} to control cookie
-     * expiration, however some browsers do not understand {@code Max-Age}, in which case
-     * setting {@link #getExpiry()} Expires} parameter may be necessary.
+     * Note that it is recommended to use {@code Max-Age} to control cookie expiration, however some browsers do not
+     * understand {@code Max-Age}, in which case setting {@link #getExpiry()} Expires} parameter may be necessary.
      * </p>
      *
      * @return the maximum age in seconds.
@@ -257,13 +253,11 @@ public class NewCookie extends Cookie {
     }
 
     /**
-     * Get the cookie expiry date. Cookies whose expiry date has passed are discarded.
-     * A cookie can be unset by setting a new cookie with an expiry date in the past,
-     * typically the lowest possible date that can be set.
+     * Get the cookie expiry date. Cookies whose expiry date has passed are discarded. A cookie can be unset by setting a
+     * new cookie with an expiry date in the past, typically the lowest possible date that can be set.
      * <p>
-     * Note that it is recommended to use {@link #getMaxAge() Max-Age} to control cookie
-     * expiration, however some browsers do not understand {@code Max-Age}, in which case
-     * setting {@code Expires} parameter may be necessary.
+     * Note that it is recommended to use {@link #getMaxAge() Max-Age} to control cookie expiration, however some browsers
+     * do not understand {@code Max-Age}, in which case setting {@code Expires} parameter may be necessary.
      * </p>
      *
      * @return cookie expiry date or {@code null} if no expiry date was set.
@@ -275,23 +269,19 @@ public class NewCookie extends Cookie {
     }
 
     /**
-     * Whether the cookie will only be sent over a secure connection. Defaults
-     * to {@code false}.
+     * Whether the cookie will only be sent over a secure connection. Defaults to {@code false}.
      *
-     * @return {@code true} if the cookie will only be sent over a secure connection,
-     *         {@code false} otherwise.
+     * @return {@code true} if the cookie will only be sent over a secure connection, {@code false} otherwise.
      */
     public boolean isSecure() {
         return secure;
     }
 
     /**
-     * Returns {@code true} if this cookie contains the {@code HttpOnly} attribute.
-     * This means that the cookie should not be accessible to scripting engines,
-     * like javascript.
+     * Returns {@code true} if this cookie contains the {@code HttpOnly} attribute. This means that the cookie should not be
+     * accessible to scripting engines, like javascript.
      *
-     * @return {@code true} if this cookie should be considered http only, {@code false}
-     *         otherwise.
+     * @return {@code true} if this cookie should be considered http only, {@code false} otherwise.
      * @since 2.0
      */
     public boolean isHttpOnly() {
@@ -299,10 +289,9 @@ public class NewCookie extends Cookie {
     }
 
     /**
-     * Obtain a new instance of a {@link Cookie} with the same name, value, path,
-     * domain and version as this {@code NewCookie}. This method can be used to
-     * obtain an object that can be compared for equality with another {@code Cookie};
-     * since a {@code Cookie} will never compare equal to a {@code NewCookie}.
+     * Obtain a new instance of a {@link Cookie} with the same name, value, path, domain and version as this
+     * {@code NewCookie}. This method can be used to obtain an object that can be compared for equality with another
+     * {@code Cookie}; since a {@code Cookie} will never compare equal to a {@code NewCookie}.
      *
      * @return a {@link Cookie}
      */
@@ -312,13 +301,12 @@ public class NewCookie extends Cookie {
     }
 
     /**
-     * Convert the cookie to a string suitable for use as the value of the
-     * corresponding HTTP header.
+     * Convert the cookie to a string suitable for use as the value of the corresponding HTTP header.
      *
      * @return a stringified cookie.
      * @deprecated The format of the toString() method is subject to change in a future version. Please use
-     * RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class).toString(value) instead if you rely on
-     * the format of this method.
+     * RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class).toString(value) instead if you rely on the format
+     * of this method.
      */
     @Override
     @Deprecated
@@ -343,15 +331,13 @@ public class NewCookie extends Cookie {
     }
 
     /**
-     * Compare for equality. Use {@link #toCookie()} to compare a
-     * {@code NewCookie} to a {@code Cookie} considering only the common
-     * properties.
+     * Compare for equality. Use {@link #toCookie()} to compare a {@code NewCookie} to a {@code Cookie} considering only the
+     * common properties.
      *
      * @param obj the object to compare to
-     * @return true if the object is a {@code NewCookie} with the same value for
-     *         all properties, false otherwise.
+     * @return true if the object is a {@code NewCookie} with the same value for all properties, false otherwise.
      */
-    @SuppressWarnings({"StringEquality", "RedundantIfStatement"})
+    @SuppressWarnings({ "StringEquality", "RedundantIfStatement" })
     @Override
     public boolean equals(final Object obj) {
         if (obj == null) {

@@ -19,12 +19,11 @@ package javax.ws.rs.sse;
 /**
  * Base Server Sent Event definition.
  * <p>
- * This interface provides basic properties of the Server Sent Event, namely ID, Name, and Comment.
- * It also provides access to the Reconnect delay property.
+ * This interface provides basic properties of the Server Sent Event, namely ID, Name, and Comment. It also provides
+ * access to the Reconnect delay property.
  * <p>
- * {@code SseEvent} is extended by another two interfaces, {@link InboundSseEvent} and
- * {@link OutboundSseEvent}. The main difference is in how are instances created and how the stored
- * data can be accessed (or provided).
+ * {@code SseEvent} is extended by another two interfaces, {@link InboundSseEvent} and {@link OutboundSseEvent}. The
+ * main difference is in how are instances created and how the stored data can be accessed (or provided).
  *
  * @author Marek Potociar
  * @since 2.1
@@ -59,19 +58,19 @@ public interface SseEvent {
     /**
      * Get a comment string that accompanies the event.
      * <p>
-     * Contains value of the comment associated with SSE event. This field is optional. Method may return {@code null},
-     * if the event comment is not specified.
+     * Contains value of the comment associated with SSE event. This field is optional. Method may return {@code null}, if
+     * the event comment is not specified.
      *
      * @return comment associated with the event.
      */
     String getComment();
 
     /**
-     * Get new connection retry time in milliseconds the event receiver should wait before attempting to
-     * reconnect after a connection to the SSE event source is lost.
+     * Get new connection retry time in milliseconds the event receiver should wait before attempting to reconnect after a
+     * connection to the SSE event source is lost.
      * <p>
-     * Contains value of SSE {@code "retry"} field. This field is optional. Method returns {@link #RECONNECT_NOT_SET}
-     * if no value has been set.
+     * Contains value of SSE {@code "retry"} field. This field is optional. Method returns {@link #RECONNECT_NOT_SET} if no
+     * value has been set.
      *
      * @return reconnection delay in milliseconds or {@link #RECONNECT_NOT_SET} if no value has been set.
      */

@@ -32,9 +32,8 @@ public class SseClient {
 
         // EventSource#register(Consumer<InboundSseEvent>)
         // consumes all events, writes then on standard out (System.out::println)
-        try (final SseEventSource eventSource =
-                     SseEventSource.target(target)
-                                   .build()) {
+        try (final SseEventSource eventSource = SseEventSource.target(target)
+                .build()) {
 
             eventSource.register(System.out::println);
             eventSource.open();

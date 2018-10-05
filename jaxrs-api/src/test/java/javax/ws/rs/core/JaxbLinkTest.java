@@ -56,8 +56,7 @@ public class JaxbLinkTest {
 
         final StringWriter writer = new StringWriter();
 
-        JAXBElement<Link.JaxbLink> jaxbLinkJAXBElement =
-                new JAXBElement<Link.JaxbLink>(new QName("", "link"), Link.JaxbLink.class, expected);
+        JAXBElement<Link.JaxbLink> jaxbLinkJAXBElement = new JAXBElement<Link.JaxbLink>(new QName("", "link"), Link.JaxbLink.class, expected);
         marshaller.marshal(jaxbLinkJAXBElement, writer);
 
         final Link.JaxbLink actual = unmarshaller.unmarshal(new StreamSource(

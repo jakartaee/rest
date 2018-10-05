@@ -20,7 +20,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Machine {
 
-    public enum Status {STOPPED, STARTED, SUSPENDED}
+    public enum Status {
+        STOPPED, STARTED, SUSPENDED
+    }
 
     ;
 

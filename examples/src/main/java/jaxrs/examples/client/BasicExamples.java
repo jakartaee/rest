@@ -92,7 +92,7 @@ public class BasicExamples {
     public void creatingResourceAndSubResourceUris() {
         // Target( http://jaxrs.examples.org/jaxrsApplication/customers/ )
         WebTarget customersUri = ClientBuilder.newClient()
-                                              .target("http://jaxrs.examples.org/jaxrsApplication/customers");
+                .target("http://jaxrs.examples.org/jaxrsApplication/customers");
         // Target( http://jaxrs.examples.org/jaxrsApplication/customers/{id}/ )
         WebTarget anyCustomerUri = customersUri.path("{id}");
         // Target( http://jaxrs.examples.org/jaxrsApplication/customers/123/ )
@@ -105,19 +105,17 @@ public class BasicExamples {
         final Client client = ClientBuilder.newClient();
 
         Response response = client.target("http://jaxrs.examples.org/jaxrsApplication/customers")
-                                  .request(MediaType.APPLICATION_XML).header("Foo", "Bar").get();
+                .request(MediaType.APPLICATION_XML).header("Foo", "Bar").get();
         assert response.getStatus() == 200;
     }
 
     public void autoCloseableResponse() {
         final Client client = ClientBuilder.newClient();
 
-        try (Response response =
-                     client.target("http://jaxrs.examples.org/jaxrsApplication/customers")
-                           .request(MediaType.APPLICATION_XML)
-                           .header("Foo", "Bar")
-                           .get();
-        ) {
+        try (Response response = client.target("http://jaxrs.examples.org/jaxrsApplication/customers")
+                .request(MediaType.APPLICATION_XML)
+                .header("Foo", "Bar")
+                .get();) {
             assert response.getStatus() == 200;
         }
     }
@@ -126,8 +124,8 @@ public class BasicExamples {
         final SSLContext sslContext = null;
         // ...initialize SSL context...
         final Client client = ClientBuilder.newBuilder()
-                                           .sslContext(sslContext)
-                                           .build();
+                .sslContext(sslContext)
+                .build();
 
         assert client != null;
     }
@@ -146,7 +144,7 @@ public class BasicExamples {
         Response response;
 
         final WebTarget customersUri = ClientBuilder.newClient()
-                                                    .target("http://jaxrs.examples.org/jaxrsApplication/customers");
+                .target("http://jaxrs.examples.org/jaxrsApplication/customers");
 
         response = customersUri.path("{id}").resolveTemplate("id", 123).request().get();
         customer = response.readEntity(Customer.class);
@@ -158,22 +156,22 @@ public class BasicExamples {
 
     public void typedResponse() {
         Customer customer = ClientBuilder.newClient()
-                                         .target("http://jaxrs.examples.org/jaxrsApplication/customers/{id}")
-                                         .resolveTemplate("id", 123).request().get(Customer.class);
+                .target("http://jaxrs.examples.org/jaxrsApplication/customers/{id}")
+                .resolveTemplate("id", 123).request().get(Customer.class);
         assert customer != null;
     }
 
     public void typedGenericResponse() {
         List<Customer> customers = ClientBuilder.newClient()
-                                                .target("http://jaxrs.examples.org/jaxrsApplication/customers")
-                                                .request().get(new GenericType<List<Customer>>() {
+                .target("http://jaxrs.examples.org/jaxrsApplication/customers")
+                .request().get(new GenericType<List<Customer>>() {
                 });
         assert customers != null;
     }
 
     public void responseUsingSubResourceClient() {
         WebTarget customersUri = ClientBuilder.newClient()
-                                              .target("http://jaxrs.examples.org/jaxrsApplication/customers");
+                .target("http://jaxrs.examples.org/jaxrsApplication/customers");
         WebTarget customer = customersUri.path("{id}");
 
         // Create a customer
@@ -194,8 +192,8 @@ public class BasicExamples {
 
     public void asyncResponse() throws Exception {
         Future<Response> future = ClientBuilder.newClient()
-                                               .target("http://jaxrs.examples.org/jaxrsApplication/customers/{id}")
-                                               .resolveTemplate("id", 123).request().async().get();
+                .target("http://jaxrs.examples.org/jaxrsApplication/customers/{id}")
+                .resolveTemplate("id", 123).request().async().get();
 
         Response response = future.get();
         Customer customer = response.readEntity(Customer.class);
@@ -204,8 +202,8 @@ public class BasicExamples {
 
     public void typedAsyncResponse() throws Exception {
         Future<Customer> customer = ClientBuilder.newClient()
-                                                 .target("http://jaxrs.examples.org/jaxrsApplication/customers/{id}")
-                                                 .resolveTemplate("id", 123).request().async().get(Customer.class);
+                .target("http://jaxrs.examples.org/jaxrsApplication/customers/{id}")
+                .resolveTemplate("id", 123).request().async().get(Customer.class);
         assert customer.get() != null;
     }
 
@@ -247,7 +245,7 @@ public class BasicExamples {
 
         // invoke a request in background
         Future<Customer> handle = anyCustomerUri.resolveTemplate("id", 123) // Target
-                                                .request().async().get(new InvocationCallback<Customer>() {
+                .request().async().get(new InvocationCallback<Customer>() {
                     @Override
                     public void completed(Customer customer) {
                         // do something
@@ -262,22 +260,22 @@ public class BasicExamples {
 
         // invoke another request in background
         anyCustomerUri.resolveTemplate("id", 456) // Target
-                      .request().async().get(new InvocationCallback<Response>() {
+                .request().async().get(new InvocationCallback<Response>() {
 
-            @Override
-            public void completed(Response customer) {
-                // do something
-            }
+                    @Override
+                    public void completed(Response customer) {
+                        // do something
+                    }
 
-            @Override
-            public void failed(Throwable throwable) {
-                // do something
-            }
-        });
+                    @Override
+                    public void failed(Throwable throwable) {
+                        // do something
+                    }
+                });
 
         // invoke one more request using newClient
         Future<Response> response = anyCustomerUri.resolveTemplate("id", 789)
-                                                  .request().cookie(new Cookie("fooName", "XYZ")).async().get();
+                .request().cookie(new Cookie("fooName", "XYZ")).async().get();
         assert response.get() != null;
     }
 
@@ -301,7 +299,6 @@ public class BasicExamples {
         client.target("http://examples.jaxrs.com/").request().buildPut(text("Hi")).invoke();
         client.target("http://examples.jaxrs.com/").request("text/plain").buildGet().submit();
 
-
         client.target("http://examples.jaxrs.com/").path("123").request("text/plain").get();
         client.target("http://examples.jaxrs.com/").path("123").request("text/plain").async().get();
         client.target("http://examples.jaxrs.com/").path("123").request("text/plain").buildGet().invoke();
@@ -313,23 +310,23 @@ public class BasicExamples {
         client.target("http://examples.jaxrs.com/").path("123").request("text/plain").buildGet().submit();
 
         client.target("http://examples.jaxrs.com/").path("123").request("text/plain")
-              .header("custom-name", "custom_value").get();
+                .header("custom-name", "custom_value").get();
         client.target("http://examples.jaxrs.com/").path("123").request("text/plain")
-              .header("custom-name", "custom_value").async().get();
+                .header("custom-name", "custom_value").async().get();
         client.target("http://examples.jaxrs.com/").path("123").request("text/plain")
-              .header("custom-name", "custom_value").buildGet().invoke();
+                .header("custom-name", "custom_value").buildGet().invoke();
         client.target("http://examples.jaxrs.com/").path("123").request("text/plain")
-              .header("custom-name", "custom_value").buildGet().submit();
+                .header("custom-name", "custom_value").buildGet().submit();
 
         // POSTing Forms
         client.target("http://examples.jaxrs.com/").path("123").request(MediaType.APPLICATION_JSON)
-              .post(form(new Form("param1", "a").param("param2", "b")));
+                .post(form(new Form("param1", "a").param("param2", "b")));
 
         MultivaluedMap<String, String> formData = new MultivaluedHashMap<String, String>();
         formData.add("param1", "a");
         formData.add("param2", "b");
         client.target("http://examples.jaxrs.com/").path("123").request(MediaType.APPLICATION_JSON)
-              .post(form(formData));
+                .post(form(formData));
 
         // Configuration
         TestFeature testFeature = new TestFeature();
@@ -342,12 +339,12 @@ public class BasicExamples {
     public void invocationFlexibility() {
         // For users who really need it...
         Invocation i = ClientBuilder.newClient()
-                                    .target("http://examples.jaxrs.com/greeting")
-                                    .request("text/plain")
-                                    .header("custom-name", "custom_value")
-                                    .buildPut(text("Hi"));
+                .target("http://examples.jaxrs.com/greeting")
+                .request("text/plain")
+                .header("custom-name", "custom_value")
+                .buildPut(text("Hi"));
 
-        i.invoke();                                              // Ok, now I can send the updated request
+        i.invoke(); // Ok, now I can send the updated request
     }
 
     public static class MyProvider implements ReaderInterceptor, WriterInterceptor, ContainerRequestFilter {
@@ -359,7 +356,7 @@ public class BasicExamples {
 
         @Override
         public Object aroundReadFrom(ReaderInterceptorContext context) throws IOException, WebApplicationException {
-            return null;  // TODO: implement method.
+            return null; // TODO: implement method.
         }
 
         @Override
@@ -382,9 +379,9 @@ public class BasicExamples {
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(256);
 
         Client client = ClientBuilder.newBuilder()
-                                     .executorService(executorService)
-                                     .scheduledExecutorService(scheduledExecutorService)
-                                     .build();
+                .executorService(executorService)
+                .scheduledExecutorService(scheduledExecutorService)
+                .build();
     }
 
     public void responseStatus20() {
@@ -393,10 +390,13 @@ public class BasicExamples {
         Response response = client.target("https://github.com/jax-rs/").request().get();
 
         switch (response.getStatus()) {
-            case 200: return;
-            case 201: return;
-            case 404: return;
-            case 500:
+        case 200:
+            return;
+        case 201:
+            return;
+        case 404:
+            return;
+        case 500:
         }
     }
 
@@ -406,10 +406,13 @@ public class BasicExamples {
         Response response = client.target("https://github.com/jax-rs/").request().get();
 
         switch (response.getStatusInfo().toEnum()) {
-            case OK: return;
-            case CREATED: return;
-            case NOT_FOUND: return;
-            case INTERNAL_SERVER_ERROR:
+        case OK:
+            return;
+        case CREATED:
+            return;
+        case NOT_FOUND:
+            return;
+        case INTERNAL_SERVER_ERROR:
         }
     }
 }

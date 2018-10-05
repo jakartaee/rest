@@ -19,9 +19,9 @@ package javax.ws.rs.sse;
 /**
  * Server-side entry point for creating {@link OutboundSseEvent} and {@link SseBroadcaster}.
  * <p>
- * Instance of this interface can be injected into a field or as a parameter of a method or
- * a constructor. Also, the instance is thread safe, meaning that it can be shared and its
- * method invoked from different threads without causing inconsistent internal state.
+ * Instance of this interface can be injected into a field or as a parameter of a method or a constructor. Also, the
+ * instance is thread safe, meaning that it can be shared and its method invoked from different threads without causing
+ * inconsistent internal state.
  *
  * @author Marek Potociar (marek.potociar at oracle.com)
  * @since 2.1

@@ -31,16 +31,16 @@ import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.RuntimeDelegate;
 
 /**
- * Defines the contract between a returned instance and the runtime when
- * an application needs to provide meta-data to the runtime.
+ * Defines the contract between a returned instance and the runtime when an application needs to provide meta-data to
+ * the runtime.
  * <p>
- * An application class should not extend this class directly. {@code Response} class is
- * reserved for an extension by a JAX-RS implementation providers. An application should use one
- * of the static methods to create a {@code Response} instance using a ResponseBuilder.
+ * An application class should not extend this class directly. {@code Response} class is reserved for an extension by a
+ * JAX-RS implementation providers. An application should use one of the static methods to create a {@code Response}
+ * instance using a ResponseBuilder.
  * </p>
  * <p>
- * Several methods have parameters of type URI, {@link UriBuilder} provides
- * convenient methods to create such values as does {@link URI#create(java.lang.String)}.
+ * Several methods have parameters of type URI, {@link UriBuilder} provides convenient methods to create such values as
+ * does {@link URI#create(java.lang.String)}.
  * </p>
  *
  * @author Paul Sandoz
@@ -52,8 +52,8 @@ import javax.ws.rs.ext.RuntimeDelegate;
 public abstract class Response implements AutoCloseable {
 
     /**
-     * Protected constructor, use one of the static methods to obtain a
-     * {@link ResponseBuilder} instance and obtain a Response from that.
+     * Protected constructor, use one of the static methods to obtain a {@link ResponseBuilder} instance and obtain a
+     * Response from that.
      */
     protected Response() {
     }
@@ -68,197 +68,164 @@ public abstract class Response implements AutoCloseable {
     /**
      * Get the complete status information associated with the response.
      *
-     * @return the response status information. The returned value is never
-     *         {@code null}.
+     * @return the response status information. The returned value is never {@code null}.
      * @since 2.0
      */
     public abstract StatusType getStatusInfo();
 
     /**
-     * Get the message entity Java instance. Returns {@code null} if the message
-     * does not contain an entity body.
+     * Get the message entity Java instance. Returns {@code null} if the message does not contain an entity body.
      * <p>
-     * If the entity is represented by an un-consumed {@link InputStream input stream}
-     * the method will return the input stream.
+     * If the entity is represented by an un-consumed {@link InputStream input stream} the method will return the input
+     * stream.
      * </p>
      *
-     * @return the message entity or {@code null} if message does not contain an
-     *         entity body (i.e. when {@link #hasEntity()} returns {@code false}).
-     * @throws IllegalStateException if the entity was previously fully consumed
-     *                               as an {@link InputStream input stream}, or
-     *                               if the response has been {@link #close() closed}.
+     * @return the message entity or {@code null} if message does not contain an entity body (i.e. when {@link #hasEntity()}
+     * returns {@code false}).
+     * @throws IllegalStateException if the entity was previously fully consumed as an {@link InputStream input stream}, or
+     * if the response has been {@link #close() closed}.
      */
     public abstract Object getEntity();
 
     /**
-     * Read the message entity input stream as an instance of specified Java type
-     * using a {@link javax.ws.rs.ext.MessageBodyReader} that supports mapping the
-     * message entity stream onto the requested type.
+     * Read the message entity input stream as an instance of specified Java type using a
+     * {@link javax.ws.rs.ext.MessageBodyReader} that supports mapping the message entity stream onto the requested type.
      * <p>
-     * Method throws an {@link ProcessingException} if the content of the
-     * message cannot be mapped to an entity of the requested type and
-     * {@link IllegalStateException} in case the entity is not backed by an input
-     * stream or if the original entity input stream has already been consumed
-     * without {@link #bufferEntity() buffering} the entity data prior consuming.
+     * Method throws an {@link ProcessingException} if the content of the message cannot be mapped to an entity of the
+     * requested type and {@link IllegalStateException} in case the entity is not backed by an input stream or if the
+     * original entity input stream has already been consumed without {@link #bufferEntity() buffering} the entity data
+     * prior consuming.
      * </p>
      * <p>
-     * A message instance returned from this method will be cached for
-     * subsequent retrievals via {@link #getEntity()}. Unless the supplied entity
-     * type is an {@link java.io.InputStream input stream}, this method automatically
-     * {@link #close() closes} the an unconsumed original response entity data stream
-     * if open. In case the entity data has been buffered, the buffer will be reset
-     * prior consuming the buffered data to enable subsequent invocations of
+     * A message instance returned from this method will be cached for subsequent retrievals via {@link #getEntity()}.
+     * Unless the supplied entity type is an {@link java.io.InputStream input stream}, this method automatically
+     * {@link #close() closes} the an unconsumed original response entity data stream if open. In case the entity data has
+     * been buffered, the buffer will be reset prior consuming the buffered data to enable subsequent invocations of
      * {@code readEntity(...)} methods on this response.
      * </p>
      *
-     * @param <T>        entity instance Java type.
+     * @param <T> entity instance Java type.
      * @param entityType the type of entity.
-     * @return the message entity; for a zero-length response entities returns a corresponding
-     *         Java object that represents zero-length data. In case no zero-length representation
-     *         is defined for the Java type, a {@link ProcessingException} wrapping the
-     *         underlying {@link NoContentException} is thrown.
-     * @throws ProcessingException   if the content of the message cannot be
-     *                               mapped to an entity of the requested type.
-     * @throws IllegalStateException if the entity is not backed by an input stream,
-     *                               the response has been {@link #close() closed} already,
-     *                               or if the entity input stream has been fully consumed already and has
-     *                               not been buffered prior consuming.
+     * @return the message entity; for a zero-length response entities returns a corresponding Java object that represents
+     * zero-length data. In case no zero-length representation is defined for the Java type, a {@link ProcessingException}
+     * wrapping the underlying {@link NoContentException} is thrown.
+     * @throws ProcessingException if the content of the message cannot be mapped to an entity of the requested type.
+     * @throws IllegalStateException if the entity is not backed by an input stream, the response has been {@link #close()
+     * closed} already, or if the entity input stream has been fully consumed already and has not been buffered prior
+     * consuming.
      * @see javax.ws.rs.ext.MessageBodyReader
      * @since 2.0
      */
     public abstract <T> T readEntity(Class<T> entityType);
 
     /**
-     * Read the message entity input stream as an instance of specified Java type
-     * using a {@link javax.ws.rs.ext.MessageBodyReader} that supports mapping the
-     * message entity stream onto the requested type.
+     * Read the message entity input stream as an instance of specified Java type using a
+     * {@link javax.ws.rs.ext.MessageBodyReader} that supports mapping the message entity stream onto the requested type.
      * <p>
-     * Method throws an {@link ProcessingException} if the content of the
-     * message cannot be mapped to an entity of the requested type and
-     * {@link IllegalStateException} in case the entity is not backed by an input
-     * stream or if the original entity input stream has already been consumed
-     * without {@link #bufferEntity() buffering} the entity data prior consuming.
+     * Method throws an {@link ProcessingException} if the content of the message cannot be mapped to an entity of the
+     * requested type and {@link IllegalStateException} in case the entity is not backed by an input stream or if the
+     * original entity input stream has already been consumed without {@link #bufferEntity() buffering} the entity data
+     * prior consuming.
      * </p>
      * <p>
-     * A message instance returned from this method will be cached for
-     * subsequent retrievals via {@link #getEntity()}. Unless the supplied entity
-     * type is an {@link java.io.InputStream input stream}, this method automatically
-     * {@link #close() closes} the an unconsumed original response entity data stream
-     * if open. In case the entity data has been buffered, the buffer will be reset
-     * prior consuming the buffered data to enable subsequent invocations of
+     * A message instance returned from this method will be cached for subsequent retrievals via {@link #getEntity()}.
+     * Unless the supplied entity type is an {@link java.io.InputStream input stream}, this method automatically
+     * {@link #close() closes} the an unconsumed original response entity data stream if open. In case the entity data has
+     * been buffered, the buffer will be reset prior consuming the buffered data to enable subsequent invocations of
      * {@code readEntity(...)} methods on this response.
      * </p>
      *
-     * @param <T>        entity instance Java type.
+     * @param <T> entity instance Java type.
      * @param entityType the type of entity; may be generic.
-     * @return the message entity; for a zero-length response entities returns a corresponding
-     *         Java object that represents zero-length data. In case no zero-length representation
-     *         is defined for the Java type, a {@link ProcessingException} wrapping the
-     *         underlying {@link NoContentException} is thrown.
-     * @throws ProcessingException   if the content of the message cannot be
-     *                               mapped to an entity of the requested type.
-     * @throws IllegalStateException if the entity is not backed by an input stream,
-     *                               the response has been {@link #close() closed} already,
-     *                               or if the entity input stream has been fully consumed already and has
-     *                               not been buffered prior consuming.
+     * @return the message entity; for a zero-length response entities returns a corresponding Java object that represents
+     * zero-length data. In case no zero-length representation is defined for the Java type, a {@link ProcessingException}
+     * wrapping the underlying {@link NoContentException} is thrown.
+     * @throws ProcessingException if the content of the message cannot be mapped to an entity of the requested type.
+     * @throws IllegalStateException if the entity is not backed by an input stream, the response has been {@link #close()
+     * closed} already, or if the entity input stream has been fully consumed already and has not been buffered prior
+     * consuming.
      * @see javax.ws.rs.ext.MessageBodyReader
      * @since 2.0
      */
     public abstract <T> T readEntity(GenericType<T> entityType);
 
     /**
-     * Read the message entity input stream as an instance of specified Java type
-     * using a {@link javax.ws.rs.ext.MessageBodyReader} that supports mapping the
-     * message entity stream onto the requested type.
+     * Read the message entity input stream as an instance of specified Java type using a
+     * {@link javax.ws.rs.ext.MessageBodyReader} that supports mapping the message entity stream onto the requested type.
      * <p>
-     * Method throws an {@link ProcessingException} if the content of the
-     * message cannot be mapped to an entity of the requested type and
-     * {@link IllegalStateException} in case the entity is not backed by an input
-     * stream or if the original entity input stream has already been consumed
-     * without {@link #bufferEntity() buffering} the entity data prior consuming.
+     * Method throws an {@link ProcessingException} if the content of the message cannot be mapped to an entity of the
+     * requested type and {@link IllegalStateException} in case the entity is not backed by an input stream or if the
+     * original entity input stream has already been consumed without {@link #bufferEntity() buffering} the entity data
+     * prior consuming.
      * </p>
      * <p>
-     * A message instance returned from this method will be cached for
-     * subsequent retrievals via {@link #getEntity()}. Unless the supplied entity
-     * type is an {@link java.io.InputStream input stream}, this method automatically
-     * {@link #close() closes} the an unconsumed original response entity data stream
-     * if open. In case the entity data has been buffered, the buffer will be reset
-     * prior consuming the buffered data to enable subsequent invocations of
+     * A message instance returned from this method will be cached for subsequent retrievals via {@link #getEntity()}.
+     * Unless the supplied entity type is an {@link java.io.InputStream input stream}, this method automatically
+     * {@link #close() closes} the an unconsumed original response entity data stream if open. In case the entity data has
+     * been buffered, the buffer will be reset prior consuming the buffered data to enable subsequent invocations of
      * {@code readEntity(...)} methods on this response.
      * </p>
      *
-     * @param <T>         entity instance Java type.
-     * @param entityType  the type of entity.
+     * @param <T> entity instance Java type.
+     * @param entityType the type of entity.
      * @param annotations annotations that will be passed to the {@link MessageBodyReader}.
-     * @return the message entity; for a zero-length response entities returns a corresponding
-     *         Java object that represents zero-length data. In case no zero-length representation
-     *         is defined for the Java type, a {@link ProcessingException} wrapping the
-     *         underlying {@link NoContentException} is thrown.
-     * @throws ProcessingException   if the content of the message cannot be
-     *                               mapped to an entity of the requested type.
-     * @throws IllegalStateException if the entity is not backed by an input stream,
-     *                               the response has been {@link #close() closed} already,
-     *                               or if the entity input stream has been fully consumed already and has
-     *                               not been buffered prior consuming.
+     * @return the message entity; for a zero-length response entities returns a corresponding Java object that represents
+     * zero-length data. In case no zero-length representation is defined for the Java type, a {@link ProcessingException}
+     * wrapping the underlying {@link NoContentException} is thrown.
+     * @throws ProcessingException if the content of the message cannot be mapped to an entity of the requested type.
+     * @throws IllegalStateException if the entity is not backed by an input stream, the response has been {@link #close()
+     * closed} already, or if the entity input stream has been fully consumed already and has not been buffered prior
+     * consuming.
      * @see javax.ws.rs.ext.MessageBodyReader
      * @since 2.0
      */
     public abstract <T> T readEntity(Class<T> entityType, Annotation[] annotations);
 
     /**
-     * Read the message entity input stream as an instance of specified Java type
-     * using a {@link javax.ws.rs.ext.MessageBodyReader} that supports mapping the
-     * message entity stream onto the requested type.
+     * Read the message entity input stream as an instance of specified Java type using a
+     * {@link javax.ws.rs.ext.MessageBodyReader} that supports mapping the message entity stream onto the requested type.
      * <p>
-     * Method throws an {@link ProcessingException} if the content of the
-     * message cannot be mapped to an entity of the requested type and
-     * {@link IllegalStateException} in case the entity is not backed by an input
-     * stream or if the original entity input stream has already been consumed
-     * without {@link #bufferEntity() buffering} the entity data prior consuming.
+     * Method throws an {@link ProcessingException} if the content of the message cannot be mapped to an entity of the
+     * requested type and {@link IllegalStateException} in case the entity is not backed by an input stream or if the
+     * original entity input stream has already been consumed without {@link #bufferEntity() buffering} the entity data
+     * prior consuming.
      * </p>
      * <p>
-     * A message instance returned from this method will be cached for
-     * subsequent retrievals via {@link #getEntity()}. Unless the supplied entity
-     * type is an {@link java.io.InputStream input stream}, this method automatically
-     * {@link #close() closes} the an unconsumed original response entity data stream
-     * if open. In case the entity data has been buffered, the buffer will be reset
-     * prior consuming the buffered data to enable subsequent invocations of
+     * A message instance returned from this method will be cached for subsequent retrievals via {@link #getEntity()}.
+     * Unless the supplied entity type is an {@link java.io.InputStream input stream}, this method automatically
+     * {@link #close() closes} the an unconsumed original response entity data stream if open. In case the entity data has
+     * been buffered, the buffer will be reset prior consuming the buffered data to enable subsequent invocations of
      * {@code readEntity(...)} methods on this response.
      * </p>
      *
-     * @param <T>         entity instance Java type.
-     * @param entityType  the type of entity; may be generic.
+     * @param <T> entity instance Java type.
+     * @param entityType the type of entity; may be generic.
      * @param annotations annotations that will be passed to the {@link MessageBodyReader}.
-     * @return the message entity; for a zero-length response entities returns a corresponding
-     *         Java object that represents zero-length data. In case no zero-length representation
-     *         is defined for the Java type, a {@link ProcessingException} wrapping the
-     *         underlying {@link NoContentException} is thrown.
-     * @throws ProcessingException   if the content of the message cannot be
-     *                               mapped to an entity of the requested type.
-     * @throws IllegalStateException if the entity is not backed by an input stream,
-     *                               the response has been {@link #close() closed} already,
-     *                               or if the entity input stream has been fully consumed already and has
-     *                               not been buffered prior consuming.
+     * @return the message entity; for a zero-length response entities returns a corresponding Java object that represents
+     * zero-length data. In case no zero-length representation is defined for the Java type, a {@link ProcessingException}
+     * wrapping the underlying {@link NoContentException} is thrown.
+     * @throws ProcessingException if the content of the message cannot be mapped to an entity of the requested type.
+     * @throws IllegalStateException if the entity is not backed by an input stream, the response has been {@link #close()
+     * closed} already, or if the entity input stream has been fully consumed already and has not been buffered prior
+     * consuming.
      * @see javax.ws.rs.ext.MessageBodyReader
      * @since 2.0
      */
     public abstract <T> T readEntity(GenericType<T> entityType, Annotation[] annotations);
 
     /**
-     * Check if there is an entity available in the response. The method returns
-     * {@code true} if the entity is present, returns {@code false} otherwise.
+     * Check if there is an entity available in the response. The method returns {@code true} if the entity is present,
+     * returns {@code false} otherwise.
      * <p>
-     * Note that the method may return {@code true} also for response messages with
-     * a zero-length content, in case the <tt>{@value javax.ws.rs.core.HttpHeaders#CONTENT_LENGTH}</tt> and
-     * <tt>{@value javax.ws.rs.core.HttpHeaders#CONTENT_TYPE}</tt> headers are specified in the message.
-     * In such case, an attempt to read the entity using one of the {@code readEntity(...)}
-     * methods will return a corresponding instance representing a zero-length entity for a
-     * given Java type or produce a {@link ProcessingException} in case no such instance
-     * is available for the Java type.
+     * Note that the method may return {@code true} also for response messages with a zero-length content, in case the
+     * <tt>{@value javax.ws.rs.core.HttpHeaders#CONTENT_LENGTH}</tt> and
+     * <tt>{@value javax.ws.rs.core.HttpHeaders#CONTENT_TYPE}</tt> headers are specified in the message. In such case, an
+     * attempt to read the entity using one of the {@code readEntity(...)} methods will return a corresponding instance
+     * representing a zero-length entity for a given Java type or produce a {@link ProcessingException} in case no such
+     * instance is available for the Java type.
      * </p>
      *
-     * @return {@code true} if there is an entity present in the message,
-     *         {@code false} otherwise.
+     * @return {@code true} if there is an entity present in the message, {@code false} otherwise.
      * @throws IllegalStateException in case the response has been {@link #close() closed}.
      * @since 2.0
      */
@@ -267,62 +234,51 @@ public abstract class Response implements AutoCloseable {
     /**
      * Buffer the message entity data.
      * <p>
-     * In case the message entity is backed by an unconsumed entity input stream,
-     * all the bytes of the original entity input stream are read and stored in a
-     * local buffer. The original entity input stream is consumed and automatically
-     * closed as part of the operation and the method returns {@code true}.
+     * In case the message entity is backed by an unconsumed entity input stream, all the bytes of the original entity input
+     * stream are read and stored in a local buffer. The original entity input stream is consumed and automatically closed
+     * as part of the operation and the method returns {@code true}.
      * </p>
      * <p>
-     * In case the response entity instance is not backed by an unconsumed input stream
-     * an invocation of {@code bufferEntity} method is ignored and the method returns
-     * {@code false}.
+     * In case the response entity instance is not backed by an unconsumed input stream an invocation of
+     * {@code bufferEntity} method is ignored and the method returns {@code false}.
      * </p>
      * <p>
-     * This operation is idempotent, i.e. it can be invoked multiple times with
-     * the same effect which also means that calling the {@code bufferEntity()}
-     * method on an already buffered (and thus closed) message instance is legal
-     * and has no further effect. Also, the result returned by the {@code bufferEntity()}
-     * method is consistent across all invocations of the method on the same
-     * {@code Response} instance.
+     * This operation is idempotent, i.e. it can be invoked multiple times with the same effect which also means that
+     * calling the {@code bufferEntity()} method on an already buffered (and thus closed) message instance is legal and has
+     * no further effect. Also, the result returned by the {@code bufferEntity()} method is consistent across all
+     * invocations of the method on the same {@code Response} instance.
      * </p>
      * <p>
-     * Buffering the message entity data allows for multiple invocations of
-     * {@code readEntity(...)} methods on the response instance. Note however, that
-     * once the response instance itself is {@link #close() closed}, the implementations
-     * are expected to release the buffered message entity data too. Therefore any subsequent
-     * attempts to read a message entity stream on such closed response will result in an
-     * {@link IllegalStateException} being thrown.
+     * Buffering the message entity data allows for multiple invocations of {@code readEntity(...)} methods on the response
+     * instance. Note however, that once the response instance itself is {@link #close() closed}, the implementations are
+     * expected to release the buffered message entity data too. Therefore any subsequent attempts to read a message entity
+     * stream on such closed response will result in an {@link IllegalStateException} being thrown.
      * </p>
      *
-     * @return {@code true} if the message entity input stream was available and
-     *         was buffered successfully, returns {@code false} if the entity stream
-     *         was not available.
-     * @throws ProcessingException   if there was an error while buffering the entity
-     *                               input stream.
+     * @return {@code true} if the message entity input stream was available and was buffered successfully, returns
+     * {@code false} if the entity stream was not available.
+     * @throws ProcessingException if there was an error while buffering the entity input stream.
      * @throws IllegalStateException in case the response has been {@link #close() closed}.
      * @since 2.0
      */
     public abstract boolean bufferEntity();
 
     /**
-     * Close the underlying message entity input stream (if available and open)
-     * as well as releases any other resources associated with the response
-     * (e.g. {@link #bufferEntity() buffered message entity data}).
+     * Close the underlying message entity input stream (if available and open) as well as releases any other resources
+     * associated with the response (e.g. {@link #bufferEntity() buffered message entity data}).
      * <p>
-     * This operation is idempotent, i.e. it can be invoked multiple times with the
-     * same effect which also means that calling the {@code close()} method on an
-     * already closed message instance is legal and has no further effect.
+     * This operation is idempotent, i.e. it can be invoked multiple times with the same effect which also means that
+     * calling the {@code close()} method on an already closed message instance is legal and has no further effect.
      * </p>
      * <p>
-     * The {@code close()} method should be invoked on all instances that
-     * contain an un-consumed entity input stream to ensure the resources associated
-     * with the instance are properly cleaned-up and prevent potential memory leaks.
-     * This is typical for client-side scenarios where application layer code
-     * processes only the response headers and ignores the response entity.
+     * The {@code close()} method should be invoked on all instances that contain an un-consumed entity input stream to
+     * ensure the resources associated with the instance are properly cleaned-up and prevent potential memory leaks. This is
+     * typical for client-side scenarios where application layer code processes only the response headers and ignores the
+     * response entity.
      * </p>
      * <p>
-     * Any attempts to manipulate (read, get, buffer) a message entity on a closed response
-     * will result in an {@link IllegalStateException} being thrown.
+     * Any attempts to manipulate (read, get, buffer) a message entity on a closed response will result in an
+     * {@link IllegalStateException} being thrown.
      * </p>
      *
      * @throws ProcessingException if there is an error closing the response.
@@ -350,8 +306,7 @@ public abstract class Response implements AutoCloseable {
     /**
      * Get Content-Length value.
      *
-     * @return Content-Length as integer if present and valid number. In other
-     *         cases returns {@code -1}.
+     * @return Content-Length as integer if present and valid number. In other cases returns {@code -1}.
      * @since 2.0
      */
     public abstract int getLength();
@@ -359,8 +314,7 @@ public abstract class Response implements AutoCloseable {
     /**
      * Get the allowed HTTP methods from the Allow HTTP header.
      *
-     * @return the allowed HTTP methods, all methods will returned as upper case
-     *         strings.
+     * @return the allowed HTTP methods, all methods will returned as upper case strings.
      * @since 2.0
      */
     public abstract Set<String> getAllowedMethods();
@@ -406,14 +360,11 @@ public abstract class Response implements AutoCloseable {
     public abstract URI getLocation();
 
     /**
-     * Get the links attached to the message as headers. Any links in the message
-     * that are relative must be resolved with respect to the actual request URI
-     * that produced this response. Note that request URIs may be updated by
-     * filters, so the actual request URI may differ from that in the original
-     * invocation.
+     * Get the links attached to the message as headers. Any links in the message that are relative must be resolved with
+     * respect to the actual request URI that produced this response. Note that request URIs may be updated by filters, so
+     * the actual request URI may differ from that in the original invocation.
      *
-     * @return links, may return empty {@link Set} if no links are present. Does
-     *         not return {@code null}.
+     * @return links, may return empty {@link Set} if no links are present. Does not return {@code null}.
      * @since 2.0
      */
     public abstract Set<Link> getLinks();
@@ -422,17 +373,16 @@ public abstract class Response implements AutoCloseable {
      * Check if link for relation exists.
      *
      * @param relation link relation.
-     * @return {@code true} if the link for the relation is present in the
-     *         {@link #getHeaders() message headers}, {@code false} otherwise.
+     * @return {@code true} if the link for the relation is present in the {@link #getHeaders() message headers},
+     * {@code false} otherwise.
      * @since 2.0
      */
     public abstract boolean hasLink(String relation);
 
     /**
-     * Get the link for the relation. A relative link is resolved with respect
-     * to the actual request URI that produced this response. Note that request
-     * URIs may be updated by filters, so the actual request URI may differ from
-     * that in the original invocation.
+     * Get the link for the relation. A relative link is resolved with respect to the actual request URI that produced this
+     * response. Note that request URIs may be updated by filters, so the actual request URI may differ from that in the
+     * original invocation.
      *
      * @param relation link relation.
      * @return the link for the relation, otherwise {@code null} if not present.
@@ -441,12 +391,10 @@ public abstract class Response implements AutoCloseable {
     public abstract Link getLink(String relation);
 
     /**
-     * Convenience method that returns a {@link Link.Builder} for the relation.
-     * See {@link #getLink} for more information.
+     * Convenience method that returns a {@link Link.Builder} for the relation. See {@link #getLink} for more information.
      *
      * @param relation link relation.
-     * @return the link builder for the relation, otherwise {@code null} if not
-     *         present.
+     * @return the link builder for the relation, otherwise {@code null} if not present.
      * @since 2.0
      */
     public abstract Link.Builder getLinkBuilder(String relation);
@@ -454,9 +402,8 @@ public abstract class Response implements AutoCloseable {
     /**
      * See {@link #getHeaders()}.
      *
-     * This method is considered deprecated. Users are encouraged to switch their
-     * code to use the {@code getHeaders()} method instead. The method may be annotated
-     * as {@link Deprecated &#64;Deprecated} in a future release of JAX-RS API.
+     * This method is considered deprecated. Users are encouraged to switch their code to use the {@code getHeaders()}
+     * method instead. The method may be annotated as {@link Deprecated &#64;Deprecated} in a future release of JAX-RS API.
      *
      * @return response headers as a multivalued map.
      */
@@ -465,18 +412,16 @@ public abstract class Response implements AutoCloseable {
     /**
      * Get view of the response headers and their object values.
      *
-     * The underlying header data may be subsequently modified by the JAX-RS runtime on the
-     * server side. Changes in the underlying header data are reflected in this view.
+     * The underlying header data may be subsequently modified by the JAX-RS runtime on the server side. Changes in the
+     * underlying header data are reflected in this view.
      * <p>
-     * On the server-side, when the message is sent, the non-string values will be serialized
-     * using a {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one is available via
-     * {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the
-     * class of the value or using the values {@code toString} method if a header delegate is
-     * not available.
+     * On the server-side, when the message is sent, the non-string values will be serialized using a
+     * {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one is available via
+     * {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the class of the value or using the
+     * values {@code toString} method if a header delegate is not available.
      * </p>
      * <p>
-     * On the client side, the returned map is identical to the one returned by
-     * {@link #getStringHeaders()}.
+     * On the client side, the returned map is identical to the one returned by {@link #getStringHeaders()}.
      * </p>
      *
      * @return response headers as an object view of header values.
@@ -491,8 +436,8 @@ public abstract class Response implements AutoCloseable {
     /**
      * Get view of the response headers and their string values.
      *
-     * The underlying header data may be subsequently modified by the JAX-RS runtime on
-     * the server side. Changes in the underlying header data are reflected in this view.
+     * The underlying header data may be subsequently modified by the JAX-RS runtime on the server side. Changes in the
+     * underlying header data are reflected in this view.
      *
      * @return response headers as a string view of header values.
      * @see #getHeaders()
@@ -504,18 +449,14 @@ public abstract class Response implements AutoCloseable {
     /**
      * Get a message header as a single string value.
      *
-     * Each single header value is converted to String using a
-     * {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one is available
-     * via {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)}
-     * for the header value class or using its {@code toString} method  if a header
-     * delegate is not available.
+     * Each single header value is converted to String using a {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one
+     * is available via {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the header value
+     * class or using its {@code toString} method if a header delegate is not available.
      *
      * @param name the message header.
-     * @return the message header value. If the message header is not present then
-     *         {@code null} is returned. If the message header is present but has no
-     *         value then the empty string is returned. If the message header is present
-     *         more than once then the values of joined together and separated by a ','
-     *         character.
+     * @return the message header value. If the message header is not present then {@code null} is returned. If the message
+     * header is present but has no value then the empty string is returned. If the message header is present more than once
+     * then the values of joined together and separated by a ',' character.
      * @see #getHeaders()
      * @see #getStringHeaders()
      * @since 2.0
@@ -523,23 +464,20 @@ public abstract class Response implements AutoCloseable {
     public abstract String getHeaderString(String name);
 
     /**
-     * Create a new ResponseBuilder by performing a shallow copy of an
-     * existing Response.
+     * Create a new ResponseBuilder by performing a shallow copy of an existing Response.
      * <p>
-     * The returned builder has its own {@link #getHeaders() response headers}
-     * but the header values are shared with the original {@code Response} instance.
-     * The original response entity instance reference is set in the new response
+     * The returned builder has its own {@link #getHeaders() response headers} but the header values are shared with the
+     * original {@code Response} instance. The original response entity instance reference is set in the new response
      * builder.
      * </p>
      * <p>
-     * Note that if the entity is backed by an un-consumed input stream, the
-     * reference to the stream is copied. In such case make sure to
-     * {@link #bufferEntity() buffer} the entity stream of the original response
-     * instance before passing it to this method.
+     * Note that if the entity is backed by an un-consumed input stream, the reference to the stream is copied. In such case
+     * make sure to {@link #bufferEntity() buffer} the entity stream of the original response instance before passing it to
+     * this method.
      * </p>
      *
-     * @param response a Response from which the status code, entity and
-     *                 {@link #getHeaders() response headers} will be copied.
+     * @param response a Response from which the status code, entity and {@link #getHeaders() response headers} will be
+     * copied.
      * @return a new response builder.
      * @since 2.0
      */
@@ -584,8 +522,7 @@ public abstract class Response implements AutoCloseable {
      *
      * @param status the response status.
      * @return a new response builder.
-     * @throws IllegalArgumentException if status is less than {@code 100} or greater
-     *                                  than {@code 599}.
+     * @throws IllegalArgumentException if status is less than {@code 100} or greater than {@code 599}.
      */
     public static ResponseBuilder status(final int status) {
         return ResponseBuilder.newInstance().status(status);
@@ -594,11 +531,10 @@ public abstract class Response implements AutoCloseable {
     /**
      * Create a new ResponseBuilder with the supplied status and reason phrase.
      *
-     * @param status       the response status.
+     * @param status the response status.
      * @param reasonPhrase the reason phrase.
      * @return the updated response builder.
-     * @throws IllegalArgumentException if status is less than {@code 100} or greater
-     *                                  than {@code 599}.
+     * @throws IllegalArgumentException if status is less than {@code 100} or greater than {@code 599}.
      * @since 2.1
      */
     public static ResponseBuilder status(final int status, final String reasonPhrase) {
@@ -615,9 +551,8 @@ public abstract class Response implements AutoCloseable {
     }
 
     /**
-     * Create a new ResponseBuilder that contains a representation. It is the
-     * callers responsibility to wrap the actual entity with
-     * {@link GenericEntity} if preservation of its generic type is required.
+     * Create a new ResponseBuilder that contains a representation. It is the callers responsibility to wrap the actual
+     * entity with {@link GenericEntity} if preservation of its generic type is required.
      *
      * @param entity the representation entity data.
      * @return a new response builder.
@@ -629,12 +564,11 @@ public abstract class Response implements AutoCloseable {
     }
 
     /**
-     * Create a new ResponseBuilder that contains a representation. It is the
-     * callers responsibility to wrap the actual entity with
-     * {@link GenericEntity} if preservation of its generic type is required.
+     * Create a new ResponseBuilder that contains a representation. It is the callers responsibility to wrap the actual
+     * entity with {@link GenericEntity} if preservation of its generic type is required.
      *
      * @param entity the representation entity data.
-     * @param type   the media type of the entity.
+     * @param type the media type of the entity.
      * @return a new response builder.
      */
     public static ResponseBuilder ok(final Object entity, final MediaType type) {
@@ -642,12 +576,11 @@ public abstract class Response implements AutoCloseable {
     }
 
     /**
-     * Create a new ResponseBuilder that contains a representation. It is the
-     * callers responsibility to wrap the actual entity with
-     * {@link GenericEntity} if preservation of its generic type is required.
+     * Create a new ResponseBuilder that contains a representation. It is the callers responsibility to wrap the actual
+     * entity with {@link GenericEntity} if preservation of its generic type is required.
      *
      * @param entity the representation entity data.
-     * @param type   the media type of the entity.
+     * @param type the media type of the entity.
      * @return a new response builder.
      */
     public static ResponseBuilder ok(final Object entity, final String type) {
@@ -655,11 +588,10 @@ public abstract class Response implements AutoCloseable {
     }
 
     /**
-     * Create a new ResponseBuilder that contains a representation. It is the
-     * callers responsibility to wrap the actual entity with
-     * {@link GenericEntity} if preservation of its generic type is required.
+     * Create a new ResponseBuilder that contains a representation. It is the callers responsibility to wrap the actual
+     * entity with {@link GenericEntity} if preservation of its generic type is required.
      *
-     * @param entity  the representation entity data.
+     * @param entity the representation entity data.
      * @param variant representation metadata.
      * @return a new response builder.
      */
@@ -677,15 +609,12 @@ public abstract class Response implements AutoCloseable {
     }
 
     /**
-     * Create a new ResponseBuilder for a created resource, set the location
-     * header using the supplied value.
+     * Create a new ResponseBuilder for a created resource, set the location header using the supplied value.
      *
-     * @param location the URI of the new resource. If a relative URI is
-     *                 supplied it will be converted into an absolute URI by resolving it
-     *                 relative to the request URI (see {@link UriInfo#getRequestUri}).
+     * @param location the URI of the new resource. If a relative URI is supplied it will be converted into an absolute URI
+     * by resolving it relative to the request URI (see {@link UriInfo#getRequestUri}).
      * @return a new response builder.
-     * @throws java.lang.IllegalArgumentException
-     *          if location is {@code null}.
+     * @throws java.lang.IllegalArgumentException if location is {@code null}.
      */
     public static ResponseBuilder created(final URI location) {
         return status(Status.CREATED).location(location);
@@ -702,9 +631,8 @@ public abstract class Response implements AutoCloseable {
     }
 
     /**
-     * Create a new ResponseBuilder with an ACCEPTED status that contains
-     * a representation. It is the callers responsibility to wrap the actual entity with
-     * {@link GenericEntity} if preservation of its generic type is required.
+     * Create a new ResponseBuilder with an ACCEPTED status that contains a representation. It is the callers responsibility
+     * to wrap the actual entity with {@link GenericEntity} if preservation of its generic type is required.
      *
      * @param entity the representation entity data.
      * @return a new response builder.
@@ -737,21 +665,18 @@ public abstract class Response implements AutoCloseable {
      *
      * @param tag a tag for the unmodified entity.
      * @return a new response builder.
-     * @throws java.lang.IllegalArgumentException
-     *          if tag is {@code null}.
+     * @throws java.lang.IllegalArgumentException if tag is {@code null}.
      */
     public static ResponseBuilder notModified(final EntityTag tag) {
         return notModified().tag(tag);
     }
 
     /**
-     * Create a new ResponseBuilder with a not-modified status
-     * and a strong entity tag. This is a shortcut
-     * for <code>notModified(new EntityTag(<i>value</i>))</code>.
+     * Create a new ResponseBuilder with a not-modified status and a strong entity tag. This is a shortcut for
+     * <code>notModified(new EntityTag(<i>value</i>))</code>.
      *
-     * @param tag the string content of a strong entity tag. The JAX-RS
-     *            runtime will quote the supplied value when creating the
-     *            header.
+     * @param tag the string content of a strong entity tag. The JAX-RS runtime will quote the supplied value when creating
+     * the header.
      * @return a new response builder.
      * @throws IllegalArgumentException if tag is {@code null}.
      */
@@ -761,16 +686,12 @@ public abstract class Response implements AutoCloseable {
     }
 
     /**
-     * Create a new ResponseBuilder for a redirection. Used in the
-     * redirect-after-POST (aka POST/redirect/GET) pattern.
+     * Create a new ResponseBuilder for a redirection. Used in the redirect-after-POST (aka POST/redirect/GET) pattern.
      *
-     * @param location the redirection URI. If a relative URI is
-     *                 supplied it will be converted into an absolute URI by resolving it
-     *                 relative to the base URI of the application (see
-     *                 {@link UriInfo#getBaseUri}).
+     * @param location the redirection URI. If a relative URI is supplied it will be converted into an absolute URI by
+     * resolving it relative to the base URI of the application (see {@link UriInfo#getBaseUri}).
      * @return a new response builder.
-     * @throws java.lang.IllegalArgumentException
-     *          if location is {@code null}.
+     * @throws java.lang.IllegalArgumentException if location is {@code null}.
      */
     public static ResponseBuilder seeOther(final URI location) {
         return status(Status.SEE_OTHER).location(location);
@@ -779,13 +700,10 @@ public abstract class Response implements AutoCloseable {
     /**
      * Create a new ResponseBuilder for a temporary redirection.
      *
-     * @param location the redirection URI. If a relative URI is
-     *                 supplied it will be converted into an absolute URI by resolving it
-     *                 relative to the base URI of the application (see
-     *                 {@link UriInfo#getBaseUri}).
+     * @param location the redirection URI. If a relative URI is supplied it will be converted into an absolute URI by
+     * resolving it relative to the base URI of the application (see {@link UriInfo#getBaseUri}).
      * @return a new response builder.
-     * @throws java.lang.IllegalArgumentException
-     *          if location is {@code null}.
+     * @throws java.lang.IllegalArgumentException if location is {@code null}.
      */
     public static ResponseBuilder temporaryRedirect(final URI location) {
         return status(Status.TEMPORARY_REDIRECT).location(location);
@@ -794,8 +712,7 @@ public abstract class Response implements AutoCloseable {
     /**
      * Create a new ResponseBuilder for a not acceptable response.
      *
-     * @param variants list of variants that were available, a null value is
-     *                 equivalent to an empty list.
+     * @param variants list of variants that were available, a null value is equivalent to an empty list.
      * @return a new response builder.
      */
     public static ResponseBuilder notAcceptable(final List<Variant> variants) {
@@ -803,30 +720,33 @@ public abstract class Response implements AutoCloseable {
     }
 
     /**
-     * A class used to build Response instances that contain metadata instead
-     * of or in addition to an entity. An initial instance may be obtained via
-     * static methods of the Response class, instance methods provide the
-     * ability to set metadata. E.g. to create a response that indicates the
-     * creation of a new resource:
-     * <pre>&#64;POST
+     * A class used to build Response instances that contain metadata instead of or in addition to an entity. An initial
+     * instance may be obtained via static methods of the Response class, instance methods provide the ability to set
+     * metadata. E.g. to create a response that indicates the creation of a new resource:
+     *
+     * <pre>
+     * &#64;POST
      * Response addWidget(...) {
      *   Widget w = ...
      *   URI widgetId = UriBuilder.fromResource(Widget.class)...
      *   return Response.created(widgetId).build();
-     * }</pre>
+     * }
+     * </pre>
      *
-     * <p>Several methods have parameters of type URI, {@link UriBuilder} provides
-     * convenient methods to create such values as does {@code URI.create()}.</p>
+     * <p>
+     * Several methods have parameters of type URI, {@link UriBuilder} provides convenient methods to create such values as
+     * does {@code URI.create()}.
+     * </p>
      *
-     * <p>Where multiple variants of the same method are provided, the type of
-     * the supplied parameter is retained in the metadata of the built
-     * {@code Response}.</p>
+     * <p>
+     * Where multiple variants of the same method are provided, the type of the supplied parameter is retained in the
+     * metadata of the built {@code Response}.
+     * </p>
      */
     public static abstract class ResponseBuilder {
 
         /**
-         * Protected constructor, use one of the static methods of
-         * {@code Response} to obtain an instance.
+         * Protected constructor, use one of the static methods of {@code Response} to obtain an instance.
          */
         protected ResponseBuilder() {
         }
@@ -841,8 +761,8 @@ public abstract class Response implements AutoCloseable {
         }
 
         /**
-         * Create a Response instance from the current ResponseBuilder. The builder
-         * is reset to a blank state equivalent to calling the ok method.
+         * Create a Response instance from the current ResponseBuilder. The builder is reset to a blank state equivalent to
+         * calling the ok method.
          *
          * @return a Response instance.
          */
@@ -865,19 +785,17 @@ public abstract class Response implements AutoCloseable {
          *
          * @param status the response status.
          * @return the updated response builder.
-         * @throws IllegalArgumentException if status is less than {@code 100} or greater
-         *                                  than {@code 599}.
+         * @throws IllegalArgumentException if status is less than {@code 100} or greater than {@code 599}.
          */
         public abstract ResponseBuilder status(int status);
 
         /**
          * Set the status on the ResponseBuilder.
          *
-         * @param status       the response status.
+         * @param status the response status.
          * @param reasonPhrase the reason phrase.
          * @return the updated response builder.
-         * @throws IllegalArgumentException if status is less than {@code 100} or greater
-         *                                  than {@code 599}.
+         * @throws IllegalArgumentException if status is less than {@code 100} or greater than {@code 599}.
          * @since 2.1
          */
         public abstract ResponseBuilder status(int status, String reasonPhrase);
@@ -909,16 +827,15 @@ public abstract class Response implements AutoCloseable {
         }
 
         /**
-         * <p>Set the response entity in the builder.
+         * <p>
+         * Set the response entity in the builder.
          * </p>
-         * <p>Any Java type instance for a response entity, that is supported by the
-         * runtime can be passed. It is the callers responsibility to wrap the
-         * actual entity with {@link GenericEntity} if preservation of its generic
-         * type is required. Note that the entity can be also set as an
-         * {@link java.io.InputStream input stream}.
+         * <p>
+         * Any Java type instance for a response entity, that is supported by the runtime can be passed. It is the callers
+         * responsibility to wrap the actual entity with {@link GenericEntity} if preservation of its generic type is required.
+         * Note that the entity can be also set as an {@link java.io.InputStream input stream}.
          * </p>
-         * A specific entity media type can be set using one of the {@code type(...)}
-         * methods.
+         * A specific entity media type can be set using one of the {@code type(...)} methods.
          *
          * @param entity the request entity.
          * @return updated response builder instance.
@@ -929,21 +846,19 @@ public abstract class Response implements AutoCloseable {
         public abstract ResponseBuilder entity(Object entity);
 
         /**
-         * <p>Set the response entity in the builder.
+         * <p>
+         * Set the response entity in the builder.
          * </p>
-         * <p>Any Java type instance for a response entity, that is supported by the
-         * runtime can be passed. It is the callers responsibility to wrap the
-         * actual entity with {@link GenericEntity} if preservation of its generic
-         * type is required. Note that the entity can be also set as an
-         * {@link java.io.InputStream input stream}.
+         * <p>
+         * Any Java type instance for a response entity, that is supported by the runtime can be passed. It is the callers
+         * responsibility to wrap the actual entity with {@link GenericEntity} if preservation of its generic type is required.
+         * Note that the entity can be also set as an {@link java.io.InputStream input stream}.
          * </p>
-         * A specific entity media type can be set using one of the {@code type(...)}
-         * methods.
+         * A specific entity media type can be set using one of the {@code type(...)} methods.
          *
-         * @param entity      the request entity.
-         * @param annotations annotations that will be passed to the {@link MessageBodyWriter},
-         *                    (in addition to any annotations declared directly on a resource
-         *                    method that returns the built response).
+         * @param entity the request entity.
+         * @param annotations annotations that will be passed to the {@link MessageBodyWriter}, (in addition to any annotations
+         * declared directly on a resource method that returns the built response).
          * @return updated response builder instance.
          * @see #entity(java.lang.Object)
          * @see #type(javax.ws.rs.core.MediaType)
@@ -953,11 +868,10 @@ public abstract class Response implements AutoCloseable {
         public abstract ResponseBuilder entity(Object entity, Annotation[] annotations);
 
         /**
-         * Set the list of allowed methods for the resource. Any duplicate method
-         * names will be truncated to a single entry.
+         * Set the list of allowed methods for the resource. Any duplicate method names will be truncated to a single entry.
          *
-         * @param methods the methods to be listed as allowed for the resource,
-         *                if {@code null} any existing allowed method list will be removed.
+         * @param methods the methods to be listed as allowed for the resource, if {@code null} any existing allowed method list
+         * will be removed.
          * @return the updated response builder.
          * @since 2.0
          */
@@ -966,8 +880,8 @@ public abstract class Response implements AutoCloseable {
         /**
          * Set the list of allowed methods for the resource.
          *
-         * @param methods the methods to be listed as allowed for the resource,
-         *                if {@code null} any existing allowed method list will be removed.
+         * @param methods the methods to be listed as allowed for the resource, if {@code null} any existing allowed method list
+         * will be removed.
          * @return the updated response builder.
          * @since 2.0
          */
@@ -976,8 +890,8 @@ public abstract class Response implements AutoCloseable {
         /**
          * Set the cache control data of the message.
          *
-         * @param cacheControl the cache control directives, if {@code null}
-         *                     any existing cache control directives will be removed.
+         * @param cacheControl the cache control directives, if {@code null} any existing cache control directives will be
+         * removed.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder cacheControl(CacheControl cacheControl);
@@ -985,9 +899,8 @@ public abstract class Response implements AutoCloseable {
         /**
          * Set the message entity content encoding.
          *
-         * @param encoding the content encoding of the message entity,
-         *                 if {@code null} any existing value for content encoding will be
-         *                 removed.
+         * @param encoding the content encoding of the message entity, if {@code null} any existing value for content encoding
+         * will be removed.
          * @return the updated response builder.
          * @since 2.0
          */
@@ -996,13 +909,12 @@ public abstract class Response implements AutoCloseable {
         /**
          * Add an arbitrary header.
          *
-         * @param name  the name of the header
-         * @param value the value of the header, the header will be serialized
-         *              using a {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if
-         *              one is available via {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)}
-         *              for the class of {@code value} or using its {@code toString} method
-         *              if a header delegate is not available. If {@code value} is {@code null}
-         *              then all current headers of the same name will be removed.
+         * @param name the name of the header
+         * @param value the value of the header, the header will be serialized using a
+         * {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one is available via
+         * {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the class of {@code value} or using
+         * its {@code toString} method if a header delegate is not available. If {@code value} is {@code null} then all current
+         * headers of the same name will be removed.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder header(String name, Object value);
@@ -1010,8 +922,7 @@ public abstract class Response implements AutoCloseable {
         /**
          * Replaces all existing headers with the newly supplied headers.
          *
-         * @param headers new headers to be set, if {@code null} all existing
-         *                headers will be removed.
+         * @param headers new headers to be set, if {@code null} all existing headers will be removed.
          * @return the updated response builder.
          * @since 2.0
          */
@@ -1020,8 +931,7 @@ public abstract class Response implements AutoCloseable {
         /**
          * Set the message entity language.
          *
-         * @param language the language of the message entity, if {@code null} any
-         *                 existing value for language will be removed.
+         * @param language the language of the message entity, if {@code null} any existing value for language will be removed.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder language(String language);
@@ -1029,8 +939,7 @@ public abstract class Response implements AutoCloseable {
         /**
          * Set the message entity language.
          *
-         * @param language the language of the message entity, if {@code null} any
-         *                 existing value for type will be removed.
+         * @param language the language of the message entity, if {@code null} any existing value for type will be removed.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder language(Locale language);
@@ -1038,8 +947,7 @@ public abstract class Response implements AutoCloseable {
         /**
          * Set the message entity media type.
          *
-         * @param type the media type of the message entity. If {@code null}, any
-         *             existing value for type will be removed.
+         * @param type the media type of the message entity. If {@code null}, any existing value for type will be removed.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder type(MediaType type);
@@ -1047,20 +955,20 @@ public abstract class Response implements AutoCloseable {
         /**
          * Set the message entity media type.
          *
-         * @param type the media type of the message entity. If {@code null}, any
-         *             existing value for type will be removed.
+         * @param type the media type of the message entity. If {@code null}, any existing value for type will be removed.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder type(String type);
 
         /**
-         * <p>Set message entity representation metadata.
+         * <p>
+         * Set message entity representation metadata.
          * </p>
-         * Equivalent to setting the values of content type, content language,
-         * and content encoding separately using the values of the variant properties.
+         * Equivalent to setting the values of content type, content language, and content encoding separately using the values
+         * of the variant properties.
          *
-         * @param variant metadata of the message entity, a {@code null} value is
-         *                equivalent to a variant with all {@code null} properties.
+         * @param variant metadata of the message entity, a {@code null} value is equivalent to a variant with all {@code null}
+         * properties.
          * @return the updated response builder.
          * @see #encoding(java.lang.String)
          * @see #language(java.util.Locale)
@@ -1072,9 +980,8 @@ public abstract class Response implements AutoCloseable {
         /**
          * Set the content location.
          *
-         * @param location the content location. Relative or absolute URIs
-         *                 may be used for the value of content location. If {@code null} any
-         *                 existing value for content location will be removed.
+         * @param location the content location. Relative or absolute URIs may be used for the value of content location. If
+         * {@code null} any existing value for content location will be removed.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder contentLocation(URI location);
@@ -1082,9 +989,8 @@ public abstract class Response implements AutoCloseable {
         /**
          * Add cookies to the response message.
          *
-         * @param cookies new cookies that will accompany the response. A {@code null}
-         *                value will remove all cookies, including those added via the
-         *                {@link #header(java.lang.String, java.lang.Object)} method.
+         * @param cookies new cookies that will accompany the response. A {@code null} value will remove all cookies, including
+         * those added via the {@link #header(java.lang.String, java.lang.Object)} method.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder cookie(NewCookie... cookies);
@@ -1092,8 +998,7 @@ public abstract class Response implements AutoCloseable {
         /**
          * Set the response expiration date.
          *
-         * @param expires the expiration date, if {@code null} removes any existing
-         *                expires value.
+         * @param expires the expiration date, if {@code null} removes any existing expires value.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder expires(Date expires);
@@ -1101,8 +1006,7 @@ public abstract class Response implements AutoCloseable {
         /**
          * Set the response entity last modification date.
          *
-         * @param lastModified the last modified date, if {@code null} any existing
-         *                     last modified value will be removed.
+         * @param lastModified the last modified date, if {@code null} any existing last modified value will be removed.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder lastModified(Date lastModified);
@@ -1110,10 +1014,9 @@ public abstract class Response implements AutoCloseable {
         /**
          * Set the location.
          *
-         * @param location the location. If a relative URI is supplied it will be
-         *                 converted into an absolute URI by resolving it relative to the
-         *                 base URI of the application (see {@link UriInfo#getBaseUri}).
-         *                 If {@code null} any existing value for location will be removed.
+         * @param location the location. If a relative URI is supplied it will be converted into an absolute URI by resolving it
+         * relative to the base URI of the application (see {@link UriInfo#getBaseUri}). If {@code null} any existing value for
+         * location will be removed.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder location(URI location);
@@ -1121,20 +1024,19 @@ public abstract class Response implements AutoCloseable {
         /**
          * Set a response entity tag.
          *
-         * @param tag the entity tag, if {@code null} any existing entity tag
-         *            value will be removed.
+         * @param tag the entity tag, if {@code null} any existing entity tag value will be removed.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder tag(EntityTag tag);
 
         /**
-         * <p>Set a strong response entity tag.
+         * <p>
+         * Set a strong response entity tag.
          * </p>
          * This is a shortcut for <code>tag(new EntityTag(<i>value</i>))</code>.
          *
-         * @param tag the string content of a strong entity tag. The JAX-RS
-         *            runtime will quote the supplied value when creating the header.
-         *            If {@code null} any existing entity tag value will be removed.
+         * @param tag the string content of a strong entity tag. The JAX-RS runtime will quote the supplied value when creating
+         * the header. If {@code null} any existing entity tag value will be removed.
          * @return the updated response builder.
          */
         @SuppressWarnings("HtmlTagCanBeJavadocTag")
@@ -1143,8 +1045,8 @@ public abstract class Response implements AutoCloseable {
         /**
          * Add a Vary header that lists the available variants.
          *
-         * @param variants a list of available representation variants, a {@code null}
-         *                 value will remove an existing value for Vary header.
+         * @param variants a list of available representation variants, a {@code null} value will remove an existing value for
+         * Vary header.
          * @return the updated response builder.
          * @since 2.0
          */
@@ -1153,8 +1055,8 @@ public abstract class Response implements AutoCloseable {
         /**
          * Add a Vary header that lists the available variants.
          *
-         * @param variants a list of available representation variants, a {@code null}
-         *                 value will remove an existing value for Vary header.
+         * @param variants a list of available representation variants, a {@code null} value will remove an existing value for
+         * Vary header.
          * @return the updated response builder.
          */
         public abstract ResponseBuilder variants(List<Variant> variants);
@@ -1162,8 +1064,7 @@ public abstract class Response implements AutoCloseable {
         /**
          * Add one or more link headers.
          *
-         * @param links links to be added to the message as headers, a {@code null}
-         *              value will remove any existing Link headers.
+         * @param links links to be added to the message as headers, a {@code null} value will remove any existing Link headers.
          * @return the updated response builder.
          * @since 2.0
          */
@@ -1221,8 +1122,8 @@ public abstract class Response implements AutoCloseable {
         /**
          * Get the this Status Type as a {@link Status}.
          * <p>
-         * Please note that returned status contains only a status code, the reason phrase is
-         * set to default one (corresponding to the status code).
+         * Please note that returned status contains only a status code, the reason phrase is set to default one (corresponding
+         * to the status code).
          *
          * @return {@link Status} representing this status type.
          * @since 2.1
@@ -1234,9 +1135,8 @@ public abstract class Response implements AutoCloseable {
 
     /**
      * Commonly used status codes defined by HTTP, see
-     * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10">HTTP/1.1 documentation</a>
-     * for the complete list. Additional status codes can be added by applications
-     * by creating an implementation of {@link StatusType}.
+     * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10">HTTP/1.1 documentation</a> for the complete
+     * list. Additional status codes can be added by applications by creating an implementation of {@link StatusType}.
      */
     public enum Status implements StatusType {
 
@@ -1245,31 +1145,37 @@ public abstract class Response implements AutoCloseable {
          */
         OK(200, "OK"),
         /**
-         * 201 Created, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">HTTP/1.1 documentation</a>.
+         * 201 Created, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">HTTP/1.1
+         * documentation</a>.
          */
         CREATED(201, "Created"),
         /**
-         * 202 Accepted, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.3">HTTP/1.1 documentation</a>.
+         * 202 Accepted, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.3">HTTP/1.1
+         * documentation</a>.
          */
         ACCEPTED(202, "Accepted"),
         /**
-         * 204 No Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">HTTP/1.1 documentation</a>.
+         * 204 No Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">HTTP/1.1
+         * documentation</a>.
          */
         NO_CONTENT(204, "No Content"),
         /**
-         * 205 Reset Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.6">HTTP/1.1 documentation</a>.
+         * 205 Reset Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.6">HTTP/1.1
+         * documentation</a>.
          *
          * @since 2.0
          */
         RESET_CONTENT(205, "Reset Content"),
         /**
-         * 206 Reset Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.7">HTTP/1.1 documentation</a>.
+         * 206 Reset Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.7">HTTP/1.1
+         * documentation</a>.
          *
          * @since 2.0
          */
         PARTIAL_CONTENT(206, "Partial Content"),
         /**
-         * 301 Moved Permanently, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.2">HTTP/1.1 documentation</a>.
+         * 301 Moved Permanently, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.2">HTTP/1.1
+         * documentation</a>.
          */
         MOVED_PERMANENTLY(301, "Moved Permanently"),
         /**
@@ -1279,69 +1185,83 @@ public abstract class Response implements AutoCloseable {
          */
         FOUND(302, "Found"),
         /**
-         * 303 See Other, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.4">HTTP/1.1 documentation</a>.
+         * 303 See Other, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.4">HTTP/1.1
+         * documentation</a>.
          */
         SEE_OTHER(303, "See Other"),
         /**
-         * 304 Not Modified, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.5">HTTP/1.1 documentation</a>.
+         * 304 Not Modified, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.5">HTTP/1.1
+         * documentation</a>.
          */
         NOT_MODIFIED(304, "Not Modified"),
         /**
-         * 305 Use Proxy, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.6">HTTP/1.1 documentation</a>.
+         * 305 Use Proxy, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.6">HTTP/1.1
+         * documentation</a>.
          *
          * @since 2.0
          */
         USE_PROXY(305, "Use Proxy"),
         /**
-         * 307 Temporary Redirect, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.8">HTTP/1.1 documentation</a>.
+         * 307 Temporary Redirect, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.8">HTTP/1.1
+         * documentation</a>.
          */
         TEMPORARY_REDIRECT(307, "Temporary Redirect"),
         /**
-         * 400 Bad Request, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">HTTP/1.1 documentation</a>.
+         * 400 Bad Request, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">HTTP/1.1
+         * documentation</a>.
          */
         BAD_REQUEST(400, "Bad Request"),
         /**
-         * 401 Unauthorized, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">HTTP/1.1 documentation</a>.
+         * 401 Unauthorized, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">HTTP/1.1
+         * documentation</a>.
          */
         UNAUTHORIZED(401, "Unauthorized"),
         /**
-         * 402 Payment Required, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.3">HTTP/1.1 documentation</a>.
+         * 402 Payment Required, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.3">HTTP/1.1
+         * documentation</a>.
          *
          * @since 2.0
          */
         PAYMENT_REQUIRED(402, "Payment Required"),
         /**
-         * 403 Forbidden, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">HTTP/1.1 documentation</a>.
+         * 403 Forbidden, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">HTTP/1.1
+         * documentation</a>.
          */
         FORBIDDEN(403, "Forbidden"),
         /**
-         * 404 Not Found, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">HTTP/1.1 documentation</a>.
+         * 404 Not Found, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">HTTP/1.1
+         * documentation</a>.
          */
         NOT_FOUND(404, "Not Found"),
         /**
-         * 405 Method Not Allowed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.6">HTTP/1.1 documentation</a>.
+         * 405 Method Not Allowed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.6">HTTP/1.1
+         * documentation</a>.
          *
          * @since 2.0
          */
         METHOD_NOT_ALLOWED(405, "Method Not Allowed"),
         /**
-         * 406 Not Acceptable, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.7">HTTP/1.1 documentation</a>.
+         * 406 Not Acceptable, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.7">HTTP/1.1
+         * documentation</a>.
          */
         NOT_ACCEPTABLE(406, "Not Acceptable"),
         /**
-         * 407 Proxy Authentication Required, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.8">HTTP/1.1 documentation</a>.
+         * 407 Proxy Authentication Required, see
+         * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.8">HTTP/1.1 documentation</a>.
          *
          * @since 2.0
          */
         PROXY_AUTHENTICATION_REQUIRED(407, "Proxy Authentication Required"),
         /**
-         * 408 Request Timeout, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.9">HTTP/1.1 documentation</a>.
+         * 408 Request Timeout, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.9">HTTP/1.1
+         * documentation</a>.
          *
          * @since 2.0
          */
         REQUEST_TIMEOUT(408, "Request Timeout"),
         /**
-         * 409 Conflict, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.10">HTTP/1.1 documentation</a>.
+         * 409 Conflict, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.10">HTTP/1.1
+         * documentation</a>.
          */
         CONFLICT(409, "Conflict"),
         /**
@@ -1349,95 +1269,112 @@ public abstract class Response implements AutoCloseable {
          */
         GONE(410, "Gone"),
         /**
-         * 411 Length Required, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.12">HTTP/1.1 documentation</a>.
+         * 411 Length Required, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.12">HTTP/1.1
+         * documentation</a>.
          *
          * @since 2.0
          */
         LENGTH_REQUIRED(411, "Length Required"),
         /**
-         * 412 Precondition Failed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.13">HTTP/1.1 documentation</a>.
+         * 412 Precondition Failed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.13">HTTP/1.1
+         * documentation</a>.
          */
         PRECONDITION_FAILED(412, "Precondition Failed"),
         /**
-         * 413 Request Entity Too Large, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.14">HTTP/1.1 documentation</a>.
+         * 413 Request Entity Too Large, see
+         * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.14">HTTP/1.1 documentation</a>.
          *
          * @since 2.0
          */
         REQUEST_ENTITY_TOO_LARGE(413, "Request Entity Too Large"),
         /**
-         * 414 Request-URI Too Long, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.15">HTTP/1.1 documentation</a>.
+         * 414 Request-URI Too Long, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.15">HTTP/1.1
+         * documentation</a>.
          *
          * @since 2.0
          */
         REQUEST_URI_TOO_LONG(414, "Request-URI Too Long"),
         /**
-         * 415 Unsupported Media Type, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.16">HTTP/1.1 documentation</a>.
+         * 415 Unsupported Media Type, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.16">HTTP/1.1
+         * documentation</a>.
          */
         UNSUPPORTED_MEDIA_TYPE(415, "Unsupported Media Type"),
         /**
-         * 416 Requested Range Not Satisfiable, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.17">HTTP/1.1 documentation</a>.
+         * 416 Requested Range Not Satisfiable, see
+         * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.17">HTTP/1.1 documentation</a>.
          *
          * @since 2.0
          */
         REQUESTED_RANGE_NOT_SATISFIABLE(416, "Requested Range Not Satisfiable"),
         /**
-         * 417 Expectation Failed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.18">HTTP/1.1 documentation</a>.
+         * 417 Expectation Failed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.18">HTTP/1.1
+         * documentation</a>.
          *
          * @since 2.0
          */
         EXPECTATION_FAILED(417, "Expectation Failed"),
         /**
-         * 428 Precondition required, see <a href="https://tools.ietf.org/html/rfc6585#section-3">RFC 6585: Additional HTTP Status Codes</a>.
+         * 428 Precondition required, see <a href="https://tools.ietf.org/html/rfc6585#section-3">RFC 6585: Additional HTTP
+         * Status Codes</a>.
          *
          * @since 2.1
          */
         PRECONDITION_REQUIRED(428, "Precondition Required"),
         /**
-         * 429 Too Many Requests, see <a href="https://tools.ietf.org/html/rfc6585#section-4">RFC 6585: Additional HTTP Status Codes</a>.
+         * 429 Too Many Requests, see <a href="https://tools.ietf.org/html/rfc6585#section-4">RFC 6585: Additional HTTP Status
+         * Codes</a>.
          *
          * @since 2.1
          */
         TOO_MANY_REQUESTS(429, "Too Many Requests"),
         /**
-         * 431 Request Header Fields Too Large, see <a href="https://tools.ietf.org/html/rfc6585#section-5">RFC 6585: Additional HTTP Status Codes</a>.
+         * 431 Request Header Fields Too Large, see <a href="https://tools.ietf.org/html/rfc6585#section-5">RFC 6585: Additional
+         * HTTP Status Codes</a>.
          *
          * @since 2.1
          */
         REQUEST_HEADER_FIELDS_TOO_LARGE(431, "Request Header Fields Too Large"),
         /**
-         * 500 Internal Server Error, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">HTTP/1.1 documentation</a>.
+         * 500 Internal Server Error, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">HTTP/1.1
+         * documentation</a>.
          */
         INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
         /**
-         * 501 Not Implemented, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.2">HTTP/1.1 documentation</a>.
+         * 501 Not Implemented, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.2">HTTP/1.1
+         * documentation</a>.
          *
          * @since 2.0
          */
         NOT_IMPLEMENTED(501, "Not Implemented"),
         /**
-         * 502 Bad Gateway, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.3">HTTP/1.1 documentation</a>.
+         * 502 Bad Gateway, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.3">HTTP/1.1
+         * documentation</a>.
          *
          * @since 2.0
          */
         BAD_GATEWAY(502, "Bad Gateway"),
         /**
-         * 503 Service Unavailable, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">HTTP/1.1 documentation</a>.
+         * 503 Service Unavailable, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">HTTP/1.1
+         * documentation</a>.
          */
         SERVICE_UNAVAILABLE(503, "Service Unavailable"),
         /**
-         * 504 Gateway Timeout, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.5">HTTP/1.1 documentation</a>.
+         * 504 Gateway Timeout, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.5">HTTP/1.1
+         * documentation</a>.
          *
          * @since 2.0
          */
         GATEWAY_TIMEOUT(504, "Gateway Timeout"),
         /**
-         * 505 HTTP Version Not Supported, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.6">HTTP/1.1 documentation</a>.
+         * 505 HTTP Version Not Supported, see
+         * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.6">HTTP/1.1 documentation</a>.
          *
          * @since 2.0
          */
         HTTP_VERSION_NOT_SUPPORTED(505, "HTTP Version Not Supported"),
         /**
-         * 511 Network Authentication Required, see <a href="https://tools.ietf.org/html/rfc6585#section-6">RFC 6585: Additional HTTP Status Codes</a>.
+         * 511 Network Authentication Required, see <a href="https://tools.ietf.org/html/rfc6585#section-6">RFC 6585: Additional
+         * HTTP Status Codes</a>.
          *
          * @since 2.1
          */
@@ -1448,8 +1385,7 @@ public abstract class Response implements AutoCloseable {
         private final Family family;
 
         /**
-         * An enumeration representing the class of status code. Family is used
-         * here since class is overloaded in Java.
+         * An enumeration representing the class of status code. Family is used here since class is overloaded in Java.
          */
         public enum Family {
 
@@ -1486,18 +1422,18 @@ public abstract class Response implements AutoCloseable {
              */
             public static Family familyOf(final int statusCode) {
                 switch (statusCode / 100) {
-                    case 1:
-                        return Family.INFORMATIONAL;
-                    case 2:
-                        return Family.SUCCESSFUL;
-                    case 3:
-                        return Family.REDIRECTION;
-                    case 4:
-                        return Family.CLIENT_ERROR;
-                    case 5:
-                        return Family.SERVER_ERROR;
-                    default:
-                        return Family.OTHER;
+                case 1:
+                    return Family.INFORMATIONAL;
+                case 2:
+                    return Family.SUCCESSFUL;
+                case 3:
+                    return Family.REDIRECTION;
+                case 4:
+                    return Family.CLIENT_ERROR;
+                case 5:
+                    return Family.SERVER_ERROR;
+                default:
+                    return Family.OTHER;
                 }
             }
         }

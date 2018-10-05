@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
  * @see HttpMethod
  * @since 1.0
  */
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @HttpMethod(HttpMethod.GET)
 @Documented

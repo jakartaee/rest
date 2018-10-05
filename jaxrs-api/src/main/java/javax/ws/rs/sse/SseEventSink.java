@@ -22,6 +22,7 @@ import java.util.concurrent.CompletionStage;
  * Outbound Server-Sent Events stream.
  * <p>
  * The instance of {@link SseEventSink} can be only acquired by injection of a resource method parameter:
+ *
  * <pre>
  * &#64;GET
  * &#64;Path("eventStream")
@@ -30,12 +31,12 @@ import java.util.concurrent.CompletionStage;
  *     // ...
  * }
  * </pre>
- * The injected instance is then considered as a return type, so the resource method doesn't return anything,
- * similarly as in server-side async processing.
+ *
+ * The injected instance is then considered as a return type, so the resource method doesn't return anything, similarly
+ * as in server-side async processing.
  * <p>
- * The underlying client connection is kept open and the application code
- * is able to send events. A server-side instance implementing the interface
- * corresponds exactly to a single client HTTP connection.
+ * The underlying client connection is kept open and the application code is able to send events. A server-side instance
+ * implementing the interface corresponds exactly to a single client HTTP connection.
  * <p>
  * The injected instance is thread safe.
  *
@@ -47,8 +48,8 @@ public interface SseEventSink extends AutoCloseable {
     /**
      * Check if the stream has been closed already.
      * <p>
-     * Please note that the client connection represented by this {@code SseServerSink} can be closed by the
-     * client side when a client decides to close connection and disconnect from the server.
+     * Please note that the client connection represented by this {@code SseServerSink} can be closed by the client side
+     * when a client decides to close connection and disconnect from the server.
      *
      * @return {@code true} when closed, {@code false} otherwise.
      */
@@ -60,17 +61,16 @@ public interface SseEventSink extends AutoCloseable {
      * Event will be serialized and sent to the client.
      *
      * @param event event to be written.
-     * @return completion stage that completes when the event has been sent. If there is a problem during sending of
-     * an event, completion stage will be completed exceptionally.
+     * @return completion stage that completes when the event has been sent. If there is a problem during sending of an
+     * event, completion stage will be completed exceptionally.
      */
     public CompletionStage<?> send(OutboundSseEvent event);
 
     /**
      * Close the {@link SseEventSink} instance and release all associated resources.
      * <p>
-     * Subsequent calls have no effect and are ignored. Once the {@link SseEventSink} is closed,
-     * invoking any method other than this one and {@link #isClosed()} would result in
-     * an {@link IllegalStateException} being thrown.
+     * Subsequent calls have no effect and are ignored. Once the {@link SseEventSink} is closed, invoking any method other
+     * than this one and {@link #isClosed()} would result in an {@link IllegalStateException} being thrown.
      */
     @Override
     void close();

@@ -42,8 +42,7 @@ public class CacheEntryLocator implements ClientRequestFilter {
             CacheEntry cacheEntry = cache.get(request.getUri().toString());
 
             if (cacheEntry != null) {
-                Response.ResponseBuilder responseBuilder =
-                        Response.status(cacheEntry.getStatus()).entity(new ByteArrayInputStream(cacheEntry.getBody()));
+                Response.ResponseBuilder responseBuilder = Response.status(cacheEntry.getStatus()).entity(new ByteArrayInputStream(cacheEntry.getBody()));
 
                 for (Map.Entry<String, List<String>> mapEntry : cacheEntry.getHeaders().entrySet()) {
                     for (String value : mapEntry.getValue()) {

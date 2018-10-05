@@ -127,11 +127,11 @@ public class GenericEntityTest {
             // check GenericEntity(Integer[], Number[]) works
             Method getNumbers = this.getClass().getDeclaredMethod("getNumbers");
             rt = getNumbers.getGenericReturnType();
-            Integer ints[] = {1, 2};
+            Integer ints[] = { 1, 2 };
             ge = new GenericEntity(ints, rt);
             // check GenericEntity(String[], Number[]) fails
             try {
-                String strings[] = {"foo", "bar"};
+                String strings[] = { "foo", "bar" };
                 ge = new GenericEntity(strings, rt);
                 fail("Expected IllegalArgumentException");
             } catch (IllegalArgumentException e) {

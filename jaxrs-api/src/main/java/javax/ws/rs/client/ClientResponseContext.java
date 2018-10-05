@@ -33,10 +33,8 @@ import javax.ws.rs.core.Response;
 /**
  * Client response filter context.
  *
- * A mutable class that provides response-specific information for the filter,
- * such as message headers, message entity or request-scoped properties.
- * The exposed setters allow modification of the exposed response-specific
- * information.
+ * A mutable class that provides response-specific information for the filter, such as message headers, message entity
+ * or request-scoped properties. The exposed setters allow modification of the exposed response-specific information.
  *
  * @author Marek Potociar
  * @since 2.0
@@ -60,14 +58,12 @@ public interface ClientResponseContext {
     /**
      * Get the complete status information associated with the response.
      *
-     * @return the response status information or {@code null} if the status was
-     *         not set.
+     * @return the response status information or {@code null} if the status was not set.
      */
     public Response.StatusType getStatusInfo();
 
     /**
-     * Set the complete status information (status code and reason phrase) associated
-     * with the response.
+     * Set the complete status information (status code and reason phrase) associated with the response.
      *
      * @param statusInfo the response status information.
      */
@@ -85,11 +81,9 @@ public interface ClientResponseContext {
      * Get a message header as a single string value.
      *
      * @param name the message header.
-     * @return the message header value. If the message header is not present then
-     *         {@code null} is returned. If the message header is present but has no
-     *         value then the empty string is returned. If the message header is present
-     *         more than once then the values of joined together and separated by a ','
-     *         character.
+     * @return the message header value. If the message header is not present then {@code null} is returned. If the message
+     * header is present but has no value then the empty string is returned. If the message header is present more than once
+     * then the values of joined together and separated by a ',' character.
      * @see #getHeaders()
      */
     public String getHeaderString(String name);
@@ -97,8 +91,7 @@ public interface ClientResponseContext {
     /**
      * Get the allowed HTTP methods from the Allow HTTP header.
      *
-     * @return the allowed HTTP methods, all methods will returned as upper case
-     *         strings.
+     * @return the allowed HTTP methods, all methods will returned as upper case strings.
      */
     public Set<String> getAllowedMethods();
 
@@ -119,16 +112,14 @@ public interface ClientResponseContext {
     /**
      * Get Content-Length value.
      *
-     * @return Content-Length as integer if present and valid number. In other
-     *         cases returns -1.
+     * @return Content-Length as integer if present and valid number. In other cases returns -1.
      */
     public int getLength();
 
     /**
      * Get the media type of the entity.
      *
-     * @return the media type or {@code null} if not specified (e.g. there's no
-     *         response entity).
+     * @return the media type or {@code null} if not specified (e.g. there's no response entity).
      */
     public MediaType getMediaType();
 
@@ -163,8 +154,7 @@ public interface ClientResponseContext {
     /**
      * Get the links attached to the message as header.
      *
-     * @return links, may return empty {@link Set} if no links are present. Never
-     *         returns {@code null}.
+     * @return links, may return empty {@link Set} if no links are present. Never returns {@code null}.
      */
     public Set<Link> getLinks();
 
@@ -172,8 +162,7 @@ public interface ClientResponseContext {
      * Check if link for relation exists.
      *
      * @param relation link relation.
-     * @return {@code true} if the for the relation link exists, {@code false}
-     *         otherwise.
+     * @return {@code true} if the for the relation link exists, {@code false} otherwise.
      */
     boolean hasLink(String relation);
 
@@ -186,38 +175,31 @@ public interface ClientResponseContext {
     public Link getLink(String relation);
 
     /**
-     * Convenience method that returns a {@link javax.ws.rs.core.Link.Builder Link.Builder}
-     * for the relation.
+     * Convenience method that returns a {@link javax.ws.rs.core.Link.Builder Link.Builder} for the relation.
      *
      * @param relation link relation.
-     * @return the link builder for the relation, otherwise {@code null} if not
-     *         present.
+     * @return the link builder for the relation, otherwise {@code null} if not present.
      */
     public Link.Builder getLinkBuilder(String relation);
 
     /**
-     * Check if there is a non-empty entity input stream is available in the response
-     * message.
+     * Check if there is a non-empty entity input stream is available in the response message.
      *
-     * The method returns {@code true} if the entity is present, returns
-     * {@code false} otherwise.
+     * The method returns {@code true} if the entity is present, returns {@code false} otherwise.
      *
-     * @return {@code true} if there is an entity present in the message,
-     *         {@code false} otherwise.
+     * @return {@code true} if there is an entity present in the message, {@code false} otherwise.
      */
     public boolean hasEntity();
 
     /**
-     * Get the entity input stream. The JAX-RS runtime is responsible for
-     * closing the input stream.
+     * Get the entity input stream. The JAX-RS runtime is responsible for closing the input stream.
      *
      * @return entity input stream.
      */
     public InputStream getEntityStream();
 
     /**
-     * Set a new entity input stream. The JAX-RS runtime is responsible for
-     * closing the input stream.
+     * Set a new entity input stream. The JAX-RS runtime is responsible for closing the input stream.
      *
      * @param input new entity input stream.
      */

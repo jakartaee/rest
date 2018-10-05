@@ -45,8 +45,8 @@ public class MediaTypeTest {
     }
 
     /**
-     * Test that passing {@code null} values to {@link MediaType} constructor does
-     * not throw a {@link NullPointerException} and produces expected result.
+     * Test that passing {@code null} values to {@link MediaType} constructor does not throw a {@link NullPointerException}
+     * and produces expected result.
      */
     @Test
     public void testNullConstructorValues() {

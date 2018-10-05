@@ -23,12 +23,12 @@ import java.util.function.Consumer;
 /**
  * Server-Sent events broadcasting facility.
  * <p>
- * Server broadcaster can be used to manage multiple {@link SseEventSink server sinks}. It enables
- * sending events to all registered event outputs and provides facility to effectively handle
- * exceptions and closures of individual registered event outputs.
+ * Server broadcaster can be used to manage multiple {@link SseEventSink server sinks}. It enables sending events to all
+ * registered event outputs and provides facility to effectively handle exceptions and closures of individual registered
+ * event outputs.
  * <p>
- * Instance of this interface is thread safe, meaning that it can be shared and its method invoked
- * from different threads without causing inconsistent internal state.
+ * Instance of this interface is thread safe, meaning that it can be shared and its method invoked from different
+ * threads without causing inconsistent internal state.
  *
  * @author Marek Potociar
  * @since 2.1
@@ -36,25 +36,25 @@ import java.util.function.Consumer;
 public interface SseBroadcaster extends AutoCloseable {
 
     /**
-     * Register a listener, which will be called when an exception was thrown by a given SSE event output when trying
-     * to write to it or close it.
+     * Register a listener, which will be called when an exception was thrown by a given SSE event output when trying to
+     * write to it or close it.
      * <p>
-     * This operation is potentially slow, especially if large number of listeners get registered in the broadcaster.
-     * The {@code SseBroadcaster} implementation is optimized to efficiently handle small amounts of
-     * concurrent listener registrations and removals and large amounts of registered listener notifications.
+     * This operation is potentially slow, especially if large number of listeners get registered in the broadcaster. The
+     * {@code SseBroadcaster} implementation is optimized to efficiently handle small amounts of concurrent listener
+     * registrations and removals and large amounts of registered listener notifications.
      *
-     * @param onError bi-consumer, taking two parameters: {@link SseEventSink}, which is the source of the
-     *                error and the actual {@link Throwable} instance.
+     * @param onError bi-consumer, taking two parameters: {@link SseEventSink}, which is the source of the error and the
+     * actual {@link Throwable} instance.
      */
     void onError(BiConsumer<SseEventSink, Throwable> onError);
 
     /**
-     * Register a listener, which will be called when the SSE event output has been closed (either by client closing
-     * the connection or by calling {@link SseEventSink#close()} on the server side.
+     * Register a listener, which will be called when the SSE event output has been closed (either by client closing the
+     * connection or by calling {@link SseEventSink#close()} on the server side.
      * <p>
-     * This operation is potentially slow, especially if large number of listeners get registered in the broadcaster.
-     * The {@code SseBroadcaster} implementation is optimized to efficiently handle small amounts of
-     * concurrent listener registrations and removals and large amounts of registered listener notifications.
+     * This operation is potentially slow, especially if large number of listeners get registered in the broadcaster. The
+     * {@code SseBroadcaster} implementation is optimized to efficiently handle small amounts of concurrent listener
+     * registrations and removals and large amounts of registered listener notifications.
      *
      * @param onClose consumer taking single parameter, a {@link SseEventSink}, which was closed.
      */
@@ -76,27 +76,23 @@ public interface SseBroadcaster extends AutoCloseable {
     CompletionStage<?> broadcast(final OutboundSseEvent event);
 
     /**
-     * Close the broadcaster and all registered {@link SseEventSink} instances. Any other resources
-     * associated with the {@link SseBroadcaster} should be released. This method is equivalent to
-     * calling {@code close(true)}.
+     * Close the broadcaster and all registered {@link SseEventSink} instances. Any other resources associated with the
+     * {@link SseBroadcaster} should be released. This method is equivalent to calling {@code close(true)}.
      * <p>
-     * Subsequent calls have no effect and are ignored. Once the {@link SseBroadcaster} is closed,
-     * invoking any other method on the broadcaster instance would result in an
-     * {@link IllegalStateException} being thrown.
+     * Subsequent calls have no effect and are ignored. Once the {@link SseBroadcaster} is closed, invoking any other method
+     * on the broadcaster instance would result in an {@link IllegalStateException} being thrown.
      */
     @Override
     void close();
 
     /**
-     * Close the broadcaster and release any resources associated with it. The closing of
-     * registered {@link SseEventSink} is controlled by the {@code cascading} parameter.
+     * Close the broadcaster and release any resources associated with it. The closing of registered {@link SseEventSink} is
+     * controlled by the {@code cascading} parameter.
      * <p>
-     * Subsequent calls have no effect and are ignored. Once the {@link SseBroadcaster} is closed,
-     * invoking any other method on the broadcaster instance would result in an
-     * {@link IllegalStateException} being thrown.
+     * Subsequent calls have no effect and are ignored. Once the {@link SseBroadcaster} is closed, invoking any other method
+     * on the broadcaster instance would result in an {@link IllegalStateException} being thrown.
      *
-     * @param cascading Boolean value that controls closing of registered {@link SseEventSink}
-     *                  instances.
+     * @param cascading Boolean value that controls closing of registered {@link SseEventSink} instances.
      */
     void close(boolean cascading);
 }

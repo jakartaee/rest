@@ -21,9 +21,8 @@ import java.io.IOException;
 /**
  * An extension interface implemented by client response filters.
  *
- * Filters implementing this interface MUST be annotated with
- * {@link javax.ws.rs.ext.Provider &#64;Provider} to be discovered by the JAX-RS
- * runtime. This type of filters is supported only as part of the Client API.
+ * Filters implementing this interface MUST be annotated with {@link javax.ws.rs.ext.Provider &#64;Provider} to be
+ * discovered by the JAX-RS runtime. This type of filters is supported only as part of the Client API.
  *
  * @author Marek Potociar
  * @author Santiago Pericas-Geertsen
@@ -33,14 +32,13 @@ import java.io.IOException;
 public interface ClientResponseFilter {
 
     /**
-     * Filter method called after a response has been provided for a request
-     * (either by a {@link ClientRequestFilter request filter} or when the
-     * HTTP invocation returns).
+     * Filter method called after a response has been provided for a request (either by a {@link ClientRequestFilter request
+     * filter} or when the HTTP invocation returns).
      *
-     * Filters in the filter chain are ordered according to their {@code javax.annotation.Priority}
-     * class-level annotation value.
+     * Filters in the filter chain are ordered according to their {@code javax.annotation.Priority} class-level annotation
+     * value.
      *
-     * @param requestContext  request context.
+     * @param requestContext request context.
      * @param responseContext response context.
      * @throws IOException if an I/O exception occurs.
      */

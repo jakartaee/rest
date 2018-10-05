@@ -27,21 +27,22 @@ import java.util.Stack;
 /**
  * Represents a generic message entity type {@code T}.
  *
- * Supports in-line instantiation of objects that represent generic types with
- * actual type parameters. An object that represents any parameterized type may
- * be obtained by sub-classing {@code GenericType}. Alternatively, an object
- * representing a concrete parameterized type can be created using a
- * {@link #GenericType(java.lang.reflect.Type)} and manually specifying
- * the {@link #getType() actual (parameterized) type}.
+ * Supports in-line instantiation of objects that represent generic types with actual type parameters. An object that
+ * represents any parameterized type may be obtained by sub-classing {@code GenericType}. Alternatively, an object
+ * representing a concrete parameterized type can be created using a {@link #GenericType(java.lang.reflect.Type)} and
+ * manually specifying the {@link #getType() actual (parameterized) type}.
  * <p>
  * For example:
  * </p>
+ *
  * <pre>
- *  GenericType&lt;List&lt;String&gt;&gt; stringListType = new GenericType&lt;List&lt;String&gt;&gt;() {};
+ * GenericType&lt;List&lt;String&gt;&gt; stringListType = new GenericType&lt;List&lt;String&gt;&gt;() {
+ * };
  * </pre>
  * <p>
  * Or:
  * </p>
+ *
  * <pre>
  *  public class MyGenericType extends GenericType&lt;List&lt;String&gt;&gt; { ... }
  *
@@ -50,10 +51,11 @@ import java.util.Stack;
  *  MyGenericType stringListType = new MyGenericType();
  * </pre>
  * <p>
- * Note that due to the Java type erasure limitations the parameterized type information
- * must be specified on a subclass, not just during the instance creation. For example,
- * the following case would throw an {@link IllegalArgumentException}:
+ * Note that due to the Java type erasure limitations the parameterized type information must be specified on a
+ * subclass, not just during the instance creation. For example, the following case would throw an
+ * {@link IllegalArgumentException}:
  * </p>
+ *
  * <pre>
  *  public class MyGenericType&lt;T&gt; extends GenericType&lt;T&gt; { ... }
  *
@@ -82,12 +84,10 @@ public class GenericType<T> {
     private final Class<?> rawType;
 
     /**
-     * Create a {@link javax.ws.rs.core.GenericType generic type} from a
-     * Java {@code instance}.
+     * Create a {@link javax.ws.rs.core.GenericType generic type} from a Java {@code instance}.
      * <p>
-     * If the supplied instance is a {@link javax.ws.rs.core.GenericEntity}, the generic type
-     * will be computed using the {@link javax.ws.rs.core.GenericEntity#getType()}.
-     * Otherwise {@code instance.getClass()} will be used.
+     * If the supplied instance is a {@link javax.ws.rs.core.GenericEntity}, the generic type will be computed using the
+     * {@link javax.ws.rs.core.GenericEntity#getType()}. Otherwise {@code instance.getClass()} will be used.
      * </p>
      *
      * @param instance Java instance for which the {@code GenericType} description should be created.
@@ -105,12 +105,10 @@ public class GenericType<T> {
     }
 
     /**
-     * Constructs a new generic type, deriving the generic type and class from
-     * type parameter. Note that this constructor is protected, users should create
-     * a (usually anonymous) subclass as shown above.
+     * Constructs a new generic type, deriving the generic type and class from type parameter. Note that this constructor is
+     * protected, users should create a (usually anonymous) subclass as shown above.
      *
-     * @throws IllegalArgumentException in case the generic type parameter value is not
-     *                                  provided by any of the subclasses.
+     * @throws IllegalArgumentException in case the generic type parameter value is not provided by any of the subclasses.
      */
     protected GenericType() {
         // Get the type parameter of GenericType<T> (aka the T value)
@@ -119,13 +117,11 @@ public class GenericType<T> {
     }
 
     /**
-     * Constructs a new generic type, supplying the generic type
-     * information and deriving the class.
+     * Constructs a new generic type, supplying the generic type information and deriving the class.
      *
      * @param genericType the generic type.
-     * @throws IllegalArgumentException if genericType is {@code null} or not an instance of
-     *                                  {@code Class} or {@link ParameterizedType} whose raw
-     *                                  type is an instance of {@code Class}.
+     * @throws IllegalArgumentException if genericType is {@code null} or not an instance of {@code Class} or
+     * {@link ParameterizedType} whose raw type is an instance of {@code Class}.
      */
     public GenericType(final Type genericType) {
         if (genericType == null) {
@@ -146,19 +142,17 @@ public class GenericType<T> {
     }
 
     /**
-     * Returns the object representing the class or interface that declared
-     * the type represented by this generic type instance.
+     * Returns the object representing the class or interface that declared the type represented by this generic type
+     * instance.
      *
-     * @return the class or interface that declared the type represented by this
-     *         generic type instance.
+     * @return the class or interface that declared the type represented by this generic type instance.
      */
     public final Class<?> getRawType() {
         return rawType;
     }
 
     /**
-     * Returns the object representing the class or interface that declared
-     * the supplied {@code type}.
+     * Returns the object representing the class or interface that declared the supplied {@code type}.
      *
      * @param type {@code Type} to inspect.
      * @return the class or interface that declared the supplied {@code type}.
@@ -198,7 +192,7 @@ public class GenericType<T> {
     /**
      * Return the value of the type parameter of {@code GenericType<T>}.
      *
-     * @param clazz     subClass of {@code baseClass} to analyze.
+     * @param clazz subClass of {@code baseClass} to analyze.
      * @param baseClass base class having the type parameter the value of which we need to retrieve
      * @return the parameterized type of {@code GenericType<T>} (aka T)
      */

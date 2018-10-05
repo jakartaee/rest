@@ -35,64 +35,61 @@ import org.junit.Test;
  */
 public class RxClientTest {
 
-    private Client client = null;       // does not run
+    private Client client = null; // does not run
 
     /**
-     * Shows how to use the default reactive invoker by calling method {@link
-     * javax.ws.rs.client.Invocation.Builder#rx()} without any arguments.
+     * Shows how to use the default reactive invoker by calling method {@link javax.ws.rs.client.Invocation.Builder#rx()}
+     * without any arguments.
      */
     @Test
     @Ignore
     public void testRxClient() {
-        CompletionStage<List<String>> cs =
-                client.target("remote/forecast/{destination}")
-                      .resolveTemplate("destination", "mars")
-                      .request()
-                      .header("Rx-User", "Java8")
-                      .rx()                               // gets CompletionStageRxInvoker
-                      .get(new GenericType<List<String>>() {
-                      });
+        CompletionStage<List<String>> cs = client.target("remote/forecast/{destination}")
+                .resolveTemplate("destination", "mars")
+                .request()
+                .header("Rx-User", "Java8")
+                .rx() // gets CompletionStageRxInvoker
+                .get(new GenericType<List<String>>() {
+                });
 
         cs.thenAccept(System.out::println);
     }
 
     /**
-     * Shows how other reactive invokers could be plugged in using the class
-     * as an argument in {@link javax.ws.rs.client.Invocation.Builder#rx(Class)}.
+     * Shows how other reactive invokers could be plugged in using the class as an argument in
+     * {@link javax.ws.rs.client.Invocation.Builder#rx(Class)}.
      */
     @Test
     @Ignore
     public void testRxClient2() {
         Client rxClient = client.register(CompletionStageRxInvokerProvider.class, RxInvokerProvider.class);
 
-        CompletionStage<List<String>> cs =
-                rxClient.target("remote/forecast/{destination}")
-                        .resolveTemplate("destination", "mars")
-                        .request()
-                        .header("Rx-User", "Java8")
-                        .rx(CompletionStageRxInvoker.class)
-                        .get(new GenericType<List<String>>() {
-                        });
+        CompletionStage<List<String>> cs = rxClient.target("remote/forecast/{destination}")
+                .resolveTemplate("destination", "mars")
+                .request()
+                .header("Rx-User", "Java8")
+                .rx(CompletionStageRxInvoker.class)
+                .get(new GenericType<List<String>>() {
+                });
 
         cs.thenAccept(System.out::println);
     }
 
     /**
-     * Shows how other reactive invokers could be plugged in using the class instance
-     * as an argument in {@link javax.ws.rs.client.Invocation.Builder#rx(Class)}.
+     * Shows how other reactive invokers could be plugged in using the class instance as an argument in
+     * {@link javax.ws.rs.client.Invocation.Builder#rx(Class)}.
      */
     @Test
     @Ignore
     public void testRxClient3() {
         Client rxClient = client.register(CompletionStageRxInvokerProvider.class, RxInvokerProvider.class);
 
-        CompletionStage<String> cs =
-                rxClient.target("remote/forecast/{destination}")
-                        .resolveTemplate("destination", "mars")
-                        .request()
-                        .header("Rx-User", "Java8")
-                        .rx(CompletionStageRxInvoker.class)
-                        .get(String.class);
+        CompletionStage<String> cs = rxClient.target("remote/forecast/{destination}")
+                .resolveTemplate("destination", "mars")
+                .request()
+                .header("Rx-User", "Java8")
+                .rx(CompletionStageRxInvoker.class)
+                .get(String.class);
 
         cs.thenAccept(System.out::println);
     }

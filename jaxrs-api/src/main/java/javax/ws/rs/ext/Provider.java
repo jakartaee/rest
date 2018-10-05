@@ -23,14 +23,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks an implementation of an extension interface that should be discoverable
- * by JAX-RS runtime during a provider scanning phase.
+ * Marks an implementation of an extension interface that should be discoverable by JAX-RS runtime during a provider
+ * scanning phase.
  *
  * @author Paul Sandoz
  * @author Marc Hadley
  * @since 1.0
  */
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Provider {

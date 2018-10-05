@@ -30,8 +30,8 @@ import org.junit.Test;
 public final class JAXRSTest {
 
     /**
-     * Installs a new {@code RuntimeDelegate} mock before each test case, as some
-     * test cases need to find a pristine <em>installed</em> RuntimeDelegate.
+     * Installs a new {@code RuntimeDelegate} mock before each test case, as some test cases need to find a pristine
+     * <em>installed</em> RuntimeDelegate.
      */
     @Before
     public final void setUp() {
@@ -39,8 +39,8 @@ public final class JAXRSTest {
     }
 
     /**
-     * Uninstalls the {@code RuntimeDelegate} mock after each test case to be sure
-     * that the <em>next</em> test case does not use a possibly cluttered instance.
+     * Uninstalls the {@code RuntimeDelegate} mock after each test case to be sure that the <em>next</em> test case does not
+     * use a possibly cluttered instance.
      */
     @After
     public final void tearDown() {
@@ -89,8 +89,7 @@ public final class JAXRSTest {
     }
 
     /**
-     * Assert that {@code Configuration.Builder}'s
-     * {@code from(external configuration)} bulk-loading method simply returns
+     * Assert that {@code Configuration.Builder}'s {@code from(external configuration)} bulk-loading method simply returns
      * {@code this}, but does nothing else, as it is a no-op implementation.
      *
      * @since 2.2
@@ -112,9 +111,8 @@ public final class JAXRSTest {
     }
 
     /**
-     * Assert that {@code Configuration.Builder}'s convenience methods delegate to
-     * its generic {@code property(name, value)} method using the <em>right</em>
-     * property name.
+     * Assert that {@code Configuration.Builder}'s convenience methods delegate to its generic {@code property(name, value)}
+     * method using the <em>right</em> property name.
      *
      * @since 2.2
      */
@@ -148,8 +146,8 @@ public final class JAXRSTest {
     }
 
     /**
-     * Assert that {@code Configuration}'s convenience methods delegate to its
-     * generic {@code property(name)} method using the <em>right</em> property name.
+     * Assert that {@code Configuration}'s convenience methods delegate to its generic {@code property(name)} method using
+     * the <em>right</em> property name.
      *
      * @since 2.2
      */

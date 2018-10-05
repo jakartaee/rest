@@ -19,8 +19,8 @@ package javax.ws.rs;
 import javax.ws.rs.core.Response;
 
 /**
- * A runtime exception indicating a resource requested by a client was
- * {@link javax.ws.rs.core.Response.Status#NOT_FOUND not found} on the server.
+ * A runtime exception indicating a resource requested by a client was {@link javax.ws.rs.core.Response.Status#NOT_FOUND
+ * not found} on the server.
  *
  * @author Sergey Beryozkin
  * @author Marek Potociar
@@ -40,8 +40,7 @@ public class NotFoundException extends ClientErrorException {
     /**
      * Construct a new "not found" exception.
      *
-     * @param message the detail message (which is saved for later retrieval
-     *                by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      */
     public NotFoundException(final String message) {
         super(message, Response.Status.NOT_FOUND);
@@ -51,8 +50,7 @@ public class NotFoundException extends ClientErrorException {
      * Construct a new "not found" exception.
      *
      * @param response error response.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 404}.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 404}.
      */
     public NotFoundException(final Response response) {
         super(validate(response, Response.Status.NOT_FOUND));
@@ -61,11 +59,9 @@ public class NotFoundException extends ClientErrorException {
     /**
      * Construct a new "not found" exception.
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param response error response.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 404}.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 404}.
      */
     public NotFoundException(final String message, final Response response) {
         super(message, validate(response, Response.Status.NOT_FOUND));
@@ -83,9 +79,8 @@ public class NotFoundException extends ClientErrorException {
     /**
      * Construct a new "not found" exception.
      *
-     * @param message the detail message (which is saved for later retrieval
-     *                by the {@link #getMessage()} method).
-     * @param cause   the underlying cause of the exception.
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+     * @param cause the underlying cause of the exception.
      */
     public NotFoundException(final String message, final Throwable cause) {
         super(message, Response.Status.NOT_FOUND, cause);
@@ -95,9 +90,8 @@ public class NotFoundException extends ClientErrorException {
      * Construct a new "not found" exception.
      *
      * @param response error response.
-     * @param cause    the underlying cause of the exception.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 404}.
+     * @param cause the underlying cause of the exception.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 404}.
      */
     public NotFoundException(final Response response, final Throwable cause) {
         super(validate(response, Response.Status.NOT_FOUND), cause);
@@ -106,12 +100,10 @@ public class NotFoundException extends ClientErrorException {
     /**
      * Construct a new "not found" exception.
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param response error response.
-     * @param cause    the underlying cause of the exception.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 404}.
+     * @param cause the underlying cause of the exception.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 404}.
      */
     public NotFoundException(final String message, final Response response, final Throwable cause) {
         super(message, validate(response, Response.Status.NOT_FOUND), cause);

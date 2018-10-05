@@ -41,7 +41,7 @@ public class FruitsResource {
         private String fruitName;
         private final String taste;
 
-        public TasteResource( String taste) {
+        public TasteResource(String taste) {
             this.taste = taste;
         }
 

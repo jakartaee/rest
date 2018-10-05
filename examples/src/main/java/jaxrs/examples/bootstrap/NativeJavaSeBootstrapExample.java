@@ -26,18 +26,15 @@ import javax.ws.rs.core.UriBuilder;
 /**
  * Java SE bootstrap example demonstrating the use of native properties.
  * <p>
- * This example demonstrates bootstrapping on Java SE platforms with native
- * properties, in particular by explicitly selecting the Grizzly2 backend in
- * Jersey. It will effectively startup the {@link HelloWorld} application at the
- * URL {@code http://localhost:80/}, i. e. the Grizzly2 backend selects exactly
- * port 80 as this is its default IP port. The actual configuration needs to be
- * queried after bootstrapping, otherwise callers would be unaware of the actual
- * chosen port, as Grizzly2's default behavior is not publicly documented.
+ * This example demonstrates bootstrapping on Java SE platforms with native properties, in particular by explicitly
+ * selecting the Grizzly2 backend in Jersey. It will effectively startup the {@link HelloWorld} application at the URL
+ * {@code http://localhost:80/}, i. e. the Grizzly2 backend selects exactly port 80 as this is its default IP port. The
+ * actual configuration needs to be queried after bootstrapping, otherwise callers would be unaware of the actual chosen
+ * port, as Grizzly2's default behavior is not publicly documented.
  * </p>
  * <p>
- * This is a native example, hence it only works with Jersey, and in particular
- * only with its Grizzly2 backend. To actually run this demo, the following
- * libraries have to be found on the classpath:
+ * This is a native example, hence it only works with Jersey, and in particular only with its Grizzly2 backend. To
+ * actually run this demo, the following libraries have to be found on the classpath:
  * </p>
  * <ul>
  * <li>jersey-server</li>
@@ -52,12 +49,9 @@ public final class NativeJavaSeBootstrapExample {
     /**
      * Runs this example.
      *
-     * @param args
-     *            unused command line arguments
-     * @throws InterruptedException
-     *             when process is killed
-     * @throws ClassNotFoundException
-     *             when Jersey's Grizzly backend is not on the classpath
+     * @param args unused command line arguments
+     * @throws InterruptedException when process is killed
+     * @throws ClassNotFoundException when Jersey's Grizzly backend is not on the classpath
      */
     public static final void main(final String[] args) throws InterruptedException, ClassNotFoundException {
         final Application application = new HelloWorld();

@@ -27,18 +27,15 @@ import javax.ws.rs.ext.RuntimeDelegate;
 /**
  * Bootstrap class used to startup a JAX-RS application in Java SE environments.
  * <p>
- * The {@code JAXRS} class is available in a Jakarta EE container environment as
- * well; however, support for the Java SE bootstrapping APIs is <em>not
- * required</em> in container environments.
+ * The {@code JAXRS} class is available in a Jakarta EE container environment as well; however, support for the Java SE
+ * bootstrapping APIs is <em>not required</em> in container environments.
  * </p>
  * <p>
- * In a Java SE environment an application is getting started by the following
- * command using default configuration values (i. e. mounting application at
- * {@code http://localhost:80/} <em>or a different port</em> (there is <em>no
- * particular default port</em> mandated by this specification). As the JAX-RS
- * implementation is free to choose any port by default, the caller will not
- * know the actual port unless explicitly checking the actual configuration of
- * the instance started:
+ * In a Java SE environment an application is getting started by the following command using default configuration
+ * values (i. e. mounting application at {@code http://localhost:80/} <em>or a different port</em> (there is <em>no
+ * particular default port</em> mandated by this specification). As the JAX-RS implementation is free to choose any port
+ * by default, the caller will not know the actual port unless explicitly checking the actual configuration of the
+ * instance started:
  * </p>
  *
  * <pre>
@@ -56,22 +53,19 @@ import javax.ws.rs.ext.RuntimeDelegate;
  * </pre>
  *
  * <p>
- * A shutdown callback can be registered which will get invoked once the
- * implementation stops serving the application:
+ * A shutdown callback can be registered which will get invoked once the implementation stops serving the application:
  * </p>
  *
  * <pre>
  * instance.stop().thenAccept(stopResult -&gt; ...));
  * </pre>
  *
- * {@code stopResult} is not further defined but solely acts as a wrapper around
- * a native result provided by the particular JAX-RS implementation. Portable
- * applications should not assume any particular data type or value.
+ * {@code stopResult} is not further defined but solely acts as a wrapper around a native result provided by the
+ * particular JAX-RS implementation. Portable applications should not assume any particular data type or value.
  *
  * <p>
- * Protocol, host address, port and root path can be overridden explicitly. As
- * the JAX-RS implementation is bound to that values, no querying of the actual
- * configuration is needed in that case:
+ * Protocol, host address, port and root path can be overridden explicitly. As the JAX-RS implementation is bound to
+ * that values, no querying of the actual configuration is needed in that case:
  * </p>
  *
  * <pre>
@@ -89,8 +83,7 @@ import javax.ws.rs.ext.RuntimeDelegate;
  * </pre>
  *
  * <p>
- * In case of HTTPS, client authentication can be enforced to ensure that only
- * <em>trustworthy</em> clients can connect:
+ * In case of HTTPS, client authentication can be enforced to ensure that only <em>trustworthy</em> clients can connect:
  * </p>
  *
  * <pre>
@@ -98,8 +91,8 @@ import javax.ws.rs.ext.RuntimeDelegate;
  * </pre>
  *
  * <p>
- * Implementations are free to support more use cases by native properties,
- * which effectively render the application non-portable:
+ * Implementations are free to support more use cases by native properties, which effectively render the application
+ * non-portable:
  * </p>
  *
  * <pre>
@@ -107,12 +100,10 @@ import javax.ws.rs.ext.RuntimeDelegate;
  * </pre>
  *
  * <p>
- * Bulk-loading allows to attach configuration storages easily without the need
- * to write down all properties to be transferred. Hence, even properties
- * unknown to the application author will get channeled into the implementation.
- * This can be done both, explicitly (hence portable) and implicitly (hence
- * <em>not necessarily</em> portable as no particular configuration mechanics
- * are required to be supported by compliant implementations):
+ * Bulk-loading allows to attach configuration storages easily without the need to write down all properties to be
+ * transferred. Hence, even properties unknown to the application author will get channeled into the implementation.
+ * This can be done both, explicitly (hence portable) and implicitly (hence <em>not necessarily</em> portable as no
+ * particular configuration mechanics are required to be supported by compliant implementations):
  * </p>
  *
  * <pre>
@@ -133,16 +124,14 @@ public interface JAXRS {
      * Starts the provided application using the specified configuration.
      *
      * <p>
-     * This method is intended to be used in Java SE environments only. The outcome
-     * of invocations in Jakarta EE container environments is undefined.
+     * This method is intended to be used in Java SE environments only. The outcome of invocations in Jakarta EE container
+     * environments is undefined.
      * </p>
      *
-     * @param application
-     *            The application to start up.
-     * @param configuration
-     *            Provides information needed for bootstrapping the application.
-     * @return {@code CompletionStage} (possibly asynchronously) producing handle of
-     *         the running application {@link JAXRS.Instance instance}.
+     * @param application The application to start up.
+     * @param configuration Provides information needed for bootstrapping the application.
+     * @return {@code CompletionStage} (possibly asynchronously) producing handle of the running application
+     * {@link JAXRS.Instance instance}.
      * @see Configuration
      * @since 2.2
      */
@@ -151,12 +140,10 @@ public interface JAXRS {
     }
 
     /**
-     * Provides information needed by the JAX-RS implementation for bootstrapping an
-     * application.
+     * Provides information needed by the JAX-RS implementation for bootstrapping an application.
      * <p>
-     * The configuration essentially consists of a set of parameters. While the set
-     * of actually effective keys is product specific, the key constants defined by
-     * the {@link JAXRS.Configuration} interface MUST be effective on all compliant
+     * The configuration essentially consists of a set of parameters. While the set of actually effective keys is product
+     * specific, the key constants defined by the {@link JAXRS.Configuration} interface MUST be effective on all compliant
      * products. Any unknown key MUST be silently ignored.
      * </p>
      *
@@ -168,8 +155,8 @@ public interface JAXRS {
         /**
          * Configuration key for the protocol an application is bound to.
          * <p>
-         * A compliant implementation at least MUST accept the strings {@code "HTTP"}
-         * and {@code "HTTPS"} if these protocols are supported.
+         * A compliant implementation at least MUST accept the strings {@code "HTTP"} and {@code "HTTPS"} if these protocols are
+         * supported.
          * </p>
          * <p>
          * The default value is {@code "HTTP"}.
@@ -182,13 +169,11 @@ public interface JAXRS {
         /**
          * Configuration key for the hostname or IP address an application is bound to.
          * <p>
-         * A compliant implementation at least MUST accept string values bearing
-         * hostnames, IP4 address text representations, and IP6 address text
-         * representations. If a hostname string, the special IP4 address string
-         * {@code "0.0.0.0"} or {@code "::"} for IP6 is provided, the application MUST
-         * be bound to <em>all</em> IP addresses assigned to that hostname. If the
-         * hostname string is {@code "localhost"} the application MUST be bound to the
-         * local host's loopback adapter <em>only</em>.
+         * A compliant implementation at least MUST accept string values bearing hostnames, IP4 address text representations,
+         * and IP6 address text representations. If a hostname string, the special IP4 address string {@code "0.0.0.0"} or
+         * {@code "::"} for IP6 is provided, the application MUST be bound to <em>all</em> IP addresses assigned to that
+         * hostname. If the hostname string is {@code "localhost"} the application MUST be bound to the local host's loopback
+         * adapter <em>only</em>.
          * </p>
          * <p>
          * The default value is {@code "localhost"}.
@@ -205,11 +190,10 @@ public interface JAXRS {
          * A compliant implementation MUST accept {@code java.lang.Integer} values.
          * </p>
          * <p>
-         * There is no default <em>port</em> mandated by this specification, but the
-         * default <em>value</em> of this property is {@link #DEFAULT_PORT} (i. e.
-         * <code>-1</code>). A compliant implementation MUST use its own default
-         * <em>port</em> when the <em>value</em> <code>-1</code> is provided, and MAY
-         * apply (but is not obligated to) auto-selection and range-scanning algorithms.
+         * There is no default <em>port</em> mandated by this specification, but the default <em>value</em> of this property is
+         * {@link #DEFAULT_PORT} (i. e. <code>-1</code>). A compliant implementation MUST use its own default <em>port</em> when
+         * the <em>value</em> <code>-1</code> is provided, and MAY apply (but is not obligated to) auto-selection and
+         * range-scanning algorithms.
          * </p>
          *
          * @since 2.2
@@ -254,10 +238,9 @@ public interface JAXRS {
          * Secure socket client authentication policy
          *
          * <p>
-         * This policy is used in secure socket handshake to control whether the server
-         * <em>requests</em> client authentication, and whether <em>successful</em>
-         * client authentication is <em>mandatory</em> (i. e. connection attempt will
-         * fail for invalid clients).
+         * This policy is used in secure socket handshake to control whether the server <em>requests</em> client authentication,
+         * and whether <em>successful</em> client authentication is <em>mandatory</em> (i. e. connection attempt will fail for
+         * invalid clients).
          * </p>
          *
          * @author Markus KARG (markus@headcrashing.eu)
@@ -273,16 +256,14 @@ public interface JAXRS {
             NONE,
 
             /**
-             * Client authentication is performed, but invalid clients are
-             * <em>accepted</em>.
+             * Client authentication is performed, but invalid clients are <em>accepted</em>.
              *
              * @since 2.2
              */
             OPTIONAL,
 
             /**
-             * Client authentication is performed, and invalid clients are
-             * <em>rejected</em>.
+             * Client authentication is performed, and invalid clients are <em>rejected</em>.
              *
              * @since 2.2
              */
@@ -290,29 +271,25 @@ public interface JAXRS {
         }
 
         /**
-         * Special value for {@link #PORT} property indicating that the implementation
-         * MUST scan for a free port.
+         * Special value for {@link #PORT} property indicating that the implementation MUST scan for a free port.
          *
          * @since 2.2
          */
         static final int FREE_PORT = 0;
 
         /**
-         * Special value for {@link #PORT} property indicating that the implementation
-         * MUST use its default port.
+         * Special value for {@link #PORT} property indicating that the implementation MUST use its default port.
          *
          * @since 2.2
          */
         static final int DEFAULT_PORT = -1;
 
         /**
-         * Returns the value of the property with the given name, or {@code null} if
-         * there is no property of that name.
+         * Returns the value of the property with the given name, or {@code null} if there is no property of that name.
          *
-         * @param name
-         *            a {@code String} specifying the name of the property.
-         * @return an {@code Object} containing the value of the property, or
-         *         {@code null} if no property exists matching the given name.
+         * @param name a {@code String} specifying the name of the property.
+         * @return an {@code Object} containing the value of the property, or {@code null} if no property exists matching the
+         * given name.
          * @since 2.2
          */
         Object property(String name);
@@ -324,8 +301,7 @@ public interface JAXRS {
          * </p>
          *
          * @return protocol to be used (e. g. {@code "HTTP")}.
-         * @throws ClassCastException
-         *             if protocol is not a {@link String}.
+         * @throws ClassCastException if protocol is not a {@link String}.
          * @see JAXRS.Configuration#PROTOCOL
          * @since 2.2
          */
@@ -339,10 +315,8 @@ public interface JAXRS {
          * Same as if calling {@link #property(String) (String) property(HOST)}.
          * </p>
          *
-         * @return host name or IP address to be used (e. g. {@code "localhost"} or
-         *         {@code "0.0.0.0"}).
-         * @throws ClassCastException
-         *             if host is not a {@link String}.
+         * @return host name or IP address to be used (e. g. {@code "localhost"} or {@code "0.0.0.0"}).
+         * @throws ClassCastException if host is not a {@link String}.
          * @see JAXRS.Configuration#HOST
          * @since 2.2
          */
@@ -356,13 +330,12 @@ public interface JAXRS {
          * Same as if calling {@link #property(String) (int) property(PORT)}.
          * </p>
          * <p>
-         * If the port was <em>not explicitly</em> given, this will return the port
-         * chosen implicitly by the JAX-RS implementation.
+         * If the port was <em>not explicitly</em> given, this will return the port chosen implicitly by the JAX-RS
+         * implementation.
          * </p>
          *
          * @return port number <em>actually</em> used (e. g. {@code 8080}).
-         * @throws ClassCastException
-         *             if port is not an {@code Integer}.
+         * @throws ClassCastException if port is not an {@code Integer}.
          * @see JAXRS.Configuration#PORT
          * @since 2.2
          */
@@ -377,8 +350,7 @@ public interface JAXRS {
          * </p>
          *
          * @return root path to be used, e. g. {@code "/"}.
-         * @throws ClassCastException
-         *             if root path is not a {@link String}.
+         * @throws ClassCastException if root path is not a {@link String}.
          * @see JAXRS.Configuration#ROOT_PATH
          * @since 2.2
          */
@@ -389,13 +361,11 @@ public interface JAXRS {
         /**
          * Convenience method to get the {@code sslContext} to be used.
          * <p>
-         * Same as if calling {@link #property(String) (SSLContext)
-         * property(SSL_CONTEXT)}.
+         * Same as if calling {@link #property(String) (SSLContext) property(SSL_CONTEXT)}.
          * </p>
          *
          * @return root path to be used, e. g. {@code "/"}.
-         * @throws ClassCastException
-         *             if sslContext is not a {@link SSLContext}.
+         * @throws ClassCastException if sslContext is not a {@link SSLContext}.
          * @see JAXRS.Configuration#SSL_CONTEXT
          * @since 2.2
          */
@@ -406,14 +376,11 @@ public interface JAXRS {
         /**
          * Convenience method to get the secure socket client authentication policy.
          * <p>
-         * Same as if calling {@link #property(String) (SSLClientAuthentication)
-         * property(SSL_CLIENT_AUTHENTICATION)}.
+         * Same as if calling {@link #property(String) (SSLClientAuthentication) property(SSL_CLIENT_AUTHENTICATION)}.
          * </p>
          *
          * @return client authentication mode, e. g. {@code NONE}.
-         * @throws ClassCastException
-         *             if sslClientAuthentication is not a
-         *             {@link SSLClientAuthentication}.
+         * @throws ClassCastException if sslClientAuthentication is not a {@link SSLClientAuthentication}.
          * @see JAXRS.Configuration#SSL_CLIENT_AUTHENTICATION
          * @since 2.2
          */
@@ -450,14 +417,11 @@ public interface JAXRS {
             /**
              * Sets the property {@code name} to the provided {@code value}.
              * <p>
-             * This method does not check the validity, type or syntax of the provided
-             * value.
+             * This method does not check the validity, type or syntax of the provided value.
              * </p>
              *
-             * @param name
-             *            name of the parameter to set.
-             * @param value
-             *            value to set, or {@code null} to use the default value.
+             * @param name name of the parameter to set.
+             * @param value value to set, or {@code null} to use the default value.
              * @return the updated builder.
              * @since 2.2
              */
@@ -466,13 +430,10 @@ public interface JAXRS {
             /**
              * Convenience method to set the {@code protocol} to be used.
              * <p>
-             * Same as if calling {@link #property(String, Object) property(PROTOCOL,
-             * value)}.
+             * Same as if calling {@link #property(String, Object) property(PROTOCOL, value)}.
              * </p>
              *
-             * @param protocol
-             *            protocol parameter of this configuration, or {@code null} to use
-             *            the default value.
+             * @param protocol protocol parameter of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
              * @see JAXRS.Configuration#PROTOCOL
              * @since 2.2
@@ -487,9 +448,7 @@ public interface JAXRS {
              * Same as if calling {@link #property(String, Object) property(HOST, value)}.
              * </p>
              *
-             * @param host
-             *            host parameter (IP address or hostname) of this configuration, or
-             *            {@code null} to use the default value.
+             * @param host host parameter (IP address or hostname) of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
              * @see JAXRS.Configuration#HOST
              * @since 2.2
@@ -504,9 +463,7 @@ public interface JAXRS {
              * Same as if calling {@link #property(String, Object) property(PORT, value)}.
              * </p>
              *
-             * @param port
-             *            port parameter of this configuration, or {@code null} to use the
-             *            default value.
+             * @param port port parameter of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
              * @see JAXRS.Configuration#PORT
              * @since 2.2
@@ -518,13 +475,10 @@ public interface JAXRS {
             /**
              * Convenience method to set the {@code rootPath} to be used.
              * <p>
-             * Same as if calling {@link #property(String, Object) property(ROOT_PATH,
-             * value)}.
+             * Same as if calling {@link #property(String, Object) property(ROOT_PATH, value)}.
              * </p>
              *
-             * @param rootPath
-             *            rootPath parameter of this configuration, or {@code null} to use
-             *            the default value.
+             * @param rootPath rootPath parameter of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
              * @see JAXRS.Configuration#ROOT_PATH
              * @since 2.2
@@ -536,13 +490,10 @@ public interface JAXRS {
             /**
              * Convenience method to set the {@code sslContext} to be used.
              * <p>
-             * Same as if calling {@link #property(String, Object) property(SSL_CONTEXT,
-             * value)}.
+             * Same as if calling {@link #property(String, Object) property(SSL_CONTEXT, value)}.
              * </p>
              *
-             * @param sslContext
-             *            sslContext parameter of this configuration, or {@code null} to use
-             *            the default value.
+             * @param sslContext sslContext parameter of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
              * @see JAXRS.Configuration#SSL_CONTEXT
              * @since 2.2
@@ -554,12 +505,10 @@ public interface JAXRS {
             /**
              * Convenience method to set SSL client authentication policy.
              * <p>
-             * Same as if calling {@link #property(String, Object)
-             * property(SSL_CLIENT_AUTHENTICATION, value)}.
+             * Same as if calling {@link #property(String, Object) property(SSL_CLIENT_AUTHENTICATION, value)}.
              * </p>
              *
-             * @param sslClientAuthentication
-             *            SSL client authentication mode of this configuration
+             * @param sslClientAuthentication SSL client authentication mode of this configuration
              * @return the updated builder.
              * @see JAXRS.Configuration#SSL_CLIENT_AUTHENTICATION
              * @since 2.2
@@ -571,19 +520,14 @@ public interface JAXRS {
             /**
              * Convenience method for bulk-loading configuration from a property supplier.
              * <p>
-             * Implementations ask the passed provider function for the actual values of all
-             * their supported properties, before returning from this configuration method.
-             * For each single request the implementation provides the name of the property
-             * and the expected data type of the value. If no such property exists (i. e.
-             * either the name is unknown or misspelled, or the type does not exactly
-             * match), the {@link Optional} is {@link Optional#empty() empty}.
+             * Implementations ask the passed provider function for the actual values of all their supported properties, before
+             * returning from this configuration method. For each single request the implementation provides the name of the
+             * property and the expected data type of the value. If no such property exists (i. e. either the name is unknown or
+             * misspelled, or the type does not exactly match), the {@link Optional} is {@link Optional#empty() empty}.
              * </p>
              *
-             * @param <T>
-             *            Type of the requested property value.
-             * @param propertiesProvider
-             *            Retrieval function of externally managed properties. MUST NOT
-             *            return {@code null}.
+             * @param <T> Type of the requested property value.
+             * @param propertiesProvider Retrieval function of externally managed properties. MUST NOT return {@code null}.
              * @return the updated builder.
              * @since 2.2
              */
@@ -592,22 +536,18 @@ public interface JAXRS {
             /**
              * Optional convenience method to bulk-load external configuration.
              * <p>
-             * Implementations are free to support any external configuration mechanics, or
-             * none at all. It is completely up to the implementation what set of properties
-             * is effectively loaded from the provided external configuration, possibly none
+             * Implementations are free to support any external configuration mechanics, or none at all. It is completely up to the
+             * implementation what set of properties is effectively loaded from the provided external configuration, possibly none
              * at all.
              * </p>
              * <p>
-             * If the passed external configuration mechanics is unsupported, this method
-             * MUST simply do nothing.
+             * If the passed external configuration mechanics is unsupported, this method MUST simply do nothing.
              * </p>
              * <p>
-             * Portable applications should not call this method, as the outcome is
-             * completely implementation-specific.
+             * Portable applications should not call this method, as the outcome is completely implementation-specific.
              * </p>
              *
-             * @param externalConfig
-             *            source of externally managed properties
+             * @param externalConfig source of externally managed properties
              * @return the updated builder.
              * @since 2.2
              */
@@ -627,15 +567,12 @@ public interface JAXRS {
     public interface Instance {
 
         /**
-         * Provides access to the configuration <em>actually</em> used by the
-         * implementation used to create this instance.
+         * Provides access to the configuration <em>actually</em> used by the implementation used to create this instance.
          * <p>
-         * This may, or may not, be the same instance passed to
-         * {@link JAXRS#start(Application, Configuration)}, not even an equal instance,
-         * as implementations MAY create a new intance and MUST update at least the
-         * {@code PORT} property with the actually used value. Portable applications
-         * should not make any assumptions but always explicitly read the actual values
-         * from the configuration returned from this method.
+         * This may, or may not, be the same instance passed to {@link JAXRS#start(Application, Configuration)}, not even an
+         * equal instance, as implementations MAY create a new intance and MUST update at least the {@code PORT} property with
+         * the actually used value. Portable applications should not make any assumptions but always explicitly read the actual
+         * values from the configuration returned from this method.
          * </p>
          *
          * @return The configuration actually used to create this instance.
@@ -646,8 +583,7 @@ public interface JAXRS {
         /**
          * Initiate immediate shutdown of running application instance.
          *
-         * @return {@code CompletionStage} asynchronously shutting down this application
-         *         instance.
+         * @return {@code CompletionStage} asynchronously shutting down this application instance.
          * @since 2.2
          */
         public CompletionStage<StopResult> stop();
@@ -663,19 +599,15 @@ public interface JAXRS {
             /**
              * Provides access to the wrapped native shutdown result.
              * <p>
-             * Implementations may, or may not, have native shutdown results. Portable
-             * applications should not invoke this method, as the outcome is undefined.
+             * Implementations may, or may not, have native shutdown results. Portable applications should not invoke this method,
+             * as the outcome is undefined.
              * </p>
              *
-             * @param <T>
-             *            Requested type of the native result to return.
-             * @param nativeClass
-             *            Requested type of the native result to return.
-             * @return Native result of shutting down the running application instance or
-             *         {@code null} if the implementation has no native result.
-             * @throws ClassCastException
-             *             if the result is not {@code null} or is not assignable to the
-             *             type {@code T}.
+             * @param <T> Requested type of the native result to return.
+             * @param nativeClass Requested type of the native result to return.
+             * @return Native result of shutting down the running application instance or {@code null} if the implementation has no
+             * native result.
+             * @throws ClassCastException if the result is not {@code null} or is not assignable to the type {@code T}.
              * @since 2.2
              */
             public <T> T unwrap(Class<T> nativeClass);
@@ -684,19 +616,14 @@ public interface JAXRS {
         /**
          * Provides access to the wrapped native handle of the application instance.
          * <p>
-         * Implementations may, or may not, have native handles. Portable applications
-         * should not invoke this method, as the outcome is undefined.
+         * Implementations may, or may not, have native handles. Portable applications should not invoke this method, as the
+         * outcome is undefined.
          * </p>
          *
-         * @param <T>
-         *            Requested type of the native handle to return.
-         * @param nativeClass
-         *            Requested type of the native handle to return.
-         * @return Native handle of the running application instance or {@code null} if
-         *         the implementation has no native handle.
-         * @throws ClassCastException
-         *             if the handle is not {@code null} and is not assignable to the
-         *             type {@code T}.
+         * @param <T> Requested type of the native handle to return.
+         * @param nativeClass Requested type of the native handle to return.
+         * @return Native handle of the running application instance or {@code null} if the implementation has no native handle.
+         * @throws ClassCastException if the handle is not {@code null} and is not assignable to the type {@code T}.
          * @since 2.2
          */
         public <T> T unwrap(Class<T> nativeClass);

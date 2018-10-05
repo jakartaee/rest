@@ -39,8 +39,7 @@ public class CacheControl {
      * @deprecated This field will be removed in a future version. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
      */
     @Deprecated
-    private static final HeaderDelegate<CacheControl> HEADER_DELEGATE =
-            RuntimeDelegate.getInstance().createHeaderDelegate(CacheControl.class);
+    private static final HeaderDelegate<CacheControl> HEADER_DELEGATE = RuntimeDelegate.getInstance().createHeaderDelegate(CacheControl.class);
     private List<String> privateFields;
     private List<String> noCacheFields;
     private Map<String, String> cacheExtension;
@@ -55,8 +54,7 @@ public class CacheControl {
     private int sMaxAge = -1;
 
     /**
-     * Create a new instance of CacheControl. The new instance will have the
-     * following default settings:
+     * Create a new instance of CacheControl. The new instance will have the following default settings:
      *
      * <ul>
      * <li>private = false</li>
@@ -85,10 +83,9 @@ public class CacheControl {
      * @param value the cache control string
      * @return the newly created CacheControl
      *
-     * @throws IllegalArgumentException if the supplied string cannot be parsed
-     *                                  or is null
+     * @throws IllegalArgumentException if the supplied string cannot be parsed or is null
      * @deprecated This method will be removed in a future version. Please use
-     *   RuntimeDelegate.getInstance().createHeaderDelegate(CacheControl.class).fromString(value) instead.
+     * RuntimeDelegate.getInstance().createHeaderDelegate(CacheControl.class).fromString(value) instead.
      */
     @Deprecated
     public static CacheControl valueOf(final String value) {
@@ -98,8 +95,7 @@ public class CacheControl {
     /**
      * Corresponds to the must-revalidate cache control directive.
      *
-     * @return true if the must-revalidate cache control directive will be included in the
-     * response, false otherwise.
+     * @return true if the must-revalidate cache control directive will be included in the response, false otherwise.
      *
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.4">HTTP/1.1 section 14.9.4</a>
      */
@@ -110,8 +106,8 @@ public class CacheControl {
     /**
      * Corresponds to the must-revalidate cache control directive.
      *
-     * @param mustRevalidate true if the must-revalidate cache control directive should be included in the
-     *                       response, false otherwise.
+     * @param mustRevalidate true if the must-revalidate cache control directive should be included in the response, false
+     * otherwise.
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.4">HTTP/1.1 section 14.9.4</a>
      */
     public void setMustRevalidate(final boolean mustRevalidate) {
@@ -121,8 +117,7 @@ public class CacheControl {
     /**
      * Corresponds to the proxy-revalidate cache control directive.
      *
-     * @return true if the proxy-revalidate cache control directive will be included in the
-     * response, false otherwise.
+     * @return true if the proxy-revalidate cache control directive will be included in the response, false otherwise.
      *
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.4">HTTP/1.1 section 14.9.4</a>
      */
@@ -133,8 +128,8 @@ public class CacheControl {
     /**
      * Corresponds to the must-revalidate cache control directive.
      *
-     * @param proxyRevalidate true if the proxy-revalidate cache control directive should be included in the
-     *                        response, false otherwise.
+     * @param proxyRevalidate true if the proxy-revalidate cache control directive should be included in the response, false
+     * otherwise.
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.4">HTTP/1.1 section 14.9.4</a>
      */
     public void setProxyRevalidate(final boolean proxyRevalidate) {
@@ -186,8 +181,8 @@ public class CacheControl {
     /**
      * Corresponds to the value of the no-cache cache control directive.
      *
-     * @return a mutable list of field-names that will form the value of the no-cache cache control directive.
-     * An empty list results in a bare no-cache directive.
+     * @return a mutable list of field-names that will form the value of the no-cache cache control directive. An empty list
+     * results in a bare no-cache directive.
      *
      * @see #isNoCache()
      * @see #setNoCache(boolean)
@@ -203,8 +198,7 @@ public class CacheControl {
     /**
      * Corresponds to the no-cache cache control directive.
      *
-     * @param noCache true if the no-cache cache control directive should be included in the
-     *                response, false otherwise.
+     * @param noCache true if the no-cache cache control directive should be included in the response, false otherwise.
      * @see #getNoCacheFields()
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1">HTTP/1.1 section 14.9.1</a>
      */
@@ -215,8 +209,7 @@ public class CacheControl {
     /**
      * Corresponds to the no-cache cache control directive.
      *
-     * @return true if the no-cache cache control directive will be included in the
-     * response, false otherwise.
+     * @return true if the no-cache cache control directive will be included in the response, false otherwise.
      *
      * @see #getNoCacheFields()
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1">HTTP/1.1 section 14.9.1</a>
@@ -228,8 +221,7 @@ public class CacheControl {
     /**
      * Corresponds to the private cache control directive.
      *
-     * @return true if the private cache control directive will be included in the
-     * response, false otherwise.
+     * @return true if the private cache control directive will be included in the response, false otherwise.
      *
      * @see #getPrivateFields()
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1">HTTP/1.1 section 14.9.1</a>
@@ -241,8 +233,8 @@ public class CacheControl {
     /**
      * Corresponds to the value of the private cache control directive.
      *
-     * @return a mutable list of field-names that will form the value of the private cache control directive.
-     * An empty list results in a bare no-cache directive.
+     * @return a mutable list of field-names that will form the value of the private cache control directive. An empty list
+     * results in a bare no-cache directive.
      *
      * @see #isPrivate()
      * @see #setPrivate(boolean)
@@ -258,8 +250,7 @@ public class CacheControl {
     /**
      * Corresponds to the private cache control directive.
      *
-     * @param flag true if the private cache control directive should be included in the
-     *             response, false otherwise.
+     * @param flag true if the private cache control directive should be included in the response, false otherwise.
      * @see #getPrivateFields()
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1">HTTP/1.1 section 14.9.1</a>
      */
@@ -270,8 +261,7 @@ public class CacheControl {
     /**
      * Corresponds to the no-transform cache control directive.
      *
-     * @return true if the no-transform cache control directive will be included in the
-     * response, false otherwise.
+     * @return true if the no-transform cache control directive will be included in the response, false otherwise.
      *
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.5">HTTP/1.1 section 14.9.5</a>
      */
@@ -282,8 +272,8 @@ public class CacheControl {
     /**
      * Corresponds to the no-transform cache control directive.
      *
-     * @param noTransform true if the no-transform cache control directive should be included in the
-     *                    response, false otherwise.
+     * @param noTransform true if the no-transform cache control directive should be included in the response, false
+     * otherwise.
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.5">HTTP/1.1 section 14.9.5</a>
      */
     public void setNoTransform(final boolean noTransform) {
@@ -293,8 +283,7 @@ public class CacheControl {
     /**
      * Corresponds to the no-store cache control directive.
      *
-     * @return true if the no-store cache control directive will be included in the
-     * response, false otherwise.
+     * @return true if the no-store cache control directive will be included in the response, false otherwise.
      *
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.2">HTTP/1.1 section 14.9.2</a>
      */
@@ -305,8 +294,7 @@ public class CacheControl {
     /**
      * Corresponds to the no-store cache control directive.
      *
-     * @param noStore true if the no-store cache control directive should be included in the
-     *                response, false otherwise.
+     * @param noStore true if the no-store cache control directive should be included in the response, false otherwise.
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.2">HTTP/1.1 section 14.9.2</a>
      */
     public void setNoStore(final boolean noStore) {
@@ -316,11 +304,10 @@ public class CacheControl {
     /**
      * Corresponds to a set of extension cache control directives.
      *
-     * @return a mutable map of cache control extension names and their values.
-     * If a key has a null value, it will appear as a bare directive. If a key has
-     * a value that contains no whitespace then the directive will appear as
-     * a simple name=value pair. If a key has a value that contains whitespace
-     * then the directive will appear as a quoted name="value" pair.
+     * @return a mutable map of cache control extension names and their values. If a key has a null value, it will appear as
+     * a bare directive. If a key has a value that contains no whitespace then the directive will appear as a simple
+     * name=value pair. If a key has a value that contains whitespace then the directive will appear as a quoted
+     * name="value" pair.
      *
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.6">HTTP/1.1 section 14.9.6</a>
      */
@@ -332,13 +319,12 @@ public class CacheControl {
     }
 
     /**
-     * Convert the cache control to a string suitable for use as the value of the
-     * corresponding HTTP header.
+     * Convert the cache control to a string suitable for use as the value of the corresponding HTTP header.
      *
      * @return a stringified cache control
      * @deprecated The format of the toString() method is subject to change in a future version. Please use
-     * RuntimeDelegate.getInstance().createHeaderDelegate(CacheControl.class).toString(value) instead if you rely on
-     * the format of this method.
+     * RuntimeDelegate.getInstance().createHeaderDelegate(CacheControl.class).toString(value) instead if you rely on the
+     * format of this method.
      */
     @Override
     @Deprecated
@@ -369,8 +355,7 @@ public class CacheControl {
     }
 
     /**
-     * Compares object argument to this cache control to see if they are the same
-     * considering all property values.
+     * Compares object argument to this cache control to see if they are the same considering all property values.
      *
      * @param obj the object to compare to
      * @return true if the two cache controls are the same, false otherwise.
@@ -425,10 +410,10 @@ public class CacheControl {
      *
      * If one of the collections is {@code null} and the other is empty, consider the collections to be equal.
      *
-     * @param first  first collection. May be {@code null}.
+     * @param first first collection. May be {@code null}.
      * @param second second collection. May be {@code null}.
-     * @return {@code true} if the two collections are not equal, {@code false} if the two collections are equal
-     * (or one of them is {@code null} and the other one is empty).
+     * @return {@code true} if the two collections are not equal, {@code false} if the two collections are equal (or one of
+     * them is {@code null} and the other one is empty).
      */
     private static boolean notEqual(final Collection<?> first, final Collection<?> second) {
         if (first == second) {
@@ -451,10 +436,10 @@ public class CacheControl {
      *
      * If one of the maps is {@code null} and the other is empty, consider the maps to be equal.
      *
-     * @param first  first collection. May be {@code null}.
+     * @param first first collection. May be {@code null}.
      * @param second second collection. May be {@code null}.
-     * @return {@code true} if the two maps are not equal, {@code false} if the two maps are equal
-     * (or one of them is {@code null} and the other one is empty).
+     * @return {@code true} if the two maps are not equal, {@code false} if the two maps are equal (or one of them is
+     * {@code null} and the other one is empty).
      */
     private static boolean notEqual(final Map<?, ?> first, final Map<?, ?> second) {
         if (first == second) {

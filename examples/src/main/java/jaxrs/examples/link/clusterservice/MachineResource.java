@@ -39,7 +39,7 @@ public class MachineResource {
     private Machine machine;
 
     @GET
-    @Produces({"application/json"})
+    @Produces({ "application/json" })
     public Response self(@PathParam("name") String name) {
         machine = getMachine(name);
         return Response.ok(machine).links(getTransitionalLinks()).build();
@@ -47,7 +47,7 @@ public class MachineResource {
 
     @POST
     @Path("starter")
-    @Produces({"application/json"})
+    @Produces({ "application/json" })
     public Response starter(@PathParam("name") String name) {
         machine = getMachine(name);
         machine.setStatus(Status.STARTED);
@@ -56,7 +56,7 @@ public class MachineResource {
 
     @POST
     @Path("stopper")
-    @Produces({"application/json"})
+    @Produces({ "application/json" })
     public Response stopper(@PathParam("name") String name) {
         machine = getMachine(name);
         machine.setStatus(Status.STOPPED);
@@ -65,7 +65,7 @@ public class MachineResource {
 
     @POST
     @Path("suspender")
-    @Produces({"application/json"})
+    @Produces({ "application/json" })
     public Response suspender(@PathParam("name") String name) {
         machine = getMachine(name);
         machine.setStatus(Status.SUSPENDED);
@@ -95,14 +95,14 @@ public class MachineResource {
                 .rel("suspender").buildRelativized(uri, name);
 
         switch (machine.getStatus()) {
-            case STOPPED:
-                return new Link[]{self, starter};
-            case STARTED:
-                return new Link[]{self, stopper, suspender};
-            case SUSPENDED:
-                return new Link[]{self, starter};
-            default:
-                throw new IllegalStateException();
+        case STOPPED:
+            return new Link[] { self, starter };
+        case STARTED:
+            return new Link[] { self, stopper, suspender };
+        case SUSPENDED:
+            return new Link[] { self, starter };
+        default:
+            throw new IllegalStateException();
         }
     }
 }

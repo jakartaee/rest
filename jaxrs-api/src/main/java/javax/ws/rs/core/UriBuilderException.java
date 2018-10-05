@@ -17,9 +17,8 @@
 package javax.ws.rs.core;
 
 /**
- * A runtime exception thrown by {@link UriBuilder#build(Object...)} methods when
- * a {@link java.net.URI} cannot be constructed based on the current state of the
- * builder.
+ * A runtime exception thrown by {@link UriBuilder#build(Object...)} methods when a {@link java.net.URI} cannot be
+ * constructed based on the current state of the builder.
  *
  * @author Paul Sandoz
  * @author Marc Hadley
@@ -46,20 +45,22 @@ public class UriBuilderException extends java.lang.RuntimeException {
 
     /**
      * Constructs an instance of <code>UriBuilderException</code> with the specified detail message and cause.
-     * <p>Note that the detail message associated with cause is not automatically incorporated in this exception's detail message.
+     * <p>
+     * Note that the detail message associated with cause is not automatically incorporated in this exception's detail
+     * message.
      *
-     * @param msg   the detail message (which is saved for later retrieval by the Throwable.getMessage() method).
-     * @param cause the cause (which is saved for later retrieval by the Throwable.getCause() method). (A null value is permitted, and indicates that the cause is nonexistent or unknown.)
+     * @param msg the detail message (which is saved for later retrieval by the Throwable.getMessage() method).
+     * @param cause the cause (which is saved for later retrieval by the Throwable.getCause() method). (A null value is
+     * permitted, and indicates that the cause is nonexistent or unknown.)
      */
     public UriBuilderException(final String msg, final Throwable cause) {
         super(msg, cause);
     }
 
     /**
-     * Constructs a new exception with the specified cause and a detail message
-     * of (<code>cause==null ? null : cause.toString()</code>) (which typically contains
-     * the class and detail message of cause). This constructor is useful
-     * for exceptions that are little more than wrappers for other throwables.
+     * Constructs a new exception with the specified cause and a detail message of
+     * (<code>cause==null ? null : cause.toString()</code>) (which typically contains the class and detail message of
+     * cause). This constructor is useful for exceptions that are little more than wrappers for other throwables.
      *
      * @param cause the original exception
      */

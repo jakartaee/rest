@@ -29,7 +29,6 @@ import javax.ws.rs.ext.RuntimeDelegate;
 
 public class EntityTagTest {
 
-
     @Before
     public void setUp() {
         RuntimeDelegate.setInstance(mock(RuntimeDelegate.class));

@@ -37,7 +37,7 @@ public class NotAllowedException extends ClientErrorException {
     /**
      * Construct a new method not allowed exception.
      *
-     * @param allowed     allowed request method.
+     * @param allowed allowed request method.
      * @param moreAllowed more allowed request methods.
      * @throws NullPointerException in case the allowed method is {@code null}.
      */
@@ -48,9 +48,8 @@ public class NotAllowedException extends ClientErrorException {
     /**
      * Construct a new method not allowed exception.
      *
-     * @param message     the detail message (which is saved for later retrieval
-     *                    by the {@link #getMessage()} method).
-     * @param allowed     allowed request method.
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+     * @param allowed allowed request method.
      * @param moreAllowed more allowed request methods.
      * @throws NullPointerException in case the allowed method is {@code null}.
      */
@@ -77,15 +76,13 @@ public class NotAllowedException extends ClientErrorException {
     /**
      * Construct a new method not allowed exception.
      * <p>
-     * Note that this constructor does not validate the presence of HTTP
-     * {@code Allow} header. I.e. it is possible
-     * to use the constructor to create a client-side exception instance
-     * even for an invalid HTTP {@code 405} response content returned from a server.
+     * Note that this constructor does not validate the presence of HTTP {@code Allow} header. I.e. it is possible to use
+     * the constructor to create a client-side exception instance even for an invalid HTTP {@code 405} response content
+     * returned from a server.
      * </p>
      *
      * @param response error response.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 405}.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 405}.
      */
     public NotAllowedException(final Response response) {
         super(validate(response, Response.Status.METHOD_NOT_ALLOWED));
@@ -94,17 +91,14 @@ public class NotAllowedException extends ClientErrorException {
     /**
      * Construct a new method not allowed exception.
      * <p>
-     * Note that this constructor does not validate the presence of HTTP
-     * {@code Allow} header. I.e. it is possible
-     * to use the constructor to create a client-side exception instance
-     * even for an invalid HTTP {@code 405} response content returned from a server.
+     * Note that this constructor does not validate the presence of HTTP {@code Allow} header. I.e. it is possible to use
+     * the constructor to create a client-side exception instance even for an invalid HTTP {@code 405} response content
+     * returned from a server.
      * </p>
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param response error response.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 405}.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 405}.
      */
     public NotAllowedException(final String message, final Response response) {
         super(message, validate(response, Response.Status.METHOD_NOT_ALLOWED));
@@ -113,7 +107,7 @@ public class NotAllowedException extends ClientErrorException {
     /**
      * Construct a new method not allowed exception.
      *
-     * @param cause          the underlying cause of the exception.
+     * @param cause the underlying cause of the exception.
      * @param allowedMethods allowed request methods.
      * @throws IllegalArgumentException in case the allowed methods varargs are {@code null}.
      */
@@ -124,9 +118,8 @@ public class NotAllowedException extends ClientErrorException {
     /**
      * Construct a new method not allowed exception.
      *
-     * @param message        the detail message (which is saved for later retrieval
-     *                       by the {@link #getMessage()} method).
-     * @param cause          the underlying cause of the exception.
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+     * @param cause the underlying cause of the exception.
      * @param allowedMethods allowed request methods.
      * @throws IllegalArgumentException in case the allowed methods varargs are {@code null}.
      */
@@ -138,10 +131,9 @@ public class NotAllowedException extends ClientErrorException {
      * Construct a new method not allowed exception.
      *
      * @param response error response.
-     * @param cause    the underlying cause of the exception.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 405} or does not contain
-     *                                  an HTTP {@code Allow} header.
+     * @param cause the underlying cause of the exception.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 405} or does not
+     * contain an HTTP {@code Allow} header.
      */
     public NotAllowedException(final Response response, final Throwable cause) {
         super(validateAllow(validate(response, Response.Status.METHOD_NOT_ALLOWED)), cause);
@@ -150,13 +142,11 @@ public class NotAllowedException extends ClientErrorException {
     /**
      * Construct a new method not allowed exception.
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param response error response.
-     * @param cause    the underlying cause of the exception.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 405} or does not contain
-     *                                  an HTTP {@code Allow} header.
+     * @param cause the underlying cause of the exception.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 405} or does not
+     * contain an HTTP {@code Allow} header.
      */
     public NotAllowedException(final String message, final Response response, final Throwable cause) {
         super(message, validateAllow(validate(response, Response.Status.METHOD_NOT_ALLOWED)), cause);

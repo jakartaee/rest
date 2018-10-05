@@ -20,8 +20,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * Represents the the HTML form data request entity encoded using the
- * {@code "application/x-www-form-urlencoded"} content type.
+ * Represents the the HTML form data request entity encoded using the {@code "application/x-www-form-urlencoded"}
+ * content type.
  *
  * @author Marek Potociar
  * @since 2.0
@@ -32,9 +32,8 @@ public class Form {
     /**
      * Create a new form data instance.
      * <p>
-     * The underlying form parameter store is configured to preserve the insertion order
-     * of the parameters. I.e. parameters can be iterated in the same order as they were
-     * inserted into the {@code Form}.
+     * The underlying form parameter store is configured to preserve the insertion order of the parameters. I.e. parameters
+     * can be iterated in the same order as they were inserted into the {@code Form}.
      * </p>
      */
     public Form() {
@@ -46,12 +45,11 @@ public class Form {
     /**
      * Create a new form data instance with a single parameter entry.
      * <p>
-     * The underlying form parameter store is configured to preserve the insertion order
-     * of the parameters. I.e. parameters can be iterated in the same order as they were
-     * inserted into the {@code Form}.
+     * The underlying form parameter store is configured to preserve the insertion order of the parameters. I.e. parameters
+     * can be iterated in the same order as they were inserted into the {@code Form}.
      * </p>
      *
-     * @param parameterName  form parameter name.
+     * @param parameterName form parameter name.
      * @param parameterValue form parameter value.
      */
     public Form(final String parameterName, final String parameterValue) {
@@ -63,9 +61,8 @@ public class Form {
     /**
      * Create a new form data instance and register a custom underlying parameter store.
      * <p>
-     * This method is useful in situations when a custom parameter store is needed
-     * in order to change the default parameter iteration order, improve performance
-     * or facilitate other custom requirements placed on the parameter store.
+     * This method is useful in situations when a custom parameter store is needed in order to change the default parameter
+     * iteration order, improve performance or facilitate other custom requirements placed on the parameter store.
      * </p>
      *
      * @param store form data store used by the created form instance.
@@ -77,7 +74,7 @@ public class Form {
     /**
      * Adds a new value to the specified form parameter.
      *
-     * @param name  name of the parameter.
+     * @param name name of the parameter.
      * @param value new parameter value to be added.
      * @return updated {@code Form} instance.
      */

@@ -23,12 +23,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Meta-annotation used to create name binding annotations for filters
- * and interceptors.
+ * Meta-annotation used to create name binding annotations for filters and interceptors.
  *
- * Name binding via annotations is only supported as part of the Server API.
- * In name binding, a <i>name-binding</i> annotation is first defined using the
- * {@code @NameBinding} meta-annotation:
+ * Name binding via annotations is only supported as part of the Server API. In name binding, a <i>name-binding</i>
+ * annotation is first defined using the {@code @NameBinding} meta-annotation:
  *
  * <pre>
  *  &#64;Target({ ElementType.TYPE, ElementType.METHOD })
@@ -37,9 +35,8 @@ import java.lang.annotation.Target;
  *  <b>public @interface Logged</b> { }
  * </pre>
  *
- * The defined name-binding annotation is then used to decorate a filter or interceptor
- * class (more than one filter or interceptor may be decorated with the same name-binding
- * annotation):
+ * The defined name-binding annotation is then used to decorate a filter or interceptor class (more than one filter or
+ * interceptor may be decorated with the same name-binding annotation):
  *
  * <pre>
  *  <b>&#64;Logged</b>
@@ -49,8 +46,8 @@ import java.lang.annotation.Target;
  *  }
  * </pre>
  *
- * At last, the name-binding annotation is applied to the resource method(s) to which the
- * name-bound JAX-RS provider(s) should be bound to:
+ * At last, the name-binding annotation is applied to the resource method(s) to which the name-bound JAX-RS provider(s)
+ * should be bound to:
  *
  * <pre>
  *  &#64;Path("/")
@@ -65,10 +62,9 @@ import java.lang.annotation.Target;
  *  }
  * </pre>
  *
- * A name-binding annotation may also be attached to a custom JAX-RS
- * {@link javax.ws.rs.core.Application} subclass. In such case a name-bound JAX-RS provider
- * bound by the annotation will be applied to all {@link HttpMethod resource and sub-resource
- * methods} in the JAX-RS application:
+ * A name-binding annotation may also be attached to a custom JAX-RS {@link javax.ws.rs.core.Application} subclass. In
+ * such case a name-bound JAX-RS provider bound by the annotation will be applied to all {@link HttpMethod resource and
+ * sub-resource methods} in the JAX-RS application:
  *
  * <pre>
  *  <b>&#64;Logged</b>

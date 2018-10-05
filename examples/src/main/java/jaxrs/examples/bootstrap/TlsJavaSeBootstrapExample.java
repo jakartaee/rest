@@ -34,12 +34,10 @@ import javax.ws.rs.core.UriBuilder;
 /**
  * Java SE bootstrap example using TLS customization.
  * <p>
- * This example demonstrates bootstrapping on Java SE platforms using HTTPS with
- * TLS 1.2 and a <em>particular</em> keystore. It explicitly sets the protocol
- * to {@code HTTPS} using port 443 and provides a {@link SSLContext} customized
- * to TLS v1.2 using a provided keystore file. The example will effectively
- * startup the {@link HelloWorld} application at the URL
- * {@code https://localhost:443/}.
+ * This example demonstrates bootstrapping on Java SE platforms using HTTPS with TLS 1.2 and a <em>particular</em>
+ * keystore. It explicitly sets the protocol to {@code HTTPS} using port 443 and provides a {@link SSLContext}
+ * customized to TLS v1.2 using a provided keystore file. The example will effectively startup the {@link HelloWorld}
+ * application at the URL {@code https://localhost:443/}.
  * </p>
  *
  * @author Markus KARG (markus@headcrashing.eu)
@@ -50,14 +48,10 @@ public final class TlsJavaSeBootstrapExample {
     /**
      * Runs this example.
      *
-     * @param args
-     *            KEYSTORE_PATH KEYSTORE_PASSWORD
-     * @throws GeneralSecurityException
-     *             in case JSSE fails
-     * @throws IOException
-     *             in case file access fails
-     * @throws InterruptedException
-     *             when process is killed
+     * @param args KEYSTORE_PATH KEYSTORE_PASSWORD
+     * @throws GeneralSecurityException in case JSSE fails
+     * @throws IOException in case file access fails
+     * @throws InterruptedException when process is killed
      */
     public static final void main(final String[] args)
             throws GeneralSecurityException, IOException, InterruptedException {

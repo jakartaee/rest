@@ -21,7 +21,7 @@ import javax.ws.rs.NameBinding;
  * @author Santiago Pericas-Geertsen
  */
 @NameBinding
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface Gzipped {
 }

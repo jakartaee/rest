@@ -36,10 +36,8 @@ import javax.ws.rs.ext.MessageBodyWriter;
 /**
  * Container response filter context.
  *
- * A mutable class that provides response-specific information for the filter,
- * such as message headers, message entity or request-scoped properties.
- * The exposed setters allow modification of the exposed response-specific
- * information.
+ * A mutable class that provides response-specific information for the filter, such as message headers, message entity
+ * or request-scoped properties. The exposed setters allow modification of the exposed response-specific information.
  *
  * @author Marek Potociar
  * @since 2.0
@@ -63,14 +61,12 @@ public interface ContainerResponseContext {
     /**
      * Get the complete status information associated with the response.
      *
-     * @return the response status information or {@code null} if the status was
-     *         not set.
+     * @return the response status information or {@code null} if the status was not set.
      */
     public Response.StatusType getStatusInfo();
 
     /**
-     * Set the complete status information (status code and reason phrase) associated
-     * with the response.
+     * Set the complete status information (status code and reason phrase) associated with the response.
      *
      * @param statusInfo the response status information.
      */
@@ -88,14 +84,12 @@ public interface ContainerResponseContext {
     /**
      * Get a string view of header values associated with the message.
      *
-     * Changes in the underlying {@link #getHeaders() headers map} are reflected
-     * in this view.
+     * Changes in the underlying {@link #getHeaders() headers map} are reflected in this view.
      * <p>
      * The method converts the non-string header values to strings using a
      * {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one is available via
-     * {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the
-     * class of the value or using the values {@code toString} method if a header delegate is
-     * not available.
+     * {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the class of the value or using the
+     * values {@code toString} method if a header delegate is not available.
      * </p>
      *
      * @return response headers as a string view of header values.
@@ -107,18 +101,14 @@ public interface ContainerResponseContext {
     /**
      * Get a message header as a single string value.
      *
-     * Each single header value is converted to String using a
-     * {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one is available
-     * via {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)}
-     * for the header value class or using its {@code toString} method  if a header
-     * delegate is not available.
+     * Each single header value is converted to String using a {@link javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one
+     * is available via {@link javax.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the header value
+     * class or using its {@code toString} method if a header delegate is not available.
      *
      * @param name the message header.
-     * @return the message header value. If the message header is not present then
-     *         {@code null} is returned. If the message header is present but has no
-     *         value then the empty string is returned. If the message header is present
-     *         more than once then the values of joined together and separated by a ','
-     *         character.
+     * @return the message header value. If the message header is not present then {@code null} is returned. If the message
+     * header is present but has no value then the empty string is returned. If the message header is present more than once
+     * then the values of joined together and separated by a ',' character.
      * @see #getHeaders()
      * @see #getStringHeaders()
      */
@@ -127,8 +117,7 @@ public interface ContainerResponseContext {
     /**
      * Get the allowed HTTP methods from the Allow HTTP header.
      *
-     * @return the allowed HTTP methods, all methods will returned as upper case
-     *         strings.
+     * @return the allowed HTTP methods, all methods will returned as upper case strings.
      */
     public Set<String> getAllowedMethods();
 
@@ -149,16 +138,14 @@ public interface ContainerResponseContext {
     /**
      * Get Content-Length value.
      *
-     * @return Content-Length as integer if present and valid number. In other
-     *         cases returns -1.
+     * @return Content-Length as integer if present and valid number. In other cases returns -1.
      */
     public int getLength();
 
     /**
      * Get the media type of the entity.
      *
-     * @return the media type or {@code null} if not specified (e.g. there's no
-     *         response entity).
+     * @return the media type or {@code null} if not specified (e.g. there's no response entity).
      */
     public MediaType getMediaType();
 
@@ -193,8 +180,7 @@ public interface ContainerResponseContext {
     /**
      * Get the links attached to the message as header.
      *
-     * @return links, may return empty {@link Set} if no links are present. Never
-     *         returns {@code null}.
+     * @return links, may return empty {@link Set} if no links are present. Never returns {@code null}.
      */
     public Set<Link> getLinks();
 
@@ -202,8 +188,7 @@ public interface ContainerResponseContext {
      * Check if link for relation exists.
      *
      * @param relation link relation.
-     * @return {@code true} if the for the relation link exists, {@code false}
-     *         otherwise.
+     * @return {@code true} if the for the relation link exists, {@code false} otherwise.
      */
     boolean hasLink(String relation);
 
@@ -216,23 +201,19 @@ public interface ContainerResponseContext {
     public Link getLink(String relation);
 
     /**
-     * Convenience method that returns a {@link javax.ws.rs.core.Link.Builder Link.Builder}
-     * for the relation.
+     * Convenience method that returns a {@link javax.ws.rs.core.Link.Builder Link.Builder} for the relation.
      *
      * @param relation link relation.
-     * @return the link builder for the relation, otherwise {@code null} if not
-     *         present.
+     * @return the link builder for the relation, otherwise {@code null} if not present.
      */
     public Link.Builder getLinkBuilder(String relation);
 
     /**
      * Check if there is an entity available in the response.
      *
-     * The method returns {@code true} if the entity is present, returns
-     * {@code false} otherwise.
+     * The method returns {@code true} if the entity is present, returns {@code false} otherwise.
      *
-     * @return {@code true} if there is an entity present in the message,
-     *         {@code false} otherwise.
+     * @return {@code true} if there is an entity present in the message, {@code false} otherwise.
      */
     public boolean hasEntity();
 
@@ -241,8 +222,7 @@ public interface ContainerResponseContext {
      *
      * Returns {@code null} if the message does not contain an entity.
      *
-     * @return the message entity or {@code null} if message does not contain an
-     *         entity body.
+     * @return the message entity or {@code null} if message does not contain an entity body.
      */
     public Object getEntity();
 
@@ -261,12 +241,11 @@ public interface ContainerResponseContext {
     public Type getEntityType();
 
     /**
-     * Set a new message entity. The existing entity {@link #getEntityAnnotations() annotations}
-     * and {@link #getMediaType() media type} are preserved.
+     * Set a new message entity. The existing entity {@link #getEntityAnnotations() annotations} and {@link #getMediaType()
+     * media type} are preserved.
      * <p>
-     * It is the callers responsibility to wrap the actual entity with
-     * {@link javax.ws.rs.core.GenericEntity} if preservation of its generic
-     * type is required.
+     * It is the callers responsibility to wrap the actual entity with {@link javax.ws.rs.core.GenericEntity} if
+     * preservation of its generic type is required.
      * </p>
      *
      * @param entity entity object.
@@ -278,14 +257,13 @@ public interface ContainerResponseContext {
     /**
      * Set a new message entity, including the attached annotations and the media type.
      * <p>
-     * It is the callers responsibility to wrap the actual entity with
-     * {@link javax.ws.rs.core.GenericEntity} if preservation of its generic
-     * type is required.
+     * It is the callers responsibility to wrap the actual entity with {@link javax.ws.rs.core.GenericEntity} if
+     * preservation of its generic type is required.
      * </p>
      *
-     * @param entity      entity object.
+     * @param entity entity object.
      * @param annotations annotations attached to the entity instance.
-     * @param mediaType   entity media type.
+     * @param mediaType entity media type.
      * @see #setEntity(Object)
      * @see MessageBodyWriter
      */
@@ -297,21 +275,21 @@ public interface ContainerResponseContext {
     /**
      * Get the annotations attached to the entity instance.
      * <p>
-     * Note that the returned annotations array contains only those annotations
-     * explicitly attached to entity instance (such as the ones attached using
-     * {@link javax.ws.rs.core.Response.ResponseBuilder#entity(Object, java.lang.annotation.Annotation[])} method
-     * as well as the ones attached to the resource method that has returned the response).
-     * The entity instance annotations array does not include annotations declared on the entity
-     * implementation class or its ancestors.
+     * Note that the returned annotations array contains only those annotations explicitly attached to entity instance (such
+     * as the ones attached using
+     * {@link javax.ws.rs.core.Response.ResponseBuilder#entity(Object, java.lang.annotation.Annotation[])} method as well as
+     * the ones attached to the resource method that has returned the response). The entity instance annotations array does
+     * not include annotations declared on the entity implementation class or its ancestors.
      * </p>
      * <p>
-     * Note that container response filters invoked earlier in the filter chain may modify the entity annotations value,
-     * in which case this getter method would return the last annotations value set by a container response filter invoked
+     * Note that container response filters invoked earlier in the filter chain may modify the entity annotations value, in
+     * which case this getter method would return the last annotations value set by a container response filter invoked
      * earlier in the filter chain.
      * </p>
      * <p>
      * For example:
      * </p>
+     *
      * <pre>
      * &#64;Path("my-resource")
      * public class MyResource {
@@ -326,14 +304,15 @@ public interface ContainerResponseContext {
      * }
      * </pre>
      * <p>
-     * The container response context for a response returned from the {@code getMe()} method above would contain all
-     * the annotations declared on the {@code getAnnotatedMe()} method (<tt>&#64;GET, &#64;Custom</tt>) as well as all
-     * the annotations from the {@code extras} field, provided this value has not been replaced by any container response filter
+     * The container response context for a response returned from the {@code getMe()} method above would contain all the
+     * annotations declared on the {@code getAnnotatedMe()} method (<tt>&#64;GET, &#64;Custom</tt>) as well as all the
+     * annotations from the {@code extras} field, provided this value has not been replaced by any container response filter
      * invoked earlier.
      * </p>
      * <p>
      * Similarly:
      * </p>
+     *
      * <pre>
      * &#64;Custom
      * public class AnnotatedMe { ... }
@@ -350,10 +329,10 @@ public interface ContainerResponseContext {
      * }
      * </pre>
      * <p>
-     * Provided that the value has not been replaced by any container response filter invoked earlier,
-     * the container response context for a response returned from the {@code getMe()} method above would contain all
-     * the annotations on the {@code getMe()} method (<tt>&#64;GET</tt>) as well as all the annotations from the
-     * {@code extras} field. It would however not contain any annotations declared on the {@code AnnotatedMe} class.
+     * Provided that the value has not been replaced by any container response filter invoked earlier, the container
+     * response context for a response returned from the {@code getMe()} method above would contain all the annotations on
+     * the {@code getMe()} method (<tt>&#64;GET</tt>) as well as all the annotations from the {@code extras} field. It would
+     * however not contain any annotations declared on the {@code AnnotatedMe} class.
      * </p>
      *
      * @return annotations attached to the entity instance.
@@ -361,16 +340,14 @@ public interface ContainerResponseContext {
     public Annotation[] getEntityAnnotations();
 
     /**
-     * Get the entity output stream. The JAX-RS runtime is responsible for
-     * closing the output stream.
+     * Get the entity output stream. The JAX-RS runtime is responsible for closing the output stream.
      *
      * @return entity output stream.
      */
     public OutputStream getEntityStream();
 
     /**
-     * Set a new entity output stream. The JAX-RS runtime is responsible for
-     * closing the output stream.
+     * Set a new entity output stream. The JAX-RS runtime is responsible for closing the output stream.
      *
      * @param outputStream new entity output stream.
      */

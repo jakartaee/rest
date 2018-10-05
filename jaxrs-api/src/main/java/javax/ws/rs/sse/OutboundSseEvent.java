@@ -57,14 +57,13 @@ public interface OutboundSseEvent extends SseEvent {
         public Builder name(String name);
 
         /**
-         * Set reconnection delay (in milliseconds) that indicates how long the event receiver should wait
-         * before attempting to reconnect in case a connection to SSE event source is lost.
+         * Set reconnection delay (in milliseconds) that indicates how long the event receiver should wait before attempting to
+         * reconnect in case a connection to SSE event source is lost.
          * <p>
          * Will be send as a value of the SSE {@code "retry"} field. This field is optional.
          * <p>
-         * Absence of a value of this field in an {@link OutboundSseEvent} instance
-         * is indicated by {@link SseEvent#RECONNECT_NOT_SET} value returned from
-         * {@link #getReconnectDelay()}.
+         * Absence of a value of this field in an {@link OutboundSseEvent} instance is indicated by
+         * {@link SseEvent#RECONNECT_NOT_SET} value returned from {@link #getReconnectDelay()}.
          *
          * @param milliseconds reconnection delay in milliseconds. Negative values un-set the reconnection delay.
          * @return updated builder instance.
@@ -85,12 +84,12 @@ public interface OutboundSseEvent extends SseEvent {
         /**
          * Set comment string associated with the event.
          * <p>
-         * The comment will be serialized with the event, before event data are serialized. If the event
-         * does not contain any data, a separate "event" that contains only the comment will be sent.
-         * This information is optional, provided the event data are set.
+         * The comment will be serialized with the event, before event data are serialized. If the event does not contain any
+         * data, a separate "event" that contains only the comment will be sent. This information is optional, provided the
+         * event data are set.
          * <p>
-         * Note that multiple invocations of this method result in a previous comment being replaced with a new one.
-         * To achieve multi-line comments, a multi-line comment string has to be used.
+         * Note that multiple invocations of this method result in a previous comment being replaced with a new one. To achieve
+         * multi-line comments, a multi-line comment string has to be used.
          *
          * @param comment comment string.
          * @return updated builder instance.
@@ -128,8 +127,8 @@ public interface OutboundSseEvent extends SseEvent {
         /**
          * Set event data and java type of event data.
          * <p>
-         * This is a convenience method that derives the event data type information from the runtime type of
-         * the event data. The supplied event data may be represented as {@link javax.ws.rs.core.GenericEntity}.
+         * This is a convenience method that derives the event data type information from the runtime type of the event data.
+         * The supplied event data may be represented as {@link javax.ws.rs.core.GenericEntity}.
          * <p>
          * Note that multiple invocations of this method result in previous even data being replaced with new one.
          *
@@ -144,11 +143,11 @@ public interface OutboundSseEvent extends SseEvent {
          * <p>
          * There are two valid configurations:
          * <ul>
-         * <li>if a {@link Builder#comment(String) comment} is set, all other parameters are optional.
-         * If event {@link Builder#data(Class, Object) data} and {@link Builder#mediaType(MediaType) media type} is set,
-         * event data will be serialized after the comment.</li>
-         * <li>if a {@link Builder#comment(String) comment} is not set, at least the event
-         * {@link Builder#data(Class, Object) data} must be set. All other parameters are optional.</li>
+         * <li>if a {@link Builder#comment(String) comment} is set, all other parameters are optional. If event
+         * {@link Builder#data(Class, Object) data} and {@link Builder#mediaType(MediaType) media type} is set, event data will
+         * be serialized after the comment.</li>
+         * <li>if a {@link Builder#comment(String) comment} is not set, at least the event {@link Builder#data(Class, Object)
+         * data} must be set. All other parameters are optional.</li>
          * </ul>
          *
          * @return new {@link OutboundSseEvent} instance.
@@ -160,8 +159,8 @@ public interface OutboundSseEvent extends SseEvent {
     /**
      * Get data type.
      * <p>
-     * This information is used to select a proper {@link javax.ws.rs.ext.MessageBodyWriter} to be used for
-     * serializing the {@link #getData() event data}.
+     * This information is used to select a proper {@link javax.ws.rs.ext.MessageBodyWriter} to be used for serializing the
+     * {@link #getData() event data}.
      *
      * @return data type. May return {@code null}, if the event does not contain any data.
      */
@@ -170,8 +169,8 @@ public interface OutboundSseEvent extends SseEvent {
     /**
      * Get generic data type.
      * <p>
-     * This information is used to select a proper {@link javax.ws.rs.ext.MessageBodyWriter} to be used for
-     * serializing the {@link #getData() event data}.
+     * This information is used to select a proper {@link javax.ws.rs.ext.MessageBodyWriter} to be used for serializing the
+     * {@link #getData() event data}.
      *
      * @return generic data type. May return {@code null}, if the event does not contain any data.
      */
@@ -180,8 +179,8 @@ public interface OutboundSseEvent extends SseEvent {
     /**
      * Get {@link MediaType media type} of the event data.
      * <p>
-     * This information is used to a select proper {@link javax.ws.rs.ext.MessageBodyWriter} to be used for
-     * serializing the {@link #getData() event data}.
+     * This information is used to a select proper {@link javax.ws.rs.ext.MessageBodyWriter} to be used for serializing the
+     * {@link #getData() event data}.
      *
      * @return data {@link MediaType}.
      */
@@ -190,10 +189,10 @@ public interface OutboundSseEvent extends SseEvent {
     /**
      * Get event data.
      * <p>
-     * The event data, if specified, are serialized and sent as one or more SSE event {@code "data"} fields
-     * (depending on the line breaks in the actual serialized data content). The data are serialized
-     * using an available {@link javax.ws.rs.ext.MessageBodyWriter} that is selected based on the event
-     * {@link #getType() type}, {@link #getGenericType()} generic type} and {@link #getMediaType()} media type}.
+     * The event data, if specified, are serialized and sent as one or more SSE event {@code "data"} fields (depending on
+     * the line breaks in the actual serialized data content). The data are serialized using an available
+     * {@link javax.ws.rs.ext.MessageBodyWriter} that is selected based on the event {@link #getType() type},
+     * {@link #getGenericType()} generic type} and {@link #getMediaType()} media type}.
      *
      * @return event data. May return {@code null}, if the event does not contain any data.
      */

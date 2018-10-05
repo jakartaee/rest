@@ -23,8 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is used to inject information into a class
- * field, bean property or method parameter.
+ * This annotation is used to inject information into a class field, bean property or method parameter.
  *
  * @author Paul Sandoz
  * @author Marc Hadley
@@ -36,7 +35,7 @@ import java.lang.annotation.Target;
  * @see javax.ws.rs.ext.Providers
  * @since 1.0
  */
-@Target({ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD})
+@Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Context {

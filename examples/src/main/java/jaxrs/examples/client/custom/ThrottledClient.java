@@ -33,7 +33,7 @@ import javax.net.ssl.SSLContext;
  */
 public final class ThrottledClient implements Client {
 
-    @SuppressWarnings({"FieldCanBeLocal", "UnusedDeclaration", "MismatchedQueryAndUpdateOfCollection"})
+    @SuppressWarnings({ "FieldCanBeLocal", "UnusedDeclaration", "MismatchedQueryAndUpdateOfCollection" })
     private final BlockingQueue<ClientRequestContext> requestQueue;
 
     public ThrottledClient() {

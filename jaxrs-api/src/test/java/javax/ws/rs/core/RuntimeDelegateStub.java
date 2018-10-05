@@ -60,11 +60,11 @@ public class RuntimeDelegateStub extends RuntimeDelegate {
 
     @Override
     public Configuration.Builder createConfigurationBuilder() {
-	return null;
+        return null;
     }
 
     @Override
     public CompletionStage<Instance> bootstrap(final Application application, final JAXRS.Configuration configuration) {
-	return null;
+        return null;
     }
 }

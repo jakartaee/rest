@@ -19,9 +19,8 @@ package javax.ws.rs;
 import javax.ws.rs.core.Response;
 
 /**
- * A runtime exception indicating that an access to a resource requested by
- * a client has been {@link javax.ws.rs.core.Response.Status#FORBIDDEN forbidden}
- * by the server.
+ * A runtime exception indicating that an access to a resource requested by a client has been
+ * {@link javax.ws.rs.core.Response.Status#FORBIDDEN forbidden} by the server.
  *
  * @author Marek Potociar
  * @since 2.0
@@ -40,8 +39,7 @@ public class ForbiddenException extends ClientErrorException {
     /**
      * Construct a new "forbidden" exception.
      *
-     * @param message the detail message (which is saved for later retrieval
-     *                by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      */
     public ForbiddenException(final String message) {
         super(message, Response.Status.FORBIDDEN);
@@ -51,8 +49,7 @@ public class ForbiddenException extends ClientErrorException {
      * Construct a new "forbidden" exception.
      *
      * @param response error response.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 403}.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 403}.
      */
     public ForbiddenException(final Response response) {
         super(validate(response, Response.Status.FORBIDDEN));
@@ -61,11 +58,9 @@ public class ForbiddenException extends ClientErrorException {
     /**
      * Construct a new "forbidden" exception.
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param response error response.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 403}.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 403}.
      */
     public ForbiddenException(final String message, final Response response) {
         super(message, validate(response, Response.Status.FORBIDDEN));
@@ -83,9 +78,8 @@ public class ForbiddenException extends ClientErrorException {
     /**
      * Construct a new "forbidden" exception.
      *
-     * @param message the detail message (which is saved for later retrieval
-     *                by the {@link #getMessage()} method).
-     * @param cause   the underlying cause of the exception.
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+     * @param cause the underlying cause of the exception.
      */
     public ForbiddenException(final String message, final Throwable cause) {
         super(message, Response.Status.FORBIDDEN, cause);
@@ -95,9 +89,8 @@ public class ForbiddenException extends ClientErrorException {
      * Construct a new "forbidden" exception.
      *
      * @param response error response.
-     * @param cause    the underlying cause of the exception.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 403}.
+     * @param cause the underlying cause of the exception.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 403}.
      */
     public ForbiddenException(final Response response, final Throwable cause) {
         super(validate(response, Response.Status.FORBIDDEN), cause);
@@ -106,12 +99,10 @@ public class ForbiddenException extends ClientErrorException {
     /**
      * Construct a new "forbidden" exception.
      *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
+     * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param response error response.
-     * @param cause    the underlying cause of the exception.
-     * @throws IllegalArgumentException in case the status code set in the response
-     *                                  is not HTTP {@code 403}.
+     * @param cause the underlying cause of the exception.
+     * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 403}.
      */
     public ForbiddenException(final String message, final Response response, final Throwable cause) {
         super(message, validate(response, Response.Status.FORBIDDEN), cause);

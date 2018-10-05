@@ -21,8 +21,7 @@ import javax.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
 import java.util.Objects;
 
 /**
- * An abstraction for the value of a HTTP Entity Tag, used as the value
- * of an ETag response header.
+ * An abstraction for the value of a HTTP Entity Tag, used as the value of an ETag response header.
  *
  * @author Paul Sandoz
  * @author Marc Hadley
@@ -34,8 +33,7 @@ public class EntityTag {
      * @deprecated This field will be removed in a future version. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
      */
     @Deprecated
-    private static final HeaderDelegate<EntityTag> HEADER_DELEGATE =
-            RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class);
+    private static final HeaderDelegate<EntityTag> HEADER_DELEGATE = RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class);
     private String value;
     private boolean weak;
 
@@ -53,7 +51,7 @@ public class EntityTag {
      * Creates a new instance of an {@code EntityTag}.
      *
      * @param value the value of the tag, quotes not included.
-     * @param weak  {@code true} if this represents a weak tag, {@code false} otherwise.
+     * @param weak {@code true} if this represents a weak tag, {@code false} otherwise.
      * @throws IllegalArgumentException if value is {@code null}.
      */
     public EntityTag(final String value, final boolean weak) {
@@ -69,10 +67,9 @@ public class EntityTag {
      *
      * @param value the entity tag string.
      * @return the newly created entity tag.
-     * @throws IllegalArgumentException if the supplied string cannot be parsed
-     *                                  or is {@code null}.
+     * @throws IllegalArgumentException if the supplied string cannot be parsed or is {@code null}.
      * @deprecated This method will be removed in a future version. Please use
-     *   RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class).fromString(value) instead.
+     * RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class).fromString(value) instead.
      */
     @Deprecated
     public static EntityTag valueOf(final String value) {
@@ -98,8 +95,7 @@ public class EntityTag {
     }
 
     /**
-     * Compares {@code obj} to this tag to see if they are the same considering
-     * weakness and value.
+     * Compares {@code obj} to this tag to see if they are the same considering weakness and value.
      *
      * @param obj the object to compare to.
      * @return {@code true} if the two tags are the same, {@code false} otherwise.
@@ -109,7 +105,7 @@ public class EntityTag {
         if (!(obj instanceof EntityTag)) {
             return false;
         }
-        
+
         EntityTag other = (EntityTag) obj;
         return Objects.equals(value, other.getValue()) && weak == other.isWeak();
     }
@@ -125,13 +121,12 @@ public class EntityTag {
     }
 
     /**
-     * Convert the entity tag to a string suitable for use as the value of the
-     * corresponding HTTP header.
+     * Convert the entity tag to a string suitable for use as the value of the corresponding HTTP header.
      *
      * @return a string version of the entity tag.
      * @deprecated The format of the toString() method is subject to change in a future version. Please use
-     * RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class).toString(value) instead if you rely on
-     * the format of this method.
+     * RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class).toString(value) instead if you rely on the format
+     * of this method.
      */
     @Override
     @Deprecated

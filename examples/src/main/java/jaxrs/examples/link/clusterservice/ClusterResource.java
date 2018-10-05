@@ -37,14 +37,14 @@ public class ClusterResource {
     private Cluster cluster = Model.getCluster();
 
     @GET
-    @Produces({"application/json"})
+    @Produces({ "application/json" })
     public Response self() {
         return Response.ok(cluster).links(getTransitionalLinks()).build();
     }
 
     @POST
     @Path("onliner")
-    @Produces({"application/json"})
+    @Produces({ "application/json" })
     public Response onliner() {
         cluster.setStatus(Status.ONLINE);
         return Response.ok(cluster).links(getTransitionalLinks()).build();
@@ -52,7 +52,7 @@ public class ClusterResource {
 
     @POST
     @Path("offliner")
-    @Produces({"application/json"})
+    @Produces({ "application/json" })
     public Response offliner() {
         cluster.setStatus(Status.OFFLINE);
         return Response.ok(cluster).links(getTransitionalLinks()).build();
@@ -66,8 +66,7 @@ public class ClusterResource {
         Link onliner = Link.fromMethod(getClass(), "onliner").baseUri(baseUri).rel("onliner").buildRelativized(uri);
         Link offliner = Link.fromMethod(getClass(), "offliner").baseUri(baseUri).rel("offliner").buildRelativized(uri);
 
-        return cluster.getStatus() == Status.ONLINE ?
-                new Link[]{self, item, offliner} : new Link[]{self, item, onliner};
+        return cluster.getStatus() == Status.ONLINE ? new Link[] { self, item, offliner } : new Link[] { self, item, onliner };
     }
 
 }

@@ -23,7 +23,7 @@
 
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-examples</artifactId>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
     <packaging>jar</packaging>
     <name>jakarta.ws.rs-examples</name>
 
@@ -258,9 +258,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.1.1</version>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>2.1.2</version>
         </dependency>
 
         <dependency>

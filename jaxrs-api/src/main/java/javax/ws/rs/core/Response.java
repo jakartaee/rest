@@ -1269,6 +1269,10 @@ public abstract class Response implements AutoCloseable {
          */
         PARTIAL_CONTENT(206, "Partial Content"),
         /**
+         * 207 Multi-Status, see <a href="https://tools.ietf.org/html/rfc4918#section-11.1">RFC 4918: HTTP Extensions for Web Distributed Authoring and Versioning (WebDAV)</a>.
+         */
+        MULTI_STATUS(207, "Multi-Status"),
+        /**
          * 301 Moved Permanently, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.2">HTTP/1.1 documentation</a>.
          */
         MOVED_PERMANENTLY(301, "Moved Permanently"),
@@ -1387,6 +1391,18 @@ public abstract class Response implements AutoCloseable {
          */
         EXPECTATION_FAILED(417, "Expectation Failed"),
         /**
+         * 422 Unprocessable Entity, see <a href="https://tools.ietf.org/html/rfc4918#section-11.2">RFC 4918: HTTP Extensions for Web Distributed Authoring and Versioning (WebDAV)</a>.
+         */
+        UNPROCESSABLE_ENTITY(422, "Unprocessable Entity"),
+        /**
+         * 423 Locked, see <a href="https://tools.ietf.org/html/rfc4918#section-11.3">RFC 4918: HTTP Extensions for Web Distributed Authoring and Versioning (WebDAV)</a>.
+         */
+        LOCKED(423, "Locked"),
+        /**
+         * 424 Failed Dependency, see <a href="https://tools.ietf.org/html/rfc4918#section-11.4">RFC 4918: HTTP Extensions for Web Distributed Authoring and Versioning (WebDAV)</a>.
+         */
+        FAILED_DEPENDENCY(423, "Failed Dependency"),
+        /**
          * 428 Precondition required, see <a href="https://tools.ietf.org/html/rfc6585#section-3">RFC 6585: Additional HTTP Status Codes</a>.
          *
          * @since 2.1
@@ -1436,6 +1452,10 @@ public abstract class Response implements AutoCloseable {
          * @since 2.0
          */
         HTTP_VERSION_NOT_SUPPORTED(505, "HTTP Version Not Supported"),
+        /**
+         * 507 Insufficient Storage, see <a href="https://tools.ietf.org/html/rfc4918#section-11.5">RFC 4918: HTTP Extensions for Web Distributed Authoring and Versioning (WebDAV)</a>.
+         */
+        INSUFFICIENT_STORAGE(507, "Insufficient Storage"),
         /**
          * 511 Network Authentication Required, see <a href="https://tools.ietf.org/html/rfc6585#section-6">RFC 6585: Additional HTTP Status Codes</a>.
          *

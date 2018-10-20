@@ -21,11 +21,11 @@
         <version>1</version>
     </parent>
 
-    <groupId>javax.ws.rs</groupId>
-    <artifactId>javax.ws.rs-examples</artifactId>
+    <groupId>jakarta.ws.rs</groupId>
+    <artifactId>jakarta.ws.rs-examples</artifactId>
     <version>2.2-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>javax.ws.rs-examples</name>
+    <name>jakarta.ws.rs-examples</name>
 
     <url>https://github.com/jax-rs/api</url>
 
@@ -259,8 +259,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
             <version>2.2-SNAPSHOT</version>
         </dependency>
 

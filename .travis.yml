@@ -10,6 +10,7 @@ jdk:
   - openjdk9
   - openjdk10
   - openjdk11
+  - openjdk-ea
 
 install:
   - cd $TRAVIS_BUILD_DIR/jaxrs-api

@@ -444,7 +444,6 @@
                             <Specification-Version>${spec.specification.version}</Specification-Version>
                             <Specification-Vendor>Oracle Corporation</Specification-Vendor>
                             <specversion>${spec.specification.version}</specversion>
-                            <Automatic-Module-Name>java.ws.rs</Automatic-Module-Name>
                             <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
                             <_nodefaultversion>false</_nodefaultversion>
                         </instructions>

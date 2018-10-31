@@ -403,7 +403,7 @@
                             <Extension-Name>${api.package}</Extension-Name>
                             <Implementation-Version>${project.version}</Implementation-Version>
                             <Specification-Version>${spec.version}</Specification-Version>
-                            <Specification-Vendor>Oracle Corporation</Specification-Vendor>
+                            <Specification-Vendor>Eclipse Foundation</Specification-Vendor>
                             <specversion>${spec.version}</specversion>
                             <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
                             <_nodefaultversion>false</_nodefaultversion>

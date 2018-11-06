@@ -681,7 +681,7 @@
         <maven.javadoc.plugin.version>3.0.0</maven.javadoc.plugin.version>
 
         <api.package>javax.ws.rs</api.package>
-        <last.final.spec.version>2.0</last.final.spec.version>
+        <last.final.spec.version>2.1</last.final.spec.version>
         <milestone.number>01</milestone.number>
         <next.final.spec.version>2.1</next.final.spec.version>
         <new.spec.version>${next.final.spec.version}</new.spec.version>

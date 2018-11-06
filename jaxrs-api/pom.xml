@@ -78,7 +78,9 @@
         <profile>
             <id>final</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>!nonFinal</name>
+                </property>
             </activation>
             <properties>
                 <!-- Final API bundle version properties -->

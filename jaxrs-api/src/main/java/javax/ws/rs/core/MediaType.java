@@ -19,6 +19,7 @@ package javax.ws.rs.core;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import javax.ws.rs.ext.RuntimeDelegate;
@@ -37,6 +38,7 @@ public class MediaType {
     private String type;
     private String subtype;
     private Map<String, String> parameters;
+    private int hash;
 
     /**
      * The media type {@code charset} parameter name.
@@ -343,6 +345,9 @@ public class MediaType {
     @SuppressWarnings("UnnecessaryJavaDocLink")
     @Override
     public boolean equals(final Object obj) {
+        if (obj == this) {
+            return true;
+        }
         if (!(obj instanceof MediaType)) {
             return false;
         }
@@ -367,7 +372,12 @@ public class MediaType {
     @SuppressWarnings("UnnecessaryJavaDocLink")
     @Override
     public int hashCode() {
-        return (this.type.toLowerCase() + this.subtype.toLowerCase()).hashCode() + this.parameters.hashCode();
+        int h = this.hash;
+        if (h == 0) {
+            h = Objects.hash(this.parameters, this.subtype.toLowerCase(), this.type.toLowerCase());
+            this.hash = h;
+        }
+        return h;
     }
 
     /**

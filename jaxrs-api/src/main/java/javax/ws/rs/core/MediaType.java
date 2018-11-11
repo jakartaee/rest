@@ -35,9 +35,9 @@ import javax.ws.rs.ext.RuntimeDelegate;
 @SuppressWarnings("JavaDoc")
 public class MediaType {
 
-    private String type;
-    private String subtype;
-    private Map<String, String> parameters;
+    private final String type;
+    private final String subtype;
+    private final Map<String, String> parameters;
     private final int hash;
 
     /**

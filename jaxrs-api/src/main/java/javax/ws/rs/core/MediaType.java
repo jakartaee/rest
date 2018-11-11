@@ -17,7 +17,6 @@
 package javax.ws.rs.core;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -174,13 +173,7 @@ public class MediaType {
     }
 
     private static TreeMap<String, String> createParametersMap(final Map<String, String> initialValues) {
-        final TreeMap<String, String> map = new TreeMap<String, String>(new Comparator<String>() {
-
-            @Override
-            public int compare(final String o1, final String o2) {
-                return o1.compareToIgnoreCase(o2);
-            }
-        });
+        final TreeMap<String, String> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         if (initialValues != null) {
             for (Map.Entry<String, String> e : initialValues.entrySet()) {
                 map.put(e.getKey().toLowerCase(), e.getValue());
@@ -237,13 +230,7 @@ public class MediaType {
         this.subtype = subtype == null ? MEDIA_TYPE_WILDCARD : subtype;
 
         if (parameterMap == null) {
-            parameterMap = new TreeMap<String, String>(new Comparator<String>() {
-
-                @Override
-                public int compare(final String o1, final String o2) {
-                    return o1.compareToIgnoreCase(o2);
-                }
-            });
+            parameterMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         }
 
         if (charset != null && !charset.isEmpty()) {

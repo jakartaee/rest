@@ -374,7 +374,7 @@ public class MediaType {
     public int hashCode() {
         int h = this.hash;
         if (h == 0) {
-            h = Objects.hash(this.parameters, this.subtype.toLowerCase(), this.type.toLowerCase());
+            h = Objects.hash(this.type.toLowerCase(), this.subtype.toLowerCase(), this.parameters);
             this.hash = h;
         }
         return h;

@@ -38,7 +38,7 @@ public class MediaType {
     private String type;
     private String subtype;
     private Map<String, String> parameters;
-    private int hash;
+    private final int hash;
 
     /**
      * The media type {@code charset} parameter name.
@@ -250,6 +250,7 @@ public class MediaType {
             parameterMap.put(CHARSET_PARAMETER, charset);
         }
         this.parameters = Collections.unmodifiableMap(parameterMap);
+        this.hash = Objects.hash(this.type.toLowerCase(), this.subtype.toLowerCase(), this.parameters);
     }
 
     /**
@@ -372,12 +373,7 @@ public class MediaType {
     @SuppressWarnings("UnnecessaryJavaDocLink")
     @Override
     public int hashCode() {
-        int h = this.hash;
-        if (h == 0) {
-            h = Objects.hash(this.type.toLowerCase(), this.subtype.toLowerCase(), this.parameters);
-            this.hash = h;
-        }
-        return h;
+        return this.hash;
     }
 
     /**

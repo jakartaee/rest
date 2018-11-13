@@ -206,7 +206,8 @@
                                     <id>default-compile</id>
                                     <configuration>
                                         <!-- compile everything to ensure module-info contains right entries -->
-                                        <release>9</release>
+                                        <source>9</source>
+                                        <target>9</target>
                                     </configuration>
                                 </execution>
                                 <execution>

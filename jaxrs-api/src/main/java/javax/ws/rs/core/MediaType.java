@@ -310,8 +310,11 @@ public class MediaType {
     }
 
     /**
-     * Check if this media type is compatible with another media type. E.g. image/* is compatible with image/jpeg,
-     * image/png, etc. Media type parameters are ignored. The function is commutative.
+     * Check if this media type is compatible with another media type.
+     * Two media types are considered to be compatible if and only if their types are equal,
+     * or one of them has a wildcard type, and their subtypes are equal or one of them has a wildcard subtype.
+     *
+     * Media type parameters are ignored. The function is commutative.
      *
      * @param other the media type to compare with.
      * @return true if the types are compatible, false otherwise.
@@ -321,16 +324,11 @@ public class MediaType {
             return false;
         }
 
-        // Two media types are compatible if and only if both of the following conditions are met:
-        // 1) one of their types is a wildcard, or their types are equal
-        // 2) one of their subtypes is a wildcard, or their two subtypes are equal.
-        if (type.equalsIgnoreCase(other.type) || type.equals(MEDIA_TYPE_WILDCARD)
-            || other.type.equals(MEDIA_TYPE_WILDCARD)) {
-            return subtype.equals(MEDIA_TYPE_WILDCARD) || other.subtype.equals(MEDIA_TYPE_WILDCARD)
-                   || subtype.equalsIgnoreCase(other.subtype);
-        }
-
-        return false;
+        return
+            (type.equalsIgnoreCase(other.type) || this.isWildcardType() || other.isWildcardType())
+            &&
+            (subtype.equalsIgnoreCase(other.subtype) || this.isWildcardSubtype()
+             || other.isWildcardSubtype());
     }
 
     /**

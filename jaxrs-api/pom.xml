@@ -76,19 +76,6 @@
 
     <profiles>
         <profile>
-            <id>final</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <!-- Final API bundle version properties -->
-                <spec.version>${next.final.spec.version}</spec.version>
-                <new.spec.version />
-                <milestone.number />
-                <non.final>false</non.final>
-            </properties>
-        </profile>
-        <profile>
             <!-- Use it with release-perform goal to skip another test run. -->
             <id>skip-tests</id>
             <activation>
@@ -401,32 +388,6 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <!-- This plugin generates the spec.* properties used in maven-bundle-plugin -->
-                    <groupId>org.glassfish.build</groupId>
-                    <artifactId>spec-version-maven-plugin</artifactId>
-                    <version>1.5</version>
-                    <configuration>
-                        <specMode>jakarta</specMode>
-                        <spec>
-                            <nonFinal>${non.final}</nonFinal>
-                            <jarType>api</jarType>
-                            <specVersion>${spec.version}</specVersion>
-                            <newSpecVersion>${new.spec.version}</newSpecVersion>
-                            <specBuild>${milestone.number}</specBuild>
-                            <specImplVersion>${project.version}</specImplVersion>
-                            <apiPackage>${api.package}</apiPackage>
-                        </spec>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>set-spec-properties</goal>
-                                <goal>check-module</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
                     <version>${maven.bundle.plugin.version}</version>
@@ -436,14 +397,14 @@
                             <_failok>true</_failok>
                             <Build-Id>${buildNumber}</Build-Id>
                             <Bundle-Description>Java API for RESTful Web Services (JAX-RS)</Bundle-Description>
-                            <Bundle-Version>${spec.bundle.version}</Bundle-Version>
-                            <Bundle-SymbolicName>${spec.bundle.symbolic-name}</Bundle-SymbolicName>
+                            <Bundle-Version>${project.version}</Bundle-Version>
+                            <Bundle-SymbolicName>${api.package}-api</Bundle-SymbolicName>
                             <DynamicImport-Package>*</DynamicImport-Package>
-                            <Extension-Name>${spec.extension.name}</Extension-Name>
-                            <Implementation-Version>${spec.implementation.version}</Implementation-Version>
-                            <Specification-Version>${spec.specification.version}</Specification-Version>
-                            <Specification-Vendor>Oracle Corporation</Specification-Vendor>
-                            <specversion>${spec.specification.version}</specversion>
+                            <Extension-Name>${api.package}</Extension-Name>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Specification-Version>${spec.version}</Specification-Version>
+                            <Specification-Vendor>Eclipse Foundation</Specification-Vendor>
+                            <specversion>${spec.version}</specversion>
                             <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
                             <_nodefaultversion>false</_nodefaultversion>
                         </instructions>
@@ -606,10 +567,6 @@
                 <artifactId>maven-bundle-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.glassfish.build</groupId>
-                <artifactId>spec-version-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
             <plugin>
@@ -662,14 +619,9 @@
         <maven.javadoc.plugin.version>3.0.0</maven.javadoc.plugin.version>
 
         <api.package>javax.ws.rs</api.package>
-        <last.final.spec.version>2.1</last.final.spec.version>
-        <milestone.number>01</milestone.number>
-        <next.final.spec.version>2.2</next.final.spec.version>
-        <new.spec.version>${next.final.spec.version}</new.spec.version>
-        <non.final>true</non.final>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skip.release.tests>false</skip.release.tests>
-        <spec.version>${last.final.spec.version}</spec.version>
+        <spec.version>2.2</spec.version>
         <spec.version.revision /> <!-- e.g. (Rev a) -->
 
         <jaxb.api.version>2.3.0</jaxb.api.version>

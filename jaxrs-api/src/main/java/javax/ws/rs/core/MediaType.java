@@ -17,8 +17,8 @@
 package javax.ws.rs.core;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import javax.ws.rs.ext.RuntimeDelegate;
@@ -34,9 +34,10 @@ import javax.ws.rs.ext.RuntimeDelegate;
 @SuppressWarnings("JavaDoc")
 public class MediaType {
 
-    private String type;
-    private String subtype;
-    private Map<String, String> parameters;
+    private final String type;
+    private final String subtype;
+    private final Map<String, String> parameters;
+    private final int hash;
 
     /**
      * The media type {@code charset} parameter name.
@@ -172,13 +173,7 @@ public class MediaType {
     }
 
     private static TreeMap<String, String> createParametersMap(final Map<String, String> initialValues) {
-        final TreeMap<String, String> map = new TreeMap<String, String>(new Comparator<String>() {
-
-            @Override
-            public int compare(final String o1, final String o2) {
-                return o1.compareToIgnoreCase(o2);
-            }
-        });
+        final TreeMap<String, String> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         if (initialValues != null) {
             for (Map.Entry<String, String> e : initialValues.entrySet()) {
                 map.put(e.getKey().toLowerCase(), e.getValue());
@@ -235,19 +230,14 @@ public class MediaType {
         this.subtype = subtype == null ? MEDIA_TYPE_WILDCARD : subtype;
 
         if (parameterMap == null) {
-            parameterMap = new TreeMap<String, String>(new Comparator<String>() {
-
-                @Override
-                public int compare(final String o1, final String o2) {
-                    return o1.compareToIgnoreCase(o2);
-                }
-            });
+            parameterMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         }
 
         if (charset != null && !charset.isEmpty()) {
             parameterMap.put(CHARSET_PARAMETER, charset);
         }
         this.parameters = Collections.unmodifiableMap(parameterMap);
+        this.hash = Objects.hash(this.type.toLowerCase(), this.subtype.toLowerCase(), this.parameters);
     }
 
     /**
@@ -343,6 +333,9 @@ public class MediaType {
     @SuppressWarnings("UnnecessaryJavaDocLink")
     @Override
     public boolean equals(final Object obj) {
+        if (obj == this) {
+            return true;
+        }
         if (!(obj instanceof MediaType)) {
             return false;
         }
@@ -367,7 +360,7 @@ public class MediaType {
     @SuppressWarnings("UnnecessaryJavaDocLink")
     @Override
     public int hashCode() {
-        return (this.type.toLowerCase() + this.subtype.toLowerCase()).hashCode() + this.parameters.hashCode();
+        return this.hash;
     }
 
     /**

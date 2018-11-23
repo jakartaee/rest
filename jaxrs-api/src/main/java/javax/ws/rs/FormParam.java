@@ -46,6 +46,13 @@ import java.lang.annotation.Target;
  * </p>
  *
  * <p>
+ * If this annotation is used to bind form parameters, a JAX-RS implementation MUST use the entity provider API
+ * to create a {@link javax.ws.rs.core.Form} and derive the values from this instance. If there is at least one
+ * {@link FormParam} for a resource method, JAX-RS implementations MUST support a {@link javax.ws.rs.core.Form}
+ * entity parameter for the same method. Support for other entity parameter types is OPTIONAL.
+ * </p>
+ *
+ * <p>
  * Note that, whilst the annotation target permits use on fields and methods, this annotation is only required to be
  * supported on resource method parameters.
  * </p>

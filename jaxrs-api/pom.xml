@@ -238,6 +238,13 @@
                     </plugins>
                 </pluginManagement>
             </build>
+            <repositories>
+                <!-- JAXB and JAF are not found in Maven Central yet, so we pull it from OSSRH staging instead. -->
+                <repository>
+                    <id>ossrh-staging</id>
+                    <url>https://oss.sonatype.org/content/repositories/staging</url>
+                </repository>
+            </repositories>
         </profile>
         <profile>
             <id>jdk9-jdk10</id>

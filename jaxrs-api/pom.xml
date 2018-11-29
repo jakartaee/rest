@@ -177,14 +177,14 @@
             </activation>
             <dependencies>
                 <dependency>
-                    <groupId>javax.xml.bind</groupId>
-                    <artifactId>jaxb-api</artifactId>
+                    <groupId>jakarta.xml.bind</groupId>
+                    <artifactId>jakarta.xml.bind-api</artifactId>
                     <version>${jaxb.api.version}</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
-                    <groupId>javax.activation</groupId>
-                    <artifactId>javax.activation-api</artifactId>
+                    <groupId>jakarta.activation</groupId>
+                    <artifactId>jakarta.activation-api</artifactId>
                     <version>${activation.api.version}</version>
                     <scope>provided</scope>
                 </dependency>
@@ -239,6 +239,13 @@
                     </plugins>
                 </pluginManagement>
             </build>
+            <repositories>
+                <!-- JAXB and JAF are not found in Maven Central yet, so we pull it from OSSRH staging instead. -->
+                <repository>
+                    <id>ossrh-staging</id>
+                    <url>https://oss.sonatype.org/content/repositories/staging</url>
+                </repository>
+            </repositories>
         </profile>
         <profile>
             <id>jdk9-jdk10</id>
@@ -408,6 +415,7 @@
                             <specversion>${spec.version}</specversion>
                             <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
                             <_nodefaultversion>false</_nodefaultversion>
+                            <Require-Capability>osgi.ee;filter:="(&amp;(osgi.ee=JavaSE)(version=1.8))"</Require-Capability>
                         </instructions>
                     </configuration>
                     <executions>
@@ -625,9 +633,9 @@
         <spec.version>2.2</spec.version>
         <spec.version.revision /> <!-- e.g. (Rev a) -->
 
-        <jaxb.api.version>2.3.0</jaxb.api.version>
-        <jaxb.impl.version>2.3.0.1</jaxb.impl.version>
-        <activation.api.version>1.2.0</activation.api.version>
+        <jaxb.api.version>2.3.2</jaxb.api.version>
+        <jaxb.impl.version>2.3.2</jaxb.impl.version>
+        <activation.api.version>1.2.1</activation.api.version>
     </properties>
 
     <distributionManagement>

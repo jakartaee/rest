@@ -525,6 +525,33 @@
                     </executions>
                 </plugin>
                 <plugin>
+                    <!-- Adding files to jar-->
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>add-legal-resource</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>add-resource</goal>
+                            </goals>
+                            <configuration>
+                                <resources>
+                                    <resource>
+                                        <directory>${legal.doc.folder}</directory>
+                                        <includes>
+                                            <include>NOTICE.md</include>
+                                            <include>LICENSE.md</include>
+                                        </includes>
+                                        <targetPath>META-INF</targetPath>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.8.2</version>
@@ -656,6 +683,10 @@
                 <groupId>org.glassfish.copyright</groupId>
                 <artifactId>glassfish-copyright-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 
@@ -696,6 +727,7 @@
         <jaxb.api.version>2.3.2</jaxb.api.version>
         <jaxb.impl.version>2.3.2</jaxb.impl.version>
         <activation.api.version>1.2.1</activation.api.version>
+        <legal.doc.folder>${maven.multiModuleProjectDirectory}/..</legal.doc.folder>
     </properties>
 
     <distributionManagement>

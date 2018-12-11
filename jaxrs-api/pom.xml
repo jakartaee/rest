@@ -414,6 +414,7 @@
                     <version>1.5</version>
                     <configuration>
                         <specMode>jakarta</specMode>
+                        <ignoreErrors>true</ignoreErrors>
                         <spec>
                             <nonFinal>${non.final}</nonFinal>
                             <jarType>api</jarType>
@@ -444,7 +445,7 @@
                             <Build-Id>${buildNumber}</Build-Id>
                             <Bundle-Description>Java API for RESTful Web Services (JAX-RS)</Bundle-Description>
                             <Bundle-Version>${spec.bundle.version}</Bundle-Version>
-                            <Bundle-SymbolicName>${spec.bundle.symbolic-name}</Bundle-SymbolicName>
+                            <Bundle-SymbolicName>jakarta.ws.rs-api</Bundle-SymbolicName>
                             <DynamicImport-Package>*</DynamicImport-Package>
                             <Extension-Name>${spec.extension.name}</Extension-Name>
                             <Implementation-Version>${spec.implementation.version}</Implementation-Version>

@@ -406,7 +406,7 @@
                             <Build-Id>${buildNumber}</Build-Id>
                             <Bundle-Description>Java API for RESTful Web Services (JAX-RS)</Bundle-Description>
                             <Bundle-Version>${project.version}</Bundle-Version>
-                            <Bundle-SymbolicName>${api.package}-api</Bundle-SymbolicName>
+                            <Bundle-SymbolicName>jakarta.ws.rs-api</Bundle-SymbolicName>
                             <DynamicImport-Package>*</DynamicImport-Package>
                             <Extension-Name>${api.package}</Extension-Name>
                             <Implementation-Version>${project.version}</Implementation-Version>

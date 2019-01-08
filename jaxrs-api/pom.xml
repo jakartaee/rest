@@ -728,7 +728,7 @@
         <jaxb.api.version>2.3.2</jaxb.api.version>
         <jaxb.impl.version>2.3.2</jaxb.impl.version>
         <activation.api.version>1.2.1</activation.api.version>
-        <legal.doc.folder>${maven.multiModuleProjectDirectory}/..</legal.doc.folder>
+        <legal.doc.folder>${project.basedir}/..</legal.doc.folder>
     </properties>
 
     <distributionManagement>

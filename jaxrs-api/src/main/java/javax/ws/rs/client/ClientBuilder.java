@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2011, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -237,7 +237,7 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
      *
      * @param scheduledExecutorService executor service to be used for scheduled async invocations.
      * @return an updated client builder instance.
-     * @see SseEventSource.Builder#reconnectingEvery(long, TimeUnit)
+     * @see javax.ws.rs.sse.SseEventSource.Builder#reconnectingEvery(long, TimeUnit)
      * @since 2.1
      */
     public abstract ClientBuilder scheduledExecutorService(final ScheduledExecutorService scheduledExecutorService);

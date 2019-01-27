@@ -216,7 +216,7 @@ public abstract class Link {
 
     /**
      * Convenience method to build a link from a resource. Equivalent to
-     * <tt>Link.fromUriBuilder({@link UriBuilder#fromResource UriBuilder.fromResource(resource)})</tt>.
+     * {@code Link.fromUriBuilder({@link UriBuilder#fromResource UriBuilder.fromResource(resource)})}.
      * Note that the link URI passed to the {@code Link.Builder} instance returned by this
      * method is relative. Should the link be built as absolute, a {@link Link.Builder#baseUri(URI)
      * base URI} has to be specified in the builder prior to building the new link instance.
@@ -236,7 +236,7 @@ public abstract class Link {
 
     /**
      * Convenience method to build a link from a resource. Equivalent to
-     * <tt>Link.fromUriBuilder({@link UriBuilder#fromMethod(Class, String) UriBuilder.fromMethod(resource, method)})</tt>.
+     * {@code Link.fromUriBuilder({@link UriBuilder#fromMethod(Class, String) UriBuilder.fromMethod(resource, method)})}.
      * Note that the link URI passed to the {@code Link.Builder} instance returned by this
      * method is relative. Should the link be built as absolute, a {@link Link.Builder#baseUri(URI)
      * base URI} has to be specified in the builder prior to building the new link instance.

@@ -362,13 +362,13 @@ public interface UriInfo {
      *
      * <p>Examples (for base URI {@code http://example.com:8080/app/root/}):
      * <br/>
-     * <br/><b>Request URI:</b> <tt>http://example.com:8080/app/root/a/b/c/resource.html</tt>
-     * <br/><b>Supplied URI:</b> <tt>a/b/c/d/file.txt</tt>
-     * <br/><b>Returned URI:</b> <tt>d/file.txt</tt>
+     * <br/><b>Request URI:</b> {@code http://example.com:8080/app/root/a/b/c/resource.html}
+     * <br/><b>Supplied URI:</b> {@code a/b/c/d/file.txt}
+     * <br/><b>Returned URI:</b> {@code d/file.txt}
      * <br/>
-     * <br/><b>Request URI:</b> <tt>http://example.com:8080/app/root/a/b/c/resource.html</tt>
-     * <br/><b>Supplied URI:</b> <tt>http://example2.com:9090/app2/root2/a/d/file.txt</tt>
-     * <br/><b>Returned URI:</b> <tt>http://example2.com:9090/app2/root2/a/d/file.txt</tt>
+     * <br/><b>Request URI:</b> {@code http://example.com:8080/app/root/a/b/c/resource.html}
+     * <br/><b>Supplied URI:</b> {@code http://example2.com:9090/app2/root2/a/d/file.txt}
+     * <br/><b>Returned URI:</b> {@code http://example2.com:9090/app2/root2/a/d/file.txt}
      * </p>
      *
      * <p>In the second example, the supplied URI is returned given that it is absolute

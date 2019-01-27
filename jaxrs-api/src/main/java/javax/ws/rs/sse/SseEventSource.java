@@ -41,7 +41,7 @@ import javax.ws.rs.client.WebTarget;
  * negotiation of delivery of any missed events based on the last received  SSE event {@code id} field value, provided
  * this field is set by the server and the negotiation facility is supported by the server. In case of a connection loss,
  * the last received SSE event {@code id} field value is send in the
- * <tt>{@value javax.ws.rs.core.HttpHeaders#LAST_EVENT_ID_HEADER}</tt> HTTP
+ * <code>{@value javax.ws.rs.core.HttpHeaders#LAST_EVENT_ID_HEADER}</code> HTTP
  * request header as part of a new connection request sent to the SSE endpoint. Upon a receipt of such reconnect request, the SSE
  * endpoint that supports this negotiation facility is expected to replay all missed events. Note however, that this is a
  * best-effort mechanism which does not provide any guaranty that all events would be delivered without a loss. You should
@@ -55,12 +55,12 @@ import javax.ws.rs.client.WebTarget;
  * <p>
  * In addition to handling the standard connection loss failures, JAX-RS {@code SseEventSource} automatically deals with any
  * {@code HTTP 503 Service Unavailable} responses from an SSE endpoint, that contain a
- * <tt>{@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</tt> HTTP header with a valid value. The
- * <tt>HTTP 503 + {@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</tt> technique is often used by HTTP endpoints
+ * <code>{@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> HTTP header with a valid value. The
+ * <code>HTTP 503 + {@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> technique is often used by HTTP endpoints
  * as a means of connection and traffic throttling.
- * In case a <tt>HTTP 503 + {@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</tt> response is received in return to a connection
+ * In case a <code>HTTP 503 + {@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> response is received in return to a connection
  * request, JAX-RS SSE event source will automatically schedule a new reconnect attempt and use the received
- * <tt>{@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</tt> HTTP header value as a one-time override of the reconnect delay.
+ * <code>{@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> HTTP header value as a one-time override of the reconnect delay.
  *
  * @author Marek Potociar
  * @since 2.1
@@ -137,7 +137,7 @@ public interface SseEventSource extends AutoCloseable {
          * Set the initial reconnect delay to be used by the event source.
          * <p>
          * Note that this value may be later overridden by the SSE endpoint using either a {@code retry} SSE event field
-         * or <tt>HTTP 503 + {@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</tt> mechanism as described
+         * or <code>HTTP 503 + {@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> mechanism as described
          * in the {@link SseEventSource} javadoc.
          *
          * @param delay the default time to wait before attempting to recover from a connection loss.

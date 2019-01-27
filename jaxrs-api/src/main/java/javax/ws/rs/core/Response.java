@@ -249,8 +249,8 @@ public abstract class Response implements AutoCloseable {
      * {@code true} if the entity is present, returns {@code false} otherwise.
      * <p>
      * Note that the method may return {@code true} also for response messages with
-     * a zero-length content, in case the <tt>{@value javax.ws.rs.core.HttpHeaders#CONTENT_LENGTH}</tt> and
-     * <tt>{@value javax.ws.rs.core.HttpHeaders#CONTENT_TYPE}</tt> headers are specified in the message.
+     * a zero-length content, in case the <code>{@value javax.ws.rs.core.HttpHeaders#CONTENT_LENGTH}</code> and
+     * <code>{@value javax.ws.rs.core.HttpHeaders#CONTENT_TYPE}</code> headers are specified in the message.
      * In such case, an attempt to read the entity using one of the {@code readEntity(...)}
      * methods will return a corresponding instance representing a zero-length entity for a
      * given Java type or produce a {@link ProcessingException} in case no such instance

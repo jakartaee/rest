@@ -125,7 +125,7 @@ public class ItemStoreResource {
     /**
      * Connect or re-connect to SSE event stream.
      *
-     * @param lastEventId Value of custom SSE HTTP <tt>{@value javax.ws.rs.core.HttpHeaders#LAST_EVENT_ID_HEADER}</tt>
+     * @param lastEventId Value of custom SSE HTTP <code>{@value javax.ws.rs.core.HttpHeaders#LAST_EVENT_ID_HEADER}</code>
      * header. Defaults to {@code -1} if not set.
      * @param serverSink new SSE server sink stream representing the (re-)established SSE client connection.
      * @throws InternalServerErrorException in case replaying missed events to the reconnected output stream fails.

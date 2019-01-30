@@ -16,13 +16,16 @@
 
 package javax.ws.rs.core;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThat;
+
+import org.hamcrest.Description;
+import org.hamcrest.DiagnosingMatcher;
+import org.hamcrest.Matcher;
+import org.junit.Test;
 
 import java.util.Map;
-
-import org.junit.Test;
 
 /**
  * {@link MediaType} unit test.
@@ -61,109 +64,97 @@ public class MediaTypeTest {
         assertEquals(MediaType.WILDCARD_TYPE, actual);
     }
 
-    /**
-     * Test that a wildcard type {@link MediaType} value with explicit subtype is not compatible with
-     * a non-wildcard type {@link MediaType} value with a different subtype.
-     */
     @Test
     public void testMediaTypeWithWildcardTypeNotCompatibleWhenSubtypeDifferent() {
-        MediaType wildcard = new MediaType(MediaType.MEDIA_TYPE_WILDCARD, "json");
+        MediaType anyJson = new MediaType(MediaType.MEDIA_TYPE_WILDCARD, "json");
 
-        assertFalse(wildcard.isCompatible(MediaType.APPLICATION_OCTET_STREAM_TYPE));
-        assertFalse(MediaType.APPLICATION_OCTET_STREAM_TYPE.isCompatible(wildcard));
+        assertThat(anyJson, not(isCompatibleWith(MediaType.APPLICATION_OCTET_STREAM_TYPE)));
+        assertThat(MediaType.APPLICATION_OCTET_STREAM_TYPE, not(isCompatibleWith(anyJson)));
     }
 
-    /**
-     * Test that a wildcard type {@link MediaType} value with explicit subtype is compatible with
-     * a non-wildcard type {@link MediaType} value with the same explicit subtype.
-     */
     @Test
     public void testMediaTypeWithWildcardTypeCompatibleWhenSubtypeMatches() {
-        MediaType wildcard = new MediaType(MediaType.MEDIA_TYPE_WILDCARD, "json");
+        MediaType anyJson = new MediaType(MediaType.MEDIA_TYPE_WILDCARD, "json");
 
-        assertTrue(wildcard.isCompatible(MediaType.APPLICATION_JSON_TYPE));
-        assertTrue(MediaType.APPLICATION_JSON_TYPE.isCompatible(wildcard));
+        assertThat(anyJson, isCompatibleWith(MediaType.APPLICATION_JSON_TYPE));
+        assertThat(MediaType.APPLICATION_JSON_TYPE, isCompatibleWith(anyJson));
     }
 
-    /**
-     * Test that a wildcard type {@link MediaType} value with explicit subtype is not compatible with
-     * a non-wildcard type {@link MediaType} value with a different subtype.
-     */
     @Test
     public void testMediaTypeWithWildcardTypeCompatibleWithExplicitTypeAndWildcardSubtype() {
-        MediaType wildcardType = new MediaType(MediaType.MEDIA_TYPE_WILDCARD, "json");
-        MediaType wildcardSubtype = new MediaType("application", MediaType.MEDIA_TYPE_WILDCARD);
+        MediaType anyJson = new MediaType(MediaType.MEDIA_TYPE_WILDCARD, "json");
+        MediaType applicationAny = new MediaType("application", MediaType.MEDIA_TYPE_WILDCARD);
 
-        assertTrue(wildcardType.isCompatible(wildcardSubtype));
-        assertTrue(wildcardSubtype.isCompatible(wildcardType));
+        assertThat(anyJson, isCompatibleWith(applicationAny));
+        assertThat(applicationAny, isCompatibleWith(anyJson));
     }
 
-    /**
-     * Test that a {@link MediaType} value with explicit type and wildcard subtype
-     * is compatible with a {@link MediaType} value with the same type and an explicit subtype.
-     */
     @Test
     public void testMediaTypeWithWildcardSubtypeCompatibleWhenTypeMatches() {
-        MediaType wildcard = new MediaType("application", MediaType.MEDIA_TYPE_WILDCARD);
+        MediaType applicationAny = new MediaType("application", MediaType.MEDIA_TYPE_WILDCARD);
 
-        assertTrue(wildcard.isCompatible(MediaType.APPLICATION_JSON_TYPE));
-        assertTrue(MediaType.APPLICATION_JSON_TYPE.isCompatible(wildcard));
+        assertThat(applicationAny, isCompatibleWith(MediaType.APPLICATION_JSON_TYPE));
+        assertThat(MediaType.APPLICATION_JSON_TYPE, isCompatibleWith(applicationAny));
     }
 
-    /**
-     * Test that a {@link MediaType} value with explicit type and wildcard subtype
-     * is not compatible with a {@link MediaType} value with a different type and an explicit subtype.
-     */
     @Test
     public void testMediaTypeWithWildcardSubtypeNotCompatibleWhenTypeDoesNotMatch() {
-        MediaType wildcard = new MediaType("application", MediaType.MEDIA_TYPE_WILDCARD);
+        MediaType applicationAny = new MediaType("application", MediaType.MEDIA_TYPE_WILDCARD);
 
-        assertFalse(wildcard.isCompatible(MediaType.TEXT_HTML_TYPE));
-        assertFalse(MediaType.TEXT_HTML_TYPE.isCompatible(wildcard));
+        assertThat(applicationAny, not(isCompatibleWith(MediaType.TEXT_HTML_TYPE)));
+        assertThat(MediaType.TEXT_HTML_TYPE, not(isCompatibleWith(applicationAny)));
     }
 
-    /**
-     * Test that a {@link MediaType} value with explicit type and subtype
-     * is compatible with a {@link MediaType} value with the same type and subtype (i.e. itself).
-     */
     @Test
     public void testMediaTypeWithExplicitTypeAndSubTypeCompatibleWithSelf() {
-        assertTrue(MediaType.APPLICATION_JSON_TYPE.isCompatible(MediaType.APPLICATION_JSON_TYPE));
+        assertThat(MediaType.APPLICATION_JSON_TYPE, isCompatibleWith(MediaType.APPLICATION_JSON_TYPE));
     }
 
-    /**
-     * Test that a {@link MediaType} value with explicit type and subtype
-     * is not compatible with a {@link MediaType} value with a different type and same subtype
-     */
     @Test
     public void testMediaTypeNotCompatibleWithOtherExplicitMediaTypeWhenTypeDifferent() {
-        assertFalse(MediaType.TEXT_XML_TYPE.isCompatible(MediaType.APPLICATION_XML_TYPE));
+        assertThat(MediaType.TEXT_XML_TYPE, not(isCompatibleWith(MediaType.APPLICATION_XML_TYPE)));
     }
 
-    /**
-     * Test that a {@link MediaType} value with explicit type and subtype
-     * is not compatible with a {@link MediaType} value with the same type and different subtype
-     */
     @Test
     public void testMediaTypeNotCompatibleWithOtherExplicitMediaTypeWhenSubtypeDifferent() {
-        assertFalse(MediaType.TEXT_XML_TYPE.isCompatible(MediaType.TEXT_HTML_TYPE));
+        assertThat(MediaType.TEXT_XML_TYPE, not(isCompatibleWith(MediaType.TEXT_HTML_TYPE)));
     }
 
-
-    /**
-     * Test that a {@link MediaType} value with explicit type and subtype
-     * is not compatible with a {@link MediaType} value with a different type and different subtype.
-     */
     @Test
     public void testMediaTypeNotCompatibleWithOtherMediaTypeWhenTypeAndSubtypeDifferent() {
-        assertFalse(MediaType.TEXT_XML_TYPE.isCompatible(MediaType.APPLICATION_JSON_TYPE));
+        assertThat(MediaType.TEXT_XML_TYPE, not(isCompatibleWith(MediaType.APPLICATION_JSON_TYPE)));
     }
 
-    /**
-     * Test that a {@link MediaType} value is not compatible with a {@code null} value.
-     */
     @Test
     public void testMediaTypeNotCompatibleWithNull() {
-        assertFalse(MediaType.APPLICATION_JSON_TYPE.isCompatible(null));
+        assertThat(MediaType.APPLICATION_JSON_TYPE, not(isCompatibleWith(null)));
+    }
+
+    private static Matcher<MediaType> isCompatibleWith(MediaType other) {
+        return new DiagnosingMatcher<MediaType>() {
+
+            @Override
+            protected boolean matches(Object o, Description description) {
+                if (o instanceof MediaType) {
+                    MediaType mediaType = (MediaType) o;
+
+                    if (!mediaType.isCompatible(other)) {
+                        description.appendText("incompatible");
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                description.appendText("not a media type");
+
+                return false;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("a compatible media type");
+            }
+        };
     }
 }

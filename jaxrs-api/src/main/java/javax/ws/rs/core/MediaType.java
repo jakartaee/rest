@@ -300,19 +300,25 @@ public class MediaType {
     }
 
     /**
-     * Check if this media type is compatible with another media type. E.g. image/* is compatible with image/jpeg,
-     * image/png, etc. Media type parameters are ignored. The function is commutative.
+     * Check if this media type is compatible with another media type.
+     * Two media types are considered to be compatible if and only if their types are equal,
+     * or one of them has a wildcard type, and their subtypes are equal or one of them has a wildcard subtype.
+     *
+     * Media type parameters are ignored. The function is commutative.
      *
      * @param other the media type to compare with.
      * @return true if the types are compatible, false otherwise.
      */
     public boolean isCompatible(final MediaType other) {
-        return other != null && // return false if other is null, else
-                (type.equals(MEDIA_TYPE_WILDCARD) || other.type.equals(MEDIA_TYPE_WILDCARD) || // both are wildcard types, or
-                        (type.equalsIgnoreCase(other.type) && (subtype.equals(MEDIA_TYPE_WILDCARD)
-                                || other.subtype.equals(MEDIA_TYPE_WILDCARD)))
-                        || // same types, wildcard sub-types, or
-                        (type.equalsIgnoreCase(other.type) && this.subtype.equalsIgnoreCase(other.subtype))); // same types & sub-types
+        if (other == null) {
+            return false;
+        }
+
+        return
+            (type.equalsIgnoreCase(other.type) || this.isWildcardType() || other.isWildcardType())
+            &&
+            (subtype.equalsIgnoreCase(other.subtype) || this.isWildcardSubtype()
+             || other.isWildcardSubtype());
     }
 
     /**

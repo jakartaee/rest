@@ -16,11 +16,16 @@
 
 package javax.ws.rs.core;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
+import org.hamcrest.Description;
+import org.hamcrest.DiagnosingMatcher;
+import org.hamcrest.Matcher;
+import org.junit.Test;
 
 import java.util.Map;
-
-import org.junit.Test;
 
 /**
  * {@link MediaType} unit test.
@@ -57,5 +62,99 @@ public class MediaTypeTest {
 
         actual = new MediaType(null, null, (String) null);
         assertEquals(MediaType.WILDCARD_TYPE, actual);
+    }
+
+    @Test
+    public void testMediaTypeWithWildcardTypeNotCompatibleWhenSubtypeDifferent() {
+        MediaType anyJson = new MediaType(MediaType.MEDIA_TYPE_WILDCARD, "json");
+
+        assertThat(anyJson, not(isCompatibleWith(MediaType.APPLICATION_OCTET_STREAM_TYPE)));
+        assertThat(MediaType.APPLICATION_OCTET_STREAM_TYPE, not(isCompatibleWith(anyJson)));
+    }
+
+    @Test
+    public void testMediaTypeWithWildcardTypeCompatibleWhenSubtypeMatches() {
+        MediaType anyJson = new MediaType(MediaType.MEDIA_TYPE_WILDCARD, "json");
+
+        assertThat(anyJson, isCompatibleWith(MediaType.APPLICATION_JSON_TYPE));
+        assertThat(MediaType.APPLICATION_JSON_TYPE, isCompatibleWith(anyJson));
+    }
+
+    @Test
+    public void testMediaTypeWithWildcardTypeCompatibleWithExplicitTypeAndWildcardSubtype() {
+        MediaType anyJson = new MediaType(MediaType.MEDIA_TYPE_WILDCARD, "json");
+        MediaType applicationAny = new MediaType("application", MediaType.MEDIA_TYPE_WILDCARD);
+
+        assertThat(anyJson, isCompatibleWith(applicationAny));
+        assertThat(applicationAny, isCompatibleWith(anyJson));
+    }
+
+    @Test
+    public void testMediaTypeWithWildcardSubtypeCompatibleWhenTypeMatches() {
+        MediaType applicationAny = new MediaType("application", MediaType.MEDIA_TYPE_WILDCARD);
+
+        assertThat(applicationAny, isCompatibleWith(MediaType.APPLICATION_JSON_TYPE));
+        assertThat(MediaType.APPLICATION_JSON_TYPE, isCompatibleWith(applicationAny));
+    }
+
+    @Test
+    public void testMediaTypeWithWildcardSubtypeNotCompatibleWhenTypeDoesNotMatch() {
+        MediaType applicationAny = new MediaType("application", MediaType.MEDIA_TYPE_WILDCARD);
+
+        assertThat(applicationAny, not(isCompatibleWith(MediaType.TEXT_HTML_TYPE)));
+        assertThat(MediaType.TEXT_HTML_TYPE, not(isCompatibleWith(applicationAny)));
+    }
+
+    @Test
+    public void testMediaTypeWithExplicitTypeAndSubTypeCompatibleWithSelf() {
+        assertThat(MediaType.APPLICATION_JSON_TYPE, isCompatibleWith(MediaType.APPLICATION_JSON_TYPE));
+    }
+
+    @Test
+    public void testMediaTypeNotCompatibleWithOtherExplicitMediaTypeWhenTypeDifferent() {
+        assertThat(MediaType.TEXT_XML_TYPE, not(isCompatibleWith(MediaType.APPLICATION_XML_TYPE)));
+    }
+
+    @Test
+    public void testMediaTypeNotCompatibleWithOtherExplicitMediaTypeWhenSubtypeDifferent() {
+        assertThat(MediaType.TEXT_XML_TYPE, not(isCompatibleWith(MediaType.TEXT_HTML_TYPE)));
+    }
+
+    @Test
+    public void testMediaTypeNotCompatibleWithOtherMediaTypeWhenTypeAndSubtypeDifferent() {
+        assertThat(MediaType.TEXT_XML_TYPE, not(isCompatibleWith(MediaType.APPLICATION_JSON_TYPE)));
+    }
+
+    @Test
+    public void testMediaTypeNotCompatibleWithNull() {
+        assertThat(MediaType.APPLICATION_JSON_TYPE, not(isCompatibleWith(null)));
+    }
+
+    private static Matcher<MediaType> isCompatibleWith(MediaType other) {
+        return new DiagnosingMatcher<MediaType>() {
+
+            @Override
+            protected boolean matches(Object o, Description description) {
+                if (o instanceof MediaType) {
+                    MediaType mediaType = (MediaType) o;
+
+                    if (!mediaType.isCompatible(other)) {
+                        description.appendText("incompatible");
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                description.appendText("not a media type");
+
+                return false;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("a compatible media type");
+            }
+        };
     }
 }

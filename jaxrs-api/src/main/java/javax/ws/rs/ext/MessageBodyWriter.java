@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -90,7 +90,7 @@ public interface MessageBodyWriter<T> {
      * @param annotations an array of the annotations attached to the message entity instance.
      * @param mediaType the media type of the HTTP entity.
      * @param httpHeaders a mutable map of the HTTP message headers.
-     * @param entityStream the {@link OutputStream} for the HTTP entity. The implementation should not close the output
+     * @param entityStream the {@link OutputStream} for the HTTP entity. The implementation must not close the output
      * stream.
      * @throws java.io.IOException if an IO error arises.
      * @throws javax.ws.rs.WebApplicationException if a specific HTTP error response needs to be produced. Only effective if

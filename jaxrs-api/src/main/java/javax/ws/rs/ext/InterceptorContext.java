@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2011, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -59,6 +59,22 @@ public interface InterceptorContext {
      * @see #getPropertyNames()
      */
     public Object getProperty(String name);
+
+    /**
+     * Returns {@code true} if the property with the given name is registered in the current request/response exchange context,
+     * or {@code false} if there is no property by that name.
+     * <p>
+     * Use the {@link #getProperty} method with a property name to get the value of a property.
+     * </p>
+     *
+     * @param name a {@code String} specifying the name of the property.
+     * @return {@code true} if this property is registered in the context, or {@code false} if no property exists matching the
+     * given name.
+     * @see #getPropertyNames()
+     */
+    default public boolean hasProperty(String name) {
+        return getProperty(name) != null;
+    }
 
     /**
      * Returns an immutable {@link java.util.Collection collection} containing the property names available within the

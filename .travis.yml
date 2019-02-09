@@ -23,6 +23,6 @@ install:
 
 script:
   - cd $TRAVIS_BUILD_DIR/jaxrs-api
-  - mvn test -B
+  - mvn verify -B
   - cd $TRAVIS_BUILD_DIR/examples
-  - mvn test -B
+  - mvn verify -B

@@ -61,15 +61,15 @@ public interface InterceptorContext {
     public Object getProperty(String name);
 
     /**
-     * Returns {@code true} if the property with the given name is registered in the current request/response exchange context,
-     * or {@code false} if there is no property by that name.
+     * Returns {@code true} if the property with the given name is registered in the current request/response exchange
+     * context, or {@code false} if there is no property by that name.
      * <p>
      * Use the {@link #getProperty} method with a property name to get the value of a property.
      * </p>
      *
      * @param name a {@code String} specifying the name of the property.
-     * @return {@code true} if this property is registered in the context, or {@code false} if no property exists matching the
-     * given name.
+     * @return {@code true} if this property is registered in the context, or {@code false} if no property exists matching
+     * the given name.
      * @see #getPropertyNames()
      */
     default public boolean hasProperty(String name) {

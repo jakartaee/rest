@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -62,6 +62,17 @@ public interface Configuration {
      * configured.
      */
     public Object getProperty(String name);
+
+    /**
+     * Check whether the property with a given name exists.
+     *
+     * @param name property name.
+     * @return {@code true} if the property with the specified property name exists, or {@code false} if the property with
+     * such name is not configured.
+     */
+    default public boolean hasProperty(String name) {
+        return getProperty(name) != null;
+    }
 
     /**
      * Returns an immutable {@link java.util.Collection collection} containing the property names available within the

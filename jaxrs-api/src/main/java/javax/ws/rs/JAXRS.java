@@ -295,10 +295,10 @@ public interface JAXRS {
         Object property(String name);
 
         /**
-         * Returns whether the property with the given name exists.
+         * Returns whether the property with the given name is configured, either explicitly or by default.
          *
          * @param name a {@code String} specifying the name of the property.
-         * @return {@code true} if the property exists, or {@code false} otherwise.
+         * @return {@code true} if the property has a value other than {@code null}, or {@code false} otherwise.
          * @since 2.2
          */
         default boolean hasProperty(String name) {

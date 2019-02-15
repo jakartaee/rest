@@ -67,8 +67,7 @@ public interface Configuration {
      * Check whether the property with a given name is configured.
      *
      * @param name property name.
-     * @return {@code true} if the property with the specified property name has a value other than {@code null}, or
-     * {@code false} if the property with such name is not configured.
+     * @return {@code false} if the property with such name is not configured, {@code true} otherwise.
      */
     default public boolean hasProperty(String name) {
         return getProperty(name) != null;

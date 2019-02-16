@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -28,7 +28,8 @@ import java.lang.reflect.Type;
  *
  * A {@code MessageBodyWriter} implementation may be annotated
  * with {@link javax.ws.rs.Produces} to restrict the media types for which it will
- * be considered suitable.
+ * be considered suitable. The {@code MessageBodyWriter} pipeline is only invoked if there is 
+ * a non-null response entity.
  * <p>
  * Providers implementing {@code MessageBodyWriter} contract must be either programmatically
  * registered in an API runtime or must be annotated with

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -27,7 +27,8 @@ import javax.ws.rs.core.MultivaluedMap;
  * Contract for a provider that supports the conversion of a stream to a Java type.
  *
  * A {@code MessageBodyReader} implementation may be annotated with {@link javax.ws.rs.Consumes} to restrict the media
- * types for which it will be considered suitable.
+ * types for which it will be considered suitable. The {@code MessageBodyReader} pipeline is executed if the matching 
+ * resource method declares an entity parameter or uses at least one {@link javax.ws.rs.FormParam}.
  * <p>
  * Providers implementing {@code MessageBodyReader} contract must be either programmatically registered in a JAX-RS
  * runtime or must be annotated with {@link javax.ws.rs.ext.Provider &#64;Provider} annotation to be automatically

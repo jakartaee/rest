@@ -295,6 +295,17 @@ public interface JAXRS {
         Object property(String name);
 
         /**
+         * Returns whether the property with the given name is configured, either explicitly or by default.
+         *
+         * @param name a {@code String} specifying the name of the property.
+         * @return {@code false} if no property exists matching the given name, {@code true} otherwise.
+         * @since 2.2
+         */
+        default boolean hasProperty(String name) {
+            return property(name) != null;
+        }
+
+        /**
          * Convenience method to get the {@code protocol} to be used.
          * <p>
          * Same as if calling {@link #property(String) (String) property(PROTOCOL)}.

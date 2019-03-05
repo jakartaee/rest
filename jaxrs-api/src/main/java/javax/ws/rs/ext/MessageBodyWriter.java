@@ -27,7 +27,8 @@ import javax.ws.rs.core.MultivaluedMap;
  * Contract for a provider that supports the conversion of a Java type to a stream.
  *
  * A {@code MessageBodyWriter} implementation may be annotated with {@link javax.ws.rs.Produces} to restrict the media
- * types for which it will be considered suitable.
+ * types for which it will be considered suitable. The {@code MessageBodyWriter} pipeline is only invoked if there is 
+ * a non-null response entity.
  * <p>
  * Providers implementing {@code MessageBodyWriter} contract must be either programmatically registered in a JAX-RS
  * runtime or must be annotated with {@link javax.ws.rs.ext.Provider &#64;Provider} annotation to be automatically

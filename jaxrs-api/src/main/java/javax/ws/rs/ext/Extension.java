@@ -16,6 +16,8 @@
 
 package javax.ws.rs.ext;
 
+import java.util.ServiceLoader;
+
 /**
  * <p>
  * An extension to the JAX-RS runtime.
@@ -26,9 +28,9 @@ package javax.ws.rs.ext;
  * runtimes.
  * </p>
  * <p>
- * JAX-RS implementations MUST automatically register classes implementing this interface in
- * {@link javax.ws.rs.core.Configuration runtime configurations} if the fully qualified name of the implementing class
- * is found in the file {@code javax.ws.rs.ext.Extension} in the {@code META-INF/services} directory.
+ * JAX-RS implementations MUST automatically register a class in {@link javax.ws.rs.core.Configuration runtime
+ * configurations} if the class is a <em>provider class</em> for the {@link Extension} <em>service type</em> according
+ * to the rules set out in the description of {@link ServiceLoader}.
  * </p>
  *
  * @author Markus KARG (markus@headcrashing.eu)

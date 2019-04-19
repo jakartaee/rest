@@ -91,10 +91,6 @@ public interface SseEventSource extends AutoCloseable {
          * {@link SseEventSource.Builder#newBuilder()}.
          */
         public static final String JAXRS_DEFAULT_SSE_BUILDER_PROPERTY = "javax.ws.rs.sse.SseEventSource.Builder";
-        /**
-         * Default SSE event source builder implementation class name.
-         */
-        private static final String JAXRS_DEFAULT_SSE_BUILDER = "org.glassfish.jersey.media.sse.internal.JerseySseEventSource$Builder";
 
         /**
          * Allows custom implementations to extend the SSE event source builder class.
@@ -111,7 +107,7 @@ public interface SseEventSource extends AutoCloseable {
         static Builder newBuilder() {
             try {
                 Object delegate = FactoryFinder.find(JAXRS_DEFAULT_SSE_BUILDER_PROPERTY,
-                        JAXRS_DEFAULT_SSE_BUILDER, SseEventSource.Builder.class);
+                        null, SseEventSource.Builder.class);
                 if (!(delegate instanceof Builder)) {
                     Class pClass = Builder.class;
                     String classnameAsResource = pClass.getName().replace('.', '/') + ".class";

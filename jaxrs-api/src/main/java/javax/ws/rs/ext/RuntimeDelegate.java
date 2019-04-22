@@ -98,10 +98,7 @@ public abstract class RuntimeDelegate {
      */
     private static RuntimeDelegate findDelegate() {
         try {
-            Object delegate = FactoryFinder.find(
-                    JAXRS_RUNTIME_DELEGATE_PROPERTY,
-                    null,
-                    RuntimeDelegate.class);
+            Object delegate = FactoryFinder.find(JAXRS_RUNTIME_DELEGATE_PROPERTY, RuntimeDelegate.class);
             if (!(delegate instanceof RuntimeDelegate)) {
                 Class pClass = RuntimeDelegate.class;
                 String classnameAsResource = pClass.getName().replace('.', '/') + ".class";

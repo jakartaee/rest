@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -34,6 +34,10 @@ import javax.ws.rs.DefaultValue;
  * {@link javax.ws.rs.MatrixParam &#64;MatrixParam}, {@link javax.ws.rs.FormParam &#64;FormParam},
  * {@link javax.ws.rs.CookieParam &#64;CookieParam} and {@link javax.ws.rs.HeaderParam &#64;HeaderParam}
  * is supported.
+ * JAX-RS implementations MUST support the {@code ParamConverter} mechanism for all Java types.
+ * If a {@code ParamConverter} is available for a type, it MUST be preferred over all other 
+ * conversion strategies mentioned in section 3.2 (i.e. single {@code String} argument constructor, 
+ * static {@code valueOf} or {@code fromString} methods, etc.).
  * <p>
  * By default, when used for injection of parameter values, a selected {@code ParamConverter}
  * instance MUST be used eagerly by a JAX-RS runtime to convert any {@link DefaultValue

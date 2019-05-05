@@ -18,10 +18,10 @@ package jaxrs.examples.bootstrap;
 
 import java.net.URI;
 
-import javax.ws.rs.JAXRS;
-import javax.ws.rs.JAXRS.Configuration;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.JAXRS;
+import jakarta.ws.rs.JAXRS.Configuration;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.UriBuilder;
 
 /**
  * Java SE bootstrap example using HTTPS.

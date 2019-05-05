@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -17,23 +17,23 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.ServiceUnavailableException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.sse.OutboundSseEvent;
-import javax.ws.rs.sse.Sse;
-import javax.ws.rs.sse.SseBroadcaster;
-import javax.ws.rs.sse.SseEventSink;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.HeaderParam;
+import jakarta.ws.rs.InternalServerErrorException;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.ServiceUnavailableException;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.sse.OutboundSseEvent;
+import jakarta.ws.rs.sse.Sse;
+import jakarta.ws.rs.sse.SseBroadcaster;
+import jakarta.ws.rs.sse.SseEventSink;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -92,7 +92,7 @@ public class ItemStoreResource {
      * <li><b>disconnect</b> - disconnect all registered event streams.</li>
      * <li><b>reconnect now</b> - enable client reconnecting.</li>
      * <li><b>reconnect &lt;seconds&gt;</b> - disable client reconnecting. Reconnecting clients will receive a HTTP 503
-     * response with {@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER} set to the amount of milliseconds specified.</li>
+     * response with {@value jakarta.ws.rs.core.HttpHeaders#RETRY_AFTER} set to the amount of milliseconds specified.</li>
      * </ul>
      *
      * @param command command to be processed.
@@ -125,7 +125,7 @@ public class ItemStoreResource {
     /**
      * Connect or re-connect to SSE event stream.
      *
-     * @param lastEventId Value of custom SSE HTTP <code>{@value javax.ws.rs.core.HttpHeaders#LAST_EVENT_ID_HEADER}</code>
+     * @param lastEventId Value of custom SSE HTTP <code>{@value jakarta.ws.rs.core.HttpHeaders#LAST_EVENT_ID_HEADER}</code>
      * header. Defaults to {@code -1} if not set.
      * @param serverSink new SSE server sink stream representing the (re-)established SSE client connection.
      * @throws InternalServerErrorException in case replaying missed events to the reconnected output stream fails.

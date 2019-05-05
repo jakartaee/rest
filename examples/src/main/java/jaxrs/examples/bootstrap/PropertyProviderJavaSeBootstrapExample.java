@@ -18,10 +18,10 @@ package jaxrs.examples.bootstrap;
 
 import java.net.URI;
 
-import javax.ws.rs.JAXRS;
-import javax.ws.rs.JAXRS.Configuration;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.JAXRS;
+import jakarta.ws.rs.JAXRS.Configuration;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.UriBuilder;
 
 import org.eclipse.microprofile.config.Config;
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -40,8 +40,8 @@ import org.eclipse.microprofile.config.ConfigProvider;
  * </p>
  *
  * <pre>
- * export javax.ws.rs.JAXRS.Port=8888;
- * java -Djavax.ws.rs.JAXRS.Host=127.0.0.1 PropertyProviderJavaSeBootstrapExample;
+ * export jakarta.ws.rs.JAXRS.Port=8888;
+ * java -Djakarta.ws.rs.JAXRS.Host=127.0.0.1 PropertyProviderJavaSeBootstrapExample;
  * </pre>
  * <p>
  * Thanks to the <em>explicit</em> use of Microprofile Config in the application, this example is completely portable.

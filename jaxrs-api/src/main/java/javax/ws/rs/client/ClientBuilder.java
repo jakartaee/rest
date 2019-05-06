@@ -43,10 +43,6 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
      * {@link ClientBuilder#newBuilder()}.
      */
     public static final String JAXRS_DEFAULT_CLIENT_BUILDER_PROPERTY = "javax.ws.rs.client.ClientBuilder";
-    /**
-     * Default client builder implementation class name.
-     */
-    private static final String JAXRS_DEFAULT_CLIENT_BUILDER = "org.glassfish.jersey.client.JerseyClientBuilder";
 
     /**
      * Allows custom implementations to extend the {@code ClientBuilder} class.
@@ -62,8 +58,7 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
      */
     public static ClientBuilder newBuilder() {
         try {
-            Object delegate = FactoryFinder.find(JAXRS_DEFAULT_CLIENT_BUILDER_PROPERTY,
-                    JAXRS_DEFAULT_CLIENT_BUILDER, ClientBuilder.class);
+            Object delegate = FactoryFinder.find(JAXRS_DEFAULT_CLIENT_BUILDER_PROPERTY, ClientBuilder.class);
             if (!(delegate instanceof ClientBuilder)) {
                 Class pClass = ClientBuilder.class;
                 String classnameAsResource = pClass.getName().replace('.', '/') + ".class";

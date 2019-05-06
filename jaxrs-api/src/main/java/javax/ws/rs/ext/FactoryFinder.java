@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -94,21 +94,17 @@ final class FactoryFinder {
     }
 
     /**
-     * Finds the implementation {@code Class} for the given factory name, or if that fails, finds the {@code Class} for the
-     * given fallback class name and create its instance. The arguments supplied MUST be used in order. If using the first
-     * argument is successful, the second one will not be used.
+     * Finds the implementation {@code Class} for the given factory name and create its instance.
      * <p>
      * This method is package private so that this code can be shared.
      *
      * @param factoryId the name of the factory to find, which is a system property.
-     * @param fallbackClassName the implementation class name, which is to be used only if nothing else. is found;
-     * {@code null} to indicate that there is no fallback class name.
      * @param service service to be found.
      * @param <T> type of the service to be found.
      * @return the instance of the specified service; may not be {@code null}.
      * @throws ClassNotFoundException if the given class could not be found or could not be instantiated.
      */
-    static <T> Object find(final String factoryId, final String fallbackClassName, final Class<T> service) throws ClassNotFoundException {
+    static <T> Object find(final String factoryId, final Class<T> service) throws ClassNotFoundException {
         ClassLoader classLoader = getContextClassLoader();
 
         try {
@@ -169,11 +165,7 @@ final class FactoryFinder {
                     + " from a system property", se);
         }
 
-        if (fallbackClassName == null) {
-            throw new ClassNotFoundException(
-                    "Provider for " + factoryId + " cannot be found", null);
-        }
-
-        return newInstance(fallbackClassName, classLoader);
+        throw new ClassNotFoundException(
+                "Provider for " + factoryId + " cannot be found", null);
     }
 }

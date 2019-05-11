@@ -25,7 +25,7 @@
     <version>2.2-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <name>javax.ws.rs-api</name>
-    <description>Java API for RESTful Web Services</description>
+    <description>Jakarta RESTful Web Services</description>
 
     <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
 
@@ -410,7 +410,7 @@
                         <instructions>
                             <_failok>true</_failok>
                             <Build-Id>${buildNumber}</Build-Id>
-                            <Bundle-Description>Java API for RESTful Web Services (JAX-RS)</Bundle-Description>
+                            <Bundle-Description>Jakarta RESTful Web Services API (JAX-RS)</Bundle-Description>
                             <Bundle-Version>${project.version}</Bundle-Version>
                             <Bundle-SymbolicName>jakarta.ws.rs-api</Bundle-SymbolicName>
                             <DynamicImport-Package>*</DynamicImport-Package>

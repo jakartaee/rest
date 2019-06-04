@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -14,20 +14,20 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-module java.ws.rs {
+module jakarta.ws.rs {
 
     requires transitive java.xml.bind;
 
     requires java.logging;
 
-    exports javax.ws.rs;
-    exports javax.ws.rs.client;
-    exports javax.ws.rs.container;
-    exports javax.ws.rs.core;
-    exports javax.ws.rs.ext;
-    exports javax.ws.rs.sse;
+    exports jakarta.ws.rs;
+    exports jakarta.ws.rs.client;
+    exports jakarta.ws.rs.container;
+    exports jakarta.ws.rs.core;
+    exports jakarta.ws.rs.ext;
+    exports jakarta.ws.rs.sse;
 
-    uses javax.ws.rs.client.ClientBuilder;
-    uses javax.ws.rs.ext.RuntimeDelegate;
-    uses javax.ws.rs.sse.SseEventSource.Builder;
+    uses jakarta.ws.rs.client.ClientBuilder;
+    uses jakarta.ws.rs.ext.RuntimeDelegate;
+    uses jakarta.ws.rs.sse.SseEventSource.Builder;
 }

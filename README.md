@@ -14,6 +14,12 @@
 
 ---
 
-# JAX-RS API [![Build Status](https://travis-ci.org/eclipse-ee4j/jaxrs-api.svg?branch=master)](https://travis-ci.org/eclipse-ee4j/jaxrs-api)
+# Jakarta RESTful Web Services [![Build Status](https://travis-ci.org/eclipse-ee4j/jaxrs-api.svg?branch=master)](https://travis-ci.org/eclipse-ee4j/jaxrs-api)
 
-This repository contains JAX-RS API source code.
+**Jakarta RESTful Web Services** provides a specification document, TCK and foundational API to develop web services following the Representational State Transfer (REST) architectural pattern.
+
+Contributions are welcome, please sign the Eclipse Contributor Agreement before submitting PRs: https://www.eclipse.org/contribute/cla
+
+Project page: https://projects.eclipse.org/projects/ee4j.jaxrs
+
+Mailinglist: https://accounts.eclipse.org/mailing-list/jaxrs-dev

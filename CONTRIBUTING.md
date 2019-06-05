@@ -1,4 +1,4 @@
-# Contributing to Eclipse Project for JAX-RS
+# Contributing to Jakarta RESTful Web Services
 
 Thanks for your interest in this project.
 

@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2017, 2019 Oracle and/or its affiliates and others. All rights reserved.
+
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Public License v. 2.0, which is available at
+    http://www.eclipse.org/legal/epl-2.0.
+
+    This Source Code may also be made available under the following Secondary
+    Licenses when the conditions for such availability set forth in the
+    Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
+    version 2 with the GNU Classpath Exception, which is available at
+    https://www.gnu.org/software/classpath/license.html.
+
+    SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>jakarta.ws.rs</groupId>
+    <artifactId>jakarta.ws.rs-spec</artifactId>
+    <version>2.1.6-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>javax.ws.rs-spec</name>
+    <description>Jakarta RESTful Web Services Specification</description>
+
+    <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <site.output.dir>${project.build.directory}/staging</site.output.dir>
+        <maven.site.skip>true</maven.site.skip>
+        <asciidoctor.maven.plugin.version>1.5.7.1</asciidoctor.maven.plugin.version>
+        <asciidoctorj.version>1.6.2</asciidoctorj.version>
+        <asciidoctorj.pdf.version>1.5.0-alpha.16</asciidoctorj.pdf.version>
+        <jruby.version>9.2.6.0</jruby.version>
+        <!-- status: DRAFT, BETA, etc., or blank for final -->
+        <status>DRAFT</status>
+        <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
+        <revisiondate>${maven.build.timestamp}</revisiondate>
+    </properties>
+
+    <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
+
+    <organization>
+        <name>Eclipse Foundation</name>
+        <url>https://www.eclipse.org/org/foundation/</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>developers</id>
+            <name>JAX-RS API Developers</name>
+            <email>jaxrs-dev@eclipse.org</email>
+            <url>https://github.com/eclipse-ee4j/jaxrs-api/graphs/contributors</url>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/eclipse-ee4j/jaxrs-api/issues</url>
+    </issueManagement>
+
+    <mailingLists>
+        <mailingList>
+            <name>JAX-RS Developer Discussions</name>
+            <archive>jaxrs-dev@eclipse.org</archive>
+        </mailingList>
+    </mailingLists>
+
+    <licenses>
+        <license>
+            <name>EFSL 1.0</name>
+            <url>https://www.eclipse.org/legal/efsl.php</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:https://github.com/eclipse-ee4j/jaxrs-api.git</connection>
+        <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <site>
+            <url>scm:git:https://github.com/eclipse-ee4j/jaxrs-api.git</url>
+        </site>
+    </distributionManagement>
+
+    <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>${asciidoctor.maven.plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jruby</groupId>
+                        <artifactId>jruby-complete</artifactId>
+                        <version>${jruby.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj</artifactId>
+                        <version>${asciidoctorj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-pdf</artifactId>
+                        <version>${asciidoctorj.pdf.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>asciidoc-to-html</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>html5</backend>
+                            <outputFile>${project.build.directory}/generated-docs/jakarta.ws.rs-spec-${project.version}.html</outputFile>
+                            <attributes>
+                                <doctype>book</doctype>
+                                <status>${status}</status>
+                                <data-uri />
+                                <icons>font</icons>
+                                <toc>left</toc>
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix />
+                                <idseparator>-</idseparator>
+                                <docinfo1>true</docinfo1>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>asciidoc-to-pdf</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>pdf</backend>
+                            <outputFile>${project.build.directory}/generated-docs/jakarta.ws.rs-spec-${project.version}.pdf</outputFile>
+                            <attributes>
+                                <pdf-stylesdir>${project.basedir}/src/main/theme</pdf-stylesdir>
+                                <pdf-style>jakartaee</pdf-style>
+                                <doctype>book</doctype>
+                                <status>${status}</status>
+                                <data-uri />
+                                <icons>font</icons>
+                                <pagenums />
+                                <toc />
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix />
+                                <idseparator>-</idseparator>
+                                <docinfo1>true</docinfo1>
+                                <embedAssets>true</embedAssets>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceDocumentName>main.adoc</sourceDocumentName>
+                    <sourceHighlighter>coderay</sourceHighlighter>
+                    <attributes>
+                        <revnumber>${project.version}</revnumber>
+                        <revremark>${status}</revremark>
+                        <revdate>${revisiondate}</revdate>
+                    </attributes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptors>
+                                <descriptor>${project.basedir}/src/main/assembly/zip.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

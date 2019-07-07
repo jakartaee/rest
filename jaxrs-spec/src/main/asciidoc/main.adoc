@@ -1,0 +1,40 @@
+﻿//
+//    Copyright (c) 2019 Oracle and/or its affiliates and others.
+//
+//    This program and the accompanying materials are made available under the
+//    terms of the Eclipse Public License v. 2.0, which is available at
+//    http://www.eclipse.org/legal/epl-2.0.
+//
+//    This Source Code may also be made available under the following Secondary
+//    Licenses when the conditions for such availability set forth in the
+//    Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
+//    version 2 with the GNU Classpath Exception, which is available at
+//    https://www.gnu.org/software/classpath/license.html.
+//
+//    SPDX-License-Identifier: EFSL-1.0
+//
+
+= Jakarta RESTful Web Services
+:authors: Contributors to Jakarta RESTful Web Services (https://github.com/eclipse-ee4j/jaxrs-api/graphs/contributors)
+:email: jaxrs-dev@eclipse.org
+:version-label!:
+:doctype: book
+:license: Eclipse Foundation Specification License v1.0
+:source-highlighter: coderay
+:toc: left
+:toclevels: 4
+:sectnumlevels: 4
+:sectanchors:
+ifdef::backend-pdf[]
+:pagenums:
+:numbered:
+:title-logo-image: image:jakarta_ee_logo_schooner_color_stacked_default.png[pdfwidth=4.25in,align=right]
+endif::[]
+
+// == License
+:sectnums!:
+include::license-efsl.adoc[]
+
+// == Boilerplate
+:sectnums:
+include::boilerplate.adoc[]

@@ -14,9 +14,13 @@ install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
   - cd $TRAVIS_BUILD_DIR/examples
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - cd $TRAVIS_BUILD_DIR/jaxrs-spec
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
   - cd $TRAVIS_BUILD_DIR/jaxrs-api
   - mvn test -B
   - cd $TRAVIS_BUILD_DIR/examples
+  - mvn test -B
+  - cd $TRAVIS_BUILD_DIR/jaxrs-spec
   - mvn test -B

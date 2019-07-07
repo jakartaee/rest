@@ -1,0 +1,45 @@
+﻿//
+//    Copyright (c) 2019 Markus KARG
+//
+//    This program and the accompanying materials are made available under the
+//    terms of the Eclipse Public License v. 2.0, which is available at
+//    http://www.eclipse.org/legal/epl-2.0.
+//
+//    This Source Code may also be made available under the following Secondary
+//    Licenses when the conditions for such availability set forth in the
+//    Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
+//    version 2 with the GNU Classpath Exception, which is available at
+//    https://www.gnu.org/software/classpath/license.html.
+//
+//    SPDX-License-Identifier: EFSL-1.0
+//
+
+== Boilerplate
+
+WARNING: This document contains just boilerplate information. It explicitly is *not* a complete specification. In particular, it misses all normative text. To learn about compliance with this specification, refer to "JAX-RS: Java™ API for RESTful Web Services" (Version 2.1, Final Release July 13, 2017).
+
+
+=== Scope
+
+*Jakarta RESTful Web Services* provides a specification document, TCK and foundational API to develop web services following the Representational State Transfer (REST) architectural pattern.
+
+
+=== Acronyms
+
+Acronyms used in this document MAY refer to Oracle / JCP technology.
+
+The acronym JAX-RS is reused with permission of Oracle and either refers to "Jakarta RESTful Web Services" or "Java™ API for RESTful Web Services", dependending on the context.
+
+
+=== TCK
+
+NOTE: At time of writing, there is no standalone TCK for *Jakarta RESTful Web Services*. To proof compliance with this specification, pass the Jakarta EE Platform TCK instead.
+
+
+=== Trademarks
+
+Jakarta EE and the schooner logo are registered trademarks of the Eclipse Foundation.
+
+Java is a registered trademark of Oracle and/or its affiliates.
+
+Other names may be trademarks of their respective owners.

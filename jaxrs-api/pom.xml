@@ -24,7 +24,7 @@
     <artifactId>jakarta.ws.rs-api</artifactId>
     <version>2.1.6-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <name>javax.ws.rs-api</name>
+    <name>jakarta.ws.rs-api</name>
     <description>Jakarta RESTful Web Services API</description>
 
     <url>https://github.com/eclipse-ee4j/jaxrs-api</url>

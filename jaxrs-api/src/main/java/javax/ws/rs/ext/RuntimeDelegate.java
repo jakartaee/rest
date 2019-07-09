@@ -16,19 +16,18 @@
 
 package javax.ws.rs.ext;
 
-import java.lang.reflect.ReflectPermission;
-import java.net.URL;
-
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.Variant.VariantListBuilder;
+import java.lang.reflect.ReflectPermission;
+import java.net.URL;
 
 /**
- * Implementations of JAX-RS provide a concrete subclass of RuntimeDelegate and
- * various JAX-RS API methods defer to methods of RuntimeDelegate for their
- * functionality. Regular users of JAX-RS are not expected to use this class
+ * Implementations of this API provide a concrete subclass of RuntimeDelegate and
+ * various API methods defer to methods of RuntimeDelegate for their
+ * functionality. Regular users of the API are not expected to use this class
  * directly and overriding an implementation of this class with a user supplied
  * subclass may cause unexpected behavior.
  *
@@ -132,7 +131,7 @@ public abstract class RuntimeDelegate {
     }
 
     /**
-     * Set the runtime delegate that will be used by JAX-RS classes. If this method
+     * Set the runtime delegate that will be used by classes. If this method
      * is not called prior to {@link #getInstance} then an implementation will
      * be sought as described in {@link #getInstance}.
      *
@@ -213,9 +212,9 @@ public abstract class RuntimeDelegate {
     /**
      * Defines the contract for a delegate that is responsible for
      * converting between the String form of a HTTP header and
-     * the corresponding JAX-RS type {@code T}.
+     * the corresponding type {@code T}.
      *
-     * @param <T> a JAX-RS type that corresponds to the value of a HTTP header.
+     * @param <T> an type that corresponds to the value of a HTTP header.
      */
     public static interface HeaderDelegate<T> {
 

@@ -21,8 +21,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Defines the components of a JAX-RS application and supplies additional
- * meta-data. A JAX-RS application or implementation supplies a concrete
+ * Defines the components of an application and supplies additional
+ * meta-data. An application or implementation supplies a concrete
  * subclass of this abstract class.
  * <p>
  * The implementation-created instance of an Application subclass may be
@@ -92,7 +92,7 @@ public class Application {
      * Get a map of custom application-wide properties.
      * <p>
      * The returned properties are reflected in the application {@link Configuration configuration}
-     * passed to the server-side features or injected into server-side JAX-RS components.
+     * passed to the server-side features or injected into server-side components.
      * </p>
      * <p>
      * The set of returned properties may be further extended or customized at deployment time

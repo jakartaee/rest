@@ -16,6 +16,10 @@
 
 package javax.ws.rs.core;
 
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.MessageBodyWriter;
+import javax.ws.rs.ext.RuntimeDelegate;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.net.URI;
@@ -25,17 +29,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.ws.rs.ProcessingException;
-import javax.ws.rs.ext.MessageBodyReader;
-import javax.ws.rs.ext.MessageBodyWriter;
-import javax.ws.rs.ext.RuntimeDelegate;
-
 /**
  * Defines the contract between a returned instance and the runtime when
  * an application needs to provide meta-data to the runtime.
  * <p>
  * An application class should not extend this class directly. {@code Response} class is
- * reserved for an extension by a JAX-RS implementation providers. An application should use one
+ * reserved for an extension by API implementation providers. An application should use one
  * of the static methods to create a {@code Response} instance using a ResponseBuilder.
  * </p>
  * <p>
@@ -456,7 +455,7 @@ public abstract class Response implements AutoCloseable {
      *
      * This method is considered deprecated. Users are encouraged to switch their
      * code to use the {@code getHeaders()} method instead. The method may be annotated
-     * as {@link Deprecated &#64;Deprecated} in a future release of JAX-RS API.
+     * as {@link Deprecated &#64;Deprecated} in a future release of the API.
      *
      * @return response headers as a multivalued map.
      */
@@ -465,7 +464,7 @@ public abstract class Response implements AutoCloseable {
     /**
      * Get view of the response headers and their object values.
      *
-     * The underlying header data may be subsequently modified by the JAX-RS runtime on the
+     * The underlying header data may be subsequently modified by the runtime on the
      * server side. Changes in the underlying header data are reflected in this view.
      * <p>
      * On the server-side, when the message is sent, the non-string values will be serialized
@@ -491,7 +490,7 @@ public abstract class Response implements AutoCloseable {
     /**
      * Get view of the response headers and their string values.
      *
-     * The underlying header data may be subsequently modified by the JAX-RS runtime on
+     * The underlying header data may be subsequently modified by the runtime on
      * the server side. Changes in the underlying header data are reflected in this view.
      *
      * @return response headers as a string view of header values.
@@ -749,7 +748,7 @@ public abstract class Response implements AutoCloseable {
      * and a strong entity tag. This is a shortcut
      * for <code>notModified(new EntityTag(<i>value</i>))</code>.
      *
-     * @param tag the string content of a strong entity tag. The JAX-RS
+     * @param tag the string content of a strong entity tag. The
      *            runtime will quote the supplied value when creating the
      *            header.
      * @return a new response builder.
@@ -1132,7 +1131,7 @@ public abstract class Response implements AutoCloseable {
          * <p/>
          * This is a shortcut for <code>tag(new EntityTag(<i>value</i>))</code>.
          *
-         * @param tag the string content of a strong entity tag. The JAX-RS
+         * @param tag the string content of a strong entity tag. The
          *            runtime will quote the supplied value when creating the header.
          *            If {@code null} any existing entity tag value will be removed.
          * @return the updated response builder.

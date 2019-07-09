@@ -48,7 +48,7 @@ import java.lang.annotation.Target;
  * that accepts a single
  * String argument (see, for example, {@link Integer#valueOf(String)}).</li>
  * <li>Have a registered implementation of {@link javax.ws.rs.ext.ParamConverterProvider}
- * JAX-RS extension SPI that returns a {@link javax.ws.rs.ext.ParamConverter}
+ * that returns a {@link javax.ws.rs.ext.ParamConverter}
  * instance capable of a "from string" conversion for the type.</li>
  * </ul>
  *

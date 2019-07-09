@@ -1,12 +1,12 @@
-# Contributing to Jakarta RESTful Web Services
+# Contributing to the Jakarta RESTful Web Services Project
 
 Thanks for your interest in this project.
 
 ## Project description
 
-JAX-RS: Java API for RESTful Web Services (JAX-RS) is a Java programming
-language API spec that provides support in creating web services according to
-the Representational State Transfer (REST) architectural pattern.
+Jakarta RESTful Web Services provides a specification document, TCK and foundational 
+API to develop web services following the Representational State Transfer (REST) 
+architectural pattern.
 
 * https://projects.eclipse.org/projects/ee4j.jaxrs
 

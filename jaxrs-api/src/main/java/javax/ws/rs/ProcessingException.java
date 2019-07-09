@@ -17,7 +17,7 @@
 package javax.ws.rs;
 
 /**
- * A base JAX-RS runtime processing exception.
+ * A base runtime processing exception.
  *
  * The exception of this type is thrown during HTTP request or response processing,
  * to signal a runtime processing failure. Typical classes of failures covered by
@@ -30,12 +30,12 @@ package javax.ws.rs;
  * entity {@link javax.ws.rs.ext.MessageBodyReader readers} and {@link javax.ws.rs.ext.MessageBodyWriter writers}
  * during entity serialization and de-serialization.</li>
  * </ul>
- * as well as any other JAX-RS runtime processing errors.
+ * as well as any other runtime processing errors.
  * The exception message or nested {@link Throwable}
  * cause SHOULD contain additional information about the reason of the processing
  * failure.
  * <p>
- * Note that the exception is used to indicate (internal) JAX-RS processing errors.
+ * Note that the exception is used to indicate (internal) processing errors.
  * It is not used to indicate HTTP error response states. A HTTP error response is
  * represented by a {@link javax.ws.rs.WebApplicationException} class or one of it's
  * sub-classes.
@@ -49,7 +49,7 @@ public class ProcessingException extends RuntimeException {
     private static final long serialVersionUID = -4232431597816056514L;
 
     /**
-     * Constructs a new JAX-RS runtime processing exception with the specified cause
+     * Constructs a new runtime processing exception with the specified cause
      * and a detail message of {@code (cause==null ? null : cause.toString())}
      * (which typically contains the class and detail message of {@code cause}).
      * This constructor is useful for runtime exceptions that are little more
@@ -64,7 +64,7 @@ public class ProcessingException extends RuntimeException {
     }
 
     /**
-     * Constructs a new JAX-RS runtime processing exception with the specified detail
+     * Constructs a new runtime processing exception with the specified detail
      * message and cause.
      * <p/>
      * Note that the detail message associated with {@code cause} is <i>not</i>
@@ -81,7 +81,7 @@ public class ProcessingException extends RuntimeException {
     }
 
     /**
-     * Constructs a new JAX-RS runtime processing exception with the specified detail
+     * Constructs a new runtime processing exception with the specified detail
      * message. The cause is not initialized, and may subsequently be initialized
      * by a call to {@link #initCause}.
      *

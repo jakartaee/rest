@@ -15,6 +15,6 @@
  */
 
 /**
- * APIs that provide extensions to the types supported by the JAX-RS API.
+ * APIs that provide extensions to the types supported by the API.
  */
 package javax.ws.rs.ext;

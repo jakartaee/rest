@@ -15,17 +15,17 @@
  */
 
 /**
- * <h1>The JAX-RS client API</h1>
+ * <h1>The Client API</h1>
  *
- * The JAX-RS client API is a Java based API used to access Web resources.
- * It is not restricted to resources implemented using JAX-RS.
+ * The Client API is a Java based API used to access Web resources.
+ * It is not restricted to resources implemented using this API.
  * It provides a higher-level abstraction compared to a {@link java.net.HttpURLConnection
- * plain HTTP communication API} as well as integration with the JAX-RS extension
+ * plain HTTP communication API} as well as integration with extension
  * providers, in order to enable concise and efficient implementation of
  * reusable client-side solutions that leverage existing and well
  * established client-side implementations of HTTP-based communication.
  * <p />
- * The JAX-RS Client API encapsulates the Uniform Interface Constraint &ndash;
+ * The Client API encapsulates the Uniform Interface Constraint &ndash;
  * a key constraint of the REST architectural style &ndash; and associated data
  * elements as client-side Java artifacts and supports a pluggable architecture
  * by defining multiple extension points.
@@ -63,7 +63,7 @@
  *       {@link javax.ws.rs.client.Invocation} for later submission</li>
  * </ol>
  *
- * As illustrated above, individual Web resources are in the JAX-RS Client API
+ * As illustrated above, individual Web resources are in the Client API
  * represented as resource targets. Each {@code WebTarget} instance is bound to a
  * concrete URI, e.g. {@code "http://example.org/messages/123"},
  * or a URI template, e.g. {@code "http://example.org/messages/{id}"}.

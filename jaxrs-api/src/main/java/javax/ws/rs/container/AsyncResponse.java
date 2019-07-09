@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * An injectable JAX-RS asynchronous response that provides means for asynchronous server side
+ * An injectable and asynchronous response that provides means for asynchronous server side
  * response processing.
  * <p>
  * A new instance of {@code AsyncResponse} may be injected into a
@@ -86,16 +86,16 @@ public interface AsyncResponse {
      * Resume the suspended request processing using the provided response data.
      *
      * The provided response data can be of any Java type that can be
-     * returned from a {@link javax.ws.rs.HttpMethod JAX-RS resource method}.
+     * returned from a {@link javax.ws.rs.HttpMethod Resource method}.
      * <p>
      * The asynchronous response must be still in a {@link #isSuspended() suspended} state
      * for this method to succeed.
      * </p>
      * <p>
      * By executing this method, the request is guaranteed to complete either successfully or
-     * with an error. The data processing by the JAX-RS runtime follows the same path
-     * as it would for the response data returned synchronously by a JAX-RS resource,
-     * except that unmapped exceptions are not re-thrown by JAX-RS runtime to be handled by
+     * with an error. The data processing by the runtime follows the same path
+     * as it would for the response data returned synchronously by a resource,
+     * except that unmapped exceptions are not re-thrown by the runtime to be handled by
      * a hosting I/O container. Instead, any unmapped exceptions are propagated to the hosting
      * I/O container via a container-specific callback mechanism. Depending on the container
      * implementation, propagated unmapped exceptions typically result in an error status
@@ -113,12 +113,12 @@ public interface AsyncResponse {
      * Resume the suspended request processing using the provided throwable.
      *
      * For the provided throwable same rules apply as for an exception thrown
-     * by a {@link javax.ws.rs.HttpMethod JAX-RS resource method}.
+     * by a {@link javax.ws.rs.HttpMethod Resource method}.
      * <p>
      * By executing this method, the request is guaranteed to complete either successfully or
-     * with an error. The throwable processing by the JAX-RS runtime follows the same path
-     * as it would for the response data returned synchronously by a JAX-RS resource,
-     * except that unmapped exceptions are not re-thrown by JAX-RS runtime to be handled by
+     * with an error. The throwable processing by the runtime follows the same path
+     * as it would for the response data returned synchronously by a resource,
+     * except that unmapped exceptions are not re-thrown by the runtime to be handled by
      * a hosting I/O container. Instead, any unmapped exceptions are propagated to the hosting
      * I/O container via a container-specific callback mechanism. Depending on the container
      * implementation, propagated unmapped exceptions typically result in an error status
@@ -136,7 +136,7 @@ public interface AsyncResponse {
     /**
      * Cancel the suspended request processing.
      * <p>
-     * When a request processing is cancelled using this method, the JAX-RS implementation
+     * When a request processing is cancelled using this method, the API implementation
      * MUST indicate to the client that the request processing has been cancelled by sending
      * back a {@link javax.ws.rs.core.Response.Status#SERVICE_UNAVAILABLE HTTP 503 (Service unavailable)}
      * error response.
@@ -161,7 +161,7 @@ public interface AsyncResponse {
     /**
      * Cancel the suspended request processing.
      * <p>
-     * When a request processing is cancelled using this method, the JAX-RS implementation
+     * When a request processing is cancelled using this method, the API implementation
      * MUST indicate to the client that the request processing has been cancelled by sending
      * back a {@link javax.ws.rs.core.Response.Status#SERVICE_UNAVAILABLE HTTP 503 (Service unavailable)}
      * error response with a {@code Retry-After} header set to the value provided by the method
@@ -190,7 +190,7 @@ public interface AsyncResponse {
     /**
      * Cancel the suspended request processing.
      * <p>
-     * When a request processing is cancelled using this method, the JAX-RS implementation
+     * When a request processing is cancelled using this method, the API implementation
      * MUST indicate to the client that the request processing has been cancelled by sending
      * back a {@link javax.ws.rs.core.Response.Status#SERVICE_UNAVAILABLE HTTP 503 (Service unavailable)}
      * error response with a {@code Retry-After} header set to the value provided by the method

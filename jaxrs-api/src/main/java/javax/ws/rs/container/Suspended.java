@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Inject a suspended {@link AsyncResponse} into a parameter of an invoked
- * JAX-RS {@link javax.ws.rs.HttpMethod resource or sub-resource method}.
+ * {@link javax.ws.rs.HttpMethod resource or sub-resource method}.
  *
  * The injected {@code AsyncResponse} instance is bound to the processing
  * of the active request and can be used to resume the request processing when
@@ -59,7 +59,7 @@ import java.util.concurrent.TimeUnit;
  * {@code AsyncResponse} using the {@code @Suspended} annotation is expected
  * be declared to return {@code void} type. Methods that inject asynchronous
  * response instance using the {@code @Suspended} annotation and declare a
- * return type other than {@code void} MUST be detected by the JAX-RS runtime and
+ * return type other than {@code void} MUST be detected by the the runtime and
  * a warning message MUST be logged. Any response value returned from such resource
  * or sub-resource method MUST be ignored by the framework:
  * </p>

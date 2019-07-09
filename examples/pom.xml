@@ -15,12 +15,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>net.java</groupId>
-        <artifactId>jvnet-parent</artifactId>
-        <version>1</version>
-    </parent>
-
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-examples</artifactId>
     <version>2.1.6-SNAPSHOT</version>
@@ -34,8 +28,8 @@
     </properties>
 
     <organization>
-        <name>Oracle Corporation</name>
-        <url>http://www.oracle.com/</url>
+        <name>Eclipse Foundation</name>
+        <url>https://www.eclipse.org/org/foundation/</url>
     </organization>
 
     <issueManagement>
@@ -45,8 +39,8 @@
 
     <mailingLists>
         <mailingList>
-            <name>JAX-RS Discussion Group </name>
-            <archive>jaxrs-spec@javaee.groups.io</archive>
+            <name>Developer Discussions</name>
+            <archive>jaxrs-dev@eclipse.org</archive>
         </mailingList>
     </mailingLists>
 
@@ -66,14 +60,10 @@
 
     <developers>
         <developer>
-            <email>santiago.pericasgeertsen@oracle.com</email>
-            <id>Santiago</id>
-            <name>Santiago Pericas-Geertsen</name>
-            <organization>Oracle</organization>
-            <roles>
-                <role>JAX-RS Spec Lead</role>
-            </roles>
-            <timezone>EST</timezone>
+            <id>developers</id>
+            <name>API Developers</name>
+            <email>jaxrs-dev@eclipse.org</email>
+            <url>https://github.com/eclipse-ee4j/jaxrs-api/graphs/contributors</url>
         </developer>
     </developers>
 
@@ -119,7 +109,7 @@
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>2.10.3</version>
                     <configuration>
-                        <doctitle>JAX-RS ${project.version} API Specification</doctitle>
+                        <doctitle>${project.version} API Specification</doctitle>
                         <bottom>
                             <![CDATA[Copyright &#169; 1996-2014,
                                 <a href="http://www.oracle.com">Oracle</a>
@@ -273,13 +263,13 @@
     <distributionManagement>
         <repository>
             <id>repo.eclipse.org</id>
-            <name>JAX-RS API Repository - Releases</name>
+            <name>API Repository - Releases</name>
             <url>https://repo.eclipse.org/content/repositories/jax-rs-api-releases/</url>
         </repository>
 
         <snapshotRepository>
             <id>repo.eclipse.org</id>
-            <name>JAX-RS API Repository - Snapshots</name>
+            <name>API Repository - Snapshots</name>
             <url>https://repo.eclipse.org/content/repositories/jax-rs-api-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>

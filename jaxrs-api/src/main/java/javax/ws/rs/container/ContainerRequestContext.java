@@ -16,14 +16,6 @@
 
 package javax.ws.rs.container;
 
-import java.io.InputStream;
-import java.net.URI;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -31,6 +23,13 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Container request filter context.
@@ -49,7 +48,7 @@ public interface ContainerRequestContext {
      * Returns the property with the given name registered in the current request/response
      * exchange context, or {@code null} if there is no property by that name.
      * <p>
-     * A property allows a JAX-RS filters and interceptors to exchange
+     * A property allows filters and interceptors to exchange
      * additional custom information not already provided by this interface.
      * </p>
      * <p>
@@ -94,7 +93,7 @@ public interface ContainerRequestContext {
      * exchange context. If the name specified is already used for a property,
      * this method will replace the value of the property with the new value.
      * <p>
-     * A property allows a JAX-RS filters and interceptors to exchange
+     * A property allows filters and interceptors to exchange
      * additional custom information not already provided by this interface.
      * </p>
      * <p>
@@ -295,7 +294,7 @@ public interface ContainerRequestContext {
     public boolean hasEntity();
 
     /**
-     * Get the entity input stream. The JAX-RS runtime is responsible for
+     * Get the entity input stream. The runtime is responsible for
      * closing the input stream.
      *
      * @return entity input stream.
@@ -303,7 +302,7 @@ public interface ContainerRequestContext {
     public InputStream getEntityStream();
 
     /**
-     * Set a new entity input stream. The JAX-RS runtime is responsible for
+     * Set a new entity input stream. The runtime is responsible for
      * closing the input stream.
      *
      * @param input new entity input stream.

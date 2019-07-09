@@ -23,9 +23,9 @@ import java.lang.reflect.Type;
  * Contract for a provider of {@link ParamConverter} instances.
  * <p>
  * Providers implementing {@code ParamConverterProvider} contract must be either programmatically
- * registered in a JAX-RS runtime or must be annotated with
+ * registered in a runtime or must be annotated with
  * {@link javax.ws.rs.ext.Provider &#64;Provider} annotation to be automatically discovered
- * by the JAX-RS runtime during a provider scanning phase.
+ * by the the runtime during a provider scanning phase.
  * </p>
  *
  * @author Marek Potociar

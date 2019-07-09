@@ -23,13 +23,13 @@
 
 <h2>Web resources</h2>
 
-<p>JAX-RS core APIs enable developers to rapidly build Web applications in Java that are characteristic
+<p>The core APIs enable developers to rapidly build Web applications in Java that are characteristic
     of the best designed parts of the Web. The API brings in support for designing and implementing
     Web resources and application that follow principles of
     <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">REST (Representational
         State Transfer)</a> architectural style to the Java Platform.</p>
 
-<p>In JAX-RS, Java POJOs can be exposed as RESTful Web resources independent of the underlying technology
+<p>With this API, Java POJOs can be exposed as RESTful Web resources independent of the underlying technology
     using a high level easy-to-use declarative annotation-based API. E.g.:</p>
 
 <pre>
@@ -55,19 +55,19 @@ public class WidgetResource {
 
 <h2>Web resource clients</h2>
 
-<p>JAX-RS client API is a Java based API used to access resources on the Web. It is not restricted
-    to resources implemented using JAX-RS. It provides a higher-level abstraction compared to a
+<p>The Client API is a Java based API used to access resources on the Web. It is not restricted
+    to resources implemented using the Server API. It provides a higher-level abstraction compared to a
     {@link java.net.HttpURLConnection plain HTTP communication API} as well as integration with the
-    JAX-RS extension providers, in order to enable concise and efficient implementation of
+    API extension providers, in order to enable concise and efficient implementation of
     reusable client-side solutions that leverage existing and well
     established client-side implementations of HTTP-based communication.</p>
 
-<p>The JAX-RS Client API also encapsulates the Uniform Interface Constraint &ndash;
+<p>The Client API also encapsulates the Uniform Interface Constraint &ndash;
     a key constraint of the REST architectural style &ndash; and associated data
     elements as client-side Java artifacts and supports a pluggable architecture
     by defining multiple extension points.</p>
 
-<p>Following example demonstrates a simple JAX-RS client API usage scenario:</p>
+<p>Following example demonstrates a simple Client API usage scenario:</p>
 
 <pre>
     Client client = ClientBuilder.newClient();
@@ -82,7 +82,7 @@ public class WidgetResource {
 
 <h2>Provider extensions</h2>
 
-<p>JAX-RS applications may provide custom extensions to the client and server runtime using the
+<p>Applications may provide custom extensions to the client and server runtime using the
     common extension APIs defined in <a href="javax/ws/rs/ext/package-summary.html">javax.ws.rs.ext</a>
     package, namely entity providers and entity provider interceptors. Additionally, request and
     response processing chains on client as well as server side can be further customized by

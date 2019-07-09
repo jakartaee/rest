@@ -19,10 +19,10 @@ package javax.ws.rs.container;
 /**
  * Asynchronous response suspend time-out handler.
  *
- * JAX-RS users may utilize this callback interface to provide
+ * Users may utilize this callback interface to provide
  * custom resolution of time-out events.
  * <p>
- * By default, JAX-RS runtime generates a {@link javax.ws.rs.WebApplicationException}
+ * By default, the runtime generates a {@link javax.ws.rs.WebApplicationException}
  * with a {@link javax.ws.rs.core.Response.Status#SERVICE_UNAVAILABLE HTTP 503
  * (Service unavailable)} error response status code. A custom time-out handler
  * may be {@link AsyncResponse#setTimeoutHandler(TimeoutHandler) set} on an
@@ -83,7 +83,7 @@ public interface TimeoutHandler {
      * Invoked when the suspended asynchronous response is about to time out.
      *
      * Implementing time-out handlers may use the callback method to change the
-     * default time-out strategy defined by JAX-RS specification (see
+     * default time-out strategy defined by this specification (see
      * {@link javax.ws.rs.container.AsyncResponse} API documentation).
      * <p>
      * A custom time-out handler may decide to either
@@ -95,7 +95,7 @@ public interface TimeoutHandler {
      * </ul>
      * </p>
      * In case the time-out handler does not take any of the actions mentioned above,
-     * a default time-out strategy is executed by the JAX-RS runtime.
+     * a default time-out strategy is executed by the runtime.
      *
      * @param asyncResponse suspended asynchronous response that is timing out.
      */

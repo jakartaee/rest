@@ -16,6 +16,12 @@
 
 package javax.ws.rs.client;
 
+import javax.ws.rs.core.Configuration;
+import javax.ws.rs.core.Cookie;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.MessageBodyWriter;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -25,13 +31,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.ws.rs.core.Configuration;
-import javax.ws.rs.core.Cookie;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.MessageBodyWriter;
 
 /**
  * Client request filter context.
@@ -50,7 +49,7 @@ public interface ClientRequestContext {
      * Returns the property with the given name registered in the current request/response
      * exchange context, or {@code null} if there is no property by that name.
      * <p>
-     * A property allows a JAX-RS filters and interceptors to exchange
+     * A property allows filters and interceptors to exchange
      * additional custom information not already provided by this interface.
      * </p>
      * <p>
@@ -85,7 +84,7 @@ public interface ClientRequestContext {
      * exchange context. If the name specified is already used for a property,
      * this method will replace the value of the property with the new value.
      * <p>
-     * A property allows a JAX-RS filters and interceptors to exchange
+     * A property allows a filters and interceptors to exchange
      * additional custom information not already provided by this interface.
      * </p>
      * <p>
@@ -319,7 +318,7 @@ public interface ClientRequestContext {
 
 
     /**
-     * Get the entity output stream. The JAX-RS runtime is responsible for
+     * Get the entity output stream. The runtime is responsible for
      * closing the output stream.
      *
      * @return entity output stream.
@@ -327,7 +326,7 @@ public interface ClientRequestContext {
     public OutputStream getEntityStream();
 
     /**
-     * Set a new entity output stream. The JAX-RS runtime is responsible for
+     * Set a new entity output stream. The runtime is responsible for
      * closing the output stream.
      *
      * @param outputStream new entity output stream.

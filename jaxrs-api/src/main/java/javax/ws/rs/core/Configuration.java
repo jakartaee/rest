@@ -16,20 +16,19 @@
 
 package javax.ws.rs.core;
 
+import javax.ws.rs.RuntimeType;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import javax.ws.rs.RuntimeType;
-
 /**
- * A configuration state associated with a {@link Configurable configurable} JAX-RS context.
+ * A configuration state associated with a {@link Configurable configurable} context.
  * Defines the components as well as additional meta-data for the configured context.
  * <p>
  * A configuration state may be used to retrieve configuration information about
- * of the associated JAX-RS context (e.g. application, resource method, etc.) or component
+ * of the associated context (e.g. application, resource method, etc.) or component
  * (e.g. {@link javax.ws.rs.client.Client}, {@link javax.ws.rs.client.WebTarget}, etc.).
- * Configuration information consists of properties, registered JAX-RS component classes
+ * Configuration information consists of properties, registered component classes
  * and/or instances.
  * </p>
  * <p>
@@ -108,7 +107,7 @@ public interface Configuration {
     public boolean isEnabled(Class<? extends Feature> featureClass);
 
     /**
-     * Check if a particular JAX-RS {@code component} instance (such as providers or
+     * Check if a particular API {@code component} instance (such as providers or
      * {@link Feature features}) has been previously registered in the runtime configuration context.
      * <p>
      * Method returns {@code true} only in case an instance equal to the {@code component}
@@ -124,7 +123,7 @@ public interface Configuration {
     public boolean isRegistered(Object component);
 
     /**
-     * Check if a JAX-RS component of the supplied {@code componentClass} class has been previously
+     * Check if a component of the supplied {@code componentClass} class has been previously
      * registered in the runtime configuration context.
      * <p>
      * Method returns {@code true} in case a component of the supplied {@code componentClass} class
@@ -153,7 +152,7 @@ public interface Configuration {
     public Map<Class<?>, Integer> getContracts(Class<?> componentClass);
 
     /**
-     * Get the immutable set of registered JAX-RS component (such as provider or
+     * Get the immutable set of registered component (such as provider or
      * {@link Feature feature}) classes to be instantiated, injected and utilized in the scope
      * of the configurable instance.
      * <p>
@@ -161,14 +160,14 @@ public interface Configuration {
      * present in the configuration context at any given time.
      * </p>
      *
-     * @return the immutable set of registered JAX-RS component classes. The returned
+     * @return the immutable set of registered component classes. The returned
      *         value may be empty but will never be {@code null}.
      * @see #getInstances
      */
     public Set<Class<?>> getClasses();
 
     /**
-     * Get the immutable set of registered JAX-RS component (such as provider or
+     * Get the immutable set of registered component (such as provider or
      * {@link Feature feature}) instances to be utilized by the configurable instance.
      * Fields and properties of returned instances are injected with their declared dependencies
      * (see {@link Context}) by the runtime prior to use.
@@ -177,7 +176,7 @@ public interface Configuration {
      * present in the configuration context at any given time.
      * </p>
      *
-     * @return the immutable set of registered JAX-RS component instances. The returned
+     * @return the immutable set of registered component instances. The returned
      *         value may be empty but will never be {@code null}.
      * @see #getClasses
      */

@@ -16,19 +16,18 @@
 
 package javax.ws.rs.client;
 
-import java.io.InputStream;
-import java.net.URI;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Client response filter context.
@@ -208,7 +207,7 @@ public interface ClientResponseContext {
     public boolean hasEntity();
 
     /**
-     * Get the entity input stream. The JAX-RS runtime is responsible for
+     * Get the entity input stream. The runtime is responsible for
      * closing the input stream.
      *
      * @return entity input stream.
@@ -216,7 +215,7 @@ public interface ClientResponseContext {
     public InputStream getEntityStream();
 
     /**
-     * Set a new entity input stream. The JAX-RS runtime is responsible for
+     * Set a new entity input stream. The runtime is responsible for
      * closing the input stream.
      *
      * @param input new entity input stream.

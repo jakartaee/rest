@@ -16,12 +16,11 @@
 
 package javax.ws.rs.sse;
 
+import javax.ws.rs.client.WebTarget;
 import java.net.URL;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-
-import javax.ws.rs.client.WebTarget;
 
 /**
  * Client for reading and processing {@link InboundSseEvent incoming Server-Sent Events}.
@@ -49,17 +48,17 @@ import javax.ws.rs.client.WebTarget;
  * <p>
  * By default, when a connection the the SSE endpoint is lost, the event source will wait 500&nbsp;ms
  * before attempting to reconnect to the SSE endpoint. The SSE endpoint can however control the client-side retry delay
- * by including a special {@code retry} field value in the any send event. JAX-RS {@code SseEventSource} tracks any
+ * by including a special {@code retry} field value in the any send event. {@code SseEventSource} tracks any
  * received SSE event {@code retry} field values set by the endpoint and adjusts the reconnect delay accordingly,
  * using the last received {@code retry} field value as the reconnect delay.
  * <p>
- * In addition to handling the standard connection loss failures, JAX-RS {@code SseEventSource} automatically deals with any
+ * In addition to handling the standard connection loss failures, {@code SseEventSource} automatically deals with any
  * {@code HTTP 503 Service Unavailable} responses from an SSE endpoint, that contain a
  * <code>{@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> HTTP header with a valid value. The
  * <code>HTTP 503 + {@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> technique is often used by HTTP endpoints
  * as a means of connection and traffic throttling.
  * In case a <code>HTTP 503 + {@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> response is received in return to a connection
- * request, JAX-RS SSE event source will automatically schedule a new reconnect attempt and use the received
+ * request, SSE event source will automatically schedule a new reconnect attempt and use the received
  * <code>{@value javax.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> HTTP header value as a one-time override of the reconnect delay.
  *
  * @author Marek Potociar
@@ -68,7 +67,7 @@ import javax.ws.rs.client.WebTarget;
 public interface SseEventSource extends AutoCloseable {
 
     /**
-     * JAX-RS {@link SseEventSource} builder class.
+     * {@link SseEventSource} builder class.
      * <p>
      * Event source builder provides methods that let you conveniently configure and subsequently build
      * a new {@code SseEventSource} instance. You can obtain a new event source builder instance using
@@ -104,7 +103,7 @@ public interface SseEventSource extends AutoCloseable {
         }
 
         /**
-         * Create a new SSE event source instance using the default implementation class provided by the JAX-RS
+         * Create a new SSE event source instance using the default implementation class provided by the
          * implementation provider.
          *
          * @return new SSE event source builder instance.

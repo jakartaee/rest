@@ -16,13 +16,12 @@
 
 package javax.ws.rs.ext;
 
+import javax.ws.rs.DefaultValue;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import javax.ws.rs.DefaultValue;
 
 /**
  * Defines a contract for a delegate responsible for converting between a
@@ -34,13 +33,13 @@ import javax.ws.rs.DefaultValue;
  * {@link javax.ws.rs.MatrixParam &#64;MatrixParam}, {@link javax.ws.rs.FormParam &#64;FormParam},
  * {@link javax.ws.rs.CookieParam &#64;CookieParam} and {@link javax.ws.rs.HeaderParam &#64;HeaderParam}
  * is supported.
- * JAX-RS implementations MUST support the {@code ParamConverter} mechanism for all Java types.
+ * API implementations MUST support the {@code ParamConverter} mechanism for all Java types.
  * If a {@code ParamConverter} is available for a type, it MUST be preferred over all other 
  * conversion strategies mentioned in section 3.2 (i.e. single {@code String} argument constructor, 
  * static {@code valueOf} or {@code fromString} methods, etc.).
  * <p>
  * By default, when used for injection of parameter values, a selected {@code ParamConverter}
- * instance MUST be used eagerly by a JAX-RS runtime to convert any {@link DefaultValue
+ * instance MUST be used eagerly by an API runtime to convert any {@link DefaultValue
  * default value} in the resource or provider model, that is during the application deployment,
  * before any value &ndash; default or otherwise &ndash; is actually required.
  * This conversion strategy ensures that any errors in the default values are reported
@@ -52,9 +51,9 @@ import javax.ws.rs.DefaultValue;
  * </p>
  * <p>
  * NOTE: A service implementing this contract is not recognized as a registrable
- * JAX-RS extension provider. Instead, a {@link ParamConverterProvider} instance
+ * extension provider. Instead, a {@link ParamConverterProvider} instance
  * responsible for providing {@code ParamConverter} instances has to be registered
- * as one of the JAX-RS extension providers.
+ * as one of the extension providers.
  * </p>
  *
  * @param <T> the supported Java type convertible to/from a {@code String} format.
@@ -91,7 +90,7 @@ public interface ParamConverter<T> {
     /**
      * Convert the supplied value to a String.
      * <p>
-     * This method is reserved for future use. Proprietary JAX-RS extensions may leverage the method.
+     * This method is reserved for future use. Proprietary API extensions may leverage the method.
      * Users should be aware that any such support for the method comes at the expense of producing
      * non-portable code.
      * </p>

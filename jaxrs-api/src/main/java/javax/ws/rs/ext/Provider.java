@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 
 /**
  * Marks an implementation of an extension interface that should be discoverable
- * by JAX-RS runtime during a provider scanning phase.
+ * by the runtime during a provider scanning phase.
  *
  * @author Paul Sandoz
  * @author Marc Hadley

@@ -20,7 +20,7 @@ package javax.ws.rs.container;
  * Asynchronous request processing lifecycle callback that receives connection
  * related {@link AsyncResponse asynchronous response} lifecycle events.
  * <p>
- * Support for this type of callback by JAX-RS runtime is OPTIONAL.
+ * Support for this type of callback by the runtime is OPTIONAL.
  * </p>
  *
  * @author Marek Potociar

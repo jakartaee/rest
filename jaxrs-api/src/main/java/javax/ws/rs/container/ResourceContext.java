@@ -39,7 +39,7 @@ public interface ResourceContext {
      * <p>
      * The resolved resource instance is properly initialized in the context of the
      * current request processing scope. The scope of the resolved resource instance
-     * depends on the managing container. For resources managed by JAX-RS container
+     * depends on the managing container. For resources managed by the runtime container
      * the default scope is per-request.
      * </p>
      *
@@ -52,7 +52,7 @@ public interface ResourceContext {
     /**
      * Initialize the resource or sub-resource instance.
      *
-     * All JAX-RS injectable fields in the resource instance will be properly initialized in
+     * All injectable fields in the resource instance will be properly initialized in
      * the context of the current request processing scope.
      *
      * @param <T>      resource instance type.

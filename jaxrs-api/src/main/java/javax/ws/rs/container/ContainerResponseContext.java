@@ -16,6 +16,13 @@
 
 package javax.ws.rs.container;
 
+import javax.ws.rs.core.EntityTag;
+import javax.ws.rs.core.Link;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.MessageBodyWriter;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -24,14 +31,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import javax.ws.rs.core.EntityTag;
-import javax.ws.rs.core.Link;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.NewCookie;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.MessageBodyWriter;
 
 /**
  * Container response filter context.
@@ -361,7 +360,7 @@ public interface ContainerResponseContext {
     public Annotation[] getEntityAnnotations();
 
     /**
-     * Get the entity output stream. The JAX-RS runtime is responsible for
+     * Get the entity output stream. The runtime is responsible for
      * closing the output stream.
      *
      * @return entity output stream.
@@ -369,7 +368,7 @@ public interface ContainerResponseContext {
     public OutputStream getEntityStream();
 
     /**
-     * Set a new entity output stream. The JAX-RS runtime is responsible for
+     * Set a new entity output stream. The runtime is responsible for
      * closing the output stream.
      *
      * @param outputStream new entity output stream.

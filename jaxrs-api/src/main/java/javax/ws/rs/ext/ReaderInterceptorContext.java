@@ -16,11 +16,10 @@
 
 package javax.ws.rs.ext;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MultivaluedMap;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Context class used by {@link javax.ws.rs.ext.ReaderInterceptor}
@@ -52,7 +51,7 @@ public interface ReaderInterceptorContext extends InterceptorContext {
     public Object proceed() throws IOException, WebApplicationException;
 
     /**
-     * Get the input stream of the object to be read. The JAX-RS runtime is responsible
+     * Get the input stream of the object to be read. The runtime is responsible
      * for closing the input stream.
      *
      * @return input stream of the object to be read.
@@ -61,7 +60,7 @@ public interface ReaderInterceptorContext extends InterceptorContext {
 
     /**
      * Set the input stream of the object to be read. For example, by wrapping
-     * it with another input stream. The JAX-RS runtime is responsible for closing
+     * it with another input stream. The runtime is responsible for closing
      * the input stream that is set.
      *
      * @param is new input stream.

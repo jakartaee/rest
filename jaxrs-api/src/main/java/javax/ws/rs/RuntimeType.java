@@ -17,18 +17,18 @@
 package javax.ws.rs;
 
 /**
- * Enumeration of JAX-RS runtime types.
+ * Enumeration of runtime types.
  *
  * @author Marek Potociar
  * @since 2.0
  */
 public enum RuntimeType {
     /**
-     * JAX-RS client run-time.
+     * The client run-time.
      */
     CLIENT,
     /**
-     * JAX-RS server run-time.
+     * The server run-time.
      */
     SERVER
 }

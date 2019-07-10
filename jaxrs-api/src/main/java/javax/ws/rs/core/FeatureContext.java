@@ -18,7 +18,7 @@ package javax.ws.rs.core;
 
 /**
  * A configurable context passed to {@link Feature} and {@link javax.ws.rs.container.DynamicFeature}
- * instances by JAX-RS runtime during the phase of their configuration.
+ * instances by the runtime during the phase of their configuration.
  *
  * @author Marek Potociar (marek.potociar at oracle.com)
  */

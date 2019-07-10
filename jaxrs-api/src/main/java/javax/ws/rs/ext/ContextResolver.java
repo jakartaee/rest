@@ -25,9 +25,9 @@ package javax.ws.rs.ext;
  * which it will be considered suitable.
  * <p>
  * Providers implementing {@code ContextResolver} contract must be either programmatically
- * registered in a JAX-RS runtime or must be annotated with
+ * registered in an API runtime or must be annotated with
  * {@link javax.ws.rs.ext.Provider &#64;Provider} annotation to be automatically discovered
- * by the JAX-RS runtime during a provider scanning phase.
+ * by the runtime during a provider scanning phase.
  * </p>
  *
  * @param <T> type of the context

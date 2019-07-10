@@ -22,8 +22,8 @@ package javax.ws.rs.core;
  * Typically encapsulates a concept or facility that involves configuration of multiple providers
  * (e.g. filters or interceptors) and/or properties.
  * <p>
- * A {@code Feature} is a special type of JAX-RS configuration meta-provider. Once a feature is registered,
- * its {@link #configure(FeatureContext)} method is invoked during JAX-RS runtime configuration and bootstrapping
+ * A {@code Feature} is a special type of configuration meta-provider. Once a feature is registered,
+ * its {@link #configure(FeatureContext)} method is invoked during runtime configuration and bootstrapping
  * phase allowing the feature to further configure the runtime context in which it has been registered.
  * From within the invoked {@code configure(...)} method a feature may provide additional runtime configuration
  * for the facility or conceptual domain it represents, such as registering additional contract providers,
@@ -31,8 +31,8 @@ package javax.ws.rs.core;
  * </p>
  * <p>
  * Features implementing this interface MAY be annotated with the {@link javax.ws.rs.ext.Provider &#64;Provider}
- * annotation in order to be discovered by the JAX-RS runtime when scanning for resources and providers.
- * Please note that this will only work for server side features. Features for the JAX-RS client must
+ * annotation in order to be discovered by the runtime when scanning for resources and providers.
+ * Please note that this will only work for server side features. Features in the Client API must
  * be registered programmatically.
  * </p>
  *

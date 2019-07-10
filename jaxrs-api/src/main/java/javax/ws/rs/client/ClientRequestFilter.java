@@ -22,7 +22,7 @@ import java.io.IOException;
  * An extension interface implemented by client request filters.
  *
  * Filters implementing this interface MUST be annotated with
- * {@link javax.ws.rs.ext.Provider &#64;Provider} to be discovered by the JAX-RS
+ * {@link javax.ws.rs.ext.Provider &#64;Provider} to be discovered by the
  * runtime. This type of filters is supported only as part of the Client API.
  *
  * @author Marek Potociar

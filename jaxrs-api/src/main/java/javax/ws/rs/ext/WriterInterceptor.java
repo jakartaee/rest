@@ -22,9 +22,9 @@ package javax.ws.rs.ext;
  *
  * <p>
  * Providers implementing {@code WriterInterceptor} contract must be either programmatically
- * registered in a JAX-RS runtime or must be annotated with
+ * registered in an API runtime or must be annotated with
  * {@link javax.ws.rs.ext.Provider &#64;Provider} annotation to be automatically discovered
- * by the JAX-RS runtime during a provider scanning phase.
+ * by the runtime during a provider scanning phase.
  * Message body interceptor instances may also be discovered and
  * bound {@link javax.ws.rs.container.DynamicFeature dynamically} to particular resource methods.
  * </p>

@@ -27,7 +27,7 @@ import java.io.IOException;
  * If there is a {@code @NameBinding} annotation applied to the filter, the filter
  * will only be executed for a response for which the request has been matched to
  * a {@link javax.ws.rs.HttpMethod resource or sub-resource method} AND the method
- * or the whole custom {@link javax.ws.rs.core.Application JAX-RS Application} class
+ * or the whole custom {@link javax.ws.rs.core.Application Application} class
  * is bound to the same name-binding annotation.
  * </p>
  * <p>
@@ -38,7 +38,7 @@ import java.io.IOException;
  * </p>
  * <p>
  * Filters implementing this interface must be annotated with
- * {@link javax.ws.rs.ext.Provider &#64;Provider} to be discovered by the JAX-RS
+ * {@link javax.ws.rs.ext.Provider &#64;Provider} to be discovered by the
  * runtime. Container response filter instances may also be discovered and
  * bound {@link DynamicFeature dynamically} to particular resource methods.
  * </p>

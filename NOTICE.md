@@ -1,13 +1,13 @@
-# Notices for Eclipse Project for JAX-RS
+# Notices for the Jakarta RESTful Web Services Project
 
-This content is produced and maintained by the Eclipse Project for JAX-RS
+This content is produced and maintained by the **Jakarta RESTful Web Services**
 project.
 
 * Project home: https://projects.eclipse.org/projects/ee4j.jaxrs
 
 ## Trademarks
 
-Eclipse Project for JAX-RS is a trademark of the Eclipse Foundation.
+**Jakarta RESTful Web Services** is a trademark of the Eclipse Foundation.
 
 ## Copyright
 

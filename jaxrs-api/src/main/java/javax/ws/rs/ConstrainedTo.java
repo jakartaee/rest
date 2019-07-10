@@ -23,14 +23,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicates the run-time context in which an annotated JAX-RS provider
+ * Indicates the run-time context in which an annotated provider
  * is applicable. If a {@code @ConstrainedTo} annotation is not
- * present on a JAX-RS provider type declaration, the declared provider
+ * present on a provider type declaration, the declared provider
  * may be used in any run-time context. If such a annotation is present,
- * the JAX-RS runtime will enforce the specified usage restriction.
+ * the runtime will enforce the specified usage restriction.
  * <p>
  * The following example illustrates restricting a {@link javax.ws.rs.ext.MessageBodyReader}
- * provider implementation to run only as part of a {@link RuntimeType#CLIENT JAX-RS client run-time}:
+ * provider implementation to run only as part of a {@link RuntimeType#CLIENT Client run-time}:
  * </p>
  * <pre>
  *  &#064;ConstrainedTo(RuntimeType.CLIENT)
@@ -40,7 +40,7 @@ import java.lang.annotation.Target;
  * </pre>
  * <p>
  * The following example illustrates restricting a {@link javax.ws.rs.ext.WriterInterceptor}
- * provider implementation to run only as part of a {@link RuntimeType#SERVER JAX-RS server run-time}:
+ * provider implementation to run only as part of a {@link RuntimeType#SERVER Server run-time}:
  * </p>
  * <pre>
  *  &#064;ConstrainedTo(RuntimeType.SERVER)
@@ -49,17 +49,17 @@ import java.lang.annotation.Target;
  *  }
  * </pre>
  * <p>
- * It is a configuration error to constraint a JAX-RS provider implementation to
- * a run-time context in which the provider cannot be applied. In such case a JAX-RS
+ * It is a configuration error to constraint a provider implementation to
+ * a run-time context in which the provider cannot be applied. In such case, the
  * runtime SHOULD inform a user about the issue and ignore the provider implementation in further
  * processing.
  * </p>
  * <p>
  * For example, the following restriction of a {@link javax.ws.rs.client.ClientRequestFilter}
- * to run only as part of a JAX-RS server run-time would be considered invalid:
+ * to run only as part of the server run-time would be considered invalid:
  * </p>
  * <pre>
- *  // reported as invalid and ignored by JAX-RS runtime
+ *  // reported as invalid and ignored by the runtime
  *  &#064;ConstrainedTo(RuntimeType.SERVER)
  *  public class MyFilter implements ClientRequestFilter {
  *      ...
@@ -75,7 +75,7 @@ import java.lang.annotation.Target;
 public @interface ConstrainedTo {
 
     /**
-     * Define the {@link RuntimeType constraint type} to be placed on a JAX-RS provider.
+     * Define the {@link RuntimeType constraint type} to be placed on a provider.
      */
     RuntimeType value();
 }

@@ -20,7 +20,7 @@ import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Response;
 
 /**
- * JAX-RS client-side runtime processing exception thrown to indicate that
+ * Client-side runtime processing exception thrown to indicate that
  * response processing has failed (e.g. in a filter chain or during message
  * entity de-serialization). The exception contains the nested {@link Response}
  * instance for which the runtime response processing failed.
@@ -35,7 +35,7 @@ public class ResponseProcessingException extends ProcessingException {
     private final Response response;
 
     /**
-     * Constructs a new JAX-RS runtime response processing exception
+     * Constructs a new runtime response processing exception
      * for a specific {@link Response response} with the specified cause
      * and a detail message of {@code (cause==null ? null : cause.toString())}
      * (which typically contains the class and detail message of {@code cause}).
@@ -53,7 +53,7 @@ public class ResponseProcessingException extends ProcessingException {
     }
 
     /**
-     * Constructs a new JAX-RS runtime response processing exception with the specified detail
+     * Constructs a new runtime response processing exception with the specified detail
      * message and cause.
      * <p/>
      * Note that the detail message associated with {@code cause} is <i>not</i>
@@ -72,7 +72,7 @@ public class ResponseProcessingException extends ProcessingException {
     }
 
     /**
-     * Constructs a new JAX-RS runtime processing exception with the specified detail
+     * Constructs a new runtime processing exception with the specified detail
      * message. The cause is not initialized, and may subsequently be initialized
      * by a call to {@link #initCause}.
      *

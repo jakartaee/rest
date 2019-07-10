@@ -24,7 +24,7 @@ import java.io.IOException;
  * By default, i.e. if no {@link javax.ws.rs.NameBinding name binding} is applied
  * to the filter implementation class, the filter instance is applied globally,
  * however only after the incoming request has been matched to a particular resource
- * by JAX-RS runtime.
+ * by the runtime.
  * If there is a {@link javax.ws.rs.NameBinding &#64;NameBinding} annotation
  * applied to the filter, the filter will also be executed at the <i>post-match</i>
  * request extension point, but only in case the matched {@link javax.ws.rs.HttpMethod
@@ -32,18 +32,18 @@ import java.io.IOException;
  * </p>
  * <p>
  * In case the filter should be applied at the <i>pre-match</i> extension point,
- * i.e. before any request matching has been performed by JAX-RS runtime, the
+ * i.e. before any request matching has been performed by the runtime, the
  * filter MUST be annotated with a {@link PreMatching &#64;PreMatching} annotation.
  * </p>
  * <p>
- * Use a pre-match request filter to update the input to the JAX-RS matching algorithm,
+ * Use a pre-match request filter to update the input to the matching algorithm,
  * e.g., the HTTP method, Accept header, return cached responses etc. Otherwise,
  * the use of a request filter invoked at the <i>post-match</i> request extension point
  * (after a successful resource method matching) is recommended.
  * </p>
  * <p>
  * Filters implementing this interface must be annotated with
- * {@link javax.ws.rs.ext.Provider &#64;Provider} to be discovered by the JAX-RS
+ * {@link javax.ws.rs.ext.Provider &#64;Provider} to be discovered by the
  * runtime. Container request filter instances may also be discovered and
  * bound {@link DynamicFeature dynamically} to particular resource methods.
  * </p>

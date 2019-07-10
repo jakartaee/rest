@@ -16,12 +16,11 @@
 
 package javax.ws.rs.ext;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 
 /**
  * Contract for a provider that supports the conversion of a stream to a
@@ -32,9 +31,9 @@ import javax.ws.rs.core.MultivaluedMap;
  * be considered suitable.
  * <p>
  * Providers implementing {@code MessageBodyReader} contract must be either programmatically
- * registered in a JAX-RS runtime or must be annotated with
+ * registered in an API runtime or must be annotated with
  * {@link javax.ws.rs.ext.Provider &#64;Provider} annotation to be automatically discovered
- * by the JAX-RS runtime during a provider scanning phase.
+ * by the runtime during a provider scanning phase.
  * </p>
  *
  * @param <T> Java type supported by the provider
@@ -81,7 +80,7 @@ public interface MessageBodyReader<T> {
      * Java representation of a zero-length entity or throw a {@link javax.ws.rs.core.NoContentException}
      * in case no zero-length entity representation is defined for the supported Java type.
      * A {@code NoContentException}, if thrown by a message body reader while reading a server
-     * request entity, is automatically translated by JAX-RS server runtime into a {@link javax.ws.rs.BadRequestException}
+     * request entity, is automatically translated by the server runtime into a {@link javax.ws.rs.BadRequestException}
      * wrapping the original {@code NoContentException} and rethrown for a standard processing by
      * the registered {@link javax.ws.rs.ext.ExceptionMapper exception mappers}.
      * </p>

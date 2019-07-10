@@ -15,6 +15,6 @@
  */
 
 /**
- * Container-specific JAX-RS API.
+ * Container-specific API.
  */
 package javax.ws.rs.container;

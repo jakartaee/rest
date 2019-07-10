@@ -16,11 +16,10 @@
 
 package javax.ws.rs.ext;
 
+import javax.ws.rs.core.MediaType;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Collection;
-
-import javax.ws.rs.core.MediaType;
 
 /**
  * Context shared by message body interceptors that can be used to wrap
@@ -43,7 +42,7 @@ public interface InterceptorContext {
      * Returns the property with the given name registered in the current request/response
      * exchange context, or {@code null} if there is no property by that name.
      * <p>
-     * A property allows a JAX-RS filters and interceptors to exchange
+     * A property allows a filters and interceptors to exchange
      * additional custom information not already provided by this interface.
      * </p>
      * <p>
@@ -86,7 +85,7 @@ public interface InterceptorContext {
      * exchange context. If the name specified is already used for a property,
      * this method will replace the value of the property with the new value.
      * <p>
-     * A property allows a JAX-RS filters and interceptors to exchange
+     * A property allows a filters and interceptors to exchange
      * additional custom information not already provided by this interface.
      * </p>
      * <p>

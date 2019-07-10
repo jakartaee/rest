@@ -19,9 +19,9 @@ package javax.ws.rs.client;
 import javax.ws.rs.core.GenericType;
 
 /**
- * Uniform interface for reactive invocation of HTTP methods. All reactive invokers in JAX-RS must
+ * Uniform interface for reactive invocation of HTTP methods. All reactive invokers must
  * implement this interface. The type parameter {@code T} represents the Java type of an asynchronous
- * computation. All JAX-RS implementations MUST support the default reactive invoker based on
+ * computation. All API implementations MUST support the default reactive invoker based on
  * {@link java.util.concurrent.CompletionStage}.
  *
  * @param <T> a type representing the asynchronous computation.

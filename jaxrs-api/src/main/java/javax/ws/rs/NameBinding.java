@@ -50,7 +50,7 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * At last, the name-binding annotation is applied to the resource method(s) to which the
- * name-bound JAX-RS provider(s) should be bound to:
+ * name-bound provider(s) should be bound to:
  *
  * <pre>
  *  &#64;Path("/")
@@ -65,10 +65,10 @@ import java.lang.annotation.Target;
  *  }
  * </pre>
  *
- * A name-binding annotation may also be attached to a custom JAX-RS
- * {@link javax.ws.rs.core.Application} subclass. In such case a name-bound JAX-RS provider
+ * A name-binding annotation may also be attached to a custom
+ * {@link javax.ws.rs.core.Application} subclass. In such case a name-bound provider
  * bound by the annotation will be applied to all {@link HttpMethod resource and sub-resource
- * methods} in the JAX-RS application:
+ * methods} in the application:
  *
  * <pre>
  *  <b>&#64;Logged</b>

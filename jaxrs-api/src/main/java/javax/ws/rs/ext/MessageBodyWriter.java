@@ -16,12 +16,11 @@
 
 package javax.ws.rs.ext;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 
 /**
  * Contract for a provider that supports the conversion of a Java type to a
@@ -32,9 +31,9 @@ import javax.ws.rs.core.MultivaluedMap;
  * be considered suitable.
  * <p>
  * Providers implementing {@code MessageBodyWriter} contract must be either programmatically
- * registered in a JAX-RS runtime or must be annotated with
+ * registered in an API runtime or must be annotated with
  * {@link javax.ws.rs.ext.Provider &#64;Provider} annotation to be automatically discovered
- * by the JAX-RS runtime during a provider scanning phase.
+ * by the runtime during a provider scanning phase.
  * </p>
  *
  * @param <T> the type that can be written.
@@ -66,10 +65,10 @@ public interface MessageBodyWriter<T> {
      * the serialized form of {@code t}. A non-negative return value has been used in a HTTP
      * {@code Content-Length} header.
      * <p>
-     * As of JAX-RS 2.0, the method has been deprecated and the value returned by the method is ignored
-     * by a JAX-RS runtime. All {@code MessageBodyWriter} implementations are advised to return {@code -1}
+     * As of version 2.0 of this API, the method has been deprecated and the value returned by the method is ignored
+     * by an API runtime. All {@code MessageBodyWriter} implementations are advised to return {@code -1}
      * from the method. Responsibility to compute the actual {@code Content-Length} header value has been
-     * delegated to JAX-RS runtime.
+     * delegated to the runtime.
      * </p>
      *
      * @param t           the instance to write

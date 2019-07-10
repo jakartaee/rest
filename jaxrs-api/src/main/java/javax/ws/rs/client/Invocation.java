@@ -16,9 +16,6 @@
 
 package javax.ws.rs.client;
 
-import java.util.Locale;
-import java.util.concurrent.Future;
-
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.CacheControl;
@@ -27,6 +24,8 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import java.util.Locale;
+import java.util.concurrent.Future;
 
 /**
  * A client request invocation.
@@ -276,7 +275,7 @@ public interface Invocation {
          * Access a reactive invoker based on a {@link RxInvoker} subclass provider. Note
          * that corresponding {@link RxInvokerProvider} must be registered in the client runtime.
          * <p>
-         * This method is an extension point for JAX-RS implementations to support other types
+         * This method is an extension point for implementations to support other types
          * representing asynchronous computations.
          *
          * @param clazz {@link RxInvoker} subclass.

@@ -16,11 +16,10 @@
 
 package javax.ws.rs.ext;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MultivaluedMap;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Context class used by {@link javax.ws.rs.ext.WriterInterceptor}
@@ -65,7 +64,7 @@ public interface WriterInterceptorContext extends InterceptorContext {
     void setEntity(Object entity);
 
     /**
-     * Get the output stream for the object to be written. The JAX-RS runtime
+     * Get the output stream for the object to be written. The runtime
      * is responsible for closing the output stream.
      *
      * @return output stream for the object to be written.
@@ -74,7 +73,7 @@ public interface WriterInterceptorContext extends InterceptorContext {
 
     /**
      * Set a new output stream for the object to be written. For example, by wrapping
-     * it with another output stream. The JAX-RS runtime is responsible for closing
+     * it with another output stream. The runtime is responsible for closing
      * the output stream that is set.
      *
      * @param os new output stream for the object to be written.

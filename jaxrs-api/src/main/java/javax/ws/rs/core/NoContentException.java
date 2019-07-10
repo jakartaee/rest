@@ -24,7 +24,7 @@ import java.io.IOException;
  * is not able to produce an instance representing an zero-length message content.
  * <p>
  * This exception, when thrown while reading a server request entity, is automatically
- * translated by JAX-RS server runtime into a {@link javax.ws.rs.BadRequestException}
+ * translated by the server runtime into a {@link javax.ws.rs.BadRequestException}
  * wrapping the original {@code NoContentException} and rethrown for a standard processing by
  * the registered {@link javax.ws.rs.ext.ExceptionMapper exception mappers}.
  * </p>

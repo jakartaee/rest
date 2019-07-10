@@ -35,7 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Unit test for JAX-RS Link marshalling and unmarshalling via JAXB.
+ * Unit test for Link marshalling and unmarshalling via JAXB.
  *
  * @author Marek Potociar (marek.potociar at oracle.com)
  */

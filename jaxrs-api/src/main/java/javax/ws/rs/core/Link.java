@@ -422,7 +422,7 @@ public abstract class Link {
 
     /**
      * Value type for {@link javax.ws.rs.core.Link} that can be marshalled and
-     * unmarshalled by JAXB.
+     * unmarshalled using the Jakarta XML Binding API.
      *
      * @see javax.ws.rs.core.Link.JaxbAdapter
      * @since 2.0
@@ -484,7 +484,7 @@ public abstract class Link {
         /**
          * Set the underlying URI for this link.
          *
-         * This setter is needed for JAXB unmarshalling.
+         * This setter is needed for unmarshalling using the Jakarta XML Binding API.
          */
         void setUri(URI uri) {
             this.uri = uri;
@@ -493,7 +493,7 @@ public abstract class Link {
         /**
          * Set the parameter map for this link.
          *
-         * This setter is needed for JAXB unmarshalling.
+         * This setter is needed for unmarshalling using the Jakarta XML Binding API.
          */
         void setParams(Map<QName, Object> params) {
             this.params = params;
@@ -535,10 +535,10 @@ public abstract class Link {
     }
 
     /**
-     * An implementation of JAXB {@link javax.xml.bind.annotation.adapters.XmlAdapter}
+     * An implementation of {@link javax.xml.bind.annotation.adapters.XmlAdapter}
      * that maps the {@link javax.ws.rs.core.Link} type to a value that can be
-     * marshalled and unmarshalled by JAXB. The following example shows how to use
-     * this adapter on a JAXB bean class:
+     * marshalled and unmarshalled. The following example shows how to use
+     * this adapter on a Jakarta XML Binding bean class:
      *
      * <pre>
      * &#64;XmlRootElement

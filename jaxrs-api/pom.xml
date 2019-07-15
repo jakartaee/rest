@@ -22,7 +22,7 @@
 
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-api</artifactId>
-    <version>2.1.6-SNAPSHOT</version>
+    <version>2.1.6</version>
     <packaging>bundle</packaging>
     <name>jakarta.ws.rs-api</name>
     <description>Jakarta RESTful Web Services API</description>

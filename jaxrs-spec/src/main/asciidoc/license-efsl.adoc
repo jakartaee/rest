@@ -4,7 +4,12 @@ Specification: {doctitle}
 
 Version: {revnumber}
 
+ifeval::["{revremark}" != ""]
 Status: {revremark}
+endif::[]
+ifeval::["{revremark}" == ""]
+Status: Final Release
+endif::[]
 
 Release: {revdate}
 ....

@@ -483,10 +483,7 @@
                         <doctitle>${apidocs.title}</doctitle>
                         <docfilessubdirs>true</docfilessubdirs>
                         <bottom>
-                            <![CDATA[Copyright &#169; 1996-2017,
-                                <a href="http://www.oracle.com">Oracle</a>
-                                and/or its affiliates. All Rights Reserved.
-                            ]]>
+                            Copyright (c) 2019 Eclipse Foundation.
                         </bottom>
                         <doclint>none</doclint>
                         <!--javaApiLinks>

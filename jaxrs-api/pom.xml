@@ -483,7 +483,9 @@
                         <doctitle>${apidocs.title}</doctitle>
                         <docfilessubdirs>true</docfilessubdirs>
                         <bottom>
-                            Copyright (c) 2019 Eclipse Foundation.
+                            <![CDATA[Copyright (c) 2019 Eclipse Foundation.
+                            Licensed under <a href="resources/EFSL.html">Eclipse Foundation
+                            Specification License</a>.]]>
                         </bottom>
                         <doclint>none</doclint>
                         <!--javaApiLinks>

@@ -22,7 +22,7 @@
 
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-spec</artifactId>
-    <version>2.1.6</version>
+    <version>2.1</version>
     <packaging>pom</packaging>
     <name>javax.ws.rs-spec</name>
     <description>Jakarta RESTful Web Services Specification</description>
@@ -36,7 +36,7 @@
         <asciidoctorj.pdf.version>1.5.0-alpha.16</asciidoctorj.pdf.version>
         <jruby.version>9.2.6.0</jruby.version>
         <!-- status: DRAFT, BETA, etc., or blank for final -->
-        <status>DRAFT</status>
+        <status></status>
         <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
         <revisiondate>${maven.build.timestamp}</revisiondate>
     </properties>

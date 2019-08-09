@@ -221,7 +221,7 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
      * <p>
      * Provided executor service will be used for executing asynchronous tasks.
      * <p>
-     * When running in a Java EE container, implementations are required to use the container-managed
+     * When running in a Jakarta EE container, implementations are required to use the container-managed
      * executor service by default.  In Java SE, the default is implementation-specific.  In either
      * case, calling this method will override the default.
      *
@@ -239,7 +239,7 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
      * <p>
      * Provided executor service will be used for executing scheduled asynchronous tasks.
      * <p>
-     * When running in a Java EE container, implementations are required to use the container-managed
+     * When running in a Jakarta EE container, implementations are required to use the container-managed
      * scheduled executor service by default.  In Java SE the default is implementation-specific.  In 
      * either case, calling this method will override the default.
      *

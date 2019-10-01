@@ -18,8 +18,8 @@ package jaxrs.examples.bootstrap;
 
 import java.net.URI;
 
-import jakarta.ws.rs.JAXRS;
-import jakarta.ws.rs.JAXRS.Configuration;
+import jakarta.ws.rs.SeBootstrap;
+import jakarta.ws.rs.SeBootstrap.Configuration;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.UriBuilder;
 
@@ -56,12 +56,12 @@ public final class NativeJavaSeBootstrapExample {
     public static final void main(final String[] args) throws InterruptedException, ClassNotFoundException {
         final Application application = new HelloWorld();
 
-        final JAXRS.Configuration requestedConfiguration = JAXRS.Configuration.builder()
+        final SeBootstrap.Configuration requestedConfiguration = SeBootstrap.Configuration.builder()
                 .property("jersey.config.server.httpServerClass",
                         Class.forName("org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServer"))
                 .build();
 
-        JAXRS.start(application, requestedConfiguration).thenAccept(instance -> {
+        SeBootstrap.start(application, requestedConfiguration).thenAccept(instance -> {
             Runtime.getRuntime()
                     .addShutdownHook(new Thread(() -> instance.stop()
                             .thenAccept(stopResult -> System.out.printf("Stop result: %s [Native stop result: %s].%n",

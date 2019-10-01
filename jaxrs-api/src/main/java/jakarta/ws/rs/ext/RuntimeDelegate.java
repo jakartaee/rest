@@ -20,8 +20,8 @@ import java.lang.reflect.ReflectPermission;
 import java.net.URL;
 import java.util.concurrent.CompletionStage;
 
-import jakarta.ws.rs.JAXRS;
-import jakarta.ws.rs.JAXRS.Instance;
+import jakarta.ws.rs.SeBootstrap;
+import jakarta.ws.rs.SeBootstrap.Instance;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.Link;
 import jakarta.ws.rs.core.UriBuilder;
@@ -224,28 +224,28 @@ public abstract class RuntimeDelegate {
     public abstract Link.Builder createLinkBuilder();
 
     /**
-     * Create a new instance of a {@link jakarta.ws.rs.JAXRS.Configuration.Builder}.
+     * Create a new instance of a {@link jakarta.ws.rs.SeBootstrap.Configuration.Builder}.
      * <p>
-     * <em>This method is not intended to be invoked by applications. Call {@link JAXRS.Configuration#builder()}
+     * <em>This method is not intended to be invoked by applications. Call {@link SeBootstrap.Configuration#builder()}
      * instead.</em>
      * </p>
      *
-     * @return new {@code JAXRS.Configuration.Builder} instance.
-     * @see JAXRS.Configuration.Builder
+     * @return new {@code SeBootstrap.Configuration.Builder} instance.
+     * @see SeBootstrap.Configuration.Builder
      */
-    public abstract JAXRS.Configuration.Builder createConfigurationBuilder();
+    public abstract SeBootstrap.Configuration.Builder createConfigurationBuilder();
 
     /**
      * Perform startup of the application in Java SE environments.
      * <p>
-     * <em>This method is not intended to be invoked by applications. Call {@link JAXRS#start(Application, Configuration)}
+     * <em>This method is not intended to be invoked by applications. Call {@link SeBootstrap#start(Application, Configuration)}
      * instead.</em>
      * </p>
      *
      * @param application The application to start up.
      * @param configuration The bootstrap configuration.
-     * @return {@code CompletionStage} asynchronously producing handle of the running application {@link JAXRS.Instance
+     * @return {@code CompletionStage} asynchronously producing handle of the running application {@link SeBootstrap.Instance
      * instance}.
      */
-    public abstract CompletionStage<Instance> bootstrap(Application application, JAXRS.Configuration configuration);
+    public abstract CompletionStage<Instance> bootstrap(Application application, SeBootstrap.Configuration configuration);
 }

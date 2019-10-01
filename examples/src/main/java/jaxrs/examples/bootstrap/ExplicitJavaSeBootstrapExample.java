@@ -18,9 +18,9 @@ package jaxrs.examples.bootstrap;
 
 import java.net.URI;
 
-import jakarta.ws.rs.JAXRS;
-import jakarta.ws.rs.JAXRS.Configuration;
-import jakarta.ws.rs.JAXRS.Configuration.SSLClientAuthentication;
+import jakarta.ws.rs.SeBootstrap;
+import jakarta.ws.rs.SeBootstrap.Configuration;
+import jakarta.ws.rs.SeBootstrap.Configuration.SSLClientAuthentication;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.UriBuilder;
 
@@ -62,10 +62,10 @@ public final class ExplicitJavaSeBootstrapExample {
         final String rootPath = args[3];
         final SSLClientAuthentication clientAuth = SSLClientAuthentication.valueOf(args[4]);
 
-        final JAXRS.Configuration requestedConfiguration = JAXRS.Configuration.builder().protocol(protocol).host(host)
+        final SeBootstrap.Configuration requestedConfiguration = SeBootstrap.Configuration.builder().protocol(protocol).host(host)
                 .port(port).rootPath(rootPath).sslClientAuthentication(clientAuth).build();
 
-        JAXRS.start(application, requestedConfiguration).thenAccept(instance -> {
+        SeBootstrap.start(application, requestedConfiguration).thenAccept(instance -> {
             Runtime.getRuntime()
                     .addShutdownHook(new Thread(() -> instance.stop()
                             .thenAccept(stopResult -> System.out.printf("Stop result: %s [Native stop result: %s].%n",

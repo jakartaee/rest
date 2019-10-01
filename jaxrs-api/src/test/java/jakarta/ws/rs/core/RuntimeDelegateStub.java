@@ -18,9 +18,9 @@ package jakarta.ws.rs.core;
 
 import java.util.concurrent.CompletionStage;
 
-import jakarta.ws.rs.JAXRS;
-import jakarta.ws.rs.JAXRS.Configuration;
-import jakarta.ws.rs.JAXRS.Instance;
+import jakarta.ws.rs.SeBootstrap;
+import jakarta.ws.rs.SeBootstrap.Configuration;
+import jakarta.ws.rs.SeBootstrap.Instance;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.Link.Builder;
@@ -66,7 +66,7 @@ public class RuntimeDelegateStub extends RuntimeDelegate {
     }
 
     @Override
-    public CompletionStage<Instance> bootstrap(final Application application, final JAXRS.Configuration configuration) {
+    public CompletionStage<Instance> bootstrap(final Application application, final SeBootstrap.Configuration configuration) {
         return null;
     }
 }

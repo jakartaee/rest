@@ -17,19 +17,19 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import jakarta.ws.rs.JAXRS;
-import jakarta.ws.rs.JAXRS.Configuration;
-import jakarta.ws.rs.JAXRS.Configuration.SSLClientAuthentication;
+import jakarta.ws.rs.SeBootstrap;
+import jakarta.ws.rs.SeBootstrap.Configuration;
+import jakarta.ws.rs.SeBootstrap.Configuration.SSLClientAuthentication;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
 /**
- * Unit tests for {@link JAXRS}
+ * Unit tests for {@link SeBootstrap}
  *
  * @author Markus KARG (markus@headcrashing.eu)
  * @since 2.2
  */
-public final class JAXRSTest {
+public final class SeBootstrapTest {
 
     /**
      * Installs a new {@code RuntimeDelegate} mock before each test case, as some test cases need to find a pristine
@@ -50,7 +50,7 @@ public final class JAXRSTest {
     }
 
     /**
-     * Assert that {@link JAXRS#start(Application, Configuration)} will delegate to
+     * Assert that {@link SeBootstrap#start(Application, Configuration)} will delegate to
      * {@link RuntimeDelegate#bootstrap(Application, Configuration)}.
      *
      * @since 2.2
@@ -61,18 +61,18 @@ public final class JAXRSTest {
         final Application application = mock(Application.class);
         final Configuration configuration = mock(Configuration.class);
         @SuppressWarnings("unchecked")
-        final CompletionStage<JAXRS.Instance> nativeCompletionStage = mock(CompletionStage.class);
+        final CompletionStage<SeBootstrap.Instance> nativeCompletionStage = mock(CompletionStage.class);
         given(RuntimeDelegate.getInstance().bootstrap(application, configuration)).willReturn(nativeCompletionStage);
 
         // when
-        final CompletionStage<JAXRS.Instance> actualCompletionStage = JAXRS.start(application, configuration);
+        final CompletionStage<SeBootstrap.Instance> actualCompletionStage = SeBootstrap.start(application, configuration);
 
         // then
         assertThat(actualCompletionStage, is(sameInstance(nativeCompletionStage)));
     }
 
     /**
-     * Assert that {@link JAXRS.Configuration#builder()} will delegate to
+     * Assert that {@link SeBootstrap.Configuration#builder()} will delegate to
      * {@link RuntimeDelegate#createConfigurationBuilder()}.
      *
      * @since 2.2
@@ -80,11 +80,11 @@ public final class JAXRSTest {
     @Test
     public final void shouldDelegateConfigurationBuilderCreationToRuntimeDelegate() {
         // given
-        final JAXRS.Configuration.Builder nativeConfigurationBuilder = mock(JAXRS.Configuration.Builder.class);
+        final SeBootstrap.Configuration.Builder nativeConfigurationBuilder = mock(SeBootstrap.Configuration.Builder.class);
         given(RuntimeDelegate.getInstance().createConfigurationBuilder()).willReturn(nativeConfigurationBuilder);
 
         // when
-        final JAXRS.Configuration.Builder actualConfigurationBuilder = JAXRS.Configuration.builder();
+        final SeBootstrap.Configuration.Builder actualConfigurationBuilder = SeBootstrap.Configuration.builder();
 
         // then
         assertThat(actualConfigurationBuilder, is(sameInstance(nativeConfigurationBuilder)));
@@ -99,11 +99,11 @@ public final class JAXRSTest {
     @Test
     public final void shouldReturnSameConfigurationBuilderInstanceWhenLoadingExternalConfiguration() {
         // given
-        final JAXRS.Configuration.Builder previousConfigurationBuilder = spy(JAXRS.Configuration.Builder.class);
+        final SeBootstrap.Configuration.Builder previousConfigurationBuilder = spy(SeBootstrap.Configuration.Builder.class);
         final Object someExternalConfiguration = mock(Object.class);
 
         // when
-        final JAXRS.Configuration.Builder currentConfigurationBuilder = previousConfigurationBuilder
+        final SeBootstrap.Configuration.Builder currentConfigurationBuilder = previousConfigurationBuilder
                 .from(someExternalConfiguration);
 
         // then
@@ -127,7 +127,7 @@ public final class JAXRSTest {
         final String someRootPathValue = mockString();
         final SSLContext someSSLContextValue = mock(SSLContext.class);
         final SSLClientAuthentication someSSLClientAuthenticationValue = SSLClientAuthentication.MANDATORY;
-        final JAXRS.Configuration.Builder configurationBuilder = spy(JAXRS.Configuration.Builder.class);
+        final SeBootstrap.Configuration.Builder configurationBuilder = spy(SeBootstrap.Configuration.Builder.class);
 
         // when
         configurationBuilder.protocol(someProtocolValue);
@@ -138,12 +138,12 @@ public final class JAXRSTest {
         configurationBuilder.sslClientAuthentication(someSSLClientAuthenticationValue);
 
         // then
-        verify(configurationBuilder).property(JAXRS.Configuration.PROTOCOL, someProtocolValue);
-        verify(configurationBuilder).property(JAXRS.Configuration.HOST, someHostValue);
-        verify(configurationBuilder).property(JAXRS.Configuration.PORT, somePortValue);
-        verify(configurationBuilder).property(JAXRS.Configuration.ROOT_PATH, someRootPathValue);
-        verify(configurationBuilder).property(JAXRS.Configuration.SSL_CONTEXT, someSSLContextValue);
-        verify(configurationBuilder).property(JAXRS.Configuration.SSL_CLIENT_AUTHENTICATION,
+        verify(configurationBuilder).property(SeBootstrap.Configuration.PROTOCOL, someProtocolValue);
+        verify(configurationBuilder).property(SeBootstrap.Configuration.HOST, someHostValue);
+        verify(configurationBuilder).property(SeBootstrap.Configuration.PORT, somePortValue);
+        verify(configurationBuilder).property(SeBootstrap.Configuration.ROOT_PATH, someRootPathValue);
+        verify(configurationBuilder).property(SeBootstrap.Configuration.SSL_CONTEXT, someSSLContextValue);
+        verify(configurationBuilder).property(SeBootstrap.Configuration.SSL_CLIENT_AUTHENTICATION,
                 someSSLClientAuthenticationValue);
     }
 
@@ -162,13 +162,13 @@ public final class JAXRSTest {
         final String someRootPathValue = mockString();
         final SSLContext someSSLContextValue = mock(SSLContext.class);
         final SSLClientAuthentication someSSLClientAuthenticationValue = SSLClientAuthentication.MANDATORY;
-        final JAXRS.Configuration configuration = spy(JAXRS.Configuration.class);
-        given(configuration.property(JAXRS.Configuration.PROTOCOL)).willReturn(someProtocolValue);
-        given(configuration.property(JAXRS.Configuration.HOST)).willReturn(someHostValue);
-        given(configuration.property(JAXRS.Configuration.PORT)).willReturn(somePortValue);
-        given(configuration.property(JAXRS.Configuration.ROOT_PATH)).willReturn(someRootPathValue);
-        given(configuration.property(JAXRS.Configuration.SSL_CONTEXT)).willReturn(someSSLContextValue);
-        given(configuration.property(JAXRS.Configuration.SSL_CLIENT_AUTHENTICATION))
+        final SeBootstrap.Configuration configuration = spy(SeBootstrap.Configuration.class);
+        given(configuration.property(SeBootstrap.Configuration.PROTOCOL)).willReturn(someProtocolValue);
+        given(configuration.property(SeBootstrap.Configuration.HOST)).willReturn(someHostValue);
+        given(configuration.property(SeBootstrap.Configuration.PORT)).willReturn(somePortValue);
+        given(configuration.property(SeBootstrap.Configuration.ROOT_PATH)).willReturn(someRootPathValue);
+        given(configuration.property(SeBootstrap.Configuration.SSL_CONTEXT)).willReturn(someSSLContextValue);
+        given(configuration.property(SeBootstrap.Configuration.SSL_CLIENT_AUTHENTICATION))
                 .willReturn(someSSLClientAuthenticationValue);
 
         // when

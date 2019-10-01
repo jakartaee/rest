@@ -18,13 +18,13 @@ package jaxrs.examples.bootstrap;
 
 import java.net.URI;
 
-import jakarta.ws.rs.JAXRS;
-import jakarta.ws.rs.JAXRS.Configuration;
-import jakarta.ws.rs.core.Application;
-import jakarta.ws.rs.core.UriBuilder;
-
 import org.eclipse.microprofile.config.Config;
 import org.eclipse.microprofile.config.ConfigProvider;
+
+import jakarta.ws.rs.SeBootstrap;
+import jakarta.ws.rs.SeBootstrap.Configuration;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.UriBuilder;
 
 /**
  * Java SE bootstrap example utilizing an external configuration system.
@@ -40,8 +40,8 @@ import org.eclipse.microprofile.config.ConfigProvider;
  * </p>
  *
  * <pre>
- * export jakarta.ws.rs.JAXRS.Port=8888;
- * java -Djakarta.ws.rs.JAXRS.Host=127.0.0.1 ExternalConfigJavaSeBootstrapExample;
+ * export jakarta.ws.rs.SeBootstrap.Port=8888;
+ * java -Djakarta.ws.rs.SeBootstrap.Host=127.0.0.1 ExternalConfigJavaSeBootstrapExample;
  * </pre>
  * <p>
  * This example uses some basic <em>external</em> JSSE configuration:
@@ -73,10 +73,10 @@ public final class ExternalConfigJavaSeBootstrapExample {
 
         final Config config = ConfigProvider.getConfig();
 
-        final JAXRS.Configuration requestedConfiguration = JAXRS.Configuration.builder().from(config).protocol("HTTPS")
+        final SeBootstrap.Configuration requestedConfiguration = SeBootstrap.Configuration.builder().from(config).protocol("HTTPS")
                 .build();
 
-        JAXRS.start(application, requestedConfiguration).thenAccept(instance -> {
+        SeBootstrap.start(application, requestedConfiguration).thenAccept(instance -> {
             Runtime.getRuntime()
                     .addShutdownHook(new Thread(() -> instance.stop()
                             .thenAccept(stopResult -> System.out.printf("Stop result: %s [Native stop result: %s].%n",

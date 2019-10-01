@@ -28,7 +28,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
 /**
  * Bootstrap class used to startup a JAX-RS application in Java SE environments.
  * <p>
- * The {@code JAXRS} class is available in a Jakarta EE container environment as well; however, support for the Java SE
+ * The {@code SeBootstrap} class is available in a Jakarta EE container environment as well; however, support for the Java SE
  * bootstrapping APIs is <em>not required</em> in container environments.
  * </p>
  * <p>
@@ -41,8 +41,8 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  *
  * <pre>
  * Application app = new MyApplication();
- * JAXRS.Configuration config = JAXRS.Configuration.builder().build();
- * JAXRS.start(app, config).thenAccept(instance -&gt; instance.configuration().port());
+ * SeBootstrap.Configuration config = SeBootstrap.Configuration.builder().build();
+ * SeBootstrap.start(app, config).thenAccept(instance -&gt; instance.configuration().port());
  * </pre>
  *
  * <p>
@@ -50,7 +50,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  * </p>
  *
  * <pre>
- * JAXRS.start(app, config).thenAccept(instance -&gt; { ... instance.stop(); } );
+ * SeBootstrap.start(app, config).thenAccept(instance -&gt; { ... instance.stop(); } );
  * </pre>
  *
  * <p>
@@ -70,7 +70,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  * </p>
  *
  * <pre>
- * JAXRS.Configuration.builder().protocol("HTTPS").host("0.0.0.0").port(8443).rootPath("api").build();
+ * SeBootstrap.Configuration.builder().protocol("HTTPS").host("0.0.0.0").port(8443).rootPath("api").build();
  * </pre>
  *
  * <p>
@@ -80,7 +80,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  * <pre>
  * SSLContext tls = SSLContext.getInstance("TLSv1.2");
  * // ...further initialize context here (see JSSE API)...
- * JAXRS.Configuration.builder().protocol("HTTPS").sslContext(tls).build();
+ * SeBootstrap.Configuration.builder().protocol("HTTPS").sslContext(tls).build();
  * </pre>
  *
  * <p>
@@ -88,7 +88,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  * </p>
  *
  * <pre>
- * JAXRS.Configuration.builder().protocol("HTTPS").sslClientAuthentication(SSLClientAuthentication.MANDATORY).build();
+ * SeBootstrap.Configuration.builder().protocol("HTTPS").sslClientAuthentication(SSLClientAuthentication.MANDATORY).build();
  * </pre>
  *
  * <p>
@@ -97,7 +97,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  * </p>
  *
  * <pre>
- * JAXRS.Configuration.builder().property("productname.foo", "bar").build()
+ * SeBootstrap.Configuration.builder().property("productname.foo", "bar").build()
  * </pre>
  *
  * <p>
@@ -109,17 +109,17 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  *
  * <pre>
  * // Explicit use of particular configuration mechanics is portable
- * JAXRS.Configuration.builder().from((name, type) -&gt; externalConfigurationSystem.getValue(name, type)).build();
+ * SeBootstrap.Configuration.builder().from((name, type) -&gt; externalConfigurationSystem.getValue(name, type)).build();
  *
  * // Implicitly relying on the support of particular configuration mechanics by
  * // the actual JAX-RS implementation is not necessarily portable
- * JAXRS.Configuration.builder().from(externalConfigurationSystem).build();
+ * SeBootstrap.Configuration.builder().from(externalConfigurationSystem).build();
  * </pre>
  *
  * @author Markus KARG (markus@headcrashing.eu)
  * @since 2.2
  */
-public interface JAXRS {
+public interface SeBootstrap {
 
     /**
      * Starts the provided application using the specified configuration.
@@ -132,7 +132,7 @@ public interface JAXRS {
      * @param application The application to start up.
      * @param configuration Provides information needed for bootstrapping the application.
      * @return {@code CompletionStage} (possibly asynchronously) producing handle of the running application
-     * {@link JAXRS.Instance instance}.
+     * {@link SeBootstrap.Instance instance}.
      * @see Configuration
      * @since 2.2
      */
@@ -144,7 +144,7 @@ public interface JAXRS {
      * Provides information needed by the JAX-RS implementation for bootstrapping an application.
      * <p>
      * The configuration essentially consists of a set of parameters. While the set of actually effective keys is product
-     * specific, the key constants defined by the {@link JAXRS.Configuration} interface MUST be effective on all compliant
+     * specific, the key constants defined by the {@link SeBootstrap.Configuration} interface MUST be effective on all compliant
      * products. Any unknown key MUST be silently ignored.
      * </p>
      *
@@ -165,7 +165,7 @@ public interface JAXRS {
          *
          * @since 2.2
          */
-        static final String PROTOCOL = "jakarta.ws.rs.JAXRS.Protocol";
+        static final String PROTOCOL = "jakarta.ws.rs.SeBootstrap.Protocol";
 
         /**
          * Configuration key for the hostname or IP address an application is bound to.
@@ -182,7 +182,7 @@ public interface JAXRS {
          *
          * @since 2.2
          */
-        static final String HOST = "jakarta.ws.rs.JAXRS.Host";
+        static final String HOST = "jakarta.ws.rs.SeBootstrap.Host";
 
         /**
          * Configuration key for the TCP port an application is bound to.
@@ -199,7 +199,7 @@ public interface JAXRS {
          *
          * @since 2.2
          */
-        static final String PORT = "jakarta.ws.rs.JAXRS.Port";
+        static final String PORT = "jakarta.ws.rs.SeBootstrap.Port";
 
         /**
          * Configuration key for the root path an application is bound to.
@@ -209,7 +209,7 @@ public interface JAXRS {
          *
          * @since 2.2
          */
-        static final String ROOT_PATH = "jakarta.ws.rs.JAXRS.RootPath";
+        static final String ROOT_PATH = "jakarta.ws.rs.SeBootstrap.RootPath";
 
         /**
          * Configuration key for the secure socket configuration to be used.
@@ -219,7 +219,7 @@ public interface JAXRS {
          *
          * @since 2.2
          */
-        static final String SSL_CONTEXT = "jakarta.ws.rs.JAXRS.SSLContext";
+        static final String SSL_CONTEXT = "jakarta.ws.rs.SeBootstrap.SSLContext";
 
         /**
          * Configuration key for the secure socket client authentication policy.
@@ -233,7 +233,7 @@ public interface JAXRS {
          *
          * @since 2.2
          */
-        static final String SSL_CLIENT_AUTHENTICATION = "jakarta.ws.rs.JAXRS.SSLClientAuthentication";
+        static final String SSL_CLIENT_AUTHENTICATION = "jakarta.ws.rs.SeBootstrap.SSLClientAuthentication";
 
         /**
          * Secure socket client authentication policy
@@ -314,7 +314,7 @@ public interface JAXRS {
          *
          * @return protocol to be used (e. g. {@code "HTTP")}.
          * @throws ClassCastException if protocol is not a {@link String}.
-         * @see JAXRS.Configuration#PROTOCOL
+         * @see SeBootstrap.Configuration#PROTOCOL
          * @since 2.2
          */
         default String protocol() {
@@ -329,7 +329,7 @@ public interface JAXRS {
          *
          * @return host name or IP address to be used (e. g. {@code "localhost"} or {@code "0.0.0.0"}).
          * @throws ClassCastException if host is not a {@link String}.
-         * @see JAXRS.Configuration#HOST
+         * @see SeBootstrap.Configuration#HOST
          * @since 2.2
          */
         default String host() {
@@ -348,7 +348,7 @@ public interface JAXRS {
          *
          * @return port number <em>actually</em> used (e. g. {@code 8080}).
          * @throws ClassCastException if port is not an {@code Integer}.
-         * @see JAXRS.Configuration#PORT
+         * @see SeBootstrap.Configuration#PORT
          * @since 2.2
          */
         default int port() {
@@ -363,7 +363,7 @@ public interface JAXRS {
          *
          * @return root path to be used, e. g. {@code "/"}.
          * @throws ClassCastException if root path is not a {@link String}.
-         * @see JAXRS.Configuration#ROOT_PATH
+         * @see SeBootstrap.Configuration#ROOT_PATH
          * @since 2.2
          */
         default String rootPath() {
@@ -378,7 +378,7 @@ public interface JAXRS {
          *
          * @return root path to be used, e. g. {@code "/"}.
          * @throws ClassCastException if sslContext is not a {@link SSLContext}.
-         * @see JAXRS.Configuration#SSL_CONTEXT
+         * @see SeBootstrap.Configuration#SSL_CONTEXT
          * @since 2.2
          */
         default SSLContext sslContext() {
@@ -393,7 +393,7 @@ public interface JAXRS {
          *
          * @return client authentication mode, e. g. {@code NONE}.
          * @throws ClassCastException if sslClientAuthentication is not a {@link SSLClientAuthentication}.
-         * @see JAXRS.Configuration#SSL_CLIENT_AUTHENTICATION
+         * @see SeBootstrap.Configuration#SSL_CLIENT_AUTHENTICATION
          * @since 2.2
          */
         default SSLClientAuthentication sslClientAuthentication() {
@@ -447,7 +447,7 @@ public interface JAXRS {
              *
              * @param protocol protocol parameter of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
-             * @see JAXRS.Configuration#PROTOCOL
+             * @see SeBootstrap.Configuration#PROTOCOL
              * @since 2.2
              */
             default Builder protocol(String protocol) {
@@ -462,7 +462,7 @@ public interface JAXRS {
              *
              * @param host host parameter (IP address or hostname) of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
-             * @see JAXRS.Configuration#HOST
+             * @see SeBootstrap.Configuration#HOST
              * @since 2.2
              */
             default Builder host(String host) {
@@ -477,7 +477,7 @@ public interface JAXRS {
              *
              * @param port port parameter of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
-             * @see JAXRS.Configuration#PORT
+             * @see SeBootstrap.Configuration#PORT
              * @since 2.2
              */
             default Builder port(Integer port) {
@@ -492,7 +492,7 @@ public interface JAXRS {
              *
              * @param rootPath rootPath parameter of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
-             * @see JAXRS.Configuration#ROOT_PATH
+             * @see SeBootstrap.Configuration#ROOT_PATH
              * @since 2.2
              */
             default Builder rootPath(String rootPath) {
@@ -507,7 +507,7 @@ public interface JAXRS {
              *
              * @param sslContext sslContext parameter of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
-             * @see JAXRS.Configuration#SSL_CONTEXT
+             * @see SeBootstrap.Configuration#SSL_CONTEXT
              * @since 2.2
              */
             default Builder sslContext(SSLContext sslContext) {
@@ -522,7 +522,7 @@ public interface JAXRS {
              *
              * @param sslClientAuthentication SSL client authentication mode of this configuration
              * @return the updated builder.
-             * @see JAXRS.Configuration#SSL_CLIENT_AUTHENTICATION
+             * @see SeBootstrap.Configuration#SSL_CLIENT_AUTHENTICATION
              * @since 2.2
              */
             default Builder sslClientAuthentication(SSLClientAuthentication sslClientAuthentication) {
@@ -581,7 +581,7 @@ public interface JAXRS {
         /**
          * Provides access to the configuration <em>actually</em> used by the implementation used to create this instance.
          * <p>
-         * This may, or may not, be the same instance passed to {@link JAXRS#start(Application, Configuration)}, not even an
+         * This may, or may not, be the same instance passed to {@link SeBootstrap#start(Application, Configuration)}, not even an
          * equal instance, as implementations MAY create a new intance and MUST update at least the {@code PORT} property with
          * the actually used value. Portable applications should not make any assumptions but always explicitly read the actual
          * values from the configuration returned from this method.

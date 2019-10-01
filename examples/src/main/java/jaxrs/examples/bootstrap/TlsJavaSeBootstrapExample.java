@@ -26,8 +26,8 @@ import java.security.KeyStore;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import jakarta.ws.rs.JAXRS;
-import jakarta.ws.rs.JAXRS.Configuration;
+import jakarta.ws.rs.SeBootstrap;
+import jakarta.ws.rs.SeBootstrap.Configuration;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.UriBuilder;
 
@@ -68,10 +68,10 @@ public final class TlsJavaSeBootstrapExample {
         final SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
         sslContext.init(keyManagerFactory.getKeyManagers(), null, null);
 
-        final JAXRS.Configuration requestedConfiguration = JAXRS.Configuration.builder().protocol("HTTPS")
+        final SeBootstrap.Configuration requestedConfiguration = SeBootstrap.Configuration.builder().protocol("HTTPS")
                 .sslContext(sslContext).build();
 
-        JAXRS.start(application, requestedConfiguration).thenAccept(instance -> {
+        SeBootstrap.start(application, requestedConfiguration).thenAccept(instance -> {
             Runtime.getRuntime()
                     .addShutdownHook(new Thread(() -> instance.stop()
                             .thenAccept(stopResult -> System.out.printf("Stop result: %s [Native stop result: %s].%n",

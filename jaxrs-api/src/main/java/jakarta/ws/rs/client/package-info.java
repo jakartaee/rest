@@ -15,7 +15,7 @@
  */
 
 /**
- * <h1>The JAX-RS client API</h1>
+ * <h2>The JAX-RS client API</h2>
  * <p>
  * The JAX-RS client API is a Java based API used to access Web resources. It is not restricted to resources implemented
  * using JAX-RS. It provides a higher-level abstraction compared to a {@link java.net.HttpURLConnection plain HTTP
@@ -27,7 +27,7 @@
  * architectural style &ndash; and associated data elements as client-side Java artifacts and supports a pluggable
  * architecture by defining multiple extension points.
  *
- * <h2>Client API Bootstrapping and Configuration</h2> The main entry point to the API is a
+ * <h3>Client API Bootstrapping and Configuration</h3> The main entry point to the API is a
  * {@link jakarta.ws.rs.client.ClientBuilder} that is used to bootstrap {@link jakarta.ws.rs.client.Client} instances -
  * {@link jakarta.ws.rs.core.Configurable configurable}, heavy-weight objects that manage the underlying communication
  * infrastructure and serve as the root objects for accessing any Web resource. The following example illustrates the
@@ -41,7 +41,7 @@
  *         .register(MyFeature.class);
  * </pre>
  *
- * <h2>Accessing Web Resources</h2> A Web resource can be accessed using a fluent API in which method invocations are
+ * <h3>Accessing Web Resources</h3> A Web resource can be accessed using a fluent API in which method invocations are
  * chained to configure and ultimately submit an HTTP request. The following example gets a {@code text/plain}
  * representation of the resource identified by {@code "http://example.org/hello"}:
  *
@@ -76,7 +76,7 @@
  * WebTarget msg456 = messages.resolveTemplate("id", 456);
  * </pre>
  *
- * <h2>Generic Invocations</h2> An {@link jakarta.ws.rs.client.Invocation} is a request that has been prepared and is
+ * <h3>Generic Invocations</h3> An {@link jakarta.ws.rs.client.Invocation} is a request that has been prepared and is
  * ready for execution. Invocations provide a generic interface that enables a separation of concerns between the
  * creator and the submitter. In particular, the submitter does not need to know how the invocation was prepared, but
  * only whether it should be executed synchronously or asynchronously.

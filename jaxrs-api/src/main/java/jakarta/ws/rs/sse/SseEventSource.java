@@ -34,7 +34,7 @@ import jakarta.ws.rs.client.WebTarget;
  * {@link WebTarget web target}. After establishing the connection, the event source starts processing any incoming
  * inbound events. Whenever a new event is received, an {@link Consumer#accept(Object)
  * Consumer&lt;InboundSseEvent&gt;#accept(InboundSseEvent)} method is invoked on any registered event consumers.
- * <h3>Reconnect support</h3>
+ * <h2>Reconnect support</h2>
  * <p>
  * The {@code SseEventSource} supports automated recuperation from a connection loss, including negotiation of delivery
  * of any missed events based on the last received SSE event {@code id} field value, provided this field is set by the

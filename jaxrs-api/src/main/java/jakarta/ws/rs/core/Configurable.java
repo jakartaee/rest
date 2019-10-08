@@ -33,13 +33,13 @@ import java.util.Map;
  * interface (such as {@link jakarta.ws.rs.client.Client} or {@link jakarta.ws.rs.client.WebTarget}). As such, the exact
  * scope of a configuration context is typically determined by a use case scenario in which the context is accessed.
  * </p>
- * <h3>Setting properties.</h3>
+ * <h2>Setting properties.</h2>
  * <p>
  * New properties can be set using the {@link #property} method. Similarly, updating a value of an existing property can
  * be achieved using the same method. Information about the configured set of properties is available via the underlying
  * {@code Configuration} object. An existing property can be removed by assigning a {@code null} value to the property.
  * </p>
- * <h3>Registering JAX-RS components.</h3>
+ * <h2>Registering JAX-RS components.</h2>
  * <p>
  * Registered custom JAX-RS component classes and instances are important part of the contextual configuration
  * information as these are the main factors that determine the capabilities of a configured runtime. Implementations

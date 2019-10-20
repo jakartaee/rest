@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ 
+    Copyright (c) 2017, 2019 Oracle and/or its affiliates. All rights reserved.
+ 
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Public License v. 2.0, which is available at
+    http://www.eclipse.org/legal/epl-2.0.
+ 
+    This Source Code may also be made available under the following Secondary
+    Licenses when the conditions for such availability set forth in the
+    Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
+    version 2 with the GNU Classpath Exception, which is available at
+    https://www.gnu.org/software/classpath/license.html.
+ 
+    SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ 
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.eclipse.ee4j</groupId>
+        <artifactId>project</artifactId>
+        <version>1.0.5</version>
+        <relativePath/>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>jakarta.restful-web-services</groupId>
+    <artifactId>restful-web-services-spec</artifactId>
+    <packaging>pom</packaging>
+    <version>2.1-SNAPSHOT</version>
+    <name>Jakarta RESTful Web Services Specification</name>
+
+    <properties>
+        <site.output.dir>${project.build.directory}/staging</site.output.dir>
+        <maven.site.skip>true</maven.site.skip>
+        <asciidoctor.maven.plugin.version>2.0.0-RC.1</asciidoctor.maven.plugin.version>
+        <asciidoctorj.version>2.0.0</asciidoctorj.version>
+        <asciidoctorj.pdf.version>1.5.0-alpha.17</asciidoctorj.pdf.version>
+        <jruby.version>9.2.7.0</jruby.version>
+        <!-- status: DRAFT, BETA, etc., or blank for final -->
+        <status>DRAFT</status>
+    </properties>
+
+    <scm>
+        <connection>scm:git:git@github.com:eclipse-ee4j/restful-web-services</connection>
+        <developerConnection>scm:git:git@github.com:eclipse-ee4j/restful-web-services</developerConnection>
+        <url>https://github.com/eclipse-ee4j/restful-web-services</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <site>
+            <url>scm:git:git@github.com:eclipse-ee4j/restful-web-services</url>
+        </site>
+    </distributionManagement>
+
+    <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>[1.8.0,1.9.0)</version>
+                                    <message>You need JDK8 or lower</message>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>${asciidoctor.maven.plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jruby</groupId>
+                        <artifactId>jruby-complete</artifactId>
+                        <version>${jruby.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj</artifactId>
+                        <version>${asciidoctorj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-pdf</artifactId>
+                        <version>${asciidoctorj.pdf.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>asciidoc-to-html</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>xhtml</backend>
+                            <attributes>
+                                <doctype>book</doctype>
+                                <status>${status}</status>
+                                <data-uri />
+                                <icons>font</icons>
+                                <toc>left</toc>
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix />
+                                <idseparator>-</idseparator>
+                                <docinfo1>true</docinfo1>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>asciidoc-to-pdf</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>pdf</backend>
+                            <attributes>
+                                <pdf-stylesdir>${project.basedir}/src/theme</pdf-stylesdir>
+                                <pdf-style>jakartaee</pdf-style>
+                                <doctype>book</doctype>
+                                <status>${status}</status>
+                                <data-uri />
+                                <icons>font</icons>
+                                <pagenums />
+                                <toc />
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix />
+                                <idseparator>-</idseparator>
+                                <docinfo1>true</docinfo1>
+                                <embedAssets>true</embedAssets>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.2</version>
+                <configuration>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <arguments>${release.arguments}</arguments>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-gitexe</artifactId>
+                        <version>1.9.4</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!--
+                This is the rule that builds the zip file for download.
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.1</version>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptors>
+                                <descriptor>assembly.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

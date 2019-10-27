@@ -1,0 +1,63 @@
+[[lifecycle_and_environment]]
+=== Lifecycle and Environment
+
+By default a single instance of each provider class is instantiated for
+each JAX-RS application. First the constructor (see
+<<provider_class_constructor>>) is called, then any requested dependencies
+are injected (see Chapter <<context>>), then the appropriate provider
+methods may be called multiple times (simultaneously), and finally the
+object is made available for garbage collection.
+<<providercontext>> describes how a provider obtains access to other
+providers via dependency injection.
+
+An implementation MAY offer other provider lifecycles, mechanisms for
+specifying these are outside the scope of this specification. E.g. an
+implementation based on an inversion-of-control framework may support
+all of the lifecycle options provided by that framework.
+
+[[automatic_discovery]]
+==== Automatic Discovery
+
+The annotation `@Provider` is used by a JAX-RS runtime to automatically
+discover provider classes via mechanisms such as class scanning. A
+JAX-RS implementation that supports automatic discovery of classes MUST
+process only those classes that are annotated with `@Provider`.
+
+[[provider_class_constructor]]
+==== Constructors
+
+Provider classes that are instantiated by the JAX-RS runtime and MUST
+have a public constructor for which the JAX-RS runtime can provide all
+parameter values. Note that a zero argument constructor is permissible
+under this rule.
+
+A public constructor MAY include parameters annotated with
+`@Context`—Chapter <<context>> defines the parameter types permitted for
+this annotation. Since providers may be created outside the scope of a
+particular request, only deployment-specific properties may be available
+from injected interfaces at construction time; request-specific
+properties are available when a provider method is called. If more than
+one public constructor can be used then an implementation MUST use the
+one with the most parameters. Choosing amongst constructors with the
+same number of parameters is implementation specific, implementations
+SHOULD generate a warning about such ambiguity.
+
+[[provider_priorities]]
+==== Priorities
+
+Application-supplied providers enable developers to extend and customize
+the JAX-RS runtime. Therefore, an application-supplied provider MUST
+always be preferred over a pre-packaged one if a single one is required.
+
+Application-supplied providers may be annotated with `@Priority`. If two
+or more providers are candidates for a certain task, the one with the
+_highest_ priority is chosen: the highest priority is defined to be the
+one with the _lowest_ value in this case. That is, `@Priority(1)` is
+higher than `@Priority(10)`. If two or more providers are eligible and
+have identical priorities, one is chosen in an implementation dependent
+manner. The default priority for all application-supplied providers is
+`javax.ws.rs.Priorities.USER`.
+
+The general rule about priorities is different for filters and
+interceptors since these providers are collected into chains. For more
+information see Section <<priorities>>.

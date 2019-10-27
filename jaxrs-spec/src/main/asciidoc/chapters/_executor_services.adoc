@@ -1,0 +1,14 @@
+[[executor_services]]
+=== Executor Services
+
+Executor services can be used to submit asynchronous tasks for
+execution. JAX-RS applications can specify executor services while
+building a `Client` instance. Two methods are provided in
+`ClientBuilder` for this purpose, namely, `executorService` and
+`scheduledExecutorService`.
+
+In an environment that supports the Concurrency Utilities for Java EE
+<<bib13>>, such as the Java EE Full Profile, implementations MUST use
+`ManagedExecutorService` and `ManagedScheduledExecutorService`,
+respectively. The reader is referred to the Javadoc of `ClientBuilder`
+for more information about executor services.

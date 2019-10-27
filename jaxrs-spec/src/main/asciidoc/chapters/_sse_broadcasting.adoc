@@ -1,0 +1,49 @@
+[[sse_broadcasting]]
+=== Broadcasting
+
+Applications may need to send events to multiple clients simultaneously.
+This action is called _broadcasting_ in JAX-RS. Multiple
+`SseEventSink`’s can be registered on a single `SseBroadcaster`.
+
+A broadcaster can only be created by calling method `newBroadcaster` on
+the injected `Sse` instance. The life-cycle and scope of an
+`SseBroadcaster` is fully controlled by applications and not the
+JAX-RS runtime. The following example shows the use of broadcasters,
+note the `@Singleton` annotation on the resource class:
+
+[source,java,numbered]
+-------------
+@Path("/")
+@Singleton
+public class SseResource {
+
+    @Context
+    private Sse sse;
+
+    private volatile SseBroadcaster sseBroadcaster;
+
+    @PostConstruct
+    public init() {
+        this.sseBroadcaster = sse.newBroadcaster();
+    }
+
+    @GET
+    @Path("register")
+    @Produces(MediaType.SERVER_SENT_EVENTS)
+    public void register(@Context SseEventSink eventSink) {
+        eventSink.send(sse.newEvent("welcome!"));
+        sseBroadcaster.register(eventSink);
+    }
+
+    @POST
+    @Path("broadcast")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public void broadcast(@FormParam("event") String event) {
+        sseBroadcaster.broadcast(sse.newEvent(event));
+    }
+}
+-------------
+
+The `register` method on a broadcaster is used to add a new
+`SseEventSink`; the `broadcast` method is used to send an SSE event to
+all registered consumers.

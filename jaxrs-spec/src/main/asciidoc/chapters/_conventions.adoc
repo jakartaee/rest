@@ -1,0 +1,31 @@
+[[conventions]]
+=== Conventions
+
+The keywords `MUST', `MUST NOT', `REQUIRED', `SHALL', `SHALL NOT',
+`SHOULD', `SHOULD NOT', `RECOMMENDED', `MAY', and `OPTIONAL' in this
+document are to be interpreted as described in RFC 2119<<bib10>>.
+
+Java code and sample data fragments are formatted as shown in figure
+<<1.1>>:
+
+[id="1.1"]
+[source,java,numbered]
+-------------
+package com.example.hello;
+
+public class Hello {
+    public static void main(String args[]) {
+    System.out.println("Hello World");
+    }
+}
+-------------
+
+URIs of the general form `http://example.org/...' and
+`http://example.com/...' represent application or context-dependent
+URIs.
+
+All parts of this specification are normative, with the exception of
+examples, notes and sections explicitly marked as `Non-Normative'.
+Non-normative notes are formatted as shown below.
+
+*Note:* _This is a note._

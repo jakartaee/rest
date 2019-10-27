@@ -1,0 +1,19 @@
+[[non_goals]]
+=== Non-Goals
+
+The following are non-goals:
+
+Support for Java versions prior to Java SE 8::
+  The API will make extensive use of annotations and lambda expressions
+  that require Java SE 8 or later.
+Description, registration and discovery::
+  The specification will neither define nor require any service
+  description, registration or discovery capability.
+HTTP Stack::
+  The specification will not define a new HTTP stack. HTTP protocol
+  support is provided by a container that hosts artifacts developed
+  using the API.
+Data model/format classes::
+  The API will not define classes that support manipulation of entity
+  body content, rather it will provide pluggability to allow such
+  classes to be used by artifacts developed using the API.

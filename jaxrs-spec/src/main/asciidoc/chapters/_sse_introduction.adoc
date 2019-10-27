@@ -1,0 +1,22 @@
+[[sse_introduction]]
+=== Introduction
+
+Server-sent events (SSE) is a specification originally introduced as
+part of HTML5 by the W3C, but is currently maintained by the WHATWG
+<<bib17>>. It provides a way to establish a one-way
+channel from a server to a client. The connection is long running: it is
+re-used for multiple events sent from the server, yet it is still based
+on the HTTP protocol. Clients request the opening of an SSE connection
+by using the special media type `text/event-stream` in the `Accept`
+header.
+
+Events are structured and contain several fields, namely, `event`,
+`data`, `id`, `retry` and `comment`. SSE is a messaging protocol where
+the `event` field corresponds to a topic, and where the `id` field can
+be used to validate event order and guarantee continuity. If a
+connection is interrupted for any reason, the `id` can be sent in a
+request header for a server to re-play past events —although this is an
+optional behavior that may not be supported by all implementations.
+Event payloads are conveyed in the `data` field and must be in text
+format; `retry` is used to control re-connects and finally `comment` is
+a general purpose field that can also be used to keep connections alive.

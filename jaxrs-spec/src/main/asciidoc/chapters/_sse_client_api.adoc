@@ -1,0 +1,32 @@
+[[sse_client_api]]
+=== Client API
+
+The JAX-RS client API for SSE was inspired by the corresponding
+JavaScript API in HTML5, but with changes that originate from the use of
+a different language. The entry point to the client API is the type
+`SseEventSource`, which provides a fluent builder similarly to other
+classes in the JAX-RS API. An `SseEventSource` is constructed from a
+`WebTarget` that is already configured with a resource location;
+`SseEventSource` does not duplicate any functionality in `WebTarget` and
+only adds the necessary logic for SSE.
+
+The following example shows how to open an SSE connection and read some
+messages for a little while:
+
+[source,java,numbered]
+-------------
+WebTarget target = client.target("http://...");
+try (SseEventSource source = SseEventSource.target(target).build()) {
+    source.register(System.out::println);
+    source.open();
+    Thread.sleep(500); // Consume events for just 500 ms
+} catch (InterruptedException e) {
+    // falls through
+}
+-------------
+
+As seen in this example, an `SseEventSource` implements `AutoCloseable`.
+Before opening the source, the client registers an event consumer that
+simply prints each event. Additional handlers for other life-cycle
+events such as `onComplete` and `onError` are also supported, but for
+simplicity only `onEvent` is shown in the example above.

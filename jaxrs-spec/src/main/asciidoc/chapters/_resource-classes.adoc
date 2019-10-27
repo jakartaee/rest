@@ -1,0 +1,43 @@
+[[resource-classes]]
+=== Resource Classes
+
+A resource class is a Java class that uses JAX-RS annotations to
+implement a corresponding Web resource. Resource classes are POJOs that
+have at least one method annotated with `@Path` or a request method
+designator.
+
+[[lifecycle-and-environment]]
+==== Lifecycle and Environment
+
+By default a new resource class instance is created for each request to
+that resource. First the constructor (see <<resource_class_constructor>>)
+is called, then any requested dependencies
+are injected (see <<resource_field>>), then the appropriate method
+(see <<resource_method>>) is invoked and finally the object is
+made available for garbage collection.
+
+An implementation MAY offer other resource class lifecycles, mechanisms
+for specifying these are outside the scope of this specification.
+E.g. an implementation based on an inversion-of-control framework may
+support all of the lifecycle options provided by that framework.
+
+[[resource_class_constructor]]
+==== Constructors
+
+Root resource classes are instantiated by the JAX-RS runtime and MUST
+have a public constructor for which the JAX-RS runtime can provide all
+parameter values. Note that a zero argument constructor is permissible
+under this rule.
+
+A public constructor MAY include parameters annotated with one of the
+following: `@Context`, `@HeaderParam`, `@CookieParam`, `@MatrixParam`,
+`@QueryParam` or `@PathParam`. However, depending on the resource class
+lifecycle and concurrency, per-request information may not make sense in
+a constructor. If more than one public constructor is suitable then an
+implementation MUST use the one with the most parameters. Choosing
+amongst suitable constructors with the same number of parameters is
+implementation specific, implementations SHOULD generate a warning about
+such ambiguity.
+
+Non-root resource classes are instantiated by an application and do not
+require the above-described public constructor.

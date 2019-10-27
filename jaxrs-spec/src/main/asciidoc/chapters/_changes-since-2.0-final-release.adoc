@@ -1,0 +1,10 @@
+[[changes-since-2.0-final-release]]
+=== Changes Since 2.0 Final Release
+
+* <<resource_field>>: Clarified exception handling for all 5 steps
+used to convert a string to a Param. Allowed the combination of
+`List<T>`, `Set<T>`, or `SortedSet<T>` and `ParamConverter`.
+* <<request_matching>>: Defined client and server media types.
+* <<reactive_clients>>: New section introducing support for
+reactive clients.
+* <<sse>>: New chapter describing the Server-Sent Events API.

@@ -1,0 +1,48 @@
+[[annotationinheritance]]
+=== Annotation Inheritance
+
+JAX-RS annotations may be used on the methods and method parameters of a
+super-class or an implemented interface. Such annotations are inherited
+by a corresponding sub-class or implementation class method provided
+that the method and its parameters do not have any JAX-RS annotations of
+their own. Annotations on a super-class take precedence over those on an
+implemented interface. The precedence over conflicting annotations
+defined in multiple implemented interfaces is implementation specific.
+Note that inheritance of class or interface annotations is not
+supported.
+
+If a subclass or implementation method has any JAX-RS annotations then
+_all_ of the annotations on the superclass or interface method are
+ignored. E.g.:
+
+[source,java,numbered]
+-------------
+public interface ReadOnlyAtomFeed {
+    @GET @Produces("application/atom+xml")
+    Feed getFeed();
+}
+
+@Path("feed")
+public class ActivityLog implements ReadOnlyAtomFeed {
+    public Feed getFeed() {...}
+}
+-------------
+
+In the above, `ActivityLog.getFeed` inherits the `@GET` and
+`@Produces` annotations from the interface. Conversely:
+
+[source,java,numbered]
+-------------
+@Path("feed")
+public class ActivityLog implements ReadOnlyAtomFeed {
+    @Produces("application/atom+xml")
+    public Feed getFeed() {...}
+}
+-------------
+
+In the above, the `@GET` annotation on `ReadOnlyAtomFeed.getFeed` is not
+inherited by `Activity-Log.getFeed` and it would require its own request
+method designator since it redefines the `@Produces` annotation.
+
+For consistency with other Java EE specifications, it is recommended to
+always repeat annotations instead of relying on annotation inheritance.

@@ -1,0 +1,14 @@
+[[changes-since-proposed-final-draft]]
+=== Changes Since Proposed Final Draft
+
+* <<request_matching>>: Additional sort criteria so that templates
+with explicit regexs are sorted ahead of those with the default.
+* <<request_matching>>, <<determine_response_type>>,
+<<declaring_provider_capabilities>> and <<context_media_type>>: Q-values not
+used in `@Consumes` or `@Produces`.
+* <<message_body_writer>>: Fixed algorithm to refer to
+<<determine_response_type>> instead of restating it. Fixed status code
+returned when the media type has been determined but an appropriate
+message body writer cannot be located.
+* Chapter <<runtimedelegate>>: Clarify that an implementation can supply
+an alternate `RuntimeDelegate` API class.

@@ -1,0 +1,118 @@
+[[declaring_method_capabilities]]
+=== Declaring Media Type Capabilities
+
+Application classes can declare the supported request and response media
+types using the `@Consumes` and `@Produces` annotations respectively.
+These annotations MAY be applied to a resource method, a resource class,
+or to an entity provider (see <<declaring_provider_capabilities>>).
+Use of these annotations on a
+resource method overrides any on the resource class or on an entity
+provider for a method argument or return type. In the absence of either
+of these annotations, support for any media type (/*) is assumed.
+
+The following example illustrates the use of these annotations:
+
+[source,java,numbered]
+-------------
+@Path("widgets")
+@Produces("application/widgets+xml")
+public class WidgetsResource {
+
+    @GET
+    public Widgets getAsXML() {...}
+
+    @GET
+    @Produces("text/html")
+    public String getAsHtml() {...}
+
+    @POST
+    @Consumes("application/widgets+xml")
+    public void addWidget(Widget widget) {...}
+}
+
+@Provider
+@Produces("application/widgets+xml")
+public class WidgetsProvider implements MessageBodyWriter<Widgets> {...}
+
+@Provider
+@Consumes("application/widgets+xml")
+public class WidgetProvider implements MessageBodyReader<Widget> {...}
+-------------
+
+In the above:
+
+* The `getAsXML` resource method will be called for `GET` requests that
+specify a response media type of `application/widgets+xml`. It returns a
+`Widgets` instance that will be mapped to that format using the
+`WidgetsProvider` class (see <<entity_providers>> for more
+information on `MessageBodyWriter`).
+* The `getAsHtml` resource method will be called for `GET` requests that
+specify a response media type of `text/html`. It returns a `String`
+containing `text/html` that will be written using the default
+implementation of `MessageBodyWriter<String>`.
+* The `addWidget` resource method will be called for `POST` requests
+that contain an entity of the media type `application/widgets+xml`. The
+value of the `widget` parameter will be mapped from the request entity
+using the `WidgetProvider` class (see <<entity_providers>> for
+more information on `MessageBodyReader`).
+
+An implementation MUST NOT invoke a method whose effective value of
+`@Produces` does not match the request `Accept` header. An
+implementation MUST NOT invoke a method whose effective value of
+`@Consumes` does not match the request `Content-Type` header.
+
+When accepting multiple media types, clients may indicate preferences by
+using a relative quality factor known as the q parameter. The value of
+the q parameter, or q-value, is used to sort the set of accepted types.
+For example, a client may indicate preference for
+`application/widgets+xml` with a relative quality factor of 1 and for
+`application/xml` with a relative quality factor of 0.8. Q-values range
+from 0 (undesirable) to 1 (highly desirable), with 1 used as default
+when omitted. A `GET` request matched to the `WidgetsResource` class
+with an accept header of
+`text/html; q=1, application/widgets+xml; q=0.8` will result in a call
+to method `getAsHtml` instead of `getAsXML` based on the value of q.
+
+A server can also indicate media type preference using the qs parameter;
+server preference is only examined when multiple media types are
+accepted by a client _with the same q-value_. Consider the following
+example:
+
+[source,java,numbered]
+-------------
+@Path("widgets2")
+public class WidgetsResource2 {
+
+    @GET
+    @Produces("application/xml", "application/json")
+    public Widgets getWidget() {...}
+
+}
+-------------
+
+Suppose a client issues a `GET` request with an accept header of
+`application/*; q=0.5, text/html`. Based on this request, the server
+determines that both `application/xml` and `application/json` are
+equally preferred by the client with a q-value of 0.5. By specifying a
+server relative quality factor as part of the `@Produces` annotation, it
+is possible to control which response media type to select:
+
+[source,java,numbered]
+-------------
+@Path("widgets2")
+public class WidgetsResource2 {
+
+    @GET
+    @Produces("application/xml; qs=1", "application/json; qs=0.75")
+    public Widgets getWidget() {...}
+
+}
+-------------
+
+With the updated value for `@Produces` in this example, and in response
+to a `GET` request with an accept header that includes
+`application/*; q=0.5`, JAX-RS implementations are REQUIRED to select
+the media type `application/xml` given its higher qs-value. Note that
+qs-values, just like q-values, are relative and as such are only
+comparable to other qs-values within the same `@Produces` annotation
+instance. For more information see <<determine_response_type>>.

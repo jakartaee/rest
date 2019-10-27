@@ -1,0 +1,121 @@
+[[reactive_clients]]
+=== Reactive Clients
+
+<<client_api_async>> introduces asynchronous programming in the
+Client API. Asynchronous programming in JAX-RS enables clients to
+unblock certain threads by pushing work to background threads which can
+be monitored and possibly waited on (joined) at a later time. This can
+be accomplished in JAX-RS by either providing an instance of
+`InvocationCallback` or operating on the result of type `Future<T>`
+returned by an asynchronous invoker —or some combination of both styles.
+
+Using `InvocationCallback` enables a more _reactive_ programming style
+in which user-provided code activates (or reacts) only when a certain
+event has occurred. Using callbacks works well for simple cases, but the
+source code becomes harder to understand when multiple events are in
+play. For example, when asynchronous invocations need to be composed,
+combined or in any way operated upon. These type of scenarios may result
+in callbacks that are nested inside other callbacks making the code far
+less readable —often referred to as the _pyramid of doom_ because of the
+inherent nesting of calls.
+
+To address the requirement of greater readability and to enable
+programmers to better reason about asynchronous computations, Java 8
+introduces the a new interface called `CompletionStage` that includes a
+large number of methods dedicated to managing asynchronous computations.
+
+JAX-RS 2.1 defines a new type of invoker called `RxInvoker`, as well a
+default implementation of this type called `CompletionStageRxInvoker`
+that is based on the Java 8 type `CompletionStage`. There is a new `rx`
+method which is used in a similar manner to `async` as described in
+<<client_api_async>>. Let us consider the following example:
+
+[source,java,numbered]
+-------------
+CompletionStage<String> csf = client.target("forecast/{destination}")
+    .resolveTemplate("destination", "mars")
+    .request()
+    .rx()
+    .get(String.class);
+
+csf.thenAccept(System.out::println);
+-------------
+
+This example first creates an asynchronous computation of type
+`CompletionStage<String>`, and then simply waits for it to complete and
+displays its result (technically, a second computation of type
+`CompletionStage<Void>` is created on the last line simply to consume
+the result of the first computation).
+
+The value of `CompletionStage` becomes apparent when multiple
+asynchronous computations are necessary to accomplish a task. The
+following example obtains, in parallel, a price and a forecast for a
+destination and makes a reservation only if the desired conditions are
+met.
+
+[source,java,numbered]
+-------------
+CompletionStage<Number> csp = client.target("price/{destination}")
+    .resolveTemplate("destination", "mars")
+    .request()
+    .rx()
+    .get(Number.class);
+
+CompletionStage<String> csf = client.target("forecast/{destination}")
+    .resolveTemplate("destination", "mars")
+    .request()
+    .rx()
+    .get(String.class);
+
+csp.thenCombine(csf, (price, forecast) ->
+    reserveIfAffordableAndWarm(price, forecast));
+-------------
+
+Note that the `Consumer` passed in the call to method `thenCombine`
+requires the values of each stage to be available and, therefore, can
+only be executed after the two parallel stages are completed.
+
+As we shall see in the next section, support for `CompletionStage` is
+the _default_ for all JAX-RS implementations, but other reactive APIs
+may also be supported as extensions.
+
+[[reactive_api_extensions]]
+==== Reactive API Extensions
+
+There have been several proposals for reactive APIs in Java. All
+JAX-RS implementations MUST support an invoker for `CompletionStage` as
+shown above. Additionally, JAX-RS implementations MAY support other
+reactive APIs using an extension built into the Client API.
+
+RxJava <<bib11>> is a popular
+reactive library available in Java. The type representing an
+asynchronous computation in this API is called an `Observable`. An
+implementation may support this type by providing a new invoker as shown
+in the following example:
+
+[source,java,numbered]
+-------------
+Client client = client.register(ObservableRxInvokerProvider.class);
+
+Observable<String> of = client.target("forecast/{destination}")
+    .resolveTemplate("destination", "mars")
+    .request()
+    .rx(ObservableRxInvoker.class) // overrides default invoker
+    .get(String.class);
+
+of.subscribe(System.out::println);
+-------------
+
+First, a provider for the new invoker must be registered on the `Client`
+object. Second, the type of the invoker must be specified as a parameter
+to the `rx` method. Note that because this is a JAX-RS extension, the
+actual names for the provider and the invoker in the example above are
+implementation dependent. The reader is referred to the documentation
+for the JAX-RS implementation of choice for more information.
+
+Version 2.0 of RxJava <<bib12>> has
+been completely re-written on top of the Reactive-Streams specification.
+This new architecture prompted the introduction of a new type called
+`Flowable`. JAX-RS implementations could easily support this new version
+by implementing a new provider (such as `FlowableRxInvokerProvider`) and
+using the same pattern shown in the example above.

@@ -1,0 +1,73 @@
+[[resource_field]]
+=== Fields and Bean Properties
+
+When a resource class is instantiated, the values of fields and bean
+properties annotated with one the following annotations are set
+according to the semantics of the annotation:
+
+`@MatrixParam`::
+  Extracts the value of a URI matrix parameter.
+`@QueryParam`::
+  Extracts the value of a URI query parameter.
+`@PathParam`::
+  Extracts the value of a URI template parameter.
+`@CookieParam`::
+  Extracts the value of a cookie.
+`@HeaderParam`::
+  Extracts the value of a header.
+`@Context`::
+  Injects an instance of a supported resource, see chapters <<context>>
+  and <<environment>> for more details.
+
+Because injection occurs at object creation time, use of these
+annotations (with the exception of `@Context`) on resource class fields
+and bean properties is only supported for the default per-request
+resource class lifecycle. An implementation SHOULD warn if resource
+classes with other lifecycles use these annotations on resource class
+fields or bean properties.
+
+A JAX-RS implementation is only required to set the annotated field and
+bean property values of instances created by its runtime. Objects
+returned by sub-resource locators (see <<sub_resources>>) are
+expected to be initialized by their creator.
+
+Valid parameter types for each of the above annotations are listed in
+the corresponding Javadoc, however in general (excluding `@Context`) the
+following types are supported:
+
+1.  Types for which a `ParamConverter` is available via
+a registered `ParamConverterProvider`. See Javadoc for these classes for
+more information.
+2.  Primitive types.
+3.  Types that have a constructor that accepts a single
+`String` argument.
+4.  Types that have a static method named `valueOf` or
+`fromString` with a single `String` argument that return an instance of
+the type. If both methods are present then `valueOf` MUST be used unless
+the type is an enum in which case `fromString` MUST be usedfootnote:[Due
+to limitations of the built-in `valueOf` method that is part of all Java
+enumerations, a `fromString` method is often defined by the enum
+writers. Consequently, the `fromString` method is preferred when
+available.].
+5.  `List<T>`, `Set<T>`, or `SortedSet<T>`, where `T` satisfies
+1,3 or 4 above.
+
+The `DefaultValue` annotation may be used to supply a default value for
+some of the above, see the Javadoc for `DefaultValue` for usage details
+and rules for generating a value in the absence of this annotation and
+the requested data. The `Encoded` annotation may be used to disable
+automatic URI decoding for `@MatrixParam`, `@QueryParam`, and
+`@PathParam` annotated fields and properties.
+
+A `WebApplicationException` thrown during construction of field or
+property values using any of the 5 steps listed above is processed
+directly as described in <<method_exc>>. Other exceptions thrown
+during construction of field or property values using any of the 5 steps
+listed above are treated as client errors: if the field or property is
+annotated with `@MatrixParam`, `@QueryParam` or `@PathParam` then an
+implementation MUST generate an instance of `NotFoundException` (404
+status) that wraps the thrown exception and no entity; if the field or
+property is annotated with `@HeaderParam` or `@CookieParam` then an
+implementation MUST generate an instance of `BadRequestException` (400
+status) that wraps the thrown exception and no entity. Exceptions MUST
+be processed as described in <<method_exc>>.

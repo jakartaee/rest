@@ -1,0 +1,39 @@
+[[terminology]]
+=== Terminology
+
+Resource class::
+  A Java class that uses JAX-RS annotations to implement a corresponding
+  Web resource, see Chapter [resources].
+Root resource class::
+  A _resource class_ annotated with `@Path`. Root resource classes
+  provide the roots of the resource class tree and provide access to
+  sub-resources, see Chapter [resources].
+Request method designator::
+  A runtime annotation annotated with `@HttpMethod`. Used to identify
+  the HTTP request method to be handled by a _resource method_.
+Resource method::
+  A method of a _resource class_ annotated with a _request method
+  designator_ that is used to handle requests on the corresponding
+  resource, see <<resource_method>>.
+Sub-resource locator::
+  A method of a _resource class_ that is used to locate sub-resources of
+  the corresponding resource, see <<sub_resources>>.
+Sub-resource method::
+  A method of a _resource class_ that is used to handle requests on a
+  sub-resource of the corresponding resource, see <<sub_resources>>.
+Provider::
+  An implementation of a JAX-RS extension interface. Providers extend
+  the capabilities of a JAX-RS runtime and are described in Chapter
+  <<providers>>.
+Filter::
+  A provider used for filtering requests and responses.
+Entity Interceptor::
+  A provider used for intercepting calls to message body readers and
+  writers.
+Invocation::
+  A Client API object that can be configured to issue an HTTP request.
+WebTarget::
+  The recipient of an Invocation, identified by a URI.
+Link::
+  A URI with additional meta-data such as a media type, a relation, a
+  title, etc.

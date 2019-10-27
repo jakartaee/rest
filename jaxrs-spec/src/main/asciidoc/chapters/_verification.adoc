@@ -1,0 +1,14 @@
+[[verification]]
+=== Verification
+
+Specific application requirements are detailed throughout this
+specification and the JAX-RS Javadocs. Implementations MAY perform
+verification steps that go beyond what it is stated in this document.
+
+A JAX-RS implementation MAY report an error condition if it detects that
+two or more resources could result in an ambiguity during the execution
+of the algorithm described <<request_matching>>. For example, if
+two resource methods in the same resource class have identical (or even
+intersecting) values in all the annotations that are relevant to the
+algorithm described in that section. The exact set of verification steps
+as well as the error reporting mechanism is implementation dependent.

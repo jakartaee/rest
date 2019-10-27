@@ -1,0 +1,6 @@
+[[other]]
+=== Other
+
+Other container technologies MAY specify their own set of injectable
+resources but MUST, at a minimum, support access to the types of context
+listed in <<contexttypes>>.

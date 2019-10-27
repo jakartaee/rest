@@ -1,0 +1,40 @@
+[[changes-since-2.0-early-draft-third-edition]]
+=== Changes Since 2.0 Early Draft (Third Edition)
+
+* Chapter ``Validation'': Removed from PR. JAX-RS 2.0 will defer to CDI
+for Bean Validation. Only those resource classes that are CDI beans
+would be validated.
+* <<method_exc>>: Clarified that the steps must be followed in
+order and that throwables are propagated to the underlying container
+only if they cannot be mapped.
+* <<resource_method>>: Added `@OPTIONS` to list.
+* <<resource_method_return>>: New note about anonymous inner
+classes.
+* <<request_matching>>: Allow multiple root resource classes to
+share same URI in algorithm. Note changes in output and input of steps 1
+and 2, respectively.
+* <<message_body_writer>>: Throw new exception
+`InternalServerErrorException`.
+* <<entity_providers>>: Removed steps that required the use of the
+JavaBeans Activation Framework<<bib20>> to map objects to
+representations and vice-versa. The EG deemed this feature to be
+confusing and not portable across implementations.
+* <<standard_entity_providers>>: Support for pre-packaged readers
+and writers for Java types `java.lang.Boolean`, `java.lang.Character`,
+`java.lang.Number` and media type `text/plain`.
+* <<standard_entity_providers>>: Detailed behavior for readers and
+zero-length request entities.
+* <<dynamic_binding>>: `DynamicBinder` replaced by
+`DynamicFeature`.
+* <<exceptions_filters_and_interceptors>>: Clarified processing of
+responses mapped using exception mappers.
+* Chapter <<asynchronous_processing>>: Updated sections related to the
+Server API. `@Suspended` annotation, timeouts and callbacks.
+* <<timeouts_and_callbacks>>: Throw new exception
+`ServiceUnavailableException`.
+* <<resource_context>>: New section for `ResourceContext`.
+* <<ejbs>>: Clarified location of annotations in accordance to the
+JAX-RS annotation inheritance rules.
+* <<filters_and_interceptors>>: Replaced `@PostMatching` by
+`@PreMatching`. Post-matching is now the default.
+* <<annotation_table>>: Edited section on JAX-RS 2.0 annotations.

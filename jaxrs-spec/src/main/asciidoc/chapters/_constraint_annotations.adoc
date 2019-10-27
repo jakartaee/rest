@@ -1,0 +1,102 @@
+[[constraint_annotations]]
+=== Constraint Annotations
+
+The Server API provides support for extracting request values and
+mapping them into Java fields, properties and parameters using
+annotations such as `@HeaderParam`, `@QueryParam`, etc. It also supports
+mapping of request entity bodies into Java objects via non-annotated
+parameters (i.e., parameters without any JAX-RS annotations). See
+Chapter <<resources>> for additional information.
+
+In earlier versions of JAX-RS, any additional validation of these values
+needed to be performed programmatically. This version of JAX-RS
+introduces support for declarative validation based on the Bean
+Validation specification <<bib16>>.
+
+The Bean Validation specification <<bib16>> supports the use of
+_constraint annotations_ as a way of declaratively validating beans,
+method parameters and method returned values. For example, consider the
+following resource class augmented with constraint annotations:
+
+[source,java,numbered]
+-------------
+@Path("/")
+class MyResourceClass {
+
+    @POST
+    @Consumes("application/x-www-form-urlencoded")
+    public void registerUser(
+        @NotNull @FormParam("firstName") String firstName,
+        @NotNull @FormParam("lastName") String lastName,
+        @Email @FormParam("email") String email) {
+        ...
+    }
+}
+-------------
+
+The annotations `@NotNull` and `@Email` impose additional constraints on
+the form parameters `firstName`, `lastName` and `email`. The
+`@NotNull` constraint is built-in to the Bean Validation API; the
+`@Email` constraint is assumed to be user defined in the example above.
+These constraint annotations are not restricted to method parameters,
+they can be used in any location in which the JAX-RS binding annotations
+are allowed with the exception of constructors and property setters.
+Rather than using method parameters, the `MyResourceClass` shown above
+could have been written as follows:
+
+[source,java,numbered]
+-------------
+@Path("/")
+class MyResourceClass {
+
+    @NotNull @FormParam("firstName")
+    private String firstName;
+
+    @NotNull @FormParam("lastName")
+    private String lastName;
+
+    private String email;
+
+    @FormParam("email")
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Email
+    public String getEmail() {
+        return email;
+    }
+    ...
+}
+-------------
+
+Note that in this version, `firstName` and `lastName` are fields
+initialized via injection and `email` is a resource class property.
+Constraint annotations on properties are specified in their
+corresponding getters.
+
+Constraint annotations are also allowed on resource classes. In addition
+to annotating fields and properties, an annotation can be defined for
+the entire class. Let us assume that `@NonEmptyNames` validates that one
+of the two _name_ fields in `MyResourceClass` is provided. Using such an
+annotation, the example above can be extended as follows:
+
+[source,java,numbered]
+-------------
+@Path("/")
+@NonEmptyNames
+class MyResourceClass {
+
+    @NotNull @FormParam("firstName")
+    private String firstName;
+
+    @NotNull @FormParam("lastName")
+    private String lastName;
+
+    private String email;
+    ...
+}
+-------------
+
+Constraint annotations on resource classes are useful for defining
+cross-field and cross-property constraints.

@@ -1,0 +1,103 @@
+[[expert_group]]
+=== Expert Group Members
+
+This specification is being developed as part of JSR 370 under the Java
+Community Process. It is the result of the collaborative work of the
+members of the JSR 370 Expert Group. The following are the present
+expert group members:
+
+-- Sergey Beryozkin (Talend SA)
+
+-- Adam Bien (Individual Member)
+
+-- Sebastian Dashner (Individual Member)
+
+-- Markus Karg (Individual Member)
+
+-- Casey Lee (Vision Service Plan)
+
+-- Marcos Luna (Individual Member)
+
+-- Andy McCright (IBM)
+
+-- Julian Reschke (Individual Member)
+
+-- Alessio Soldano (Red Hat)
+
+The following are former group members of the JSR 339 Expert Group:
+
+-- Jan Algermussen (Individual Member)
+
+-- Florent Beniot (OW2)
+
+-- Sergey Beryozkin (Talend SA)
+
+-- Adam Bien (Individual Member)
+
+-- Bill Burke (Red Hat)
+
+-- Clinton L. Combs (Individual Member)
+
+-- Jian Wu Dai (IBM)
+
+-- Bill De Hora (Individual Member)
+
+-- Markus Karg (Individual Member)
+
+-- Sastry Malladi (eBay, Inc)
+
+-- Julian Reschke (Individual Member)
+
+-- Guilherme de Azevedo Silveira (Individual Member)
+
+-- Synodinos, Dionysios G. (Individual Member)
+
+JAX-RS 1.X has been developed as part of JSR 311 under the Java
+Community Process. The following were group members of the JSR 311
+Expert Group:
+
+-- Heiko Braun (Red Hat Middleware LLC)
+
+-- Larry Cable (BEA Systems)
+
+-- Roy Fielding (Day Software, Inc.)
+
+-- Harpreet Geekee (Nortel)
+
+-- Nickolas Grabovas (Individual Member)
+
+-- Mark Hansen (Individual Member)
+
+-- John Harby (Individual Member)
+
+-- Hao He (Individual Member)
+
+-- Ryan Heaton (Individual Member)
+
+-- David Hensley (Individual Member)
+
+-- Stephan Koops (Individual Member)
+
+-- Changshin Lee (NCsoft Corporation)
+
+-- Francois Leygues (Alcatel-Lucent)
+
+-- Jerome Louvel (Individual Member)
+
+-- Hamid Ben Malek (Fujitsu Limited)
+
+-- Ryan J. McDonough (Individual Member)
+
+-- Felix Meschberger (Day Software, Inc.)
+
+-- David Orchard (BEA Systems)
+
+-- Dhanji R. Prasanna (Individual Member)
+
+-- Julian Reschke (Individual Member)
+
+-- Jan Schulz-Hofen (Individual Member)
+
+-- Joel Smith (IBM)
+
+-- Stefan Tilkov (innoQ Deutschland GmbH)

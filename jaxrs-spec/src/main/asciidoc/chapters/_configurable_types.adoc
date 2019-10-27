@@ -1,0 +1,51 @@
+[[configurable_types]]
+=== Configurable Types
+
+The following Client API types are configurable: `Client`,
+`ClientBuilder`, and `WebTarget`. Configuration methods are inherited
+from the `Configurable` interface implemented by all these classes. This
+interface supports configuration of:
+
+Properties::
+  Name-value pairs for additional configuration of features or other
+  components of a JAX-RS implementation.
+Features::
+  A special type of provider that implement the `Feature` interface and
+  can be used to configure a JAX-RS implementation.
+Providers::
+  Classes or instances of classes that implement one or more of the
+  provider interfaces from Chapter [providers]. A provider can be a
+  message body reader, a filter, a context resolver, etc.
+
+The configuration defined on an instance of any of the aforementioned
+types is inherited by other instances created from it. For example, an
+instance of `WebTarget` created from a `Client` will inherit the
+`Client`’s configuration. However, any additional changes to the
+instance of `WebTarget` will not impact the `Client`’s configuration and
+vice versa. Therefore, once a configuration is inherited it is also
+detached (deep copied) from its parent configuration and changes to the
+parent and child configurations are not be visible to each other.
+
+[[filters_interceptors_client]]
+==== Filters and Entity Interceptors
+
+As explained in Chapter <<filters_and_interceptors>>, filters and
+interceptors are defined as JAX-RS providers. Therefore, they can be
+registered in any of the configurable types listed in the previous
+section. The following example shows how to register filters and
+interceptors on instances of `Client` and `WebTarget`:
+
+[source,java,numbered]
+-------------
+// Create client and register logging filter
+Client client = ClientBuilder.newClient().register(LoggingFilter.class);
+
+// Executes logging filter from client and caching filter from target
+WebTarget wt = client.target("http://examples.org/customers/123");
+Customer c = wt.register(CachingFilter.class).request("application/xml")
+    .get(Customer.class);
+-------------
+
+In this example, `LoggingFilter` is inherited by each instance of
+`WebTarget` created from `client`; an additional provider named
+`CachingFilter` is registered on the instance of `WebTarget`.

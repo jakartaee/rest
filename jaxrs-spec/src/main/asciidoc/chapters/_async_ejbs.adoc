@@ -1,0 +1,31 @@
+[[async_ejbs]]
+=== EJB Resource Classes
+
+As stated in <<ejbs>>, JAX-RS implementations in products that
+support EJB must also support the use of stateless and singleton session
+beans as root resource classes. When an EJB method is annotated with
+`@Asynchronous`, the EJB container automatically allocates the necessary
+resources for its execution. Thus, in this scenario, the use of an
+`Executor` is unnecessary to generate an asynchronous response.
+
+Consider the following example:
+
+[source,java,numbered]
+-------------
+@Stateless
+@Path("/")
+class EJBResource {
+
+    @GET @Asynchronous
+    public void longRunningOp(@Suspended AsyncResponse ar) {
+        executeLongRunningOp();
+        ar.resume("Hello async world!");
+    }
+}
+-------------
+
+There is no explicit thread management needed in this case since that is
+under the control of the EJB container. Just like the other examples in
+this chapter, the response is produced by calling `resume` on the
+injected `AsyncResponse`. Hence, the return type of `longRunningOp` is
+simply `void`.

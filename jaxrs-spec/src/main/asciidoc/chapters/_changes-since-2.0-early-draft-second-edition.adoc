@@ -1,0 +1,54 @@
+[[changes-since-2.0-early-draft-second-edition]]
+=== Changes Since 2.0 Early Draft (Second Edition)
+
+* <<uritemplates>>: New example showing a scenario in which a
+`@PathParam` is not be available for injection.
+* <<request_matching>>: Formalization of certain parts of the
+matching algorithm that were vague. Defined formal ordering between
+media types and highlighted situations in which implementations should
+report a warning if the matching is ambiguous.
+* <<request_matching>>: New sample showing the resource matching
+algorithm in action.
+* <<template_to_regex>>: New footnote about syntax of regular
+expression.
+* Chapter <<providers>>: The annotation `@Provider` is now only required
+for automatic discovery of providers (typically via class scanning). It
+is no longer required for a provider that is manually registered in
+classes such as `Application` or `Configuration`.
+* <<automatic_discovery>>: New section about automatic discovery
+of provider classes. Only those annotated with `@Provider` must be
+discovered automatically.
+* Chapter <<client_api>>: Features are now providers and can be registered
+as such. A feature can no longer be disabled.
+* Chapter <<client_api>>: Class `Target` renamed to `WebTarget`. Removed
+text describing how to use a builder factory class (no longer
+supported). A few other minor updates and typos fixed.
+* Chapter <<filters_and_interceptors>>: Extension points for filters
+revised. New filter interfaces `ClientRequestFilter` and
+`ClientResponseFilter` in Client API and new filter interfaces
+`ContainerRequestFilter` and `ContainerResponseFilter` in Server API.
+Corresponding context classes also updated in chapter. A
+`ContainerRequestFilter` is executed before resource matching unless
+annotated with `@PostMatching`. It is no longer possible to share a
+filter implementation between the Client and Server APIs; entity
+interceptors are still shareable.
+* Chapter <<filters_and_interceptors>>: Section on the relationship
+between filters and entity interceptors (including diagram) dropped.
+* <<global_binding>>: Clarified global binding in relation to the
+new semantics of `@Provider` for automatic discovery.
+* <<dynamic_binding>>: The `DynamicBinding` interface, intended to
+be implemented by filters and entity interceptors, is replaced by
+`DynamicBinder`. A dynamic binder is a new type of provider that binds
+filters and entity interceptors with resource methods.
+* Chapter ``Validation'': Use media type names instead of Java constants
+for clarity. More descriptive names for constraint annotations. Changed
+inheritance rules for constraint annotations to follow those defined in
+<<bib16>>. New note about `@Valid` support for return values. Fixed
+phase number typo.
+* <<timeouts_and_callbacks>>: New sentence about calling `suspend`
+more than once or in a method annotated with `@Suspend`.
+* <<async_ejbs>>: New section about EJB resource classes with
+methods annotated with `@Asynchronous`.
+* Chapter <<environment>>: Re-structured chapter with sub-sections for
+each of the EE technologies with which JAX-RS integrates. New examples
+added.

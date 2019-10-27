@@ -1,0 +1,8 @@
+[[config]]
+=== Configuration
+
+The resources and providers that make up a JAX-RS application are
+configured via an application-supplied subclass of `Application`. An
+implementation MAY provide alternate mechanisms for locating resource
+classes and providers (e.g. runtime class scanning) but use of
+`Application` is the only portable means of configuration.

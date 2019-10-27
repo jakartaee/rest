@@ -1,0 +1,71 @@
+[[introduction_filters]]
+=== Introduction
+
+Entity interceptors wrap around a method invocation at a specific
+extension point. Filters execute code at an extension point but without
+wrapping a method invocation. There are four extension points for
+filters: , ,  and . There are two extension points for entity
+interceptors:  and . For each of these extension points, there is a
+corresponding interface:
+
+[source,java,numbered]
+-------------
+public interface ClientRequestFilter {
+    void filter(ClientRequestContext requestContext) throws IOException;
+}
+public interface ClientResponseFilter {
+    void filter(ClientRequestContext requestContext,
+        ClientResponseContext responseContext) throws IOException;
+}
+public interface ContainerRequestFilter {
+    void filter(ContainerRequestContext requestContext) throws IOException;
+}
+public interface ContainerResponseFilter {
+    void filter(ContainerRequestContext requestContext,
+    ContainerResponseContext responseContext) throws IOException;
+}
+
+public interface ReaderInterceptor {
+    Object aroundReadFrom(ReaderInterceptorContext context)
+        throws java.io.IOException, javax.ws.rs.WebApplicationException;
+}
+public interface WriterInterceptor {
+    void aroundWriteTo(WriterInterceptorContext context)
+        throws java.io.IOException, javax.ws.rs.WebApplicationException;
+}
+-------------
+
+A _client_ filter is a class that implements `ClientRequestFilter` or
+`ClientResponseFilter` or both. A _container_ filter is a class that
+implements `ContainerRequestFilter` or `ContainerResponseFilter`, or
+both. An entity interceptor is a class that implements
+`ReaderInterceptor` or `WriterInterceptor`, or both. Filters and entity
+interceptors are providers and, as such, may be annotated with
+`@Provider` for automatic discovery.
+
+In the Client API, a `ClientRequestFilter` is executed as part of the
+invocation pipeline, before the HTTP request is delivered to the
+network; a `ClientResponseFilter` is executed upon receiving a server
+response, before control is returned to the application. In the Server
+API, a `ContainerRequestFilter` is executed upon receiving a request
+from a client; a `ContainerResponseFilter` is executed as part of the
+response pipeline, before the HTTP response is delivered to the network.
+
+A globally-bound (see <<global_binding>>)
+`ContainerRequestFilter` is a container filter executed after resource
+matching _unless_ it is annotated with `@PreMatching`. The use of this
+annotation on this type of filters defines a new extension point for
+applications to use, namely . Certain `ContainerRequestContext` methods
+may not be available at this extension point.
+
+An entity interceptor implementing `ReaderInterceptor` wraps around
+calls to `MessageBodyReader`’s method `readFrom`. An entity interceptor
+implementing `WriterInterceptor` wraps around calls to
+`MessageBodyWriter`’s method `writeTo`. JAX-RS implementations are
+REQUIRED to call registered interceptors when mapping representations to
+Java types and vice versa. See <<entity_providers>> for more
+information on entity providers.
+
+Please refer to Appendix <<processing_pipeline>> for some diagrams on the
+client and server processing pipelines that show the interaction between
+filters and entity interceptors.

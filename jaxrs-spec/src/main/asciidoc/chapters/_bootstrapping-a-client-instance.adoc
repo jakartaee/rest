@@ -1,0 +1,25 @@
+[[bootstrapping-a-client-instance]]
+=== Bootstrapping a Client Instance
+
+An instance of `Client` is required to access a Web resource using the
+Client API. The default instance of `Client` can be obtained by calling
+`newClient` on `ClientBuilder`. `Client` instances can be configured
+using methods inherited from `Configurable` as follows:
+
+[source,java,numbered]
+-------------
+// Default instance of client
+Client client = ClientBuilder.newClient();
+
+// Additional configuration of default client
+client.property("MyProperty", "MyValue")
+    .register(MyProvider.class)
+    .register(MyFeature.class);
+-------------
+
+See Chapter <<providers>> for more information on providers. Properties
+are simply name-value pairs where the value is an arbitrary object.
+Features are also providers and must implement the `Feature` interface;
+they are useful for grouping sets of properties and providers (including
+other features) that are logically related and must be enabled as a
+unit.

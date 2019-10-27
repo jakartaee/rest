@@ -1,0 +1,36 @@
+[[priorities]]
+=== Priorities
+
+The order in which filters and interceptors are executed as part of
+their corresponding chains is controlled by the `@Priority` annotation
+defined in <<bib15>>. Priorities are represented by integer
+numbers. Execution chains for extension points , , ,  and  are sorted in
+__ascending order__; the lower the number the higher the priority.
+Execution chains for extension points  and  are sorted in __descending
+order__; the higher the number the higher the priority. These rules
+ensure that response filters are executed in reversed order of request
+filters.
+
+The `Priorities` class in JAX-RS defines a set of built-in priorities
+for security, header decorators, decoders and encoders. The default
+binding priority is `javax.ws.rs.Priorities.USER`. For example, the
+priority of an authentication filter can be set as follows:
+
+[source,java,numbered]
+-------------
+@Provider
+@Authenticated
+@Priority(Priorities.AUTHENTICATION)
+public class AuthenticationFilter implements ContainerRequestFilter {
+    ...
+}
+-------------
+
+Note that even though, as explained in <<binding_in_client_api>>,
+annotations are not used for binding in the Client API, they are still
+used to define priorities. Therefore, if a priority other than the
+default is required, the `@Priority` annotation must be used for a
+filter or interceptor registered with the Client API.
+
+The order in which filters and interceptors that belong to the same
+priority class are executed is implementation dependent.

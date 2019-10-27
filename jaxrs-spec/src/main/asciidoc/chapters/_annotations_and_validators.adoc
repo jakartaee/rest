@@ -1,0 +1,48 @@
+[[annotations_and_validators]]
+=== Annotations and Validators
+
+Annotation constraints and validators are defined in accordance with the
+Bean Validation specification <<bib16>>. The `@Email` annotation
+shown above is defined using the Bean Validation
+`@Constraint` meta-annotation:
+
+[source,java,numbered]
+-------------
+@Target( { METHOD, FIELD, PARAMETER })
+@Retention(RUNTIME)
+@Constraint(validatedBy = EmailValidator.class)
+public @interface Email {
+    String message() default "{com.example.validation.constraints.email}";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
+}
+-------------
+
+The `@Constraint` annotation must include a reference to the validator
+class that will be used to validate decorated values. The
+`EmailValidator` class must implement `ConstraintValidator<Email, T>`
+where `T` is the type of values being validated. For example,
+
+[source,java,numbered]
+-------------
+public class EmailValidator implements ConstraintValidator<Email, String> {
+    public void initialize(Email email) {
+        ...
+    }
+
+    public boolean isValid(String value, ConstraintValidatorContext context) {
+        ...
+    }
+}
+-------------
+
+Thus, `EmailValidator` applies to values annotated with `@Email` that
+are of type `String`. Validators for different types can be defined for
+the same constraint annotation.
+
+Constraint annotations must also define a `groups` element to indicate
+which processing groups they are associated with. If no groups are
+specified (as in the example above) the `Default` group is assumed. For
+simplicity, JAX-RS implementations are NOT REQUIRED to support
+processing groups other than `Default`. In what follows, we assume that
+constraint validation is carried out in the `Default` processing group.

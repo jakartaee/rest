@@ -31,34 +31,4 @@ A JAX-RS implementation may rely on a particular implementation of
 supplied `RuntimeDelegate` instance with an application-supplied
 alternative and doing so may cause unexpected problems.
 
-[[rdconfig]]
-=== Configuration
-
-If not supplied by injection, the supplied `RuntimeDelegate` API class
-obtains the concrete implementation class using the following algorithm.
-The steps listed below are performed in sequence and, at each step, at
-most one candidate implementation class name will be produced. The
-implementation will then attempt to load the class with the given class
-name using the current context class loader or, missing one, the
-`java.lang.Class.forName(String)` method. As soon as a step results in
-an implementation class being successfully loaded, the algorithm
-terminates.
-
-1.  Use the Java SE class `java.util.ServiceLoader` to attempt to load
-an implementation from
-`META-INF/services/javax.ws.rs.ext.RuntimeDelegate`. Note that this may
-require more than one call to method
-`ServiceLoader.load(Class, ClassLoader)` in order to try both the
-context class loader and the current class loader as explained
-above.footnote:[Earlier versions of JAX-RS did not mandate the use
-`ServiceLoader`. This backward-compatible change that started in
-JAX-RS 2.1 is to ensure forward compatibility with the Java SE 9 module
-system.]
-2.  If the `${java.home}/lib/jaxrs.properties` file exists and it is
-readable by the `java.util.Properties.load(InputStream)` method and it
-contains an entry whose key is `javax.ws.rs.ext.RuntimeDelegate`, then
-the value of that entry is used as the name of the implementation class.
-3.  If a system property with the name `javax.ws.rs.ext.RuntimeDelegate`
-is defined, then its value is used as the name of the implementation
-class.
-4.  Finally, a default implementation class name is used.
+include::_rdconfig.adoc[]

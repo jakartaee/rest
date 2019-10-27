@@ -1,0 +1,26 @@
+[[servlet_container]]
+=== Servlet Container
+
+The `@Context` annotation can be used to indicate a dependency on a
+Servlet-defined resource. A Servlet-based implementation MUST support
+injection of the following Servlet-defined types: `ServletConfig`,
+`ServletContext`, `HttpServletRequest` and `HttpServletResponse`.
+
+An injected `HttpServletRequest` allows a resource method to stream the
+contents of a request entity. If the resource method has a parameter
+whose value is derived from the request entity then the stream will have
+already been consumed and an attempt to access it MAY result in an
+exception.
+
+An injected `HttpServletResponse` allows a resource method to commit the
+HTTP response prior to returning. An implementation MUST check the
+committed status and only process the return value if the response is
+not yet committed.
+
+Servlet filters may trigger consumption of a request body by accessing
+request parameters. In a servlet container the @FormParam annotation and
+the standard entity provider for `application/x-www-form-urlencoded`
+MUST obtain their values from the servlet request parameters if the
+request body has already been consumed. Servlet APIs do not
+differentiate between parameters in the URI and body of a request so
+URI-based query parameters may be included in the entity parameter.

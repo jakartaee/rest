@@ -1,0 +1,14 @@
+[[annotation_inheritance]]
+=== Annotation Inheritance
+
+The rules for inheritance of constraint annotation are defined in
+<<bib16>>. It is worth noting that these rules are incompatible
+with those defined in <<annotationinheritance>>. Generally
+speaking, constraint annotations in <<bib16>> are cumulative (can
+be strengthen) across a given type hierarchy while JAX-RS annotations
+are inherited or, overridden and ignored.
+
+The goal of this specification is to enable validation of
+JAX-RS resources by leveraging existing Bean Validation implementations.
+Therefore, JAX-RS implementations MUST follow the constraint annotation
+rules defined in <<bib16>>.

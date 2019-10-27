@@ -1,0 +1,36 @@
+[[changes-since-public-review-draft]]
+=== Changes Since Public Review Draft
+
+* <<applications>>: Renamed ApplicationConfig class to
+Application.
+* Chapter <<resources>>: UriBuilder reworked to always encode components.
+* <<resource_class_constructor>> and
+<<provider_class_constructor>>: Added requirement to warn when choice of
+constructor is ambiguous.
+* <<resource_field>>: `FormParam` no longer required to be
+supported on fields or properties.
+* <<resource_method_return>>: Added text describing how to
+determine raw and generic types from method return type and returned
+instance.
+* <<uritemplates>>: Template parameters can specify the regular
+expression that forms their capturing group.
+* <<reqpreproc>>: Make pre-processed URIs available rather than
+original request URI. Added URI normalization.
+* <<reqpreproc>>: Removed URI-based content negotiation.
+* <<request_matching>>: Reorganized the request matching algorithm
+to remove redundancy and improve readability, no functional change.
+* <<template_to_regex>>: Changes to regular expressions to
+eliminate edge cases.
+* <<entity_providers>>: Added requirement to use JavaBean
+Activation Framework when no entity provider can be found.
+* <<standard_entity_providers>>: Require standard JAXB entity
+providers to use application-supplied JAXB contexts in preference to
+their own.
+* <<contextprovider>>: Added support for specifying media type
+capabilities of context providers.
+* <<contexttypes>>: Removed `ContextResolver` from list of
+injectable resources.
+* <<providercontext>>: Changed name to Providers, removed entity
+provider-specific text to reflect more generic capabilities.
+* <<headersupport>>: New appendix describing where particular HTTP
+headers are supported.

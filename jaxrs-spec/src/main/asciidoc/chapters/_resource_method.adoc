@@ -1,0 +1,175 @@
+[[resource_method]]
+=== Resource Methods
+
+Resource methods are methods of a resource class annotated with a
+request method designator. They are used to handle requests and MUST
+conform to certain restrictions described in this section.
+
+A request method designator is a runtime annotation that is annotated
+with the `@HttpMethod` annotation. JAX-RS defines a set of request
+method designators for the common HTTP methods: `@GET`, `@POST`, `@PUT`,
+`@DELETE`, `@PATCH`, `@HEAD` and `@OPTIONS`. Users may define their own
+custom request method designators including alternate designators for
+the common HTTP methods.
+
+[[visibility]]
+==== Visibility
+
+Only `public` methods may be exposed as resource methods. An
+implementation SHOULD warn users if a non-`public` method carries a
+method designator or `@Path` annotation.
+
+[[resource_method_params]]
+==== Parameters
+
+When a resource method is invoked, parameters annotated with
+`@FormParam` or one of the annotations listed in Section
+[resource_field] are mapped from the request according to the semantics
+of the annotation. Similar to fields and bean properties:
+
+* The `DefaultValue` annotation may be used to supply a default value
+for parameters
+* The `Encoded` annotation may be used to disable automatic URI decoding
+of parameter values
+* Exceptions thrown during construction of parameter values are treated
+the same as exceptions thrown during construction of field or bean
+property values, see <<resource_field>>. Exceptions thrown during
+construction of `@FormParam` annotated parameter values are treated the
+same as if the parameter were annotated with `@HeaderParam`.
+
+[[entity_parameters]]
+===== Entity Parameters
+
+The value of a parameter not annotated with `@FormParam` or any of the
+annotations listed in in <<resource_field>>, called the entity
+parameter, is mapped from the request entity body. Conversion between an
+entity body and a Java type is the responsibility of an entity provider,
+see <<entity_providers>>. Resource methods MUST have at most one
+entity parameter.
+
+[[resource_method_return]]
+==== Return Type
+
+Resource methods MAY return `void`, `Response`, `GenericEntity`, or
+another Java type, these return types are mapped to a response entity
+body as follows:
+
+`void`::
+  Results in an empty entity body with a 204 status code.
+`Response`::
+  Results in an entity body mapped from the entity property of the
+  `Response` with the status code specified by the status property of
+  the `Response`. A `null` return value results in a 204 status code. If
+  the status property of the `Response` is not set: a 200 status code is
+  used for a non-`null` entity property and a 204 status code is used if
+  the entity property is `null`.
+`GenericEntity`::
+  Results in an entity body mapped from the `Entity` property of the
+  `GenericEntity`. If the return value is not `null` a 200 status code
+  is used, a `null` return value results in a 204 status code.
+Other::
+  Results in an entity body mapped from the class of the returned
+  instance or of its type parameter `T` if the return type is
+  `CompletionStage<T>` (see <<completionstage>>); if the class is
+  an anonymous inner class, its superclass is used instead. If the
+  return value is not `null` a 200 status code is used, a `null` return
+  value results in a 204 status code.
+
+Methods that need to provide additional metadata with a response should
+return an instance of `Response`, the `Response``Builder` class provides
+a convenient way to create a `Response` instance using a builder
+pattern.
+
+Conversion between a Java object and an entity body is the
+responsibility of an entity provider, see <<entity_providers>>.
+The return type of a resource method and the type of the returned
+instance are used to determine the raw type and generic type supplied to
+the `isWritable` method of `MessageBodyWriter` as follows:
+
+[id="Table 3.1"]
+|==================================
+|*Return Type*  |*Returned Instance*
+usedfootnote:[Or `Entity` property of returned instance if return type is
+`Response` or a subclass thereof.]    |*Raw Type*     |*Generic Type*
+|`GenericEntity`    |`GenericEntity` or subclass    |`RawType` property
+|`Type` property
+|`Response` |`GenericEntity` or subclass    |`RawType` property
+|`Type` property
+|`Response` |`Object` or subclass   |Class of instance |Class of instance
+|`Other`    |Return type or subclass    |Class of instance  |Generic type of return type
+|==================================
+Table 3.1: Determining raw and generic types of return values
+
+To illustrate the above consider a method that always returns an
+instance of `ArrayList<String>` either directly or wrapped in some
+combination of `Response` and `GenericEntity`. The resulting raw and
+generic types are shown below.
+
+[id="Table 3.2"]
+|==================================
+|*Return Type*  |*Returned Instance*    |*Raw Type* |*Generic Type
+|`GenericEntity`    |`GenericEntity<List<String>>`  |`ArrayList<?>` |`List<String>`
+|`Response` |`GenericEntity<List<String>>`  |`ArrayList<?>` |`List<String>`
+|`Response` |`ArrayList<String>`    |`ArrayList<?>` |`ArrayList<?>`
+|`List<String>` |`ArrayList<String>`    |`ArrayList<?>` |`List<String>`
+|==================================
+Table 3.2: Example raw and generic types of return values
+
+[[method_exc]]
+==== Exceptions
+
+A resource method, sub-resource method or sub-resource locator may throw
+any checked or unchecked exception. An implementation MUST catch all
+exceptions and process them in the following order:
+
+1.  Instances of `WebApplicationException` and its subclasses MUST be
+mapped to a response as follows. If the `response` property of the
+exception does not contain an entity and an exception mapping provider
+(see <<exceptionmapper>>) is available for
+`WebApplicationException` or the corresponding subclass, an
+implementation MUST use the provider to create a new
+`Response` instance, otherwise the `response` property is used directly.
+The resulting `Response` instance is then processed according to
+<<resource_method_return>>.
+2.  If an exception mapping provider (see <<exceptionmapper>>) is
+available for the exception or one of its superclasses, an
+implementation MUST use the provider whose generic type is the nearest
+superclass of the exception to create a `Response` instance that is then
+processed according to <<resource_method_return>>. If the
+exception mapping provider throws an exception while creating a
+`Response` then return a server error (status code 500) response to the
+client.
+3.  Unchecked exceptions and errors that have not been
+mapped MUST be re-thrown and allowed to propagate to the underlying
+container.
+4.  Checked exceptions and throwables that have not been
+mapped and cannot be thrown directly MUST be wrapped in a
+container-specific exception that is then thrown and allowed to
+propagate to the underlying container. Servlet-based implementations
+MUST use `ServletException` as the wrapper. JAX-WS `Provider`-based
+implementations MUST use `WebServiceException` as the wrapper.
+
+*Note:* _Items 3 and 4 allow existing container facilities
+(e.g. a Servlet filter or error pages) to be used to handle the error if
+desired._
+
+[[head_and_options]]
+==== HEAD and OPTIONS
+
+`HEAD` and `OPTIONS` requests receive additional automated support. On
+receipt of a `HEAD` request an implementation MUST either:
+
+1.  Call a method annotated with a request method designator for `HEAD`
+or, if none present,
+2.  Call a method annotated with a request method
+designator for `GET` and discard any returned entity.
+
+Note that option 2 may result in reduced performance where
+entity creation is significant.
+
+On receipt of an `OPTIONS` request an implementation MUST either:
+
+1.  Call a method annotated with a request method designator for
+`OPTIONS` or, if none present,
+2.  Generate an automatic response using the metadata provided by the
+JAX-RS annotations on the matching class and its methods.

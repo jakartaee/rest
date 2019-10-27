@@ -1,0 +1,38 @@
+[[exceptions_providers]]
+=== Exceptions
+
+Exception handling differs depending on whether a provider is part of
+the client runtime or server runtime. This is covered in the next two
+sections.
+
+[[exceptions_providers_server]]
+==== Server Runtime
+
+When a provider method throws an exception, the JAX-RS server runtime
+will attempt to map the exception to a suitable HTTP response in the
+same way as described for methods and locators in <<method_exc>>.
+If the exception is thrown while generating a response,
+JAX-RS implementations are required to map the exception _only when_ the
+response has not been committed yet.
+
+As explained in <<exceptionmapper>>, an application can supply
+exception mapping providers to customize this mapping, but these
+exception mappers will be ignored during the processing of a _previously
+mapped_ response to avoid entering a potentially infinite loop. For
+example, suppose a method in a message body reader throws an exception
+that is mapped to a response via an exception mapping provider; if the
+message body writer throws an exception while trying to write the mapped
+response, JAX-RS implementations will not attempt to map the exception
+again.
+
+[[exceptions_providers_client]]
+==== Client Runtime
+
+When a provider method throws an exception, the JAX-RS client runtime
+will map it to an instance of `ProcessingException` if thrown while
+processing a request, and to a `ResponseProcessingException` if thrown
+while processing a response.
+
+Note that the client runtime will only throw an instance of
+`WebApplicationException` (or any of its subclasses) as a result of a
+response from the server with status codes 3xx, 4xx or 5xx.

@@ -1,0 +1,29 @@
+[[contextprovider]]
+=== Context Providers
+
+Context providers supply context to resource classes and other
+providers. A context provider class implements the `ContextResolver<T>`
+interface and may be annotated with `@Provider` for automatic discovery.
+E.g., an application wishing to provide a customized `JAXBContext` to
+the default JAXB entity providers would supply a class implementing
+`ContextResolver<JAXBContext>`.
+
+Context providers MAY return `null` from the `getContext` method if they
+do not wish to provide their context for a particular Java type. E.g. a
+JAXB context provider may wish to only provide the context for certain
+JAXB classes. Context providers MAY also manage multiple contexts of the
+same type keyed to different Java types.
+
+[[context_media_type]]
+==== Declaring Media Type Capabilities
+
+Context provider implementations MAY restrict the media types they
+support using the `@Produces` annotation. The absence of this annotation
+is equivalent to its inclusion with media type (/*), i.e. absence
+implies that any media type is supported.
+
+When choosing a context provider an implementation sorts the available
+providers according to the media types they declare support for. Sorting
+of media types follows the general rule: x/y latexmath:[$<$] x/*
+latexmath:[$<$] */*, i.e. a provider that explicitly lists a media type
+is sorted before a provider that lists */*.

@@ -1,0 +1,39 @@
+[[client-targets]]
+=== Client Targets
+
+The benefits of using a `WebTarget` become apparent when building
+complex URIs, for example by extending base URIs with additional path
+segments or templates. The following example highlights these cases:
+
+[source,java,numbered]
+-------------
+WebTarget base = client.target("http://example.org/");
+WebTarget hello = base.path("hello").path("{whom}");
+Response res = hello.resolveTemplate("whom", "world").request("...").get();
+-------------
+
+Note the use of the URI template parameter `{whom}`. The example above
+gets a representation for the resource identified by
+`http://example.org/hello/world`.
+
+`WebTarget` instances are _immutable_ with respect to their URI (or URI
+template): methods for specifying additional path segments and
+parameters return a new instance of `WebTarget`. However,
+`WebTarget` instances are _mutable_ with respect to their configuration.
+Thus, configuring a `WebTarget` does not create new instances.
+
+[source,java,numbered]
+-------------
+// Create WebTarget instance base
+WebTarget base = client.target("http://example.org/");
+// Create new WebTarget instance hello and configure it
+WebTarget hello = base.path("hello");
+hello.register(MyProvider.class);
+-------------
+
+In this example, two instances of `WebTarget` are created. The instance
+`hello` inherits the configuration from `base` and it is further
+configured by registering `MyProvider.class`. Note that changes to
+`hello`’s configuration do not affect `base`, i.e. inheritance performs
+a _deep_ copy of the configuration. See Section [configurable_types] for
+additional information on configurable types.

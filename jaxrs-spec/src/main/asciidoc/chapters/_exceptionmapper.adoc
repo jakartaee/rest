@@ -1,0 +1,31 @@
+[[exceptionmapper]]
+=== Exception Mapping Providers
+
+Exception mapping providers map a checked or runtime exception to an
+instance of `Response`. An exception mapping provider implements the
+`ExceptionMapper<T>` interface and may be annotated with `@Provider` for
+automatic discovery.
+
+When a resource class or provider method throws an exception for which
+there is an exception mapping provider, the matching provider is used to
+obtain a `Response` instance. The resulting `Response` is processed as
+if a web resource method had returned the `Response`, see
+<<resource_method_return>>. In particular, a mapped `Response` MUST be
+processed using the ContainerResponse filter chain defined in
+Chapter <<filters_and_interceptors>>.
+
+When choosing an exception mapping provider to map an exception, an
+implementation MUST use the provider whose generic type is the nearest
+superclass of the exception. If two or more exception providers are
+applicable, the one with the highest priority MUST be chosen as
+described in <<provider_priorities>>.
+
+To avoid a potentially infinite loop, a single exception mapper must be
+used during the processing of a request and its corresponding response.
+JAX-RS implementations MUST NOT attempt to map exceptions thrown while
+processing a response previously mapped from an exception. Instead, this
+exception MUST be processed as described in steps 3 and
+4 in <<method_exc>>.
+
+Note that exception mapping providers are _not_ supported as part of the
+Client API.

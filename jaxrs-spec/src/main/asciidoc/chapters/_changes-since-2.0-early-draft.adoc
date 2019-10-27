@@ -1,0 +1,35 @@
+[[changes-since-2.0-early-draft]]
+=== Changes Since 2.0 Early Draft
+
+* <<expert_group>>: Updated 2.0 expert group member list.
+* <<acks>>: Updated acknowledgements for 2.0 version.
+* <<exceptions_providers>>: New section that describes exception
+handling for all providers. Related changes to reference this new
+section.
+* <<exceptions_filters_and_interceptors>>: New section for filter
+and interceptor exceptions. Related changes to reference this new
+section.
+* <<request_matching>>: Updated step 2a so that it only goes to
+step 3 when latexmath:[$M \neq \{\}$].
+* <<request_matching>>: New sentence about the use of a server
+quality parameter (qs-value) during request matching.
+* Chapter <<filters_and_interceptors>>: New extension point for pre-match
+filters that are executed before resource matching.
+* Chapter <<filters_and_interceptors>>: Filter methods no longer return a
+next action; the execution of a request filter chain is stopped by
+setting a response in the associated context.
+* Chapter <<filters_and_interceptors>>: Handlers renamed to entity
+interceptors for clarity (in this log included).
+* Section <<global_binding>>: Global binding is now the default for
+filters and entity interceptors. The annotation `@GlobalBinding` has
+been dropped.
+* Section <<priorities>>: Clarified reverse ordering of the response
+filter chain based on binding priorities.
+* Appendix C: Removed from this version after changes to Chapter
+<<filters_and_interceptors>>.
+* Chapter ``Validation'': Moved to an instantiate-then-validate strategy
+in which validation of constructor parameters and setters is no longer
+supported. Simplified validation process to better align with Bean
+Validation 1.1 <<bib16>>. In particular, validation of resource
+classes, fields and property getters are all carried out in a single
+step.

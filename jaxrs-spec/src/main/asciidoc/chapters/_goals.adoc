@@ -1,0 +1,31 @@
+[[goals]]
+=== Goals
+
+The following are the goals of the API:
+
+POJO-based::
+  The API will provide a set of annotations and associated
+  classes/interfaces that may be used with POJOs in order to expose them
+  as Web resources. The specification will define object lifecycle and
+  scope.
+HTTP-centric::
+  The specification will assume HTTP<<bib4>> is the
+  underlying network protocol and will provide a clear mapping between
+  HTTP and URI<<bib5>> elements and
+  the corresponding API classes and annotations. The API will provide
+  high level support for common HTTP usage patterns and will be
+  sufficiently flexible to support a variety of HTTP applications
+  including WebDAV<<bib6>> and the Atom Publishing
+  Protocol<<bib7>>.
+Format independence::
+  The API will be applicable to a wide variety of HTTP entity body
+  content types. It will provide the necessary pluggability to allow
+  additional types to be added by an application in a standard manner.
+Container independence::
+  Artifacts using the API will be deployable in a variety of Web-tier
+  containers. The specification will define how artifacts are deployed
+  in a Servlet<<bib8>> container and as a JAX-WS<<bib9>> Provider.
+Inclusion in Java EE::
+  The specification will define the environment for a Web resource class
+  hosted in a Java EE container and will specify how to use Java EE
+  features and components within a Web resource class.

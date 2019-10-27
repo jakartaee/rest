@@ -1,0 +1,36 @@
+[[changes-since-2.0-public-review-draft]]
+=== Changes Since 2.0 Public Review Draft
+
+* In Javadocs: Method `getSize` in class `MessageBodyWriter` is
+deprecated.
+* Chapter <<resources>> and <<providers>>: Replaced
+`WebApplicationException` by corresponding subclass depending on HTTP
+status code.
+* <<resource_field>>: New step for `ParamConverter`.
+* <<standard_entity_providers>>: Special case for zero-length
+entities and primitive types.
+* Chapter <<client_api>>: Updated samples and text related to the
+configuration of Client API types. Method `configuration` has been
+removed in favor of the `Configurable` interface.
+* Chapter <<client_api>>: `ClientFactory` renamed to `ClientBuilder`.
+* Chapter <<client_api>>: Dropped support for `@Uri` annotation.
+* <<entity_interceptors>>: New paragraph clarifying that entity
+interceptors are not called if a `readFrom` or `writeTo` method is
+called directly from application code.
+* <<entity_interceptors>>: Improved `GzipInterceptor` sample.
+* <<Name_Binding>>: Clarified name binding with multiple
+annotations. Made semantics compatible with CDI interceptor binding.
+Name binding with `Application` subclasses.
+* <<priorities>>: Annotation `@BindingPriority` replaced by common
+annotation `@Priority`.
+* <<exceptions_filters_and_interceptors>>: Clarified processing of
+a response mapped from an exception.
+* <<server_api>>: Updated samples in this section. New citation
+for JSR 236.
+* <<timeouts_and_callbacks>>: Improved example.
+* <<client_api_async>>: Fixed signature of method `failed` in
+samples.
+* <<default_validation_mode>>: New section about default
+validation and `@ValidateExecutable`.
+* <<validation_and_error_reporting>>: Restored validation phases.
+* <<jsonp>>: New section about integration with JSON-P.

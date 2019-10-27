@@ -1,0 +1,20 @@
+[[sse_pipeline]]
+=== Processing Pipeline
+
+Connections from SSE clients are represented by injectable instances of
+`SseEventSink`. There are some similarities between SSE and asynchronous
+processing (see Chapter <<asynchronous_processing>>). Asynchronous
+responses can be resumed at most once while an `SseEventSink` can be
+used multiple times to stream individual events.
+
+For compatibility purposes, implementations MUST initiate processing of
+an SSE response when either the first message is sent or when the
+resource method returns, whichever happens first. The initial SSE
+response, which may only include the HTTP headers, is processed using
+the standard JAX-RS pipeline as described in Appendix
+<<processing_pipeline>>. Each subsequent SSE event may include a different
+payload and thus require the use of a specific message body writer. Note
+that since this use case differs slightly from the normal
+JAX-RS pipeline, implementations SHOULD NOT call entity interceptors on
+each individual event.footnote:[As a matter of fact, there is no API to
+bind entity interceptors to individual SSE events.]

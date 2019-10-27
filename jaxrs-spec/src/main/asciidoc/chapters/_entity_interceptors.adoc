@@ -1,0 +1,72 @@
+[[entity_interceptors]]
+=== Entity Interceptors
+
+An entity interceptor implements interface `ReaderInterceptor` or
+`WriterInterceptor`, or both. There is an _interceptor chain_ for each
+kind of entity interceptor. Entity interceptors in a chain are sorted
+based on their priorities (see <<priorities>>) and are executed in
+order.
+
+As part of the JAX-RS processing pipeline (see Appendix
+<<processing_pipeline>>), entity interceptors wrap calls to the methods
+`readFrom` in classes implementing `MessageBodyReader` and `writeTo` in
+classes implementing `MessageBodyWriter`. An interceptor SHOULD
+explicitly call the context method `proceed` to continue the execution
+of the chain. Because of their wrapping nature, failure to call this
+method will prevent execution of the wrapped method in the corresponding
+message body reader or message body writer.
+
+The following example shows an implementation of a GZIP entity
+interceptor that provides deflate and inflate
+capabilities footnote:[This class is not intended to be a complete
+implementation of this interceptor.].
+
+[source,java,numbered]
+-------------
+@Provider
+class GzipInterceptor implements ReaderInterceptor, WriterInterceptor {
+
+    @Override
+    Object aroundReadFrom(ReaderInterceptorContext ctx) ... {
+        if (isGzipped(ctx)) {
+            InputStream old = ctx.getInputStream();
+            ctx.setInputStream(new GZIPInputStream(old));
+            try {
+                return ctx.proceed();
+            } finally {
+                ctx.setInputStream(old);
+            }
+        } else {
+            return ctx.proceed();
+        }
+    }
+
+    @Override
+    void aroundWriteTo(WriterInterceptorContext ctx) ... {
+        OutputStream old = ctx.getOutputStream();
+        GZIPOutputStream gzipOutputStream = new GZIPOutputStream(old);
+        ctx.setOutputStream(gzipOutputStream);
+        updateHeaders(ctx);
+        try {
+            ctx.proceed();
+        } finally {
+            gzipOutputStream.finish();
+            ctx.setOutputStream(old);
+        }
+    }
+    ...
+}
+-------------
+
+The context types, `ReaderInterceptorContext` and
+`WriterInterceptorContext`, provide read and write access to the
+parameters of the corresponding wrapped methods. In the example shown
+above, the input and output streams are wrapped and updated in the
+context object before proceeding. JAX-RS implementations MUST use the
+last parameter values set in the context object when calling the wrapped
+methods `MessageBodyReader.readFrom` and `MessageBodyWriter.writeTo`.
+
+It is worth noting that a `readFrom` or a `writeTo` that is called
+directly from application code, e.g. via the injection of a `Providers`
+instance, will _not_ trigger the execution of any entity interceptors
+since it is not part of the normal JAX-RS processing pipeline.

@@ -1,0 +1,42 @@
+[[sse_server_api]]
+=== Server API
+
+The JAX-RS SSE server API is used to accept connections and send events
+to one or more clients. A resource method that injects an `SseEventSink`
+and produces the media type `text/event-stream` is an SSE resource
+method.
+
+The following example accepts SSE connections and uses an executor
+thread to send 3 events before closing the connection:
+
+[source,java,numbered]
+-------------
+@GET
+@Path("eventStream")
+@Produces(MediaType.SERVER_SENT_EVENTS)
+public void eventStream(@Context SseEventSink eventSink,
+                        @Context Sse sse) {
+    executor.execute(() -> {
+        try (SseEventSink sink = eventSink) {
+            eventSink.send(sse.newEvent("event1"));
+            eventSink.send(sse.newEvent("event2"));
+            eventSink.send(sse.newEvent("event3"));
+        }
+    });
+}
+-------------
+
+SSE resource methods follow a similar pattern to those for asynchronous
+processing (see <<introduction_async>>) in that the object
+representing the incoming connection, in this case `SseEventSink`, is
+injected into the resource method.
+
+The example above also injects the `Sse` type which provides factory
+methods for events and broadcasters. See <<sse_broadcasting>> for
+more information about broadcasting. Note that, just like
+`SseEventSource`, the interface `SseEventSink` is also auto-closeable,
+hence the use of the _try-with-resources_ statement above.
+
+Method `send` on `SseEventSink` returns a `CompletionStage<?>` as a way
+to provide a _handle_ to the action of asynchronously sending a message
+to a client.

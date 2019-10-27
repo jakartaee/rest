@@ -1,0 +1,10 @@
+[[concurrency]]
+=== Concurrency
+
+Context is specific to a particular request but instances of certain
+JAX-RS components (providers and resource classes with a lifecycle other
+than per-request) may need to support multiple concurrent requests. When
+injecting an instance of one of the types listed in
+<<contexttypes>>, the instance supplied MUST be capable of selecting the
+correct context for a particular request. Use of a thread-local proxy is
+a common way to achieve this.

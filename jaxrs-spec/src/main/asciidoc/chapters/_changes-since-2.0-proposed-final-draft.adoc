@@ -1,0 +1,26 @@
+[[changes-since-2.0-proposed-final-draft]]
+=== Changes Since 2.0 Proposed Final Draft
+
+* <<message_body_reader>> and <<message_body_writer>>: Updated last
+logical step separating client and server runtimes.
+* <<standard_entity_providers>>: New exception
+`NoContentException` to handle zero-length entities.
+* <<exceptions_providers>> and
+<<exceptions_filters_and_interceptors>>: New subsections to separate
+client and server processing of exceptions.
+* <<configurable_types>>: `Invocation` and
+`Invocation.Builder` are no longer configurable types.
+* <<filters_interceptors_client>>: Updated samples based on
+changes to Client API.
+* <<default_validation_mode>>: Updated section based on changes to
+Bean Validation API.
+* <<validation_and_error_reporting>>: Minor re-wording of Phase 2.
+* <<timeouts_and_callbacks>>: Improved example to return a
+response if a timeout expires.
+* <<client_api_async>>: Updated samples based on changes to Client
+API.
+* <<contexttypes>>: Clarified server vs. client injectable types.
+* <<configuration_injection>>: New section about injection of
+`Configuration` instances.
+* <<bv_support>>: New section stating that support for resource
+validation is required only in a product that supports Bean Validation.

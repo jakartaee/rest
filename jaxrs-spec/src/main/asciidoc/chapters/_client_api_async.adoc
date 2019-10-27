@@ -1,0 +1,64 @@
+[[client_api_async]]
+=== Client API
+
+The fluent API supports asynchronous invocations as part of the
+invocation building process. By default, invocations are synchronous but
+can be set to run asynchronously by calling the `async` method and
+(optionally) registering an instance of `InvocationCallback` as shown
+next:
+
+[source,java,numbered]
+-------------
+Client client = ClientBuilder.newClient();
+WebTarget target = client.target("http://example.org/customers/{id}");
+target.resolveTemplate("id", 123).request().async().get(
+    new InvocationCallback<Customer>() {
+        @Override
+        public void completed(Customer customer) {
+            // Do something
+        }
+        @Override
+        public void failed(Throwable throwable) {
+            // Process error
+        }
+});
+-------------
+
+Note that in this example, the call to `get` after calling `async`
+returns immediately without blocking the caller’s thread. The response
+type is specified as a type parameter to `InvocationCallback`. The
+method `completed` is called when the invocation completes successfully
+and a response is available; the method `failed` is called with an
+instance of `Throwable` when the invocation fails.
+
+All asynchronous invocations return an instance of `Future<T>` here the
+type parameter `T` matches the type specified in `InvocationCallback`.
+This instance can be used to monitor or cancel the asynchronous
+invocation:
+
+[source,java,numbered]
+-------------
+Future<Customer> ff = target.resolveTemplate("id", 123).request().async()
+    .get(new InvocationCallback<Customer>() {
+    @Override
+    public void completed(Customer customer) {
+        // Do something
+    }
+    @Override
+    public void failed(Throwable throwable) {
+        // Process error
+    }
+    });
+
+// After waiting for a while ...
+if (!ff.isDone()) {
+    ff.cancel(true);
+}
+-------------
+
+Even though it is recommended to pass an instance of
+`InvocationCallback` when executing an asynchronous call, it is not
+mandated. When omitted, the `Future<T>` returned by the invocation can
+be used to gain access to the response by calling the method
+`Future.get`, which will return an instance of `T` if the invocation was
+successful or `null` if the invocation failed.

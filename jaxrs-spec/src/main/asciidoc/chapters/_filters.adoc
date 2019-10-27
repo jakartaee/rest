@@ -1,0 +1,78 @@
+[[filters]]
+=== Filters
+
+Filters are grouped into __filter chains__. There is a separate filter
+chain for each extension point introduced in the previous section,
+namely: , , ,  and . Filters in a chain are sorted based on their
+priorities (see <<priorities>>) and are executed in order.
+
+The following example shows an implementation of a container logging
+filter: each method simply logs the message and returns.
+
+[source,java,numbered]
+-------------
+@Provider
+class LoggingFilter implements ContainerRequestFilter,
+                               ContainerResponseFilter {
+
+    @Override
+    public void filter(ContainerRequestContext requestContext)
+        throws IOException {
+        log(requestContext);
+    }
+
+    @Override
+    public void filter(ContainerRequestContext requestContext,
+        ContainerResponseContext responseContext) throws IOException {
+        log(responseContext);
+    }
+    ...
+}
+-------------
+
+`ContainerRequestContext` is a mutable class that provides
+request-specific information for the filter, such as the request URI,
+message headers, message entity or request-scoped properties. The
+exposed setters allow (certain) modification of the request before it is
+processed by the resource method. Similarly, there is a corresponding
+`ContainerResponseContext` that provides response-specific information.
+
+Request filters implementing `ClientRequestFilter` or
+`ContainerRequestFilter` can stop the execution of their corresponding
+chains by calling `abortWith(Response)` in their corresponding context
+object. If this method is invoked, JAX-RS implementations are REQUIRED
+to abort execution of the chain and treat the response object as if
+produced by calling the resource method (Server API) or executing the
+HTTP invocation (Client API). For example, upon a cache hit, a client
+_caching_ filter may call `abortWith(Response)` to abort execution and
+optimize network access.
+
+As stated above, a `ContainerRequestFilter` that is annotated with
+`@PreMatching` is executed upon receiving a client request but _before_
+a resource method is matched. Thus, this type of filter has the ability
+to modify the input to the matching algorithm (see
+<<request_matching>>) and, consequently, alter its outcome. The
+following example uses a `ContainerRequestFilter` annotated with
+`@PreMatching` to tunnel requests via POST by using the
+X-HTTP-Method-Override header to overwrite the HTTP method prior to
+resource matching.
+
+[source,java,numbered]
+-------------
+@Provider
+@PreMatching
+public class HttpMethodOverrideFilter implements ContainerRequestFilter {
+
+    @Override
+    public void filter(ContainerRequestContext requestContext)
+        throws IOException {
+        if (requestContext.getMethod().equalsIgnoreCase("POST")) {
+            String override = requestContext.getHeaders()
+                .getFirst("X-HTTP-Method-Override");
+            if (override != null) {
+                requestContext.setMethod(override);
+            }
+        }
+    }
+}
+-------------

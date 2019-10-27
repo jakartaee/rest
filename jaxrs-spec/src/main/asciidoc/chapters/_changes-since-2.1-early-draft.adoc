@@ -1,0 +1,8 @@
+[[changes-since-2.1-early-draft]]
+=== Changes Since 2.1 Early Draft
+
+* Chapter <<sse>>: API changes and removal of Flow API references.
+* <<resource_method>>: Added `@PATCH` to list of supported HTTP
+methods.
+* <<executor_services>>: New section about executor services.
+* <<rdconfig>>: Use of `ServiceLoader` in first step of algorithm.

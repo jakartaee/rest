@@ -1,0 +1,184 @@
+[[binding]]
+=== Binding
+
+Binding is the process by which a filter or interceptor is associated
+with a resource class or method (Server API) or an invocation (Client
+API). The forms of binding presented in the next sections are only
+supported as part of the Server API. See <<binding_in_client_api>>
+for binding in the Client API.
+
+[[global_binding]]
+==== Global Binding
+
+Global binding is the default type of binding. A filter or interceptor
+that has no annotations is assumed to be bound globally, i.e. it applies
+to all the resource methods in an application. Like any other provider,
+a filter or interceptor can be registered manually (e.g., via
+`Application` or `Configuration`) or be discovered automatically. Note
+that for a filter or interceptor to be automatically discovered it MUST
+be annotated with `@Provider` (see <<automatic_discovery>>).
+
+For example, the `LoggingFilter` defined in Section [filters] is both
+automatically discovered (it is annotated with `@Provider`) and bound
+globally. If this filter is part of an application, requests and
+responses will be logged for all resource methods.
+
+As stated in <<introduction_filters>>, a global
+`ContainerRequestFilter` is executed after resource matching unless
+annotated with `@PreMatching`. A global filter that injects
+`ResourceInfo`, and generally depends on resource information for its
+execution, must not be annotated with `@PreMatching`.
+
+[[Name_Binding]]
+==== Name Binding
+
+A filter or interceptor can be associated with a resource class or
+method by declaring a new _binding_ annotation à la CDI <<bib14>>.
+These annotations are declared using the JAX-RS meta-annotation
+`@NameBinding` and are used to decorate both the filter (or interceptor)
+and the resource method or resource class. For example, the
+`LoggingFilter` defined in <<filters>> can be bound to the method
+`hello` in `MyResourceClass`, instead of globally, as follows:
+
+[source,java,numbered]
+-------------
+@Provider
+@Logged
+class LoggingFilter implements ContainerRequestFilter,
+                               ContainerResponseFilter {
+    ...
+}
+-------------
+
+[source,java,numbered]
+-------------
+@Path("/")
+public class MyResourceClass {
+    @Logged
+    @GET
+    @Produces("text/plain")
+    @Path("{name}")
+    public String hello(@PathParam("name") String name) {
+        return "Hello " + name;
+    }
+}
+-------------
+
+According to the semantics of `LoggingFilter`, the request will be
+logged before the `hello` method is called and the response will be
+logged after it returns. The declaration of the `@Logged` annotation is
+shown next.
+
+[source,java,numbered]
+-------------
+@NameBinding
+@Target({ ElementType.TYPE, ElementType.METHOD })
+@Retention(value = RetentionPolicy.RUNTIME)
+public @interface Logged { }
+-------------
+
+Multiple filters and interceptors can be bound to a single resource
+method using additional annotations. For example, given the following
+filter:
+
+[source,java,numbered]
+-------------
+@Provider
+@Authenticated
+class AuthenticationFilter implements ContainerRequestFilter {
+    ...
+}
+-------------
+
+method `hello` above could be decorated with `@Logged` and
+`@Authenticated` in order to provide both logging and authentication
+capabilities to the resource.
+
+A filter or interceptor class can be decorated with multiple binding
+annotations. In this case, in accordance with the semantics described in
+CDI <<bib14>>, all those annotations must be present in the resource
+class or method for the binding to be established. For example, if
+`LoggingFilter` is defined as follows:
+
+[source,java,numbered]
+-------------
+@Provider
+@Logged @Verbose
+class LoggingFilter implements ContainerRequestFilter,
+                               ContainerResponseFilter {
+    ...
+}
+-------------
+
+then method `hello` above must be annotated with both `@Logged` and
+`@Verbose` for the binding to be in effect.
+
+Binding annotations can also be applied to resource classes and
+`Application` subclasses. Binding annotations that decorate resource
+classes apply to _all_ resource methods defined in them. Binding
+annotations that decorate `Application` subclasses can also be used to
+bind filters and interceptors globally, even if other annotations are
+present. For example, `LoggingFilter` as defined at the beginning of
+this section can be bound globally as follows:
+
+[source,java,numbered]
+-------------
+@Logged
+public class MyApplication extends Application {
+    ...
+}
+-------------
+
+Note that returning filters or interceptors from the methods
+`getClasses` or `getSingletons` in an application subclass will bind
+them globally only if they are _not_ decorated with a name binding
+annotation. If they are decorated with at least one name binding
+annotation, the application subclass must be annotated as shown above in
+order for those filters or interceptors to be bound globally. See
+Chapter <<applications>> for more information on JAX-RS applications.
+
+[[dynamic_binding]]
+==== Dynamic Binding
+
+The annotation-based forms of binding presented thus far are _static_.
+Dynamic binding is also supported using dynamic features. A dynamic
+feature is a provider that implements the `DynamicFeature` interface.
+These providers are used to augment the set of filters and entity
+interceptors bound to a resource method.
+
+The following example defines a dynamic feature that binds the filter
+`LoggingFilter` —assumed not globally bound for the purpose of this
+example— with all the resource methods in `MyResource` that are
+annotated with `@GET`.
+
+[source,java,numbered]
+-------------
+@Provider
+public final class DynamicLoggingFilterFeature implements DynamicFeature {
+
+    @Override
+    public void configure(ResourceInfo resourceInfo,
+                          FeatureContext context) {
+        if (MyResource.class.isAssignableFrom(resourceInfo.getResourceClass())
+            && resourceInfo.getResourceMethod().isAnnotationPresent(GET.class)) {
+            context.register(new LoggingFilter());
+        }
+    }
+}
+-------------
+
+The overridden method in this provider updates the `Configuration`
+object assigned to each resource method; the information about the
+resource method is provided in the form of a `ResourceInfo` instance.
+JAX-RS implementations SHOULD resolve dynamic features for filters and
+interceptors once for each resource method. It is RECOMMENDED to process
+dynamic features at application deployment time.
+
+[[binding_in_client_api]]
+==== Binding in Client API
+
+Binding in the Client API is accomplished via API calls instead of
+annotations. `Client`, `Invocation`, `Invocation.Builder` and
+`WebTarget` are all configurable types: their configuration can be
+accessed using the methods inherited from the `Configurable` interface.
+See <<configurable_types>> for more information.

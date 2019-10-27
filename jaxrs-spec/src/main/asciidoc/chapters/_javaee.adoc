@@ -1,0 +1,199 @@
+[[javaee]]
+=== Integration with Java EE Technologies
+
+This section describes the additional requirements that apply to a
+JAX-RS implementation when combined in a product that supports the
+following specifications.
+
+[[servlets]]
+==== Servlets
+
+In a product that also supports the Servlet specification,
+implementations MUST support JAX-RS applications that are packaged as a
+Web application. See Section [servlet] for more information Web
+application packaging.
+
+It is RECOMMENDED for a JAX-RS implementation to provide asynchronous
+processing support, as defined in <<asynchronous_processing>>, by
+enabling asynchronous processing (i.e., `asyncSupported=true`) in the
+underlying Servlet 3 container. It is OPTIONAL for a
+JAX-RS implementation to support asynchronous processing when running on
+a Servlet container whose version is prior to 3.
+
+As explained in <<servlet_container>>, injection of
+Servlet-defined types is possible using the `@Context` annotation.
+Additionally, web application’s `<context-param>` and servlet’s
+`<init-param>` can be used to define application properties passed to
+server-side features or injected into server-side JAX-RS components. See
+Javadoc for `Application.getProperties` for more information.
+
+[[managed_beans]]
+==== Managed Beans
+
+In a product that supports Managed Beans, implementations MUST support
+the use of Managed Beans as root resource classes, providers and
+`Application` subclasses.
+
+For example, a bean that uses a managed-bean interceptor can be defined
+as a JAX-RS resource as follows:
+
+[source,java,numbered]
+-------------
+@ManagedBean
+@Path("/managedbean")
+public class ManagedBeanResource {
+
+    public static class MyInterceptor {
+        @AroundInvoke
+        public String around(InvocationContext ctx) throws Exception {
+            System.out.println("around() called");
+            return (String) ctx.proceed();
+        }
+    }
+
+    @GET
+    @Produces("text/plain")
+    @Interceptors(MyInterceptor.class)
+    public String getIt() {
+        return "Hi managedbean!";
+    }
+}
+-------------
+
+The example above uses a managed-bean interceptor to intercept calls to
+the resource method `getIt`. See <<additional_reqs>> for
+additional requirements on Managed Beans.
+
+[[cdi]]
+==== Context and Dependency Injection (CDI)
+
+In a product that supports CDI, implementations MUST support the use of
+CDI-style Beans as root resource classes, providers and `Application`
+subclasses. Providers and `Application` subclasses MUST be singletons or
+use application scope.
+
+For example, assuming CDI is enabled via the inclusion of a `beans.xml`
+file, a CDI-style bean that can be defined as a JAX-RS resource as
+follows:
+
+[source,java,numbered]
+-------------
+@Path("/cdibean")
+public class CdiBeanResource {
+
+    @Inject MyOtherCdiBean bean;    // CDI injected bean
+
+    @GET
+    @Produces("text/plain")
+    public String getIt() {
+        return bean.getIt();
+    }
+}
+-------------
+
+The example above takes advantage of the type-safe dependency injection
+provided in CDI by using another bean, of type `MyOtherCdiBean`, in
+order to return a resource representation. See <<additional_reqs>>
+for additional requirements on CDI-style Beans.
+
+[[ejbs]]
+==== Enterprise Java Beans (EJBs)
+
+In a product that supports EJBs, an implementation MUST support the use
+of stateless and singleton session beans as root resource classes,
+providers and `Application` subclasses. JAX-RS annotations can be
+applied to methods in an EJB’s local interface or directly to methods in
+a no-interface EJB. Resource class annotations (like `@Path`) MUST be
+applied to an EJB’s class directly following the annotation inheritance
+rules defined in <<annotationinheritance>>.
+
+For example, a stateless EJB that implements a local interface can be
+defined as a JAX-RS resource class as follows:
+
+[source,java,numbered]
+-------------
+@Local
+public interface LocalEjb {
+
+    @GET
+    @Produces("text/plain")
+    public String getIt();
+}
+
+@Stateless
+@Path("/stateless")
+public class StatelessEjbResource implements LocalEjb {
+
+    @Override
+    public String getIt() {
+        return "Hi stateless!";
+    }
+}
+-------------
+
+JAX-RS implementations are REQUIRED to discover EJBs by inspecting
+annotations on classes and local interfaces; they are not REQUIRED to
+read EJB deployment descriptors (ejb-jar.xml). Therefore, any
+information in an EJB deployment descriptor for the purpose of
+overriding EJB annotations or providing additional meta-data will likely
+result in a non-portable JAX-RS application.
+
+If an `ExceptionMapper` for a `EJBException` or subclass is not included
+with an application then exceptions thrown by an EJB resource class or
+provider method MUST be unwrapped and processed as described in <<method_exc>>.
+
+See <<async_ejbs>> for more information on asynchronous EJB
+methods and <<additional_reqs>> for additional requirements on
+EJBs.
+
+[[bv_support]]
+==== Bean Validation
+
+In a product that supports the Bean Validation specification <<bib16>>
+, implementations MUST support resource validation using constraint
+annotations as described in Chapter <<validation>>. Otherwise, support for
+resource validation is OPTIONAL.
+
+[[jsonp]]
+==== Java API for JSON Processing
+
+In a product that supports the Java API for JSON Processing (JSON-P)
+<<bib18>>, implementations MUST support entity providers for
+`JsonValue` and all of its sub-types: `JsonStructure`, `JsonObject`,
+`JsonArray`, `JsonString` and `JsonNumber`.
+
+Note that other types from the JSON-P API such as `JsonParser`,
+`JsonGenerator`, `JsonReader` and `JsonWriter` can also be integrated
+into JAX-RS applications using the entity providers for `InputStream`
+and `StreamingOutput`.
+
+[[jsonb]]
+==== Java API for JSON Binding
+
+In a product that supports the Java API for JSON Binding (JSON-B)
+<<bib19>>, implementations MUST support entity providers for all
+Java types supported by JSON-B in combination with the following media
+types: `application/json`, `text/json` as well as any other media types
+matching `/json` or `/*+json`.
+
+Note that if JSON-B and JSON-P are both supported in the same
+environment, entity providers for JSON-B take precedence over those for
+JSON-P for all types except `JsonValue` and its sub-types.
+
+[[additional_reqs]]
+==== Additional Requirements
+
+The following additional requirements apply when using Managed Beans,
+CDI-style Beans or EJBs as resource classes, providers or `Application`
+subclasses:
+
+* Field and property injection of JAX-RS resources MUST be performed
+prior to the container invoking any `@PostConstruct` annotated method.
+* Support for constructor injection of JAX-RS resources is OPTIONAL.
+Portable applications MUST instead use fields or bean properties in
+conjunction with a `@PostConstruct` annotated method. Implementations
+SHOULD warn users about use of non-portable constructor injection.
+* Implementations MUST NOT require use of `@Inject` or `@Resource` to
+trigger injection of JAX-RS annotated fields or properties.
+Implementations MAY support such usage but SHOULD warn users about
+non-portability.

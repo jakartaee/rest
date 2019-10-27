@@ -1,0 +1,63 @@
+[[validation_and_error_reporting]]
+=== Validation and Error Reporting
+
+Constraint annotations are allowed in the same locations as the
+following annotations: `@MatrixParam`, `@QueryParam`, `@PathParam`,
+`@CookieParam`, `@HeaderParam` and `@Context`, _except_ in class
+constructors and property setters. Specifically, they are allowed in
+resource method parameters, fields and property getters as well as
+resource classes, entity parameters and resource methods (return
+values).
+
+The default resource class instance lifecycle is per-request in JAX-RS.
+Implementations MAY support other lifecycles; the same caveats related
+to the use of other JAX-RS annotations in resource classes apply to
+constraint annotations. For example, a constraint validation annotating
+a constructor parameter in a resource class whose lifecycle is singleton
+will only be executed once.
+
+JAX-RS implementations SHOULD use the following process to validate
+resource class instances after they have been instantiated:
+
+Phase 1::
+  Inject field values and initialize bean properties as described in
+  Section <<resource_field>>.
+Phase 2::
+  Validate annotations on fields, property getters (if enabled) and the
+  resource class. The order in which these validations are executed is
+  implementation dependent.
+Phase 3::
+  Validate annotations on parameters passed to the resource method
+  matched.
+Phase 4::
+  If no constraint violations found thus far, invoke resource method and
+  validate returned value.
+
+The exception model in <<bib16>> defines a base class
+`javax.validation.ValidationException` and a few subclasses to report
+errors that are specific to constraint definitions, constraint
+declarations, group definitions and constraint violations.
+JAX-RS implementations MUST provide a default exception mapper (see
+<<exceptionmapper>>) for `javax.validation.ValidationException`
+according to the following rules:
+
+1.  If the exception is of type `javax.validation.ValidationException`
+or any of its subclasses _excluding_
+`javax.validation.ConstraintViolationException`, then it is mapped to a
+response with status code 500 (Internal Server Error).
+2.  If the exception is an instance of
+`javax.validation.ConstraintViolationException`, then:
+a.  If the exception was thrown while validating a method return type,
+then it is mapped to a response with status code 500 (Internal Server
+Error).footnote:[The property path of a ConstraintViolation provides
+information about the location from which an exception originated. See
+Javadoc for more information.]
+b.  Otherwise, it is mapped to a response with status code 400 (Bad
+Request).
+
+In all cases, JAX-RS implementations SHOULD include a response entity
+describing the source of the error; however, the exact content and
+format of this entity is beyond the scope of this specification. As
+described in <<exceptionmapper>>, applications can provide their
+own exception mappers and, consequently, customize the default mapper
+described above.

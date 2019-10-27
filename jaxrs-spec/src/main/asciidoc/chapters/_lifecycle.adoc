@@ -1,0 +1,10 @@
+[[lifecycle]]
+=== Lifecycle
+
+By default, just like all the other providers, a single instance of each
+filter or entity interceptor is instantiated for each
+JAX-RS application. First the constructor is called, then any requested
+dependencies are injected, then the appropriate methods are called
+(simultaneously) as needed. Implementations MAY offer alternative
+lifecycle options beyond the default one. See
+<<lifecycle_and_environment>> for additional information.

@@ -1,0 +1,83 @@
+[[entity_validation]]
+=== Entity Validation
+
+Request entity bodies can be mapped to resource method parameters. There
+are two ways in which these entities can be validated. If the request
+entity is mapped to a Java bean whose class is decorated with Bean
+Validation annotations, then validation can be enabled using `@Valid`:
+
+[source,java,numbered]
+-------------
+@StandardUser
+class User {
+
+    @NotNull
+    private String firstName;
+    ...
+}
+
+@Path("/")
+class MyResourceClass {
+
+    @POST
+    @Consumes("application/xml")
+    public void registerUser(@Valid User user) {
+        ...
+    }
+}
+-------------
+
+In this case, the validator associated with `@StandardUser` (as well as
+those for non-class level constraints like `@NotNull`) will be called to
+verify the request entity mapped to `user`. Alternatively, a new
+annotation can be defined and used directly on the resource method
+parameter.
+
+[source,java,numbered]
+-------------
+@Path("/")
+class MyResourceClass {
+
+    @POST
+    @Consumes("application/xml")
+    public void registerUser(@PremiumUser User user) {
+        ...
+    }
+}
+-------------
+
+In the example above, `@PremiumUser` rather than `@StandardUser` will be
+used to validate the request entity. These two ways in which validation
+of entities can be triggered can also be combined by including
+`@Valid` in the list of constraints. The presence of `@Valid` will
+trigger validation of _all_ the constraint annotations decorating a Java
+bean class. This validation will take place in the `Default` processing
+group unless the `@ConvertGroup` annotation is present. See <<bib16>>
+for more information on `@ConvertGroup`.
+
+Response entity bodies returned from resource methods can be validated
+in a similar manner by annotating the resource method itself. To
+exemplify, assuming both `@StandardUser` and `@PremiumUser` are required
+to be checked before returning a user, the `getUser` method can be
+annotated as shown next:
+
+[source,java,numbered]
+-------------
+@Path("/")
+class MyResourceClass {
+
+    @GET
+    @Path("{id}")
+    @Produces("application/xml")
+    @Valid @PremiumUser
+    public User getUser(@PathParam("id") String id) {
+        User u = findUser(id);
+        return u;
+    }
+    ...
+}
+-------------
+
+Note that `@PremiumUser` is explicitly listed and `@StandardUser` is
+triggered by the presence of the `@Valid` annotation —see definition of
+`User` class earlier in this section.

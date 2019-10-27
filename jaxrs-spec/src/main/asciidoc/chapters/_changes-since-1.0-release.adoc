@@ -1,0 +1,16 @@
+[[changes-since-1.0-release]]
+=== Changes Since 1.0 Release
+
+* <<servlet>>: New requirements for Servlet 3 containers.
+* <<javaee>>: Requirements for Java EE 6 containers.
+* <<standard_entity_providers>>: Requirements on standard entity
+providers when presented with an empty message entity.
+* <<message_body_writer>>: Add closeness of generic type as
+secondary sort key.
+* <<message_body_reader>>: Default to application/octet-stream if
+a request does not contain a content-type header.
+* <<resource_field>>: Add support for static fromString method.
+* <<annotationinheritance>>: Clarify annotation inheritance.
+* <<security_context>>: Fix typo.
+* <<servlet_container>>: Additional considerations related to
+filters consuming request bodies.

@@ -1,0 +1,34 @@
+[[exceptions_filters_and_interceptors]]
+=== Exceptions
+
+[[server-runtime]]
+==== Server Runtime
+
+When a filter or interceptor method throws an exception, the server
+runtime will process the exception as described in
+<<exceptions_providers_server>>. As explained in
+<<exceptionmapper>>, an application can supply exception mapping
+providers. At most one exception mapper MUST be used in a single request
+processing cycle to avoid potentially infinite loops.
+
+A response mapped from an exception MUST be processed using the  filter
+chain and the  interceptor chain (if an entity is present in the mapped
+response). The number of entries in these chains depends on whether a
+resource method has been matched or not at the time the exception is
+thrown. There are two cases:
+
+1.  If a web resource has been matched before the exception was thrown,
+then the filters in  and the interceptors in  will include everything
+that has been bound to the method as well as globally;
+2.  Otherwise, only global filters and interceptors will
+be included.
+
+Note that a filter or interceptor invoked in case 2 will not
+have access to resource-dependent information, such as that returned by
+an injectable instance of `ResourceInfo`.
+
+[[client-runtime]]
+==== Client Runtime
+
+When a filter or interceptor method throws an exception, the client
+runtime will process the exception as described in <<exceptions_providers_client>>.

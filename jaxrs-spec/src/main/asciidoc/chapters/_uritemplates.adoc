@@ -1,0 +1,155 @@
+[[uritemplates]]
+=== URI Templates
+
+A root resource class is anchored in URI space using the
+`@Path` annotation. The value of the annotation is a relative URI path
+template whose base URI is provided by the combination of the deployment
+context and the application path (see the `@ApplicationPath`
+annotation).
+
+A URI path template is a string with zero or more embedded parameters
+that, when values are substituted for all the parameters, is a valid
+URI<<bib5>> path. The Javadoc for the
+`@Path` annotation describes their syntax. E.g.:
+
+[source,java,numbered]
+-------------
+@Path("widgets/{id}")
+public class Widget {
+    ...
+}
+-------------
+
+In the above example the `Widget` resource class is identified by the
+relative URI path `widgets/xxx` where `xxx` is the value of the `id`
+parameter.
+
+*Note:* _Because \{and } are not part of either the reserved or unreserved
+productions of URI<<bib5>> they will
+not appear in a valid URI._
+
+The value of the annotation is automatically encoded, e.g. the following
+two lines are equivalent:
+
+[source,java,numbered]
+-------------
+@Path("widget list/{id}")
+@Path("widget%20list/{id}")
+-------------
+
+Template parameters can optionally specify the regular expression used
+to match their values. The default value matches any text and terminates
+at the end of a path segment but other values can be used to alter this
+behavior, e.g.:
+
+[source,java,numbered]
+-------------
+@Path("widgets/{path:.+}")
+public class Widget {
+    ...
+}
+-------------
+
+In the above example the `Widget` resource class will be matched for any
+request whose path starts with `widgets` and contains at least one more
+path segment; the value of the `path` parameter will be the request path
+following `widgets`. E.g. given the request path `widgets/small/a` the
+value of `path` would be `small/a`.
+
+The value of a URI path parameter is available for injection via
+`@PathParam` on a field, property or method parameter. Note that if a
+URI template is used on a method, a path parameter injected in a field
+or property may not be available (set to `null`). The following example
+illustrates this scenario:
+
+[source,java,numbered]
+-------------
+@Path("widgets")
+public class WidgetsResource {
+    @PathParam("id") String id;
+
+    @GET
+    public WidgetList getWidgets() {
+        ...     // id is null here
+    }
+
+    @GET
+    @Path("{id}")
+    public Widget findWidget() {
+        return new WidgetResource(id);
+    }
+}
+-------------
+
+[[sub_resources]]
+==== Sub Resources
+
+Methods of a resource class that are annotated with `@Path` are either
+sub-resource methods or sub-resource locators. Sub-resource methods
+handle a HTTP request directly whilst sub-resource locators return an
+object or class that will handle a HTTP request. The presence or absence
+of a request method designator (e.g. @GET) differentiates between the
+two:
+
+Present::
+  Such methods, known as _sub-resource methods_, are treated like a
+  normal resource method (see <<resource_method>>) except the
+  method is only invoked for request URIs that match a URI template
+  created by concatenating the URI template of the resource class with
+  the URI template of the methodfootnote:[If the resource class URI
+  template does not end with a / character then one is added during the
+  concatenation.].
+Absent::
+  Such methods, known as _sub-resource locators_, are used to
+  dynamically resolve the object that will handle the request.
+  Sub-resource locators can return objects or classes; if a class is
+  returned then an object is obtained by the implementation using a
+  _suitable_ constructor as described in
+  <<resource_class_constructor>>. In either case, the resulting object is
+  used to handle the request or to further resolve the object that will
+  handle the request, see <<mapping_requests_to_java_methods>> for further
+  details.
+  +
+  When an object is returned, implementations MUST dynamically determine
+  its class rather than relying on the static sub-resource locator
+  return type, since the returned instance may be a subclass of the
+  declared type with potentially different annotations, see
+  <<annotationinheritance>> for rules on annotation inheritance.
+  Sub-resource locators may have all the same parameters as a normal
+  resource method (see <<resource_method>>) except that they MUST
+  NOT have an entity parameter.
+
+The following example illustrates the difference:
+
+[source,java,numbered]
+-------------
+@Path("widgets")
+public class WidgetsResource {
+    @GET
+    @Path("offers")
+    public WidgetList getDiscounted() {...}
+
+    @Path("{id}")
+    public WidgetResource findWidget(@PathParam("id") String id) {
+        return new WidgetResource(id);
+    }
+}
+
+public class WidgetResource {
+    public WidgetResource(String id) {...}
+
+    @GET
+    public Widget getDetails() {...}
+}
+-------------
+
+In the above a `GET` request for the `widgets/offers` resource is
+handled directly by the `getDiscounted` sub-resource method of the
+resource class `WidgetsResource` whereas a `GET` request for
+`widgets/xxx` is handled by the `getDetails` method of the
+`WidgetResource` resource class.
+
+*Note:* _A set of sub-resource methods annotated with the same URI template value
+are functionally equivalent to a similarly annotated sub-resource
+locator that returns an instance of a resource class with the same set
+of resource methods._

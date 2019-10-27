@@ -1,0 +1,46 @@
+[[invocations]]
+=== Invocations
+
+An invocation is a request that has been prepared and is ready for
+execution. Invocations provide a _generic interface_ that enables a
+separation of concerns between the creator and the submitter. In
+particular, the submitter does not need to know how the invocation was
+prepared, but only how it should be executed: namely, synchronously or
+asynchronously.
+
+Let us consider the following example footnote:[The Collections class in
+this example is arbitrary and does not correspond to any specific
+implementation. There are a number of Java collection libraries
+available that provide this type of functionality.]:
+
+[source,java,numbered]
+-------------
+// Executed by the creator
+Invocation inv1 = client.target("http://examples.org/atm/balance")
+    .queryParam("card", "111122223333").queryParam("pin", "9876")
+    .request("text/plain").buildGet();
+Invocation inv2 = client.target("http://examples.org/atm/withdrawal")
+    .queryParam("card", "111122223333").queryParam("pin", "9876")
+    .request().buildPost(text("50.0"));
+Collection<Invocation> invs = Arrays.asList(inv1, inv2);
+
+// Executed by the submitter
+Collection<Response> ress =
+    Collections.transform(invs,
+        new F<Invocation, Response>() {
+        @Override
+        public Response apply(Invocation inv) {
+            return inv.invoke(); } });
+-------------
+
+// Executed by the submitter Collection<Response> ress =
+Collections.transform(invs, new F<Invocation, Response>() @Override
+public Response apply(Invocation inv) return inv.invoke(); );
+
+In this example, two invocations are prepared and stored in a collection
+by the creator. The submitter then traverses the collection applying a
+transformation that maps an `Invocation` to a `Response`. The mapping
+calls `Invocation.invoke` to execute the invocation synchronously;
+asynchronous execution is also supported by calling `Invocation.submit`.
+Refer to Chapter <<asynchronous_processing>> for more information on
+asynchronous invocations.

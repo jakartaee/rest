@@ -1,0 +1,11 @@
+[appendix]
+[[processing_pipeline]]
+== Processing Pipeline
+
+[[pipeline_server]]
+image:pipeline_server.png[]
+Figure C.1: JAX-RS Server Processing Pipeline.
+
+[[pipeline_client]]
+image:pipeline_client.png[]
+Figure C.2: JAX-RS Client Processing Pipeline.

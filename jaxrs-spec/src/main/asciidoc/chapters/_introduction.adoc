@@ -1,0 +1,291 @@
+﻿[[introduction]]
+== Introduction
+
+This specification defines a set of Java APIs for the development of Web
+services built according to the Representational State Transfer<<bib1>>
+(REST) architectural style. Readers are assumed to be familiar
+with REST; for more information about the REST architectural style and
+RESTful Web services, see:
+
+* Architectural Styles and the Design of Network-based Software
+Architectures<<bib1>>
+* The REST Wiki<<bib2>>
+* Representational State Transfer on Wikipedia<<bib3>>
+
+[[status]]
+=== Status
+
+This is the final release of version 2.1. The issue tracking system for
+this release can be found at:
+
+https://github.com/jax-rs/api/issues
+
+The corresponding Javadocs can be found online at:
+
+https://jax-rs.github.io/apidocs/2.1
+
+The reference implementation can be obtained from:
+
+https://jersey.github.io
+
+The expert group seeks feedback from the community on any aspect of this
+specification, please send comments to:
+
+jaxrs-spec@javaee.groups.io
+
+[[goals]]
+=== Goals
+
+The following are the goals of the API:
+
+POJO-based::
+  The API will provide a set of annotations and associated
+  classes/interfaces that may be used with POJOs in order to expose them
+  as Web resources. The specification will define object lifecycle and
+  scope.
+HTTP-centric::
+  The specification will assume HTTP<<bib4>> is the
+  underlying network protocol and will provide a clear mapping between
+  HTTP and URI<<bib5>> elements and
+  the corresponding API classes and annotations. The API will provide
+  high level support for common HTTP usage patterns and will be
+  sufficiently flexible to support a variety of HTTP applications
+  including WebDAV<<bib6>> and the Atom Publishing
+  Protocol<<bib7>>.
+Format independence::
+  The API will be applicable to a wide variety of HTTP entity body
+  content types. It will provide the necessary pluggability to allow
+  additional types to be added by an application in a standard manner.
+Container independence::
+  Artifacts using the API will be deployable in a variety of Web-tier
+  containers. The specification will define how artifacts are deployed
+  in a Servlet<<bib8>> container and as a JAX-WS<<bib9>> Provider.
+Inclusion in Java EE::
+  The specification will define the environment for a Web resource class
+  hosted in a Java EE container and will specify how to use Java EE
+  features and components within a Web resource class.
+
+[[non_goals]]
+=== Non-Goals
+
+The following are non-goals:
+
+Support for Java versions prior to Java SE 8::
+  The API will make extensive use of annotations and lambda expressions
+  that require Java SE 8 or later.
+Description, registration and discovery::
+  The specification will neither define nor require any service
+  description, registration or discovery capability.
+HTTP Stack::
+  The specification will not define a new HTTP stack. HTTP protocol
+  support is provided by a container that hosts artifacts developed
+  using the API.
+Data model/format classes::
+  The API will not define classes that support manipulation of entity
+  body content, rather it will provide pluggability to allow such
+  classes to be used by artifacts developed using the API.
+
+[[conventions]]
+=== Conventions
+
+The keywords `MUST', `MUST NOT', `REQUIRED', `SHALL', `SHALL NOT',
+`SHOULD', `SHOULD NOT', `RECOMMENDED', `MAY', and `OPTIONAL' in this
+document are to be interpreted as described in RFC 2119<<bib10>>.
+
+Java code and sample data fragments are formatted as shown in figure
+<<1.1>>:
+
+[id="1.1"]
+[source,java,numbered]
+-------------
+package com.example.hello;
+
+public class Hello {
+    public static void main(String args[]) {
+    System.out.println("Hello World");
+    }
+}
+-------------
+
+URIs of the general form `http://example.org/...' and
+`http://example.com/...' represent application or context-dependent
+URIs.
+
+All parts of this specification are normative, with the exception of
+examples, notes and sections explicitly marked as `Non-Normative'.
+Non-normative notes are formatted as shown below.
+
+*Note:* _This is a note._
+
+[[terminology]]
+=== Terminology
+
+Resource class::
+  A Java class that uses JAX-RS annotations to implement a corresponding
+  Web resource, see Chapter [resources].
+Root resource class::
+  A _resource class_ annotated with `@Path`. Root resource classes
+  provide the roots of the resource class tree and provide access to
+  sub-resources, see Chapter [resources].
+Request method designator::
+  A runtime annotation annotated with `@HttpMethod`. Used to identify
+  the HTTP request method to be handled by a _resource method_.
+Resource method::
+  A method of a _resource class_ annotated with a _request method
+  designator_ that is used to handle requests on the corresponding
+  resource, see <<resource_method>>.
+Sub-resource locator::
+  A method of a _resource class_ that is used to locate sub-resources of
+  the corresponding resource, see <<sub_resources>>.
+Sub-resource method::
+  A method of a _resource class_ that is used to handle requests on a
+  sub-resource of the corresponding resource, see <<sub_resources>>.
+Provider::
+  An implementation of a JAX-RS extension interface. Providers extend
+  the capabilities of a JAX-RS runtime and are described in Chapter
+  <<providers>>.
+Filter::
+  A provider used for filtering requests and responses.
+Entity Interceptor::
+  A provider used for intercepting calls to message body readers and
+  writers.
+Invocation::
+  A Client API object that can be configured to issue an HTTP request.
+WebTarget::
+  The recipient of an Invocation, identified by a URI.
+Link::
+  A URI with additional meta-data such as a media type, a relation, a
+  title, etc.
+
+[[expert_group]]
+=== Expert Group Members
+
+This specification is being developed as part of JSR 370 under the Java
+Community Process. It is the result of the collaborative work of the
+members of the JSR 370 Expert Group. The following are the present
+expert group members:
+
+-- Sergey Beryozkin (Talend SA)
+
+-- Adam Bien (Individual Member)
+
+-- Sebastian Dashner (Individual Member)
+
+-- Markus Karg (Individual Member)
+
+-- Casey Lee (Vision Service Plan)
+
+-- Marcos Luna (Individual Member)
+
+-- Andy McCright (IBM)
+
+-- Julian Reschke (Individual Member)
+
+-- Alessio Soldano (Red Hat)
+
+The following are former group members of the JSR 339 Expert Group:
+
+-- Jan Algermussen (Individual Member)
+
+-- Florent Beniot (OW2)
+
+-- Sergey Beryozkin (Talend SA)
+
+-- Adam Bien (Individual Member)
+
+-- Bill Burke (Red Hat)
+
+-- Clinton L. Combs (Individual Member)
+
+-- Jian Wu Dai (IBM)
+
+-- Bill De Hora (Individual Member)
+
+-- Markus Karg (Individual Member)
+
+-- Sastry Malladi (eBay, Inc)
+
+-- Julian Reschke (Individual Member)
+
+-- Guilherme de Azevedo Silveira (Individual Member)
+
+-- Synodinos, Dionysios G. (Individual Member)
+
+JAX-RS 1.X has been developed as part of JSR 311 under the Java
+Community Process. The following were group members of the JSR 311
+Expert Group:
+
+-- Heiko Braun (Red Hat Middleware LLC)
+
+-- Larry Cable (BEA Systems)
+
+-- Roy Fielding (Day Software, Inc.)
+
+-- Harpreet Geekee (Nortel)
+
+-- Nickolas Grabovas (Individual Member)
+
+-- Mark Hansen (Individual Member)
+
+-- John Harby (Individual Member)
+
+-- Hao He (Individual Member)
+
+-- Ryan Heaton (Individual Member)
+
+-- David Hensley (Individual Member)
+
+-- Stephan Koops (Individual Member)
+
+-- Changshin Lee (NCsoft Corporation)
+
+-- Francois Leygues (Alcatel-Lucent)
+
+-- Jerome Louvel (Individual Member)
+
+-- Hamid Ben Malek (Fujitsu Limited)
+
+-- Ryan J. McDonough (Individual Member)
+
+-- Felix Meschberger (Day Software, Inc.)
+
+-- David Orchard (BEA Systems)
+
+-- Dhanji R. Prasanna (Individual Member)
+
+-- Julian Reschke (Individual Member)
+
+-- Jan Schulz-Hofen (Individual Member)
+
+-- Joel Smith (IBM)
+
+-- Stefan Tilkov (innoQ Deutschland GmbH)
+
+[[acks]]
+=== Acknowledgements
+
+During the course of this JSR we received great contributions and
+suggestions from many individuals. Special thanks to Marek Potociar and
+Michal Gajdos. Also Gunnar Morling, Ondrej Mihalyi, Arjan Tijms,
+Guillermo Gonzales de Aguero, Christian Kaltepoth and many, many others.
+Last but not least to the JSR 370 Expert Group for all their
+contributions.
+
+During the course of JSR 339 we received many excellent suggestions.
+Special thanks to Martin Matula, Gerard Davison, Jakub Podlesak and
+Pavel Bucek from Oracle as well as Pete Muir and Emmanuel Bernard from
+Red Hat. Also to Gunnar Morling and Ron Sigal (Red Hat) for their
+suggestions on how to improve resource validation, and to Mattias
+Arthursson for his insights on hypermedia.
+
+During the course of JSR 311 we received many excellent suggestions on
+the JSR and Jersey (RI) mailing lists, thanks in particular to James
+Manger (Telstra) and Reto Bachmann-Gmür (Trialox) for their
+contributions. The following individuals (all Sun Microsystems at the
+time) have also made invaluable technical contributions: Roberto
+Chinnici, Dianne Jiao (TCK), Ron Monzillo, Rajiv Mordani, Eduardo
+Pelegri-Llopart, Jakub Podlesak (RI) and Bill Shannon.
+
+The `GenericEntity` class was inspired by the Google Guice `TypeLiteral`
+class. Our thanks to Bob Lee and Google for donating this class to
+JAX-RS.

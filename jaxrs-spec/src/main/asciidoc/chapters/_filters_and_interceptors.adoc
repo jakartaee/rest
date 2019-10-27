@@ -1,0 +1,499 @@
+[[filters_and_interceptors]]
+== Filters and Interceptors
+
+Filters and entity interceptors can be registered for execution at
+well-defined extension points in JAX-RS implementations. They are used
+to extend an implementation in order to provide capabilities such as
+logging, confidentiality, authentication, entity compression, etc.
+
+[[introduction_filters]]
+=== Introduction
+
+Entity interceptors wrap around a method invocation at a specific
+extension point. Filters execute code at an extension point but without
+wrapping a method invocation. There are four extension points for
+filters: , ,  and . There are two extension points for entity
+interceptors:  and . For each of these extension points, there is a
+corresponding interface:
+
+[source,java,numbered]
+-------------
+public interface ClientRequestFilter {
+    void filter(ClientRequestContext requestContext) throws IOException;
+}
+public interface ClientResponseFilter {
+    void filter(ClientRequestContext requestContext,
+        ClientResponseContext responseContext) throws IOException;
+}
+public interface ContainerRequestFilter {
+    void filter(ContainerRequestContext requestContext) throws IOException;
+}
+public interface ContainerResponseFilter {
+    void filter(ContainerRequestContext requestContext,
+    ContainerResponseContext responseContext) throws IOException;
+}
+
+public interface ReaderInterceptor {
+    Object aroundReadFrom(ReaderInterceptorContext context)
+        throws java.io.IOException, javax.ws.rs.WebApplicationException;
+}
+public interface WriterInterceptor {
+    void aroundWriteTo(WriterInterceptorContext context)
+        throws java.io.IOException, javax.ws.rs.WebApplicationException;
+}
+-------------
+
+A _client_ filter is a class that implements `ClientRequestFilter` or
+`ClientResponseFilter` or both. A _container_ filter is a class that
+implements `ContainerRequestFilter` or `ContainerResponseFilter`, or
+both. An entity interceptor is a class that implements
+`ReaderInterceptor` or `WriterInterceptor`, or both. Filters and entity
+interceptors are providers and, as such, may be annotated with
+`@Provider` for automatic discovery.
+
+In the Client API, a `ClientRequestFilter` is executed as part of the
+invocation pipeline, before the HTTP request is delivered to the
+network; a `ClientResponseFilter` is executed upon receiving a server
+response, before control is returned to the application. In the Server
+API, a `ContainerRequestFilter` is executed upon receiving a request
+from a client; a `ContainerResponseFilter` is executed as part of the
+response pipeline, before the HTTP response is delivered to the network.
+
+A globally-bound (see <<global_binding>>)
+`ContainerRequestFilter` is a container filter executed after resource
+matching _unless_ it is annotated with `@PreMatching`. The use of this
+annotation on this type of filters defines a new extension point for
+applications to use, namely . Certain `ContainerRequestContext` methods
+may not be available at this extension point.
+
+An entity interceptor implementing `ReaderInterceptor` wraps around
+calls to `MessageBodyReader`’s method `readFrom`. An entity interceptor
+implementing `WriterInterceptor` wraps around calls to
+`MessageBodyWriter`’s method `writeTo`. JAX-RS implementations are
+REQUIRED to call registered interceptors when mapping representations to
+Java types and vice versa. See <<entity_providers>> for more
+information on entity providers.
+
+Please refer to Appendix <<processing_pipeline>> for some diagrams on the
+client and server processing pipelines that show the interaction between
+filters and entity interceptors.
+
+[[filters]]
+=== Filters
+
+Filters are grouped into __filter chains__. There is a separate filter
+chain for each extension point introduced in the previous section,
+namely: , , ,  and . Filters in a chain are sorted based on their
+priorities (see <<priorities>>) and are executed in order.
+
+The following example shows an implementation of a container logging
+filter: each method simply logs the message and returns.
+
+[source,java,numbered]
+-------------
+@Provider
+class LoggingFilter implements ContainerRequestFilter,
+                               ContainerResponseFilter {
+
+    @Override
+    public void filter(ContainerRequestContext requestContext)
+        throws IOException {
+        log(requestContext);
+    }
+
+    @Override
+    public void filter(ContainerRequestContext requestContext,
+        ContainerResponseContext responseContext) throws IOException {
+        log(responseContext);
+    }
+    ...
+}
+-------------
+
+`ContainerRequestContext` is a mutable class that provides
+request-specific information for the filter, such as the request URI,
+message headers, message entity or request-scoped properties. The
+exposed setters allow (certain) modification of the request before it is
+processed by the resource method. Similarly, there is a corresponding
+`ContainerResponseContext` that provides response-specific information.
+
+Request filters implementing `ClientRequestFilter` or
+`ContainerRequestFilter` can stop the execution of their corresponding
+chains by calling `abortWith(Response)` in their corresponding context
+object. If this method is invoked, JAX-RS implementations are REQUIRED
+to abort execution of the chain and treat the response object as if
+produced by calling the resource method (Server API) or executing the
+HTTP invocation (Client API). For example, upon a cache hit, a client
+_caching_ filter may call `abortWith(Response)` to abort execution and
+optimize network access.
+
+As stated above, a `ContainerRequestFilter` that is annotated with
+`@PreMatching` is executed upon receiving a client request but _before_
+a resource method is matched. Thus, this type of filter has the ability
+to modify the input to the matching algorithm (see
+<<request_matching>>) and, consequently, alter its outcome. The
+following example uses a `ContainerRequestFilter` annotated with
+`@PreMatching` to tunnel requests via POST by using the
+X-HTTP-Method-Override header to overwrite the HTTP method prior to
+resource matching.
+
+[source,java,numbered]
+-------------
+@Provider
+@PreMatching
+public class HttpMethodOverrideFilter implements ContainerRequestFilter {
+
+    @Override
+    public void filter(ContainerRequestContext requestContext)
+        throws IOException {
+        if (requestContext.getMethod().equalsIgnoreCase("POST")) {
+            String override = requestContext.getHeaders()
+                .getFirst("X-HTTP-Method-Override");
+            if (override != null) {
+                requestContext.setMethod(override);
+            }
+        }
+    }
+}
+-------------
+
+[[entity_interceptors]]
+=== Entity Interceptors
+
+An entity interceptor implements interface `ReaderInterceptor` or
+`WriterInterceptor`, or both. There is an _interceptor chain_ for each
+kind of entity interceptor. Entity interceptors in a chain are sorted
+based on their priorities (see <<priorities>>) and are executed in
+order.
+
+As part of the JAX-RS processing pipeline (see Appendix
+<<processing_pipeline>>), entity interceptors wrap calls to the methods
+`readFrom` in classes implementing `MessageBodyReader` and `writeTo` in
+classes implementing `MessageBodyWriter`. An interceptor SHOULD
+explicitly call the context method `proceed` to continue the execution
+of the chain. Because of their wrapping nature, failure to call this
+method will prevent execution of the wrapped method in the corresponding
+message body reader or message body writer.
+
+The following example shows an implementation of a GZIP entity
+interceptor that provides deflate and inflate
+capabilities footnote:[This class is not intended to be a complete
+implementation of this interceptor.].
+
+[source,java,numbered]
+-------------
+@Provider
+class GzipInterceptor implements ReaderInterceptor, WriterInterceptor {
+
+    @Override
+    Object aroundReadFrom(ReaderInterceptorContext ctx) ... {
+        if (isGzipped(ctx)) {
+            InputStream old = ctx.getInputStream();
+            ctx.setInputStream(new GZIPInputStream(old));
+            try {
+                return ctx.proceed();
+            } finally {
+                ctx.setInputStream(old);
+            }
+        } else {
+            return ctx.proceed();
+        }
+    }
+
+    @Override
+    void aroundWriteTo(WriterInterceptorContext ctx) ... {
+        OutputStream old = ctx.getOutputStream();
+        GZIPOutputStream gzipOutputStream = new GZIPOutputStream(old);
+        ctx.setOutputStream(gzipOutputStream);
+        updateHeaders(ctx);
+        try {
+            ctx.proceed();
+        } finally {
+            gzipOutputStream.finish();
+            ctx.setOutputStream(old);
+        }
+    }
+    ...
+}
+-------------
+
+The context types, `ReaderInterceptorContext` and
+`WriterInterceptorContext`, provide read and write access to the
+parameters of the corresponding wrapped methods. In the example shown
+above, the input and output streams are wrapped and updated in the
+context object before proceeding. JAX-RS implementations MUST use the
+last parameter values set in the context object when calling the wrapped
+methods `MessageBodyReader.readFrom` and `MessageBodyWriter.writeTo`.
+
+It is worth noting that a `readFrom` or a `writeTo` that is called
+directly from application code, e.g. via the injection of a `Providers`
+instance, will _not_ trigger the execution of any entity interceptors
+since it is not part of the normal JAX-RS processing pipeline.
+
+[[lifecycle]]
+=== Lifecycle
+
+By default, just like all the other providers, a single instance of each
+filter or entity interceptor is instantiated for each
+JAX-RS application. First the constructor is called, then any requested
+dependencies are injected, then the appropriate methods are called
+(simultaneously) as needed. Implementations MAY offer alternative
+lifecycle options beyond the default one. See
+<<lifecycle_and_environment>> for additional information.
+
+[[binding]]
+=== Binding
+
+Binding is the process by which a filter or interceptor is associated
+with a resource class or method (Server API) or an invocation (Client
+API). The forms of binding presented in the next sections are only
+supported as part of the Server API. See <<binding_in_client_api>>
+for binding in the Client API.
+
+[[global_binding]]
+==== Global Binding
+
+Global binding is the default type of binding. A filter or interceptor
+that has no annotations is assumed to be bound globally, i.e. it applies
+to all the resource methods in an application. Like any other provider,
+a filter or interceptor can be registered manually (e.g., via
+`Application` or `Configuration`) or be discovered automatically. Note
+that for a filter or interceptor to be automatically discovered it MUST
+be annotated with `@Provider` (see <<automatic_discovery>>).
+
+For example, the `LoggingFilter` defined in Section [filters] is both
+automatically discovered (it is annotated with `@Provider`) and bound
+globally. If this filter is part of an application, requests and
+responses will be logged for all resource methods.
+
+As stated in <<introduction_filters>>, a global
+`ContainerRequestFilter` is executed after resource matching unless
+annotated with `@PreMatching`. A global filter that injects
+`ResourceInfo`, and generally depends on resource information for its
+execution, must not be annotated with `@PreMatching`.
+
+[[Name_Binding]]
+==== Name Binding
+
+A filter or interceptor can be associated with a resource class or
+method by declaring a new _binding_ annotation à la CDI <<bib14>>.
+These annotations are declared using the JAX-RS meta-annotation
+`@NameBinding` and are used to decorate both the filter (or interceptor)
+and the resource method or resource class. For example, the
+`LoggingFilter` defined in <<filters>> can be bound to the method
+`hello` in `MyResourceClass`, instead of globally, as follows:
+
+[source,java,numbered]
+-------------
+@Provider
+@Logged
+class LoggingFilter implements ContainerRequestFilter,
+                               ContainerResponseFilter {
+    ...
+}
+-------------
+
+[source,java,numbered]
+-------------
+@Path("/")
+public class MyResourceClass {
+    @Logged
+    @GET
+    @Produces("text/plain")
+    @Path("{name}")
+    public String hello(@PathParam("name") String name) {
+        return "Hello " + name;
+    }
+}
+-------------
+
+According to the semantics of `LoggingFilter`, the request will be
+logged before the `hello` method is called and the response will be
+logged after it returns. The declaration of the `@Logged` annotation is
+shown next.
+
+[source,java,numbered]
+-------------
+@NameBinding
+@Target({ ElementType.TYPE, ElementType.METHOD })
+@Retention(value = RetentionPolicy.RUNTIME)
+public @interface Logged { }
+-------------
+
+Multiple filters and interceptors can be bound to a single resource
+method using additional annotations. For example, given the following
+filter:
+
+[source,java,numbered]
+-------------
+@Provider
+@Authenticated
+class AuthenticationFilter implements ContainerRequestFilter {
+    ...
+}
+-------------
+
+method `hello` above could be decorated with `@Logged` and
+`@Authenticated` in order to provide both logging and authentication
+capabilities to the resource.
+
+A filter or interceptor class can be decorated with multiple binding
+annotations. In this case, in accordance with the semantics described in
+CDI <<bib14>>, all those annotations must be present in the resource
+class or method for the binding to be established. For example, if
+`LoggingFilter` is defined as follows:
+
+[source,java,numbered]
+-------------
+@Provider
+@Logged @Verbose
+class LoggingFilter implements ContainerRequestFilter,
+                               ContainerResponseFilter {
+    ...
+}
+-------------
+
+then method `hello` above must be annotated with both `@Logged` and
+`@Verbose` for the binding to be in effect.
+
+Binding annotations can also be applied to resource classes and
+`Application` subclasses. Binding annotations that decorate resource
+classes apply to _all_ resource methods defined in them. Binding
+annotations that decorate `Application` subclasses can also be used to
+bind filters and interceptors globally, even if other annotations are
+present. For example, `LoggingFilter` as defined at the beginning of
+this section can be bound globally as follows:
+
+[source,java,numbered]
+-------------
+@Logged
+public class MyApplication extends Application {
+    ...
+}
+-------------
+
+Note that returning filters or interceptors from the methods
+`getClasses` or `getSingletons` in an application subclass will bind
+them globally only if they are _not_ decorated with a name binding
+annotation. If they are decorated with at least one name binding
+annotation, the application subclass must be annotated as shown above in
+order for those filters or interceptors to be bound globally. See
+Chapter <<applications>> for more information on JAX-RS applications.
+
+[[dynamic_binding]]
+==== Dynamic Binding
+
+The annotation-based forms of binding presented thus far are _static_.
+Dynamic binding is also supported using dynamic features. A dynamic
+feature is a provider that implements the `DynamicFeature` interface.
+These providers are used to augment the set of filters and entity
+interceptors bound to a resource method.
+
+The following example defines a dynamic feature that binds the filter
+`LoggingFilter` —assumed not globally bound for the purpose of this
+example— with all the resource methods in `MyResource` that are
+annotated with `@GET`.
+
+[source,java,numbered]
+-------------
+@Provider
+public final class DynamicLoggingFilterFeature implements DynamicFeature {
+
+    @Override
+    public void configure(ResourceInfo resourceInfo,
+                          FeatureContext context) {
+        if (MyResource.class.isAssignableFrom(resourceInfo.getResourceClass())
+            && resourceInfo.getResourceMethod().isAnnotationPresent(GET.class)) {
+            context.register(new LoggingFilter());
+        }
+    }
+}
+-------------
+
+The overridden method in this provider updates the `Configuration`
+object assigned to each resource method; the information about the
+resource method is provided in the form of a `ResourceInfo` instance.
+JAX-RS implementations SHOULD resolve dynamic features for filters and
+interceptors once for each resource method. It is RECOMMENDED to process
+dynamic features at application deployment time.
+
+[[binding_in_client_api]]
+==== Binding in Client API
+
+Binding in the Client API is accomplished via API calls instead of
+annotations. `Client`, `Invocation`, `Invocation.Builder` and
+`WebTarget` are all configurable types: their configuration can be
+accessed using the methods inherited from the `Configurable` interface.
+See <<configurable_types>> for more information.
+
+[[priorities]]
+=== Priorities
+
+The order in which filters and interceptors are executed as part of
+their corresponding chains is controlled by the `@Priority` annotation
+defined in <<bib15>>. Priorities are represented by integer
+numbers. Execution chains for extension points , , ,  and  are sorted in
+__ascending order__; the lower the number the higher the priority.
+Execution chains for extension points  and  are sorted in __descending
+order__; the higher the number the higher the priority. These rules
+ensure that response filters are executed in reversed order of request
+filters.
+
+The `Priorities` class in JAX-RS defines a set of built-in priorities
+for security, header decorators, decoders and encoders. The default
+binding priority is `javax.ws.rs.Priorities.USER`. For example, the
+priority of an authentication filter can be set as follows:
+
+[source,java,numbered]
+-------------
+@Provider
+@Authenticated
+@Priority(Priorities.AUTHENTICATION)
+public class AuthenticationFilter implements ContainerRequestFilter {
+    ...
+}
+-------------
+
+Note that even though, as explained in <<binding_in_client_api>>,
+annotations are not used for binding in the Client API, they are still
+used to define priorities. Therefore, if a priority other than the
+default is required, the `@Priority` annotation must be used for a
+filter or interceptor registered with the Client API.
+
+The order in which filters and interceptors that belong to the same
+priority class are executed is implementation dependent.
+
+[[exceptions_filters_and_interceptors]]
+=== Exceptions
+
+[[server-runtime]]
+==== Server Runtime
+
+When a filter or interceptor method throws an exception, the server
+runtime will process the exception as described in
+<<exceptions_providers_server>>. As explained in
+<<exceptionmapper>>, an application can supply exception mapping
+providers. At most one exception mapper MUST be used in a single request
+processing cycle to avoid potentially infinite loops.
+
+A response mapped from an exception MUST be processed using the  filter
+chain and the  interceptor chain (if an entity is present in the mapped
+response). The number of entries in these chains depends on whether a
+resource method has been matched or not at the time the exception is
+thrown. There are two cases:
+
+1.  If a web resource has been matched before the exception was thrown,
+then the filters in  and the interceptors in  will include everything
+that has been bound to the method as well as globally;
+2.  Otherwise, only global filters and interceptors will
+be included.
+
+Note that a filter or interceptor invoked in case 2 will not
+have access to resource-dependent information, such as that returned by
+an injectable instance of `ResourceInfo`.
+
+[[client-runtime]]
+==== Client Runtime
+
+When a filter or interceptor method throws an exception, the client
+runtime will process the exception as described in <<exceptions_providers_client>>.

@@ -1,0 +1,251 @@
+﻿[[asynchronous_processing]]
+== Asynchronous Processing
+
+This chapter describes the asynchronous processing capabilities in
+JAX-RS. Asynchronous processing is supported both in the Client API and
+in the Server API.
+
+[[introduction_async]]
+=== Introduction
+
+Asynchronous processing is a technique that enables a better and more
+efficient use of processing threads. On the client side, a thread that
+issues a request may also be responsible for updating a UI component; if
+that thread is blocked waiting for a response, the user’s perceived
+performance of the application will suffer. Similarly, on the server
+side, a thread that is processing a request should avoid blocking while
+waiting for an external event to complete so that other requests
+arriving to the server during that period of time can be
+attendedfootnote:[The maximum number of request threads is typically set
+by the administrator; if that upper bound is reached, subsequent
+requests will be rejected.].
+
+[[server_api]]
+=== Server API
+
+[[async_response]]
+==== AsyncResponse
+
+Synchronous processing requires a resource method to produce a response
+upon returning control back to the JAX-RS implementation. Asynchronous
+processing enables a resource method to inform the JAX-RS implementation
+that a response is not readily available upon return but will be
+produced at a future time. This can be accomplished by first
+_suspending_ and later _resuming_ the client connection on which the
+request was received.
+
+Let us illustrate these concepts via an example:
+
+[source,java,numbered]
+-------------
+@Path("/async/longRunning")
+public class MyResource {
+
+    @GET
+    public void longRunningOp(@Suspended final AsyncResponse ar) {
+        executor.submit(
+            new Runnable() {
+                public void run() {
+                    executeLongRunningOp();
+                    ar.resume("Hello async world!");
+                }
+            });
+    }
+    ...
+}
+-------------
+
+A resource method that elects to produce a response asynchronously must
+inject as a method parameter an instance of the class `AsyncResponse`
+using the special annotation `@Suspended`. In the example above, the
+method `longRunningOp` is called upon receiving a `GET` request. Rather
+than producing a response immediately, this method forks a (non-request)
+thread to execute a long running operation and returns immediately. Once
+the execution of the long running operation is complete, the connection
+is resumed and the response returned by calling `resume` on the injected
+instance of `AsyncResponse`.
+
+For more information on executors, concurrency and thread management in
+a Java EE environment, the reader is referred to JSR 236 <<bib13>>. For
+more information about executors in the JAX-RS Client API see <<executor_services>>.
+
+[[timeouts_and_callbacks]]
+===== Timeouts and Callbacks
+
+A timeout value can be specified when suspending a connection to avoid
+waiting for a response indefinitely. The default unit is milliseconds,
+but any unit of type `java.util.concurrent.TimeUnit` can be used. The
+following example sets a timeout of 15 seconds and registers an instance
+of `TimeoutHandler` in case the timeout is reached before the connection
+is resumed.
+
+[source,java,numbered]
+-------------
+@GET
+public void longRunningOp(@Suspended final AsyncResponse ar) {
+    // Register handler and set timeout
+    ar.setTimeoutHandler(new TimeoutHandler() {
+        public void handleTimeout(AsyncResponse ar) {
+            ar.resume(Response.status(SERVICE_UNAVAILABLE).entity(
+                "Operation timed out -- please try again").build());
+            }
+    });
+    ar.setTimeout(15, SECONDS);
+
+    // Execute long running operation in new thread
+    executor.execute(
+        new Runnable() {
+            public void run() {
+                executeLongRunningOp();
+                ar.resume("Hello async world!");
+            }
+        });
+}
+-------------
+
+JAX-RS implementations are REQUIRED to generate a
+`ServiceUnavailableException`, a subclass of
+`WebApplicationException` with its status set to 503, if the timeout
+value is reached and no timeout handler is registered. The exception
+MUST be processed as described in <<method_exc>>. If a registered
+timeout handler resets the timeout value or resumes the connection and
+returns a response, JAX-RS implementations MUST NOT generate an
+exception.
+
+It is also possible to register callbacks on an instance of
+`AsyncResponse` in order to listen for processing completion
+(`CompletionCallback`) and connection termination (`ConnectionCallback`)
+events. See Javadoc for `AsyncResponse` for more information on how to
+register these callbacks. Note that support for `ConnectionCallback` is
+OPTIONAL.
+
+[[completionstage]]
+==== CompletionStage
+
+An alternative approach to the injection of `AsyncResponse` is for a
+resource method to return an instance of `CompletionStage<T>` as an
+indication to the underlying JAX-RS implementation that asynchronous
+processing is enabled. The example from <<async_response>> can be
+re-written using `CompletionStage` as follows:
+
+[source,java,numbered]
+-------------
+@Path("/async/longRunning")
+public class MyResource {
+
+    @GET
+    public CompletionStage<String> longRunningOp() {
+        CompletableFuture<String> cs = new CompletableFuture<>();
+        executor.submit(
+            new Runnable() {
+                public void run() {
+                    executeLongRunningOp();
+                    cs.complete("Hello async world!");
+                }
+            });
+        return cs;
+    }
+    ...
+}
+-------------
+
+In this example, a `CompletableFuture` instance is created and returned
+in the resource method; the call to method `complete` on that instance
+is executed only after the long running operation terminates.
+
+[[async_ejbs]]
+=== EJB Resource Classes
+
+As stated in <<ejbs>>, JAX-RS implementations in products that
+support EJB must also support the use of stateless and singleton session
+beans as root resource classes. When an EJB method is annotated with
+`@Asynchronous`, the EJB container automatically allocates the necessary
+resources for its execution. Thus, in this scenario, the use of an
+`Executor` is unnecessary to generate an asynchronous response.
+
+Consider the following example:
+
+[source,java,numbered]
+-------------
+@Stateless
+@Path("/")
+class EJBResource {
+
+    @GET @Asynchronous
+    public void longRunningOp(@Suspended AsyncResponse ar) {
+        executeLongRunningOp();
+        ar.resume("Hello async world!");
+    }
+}
+-------------
+
+There is no explicit thread management needed in this case since that is
+under the control of the EJB container. Just like the other examples in
+this chapter, the response is produced by calling `resume` on the
+injected `AsyncResponse`. Hence, the return type of `longRunningOp` is
+simply `void`.
+
+[[client_api_async]]
+=== Client API
+
+The fluent API supports asynchronous invocations as part of the
+invocation building process. By default, invocations are synchronous but
+can be set to run asynchronously by calling the `async` method and
+(optionally) registering an instance of `InvocationCallback` as shown
+next:
+
+[source,java,numbered]
+-------------
+Client client = ClientBuilder.newClient();
+WebTarget target = client.target("http://example.org/customers/{id}");
+target.resolveTemplate("id", 123).request().async().get(
+    new InvocationCallback<Customer>() {
+        @Override
+        public void completed(Customer customer) {
+            // Do something
+        }
+        @Override
+        public void failed(Throwable throwable) {
+            // Process error
+        }
+});
+-------------
+
+Note that in this example, the call to `get` after calling `async`
+returns immediately without blocking the caller’s thread. The response
+type is specified as a type parameter to `InvocationCallback`. The
+method `completed` is called when the invocation completes successfully
+and a response is available; the method `failed` is called with an
+instance of `Throwable` when the invocation fails.
+
+All asynchronous invocations return an instance of `Future<T>` here the
+type parameter `T` matches the type specified in `InvocationCallback`.
+This instance can be used to monitor or cancel the asynchronous
+invocation:
+
+[source,java,numbered]
+-------------
+Future<Customer> ff = target.resolveTemplate("id", 123).request().async()
+    .get(new InvocationCallback<Customer>() {
+    @Override
+    public void completed(Customer customer) {
+        // Do something
+    }
+    @Override
+    public void failed(Throwable throwable) {
+        // Process error
+    }
+    });
+
+// After waiting for a while ...
+if (!ff.isDone()) {
+    ff.cancel(true);
+}
+-------------
+
+Even though it is recommended to pass an instance of
+`InvocationCallback` when executing an asynchronous call, it is not
+mandated. When omitted, the `Future<T>` returned by the invocation can
+be used to gain access to the response by calling the method
+`Future.get`, which will return an instance of `T` if the invocation was
+successful or `null` if the invocation failed.

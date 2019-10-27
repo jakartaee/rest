@@ -1,0 +1,61 @@
+﻿= Jakarta RESTful Web Services, Version 2.1
+Comments to: jaxrs-spec@javaee.groups.io
+v2.1 Final Release, May 14, 2019
+// Metadata:
+:decription: Jakarta RESTful Web Services, Version 2.1
+// Settings:
+:sectnums:
+:sectnumlevels: 5
+:xrefstyle: full
+
+Editors: +
+Pavel Bucek +
+Santiago Pericas-Geertsen +
+
+Comments to: jaxrs-spec@javaee.groups.io
+
+_Oracle Corporation +
+500 Oracle Parkway, Redwood Shores, CA 94065 USA._
+
+
+Copyright (c) 2017, 2019 Oracle and/or its affiliates. All rights reserved.
+
+Oracle and Java are registered trademarks of Oracle and/or its
+affiliates. Other names may be trademarks of their respective owners.
+
+
+include::chapters/_introduction.adoc[]
+
+include::chapters/_applications.adoc[]
+
+include::chapters/_resources.adoc[]
+
+include::chapters/_providers.adoc[]
+
+include::chapters/_client_api.adoc[]
+
+include::chapters/_filters_and_interceptors.adoc[]
+
+include::chapters/_validation.adoc[]
+
+include::chapters/_asynchronous_processing.adoc[]
+
+include::chapters/_sse.adoc[]
+
+include::chapters/_context.adoc[]
+
+include::chapters/_environment.adoc[]
+
+include::chapters/_runtimedelegate.adoc[]
+
+:sectnums!:
+
+include::chapters/_annotation_table.adoc[]
+
+include::chapters/_headersupport.adoc[]
+
+include::chapters/_processing_pipeline.adoc[]
+
+include::chapters/_change-log.adoc[]
+
+include::chapters/_bibliography.adoc[]

@@ -1,0 +1,362 @@
+[[validation]]
+== Validation
+
+Validation is the process of verifying that some data obeys one or more
+pre-defined constraints. The Bean Validation specification <<bib16>>
+defines an API to validate Java Beans. This chapter describes how
+JAX-RS provides native support for validating resource classes based on
+the concepts presented in <<bib16>>. See <<bv_support>> for
+more information on implementation requirements.
+
+[[constraint_annotations]]
+=== Constraint Annotations
+
+The Server API provides support for extracting request values and
+mapping them into Java fields, properties and parameters using
+annotations such as `@HeaderParam`, `@QueryParam`, etc. It also supports
+mapping of request entity bodies into Java objects via non-annotated
+parameters (i.e., parameters without any JAX-RS annotations). See
+Chapter <<resources>> for additional information.
+
+In earlier versions of JAX-RS, any additional validation of these values
+needed to be performed programmatically. This version of JAX-RS
+introduces support for declarative validation based on the Bean
+Validation specification <<bib16>>.
+
+The Bean Validation specification <<bib16>> supports the use of
+_constraint annotations_ as a way of declaratively validating beans,
+method parameters and method returned values. For example, consider the
+following resource class augmented with constraint annotations:
+
+[source,java,numbered]
+-------------
+@Path("/")
+class MyResourceClass {
+
+    @POST
+    @Consumes("application/x-www-form-urlencoded")
+    public void registerUser(
+        @NotNull @FormParam("firstName") String firstName,
+        @NotNull @FormParam("lastName") String lastName,
+        @Email @FormParam("email") String email) {
+        ...
+    }
+}
+-------------
+
+The annotations `@NotNull` and `@Email` impose additional constraints on
+the form parameters `firstName`, `lastName` and `email`. The
+`@NotNull` constraint is built-in to the Bean Validation API; the
+`@Email` constraint is assumed to be user defined in the example above.
+These constraint annotations are not restricted to method parameters,
+they can be used in any location in which the JAX-RS binding annotations
+are allowed with the exception of constructors and property setters.
+Rather than using method parameters, the `MyResourceClass` shown above
+could have been written as follows:
+
+[source,java,numbered]
+-------------
+@Path("/")
+class MyResourceClass {
+
+    @NotNull @FormParam("firstName")
+    private String firstName;
+
+    @NotNull @FormParam("lastName")
+    private String lastName;
+
+    private String email;
+
+    @FormParam("email")
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Email
+    public String getEmail() {
+        return email;
+    }
+    ...
+}
+-------------
+
+Note that in this version, `firstName` and `lastName` are fields
+initialized via injection and `email` is a resource class property.
+Constraint annotations on properties are specified in their
+corresponding getters.
+
+Constraint annotations are also allowed on resource classes. In addition
+to annotating fields and properties, an annotation can be defined for
+the entire class. Let us assume that `@NonEmptyNames` validates that one
+of the two _name_ fields in `MyResourceClass` is provided. Using such an
+annotation, the example above can be extended as follows:
+
+[source,java,numbered]
+-------------
+@Path("/")
+@NonEmptyNames
+class MyResourceClass {
+
+    @NotNull @FormParam("firstName")
+    private String firstName;
+
+    @NotNull @FormParam("lastName")
+    private String lastName;
+
+    private String email;
+    ...
+}
+-------------
+
+Constraint annotations on resource classes are useful for defining
+cross-field and cross-property constraints.
+
+[[annotations_and_validators]]
+=== Annotations and Validators
+
+Annotation constraints and validators are defined in accordance with the
+Bean Validation specification <<bib16>>. The `@Email` annotation
+shown above is defined using the Bean Validation
+`@Constraint` meta-annotation:
+
+[source,java,numbered]
+-------------
+@Target( { METHOD, FIELD, PARAMETER })
+@Retention(RUNTIME)
+@Constraint(validatedBy = EmailValidator.class)
+public @interface Email {
+    String message() default "{com.example.validation.constraints.email}";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
+}
+-------------
+
+The `@Constraint` annotation must include a reference to the validator
+class that will be used to validate decorated values. The
+`EmailValidator` class must implement `ConstraintValidator<Email, T>`
+where `T` is the type of values being validated. For example,
+
+[source,java,numbered]
+-------------
+public class EmailValidator implements ConstraintValidator<Email, String> {
+    public void initialize(Email email) {
+        ...
+    }
+
+    public boolean isValid(String value, ConstraintValidatorContext context) {
+        ...
+    }
+}
+-------------
+
+Thus, `EmailValidator` applies to values annotated with `@Email` that
+are of type `String`. Validators for different types can be defined for
+the same constraint annotation.
+
+Constraint annotations must also define a `groups` element to indicate
+which processing groups they are associated with. If no groups are
+specified (as in the example above) the `Default` group is assumed. For
+simplicity, JAX-RS implementations are NOT REQUIRED to support
+processing groups other than `Default`. In what follows, we assume that
+constraint validation is carried out in the `Default` processing group.
+
+[[entity_validation]]
+=== Entity Validation
+
+Request entity bodies can be mapped to resource method parameters. There
+are two ways in which these entities can be validated. If the request
+entity is mapped to a Java bean whose class is decorated with Bean
+Validation annotations, then validation can be enabled using `@Valid`:
+
+[source,java,numbered]
+-------------
+@StandardUser
+class User {
+
+    @NotNull
+    private String firstName;
+    ...
+}
+
+@Path("/")
+class MyResourceClass {
+
+    @POST
+    @Consumes("application/xml")
+    public void registerUser(@Valid User user) {
+        ...
+    }
+}
+-------------
+
+In this case, the validator associated with `@StandardUser` (as well as
+those for non-class level constraints like `@NotNull`) will be called to
+verify the request entity mapped to `user`. Alternatively, a new
+annotation can be defined and used directly on the resource method
+parameter.
+
+[source,java,numbered]
+-------------
+@Path("/")
+class MyResourceClass {
+
+    @POST
+    @Consumes("application/xml")
+    public void registerUser(@PremiumUser User user) {
+        ...
+    }
+}
+-------------
+
+In the example above, `@PremiumUser` rather than `@StandardUser` will be
+used to validate the request entity. These two ways in which validation
+of entities can be triggered can also be combined by including
+`@Valid` in the list of constraints. The presence of `@Valid` will
+trigger validation of _all_ the constraint annotations decorating a Java
+bean class. This validation will take place in the `Default` processing
+group unless the `@ConvertGroup` annotation is present. See <<bib16>>
+for more information on `@ConvertGroup`.
+
+Response entity bodies returned from resource methods can be validated
+in a similar manner by annotating the resource method itself. To
+exemplify, assuming both `@StandardUser` and `@PremiumUser` are required
+to be checked before returning a user, the `getUser` method can be
+annotated as shown next:
+
+[source,java,numbered]
+-------------
+@Path("/")
+class MyResourceClass {
+
+    @GET
+    @Path("{id}")
+    @Produces("application/xml")
+    @Valid @PremiumUser
+    public User getUser(@PathParam("id") String id) {
+        User u = findUser(id);
+        return u;
+    }
+    ...
+}
+-------------
+
+Note that `@PremiumUser` is explicitly listed and `@StandardUser` is
+triggered by the presence of the `@Valid` annotation —see definition of
+`User` class earlier in this section.
+
+[[default_validation_mode]]
+=== Default Validation Mode
+
+According to <<bib16>>, validation is enabled by default only for
+the so called _constrained_ methods. Getter methods as defined by the
+Java Beans specification are not constrained methods, so they will not
+be validated by default. The special annotation `@ValidateOnExecution`
+defined in <<bib16>> can be used to selectively enable and disable
+validation. For example, you can enable validation on method `getEmail`
+shown above as follows:
+
+[source,java,numbered]
+-------------
+@Path("/")
+class MyResourceClass {
+
+    @Email
+    @ValidateOnExecution
+    public String getEmail() {
+        return email;
+    }
+    ...
+}
+-------------
+
+The default value for the `type` attribute of `@ValidateOnExecution` is
+`IMPLICIT` which, in the example above, results in method `getEmail`
+being validated. See <<bib16>> for more information on other uses
+of this annotation.
+
+Note that if validation for getter methods is _enabled_ and a resource
+method’s signature obeys the rules for getters, the resource method may
+be (unintentionally) invoked during validation. Conversely, if
+validation for getter methods is _disabled_ and the _matching_ resource
+method’s signature obeys the rules for getters, the JAX-RS runtime will
+still validate the method (i.e., the validation preference will be
+ignored) before invocation.
+
+[[annotation_inheritance]]
+=== Annotation Inheritance
+
+The rules for inheritance of constraint annotation are defined in
+<<bib16>>. It is worth noting that these rules are incompatible
+with those defined in <<annotationinheritance>>. Generally
+speaking, constraint annotations in <<bib16>> are cumulative (can
+be strengthen) across a given type hierarchy while JAX-RS annotations
+are inherited or, overridden and ignored.
+
+The goal of this specification is to enable validation of
+JAX-RS resources by leveraging existing Bean Validation implementations.
+Therefore, JAX-RS implementations MUST follow the constraint annotation
+rules defined in <<bib16>>.
+
+[[validation_and_error_reporting]]
+=== Validation and Error Reporting
+
+Constraint annotations are allowed in the same locations as the
+following annotations: `@MatrixParam`, `@QueryParam`, `@PathParam`,
+`@CookieParam`, `@HeaderParam` and `@Context`, _except_ in class
+constructors and property setters. Specifically, they are allowed in
+resource method parameters, fields and property getters as well as
+resource classes, entity parameters and resource methods (return
+values).
+
+The default resource class instance lifecycle is per-request in JAX-RS.
+Implementations MAY support other lifecycles; the same caveats related
+to the use of other JAX-RS annotations in resource classes apply to
+constraint annotations. For example, a constraint validation annotating
+a constructor parameter in a resource class whose lifecycle is singleton
+will only be executed once.
+
+JAX-RS implementations SHOULD use the following process to validate
+resource class instances after they have been instantiated:
+
+Phase 1::
+  Inject field values and initialize bean properties as described in
+  Section <<resource_field>>.
+Phase 2::
+  Validate annotations on fields, property getters (if enabled) and the
+  resource class. The order in which these validations are executed is
+  implementation dependent.
+Phase 3::
+  Validate annotations on parameters passed to the resource method
+  matched.
+Phase 4::
+  If no constraint violations found thus far, invoke resource method and
+  validate returned value.
+
+The exception model in <<bib16>> defines a base class
+`javax.validation.ValidationException` and a few subclasses to report
+errors that are specific to constraint definitions, constraint
+declarations, group definitions and constraint violations.
+JAX-RS implementations MUST provide a default exception mapper (see
+<<exceptionmapper>>) for `javax.validation.ValidationException`
+according to the following rules:
+
+1.  If the exception is of type `javax.validation.ValidationException`
+or any of its subclasses _excluding_
+`javax.validation.ConstraintViolationException`, then it is mapped to a
+response with status code 500 (Internal Server Error).
+2.  If the exception is an instance of
+`javax.validation.ConstraintViolationException`, then:
+a.  If the exception was thrown while validating a method return type,
+then it is mapped to a response with status code 500 (Internal Server
+Error).footnote:[The property path of a ConstraintViolation provides
+information about the location from which an exception originated. See
+Javadoc for more information.]
+b.  Otherwise, it is mapped to a response with status code 400 (Bad
+Request).
+
+In all cases, JAX-RS implementations SHOULD include a response entity
+describing the source of the error; however, the exact content and
+format of this entity is beyond the scope of this specification. As
+described in <<exceptionmapper>>, applications can provide their
+own exception mappers and, consequently, customize the default mapper
+described above.

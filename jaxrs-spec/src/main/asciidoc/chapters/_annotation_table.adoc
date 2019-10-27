@@ -1,0 +1,93 @@
+﻿[appendix]
+[[annotation_table]]
+== Summary of Annotations
+
+|===============================================
+|*Annotation*   |*Target*           |*Description*
+|`Consumes`     |Type or method     |Specifies a list of media types that can be consumed.
+|`Produces`     |Type or method     |Specifies a list of media types that can
+be produced.
+|`GET`          |Method             |Specifies that the annotated method
+handles HTTP GET requests.
+|`POST`         |Method             |Specifies that the
+annotated method handles HTTP POST requests.
+|`PUT`          |Method             |Specifies
+that the annotated method handles HTTP PUT requests.
+|`DELETE`       |Method             |Specifies that the annotated method handles HTTP DELETE requests.
+|`PATCH`        |Method             |Specifies that the annotated method handles HTTP
+PATCH requests.
+|`HEAD`         |Method             |Specifies that the annotated method
+handles HTTP HEAD requests. Note that HEAD may be automatically handled,
+see <<head_and_options>>.
+|`OPTIONS`      |Method             |Specifies that the
+annotated method handles HTTP OPTIONS requests.
+|`ApplicationPath`  |Type           |Specifies the resource-wide application
+path that forms the base URI of all root resource classes.
+|`Path`         |Type or method     |Specifies a relative path for a resource.
+When used on a class this annotation
+identifies that class as a root resource. When used on a method this
+annotation identifies a sub-resource method or locator.
+|`PathParam` |Parameter, field or method    |Specifies that the value of a method
+parameter, class field, or bean property is to be extracted from the
+request URI path. The value of the annotation identifies the name of a
+URI template parameter.
+|`QueryParam`   |Parameter, field or method
+|Specifies that the value of a method parameter, class field, or bean
+property is to be extracted from a URI query parameter. The value of the
+annotation identifies the name of a query parameter.
+|`FormParam`    |Parameter, field or method |Specifies that the value of a method
+parameter is to be extracted from a form parameter in a request entity
+body. The value of the annotation identifies the name of a form
+parameter. Note that whilst the annotation target allows use on fields
+and methods, the specification only requires support for use on resource
+method parameters.
+|`MatrixParam`  |Parameter, field or method     |Specifies
+that the value of a method parameter, class field, or bean property is
+to be extracted from a URI matrix parameter. The value of the annotation
+identifies the name of a matrix parameter.
+|`CookieParam`  |Parameter, field or method |Specifies that the value of
+a method parameter, class
+field, or bean property is to be extracted from a HTTP cookie. The value
+of the annotation identifies the name of a the cookie.
+|`HeaderParam` |Parameter, field or method  |Specifies that the value of a method
+parameter, class field, or bean property is to be extracted from a HTTP
+header. The value of the annotation identifies the name of a HTTP
+header.
+|`Encoded`      |Type, constructor, method, field or parameter
+|Disables automatic URI decoding for path, query, form and matrix
+parameters.
+|`DefaultValue` |Parameter, field or method     |Specifies a
+default value for a field, property or method parameter annotated with
+`@QueryParam`, `@MatrixParam`, `@CookieParam`, `@FormParam` or
+`@HeaderParam`. The specified value will be used if the corresponding
+query or matrix parameter is not present in the request URI, if the
+corresponding form parameter is not in the request entity body, or if
+the corresponding HTTP header is not included in the request.
+|`Context`  |Field, method or parameter |Identifies an injection target for one of
+the types listed in <<contexttypes>> or the applicable section of
+Chapter <<environment>>.
+|`HttpMethod`   |Annotation     |Specifies the HTTP
+method for a request method designator annotation.
+|`Provider`     |Type   |Specifies that the annotated class implements a JAX-RS extension
+interface.
+3+|*Since JAX-RS 2.0*
+|`NameBinding`  |Annotation |Meta-annotation to create annotations for
+binding filters or interceptors to resource methods and applications.
+Name binding is only supported as part of the Server API.
+|`Suspended`    |Parameter |Indicates that a resource method is asynchronous. I.e., that
+it does not produce a response upon returning. JAX-RS implementations
+will suspend the incoming connection until a response becomes available.
+|`PreMatching`  |Type   |Global binding annotation that can be applied to
+a container filter to indicate that it should be applied globally and
+before the resource method is matched.
+|`BeanParam`    |Parameter, field or method         |Can be used to inject
+a user-defined bean whose fields and
+properties may be annotated with JAX-RS param
+annotations.
+|`ConstrainedTo`    |Type   |Can be used to restrict the
+applicability of a provider to just the Client API or just the Server
+API. If omitted, a provider can be used in either context.
+|`ParamConverter.Lazy`  |Type   |Indicates that a conversion of a default
+value delegated to a `ParamConverter` SHOULD occur only when the value
+is actually requested.
+|===============================================

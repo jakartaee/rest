@@ -1,0 +1,372 @@
+[[client_api]]
+== Client API
+
+The Client API is used to access Web resources. It provides a
+higher-level API than `HttpURLConnection` as well as integration with
+JAX-RS providers. Unless otherwise stated, types presented in this
+chapter live in the `javax.ws.rs.client` package.
+
+[[bootstrapping-a-client-instance]]
+=== Bootstrapping a Client Instance
+
+An instance of `Client` is required to access a Web resource using the
+Client API. The default instance of `Client` can be obtained by calling
+`newClient` on `ClientBuilder`. `Client` instances can be configured
+using methods inherited from `Configurable` as follows:
+
+[source,java,numbered]
+-------------
+// Default instance of client
+Client client = ClientBuilder.newClient();
+
+// Additional configuration of default client
+client.property("MyProperty", "MyValue")
+    .register(MyProvider.class)
+    .register(MyFeature.class);
+-------------
+
+See Chapter <<providers>> for more information on providers. Properties
+are simply name-value pairs where the value is an arbitrary object.
+Features are also providers and must implement the `Feature` interface;
+they are useful for grouping sets of properties and providers (including
+other features) that are logically related and must be enabled as a
+unit.
+
+[[resource_access]]
+=== Resource Access
+
+A Web resource can be accessed using a fluent API in which method
+invocations are chained to build and ultimately submit an HTTP request.
+The following example gets a `text/plain` representation of the resource
+identified by `http://example.org/hello`:
+
+[source,java,numbered]
+-------------
+Client client = ClientBuilder.newClient();
+Response res = client.target("http://example.org/hello")
+    .request("text/plain").get();
+-------------
+
+Conceptually, the steps required to submit a request are the following:
+(i) obtain an instance of `Client` (ii) create a `WebTarget` (iii)
+create a request from the `WebTarget` and (iv) submit a request or get a
+prepared `Invocation` for later submission. See Section [invocations]
+for more information on using `Invocation`.
+
+Method chaining is not limited to the example shown above. A request can
+be further specified by setting headers, cookies, query parameters, etc.
+For example:
+
+[source,java,numbered]
+-------------
+Response res = client.target("http://example.org/hello")
+    .queryParam("MyParam","...")
+    .request("text/plain")
+    .header("MyHeader", "...")
+    .get();
+-------------
+
+See the Javadoc for the classes in the `javax.ws.rs.client` package for
+more information.
+
+[[client-targets]]
+=== Client Targets
+
+The benefits of using a `WebTarget` become apparent when building
+complex URIs, for example by extending base URIs with additional path
+segments or templates. The following example highlights these cases:
+
+[source,java,numbered]
+-------------
+WebTarget base = client.target("http://example.org/");
+WebTarget hello = base.path("hello").path("{whom}");
+Response res = hello.resolveTemplate("whom", "world").request("...").get();
+-------------
+
+Note the use of the URI template parameter `{whom}`. The example above
+gets a representation for the resource identified by
+`http://example.org/hello/world`.
+
+`WebTarget` instances are _immutable_ with respect to their URI (or URI
+template): methods for specifying additional path segments and
+parameters return a new instance of `WebTarget`. However,
+`WebTarget` instances are _mutable_ with respect to their configuration.
+Thus, configuring a `WebTarget` does not create new instances.
+
+[source,java,numbered]
+-------------
+// Create WebTarget instance base
+WebTarget base = client.target("http://example.org/");
+// Create new WebTarget instance hello and configure it
+WebTarget hello = base.path("hello");
+hello.register(MyProvider.class);
+-------------
+
+In this example, two instances of `WebTarget` are created. The instance
+`hello` inherits the configuration from `base` and it is further
+configured by registering `MyProvider.class`. Note that changes to
+`hello`’s configuration do not affect `base`, i.e. inheritance performs
+a _deep_ copy of the configuration. See Section [configurable_types] for
+additional information on configurable types.
+
+[[typed-entities]]
+=== Typed Entities
+
+The response to a request is not limited to be of type `Response`. The
+following example upgrades the status of customer number 123 to ``gold
+status'' by first obtaining an entity of type `Customer` and then
+posting that entity to a different URI:
+
+[source,java,numbered]
+-------------
+Customer c = client.target("http://examples.org/customers/123")
+.request("application/xml").get(Customer.class);
+String newId = client.target("http://examples.org/gold-customers/")
+.request().post(xml(c), String.class);
+-------------
+
+Note the use of the _variant_ `xml()` in the call to `post`. The class
+`javax.ws.rs.client.Entity` defines variants for the most popular media
+types used in JAX-RS applications.
+
+In the example above, just like in the Server API,
+JAX-RS implementations are REQUIRED to use entity providers to map a
+representation of type `application/xml` to an instance of `Customer`
+and vice versa. See <<standard_entity_providers>> for a list of
+entity providers that MUST be supported by all JAX-RS implementations.
+
+[[invocations]]
+=== Invocations
+
+An invocation is a request that has been prepared and is ready for
+execution. Invocations provide a _generic interface_ that enables a
+separation of concerns between the creator and the submitter. In
+particular, the submitter does not need to know how the invocation was
+prepared, but only how it should be executed: namely, synchronously or
+asynchronously.
+
+Let us consider the following example footnote:[The Collections class in
+this example is arbitrary and does not correspond to any specific
+implementation. There are a number of Java collection libraries
+available that provide this type of functionality.]:
+
+[source,java,numbered]
+-------------
+// Executed by the creator
+Invocation inv1 = client.target("http://examples.org/atm/balance")
+    .queryParam("card", "111122223333").queryParam("pin", "9876")
+    .request("text/plain").buildGet();
+Invocation inv2 = client.target("http://examples.org/atm/withdrawal")
+    .queryParam("card", "111122223333").queryParam("pin", "9876")
+    .request().buildPost(text("50.0"));
+Collection<Invocation> invs = Arrays.asList(inv1, inv2);
+
+// Executed by the submitter
+Collection<Response> ress =
+    Collections.transform(invs,
+        new F<Invocation, Response>() {
+        @Override
+        public Response apply(Invocation inv) {
+            return inv.invoke(); } });
+-------------
+
+// Executed by the submitter Collection<Response> ress =
+Collections.transform(invs, new F<Invocation, Response>() @Override
+public Response apply(Invocation inv) return inv.invoke(); );
+
+In this example, two invocations are prepared and stored in a collection
+by the creator. The submitter then traverses the collection applying a
+transformation that maps an `Invocation` to a `Response`. The mapping
+calls `Invocation.invoke` to execute the invocation synchronously;
+asynchronous execution is also supported by calling `Invocation.submit`.
+Refer to Chapter <<asynchronous_processing>> for more information on
+asynchronous invocations.
+
+[[configurable_types]]
+=== Configurable Types
+
+The following Client API types are configurable: `Client`,
+`ClientBuilder`, and `WebTarget`. Configuration methods are inherited
+from the `Configurable` interface implemented by all these classes. This
+interface supports configuration of:
+
+Properties::
+  Name-value pairs for additional configuration of features or other
+  components of a JAX-RS implementation.
+Features::
+  A special type of provider that implement the `Feature` interface and
+  can be used to configure a JAX-RS implementation.
+Providers::
+  Classes or instances of classes that implement one or more of the
+  provider interfaces from Chapter [providers]. A provider can be a
+  message body reader, a filter, a context resolver, etc.
+
+The configuration defined on an instance of any of the aforementioned
+types is inherited by other instances created from it. For example, an
+instance of `WebTarget` created from a `Client` will inherit the
+`Client`’s configuration. However, any additional changes to the
+instance of `WebTarget` will not impact the `Client`’s configuration and
+vice versa. Therefore, once a configuration is inherited it is also
+detached (deep copied) from its parent configuration and changes to the
+parent and child configurations are not be visible to each other.
+
+[[filters_interceptors_client]]
+==== Filters and Entity Interceptors
+
+As explained in Chapter <<filters_and_interceptors>>, filters and
+interceptors are defined as JAX-RS providers. Therefore, they can be
+registered in any of the configurable types listed in the previous
+section. The following example shows how to register filters and
+interceptors on instances of `Client` and `WebTarget`:
+
+[source,java,numbered]
+-------------
+// Create client and register logging filter
+Client client = ClientBuilder.newClient().register(LoggingFilter.class);
+
+// Executes logging filter from client and caching filter from target
+WebTarget wt = client.target("http://examples.org/customers/123");
+Customer c = wt.register(CachingFilter.class).request("application/xml")
+    .get(Customer.class);
+-------------
+
+In this example, `LoggingFilter` is inherited by each instance of
+`WebTarget` created from `client`; an additional provider named
+`CachingFilter` is registered on the instance of `WebTarget`.
+
+[[reactive_clients]]
+=== Reactive Clients
+
+<<client_api_async>> introduces asynchronous programming in the
+Client API. Asynchronous programming in JAX-RS enables clients to
+unblock certain threads by pushing work to background threads which can
+be monitored and possibly waited on (joined) at a later time. This can
+be accomplished in JAX-RS by either providing an instance of
+`InvocationCallback` or operating on the result of type `Future<T>`
+returned by an asynchronous invoker —or some combination of both styles.
+
+Using `InvocationCallback` enables a more _reactive_ programming style
+in which user-provided code activates (or reacts) only when a certain
+event has occurred. Using callbacks works well for simple cases, but the
+source code becomes harder to understand when multiple events are in
+play. For example, when asynchronous invocations need to be composed,
+combined or in any way operated upon. These type of scenarios may result
+in callbacks that are nested inside other callbacks making the code far
+less readable —often referred to as the _pyramid of doom_ because of the
+inherent nesting of calls.
+
+To address the requirement of greater readability and to enable
+programmers to better reason about asynchronous computations, Java 8
+introduces the a new interface called `CompletionStage` that includes a
+large number of methods dedicated to managing asynchronous computations.
+
+JAX-RS 2.1 defines a new type of invoker called `RxInvoker`, as well a
+default implementation of this type called `CompletionStageRxInvoker`
+that is based on the Java 8 type `CompletionStage`. There is a new `rx`
+method which is used in a similar manner to `async` as described in
+<<client_api_async>>. Let us consider the following example:
+
+[source,java,numbered]
+-------------
+CompletionStage<String> csf = client.target("forecast/{destination}")
+    .resolveTemplate("destination", "mars")
+    .request()
+    .rx()
+    .get(String.class);
+
+csf.thenAccept(System.out::println);
+-------------
+
+This example first creates an asynchronous computation of type
+`CompletionStage<String>`, and then simply waits for it to complete and
+displays its result (technically, a second computation of type
+`CompletionStage<Void>` is created on the last line simply to consume
+the result of the first computation).
+
+The value of `CompletionStage` becomes apparent when multiple
+asynchronous computations are necessary to accomplish a task. The
+following example obtains, in parallel, a price and a forecast for a
+destination and makes a reservation only if the desired conditions are
+met.
+
+[source,java,numbered]
+-------------
+CompletionStage<Number> csp = client.target("price/{destination}")
+    .resolveTemplate("destination", "mars")
+    .request()
+    .rx()
+    .get(Number.class);
+
+CompletionStage<String> csf = client.target("forecast/{destination}")
+    .resolveTemplate("destination", "mars")
+    .request()
+    .rx()
+    .get(String.class);
+
+csp.thenCombine(csf, (price, forecast) ->
+    reserveIfAffordableAndWarm(price, forecast));
+-------------
+
+Note that the `Consumer` passed in the call to method `thenCombine`
+requires the values of each stage to be available and, therefore, can
+only be executed after the two parallel stages are completed.
+
+As we shall see in the next section, support for `CompletionStage` is
+the _default_ for all JAX-RS implementations, but other reactive APIs
+may also be supported as extensions.
+
+[[reactive_api_extensions]]
+==== Reactive API Extensions
+
+There have been several proposals for reactive APIs in Java. All
+JAX-RS implementations MUST support an invoker for `CompletionStage` as
+shown above. Additionally, JAX-RS implementations MAY support other
+reactive APIs using an extension built into the Client API.
+
+RxJava <<bib11>> is a popular
+reactive library available in Java. The type representing an
+asynchronous computation in this API is called an `Observable`. An
+implementation may support this type by providing a new invoker as shown
+in the following example:
+
+[source,java,numbered]
+-------------
+Client client = client.register(ObservableRxInvokerProvider.class);
+
+Observable<String> of = client.target("forecast/{destination}")
+    .resolveTemplate("destination", "mars")
+    .request()
+    .rx(ObservableRxInvoker.class) // overrides default invoker
+    .get(String.class);
+    
+of.subscribe(System.out::println);
+-------------
+
+First, a provider for the new invoker must be registered on the `Client`
+object. Second, the type of the invoker must be specified as a parameter
+to the `rx` method. Note that because this is a JAX-RS extension, the
+actual names for the provider and the invoker in the example above are
+implementation dependent. The reader is referred to the documentation
+for the JAX-RS implementation of choice for more information.
+
+Version 2.0 of RxJava <<bib12>> has
+been completely re-written on top of the Reactive-Streams specification.
+This new architecture prompted the introduction of a new type called
+`Flowable`. JAX-RS implementations could easily support this new version
+by implementing a new provider (such as `FlowableRxInvokerProvider`) and
+using the same pattern shown in the example above.
+
+[[executor_services]]
+=== Executor Services
+
+Executor services can be used to submit asynchronous tasks for
+execution. JAX-RS applications can specify executor services while
+building a `Client` instance. Two methods are provided in
+`ClientBuilder` for this purpose, namely, `executorService` and
+`scheduledExecutorService`.
+
+In an environment that supports the Concurrency Utilities for Java EE
+<<bib13>>, such as the Java EE Full Profile, implementations MUST use
+`ManagedExecutorService` and `ManagedScheduledExecutorService`,
+respectively. The reader is referred to the Javadoc of `ClientBuilder`
+for more information about executor services.

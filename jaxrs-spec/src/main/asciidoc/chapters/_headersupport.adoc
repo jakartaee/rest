@@ -1,0 +1,72 @@
+[appendix]
+[[headersupport]]
+== HTTP Header Support
+
+The following table lists HTTP headers that are directly supported,
+either automatically by a JAX-RS implementation runtime or by an
+application using the JAX-RS API. Any request header may be obtained
+using `HttpHeaders`, see <<httpheaders>>; response headers not
+listed here may set using the `ResponseBuilder``.header` method.
+
+|===============================================
+|*Header*           |*Description*
+|`Accept`           |Used by runtime when
+selecting a resource method, compared to value of
+`@Produces` annotation, see <<declaring_method_capabilities>>.
+|`Accept-Charset`   |Processed by runtime if application uses
+`Request.selectVariant` method, see <<conneg_and_preconditions>>.
+|`Accept-Encoding`  |Processed by runtime if
+application uses `Request.selectVariant` method, see <<conneg_and_preconditions>>.
+|`Accept-Language`  |Processed by runtime if
+application uses `Request.selectVariant` method, see <<conneg_and_preconditions>>.
+|`Allow`            |Included in automatically
+generated 405 error responses (see Section [request_matching]) and
+automatically generated responses to OPTIONS requests (see <<head_and_options>>).
+|`Authorization`    |Depends on container, information
+available via `SecurityContext`, see <<security_context>>.
+|`Cache-Control`    |See `CacheControl` class and
+`ResponseBuilder.cacheControl` method.
+|`Content-Encoding` |Response
+header set by application using `Response.ok` or
+`ResponseBuilder.variant`.
+|`Content-Language` |Response header set by
+application using `Response.ok`, `ResponseBuilder.language`, or
+`ResponseBuilder.variant`.
+|`Content-Length`   |Processed automatically
+for requests, set automatically in responses if value is provided by the
+`MessageBodyWriter` used to serialize the message entity.
+|`Content-Type`     |Request header used by runtime when selecting a resource method,
+compared to value of `@Consumes` annotation, see
+<<declaring_method_capabilities>>. Response header either set by
+application using `Response.ok`, `ResponseBuilder.type`, or
+`ResponseBuilder.variant`, or set automatically by runtime (see
+<<determine_response_type>>).
+|`Cookie`           |See `Cookie` class and
+`HttpHeaders.getCookies` method.
+|`Date`             |Included in responses
+automatically as per HTTP/1.1.
+|`ETag`             |See `EntityTag` class,
+`Response.notModified` method and `ResponseBuilder.tag` method.
+|`Expect`           |Depends on underlying container.
+|`Expires`          |Set by application using the `ResponseBuilder.expires` method.
+|`If-Match`         |Processed by runtime if application uses corresponding
+`Request.evaluatePreconditions` method, see Section
+[conneg_and_preconditions]. `If-Modified-Since` & Processed by runtime
+if application uses corresponding `Request.evaluatePreconditions`
+method, see <<conneg_and_preconditions>>.
+|`If-None-Match`    |Processed by runtime if application uses corresponding
+`Request.evaluatePreconditions` method, see Section
+<<conneg_and_preconditions>>.
+|`If-Unmodified-Since`  |Processed by runtime
+if application uses corresponding `Request.evaluatePreconditions`
+method, see <<conneg_and_preconditions>>.
+|`Last-Modified` |Set by
+application using the `ResponseBuilder.lastModified` method.
+`Location` & Set by application using the applicable `Response` method
+or directly using the `ResponseBuilder.location` method.
+|`Set-Cookie` |See `NewCookie` class and `ResponseBuilder.cookie` method.
+|`Transfer-Encoding`    |See <<transfer_encoding>>.
+|`Vary`     |Set by application using `Response.notAcceptable` method or
+`ResponseBuilder.variants` method.
+|`WWW-Authenticate`     |Depends on container.
+|===============================================

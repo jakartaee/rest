@@ -1,0 +1,177 @@
+﻿[[applications]]
+== Applications
+
+A JAX-RS application consists of one or more resources (see Chapter
+<<resources>>) and zero or more providers (see Chapter <<providers>>). This
+chapter describes aspects of JAX-RS that apply to an application as a
+whole, subsequent chapters describe particular aspects of a
+JAX-RS application and requirements on JAX-RS implementations.
+
+[[config]]
+=== Configuration
+
+The resources and providers that make up a JAX-RS application are
+configured via an application-supplied subclass of `Application`. An
+implementation MAY provide alternate mechanisms for locating resource
+classes and providers (e.g. runtime class scanning) but use of
+`Application` is the only portable means of configuration.
+
+[[verification]]
+=== Verification
+
+Specific application requirements are detailed throughout this
+specification and the JAX-RS Javadocs. Implementations MAY perform
+verification steps that go beyond what it is stated in this document.
+
+A JAX-RS implementation MAY report an error condition if it detects that
+two or more resources could result in an ambiguity during the execution
+of the algorithm described <<request_matching>>. For example, if
+two resource methods in the same resource class have identical (or even
+intersecting) values in all the annotations that are relevant to the
+algorithm described in that section. The exact set of verification steps
+as well as the error reporting mechanism is implementation dependent.
+
+[[publication]]
+=== Publication
+
+Applications are published in different ways depending on whether the
+application is run in a Java SE environment or within a container. This
+section describes the alternate means of publication.
+
+[[java-se]]
+==== Java SE
+
+In a Java SE environment a configured instance of an endpoint class can
+be obtained using the `createEndpoint` method of `RuntimeDelegate`. The
+application supplies an instance of `Application` and the type of
+endpoint required. An implementation MAY support zero or more endpoint
+types of any desired type.
+
+How the resulting endpoint class instance is used to publish the
+application is outside the scope of this specification.
+
+[[jax-ws]]
+===== JAX-WS
+
+An implementation that supports publication via JAX-WS MUST support
+`createEndpoint` with an endpoint type of `javax.xml.ws.Provider`.
+JAX-WS describes how a `Provider` based endpoint can be published in an
+SE environment.
+
+[[servlet]]
+==== Servlet
+
+A JAX-RS application is packaged as a Web application in a `.war` file.
+The application classes are packaged in `WEB-INF/classes` or
+`WEB-INF/lib` and required libraries are packaged in `WEB-INF/lib`. See
+the Servlet specification for full details on packaging of web
+applications.
+
+It is RECOMMENDED that implementations support the Servlet 3 framework
+pluggability mechanism to enable portability between containers and to
+avail themselves of container-supplied class scanning facilities. When
+using the pluggability mechanism the following conditions MUST be met:
+
+* If _no_ `Application` subclass is present, JAX-RS implementations are
+REQUIRED to dynamically add a servlet and set its name to
++
+`javax.ws.rs.core.Application`
++
+and to automatically discover all root resource classes and providers
+which MUST be packaged with the application. Additionally, the
+application MUST be packaged with a `web.xml` that specifies a servlet
+mapping for the added servlet. An example of such a `web.xml` file is:
+
+[source,xml,numbered]
+-------------
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <servlet>
+        <servlet-name>javax.ws.rs.core.Application</servlet-name>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>javax.ws.rs.core.Application</servlet-name>
+        <url-pattern>/myresources/*</url-pattern>
+    </servlet-mapping>
+</web-app>
+-------------
+
+* If an `Application` subclass is present:
+** If there is already a servlet that handles this application. That is,
+a servlet that has an initialization parameter named
++
+`javax.ws.rs.Application`
++
+whose value is the fully qualified name of the `Application` subclass,
+then no additional configuration steps are required by the JAX-RS
+implementation.
+** If _no_ servlet handles this application, JAX-RS implementations are
+REQUIRED to dynamically add a servlet whose fully qualified name must be
+that of the `Application` subclass. If the `Application` subclass is
+annotated with `@ApplicationPath`, implementations are REQUIRED to use
+the value of this annotation appended with "/*" to define a mapping
+for the added server. Otherwise, the application MUST be packaged with a
+`web.xml` that specifies a servlet mapping. For example, if
+`org.example.MyApplication` is the name of the `Application` subclass, a
+sample `web.xml` would be:
+
+[source,xml,numbered]
+-------------
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <servlet>
+        <servlet-name>org.example.MyApplication</servlet-name>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>org.example.MyApplication</servlet-name>
+        <url-pattern>/myresources/*</url-pattern>
+    </servlet-mapping>
+</web-app>
+-------------
+
+When an `Application` subclass is present in the archive, if both
+`Application.getClasses` and `Application.getSingletons` return an empty
+collection then all root resource classes and providers packaged in the
+web application MUST be included and the JAX-RS implementation is
+REQUIRED to discover them automatically by scanning a `.war` file as
+described above. If either `getClasses` or `getSingletons` returns a
+non-empty collection then only those classes or singletons returned MUST
+be included in the published JAX-RS application.
+
+The following table summarizes the Servlet 3 framework pluggability
+mechanism:
+
+[id="Table 2.1"]
+|==================================
+|*Condition*    |*Action*   |*Servlet Name*     |*web.xml*
+|No `Application` subclass   |Add servlet    |`javax.ws.rs.core.Application`
+|Required for servlet mapping
+|`Application` subclass handled by existing servlet |(none) |(already defined)
+|Not required
+|`Application` subclass _not_ handled by existing servlet   |Add servlet
+|Subclass name  |If no `@ApplicationPath` then required for servlet mapping
+|==================================
+Table 2.1: Summary of Servlet 3 framework pluggability cases
+
+If not using the Servlet 3 framework pluggability mechanism (e.g. in a
+pre-Servlet 3.0 container), the `servlet-class` or `filter-class`
+element of the `web.xml` descriptor SHOULD name the
+JAX-RS implementation-supplied servlet or filter class respectively. The
+`Application` subclass SHOULD be identified using an `init-param` with a
+`param-name` of `javax.ws.rs.Application`.
+
+Note that the Servlet 3 framework pluggability mechanism described above
+is based on servlets and not filters. Applications that prefer to use an
+implementation-supplied filter class must use the pre-Servlet 3.0
+configuration mechanism.
+
+[[other-container]]
+==== Other Container
+
+An implementation MAY provide facilities to host a JAX-RS application in
+other types of container, such facilities are outside the scope of this
+specification.

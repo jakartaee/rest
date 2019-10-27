@@ -1,0 +1,221 @@
+[[context]]
+== Context
+
+JAX-RS provides facilities for obtaining and processing information
+about the application deployment context and the context of individual
+requests. Such information is available to `Application` subclasses (see
+Section <<config>>), root resource classes (see Chapter <<resources>>), and
+providers (see Chapter <<providers>>). This chapter describes these
+facilities.
+
+[[concurrency]]
+=== Concurrency
+
+Context is specific to a particular request but instances of certain
+JAX-RS components (providers and resource classes with a lifecycle other
+than per-request) may need to support multiple concurrent requests. When
+injecting an instance of one of the types listed in
+<<contexttypes>>, the instance supplied MUST be capable of selecting the
+correct context for a particular request. Use of a thread-local proxy is
+a common way to achieve this.
+
+[[contexttypes]]
+=== Context Types
+
+This section describes the types of context available to providers
+(client and server) as well as resource classes and `Application`
+subclasses (server only). Except for `Configuration` and `Providers`,
+which are injectable in both client and server-side providers, all the
+other types are server-side only.
+
+[[application]]
+==== Application
+
+The instance of the application-supplied `Application` subclass can be
+injected into a class field or method parameter using the
+`@Context` annotation. Access to the `Application` subclass instance
+allows configuration information to be centralized in that class. Note
+that this cannot be injected into the `Application` subclass itself
+since this would create a circular dependency.
+
+[[uris-and-uri-templates]]
+==== URIs and URI Templates
+
+An instance of `UriInfo` can be injected into a class field or method
+parameter using the `@Context` annotation. `UriInfo` provides both
+static and dynamic, per-request information, about the components of a
+request URI. E.g. the following would return the names of any query
+parameters in a request:
+
+[source,java,numbered]
+-------------
+@GET
+@Produces{"text/plain"}
+public String listQueryParamNames(@Context UriInfo info) {
+    StringBuilder buf = new StringBuilder();
+    for (String param: info.getQueryParameters().keySet()) {
+        buf.append(param);
+        buf.append("\n");
+    }
+    return buf.toString();
+}
+-------------
+
+Note that the methods of `UriInfo` provide access to request URI
+information following the pre-processing described in <<reqpreproc>>.
+
+[[httpheaders]]
+==== Headers
+
+An instance of `HttpHeaders` can be injected into a class field or
+method parameter using the `@Context` annotation. `HttpHeaders` provides
+access to request header information either in map form or via strongly
+typed convenience methods. E.g. the following would return the names of
+all the headers in a request:
+
+[source,java,numbered]
+-------------
+@GET
+@Produces{"text/plain"}
+public String listHeaderNames(@Context HttpHeaders headers) {
+    StringBuilder buf = new StringBuilder();
+    for (String header: headers.getRequestHeaders().keySet()) {
+        buf.append(header);
+        buf.append("\n");
+    }
+    return buf.toString();
+}
+-------------
+
+Note that the methods of `HttpHeaders` provide access to request
+information following the pre-processing described in <<reqpreproc>>.
+
+Response headers may be provided using the `Response` class, see
+<<resource_method_return>> for more details.
+
+[[conneg_and_preconditions]]
+==== Content Negotiation and Preconditions
+
+JAX-RS simplifies support for content negotiation and preconditions
+using the `Request` interface. An instance of `Request` can be injected
+into a class field or method parameter using the `@Context` annotation.
+The methods of `Request` allow a caller to determine the best matching
+representation variant and to evaluate whether the current state of the
+resource matches any preconditions in the request. Precondition support
+methods return a `ResponseBuilder` that can be returned to the client to
+inform it that the request preconditions were not met. E.g. the
+following checks if the current entity tag matches any preconditions in
+the request before updating the resource:
+
+[source,java,numbered]
+-------------
+@PUT
+public Response updateFoo(@Context Request request, Foo foo) {
+    EntityTag tag = getCurrentTag();
+    ResponseBuilder responseBuilder = request.evaluatePreconditions(tag);
+    if (responseBuilder != null)
+        return responseBuilder.build();
+    else
+        return doUpdate(foo);
+}
+-------------
+
+The application could also set the content location, expiry date and
+cache control information into the returned `ResponseBuilder` before
+building the response.
+
+[[security_context]]
+==== Security Context
+
+The `SecurityContext` interface provides access to information about the
+security context of the current request. An instance of
+`SecurityContext` can be injected into a class field or method parameter
+using the `@Context` annotation. The methods of
+`SecurityContext` provide access to the current user principal,
+information about roles assumed by the requester, whether the request
+arrived over a secure channel and the authentication scheme used.
+
+[[providercontext]]
+==== Providers
+
+The `Providers` interface allows for lookup of provider instances based
+on a set of search criteria. An instance of `Providers` can be injected
+into a class field or method parameter using the `@Context` annotation.
+
+This interface is expected to be primarily of interest to provider
+authors wishing to use other providers functionality. It is injectable
+in both client and server providers.
+
+[[resource_context]]
+==== Resource Context
+
+The `ResourceContext` interface provides access to instantiation and
+initialization of resource or sub-resource classes in the default
+per-request scope. It can be injected to help with creation and
+initialization, or just initialization, of instances created by an
+application.
+
+Let us revisit the example from <<sub_resources>> with some simple
+modifications:
+
+[source,java,numbered]
+-------------
+@Path("widgets")
+public class WidgetsResource {
+    @Context
+    private ResourceContext rc;
+
+    @Path("{id}")
+    public WidgetResource findWidget(@PathParam("id") String id) {
+        return rc.initResource(new WidgetResource(id));
+    }
+}
+
+public class WidgetResource {
+    @Context
+    private HttpHeaders headers;
+
+    public WidgetResource(String id) {...}
+
+    @GET
+    public Widget getDetails() {...}
+}
+-------------
+
+Note that the instance returned by the resource locator `findWidget` in
+`WidgetsResource` is initialized using the injected `ResourceContext`
+before it is returned. Without this step, the `headers` field in
+`WidgetResource` will not be properly initialized.
+
+[[configuration_injection]]
+==== Configuration
+
+Both the client and the server runtime configurations are available for
+injection via `@Context`. These configurations are available for
+injection in providers (client or server) and resource classes (server
+only).
+
+As an example, consider the case of a client logging filter that not
+only logs messages but also logs information about certain features
+enabled during the processing of a request:
+
+[source,java,numbered]
+-------------
+public class LoggingFilter implements ClientRequestFilter {
+
+    @Context
+    private Configuration config;
+
+    @Override
+    public void filter(ClientRequestContext ctx) throws IOException {
+        if (config.isEnabled(MyFeature.class)) {
+            logMyFeatureEnabled(ctx);
+        }
+        logMessage(ctx);
+    }
+    ...
+}
+-------------
+
+A client runtime configuration is injected in the filter shown above and
+its `isEnabled` method called to check if `MyFeature` is enabled.

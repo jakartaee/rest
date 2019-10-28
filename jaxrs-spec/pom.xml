@@ -39,6 +39,8 @@
         <jruby.version>9.2.7.0</jruby.version>
         <!-- status: DRAFT, BETA, etc., or blank for final -->
         <status>DRAFT</status>
+        <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
+        <revisiondate>${maven.build.timestamp}</revisiondate>
     </properties>
 
     <scm>
@@ -87,6 +89,9 @@
                         <configuration>
                             <backend>xhtml</backend>
                             <attributes>
+                                <revnumber>${project.version}</revnumber>
+                                <revremark>${status}</revremark>
+                                <revdate>${revisiondate}</revdate>
                                 <doctype>book</doctype>
                                 <status>${status}</status>
                                 <data-uri />
@@ -111,6 +116,9 @@
                             <attributes>
                                 <pdf-stylesdir>${project.basedir}/src/theme</pdf-stylesdir>
                                 <pdf-style>jakartaee</pdf-style>
+                                <revnumber>${project.version}</revnumber>
+                                <revremark>${status}</revremark>
+                                <revdate>${revisiondate}</revdate>
                                 <doctype>book</doctype>
                                 <status>${status}</status>
                                 <data-uri />

@@ -1,4 +1,4 @@
-﻿= Jakarta RESTful Web Services, Version 2.1
+= Jakarta RESTful Web Services, Version 2.1
 Comments to: jaxrs-spec@javaee.groups.io
 v2.1 Final Release, May 14, 2019
 // Metadata:
@@ -18,7 +18,7 @@ _Oracle Corporation +
 500 Oracle Parkway, Redwood Shores, CA 94065 USA._
 
 
-Copyright (c) 2017, 2019 Oracle and/or its affiliates. All rights reserved.
+Copyright © 2019 Eclipse Foundation
 
 Oracle and Java are registered trademarks of Oracle and/or its
 affiliates. Other names may be trademarks of their respective owners.

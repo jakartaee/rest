@@ -1,28 +1,25 @@
-= Jakarta RESTful Web Services, Version 2.1
-Comments to: jaxrs-spec@javaee.groups.io
-v2.1 Final Release, May 14, 2019
-// Metadata:
-:decription: Jakarta RESTful Web Services, Version 2.1
-// Settings:
+= Jakarta RESTful Web Services
+:authors: Contributors to Jakarta RESTful Web Services (https://github.com/eclipse-ee4j/jaxrs-api/graphs/contributors)
+:email: jaxrs-dev@eclipse.org
+:version-label!:
+:doctype: book
+:license: Eclipse Foundation Specification License v1.0
+:source-highlighter: coderay
+:toc: left
+:toclevels: 3
+:sectnumlevels: 4
+:sectanchors:
+ifdef::backend-pdf[]
+:pagenums:
+:numbered:
+:title-logo-image: image:jakarta_ee_logo_schooner_color_stacked_default.png[pdfwidth=4.25in,align=right]
+endif::[]
+
+:sectnums!:
+
+include::chapters/license/_license-efsl.adoc[]
+
 :sectnums:
-:sectnumlevels: 5
-:xrefstyle: full
-
-Editors: +
-Pavel Bucek +
-Santiago Pericas-Geertsen +
-
-Comments to: jaxrs-spec@javaee.groups.io
-
-_Oracle Corporation +
-500 Oracle Parkway, Redwood Shores, CA 94065 USA._
-
-
-Copyright © 2019 Eclipse Foundation
-
-Oracle and Java are registered trademarks of Oracle and/or its
-affiliates. Other names may be trademarks of their respective owners.
-
 
 include::chapters/introduction/_introduction.adoc[]
 

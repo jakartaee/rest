@@ -24,38 +24,38 @@ Oracle and Java are registered trademarks of Oracle and/or its
 affiliates. Other names may be trademarks of their respective owners.
 
 
-include::chapters/_introduction.adoc[]
+include::chapters/introduction/_introduction.adoc[]
 
-include::chapters/_applications.adoc[]
+include::chapters/applications/_applications.adoc[]
 
-include::chapters/_resources.adoc[]
+include::chapters/resources/_resources.adoc[]
 
-include::chapters/_providers.adoc[]
+include::chapters/providers/_providers.adoc[]
 
-include::chapters/_client_api.adoc[]
+include::chapters/client_api/_client_api.adoc[]
 
-include::chapters/_filters_and_interceptors.adoc[]
+include::chapters/filters_and_interceptors/_filters_and_interceptors.adoc[]
 
-include::chapters/_validation.adoc[]
+include::chapters/validation/_validation.adoc[]
 
-include::chapters/_asynchronous_processing.adoc[]
+include::chapters/asynchronous_processing/_asynchronous_processing.adoc[]
 
-include::chapters/_sse.adoc[]
+include::chapters/sse/_sse.adoc[]
 
-include::chapters/_context.adoc[]
+include::chapters/context/_context.adoc[]
 
-include::chapters/_environment.adoc[]
+include::chapters/environment/_environment.adoc[]
 
-include::chapters/_runtimedelegate.adoc[]
+include::chapters/runtimedelegate/_runtimedelegate.adoc[]
 
 :sectnums!:
 
-include::chapters/_annotation_table.adoc[]
+include::chapters/appendix/_annotation_table.adoc[]
 
-include::chapters/_headersupport.adoc[]
+include::chapters/appendix/_headersupport.adoc[]
 
-include::chapters/_processing_pipeline.adoc[]
+include::chapters/appendix/_processing_pipeline.adoc[]
 
-include::chapters/_change-log.adoc[]
+include::chapters/appendix/_change-log.adoc[]
 
-include::chapters/_bibliography.adoc[]
+include::chapters/appendix/_bibliography.adoc[]

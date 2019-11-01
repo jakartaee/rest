@@ -86,7 +86,8 @@ The return type of a resource method and the type of the returned
 instance are used to determine the raw type and generic type supplied to
 the `isWritable` method of `MessageBodyWriter` as follows:
 
-[id="Table 3.1"]
+[id="Table-Determining-raw-and-generic-types-of-return-values"]
+.Determining raw and generic types of return values
 |==================================
 |*Return Type*  |*Returned Instance*
 usedfootnote:[Or `Entity` property of returned instance if return type is
@@ -98,14 +99,14 @@ usedfootnote:[Or `Entity` property of returned instance if return type is
 |`Response` |`Object` or subclass   |Class of instance |Class of instance
 |`Other`    |Return type or subclass    |Class of instance  |Generic type of return type
 |==================================
-Table 3.1: Determining raw and generic types of return values
 
 To illustrate the above consider a method that always returns an
 instance of `ArrayList<String>` either directly or wrapped in some
 combination of `Response` and `GenericEntity`. The resulting raw and
 generic types are shown below.
 
-[id="Table 3.2"]
+[id="Table-Example-raw-and-generic-types-of-return-values"]
+.Example raw and generic types of return values
 |==================================
 |*Return Type*  |*Returned Instance*    |*Raw Type* |*Generic Type
 |`GenericEntity`    |`GenericEntity<List<String>>`  |`ArrayList<?>` |`List<String>`
@@ -113,7 +114,6 @@ generic types are shown below.
 |`Response` |`ArrayList<String>`    |`ArrayList<?>` |`ArrayList<?>`
 |`List<String>` |`ArrayList<String>`    |`ArrayList<?>` |`List<String>`
 |==================================
-Table 3.2: Example raw and generic types of return values
 
 [[method_exc]]
 ==== Exceptions

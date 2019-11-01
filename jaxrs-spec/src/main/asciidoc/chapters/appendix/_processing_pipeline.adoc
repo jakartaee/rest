@@ -3,9 +3,9 @@
 == Processing Pipeline
 
 [[pipeline_server]]
-image:pipeline_server.png[]
-Figure C.1: JAX-RS Server Processing Pipeline.
+.JAX-RS Server Processing Pipeline
+image::pipeline_server.png[]
 
 [[pipeline_client]]
-image:pipeline_client.png[]
-Figure C.2: JAX-RS Client Processing Pipeline.
+.JAX-RS Client Processing Pipeline
+image::pipeline_client.png[]

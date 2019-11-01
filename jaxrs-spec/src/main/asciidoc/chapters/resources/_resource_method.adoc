@@ -86,7 +86,7 @@ The return type of a resource method and the type of the returned
 instance are used to determine the raw type and generic type supplied to
 the `isWritable` method of `MessageBodyWriter` as follows:
 
-[id="Table-Determining-raw-and-generic-types-of-return-values"]
+[id="Table-Determining-raw-and-generic-types-of-return-values", cols="2,3,2,3"]
 .Determining raw and generic types of return values
 |==================================
 |*Return Type*  |*Returned Instance*
@@ -105,7 +105,7 @@ instance of `ArrayList<String>` either directly or wrapped in some
 combination of `Response` and `GenericEntity`. The resulting raw and
 generic types are shown below.
 
-[id="Table-Example-raw-and-generic-types-of-return-values"]
+[id="Table-Example-raw-and-generic-types-of-return-values", cols="22,41,21,20"]
 .Example raw and generic types of return values
 |==================================
 |*Return Type*  |*Returned Instance*    |*Raw Type* |*Generic Type

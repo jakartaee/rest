@@ -45,8 +45,6 @@ include::chapters/environment/_environment.adoc[]
 
 include::chapters/runtimedelegate/_runtimedelegate.adoc[]
 
-:sectnums!:
-
 include::chapters/appendix/_annotation_table.adoc[]
 
 include::chapters/appendix/_headersupport.adoc[]

@@ -112,7 +112,7 @@ be included in the published JAX-RS application.
 The following table summarizes the Servlet 3 framework pluggability
 mechanism:
 
-[id="Table-Summary-of-Servlet-3-framework-pluggability-cases"]
+[id="Table-Summary-of-Servlet-3-framework-pluggability-cases", cols="24,14,39,31"]
 .Summary of Servlet 3 framework pluggability cases
 |==================================
 |*Condition*    |*Action*   |*Servlet Name*     |*web.xml*

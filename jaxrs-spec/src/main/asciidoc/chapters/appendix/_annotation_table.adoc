@@ -2,6 +2,7 @@
 [[annotation_table]]
 == Summary of Annotations
 
+[cols="4,5,8"]
 |===============================================
 |*Annotation*   |*Target*           |*Description*
 |`Consumes`     |Type or method     |Specifies a list of media types that can be consumed.

@@ -8,6 +8,7 @@ application using the JAX-RS API. Any request header may be obtained
 using `HttpHeaders`, see <<httpheaders>>; response headers not
 listed here may set using the `ResponseBuilder``.header` method.
 
+[cols="2,5"]
 |===============================================
 |*Header*           |*Description*
 |`Accept`           |Used by runtime when

@@ -13,8 +13,8 @@ this example is arbitrary and does not correspond to any specific
 implementation. There are a number of Java collection libraries
 available that provide this type of functionality.]:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 // Executed by the creator
 Invocation inv1 = client.target("http://examples.org/atm/balance")
     .queryParam("card", "111122223333").queryParam("pin", "9876")
@@ -31,7 +31,7 @@ Collection<Response> ress =
         @Override
         public Response apply(Invocation inv) {
             return inv.invoke(); } });
--------------
+----
 
 // Executed by the submitter Collection<Response> ress =
 Collections.transform(invs, new F<Invocation, Response>() @Override

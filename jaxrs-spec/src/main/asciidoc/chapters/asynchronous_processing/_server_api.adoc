@@ -14,8 +14,8 @@ request was received.
 
 Let us illustrate these concepts via an example:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("/async/longRunning")
 public class MyResource {
 
@@ -31,7 +31,7 @@ public class MyResource {
     }
     ...
 }
--------------
+----
 
 A resource method that elects to produce a response asynchronously must
 inject as a method parameter an instance of the class `AsyncResponse`
@@ -57,8 +57,8 @@ following example sets a timeout of 15 seconds and registers an instance
 of `TimeoutHandler` in case the timeout is reached before the connection
 is resumed.
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @GET
 public void longRunningOp(@Suspended final AsyncResponse ar) {
     // Register handler and set timeout
@@ -79,7 +79,7 @@ public void longRunningOp(@Suspended final AsyncResponse ar) {
             }
         });
 }
--------------
+----
 
 JAX-RS implementations are REQUIRED to generate a
 `ServiceUnavailableException`, a subclass of
@@ -106,8 +106,8 @@ indication to the underlying JAX-RS implementation that asynchronous
 processing is enabled. The example from <<async_response>> can be
 re-written using `CompletionStage` as follows:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("/async/longRunning")
 public class MyResource {
 
@@ -125,7 +125,7 @@ public class MyResource {
     }
     ...
 }
--------------
+----
 
 In this example, a `CompletableFuture` instance is created and returned
 in the resource method; the call to method `complete` on that instance

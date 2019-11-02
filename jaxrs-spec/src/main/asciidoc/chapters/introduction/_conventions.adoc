@@ -9,8 +9,8 @@ Java code and sample data fragments are formatted as shown in figure
 <<1.1>>:
 
 [id="1.1"]
-[source,java,numbered]
--------------
+[source,java]
+----
 package com.example.hello;
 
 public class Hello {
@@ -18,7 +18,7 @@ public class Hello {
     System.out.println("Hello World");
     }
 }
--------------
+----
 
 URIs of the general form `http://example.org/...' and
 `http://example.com/...' represent application or context-dependent

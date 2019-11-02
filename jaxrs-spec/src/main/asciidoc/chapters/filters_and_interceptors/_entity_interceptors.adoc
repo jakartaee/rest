@@ -21,8 +21,8 @@ interceptor that provides deflate and inflate
 capabilities footnote:[This class is not intended to be a complete
 implementation of this interceptor.].
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Provider
 class GzipInterceptor implements ReaderInterceptor, WriterInterceptor {
 
@@ -56,7 +56,7 @@ class GzipInterceptor implements ReaderInterceptor, WriterInterceptor {
     }
     ...
 }
--------------
+----
 
 The context types, `ReaderInterceptorContext` and
 `WriterInterceptorContext`, provide read and write access to the

@@ -40,18 +40,18 @@ and the resource method or resource class. For example, the
 `LoggingFilter` defined in <<filters>> can be bound to the method
 `hello` in `MyResourceClass`, instead of globally, as follows:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Provider
 @Logged
 class LoggingFilter implements ContainerRequestFilter,
                                ContainerResponseFilter {
     ...
 }
--------------
+----
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("/")
 public class MyResourceClass {
     @Logged
@@ -62,33 +62,33 @@ public class MyResourceClass {
         return "Hello " + name;
     }
 }
--------------
+----
 
 According to the semantics of `LoggingFilter`, the request will be
 logged before the `hello` method is called and the response will be
 logged after it returns. The declaration of the `@Logged` annotation is
 shown next.
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @NameBinding
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface Logged { }
--------------
+----
 
 Multiple filters and interceptors can be bound to a single resource
 method using additional annotations. For example, given the following
 filter:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Provider
 @Authenticated
 class AuthenticationFilter implements ContainerRequestFilter {
     ...
 }
--------------
+----
 
 method `hello` above could be decorated with `@Logged` and
 `@Authenticated` in order to provide both logging and authentication
@@ -100,15 +100,15 @@ CDI <<bib14>>, all those annotations must be present in the resource
 class or method for the binding to be established. For example, if
 `LoggingFilter` is defined as follows:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Provider
 @Logged @Verbose
 class LoggingFilter implements ContainerRequestFilter,
                                ContainerResponseFilter {
     ...
 }
--------------
+----
 
 then method `hello` above must be annotated with both `@Logged` and
 `@Verbose` for the binding to be in effect.
@@ -121,13 +121,13 @@ bind filters and interceptors globally, even if other annotations are
 present. For example, `LoggingFilter` as defined at the beginning of
 this section can be bound globally as follows:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Logged
 public class MyApplication extends Application {
     ...
 }
--------------
+----
 
 Note that returning filters or interceptors from the methods
 `getClasses` or `getSingletons` in an application subclass will bind
@@ -151,8 +151,8 @@ The following example defines a dynamic feature that binds the filter
 example— with all the resource methods in `MyResource` that are
 annotated with `@GET`.
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Provider
 public final class DynamicLoggingFilterFeature implements DynamicFeature {
 
@@ -165,7 +165,7 @@ public final class DynamicLoggingFilterFeature implements DynamicFeature {
         }
     }
 }
--------------
+----
 
 The overridden method in this provider updates the `Configuration`
 object assigned to each resource method; the information about the

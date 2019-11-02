@@ -6,8 +6,8 @@ Client API. The default instance of `Client` can be obtained by calling
 `newClient` on `ClientBuilder`. `Client` instances can be configured
 using methods inherited from `Configurable` as follows:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 // Default instance of client
 Client client = ClientBuilder.newClient();
 
@@ -15,7 +15,7 @@ Client client = ClientBuilder.newClient();
 client.property("MyProperty", "MyValue")
     .register(MyProvider.class)
     .register(MyFeature.class);
--------------
+----
 
 See Chapter <<providers>> for more information on providers. Properties
 are simply name-value pairs where the value is an arbitrary object.

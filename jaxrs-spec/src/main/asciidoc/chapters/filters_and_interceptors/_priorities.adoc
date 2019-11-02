@@ -16,15 +16,15 @@ for security, header decorators, decoders and encoders. The default
 binding priority is `javax.ws.rs.Priorities.USER`. For example, the
 priority of an authentication filter can be set as follows:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Provider
 @Authenticated
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
     ...
 }
--------------
+----
 
 Note that even though, as explained in <<binding_in_client_api>>,
 annotations are not used for binding in the Client API, they are still

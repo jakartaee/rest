@@ -9,8 +9,8 @@ defined in <<bib16>> can be used to selectively enable and disable
 validation. For example, you can enable validation on method `getEmail`
 shown above as follows:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("/")
 class MyResourceClass {
 
@@ -21,7 +21,7 @@ class MyResourceClass {
     }
     ...
 }
--------------
+----
 
 The default value for the `type` attribute of `@ValidateOnExecution` is
 `IMPLICIT` which, in the example above, results in method `getEmail`

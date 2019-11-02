@@ -12,13 +12,13 @@ that, when values are substituted for all the parameters, is a valid
 URI<<bib5>> path. The Javadoc for the
 `@Path` annotation describes their syntax. E.g.:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("widgets/{id}")
 public class Widget {
     ...
 }
--------------
+----
 
 In the above example the `Widget` resource class is identified by the
 relative URI path `widgets/xxx` where `xxx` is the value of the `id`
@@ -31,24 +31,24 @@ not appear in a valid URI._
 The value of the annotation is automatically encoded, e.g. the following
 two lines are equivalent:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("widget list/{id}")
 @Path("widget%20list/{id}")
--------------
+----
 
 Template parameters can optionally specify the regular expression used
 to match their values. The default value matches any text and terminates
 at the end of a path segment but other values can be used to alter this
 behavior, e.g.:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("widgets/{path:.+}")
 public class Widget {
     ...
 }
--------------
+----
 
 In the above example the `Widget` resource class will be matched for any
 request whose path starts with `widgets` and contains at least one more
@@ -62,8 +62,8 @@ URI template is used on a method, a path parameter injected in a field
 or property may not be available (set to `null`). The following example
 illustrates this scenario:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("widgets")
 public class WidgetsResource {
     @PathParam("id") String id;
@@ -79,7 +79,7 @@ public class WidgetsResource {
         return new WidgetResource(id);
     }
 }
--------------
+----
 
 [[sub_resources]]
 ==== Sub Resources
@@ -121,8 +121,8 @@ Absent::
 
 The following example illustrates the difference:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("widgets")
 public class WidgetsResource {
     @GET
@@ -141,7 +141,7 @@ public class WidgetResource {
     @GET
     public Widget getDetails() {...}
 }
--------------
+----
 
 In the above a `GET` request for the `widgets/offers` resource is
 handled directly by the `getDiscounted` sub-resource method of the

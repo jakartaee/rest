@@ -9,8 +9,8 @@ priorities (see <<priorities>>) and are executed in order.
 The following example shows an implementation of a container logging
 filter: each method simply logs the message and returns.
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Provider
 class LoggingFilter implements ContainerRequestFilter,
                                ContainerResponseFilter {
@@ -28,7 +28,7 @@ class LoggingFilter implements ContainerRequestFilter,
     }
     ...
 }
--------------
+----
 
 `ContainerRequestContext` is a mutable class that provides
 request-specific information for the filter, such as the request URI,
@@ -57,8 +57,8 @@ following example uses a `ContainerRequestFilter` annotated with
 X-HTTP-Method-Override header to overwrite the HTTP method prior to
 resource matching.
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Provider
 @PreMatching
 public class HttpMethodOverrideFilter implements ContainerRequestFilter {
@@ -75,4 +75,4 @@ public class HttpMethodOverrideFilter implements ContainerRequestFilter {
         }
     }
 }
--------------
+----

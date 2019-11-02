@@ -13,8 +13,8 @@ only adds the necessary logic for SSE.
 The following example shows how to open an SSE connection and read some
 messages for a little while:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 WebTarget target = client.target("http://...");
 try (SseEventSource source = SseEventSource.target(target).build()) {
     source.register(System.out::println);
@@ -23,7 +23,7 @@ try (SseEventSource source = SseEventSource.target(target).build()) {
 } catch (InterruptedException e) {
     // falls through
 }
--------------
+----
 
 As seen in this example, an `SseEventSource` implements `AutoCloseable`.
 Before opening the source, the client registers an event consumer that

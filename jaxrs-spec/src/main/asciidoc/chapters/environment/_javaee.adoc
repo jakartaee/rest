@@ -37,8 +37,8 @@ the use of Managed Beans as root resource classes, providers and
 For example, a bean that uses a managed-bean interceptor can be defined
 as a JAX-RS resource as follows:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @ManagedBean
 @Path("/managedbean")
 public class ManagedBeanResource {
@@ -58,7 +58,7 @@ public class ManagedBeanResource {
         return "Hi managedbean!";
     }
 }
--------------
+----
 
 The example above uses a managed-bean interceptor to intercept calls to
 the resource method `getIt`. See <<additional_reqs>> for
@@ -76,8 +76,8 @@ For example, assuming CDI is enabled via the inclusion of a `beans.xml`
 file, a CDI-style bean that can be defined as a JAX-RS resource as
 follows:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("/cdibean")
 public class CdiBeanResource {
 
@@ -89,7 +89,7 @@ public class CdiBeanResource {
         return bean.getIt();
     }
 }
--------------
+----
 
 The example above takes advantage of the type-safe dependency injection
 provided in CDI by using another bean, of type `MyOtherCdiBean`, in
@@ -110,8 +110,8 @@ rules defined in <<annotationinheritance>>.
 For example, a stateless EJB that implements a local interface can be
 defined as a JAX-RS resource class as follows:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Local
 public interface LocalEjb {
 
@@ -129,7 +129,7 @@ public class StatelessEjbResource implements LocalEjb {
         return "Hi stateless!";
     }
 }
--------------
+----
 
 JAX-RS implementations are REQUIRED to discover EJBs by inspecting
 annotations on classes and local interfaces; they are not REQUIRED to

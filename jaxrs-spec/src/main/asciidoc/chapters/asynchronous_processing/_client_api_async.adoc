@@ -7,8 +7,8 @@ can be set to run asynchronously by calling the `async` method and
 (optionally) registering an instance of `InvocationCallback` as shown
 next:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 Client client = ClientBuilder.newClient();
 WebTarget target = client.target("http://example.org/customers/{id}");
 target.resolveTemplate("id", 123).request().async().get(
@@ -22,7 +22,7 @@ target.resolveTemplate("id", 123).request().async().get(
             // Process error
         }
 });
--------------
+----
 
 Note that in this example, the call to `get` after calling `async`
 returns immediately without blocking the caller’s thread. The response
@@ -36,8 +36,8 @@ type parameter `T` matches the type specified in `InvocationCallback`.
 This instance can be used to monitor or cancel the asynchronous
 invocation:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 Future<Customer> ff = target.resolveTemplate("id", 123).request().async()
     .get(new InvocationCallback<Customer>() {
     @Override
@@ -54,7 +54,7 @@ Future<Customer> ff = target.resolveTemplate("id", 123).request().async()
 if (!ff.isDone()) {
     ff.cancel(true);
 }
--------------
+----
 
 Even though it is recommended to pass an instance of
 `InvocationCallback` when executing an asynchronous call, it is not

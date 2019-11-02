@@ -12,8 +12,8 @@ of these annotations, support for any media type (/*) is assumed.
 
 The following example illustrates the use of these annotations:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("widgets")
 @Produces("application/widgets+xml")
 public class WidgetsResource {
@@ -37,7 +37,7 @@ public class WidgetsProvider implements MessageBodyWriter<Widgets> {...}
 @Provider
 @Consumes("application/widgets+xml")
 public class WidgetProvider implements MessageBodyReader<Widget> {...}
--------------
+----
 
 In the above:
 
@@ -78,8 +78,8 @@ server preference is only examined when multiple media types are
 accepted by a client _with the same q-value_. Consider the following
 example:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("widgets2")
 public class WidgetsResource2 {
 
@@ -88,7 +88,7 @@ public class WidgetsResource2 {
     public Widgets getWidget() {...}
 
 }
--------------
+----
 
 Suppose a client issues a `GET` request with an accept header of
 `application/*; q=0.5, text/html`. Based on this request, the server
@@ -97,8 +97,8 @@ equally preferred by the client with a q-value of 0.5. By specifying a
 server relative quality factor as part of the `@Produces` annotation, it
 is possible to control which response media type to select:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("widgets2")
 public class WidgetsResource2 {
 
@@ -107,7 +107,7 @@ public class WidgetsResource2 {
     public Widgets getWidget() {...}
 
 }
--------------
+----
 
 With the updated value for `@Produces` in this example, and in response
 to a `GET` request with an accept header that includes

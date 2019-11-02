@@ -224,8 +224,8 @@ dependent manner.
 Consider the following example and assume the request to be `GET`
 `widgets/1`:
 +
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("widget")
 public class WidgetResource {
     private String id;
@@ -252,7 +252,7 @@ public class WidgetsResource {
         return new WidgetResource(id);
     }
 }
--------------
+----
 +
 The input and output values for each of the 3 steps in the matching
 algorithm are as follows:

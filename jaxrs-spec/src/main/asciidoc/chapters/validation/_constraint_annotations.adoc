@@ -18,8 +18,8 @@ _constraint annotations_ as a way of declaratively validating beans,
 method parameters and method returned values. For example, consider the
 following resource class augmented with constraint annotations:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("/")
 class MyResourceClass {
 
@@ -32,7 +32,7 @@ class MyResourceClass {
         ...
     }
 }
--------------
+----
 
 The annotations `@NotNull` and `@Email` impose additional constraints on
 the form parameters `firstName`, `lastName` and `email`. The
@@ -44,8 +44,8 @@ are allowed with the exception of constructors and property setters.
 Rather than using method parameters, the `MyResourceClass` shown above
 could have been written as follows:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("/")
 class MyResourceClass {
 
@@ -68,7 +68,7 @@ class MyResourceClass {
     }
     ...
 }
--------------
+----
 
 Note that in this version, `firstName` and `lastName` are fields
 initialized via injection and `email` is a resource class property.
@@ -81,8 +81,8 @@ the entire class. Let us assume that `@NonEmptyNames` validates that one
 of the two _name_ fields in `MyResourceClass` is provided. Using such an
 annotation, the example above can be extended as follows:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("/")
 @NonEmptyNames
 class MyResourceClass {
@@ -96,7 +96,7 @@ class MyResourceClass {
     private String email;
     ...
 }
--------------
+----
 
 Constraint annotations on resource classes are useful for defining
 cross-field and cross-property constraints.

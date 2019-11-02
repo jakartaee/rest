@@ -44,7 +44,7 @@ is resumed and the response returned by calling `resume` on the injected
 instance of `AsyncResponse`.
 
 For more information on executors, concurrency and thread management in
-a Java EE environment, the reader is referred to JSR 236 <<bib13>>. For
+a Jakarta EE environment, the reader is referred to JSR 236 <<bib13>>. For
 more information about executors in the JAX-RS Client API see <<executor_services>>.
 
 [[timeouts_and_callbacks]]

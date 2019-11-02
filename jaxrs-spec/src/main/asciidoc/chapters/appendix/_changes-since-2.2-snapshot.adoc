@@ -1,0 +1,4 @@
+[[changes-since-2.2-snapshot]]
+=== Changes Since 2.2-SNAPSHOT
+
+* Referencing Jakarta EE instead of Java EE

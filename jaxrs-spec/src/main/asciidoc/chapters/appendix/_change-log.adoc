@@ -2,6 +2,8 @@
 [[change-log]]
 == Change Log
 
+include::_changes-since-2.2-snapshot.adoc[]
+
 include::_changes-since-2.1-public-review.adoc[]
 
 include::_changes-since-2.1-early-draft.adoc[]

@@ -1,5 +1,5 @@
 [[javaee]]
-=== Integration with Java EE Technologies
+=== Integration with Jakarta EE Technologies
 
 This section describes the additional requirements that apply to a
 JAX-RS implementation when combined in a product that supports the

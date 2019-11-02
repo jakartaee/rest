@@ -311,4 +311,4 @@ Note that the above renders the name of template variables irrelevant
 for template matching purposes. However, implementations will need to
 retain template variable names in order to facilitate the extraction of
 template variable values via `@PathParam` or
-`UriInfo``.getPathParameters`.
+`UriInfo.getPathParameters`.

@@ -41,7 +41,7 @@ described in <<method_exc>>) and the client runtime MUST generate
 an instance of `ProcessingException`.
 
 See <<exceptions_providers>> for more information on handling
-exceptions thrown in `MessageBodyReader``.readFrom`.
+exceptions thrown in `MessageBodyReader.readFrom`.
 
 [[message_body_writer]]
 ==== Message Body Writer
@@ -93,7 +93,7 @@ ordering. The mechanism defined to enable this flag is implementation
 dependent.
 
 See <<exceptions_providers>> for more information on handling
-exceptions thrown in `MessageBodyWriter``.write`.
+exceptions thrown in `MessageBodyWriter.write`.
 
 [[declaring_provider_capabilities]]
 ==== Declaring Media Type Capabilities

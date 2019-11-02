@@ -1,7 +1,7 @@
 [[changes-since-2.0-early-draft-third-edition]]
 === Changes Since 2.0 Early Draft (Third Edition)
 
-* Chapter ``Validation'': Removed from PR. JAX-RS 2.0 will defer to CDI
+* Chapter "Validation": Removed from PR. JAX-RS 2.0 will defer to CDI
 for Bean Validation. Only those resource classes that are CDI beans
 would be validated.
 * <<method_exc>>: Clarified that the steps must be followed in

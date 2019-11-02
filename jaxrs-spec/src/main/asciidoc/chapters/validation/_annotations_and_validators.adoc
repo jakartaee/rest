@@ -6,8 +6,8 @@ Bean Validation specification <<bib16>>. The `@Email` annotation
 shown above is defined using the Bean Validation
 `@Constraint` meta-annotation:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Target( { METHOD, FIELD, PARAMETER })
 @Retention(RUNTIME)
 @Constraint(validatedBy = EmailValidator.class)
@@ -16,15 +16,15 @@ public @interface Email {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
--------------
+----
 
 The `@Constraint` annotation must include a reference to the validator
 class that will be used to validate decorated values. The
 `EmailValidator` class must implement `ConstraintValidator<Email, T>`
 where `T` is the type of values being validated. For example,
 
-[source,java,numbered]
--------------
+[source,java]
+----
 public class EmailValidator implements ConstraintValidator<Email, String> {
     public void initialize(Email email) {
         ...
@@ -34,7 +34,7 @@ public class EmailValidator implements ConstraintValidator<Email, String> {
         ...
     }
 }
--------------
+----
 
 Thus, `EmailValidator` applies to values annotated with `@Email` that
 are of type `String`. Validators for different types can be defined for

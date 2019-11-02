@@ -35,8 +35,8 @@ registered in any of the configurable types listed in the previous
 section. The following example shows how to register filters and
 interceptors on instances of `Client` and `WebTarget`:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 // Create client and register logging filter
 Client client = ClientBuilder.newClient().register(LoggingFilter.class);
 
@@ -44,7 +44,7 @@ Client client = ClientBuilder.newClient().register(LoggingFilter.class);
 WebTarget wt = client.target("http://examples.org/customers/123");
 Customer c = wt.register(CachingFilter.class).request("application/xml")
     .get(Customer.class);
--------------
+----
 
 In this example, `LoggingFilter` is inherited by each instance of
 `WebTarget` created from `client`; an additional provider named

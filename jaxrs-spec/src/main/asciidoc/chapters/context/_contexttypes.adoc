@@ -26,8 +26,8 @@ static and dynamic, per-request information, about the components of a
 request URI. E.g. the following would return the names of any query
 parameters in a request:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @GET
 @Produces{"text/plain"}
 public String listQueryParamNames(@Context UriInfo info) {
@@ -38,7 +38,7 @@ public String listQueryParamNames(@Context UriInfo info) {
     }
     return buf.toString();
 }
--------------
+----
 
 Note that the methods of `UriInfo` provide access to request URI
 information following the pre-processing described in <<reqpreproc>>.
@@ -52,8 +52,8 @@ access to request header information either in map form or via strongly
 typed convenience methods. E.g. the following would return the names of
 all the headers in a request:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @GET
 @Produces{"text/plain"}
 public String listHeaderNames(@Context HttpHeaders headers) {
@@ -64,7 +64,7 @@ public String listHeaderNames(@Context HttpHeaders headers) {
     }
     return buf.toString();
 }
--------------
+----
 
 Note that the methods of `HttpHeaders` provide access to request
 information following the pre-processing described in <<reqpreproc>>.
@@ -86,8 +86,8 @@ inform it that the request preconditions were not met. E.g. the
 following checks if the current entity tag matches any preconditions in
 the request before updating the resource:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @PUT
 public Response updateFoo(@Context Request request, Foo foo) {
     EntityTag tag = getCurrentTag();
@@ -97,7 +97,7 @@ public Response updateFoo(@Context Request request, Foo foo) {
     else
         return doUpdate(foo);
 }
--------------
+----
 
 The application could also set the content location, expiry date and
 cache control information into the returned `ResponseBuilder` before
@@ -137,8 +137,8 @@ application.
 Let us revisit the example from <<sub_resources>> with some simple
 modifications:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("widgets")
 public class WidgetsResource {
     @Context
@@ -159,7 +159,7 @@ public class WidgetResource {
     @GET
     public Widget getDetails() {...}
 }
--------------
+----
 
 Note that the instance returned by the resource locator `findWidget` in
 `WidgetsResource` is initialized using the injected `ResourceContext`
@@ -178,8 +178,8 @@ As an example, consider the case of a client logging filter that not
 only logs messages but also logs information about certain features
 enabled during the processing of a request:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 public class LoggingFilter implements ClientRequestFilter {
 
     @Context
@@ -194,7 +194,7 @@ public class LoggingFilter implements ClientRequestFilter {
     }
     ...
 }
--------------
+----
 
 A client runtime configuration is injected in the filter shown above and
 its `isEnabled` method called to check if `MyFeature` is enabled.

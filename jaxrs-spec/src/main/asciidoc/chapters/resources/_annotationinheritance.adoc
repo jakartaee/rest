@@ -15,8 +15,8 @@ If a subclass or implementation method has any JAX-RS annotations then
 _all_ of the annotations on the superclass or interface method are
 ignored. E.g.:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 public interface ReadOnlyAtomFeed {
     @GET @Produces("application/atom+xml")
     Feed getFeed();
@@ -26,19 +26,19 @@ public interface ReadOnlyAtomFeed {
 public class ActivityLog implements ReadOnlyAtomFeed {
     public Feed getFeed() {...}
 }
--------------
+----
 
 In the above, `ActivityLog.getFeed` inherits the `@GET` and
 `@Produces` annotations from the interface. Conversely:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("feed")
 public class ActivityLog implements ReadOnlyAtomFeed {
     @Produces("application/atom+xml")
     public Feed getFeed() {...}
 }
--------------
+----
 
 In the above, the `@GET` annotation on `ReadOnlyAtomFeed.getFeed` is not
 inherited by `Activity-Log.getFeed` and it would require its own request

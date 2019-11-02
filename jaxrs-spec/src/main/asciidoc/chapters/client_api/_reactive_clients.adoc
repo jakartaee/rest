@@ -30,8 +30,8 @@ that is based on the Java 8 type `CompletionStage`. There is a new `rx`
 method which is used in a similar manner to `async` as described in
 <<client_api_async>>. Let us consider the following example:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 CompletionStage<String> csf = client.target("forecast/{destination}")
     .resolveTemplate("destination", "mars")
     .request()
@@ -39,7 +39,7 @@ CompletionStage<String> csf = client.target("forecast/{destination}")
     .get(String.class);
 
 csf.thenAccept(System.out::println);
--------------
+----
 
 This example first creates an asynchronous computation of type
 `CompletionStage<String>`, and then simply waits for it to complete and
@@ -53,8 +53,8 @@ following example obtains, in parallel, a price and a forecast for a
 destination and makes a reservation only if the desired conditions are
 met.
 
-[source,java,numbered]
--------------
+[source,java]
+----
 CompletionStage<Number> csp = client.target("price/{destination}")
     .resolveTemplate("destination", "mars")
     .request()
@@ -69,7 +69,7 @@ CompletionStage<String> csf = client.target("forecast/{destination}")
 
 csp.thenCombine(csf, (price, forecast) ->
     reserveIfAffordableAndWarm(price, forecast));
--------------
+----
 
 Note that the `Consumer` passed in the call to method `thenCombine`
 requires the values of each stage to be available and, therefore, can
@@ -93,8 +93,8 @@ asynchronous computation in this API is called an `Observable`. An
 implementation may support this type by providing a new invoker as shown
 in the following example:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 Client client = client.register(ObservableRxInvokerProvider.class);
 
 Observable<String> of = client.target("forecast/{destination}")
@@ -104,7 +104,7 @@ Observable<String> of = client.target("forecast/{destination}")
     .get(String.class);
 
 of.subscribe(System.out::println);
--------------
+----
 
 First, a provider for the new invoker must be registered on the `Client`
 object. Second, the type of the invoker must be specified as a parameter

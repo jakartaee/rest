@@ -6,13 +6,13 @@ following example upgrades the status of customer number 123 to "gold
 status" by first obtaining an entity of type `Customer` and then
 posting that entity to a different URI:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 Customer c = client.target("http://examples.org/customers/123")
 .request("application/xml").get(Customer.class);
 String newId = client.target("http://examples.org/gold-customers/")
 .request().post(xml(c), String.class);
--------------
+----
 
 Note the use of the _variant_ `xml()` in the call to `post`. The class
 `javax.ws.rs.client.Entity` defines variants for the most popular media

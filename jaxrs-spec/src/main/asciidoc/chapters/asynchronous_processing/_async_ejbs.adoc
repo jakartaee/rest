@@ -10,8 +10,8 @@ resources for its execution. Thus, in this scenario, the use of an
 
 Consider the following example:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Stateless
 @Path("/")
 class EJBResource {
@@ -22,7 +22,7 @@ class EJBResource {
         ar.resume("Hello async world!");
     }
 }
--------------
+----
 
 There is no explicit thread management needed in this case since that is
 under the control of the EJB container. Just like the other examples in

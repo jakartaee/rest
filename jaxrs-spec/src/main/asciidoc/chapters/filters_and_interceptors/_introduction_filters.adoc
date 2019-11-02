@@ -8,18 +8,21 @@ filters: , ,  and . There are two extension points for entity
 interceptors:  and . For each of these extension points, there is a
 corresponding interface:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 public interface ClientRequestFilter {
     void filter(ClientRequestContext requestContext) throws IOException;
 }
+
 public interface ClientResponseFilter {
     void filter(ClientRequestContext requestContext,
         ClientResponseContext responseContext) throws IOException;
 }
+
 public interface ContainerRequestFilter {
     void filter(ContainerRequestContext requestContext) throws IOException;
 }
+
 public interface ContainerResponseFilter {
     void filter(ContainerRequestContext requestContext,
     ContainerResponseContext responseContext) throws IOException;
@@ -29,11 +32,12 @@ public interface ReaderInterceptor {
     Object aroundReadFrom(ReaderInterceptorContext context)
         throws java.io.IOException, javax.ws.rs.WebApplicationException;
 }
+
 public interface WriterInterceptor {
     void aroundWriteTo(WriterInterceptorContext context)
         throws java.io.IOException, javax.ws.rs.WebApplicationException;
 }
--------------
+----
 
 A _client_ filter is a class that implements `ClientRequestFilter` or
 `ClientResponseFilter` or both. A _container_ filter is a class that

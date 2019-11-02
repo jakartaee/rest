@@ -49,8 +49,8 @@ which MUST be packaged with the application. Additionally, the
 application MUST be packaged with a `web.xml` that specifies a servlet
 mapping for the added servlet. An example of such a `web.xml` file is:
 
-[source,xml,numbered]
--------------
+[source,xml]
+----
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
@@ -63,7 +63,7 @@ mapping for the added servlet. An example of such a `web.xml` file is:
         <url-pattern>/myresources/*</url-pattern>
     </servlet-mapping>
 </web-app>
--------------
+----
 
 * If an `Application` subclass is present:
 ** If there is already a servlet that handles this application. That is,
@@ -84,8 +84,8 @@ for the added server. Otherwise, the application MUST be packaged with a
 `org.example.MyApplication` is the name of the `Application` subclass, a
 sample `web.xml` would be:
 
-[source,xml,numbered]
--------------
+[source,xml]
+----
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
@@ -98,7 +98,7 @@ sample `web.xml` would be:
         <url-pattern>/myresources/*</url-pattern>
     </servlet-mapping>
 </web-app>
--------------
+----
 
 When an `Application` subclass is present in the archive, if both
 `Application.getClasses` and `Application.getSingletons` return an empty

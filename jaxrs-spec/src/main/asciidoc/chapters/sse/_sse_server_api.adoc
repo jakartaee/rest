@@ -9,8 +9,8 @@ method.
 The following example accepts SSE connections and uses an executor
 thread to send 3 events before closing the connection:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @GET
 @Path("eventStream")
 @Produces(MediaType.SERVER_SENT_EVENTS)
@@ -24,7 +24,7 @@ public void eventStream(@Context SseEventSink eventSink,
         }
     });
 }
--------------
+----
 
 SSE resource methods follow a similar pattern to those for asynchronous
 processing (see <<introduction_async>>) in that the object

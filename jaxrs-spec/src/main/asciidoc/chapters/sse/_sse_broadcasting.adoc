@@ -11,8 +11,8 @@ the injected `Sse` instance. The life-cycle and scope of an
 JAX-RS runtime. The following example shows the use of broadcasters,
 note the `@Singleton` annotation on the resource class:
 
-[source,java,numbered]
--------------
+[source,java]
+----
 @Path("/")
 @Singleton
 public class SseResource {
@@ -42,7 +42,7 @@ public class SseResource {
         sseBroadcaster.broadcast(sse.newEvent(event));
     }
 }
--------------
+----
 
 The `register` method on a broadcaster is used to add a new
 `SseEventSink`; the `broadcast` method is used to send an SSE event to

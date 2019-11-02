@@ -25,7 +25,7 @@ Container independence::
   Artifacts using the API will be deployable in a variety of Web-tier
   containers. The specification will define how artifacts are deployed
   in a Servlet<<bib8>> container and as a JAX-WS<<bib9>> Provider.
-Inclusion in Java EE::
+Inclusion in Jakarta EE::
   The specification will define the environment for a Web resource class
-  hosted in a Java EE container and will specify how to use Java EE
+  hosted in a Jakarta EE container and will specify how to use Jakarta EE
   features and components within a Web resource class.

@@ -7,8 +7,8 @@ building a `Client` instance. Two methods are provided in
 `ClientBuilder` for this purpose, namely, `executorService` and
 `scheduledExecutorService`.
 
-In an environment that supports the Concurrency Utilities for Java EE
-<<bib13>>, such as the Java EE Full Profile, implementations MUST use
+In an environment that supports Jakarta Concurrency
+<<bib13>>, such as full Jakarta EE platform products, implementations MUST use
 `ManagedExecutorService` and `ManagedScheduledExecutorService`,
 respectively. The reader is referred to the Javadoc of `ClientBuilder`
 for more information about executor services.

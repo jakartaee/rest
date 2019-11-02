@@ -2,8 +2,8 @@
 === Typed Entities
 
 The response to a request is not limited to be of type `Response`. The
-following example upgrades the status of customer number 123 to ``gold
-status'' by first obtaining an entity of type `Customer` and then
+following example upgrades the status of customer number 123 to "gold
+status" by first obtaining an entity of type `Customer` and then
 posting that entity to a different URI:
 
 [source,java,numbered]

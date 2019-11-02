@@ -76,7 +76,7 @@ Other::
   value results in a 204 status code.
 
 Methods that need to provide additional metadata with a response should
-return an instance of `Response`, the `Response``Builder` class provides
+return an instance of `Response`, the `ResponseBuilder` class provides
 a convenient way to create a `Response` instance using a builder
 pattern.
 

@@ -79,6 +79,13 @@
                         <version>${asciidoctorj.pdf.version}</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <logHandler>
+                        <failIf>
+                            <severity>ERROR</severity>
+                        </failIf>
+                    </logHandler>
+                </configuration>
                 <executions>
                     <execution>
                         <id>asciidoc-to-html</id>

@@ -1,4 +1,14 @@
-﻿[bibliography]
+﻿////
+*******************************************************************
+* Copyright (c) 2019 Eclipse Foundation
+*
+* This specification document is made available under the terms
+* of the Eclipse Foundation Specification License v1.0, which is
+* available at https://www.eclipse.org/legal/efsl.php.
+*******************************************************************
+////
+
+[bibliography]
 == Bibliography
 
 - [[[bib1,1]]] R. Fielding. Architectural Styles and the Design of Network-based Software Architectures. Ph.d

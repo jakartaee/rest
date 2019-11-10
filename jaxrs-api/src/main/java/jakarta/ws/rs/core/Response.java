@@ -612,7 +612,7 @@ public abstract class Response implements AutoCloseable {
      * Create a new ResponseBuilder for a created resource, set the location header using the supplied value.
      *
      * @param location the URI of the new resource. If a relative URI is supplied it will be converted into an absolute URI
-     * by resolving it relative to the request URI (see {@link UriInfo#getRequestUri}).
+     * by resolving it relative to the base URI (see {@link UriInfo#getRequestUri}).
      * @return a new response builder.
      * @throws java.lang.IllegalArgumentException if location is {@code null}.
      */

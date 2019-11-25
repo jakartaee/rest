@@ -3,7 +3,8 @@
 
 Filters are grouped into __filter chains__. There is a separate filter
 chain for each extension point introduced in the previous section,
-namely: , , ,  and . Filters in a chain are sorted based on their
+namely: `ClientRequest`, `ClientResponse`, `ContainerRequest`, `ContainerResponse`
+and `PreMatchContainerRequest`. Filters in a chain are sorted based on their
 priorities (see <<priorities>>) and are executed in order.
 
 The following example shows an implementation of a container logging

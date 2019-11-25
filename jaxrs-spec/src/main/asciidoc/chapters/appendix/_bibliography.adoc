@@ -2,33 +2,33 @@
 == Bibliography
 
 - [[[bib1,1]]] R. Fielding. Architectural Styles and the Design of Network-based Software Architectures. Ph.d
-               dissertation, University of California, Irvine, 2000. See http://roy.gbiv.com/pubs/dissertation/top.htm.
+               dissertation, University of California, Irvine, 2000. See https://roy.gbiv.com/pubs/dissertation/top.htm.
 
 - [[[bib2,2]]] REST Wiki. Web site. See http://rest.blueoxen.net/cgi-bin/wiki.pl.
 
 - [[[bib3,3]]] Representational State Transfer. Web site, Wikipedia. See
-               http://en.wikipedia.org/wiki/Representational State Transfer.
+               https://en.wikipedia.org/wiki/Representational State Transfer.
 
 - [[[bib4,4]]]  R. Fielding, J. Gettys, J. C. Mogul, H. Frystyk, and T. Berners-Lee. RFC 2616: Hypertext Transfer
-               Protocol – HTTP/1.1. RFC, IETF, January 1997. See http://www.ietf.org/rfc/rfc2616.txt.
+               Protocol – HTTP/1.1. RFC, IETF, January 1997. See https://www.ietf.org/rfc/rfc2616.txt.
 
 - [[[bib5,5]]]  T. Berners-Lee, R. Fielding, and L. Masinter. RFC 3986: Uniform Resource Identifier (URI): Generic
-               Syntax. RFC, IETF, January 2005. See http://www.ietf.org/rfc/rfc3986.txt.
+               Syntax. RFC, IETF, January 2005. See https://www.ietf.org/rfc/rfc3986.txt.
 
 - [[[bib6,6]]]  L. Dusseault. RFC 4918: HTTP Extensions for Web Distributed Authoring and Versioning
-               (WebDAV). RFC, IETF, June 2007. See http://www.ietf.org/rfc/rfc4918.txt.
+               (WebDAV). RFC, IETF, June 2007. See https://www.ietf.org/rfc/rfc4918.txt.
 
 - [[[bib7,7]]]  J.C. Gregorio and B. de hOra. The Atom Publishing Protocol. Internet Draft, IETF, March 2007. See
-               http://bitworking.org/projects/atom/draft-ietf-atompub-protocol-14.html.
+               https://bitworking.org/projects/atom/draft-ietf-atompub-protocol-14.html.
 
 - [[[bib8,8]]]  G. Murray. Java Servlet Specification Version 2.5. JSR, JCP, October 2006. See
-               http://java.sun.com/products/servlet.
+               https://java.sun.com/products/servlet.
 
 - [[[bib9,9]]]  R. Chinnici, M. Hadley, and R. Mordani. Java API for XML Web Services. JSR, JCP, August 2005.
-               See http://jcp.org/en/jsr/detail?id=224.
+               See https://jcp.org/en/jsr/detail?id=224.
 
 - [[[bib10,10]]]  S. Bradner. RFC 2119: Keywords for use in RFCs to Indicate Requirement Levels. RFC, IETF,
-               March 1997. See http://www.ietf.org/rfc/rfc2119.txt.
+               March 1997. See https://www.ietf.org/rfc/rfc2119.txt.
 
 - [[[bib11,11]]]  RxJava: a library for composing asynchronous and event-based programs using observable sequences
                for the java VM. See https://github.com/ReactiveX/RxJava.
@@ -37,24 +37,24 @@
                https://github.com/ReactiveX/RxJava/wiki/What’s-different-in-2.0.
 
 - [[[bib13,13]]]  Anthony Lai. Concurrency Utilities for Java EE. JSR, JCP, March 2013. See
-               http://jcp.org/en/jsr/detail?id=236.
+               https://jcp.org/en/jsr/detail?id=236.
 
 - [[[bib14,14]]]  Gavin King. Context and Dependency Injection for the Java Platform. JSR, JCP, December 2009.
-               See http://jcp.org/en/jsr/detail?id=299.
+               See https://jcp.org/en/jsr/detail?id=299.
 
 - [[[bib15,15]]]  Rajiv Mordani. Common Annotations for the Java Platform. JSR, JCP, July 2005. See
-               http://jcp.org/en/jsr/detail?id=250.
+               https://jcp.org/en/jsr/detail?id=250.
 
 - [[[bib16,16]]]  Emmanuel Bernard. Bean Validation 1.1. JSR, JCP, March 2013. See
-               http://jcp.org/en/jsr/detail?id=349.
+               https://jcp.org/en/jsr/detail?id=349.
 
 - [[[bib17,17]]]  Server-Sent Events. See https://html.spec.whatwg.org/#server-sent-events.
 
 - [[[bib18,18]]]  Dmitry Kornilov. Java API for JSON Processing 1.1. JSR, JCP, May 2017. See
-               http://jcp.org/en/jsr/detail?id=374.
+               https://jcp.org/en/jsr/detail?id=374.
 
 - [[[bib19,19]]]  Dmitry Kornilov. Java API for JSON Binding. JSR, JCP, July 2017. See
-               http://jcp.org/en/jsr/detail?id=367.
+               https://jcp.org/en/jsr/detail?id=367.
 
 - [[[bib20,20]]]  Bill Shannon. JavaBeans Activation Framework. JSR, JCP, May 2006. See
-               http://jcp.org/en/jsr/detail?id=925.
+               https://jcp.org/en/jsr/detail?id=925.

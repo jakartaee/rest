@@ -21,7 +21,7 @@ application is outside the scope of this specification.
 ===== JAX-WS
 
 An implementation that supports publication via JAX-WS MUST support
-`createEndpoint` with an endpoint type of `javax.xml.ws.Provider`.
+`createEndpoint` with an endpoint type of `jakarta.xml.ws.Provider`.
 JAX-WS describes how a `Provider` based endpoint can be published in an
 SE environment.
 
@@ -42,7 +42,7 @@ using the pluggability mechanism the following conditions MUST be met:
 * If _no_ `Application` subclass is present, JAX-RS implementations are
 REQUIRED to dynamically add a servlet and set its name to
 +
-`javax.ws.rs.core.Application`
+`jakarta.ws.rs.core.Application`
 +
 and to automatically discover all root resource classes and providers
 which MUST be packaged with the application. Additionally, the
@@ -56,10 +56,10 @@ mapping for the added servlet. An example of such a `web.xml` file is:
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <servlet>
-        <servlet-name>javax.ws.rs.core.Application</servlet-name>
+        <servlet-name>jakarta.ws.rs.core.Application</servlet-name>
     </servlet>
     <servlet-mapping>
-        <servlet-name>javax.ws.rs.core.Application</servlet-name>
+        <servlet-name>jakarta.ws.rs.core.Application</servlet-name>
         <url-pattern>/myresources/*</url-pattern>
     </servlet-mapping>
 </web-app>
@@ -69,7 +69,7 @@ mapping for the added servlet. An example of such a `web.xml` file is:
 ** If there is already a servlet that handles this application. That is,
 a servlet that has an initialization parameter named
 +
-`javax.ws.rs.Application`
+`jakarta.ws.rs.Application`
 +
 whose value is the fully qualified name of the `Application` subclass,
 then no additional configuration steps are required by the JAX-RS
@@ -115,7 +115,7 @@ mechanism:
 [id="Table 2.1"]
 |==================================
 |*Condition*    |*Action*   |*Servlet Name*     |*web.xml*
-|No `Application` subclass   |Add servlet    |`javax.ws.rs.core.Application`
+|No `Application` subclass   |Add servlet    |`jakarta.ws.rs.core.Application`
 |Required for servlet mapping
 |`Application` subclass handled by existing servlet |(none) |(already defined)
 |Not required
@@ -129,7 +129,7 @@ pre-Servlet 3.0 container), the `servlet-class` or `filter-class`
 element of the `web.xml` descriptor SHOULD name the
 JAX-RS implementation-supplied servlet or filter class respectively. The
 `Application` subclass SHOULD be identified using an `init-param` with a
-`param-name` of `javax.ws.rs.Application`.
+`param-name` of `jakarta.ws.rs.Application`.
 
 Note that the Servlet 3 framework pluggability mechanism described above
 is based on servlets and not filters. Applications that prefer to use an

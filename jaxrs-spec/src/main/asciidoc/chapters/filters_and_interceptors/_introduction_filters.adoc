@@ -14,8 +14,9 @@
 Entity interceptors wrap around a method invocation at a specific
 extension point. Filters execute code at an extension point but without
 wrapping a method invocation. There are four extension points for
-filters: , ,  and . There are two extension points for entity
-interceptors:  and . For each of these extension points, there is a
+filters: `ClientRequest`, `ClientResponse`, `ContainerRequest` and `ContainerResponse`.
+There are two extension points for entity interceptors:
+`ReadFrom` and `WriteTo`. For each of these extension points, there is a
 corresponding interface:
 
 [source,java]

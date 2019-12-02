@@ -13,7 +13,7 @@ filters.
 
 The `Priorities` class in JAX-RS defines a set of built-in priorities
 for security, header decorators, decoders and encoders. The default
-binding priority is `javax.ws.rs.Priorities.USER`. For example, the
+binding priority is `jakarta.ws.rs.Priorities.USER`. For example, the
 priority of an authentication filter can be set as follows:
 
 [source,java,numbered]

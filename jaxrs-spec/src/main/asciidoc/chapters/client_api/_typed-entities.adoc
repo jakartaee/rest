@@ -15,7 +15,7 @@ String newId = client.target("http://examples.org/gold-customers/")
 -------------
 
 Note the use of the _variant_ `xml()` in the call to `post`. The class
-`javax.ws.rs.client.Entity` defines variants for the most popular media
+`jakarta.ws.rs.client.Entity` defines variants for the most popular media
 types used in JAX-RS applications.
 
 In the example above, just like in the Server API,

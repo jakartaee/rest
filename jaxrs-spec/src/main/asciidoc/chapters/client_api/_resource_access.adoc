@@ -32,5 +32,5 @@ Response res = client.target("http://example.org/hello")
     .get();
 -------------
 
-See the Javadoc for the classes in the `javax.ws.rs.client` package for
+See the Javadoc for the classes in the `jakarta.ws.rs.client` package for
 more information.

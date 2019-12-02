@@ -4,7 +4,7 @@
 The Client API is used to access Web resources. It provides a
 higher-level API than `HttpURLConnection` as well as integration with
 JAX-RS providers. Unless otherwise stated, types presented in this
-chapter live in the `javax.ws.rs.client` package.
+chapter live in the `jakarta.ws.rs.client` package.
 
 include::_bootstrapping-a-client-instance.adoc[]
 

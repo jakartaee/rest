@@ -13,7 +13,7 @@ terminates.
 
 1.  Use the Java SE class `java.util.ServiceLoader` to attempt to load
 an implementation from
-`META-INF/services/javax.ws.rs.ext.RuntimeDelegate`. Note that this may
+`META-INF/services/jakarta.ws.rs.ext.RuntimeDelegate`. Note that this may
 require more than one call to method
 `ServiceLoader.load(Class, ClassLoader)` in order to try both the
 context class loader and the current class loader as explained
@@ -23,9 +23,9 @@ JAX-RS 2.1 is to ensure forward compatibility with the Java SE 9 module
 system.]
 2.  If the `${java.home}/lib/jaxrs.properties` file exists and it is
 readable by the `java.util.Properties.load(InputStream)` method and it
-contains an entry whose key is `javax.ws.rs.ext.RuntimeDelegate`, then
+contains an entry whose key is `jakarta.ws.rs.ext.RuntimeDelegate`, then
 the value of that entry is used as the name of the implementation class.
-3.  If a system property with the name `javax.ws.rs.ext.RuntimeDelegate`
+3.  If a system property with the name `jakarta.ws.rs.ext.RuntimeDelegate`
 is defined, then its value is used as the name of the implementation
 class.
 4.  Finally, a default implementation class name is used.

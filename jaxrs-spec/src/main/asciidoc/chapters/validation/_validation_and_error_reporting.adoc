@@ -34,19 +34,19 @@ Phase 4::
   validate returned value.
 
 The exception model in <<bib16>> defines a base class
-`javax.validation.ValidationException` and a few subclasses to report
+`jakarta.validation.ValidationException` and a few subclasses to report
 errors that are specific to constraint definitions, constraint
 declarations, group definitions and constraint violations.
 JAX-RS implementations MUST provide a default exception mapper (see
-<<exceptionmapper>>) for `javax.validation.ValidationException`
+<<exceptionmapper>>) for `jakarta.validation.ValidationException`
 according to the following rules:
 
-1.  If the exception is of type `javax.validation.ValidationException`
+1.  If the exception is of type `jakarta.validation.ValidationException`
 or any of its subclasses _excluding_
-`javax.validation.ConstraintViolationException`, then it is mapped to a
+`jakarta.validation.ConstraintViolationException`, then it is mapped to a
 response with status code 500 (Internal Server Error).
 2.  If the exception is an instance of
-`javax.validation.ConstraintViolationException`, then:
+`jakarta.validation.ConstraintViolationException`, then:
 a.  If the exception was thrown while validating a method return type,
 then it is mapped to a response with status code 500 (Internal Server
 Error).footnote:[The property path of a ConstraintViolation provides

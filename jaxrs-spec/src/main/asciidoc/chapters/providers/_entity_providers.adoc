@@ -128,12 +128,12 @@ type combinations:
   All media types (`/*`).
 `java.io.File`::
   All media types (`/*`).
-`javax.activation.DataSource`::
+`jakarta.activation.DataSource`::
   All media types (`/*`).
-`javax.xml.transform.Source`::
+`jakarta.xml.transform.Source`::
   XML types (`text/xml`, `application/xml` and media types of the form
   `application/*+xml`).
-`javax.xml.bind.JAXBElement` and application-supplied JAXB classes::
+`jakarta.xml.bind.JAXBElement` and application-supplied JAXB classes::
   XML types (`text/xml` and `application/xml` and media types of the
   form `application/*+xml`).
 `MultivaluedMap<String,String>`::
@@ -162,7 +162,7 @@ runtime into a `BadRequestException` wrapping the original
 exception mappers.
 
 The implementation-supplied entity provider(s) for
-`javax.xml.bind.JAXBElement` and application-supplied JAXB classes MUST
+`jakarta.xml.bind.JAXBElement` and application-supplied JAXB classes MUST
 use `JAXBContext` instances provided by application-supplied context
 resolvers, see <<contextprovider>>. If an application does not
 supply a `JAXBContext` for a particular type, the

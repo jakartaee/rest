@@ -56,7 +56,7 @@ one with the _lowest_ value in this case. That is, `@Priority(1)` is
 higher than `@Priority(10)`. If two or more providers are eligible and
 have identical priorities, one is chosen in an implementation dependent
 manner. The default priority for all application-supplied providers is
-`javax.ws.rs.Priorities.USER`.
+`jakarta.ws.rs.Priorities.USER`.
 
 The general rule about priorities is different for filters and
 interceptors since these providers are collected into chains. For more

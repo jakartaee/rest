@@ -27,11 +27,11 @@ public interface ContainerResponseFilter {
 
 public interface ReaderInterceptor {
     Object aroundReadFrom(ReaderInterceptorContext context)
-        throws java.io.IOException, javax.ws.rs.WebApplicationException;
+        throws java.io.IOException, jakarta.ws.rs.WebApplicationException;
 }
 public interface WriterInterceptor {
     void aroundWriteTo(WriterInterceptorContext context)
-        throws java.io.IOException, javax.ws.rs.WebApplicationException;
+        throws java.io.IOException, jakarta.ws.rs.WebApplicationException;
 }
 -------------
 

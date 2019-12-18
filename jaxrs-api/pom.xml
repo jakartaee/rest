@@ -155,7 +155,7 @@
                         </executions>
                         <configuration>
                             <serverId>ossrh</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <nexusUrl>https://jakarta.oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>false</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
@@ -166,13 +166,13 @@
                 <repository>
                     <id>ossrh</id>
                     <name>Sonatype Nexus Releases</name>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+                    <url>https://jakarta.oss.sonatype.org/service/local/staging/deploy/maven2</url>
                 </repository>
 
                 <snapshotRepository>
                     <id>ossrh</id>
                     <name>Sonatype Nexus Snapshots</name>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                    <url>https://jakarta.oss.sonatype.org/content/repositories/snapshots</url>
                 </snapshotRepository>
             </distributionManagement>
         </profile>
@@ -249,7 +249,7 @@
                 <!-- JAXB and JAF are not found in Maven Central yet, so we pull it from OSSRH staging instead. -->
                 <repository>
                     <id>ossrh-staging</id>
-                    <url>https://oss.sonatype.org/content/repositories/staging</url>
+                    <url>https://jakarta.oss.sonatype.org/content/repositories/staging</url>
                 </repository>
             </repositories>
         </profile>

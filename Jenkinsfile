@@ -25,6 +25,9 @@ pipeline {
 				dir ('examples') {
 					sh "$MVN deploy"
 				}
+				dir ('jaxrs-spec') {
+					sh "$MVN deploy"
+				}
 			}
 		}
 	}

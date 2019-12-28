@@ -31,7 +31,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <microprofile.config.version>1.3</microprofile.config.version>
     </properties>
 
     <organization>
@@ -268,12 +267,6 @@
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.microprofile.config</groupId>
-            <artifactId>microprofile-config-api</artifactId>
-            <version>${microprofile.config.version}</version>
         </dependency>
     </dependencies>
 

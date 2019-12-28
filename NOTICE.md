@@ -1,4 +1,4 @@
-# Notices for Eclipse Project for JAX-RS
+# Notices for Jakarta RESTful Web Services
 
 This content is produced and maintained by the **Jakarta RESTful Web Services**
 project.

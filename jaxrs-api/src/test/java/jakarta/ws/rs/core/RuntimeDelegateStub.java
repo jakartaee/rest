@@ -16,13 +16,6 @@
 
 package jakarta.ws.rs.core;
 
-import java.util.concurrent.CompletionStage;
-
-import jakarta.ws.rs.SeBootstrap;
-import jakarta.ws.rs.SeBootstrap.Configuration;
-import jakarta.ws.rs.SeBootstrap.Instance;
-import jakarta.ws.rs.core.Application;
-import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.Link.Builder;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Variant.VariantListBuilder;
@@ -57,16 +50,6 @@ public class RuntimeDelegateStub extends RuntimeDelegate {
 
     @Override
     public Builder createLinkBuilder() {
-        return null;
-    }
-
-    @Override
-    public Configuration.Builder createConfigurationBuilder() {
-        return null;
-    }
-
-    @Override
-    public CompletionStage<Instance> bootstrap(final Application application, final SeBootstrap.Configuration configuration) {
         return null;
     }
 }

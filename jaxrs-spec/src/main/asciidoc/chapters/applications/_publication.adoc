@@ -1,4 +1,4 @@
-////
+﻿////
 *******************************************************************
 * Copyright (c) 2019 Eclipse Foundation
 *
@@ -15,8 +15,17 @@ Applications are published in different ways depending on whether the
 application is run in a Java SE environment or within a container. This
 section describes the alternate means of publication.
 
+A compliant implementation MUST support both alternatives on Java SE.
+
 [[java-se]]
 ==== Java SE
+
+There are two alternative ways of publication on Java SE:
+The full Java SE HTTP server bootstrap, and creating just Java SE Endpoints.
+Both are described in this section.
+
+[[se-endpoint]]
+===== Java SE Endpoint
 
 In a Java SE environment a configured instance of an endpoint class can
 be obtained using the `createEndpoint` method of `RuntimeDelegate`. The
@@ -28,12 +37,35 @@ How the resulting endpoint class instance is used to publish the
 application is outside the scope of this specification.
 
 [[jax-ws]]
-===== JAX-WS
+====== JAX-WS
 
 An implementation that supports publication via JAX-WS MUST support
 `createEndpoint` with an endpoint type of `jakarta.xml.ws.Provider`.
 JAX-WS describes how a `Provider` based endpoint can be published in an
 SE environment.
+
+[[se-bootstrap]]
+===== Java SE Bootstrap
+
+This is the RECOMMENDED way of publishing an application on Java SE,
+as the bootstrapping code is completely portable across vendors and products.
+
+In a Java SE environment an application can be published using an embedded
+HTTP server bootstrapped by the implementation. An application invokes
+`SeBootstrap.start(app, config)` with an implementation of `Application`
+and a configuration built by calling `build()` on a configuration builder.
+
+The builder is created by `SeBootstrap.Configuration.builder()` and assembles
+all information needed to configure the embedded HTTP server using properties.
+A compliant implementation MUST support all properties explicitly defined by
+`SeBootstrap.Configuration`, but MAY support additional properties using a
+product-specific namespace prefix.
+
+====== Reserved Namespace `jakarta`
+
+The namespace prefix `jakarta` is reserved
+and MUST NOT be extended by vendors, but only by future revisions of the
+Jakarta RESTful Web Services API, Javadoc and / or specification.
 
 [[servlet]]
 ==== Servlet

@@ -1,1 +1,14 @@
-theme: jekyll-theme-minimal
+remote_theme: jakartaee/jekyll-theme-jakarta-ee
+
+title: [Jakarta RESTful Web Services]
+description: [Jakarta RESTful Web Services provides a specification document, TCK and foundational API to develop web services following the Representational State Transfer (REST) architectural pattern.]
+
+latestVersion: 2.1.6
+
+links:
+  source: https://github.com/eclipse-ee4j/jaxrs-api
+  spec: https://eclipse-ee4j.github.io/jaxrs-api/spec
+  javadocs: https://eclipse-ee4j.github.io/jaxrs-api/apidocs
+  download: https://github.com/eclipse-ee4j/jaxrs-api/releases
+  mailinglist: https://accounts.eclipse.org/mailing-list/jaxrs-dev
+

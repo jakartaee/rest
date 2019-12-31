@@ -63,7 +63,7 @@ public abstract class UriBuilder {
      * Creates a new instance of UriBuilder.
      *
      * @return a new instance of UriBuilder.
-     * @since 2.2
+     * @since 3.1
      */
     public static UriBuilder newInstance() {
         return RuntimeDelegate.getInstance().createUriBuilder();

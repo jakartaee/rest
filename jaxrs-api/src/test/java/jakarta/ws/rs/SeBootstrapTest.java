@@ -27,7 +27,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  * Unit tests for {@link SeBootstrap}
  *
  * @author Markus KARG (markus@headcrashing.eu)
- * @since 2.2
+ * @since 3.1
  */
 public final class SeBootstrapTest {
 
@@ -53,7 +53,7 @@ public final class SeBootstrapTest {
      * Assert that {@link SeBootstrap#start(Application, Configuration)} will delegate to
      * {@link RuntimeDelegate#bootstrap(Application, Configuration)}.
      *
-     * @since 2.2
+     * @since 3.1
      */
     @Test
     public final void shouldDelegateApplicationStartupToRuntimeDelegate() {
@@ -75,7 +75,7 @@ public final class SeBootstrapTest {
      * Assert that {@link SeBootstrap.Configuration#builder()} will delegate to
      * {@link RuntimeDelegate#createConfigurationBuilder()}.
      *
-     * @since 2.2
+     * @since 3.1
      */
     @Test
     public final void shouldDelegateConfigurationBuilderCreationToRuntimeDelegate() {
@@ -94,7 +94,7 @@ public final class SeBootstrapTest {
      * Assert that {@code Configuration.Builder}'s {@code from(external configuration)} bulk-loading method simply returns
      * {@code this}, but does nothing else, as it is a no-op implementation.
      *
-     * @since 2.2
+     * @since 3.1
      */
     @Test
     public final void shouldReturnSameConfigurationBuilderInstanceWhenLoadingExternalConfiguration() {
@@ -116,7 +116,7 @@ public final class SeBootstrapTest {
      * Assert that {@code Configuration.Builder}'s convenience methods delegate to its generic {@code property(name, value)}
      * method using the <em>right</em> property name.
      *
-     * @since 2.2
+     * @since 3.1
      */
     @Test
     public final void shouldPushCorrespondingPropertiesIntoConfigurationBuilder() {
@@ -151,7 +151,7 @@ public final class SeBootstrapTest {
      * Assert that {@code Configuration}'s convenience methods delegate to its generic {@code property(name)} method using
      * the <em>right</em> property name.
      *
-     * @since 2.2
+     * @since 3.1
      */
     @Test
     public final void shouldPullCorrespondingPropertiesFromConfiguration() {

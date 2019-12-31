@@ -7,8 +7,8 @@ latestVersion: 2.1.6
 
 links:
   source: https://github.com/eclipse-ee4j/jaxrs-api
-  spec: https://eclipse-ee4j.github.io/jaxrs-api/spec
   javadocs: https://eclipse-ee4j.github.io/jaxrs-api/apidocs
+  docs: https://jakarta.ee/specifications/restful-ws/2.1/restful-ws-spec-2.1.html
   download: https://github.com/eclipse-ee4j/jaxrs-api/releases
   mailinglist: https://accounts.eclipse.org/mailing-list/jaxrs-dev
 

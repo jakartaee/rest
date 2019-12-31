@@ -16,7 +16,7 @@
  *
  *
  * @author Markus KARG (markus@headcrashing.eu)
- * @since 2.2
+ * @since 3.1
  * @see jakarta.ws.rs.SeBootstrap;
  */
 package jaxrs.examples.bootstrap;

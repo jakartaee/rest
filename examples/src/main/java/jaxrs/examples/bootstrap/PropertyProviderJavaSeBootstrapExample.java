@@ -56,7 +56,7 @@ import jakarta.ws.rs.core.UriBuilder;
  * </ul>
  *
  * @author Markus KARG (markus@headcrashing.eu)
- * @since 2.2
+ * @since 3.1
  */
 public final class PropertyProviderJavaSeBootstrapExample {
 

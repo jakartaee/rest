@@ -28,7 +28,7 @@ import jakarta.ws.rs.core.Application;
  * Demo application simply returning the string {@code "Hello, World!"}.
  *
  * @author Markus KARG (markus@headcrashing.eu)
- * @since 2.2
+ * @since 3.1
  */
 @ApplicationPath("helloworld")
 @Path("hello")

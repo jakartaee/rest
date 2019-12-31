@@ -117,7 +117,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  * </pre>
  *
  * @author Markus KARG (markus@headcrashing.eu)
- * @since 2.2
+ * @since 3.1
  */
 public interface SeBootstrap {
 
@@ -134,7 +134,7 @@ public interface SeBootstrap {
      * @return {@code CompletionStage} (possibly asynchronously) producing handle of the running application
      * {@link SeBootstrap.Instance instance}.
      * @see Configuration
-     * @since 2.2
+     * @since 3.1
      */
     static CompletionStage<Instance> start(final Application application, final Configuration configuration) {
         return RuntimeDelegate.getInstance().bootstrap(application, configuration);
@@ -149,7 +149,7 @@ public interface SeBootstrap {
      * </p>
      *
      * @author Markus KARG (markus@headcrashing.eu)
-     * @since 2.2
+     * @since 3.1
      */
     public static interface Configuration {
 
@@ -163,7 +163,7 @@ public interface SeBootstrap {
          * The default value is {@code "HTTP"}.
          * </p>
          *
-         * @since 2.2
+         * @since 3.1
          */
         static final String PROTOCOL = "jakarta.ws.rs.SeBootstrap.Protocol";
 
@@ -180,7 +180,7 @@ public interface SeBootstrap {
          * The default value is {@code "localhost"}.
          * </p>
          *
-         * @since 2.2
+         * @since 3.1
          */
         static final String HOST = "jakarta.ws.rs.SeBootstrap.Host";
 
@@ -197,7 +197,7 @@ public interface SeBootstrap {
          * range-scanning algorithms.
          * </p>
          *
-         * @since 2.2
+         * @since 3.1
          */
         static final String PORT = "jakarta.ws.rs.SeBootstrap.Port";
 
@@ -207,7 +207,7 @@ public interface SeBootstrap {
          * The default value is {@code "/"}.
          * </p>
          *
-         * @since 2.2
+         * @since 3.1
          */
         static final String ROOT_PATH = "jakarta.ws.rs.SeBootstrap.RootPath";
 
@@ -217,7 +217,7 @@ public interface SeBootstrap {
          * The default value is {@link SSLContext#getDefault()}.
          * </p>
          *
-         * @since 2.2
+         * @since 3.1
          */
         static final String SSL_CONTEXT = "jakarta.ws.rs.SeBootstrap.SSLContext";
 
@@ -231,7 +231,7 @@ public interface SeBootstrap {
          * The default value is {@code SSLClientAuthentication#NONE}.
          * </p>
          *
-         * @since 2.2
+         * @since 3.1
          */
         static final String SSL_CLIENT_AUTHENTICATION = "jakarta.ws.rs.SeBootstrap.SSLClientAuthentication";
 
@@ -245,28 +245,28 @@ public interface SeBootstrap {
          * </p>
          *
          * @author Markus KARG (markus@headcrashing.eu)
-         * @since 2.2
+         * @since 3.1
          */
         public enum SSLClientAuthentication {
 
             /**
              * Server will <em>not request</em> client authentication.
              *
-             * @since 2.2
+             * @since 3.1
              */
             NONE,
 
             /**
              * Client authentication is performed, but invalid clients are <em>accepted</em>.
              *
-             * @since 2.2
+             * @since 3.1
              */
             OPTIONAL,
 
             /**
              * Client authentication is performed, and invalid clients are <em>rejected</em>.
              *
-             * @since 2.2
+             * @since 3.1
              */
             MANDATORY
         }
@@ -274,14 +274,14 @@ public interface SeBootstrap {
         /**
          * Special value for {@link #PORT} property indicating that the implementation MUST scan for a free port.
          *
-         * @since 2.2
+         * @since 3.1
          */
         static final int FREE_PORT = 0;
 
         /**
          * Special value for {@link #PORT} property indicating that the implementation MUST use its default port.
          *
-         * @since 2.2
+         * @since 3.1
          */
         static final int DEFAULT_PORT = -1;
 
@@ -291,7 +291,7 @@ public interface SeBootstrap {
          * @param name a {@code String} specifying the name of the property.
          * @return an {@code Object} containing the value of the property, or {@code null} if no property exists matching the
          * given name.
-         * @since 2.2
+         * @since 3.1
          */
         Object property(String name);
 
@@ -300,7 +300,7 @@ public interface SeBootstrap {
          *
          * @param name a {@code String} specifying the name of the property.
          * @return {@code false} if no property exists matching the given name, {@code true} otherwise.
-         * @since 2.2
+         * @since 3.1
          */
         default boolean hasProperty(String name) {
             return property(name) != null;
@@ -315,7 +315,7 @@ public interface SeBootstrap {
          * @return protocol to be used (e. g. {@code "HTTP")}.
          * @throws ClassCastException if protocol is not a {@link String}.
          * @see SeBootstrap.Configuration#PROTOCOL
-         * @since 2.2
+         * @since 3.1
          */
         default String protocol() {
             return (String) property(PROTOCOL);
@@ -330,7 +330,7 @@ public interface SeBootstrap {
          * @return host name or IP address to be used (e. g. {@code "localhost"} or {@code "0.0.0.0"}).
          * @throws ClassCastException if host is not a {@link String}.
          * @see SeBootstrap.Configuration#HOST
-         * @since 2.2
+         * @since 3.1
          */
         default String host() {
             return (String) property(HOST);
@@ -349,7 +349,7 @@ public interface SeBootstrap {
          * @return port number <em>actually</em> used (e. g. {@code 8080}).
          * @throws ClassCastException if port is not an {@code Integer}.
          * @see SeBootstrap.Configuration#PORT
-         * @since 2.2
+         * @since 3.1
          */
         default int port() {
             return (int) property(PORT);
@@ -364,7 +364,7 @@ public interface SeBootstrap {
          * @return root path to be used, e. g. {@code "/"}.
          * @throws ClassCastException if root path is not a {@link String}.
          * @see SeBootstrap.Configuration#ROOT_PATH
-         * @since 2.2
+         * @since 3.1
          */
         default String rootPath() {
             return (String) property(ROOT_PATH);
@@ -379,7 +379,7 @@ public interface SeBootstrap {
          * @return root path to be used, e. g. {@code "/"}.
          * @throws ClassCastException if sslContext is not a {@link SSLContext}.
          * @see SeBootstrap.Configuration#SSL_CONTEXT
-         * @since 2.2
+         * @since 3.1
          */
         default SSLContext sslContext() {
             return (SSLContext) property(SSL_CONTEXT);
@@ -394,7 +394,7 @@ public interface SeBootstrap {
          * @return client authentication mode, e. g. {@code NONE}.
          * @throws ClassCastException if sslClientAuthentication is not a {@link SSLClientAuthentication}.
          * @see SeBootstrap.Configuration#SSL_CLIENT_AUTHENTICATION
-         * @since 2.2
+         * @since 3.1
          */
         default SSLClientAuthentication sslClientAuthentication() {
             return (SSLClientAuthentication) property(SSL_CLIENT_AUTHENTICATION);
@@ -404,7 +404,7 @@ public interface SeBootstrap {
          * Creates a new bootstrap configuration builder instance.
          *
          * @return {@link Builder} for bootstrap configuration.
-         * @since 2.2
+         * @since 3.1
          */
         static Builder builder() {
             return RuntimeDelegate.getInstance().createConfigurationBuilder();
@@ -414,7 +414,7 @@ public interface SeBootstrap {
          * Builder for bootstrap {@link Configuration}.
          *
          * @author Markus KARG (markus@headcrashing.eu)
-         * @since 2.2
+         * @since 3.1
          */
         static interface Builder {
 
@@ -422,7 +422,7 @@ public interface SeBootstrap {
              * Builds a bootstrap configuration instance from the provided property values.
              *
              * @return {@link Configuration} built from provided property values.
-             * @since 2.2
+             * @since 3.1
              */
             Configuration build();
 
@@ -435,7 +435,7 @@ public interface SeBootstrap {
              * @param name name of the parameter to set.
              * @param value value to set, or {@code null} to use the default value.
              * @return the updated builder.
-             * @since 2.2
+             * @since 3.1
              */
             Builder property(String name, Object value);
 
@@ -448,7 +448,7 @@ public interface SeBootstrap {
              * @param protocol protocol parameter of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
              * @see SeBootstrap.Configuration#PROTOCOL
-             * @since 2.2
+             * @since 3.1
              */
             default Builder protocol(String protocol) {
                 return property(PROTOCOL, protocol);
@@ -463,7 +463,7 @@ public interface SeBootstrap {
              * @param host host parameter (IP address or hostname) of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
              * @see SeBootstrap.Configuration#HOST
-             * @since 2.2
+             * @since 3.1
              */
             default Builder host(String host) {
                 return property(HOST, host);
@@ -478,7 +478,7 @@ public interface SeBootstrap {
              * @param port port parameter of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
              * @see SeBootstrap.Configuration#PORT
-             * @since 2.2
+             * @since 3.1
              */
             default Builder port(Integer port) {
                 return property(PORT, port);
@@ -493,7 +493,7 @@ public interface SeBootstrap {
              * @param rootPath rootPath parameter of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
              * @see SeBootstrap.Configuration#ROOT_PATH
-             * @since 2.2
+             * @since 3.1
              */
             default Builder rootPath(String rootPath) {
                 return property(ROOT_PATH, rootPath);
@@ -508,7 +508,7 @@ public interface SeBootstrap {
              * @param sslContext sslContext parameter of this configuration, or {@code null} to use the default value.
              * @return the updated builder.
              * @see SeBootstrap.Configuration#SSL_CONTEXT
-             * @since 2.2
+             * @since 3.1
              */
             default Builder sslContext(SSLContext sslContext) {
                 return property(SSL_CONTEXT, sslContext);
@@ -523,7 +523,7 @@ public interface SeBootstrap {
              * @param sslClientAuthentication SSL client authentication mode of this configuration
              * @return the updated builder.
              * @see SeBootstrap.Configuration#SSL_CLIENT_AUTHENTICATION
-             * @since 2.2
+             * @since 3.1
              */
             default Builder sslClientAuthentication(SSLClientAuthentication sslClientAuthentication) {
                 return property(SSL_CLIENT_AUTHENTICATION, sslClientAuthentication);
@@ -541,7 +541,7 @@ public interface SeBootstrap {
              * @param <T> Type of the requested property value.
              * @param propertiesProvider Retrieval function of externally managed properties. MUST NOT return {@code null}.
              * @return the updated builder.
-             * @since 2.2
+             * @since 3.1
              */
             <T> Builder from(BiFunction<String, Class<T>, Optional<T>> propertiesProvider);
 
@@ -561,7 +561,7 @@ public interface SeBootstrap {
              *
              * @param externalConfig source of externally managed properties
              * @return the updated builder.
-             * @since 2.2
+             * @since 3.1
              */
             default Builder from(Object externalConfig) {
                 return this;
@@ -574,7 +574,7 @@ public interface SeBootstrap {
      * Handle of the running application instance.
      *
      * @author Markus KARG (markus@headcrashing.eu)
-     * @since 2.2
+     * @since 3.1
      */
     public interface Instance {
 
@@ -588,7 +588,7 @@ public interface SeBootstrap {
          * </p>
          *
          * @return The configuration actually used to create this instance.
-         * @since 2.2
+         * @since 3.1
          */
         public Configuration configuration();
 
@@ -596,7 +596,7 @@ public interface SeBootstrap {
          * Initiate immediate shutdown of running application instance.
          *
          * @return {@code CompletionStage} asynchronously shutting down this application instance.
-         * @since 2.2
+         * @since 3.1
          */
         public CompletionStage<StopResult> stop();
 
@@ -604,7 +604,7 @@ public interface SeBootstrap {
          * Result of stopping the application instance.
          *
          * @author Markus KARG (markus@headcrashing.eu)
-         * @since 2.2
+         * @since 3.1
          */
         public interface StopResult {
 
@@ -620,7 +620,7 @@ public interface SeBootstrap {
              * @return Native result of shutting down the running application instance or {@code null} if the implementation has no
              * native result.
              * @throws ClassCastException if the result is not {@code null} or is not assignable to the type {@code T}.
-             * @since 2.2
+             * @since 3.1
              */
             public <T> T unwrap(Class<T> nativeClass);
         }
@@ -636,7 +636,7 @@ public interface SeBootstrap {
          * @param nativeClass Requested type of the native handle to return.
          * @return Native handle of the running application instance or {@code null} if the implementation has no native handle.
          * @throws ClassCastException if the handle is not {@code null} and is not assignable to the type {@code T}.
-         * @since 2.2
+         * @since 3.1
          */
         public <T> T unwrap(Class<T> nativeClass);
     }

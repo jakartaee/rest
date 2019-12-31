@@ -48,7 +48,7 @@ import jakarta.ws.rs.core.UriBuilder;
  * </p>
  *
  * @author Markus KARG (markus@headcrashing.eu)
- * @since 2.2
+ * @since 3.1
  */
 public final class ClientAuthenticationJavaSeBootstrapExample {
 

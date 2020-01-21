@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -57,22 +57,21 @@ import jakarta.ws.rs.client.WebTarget;
  * <ul>
  * <li>200 - with <code>{@value jakarta.ws.rs.core.HttpHeaders#CONTENT_TYPE}</code> header of "text/event-stream": This is normal
  * operation. <code>onEvent</code> is invoked for each event.  <code>onComplete</code> is invoked when there are no more
- * events. <code>onError</code> is invoked only if a non-recoverable error occurs during processing.</li>
+ * events. <code>onError</code> is invoked only if an unrecoverable error occurs during processing.</li>
  * <li>200 - with unsupported or missing <code>{@value jakarta.ws.rs.core.HttpHeaders#CONTENT_TYPE}</code> header: This is an
- * error condition. <code>onError</code> and <code>onComplete</code> are invoked.</li>
+ * error condition. <code>onError</code> is invoked.</li>
  * <li>204 - This indicates that server has no events to send. Only <code>onComplete</code> is invoked.</li>
  * <li>503 - with <code>{@value jakarta.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> header set to a valid value: This indicates
  * that the server is unavailable, but that the client should reconnect later. No consumers are invoked unless the client
  * event source is closed, prior to reconnecting (resulting in <code>onComplete</code> invocation). After the specified
  * delay, the client should automatically attempt to reconnect which will result in a new response.</li>
  * <li>503 - with invalid or missing <code>{@value jakarta.ws.rs.core.HttpHeaders#RETRY_AFTER}</code> header: This is an error
- * condition. <code>onError</code> and <code>onComplete</code> are invoked.</li>
- * <li>Any other status code: This is an error condition. <code>onError</code> and <code>onComplete</code> are invoked.</li>
+ * condition. <code>onError</code> is invoked.</li>
+ * <li>Any other status code: This is an error condition. <code>onError</code> is invoked.</li>
  * </ul>
  * <p>
  * In the case of an error condition response, the <code>Throwable</code> passed to the <code>onError</code> consumer
- * <i>should</i>
- * be a WebApplicationException containing the invalid <code>Response</code> object.
+ * <i>should</i> be a WebApplicationException containing the invalid <code>Response</code> object.
  *
  * @author Marek Potociar
  * @since 2.1
@@ -196,8 +195,9 @@ public interface SseEventSource extends AutoCloseable {
      * Register {@link InboundSseEvent} and {@link Throwable} consumers and onComplete callback.
      * <p>
      * Event consumer is invoked once per each received event, {@code Throwable} consumer is invoked invoked upon a
-     * unrecoverable error encountered by a {@link SseEventSource}, onComplete callback is invoked when there are no further
-     * events to be received.
+     * unrecoverable error encountered by a {@link SseEventSource}, onComplete callback is invoked after a successful
+     * connection and when there are no further events to be received. Note that the onComplete callback will not be
+     * invoked if the onError callback has been invoked.
      *
      * @param onEvent event consumer.
      * @param onError error consumer.

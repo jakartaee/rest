@@ -75,7 +75,10 @@ public class Application {
      *
      * @return a set of root resource and provider instances. Returning {@code null} is equivalent to returning an empty
      * set.
+     * @deprecated Automatic discovery of resources and providers or the {@code getClasses} method is preferred over
+      * {@code getSingletons}.
      */
+    @Deprecated
     public Set<Object> getSingletons() {
         return Collections.emptySet();
     }

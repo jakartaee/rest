@@ -197,8 +197,13 @@ The following additional requirements apply when using Managed Beans,
 CDI-style Beans or EJBs as resource classes, providers or `Application`
 subclasses:
 
-* Field and property injection of JAX-RS resources MUST be performed
-prior to the container invoking any `@PostConstruct` annotated method.
+* For JAX-RS resources and providers where the JAX-RS implementation 
+participates in their creation and initialization, field and property
+injection in these resources and providers MUST be performed prior to the
+container invoking any `@PostConstruct` annotated method. For resources
+and providers created by the application (e.g. instances returned via the
+`Application.getSingletons()` method, or instances passed via
+`Configurable.register`), this requirement does not apply.
 * Support for constructor injection of JAX-RS resources is OPTIONAL.
 Portable applications MUST instead use fields or bean properties in
 conjunction with a `@PostConstruct` annotated method. Implementations

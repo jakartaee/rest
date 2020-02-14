@@ -13,6 +13,6 @@
 
 The `SseEventSource` class uses the existing JAX-RS mechanism based on
 `RuntimeDelegate` to find an implementation using the service name
-`javax.ws.rs.sse.SseEventSource.Builder`. The majority of types in the
-`javax.ws.rs.sse` are thread safe; the reader is referred to the Javadoc
+`jakarta.ws.rs.sse.SseEventSource.Builder`. The majority of types in the
+`jakarta.ws.rs.sse` are thread safe; the reader is referred to the Javadoc
 for more information on thread safety.

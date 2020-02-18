@@ -22,7 +22,7 @@
 
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-api</artifactId>
-    <version>3.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <name>jakarta.ws.rs-api</name>
     <description>Jakarta RESTful Web Services</description>
@@ -671,9 +671,9 @@
         <spec.version>2.2</spec.version>
         <spec.version.revision /> <!-- e.g. (Rev a) -->
 
-        <jaxb.api.version>2.3.2</jaxb.api.version>
+        <jaxb.api.version>3.0.0-RC1</jaxb.api.version>
         <jaxb.impl.version>2.3.2</jaxb.impl.version>
-        <activation.api.version>1.2.1</activation.api.version>
+        <activation.api.version>2.0.0-rc1</activation.api.version>
         <legal.doc.folder>${project.basedir}/..</legal.doc.folder>
     </properties>
 

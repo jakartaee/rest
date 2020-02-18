@@ -16,7 +16,7 @@
 
 module jakarta.ws.rs {
 
-    requires transitive java.xml.bind;
+    requires transitive jakarta.xml.bind;
 
     requires java.logging;
 
@@ -30,4 +30,6 @@ module jakarta.ws.rs {
     uses jakarta.ws.rs.client.ClientBuilder;
     uses jakarta.ws.rs.ext.RuntimeDelegate;
     uses jakarta.ws.rs.sse.SseEventSource.Builder;
+
+    opens jakarta.ws.rs.core to jakarta.xml.bind;
 }

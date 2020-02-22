@@ -12,7 +12,7 @@
 === Annotations and Validators
 
 Annotation constraints and validators are defined in accordance with the
-Bean Validation specification <<bib16>>. The `@Email` annotation
+Bean Validation Specification <<bib16>>. The `@Email` annotation
 shown above is defined using the Bean Validation
 `@Constraint` meta-annotation:
 

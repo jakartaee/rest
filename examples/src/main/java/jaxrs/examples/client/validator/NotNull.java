@@ -10,20 +10,20 @@
 
 package jaxrs.examples.client.validator;
 
-import javax.enterprise.util.AnnotationLiteral;
-import javax.validation.Payload;
+import jakarta.enterprise.util.AnnotationLiteral;
+import jakarta.validation.Payload;
 
 /**
  * @author Santiago Pericas-Geertsen
  */
-public class NotNull extends AnnotationLiteral<javax.validation.constraints.NotNull>
-        implements javax.validation.constraints.NotNull {
+public class NotNull extends AnnotationLiteral<jakarta.validation.constraints.NotNull>
+        implements jakarta.validation.constraints.NotNull {
 
     private static final long serialVersionUID = -5352564534866654470L;
 
     @Override
     public String message() {
-        return "{javax.validation.constraints.NotNull.message}";
+        return "{jakarta.validation.constraints.NotNull.message}";
     }
 
     @Override

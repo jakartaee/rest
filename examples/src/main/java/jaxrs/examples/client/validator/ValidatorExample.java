@@ -14,11 +14,11 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import javax.enterprise.util.AnnotationLiteral;
-import javax.validation.Constraint;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import javax.validation.Payload;
+import jakarta.enterprise.util.AnnotationLiteral;
+import jakarta.validation.Constraint;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+import jakarta.validation.Payload;
 
 public class ValidatorExample {
 
@@ -54,7 +54,7 @@ public class ValidatorExample {
 
         @Override
         public String message() {
-            return "{javax.validation.constraints.NotNull.message}";
+            return "{jakarta.validation.constraints.NotNull.message}";
         }
 
         @Override

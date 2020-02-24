@@ -18,9 +18,9 @@ import jakarta.ws.rs.core.Link;
 import jakarta.ws.rs.core.Link.JaxbAdapter;
 import jakarta.ws.rs.core.UriInfo;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * ResourceExample class.

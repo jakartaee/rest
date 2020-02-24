@@ -41,7 +41,7 @@ import jakarta.ws.rs.ext.WriterInterceptor;
 import jakarta.ws.rs.ext.WriterInterceptorContext;
 
 import javax.net.ssl.SSLContext;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import jaxrs.examples.client.custom.ThrottledClient;
 import static jakarta.ws.rs.client.Entity.form;

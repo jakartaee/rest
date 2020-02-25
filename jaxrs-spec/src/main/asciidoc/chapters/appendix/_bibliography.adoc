@@ -34,8 +34,8 @@
 - [[[bib8,8]]]  Jakarta™ Servlet Specification, Version 4.0. Available at:
                https://jakarta.ee/specifications/servlet/4.0
 
-- [[[bib9,9]]]  R. Chinnici, M. Hadley, and R. Mordani. Java API for XML Web Services. JSR, JCP, August 2005.
-               See https://jcp.org/en/jsr/detail?id=224.
+- [[[bib9,9]]]  Jakarta XML Web Services, Version 3.0
+               https://jakarta.ee/specifications/xml-web-services/2.3/.
 
 - [[[bib10,10]]]  S. Bradner. RFC 2119: Keywords for use in RFCs to Indicate Requirement Levels. RFC, IETF,
                March 1997. See https://www.ietf.org/rfc/rfc2119.txt.
@@ -66,5 +66,5 @@
 - [[[bib19,19]]]  Jakarta™ JSON Binding Specification, Version 1.0. Available at:
                https://jakarta.ee/specifications/jsonb/1.0
 
-- [[[bib20,20]]]  Bill Shannon. JavaBeans Activation Framework. JSR, JCP, May 2006. See
-               https://jcp.org/en/jsr/detail?id=925.
+- [[[bib20,20]]]  Jakarta Activation, Version 1.2
+               https://jakarta.ee/specifications/activation/1.2/.

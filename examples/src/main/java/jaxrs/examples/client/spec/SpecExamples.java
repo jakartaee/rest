@@ -21,8 +21,7 @@ import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
 import static jakarta.ws.rs.client.Entity.entity;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
+import jakarta.xml.bind.annotation.XmlRootElement;
 import jaxrs.examples.client.custom.ThrottledClient;
 
 /**

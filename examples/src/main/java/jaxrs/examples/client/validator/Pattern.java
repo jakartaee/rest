@@ -10,14 +10,14 @@
 
 package jaxrs.examples.client.validator;
 
-import javax.enterprise.util.AnnotationLiteral;
-import javax.validation.Payload;
+import jakarta.enterprise.util.AnnotationLiteral;
+import jakarta.validation.Payload;
 
 /**
  * @author sp106478
  */
-public class Pattern extends AnnotationLiteral<javax.validation.constraints.Pattern>
-        implements javax.validation.constraints.Pattern {
+public class Pattern extends AnnotationLiteral<jakarta.validation.constraints.Pattern>
+        implements jakarta.validation.constraints.Pattern {
     private static final long serialVersionUID = 920895043686145958L;
 
     private String regexp;
@@ -28,7 +28,7 @@ public class Pattern extends AnnotationLiteral<javax.validation.constraints.Patt
 
     @Override
     public String message() {
-        return "{javax.validation.constraints.Pattern.message}";
+        return "{jakarta.validation.constraints.Pattern.message}";
     }
 
     @Override

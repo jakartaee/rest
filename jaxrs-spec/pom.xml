@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-spec</artifactId>
-    <version>3.0-SNAPSHOT</version>
+    <version>3.0.0-M1</version>
     <packaging>pom</packaging>
     <name>Jakarta RESTful Web Services Specification</name>
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2011, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -404,8 +404,12 @@ public abstract class Link {
     }
 
     /**
-     * Value type for {@link jakarta.ws.rs.core.Link} that can be marshalled and unmarshalled by JAXB.
+     * Value type for {@link jakarta.ws.rs.core.Link} that can be marshalled and
+     * unmarshalled by JAXB.
      *
+     * Note that usage of this class requires the Jakarta XML Binding API and an implementation. The Jakarta RESTful Web
+     * Services implementation is not required to provide these dependencies.
+     * 
      * @see jakarta.ws.rs.core.Link.JaxbAdapter
      * @since 2.0
      */
@@ -538,6 +542,9 @@ public abstract class Link {
      * }
      * </pre>
      *
+     * Note that usage of this class requires the Jakarta XML Binding API and an implementation. The Jakarta RESTful Web
+     * Services implementation is not required to provide these dependencies.
+     * 
      * @see jakarta.ws.rs.core.Link.JaxbLink
      * @since 2.0
      */

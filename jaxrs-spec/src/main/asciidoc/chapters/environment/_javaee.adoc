@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2020 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -189,6 +189,16 @@ matching `/json` or `/*+json`.
 Note that if JSON-B and JSON-P are both supported in the same
 environment, entity providers for JSON-B take precedence over those for
 JSON-P for all types except `JsonValue` and its sub-types.
+
+[[jaxb]]
+==== Jakarta XML Binding
+
+In a product that supports the Jakarta XML Binding API (JAXB)
+<<bib21>>, implementations MUST support entity providers for the type,
+`jakarta.xml.bind.JAXBElement`, and application-supplied JAXB classes
+in combination with the following XML-based media types:
+`text/xml` and `application/xml` and media types of the
+form `application/*+xml`.
 
 [[additional_reqs]]
 ==== Additional Requirements

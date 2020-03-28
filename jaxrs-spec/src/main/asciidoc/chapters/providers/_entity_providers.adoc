@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2020 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -143,9 +143,6 @@ type combinations:
 `jakarta.xml.transform.Source`::
   XML types (`text/xml`, `application/xml` and media types of the form
   `application/*+xml`).
-`jakarta.xml.bind.JAXBElement` and application-supplied JAXB classes::
-  XML types (`text/xml` and `application/xml` and media types of the
-  form `application/*+xml`).
 `MultivaluedMap<String,String>`::
   Form content (`application/x-www-form-urlencoded`).
 `StreamingOutput`::
@@ -155,8 +152,8 @@ type combinations:
   boxing/unboxing conversion.
 
 Depending on the environment, the list of standard entity providers MUST
-also include those for JSON. For more information about these providers
-see <<jsonp>> and <<jsonb>>.
+also include those for JSON or XML. For more information about these providers
+see <<jsonp>>, <<jsonb>> and <<jaxb>>.
 
 When reading zero-length message entities all pre-packaged
 `MessageBodyReader` implementations, except the JAXB one and those for

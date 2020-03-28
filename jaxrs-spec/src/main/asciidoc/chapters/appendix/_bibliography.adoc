@@ -1,6 +1,6 @@
 ﻿////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2020 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -67,4 +67,7 @@
                https://jakarta.ee/specifications/jsonb/1.0
 
 - [[[bib20,20]]]  Jakarta Activation, Version 1.2
-               https://jakarta.ee/specifications/activation/1.2/.
+               https://jakarta.ee/specifications/activation/1.2/
+
+- [[[bib21,21]]]  Jakarta XML Binding, Version 3.0
+               https://jakarta.ee/specifications/xml-binding/3.0/

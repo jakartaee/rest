@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2020 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -23,6 +23,9 @@ do not wish to provide their context for a particular Java type. E.g. a
 JAXB context provider may wish to only provide the context for certain
 JAXB classes. Context providers MAY also manage multiple contexts of the
 same type keyed to different Java types.
+
+Note that a context provider for JAXB is only applicable in products that
+support <<jaxb>>.
 
 [[context_media_type]]
 ==== Declaring Media Type Capabilities

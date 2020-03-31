@@ -16,8 +16,8 @@ instance of `Response`. An exception mapping provider implements the
 `ExceptionMapper<T>` interface and may be annotated with `@Provider` for
 automatic discovery.
 
-When a resource class or provider method throws an exception for which
-there is an exception mapping provider, the matching provider is used to
+When a resource class or provider method throws an exception,
+the matching provider is used to
 obtain a `Response` instance. The resulting `Response` is processed as
 if a web resource method had returned the `Response`, see
 <<resource_method_return>>. In particular, a mapped `Response` MUST be
@@ -29,6 +29,15 @@ implementation MUST use the provider whose generic type is the nearest
 superclass of the exception. If two or more exception providers are
 applicable, the one with the highest priority MUST be chosen as
 described in <<provider_priorities>>.
+
+A JAX-RS implementation MUST include a default exception mapping provider
+that implements ExceptionMapper<Throwable> and which SHOULD
+
+1. log the exception, and
+2. set the response status to 500.
+
+When the default exception mapping provider handles a WebApplicationException, it MUST
+return the embedded Response, and it MUST respect the status code in the Response.
 
 To avoid a potentially infinite loop, a single exception mapper must be
 used during the processing of a request and its corresponding response.

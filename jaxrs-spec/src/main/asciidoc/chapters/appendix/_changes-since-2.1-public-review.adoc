@@ -25,3 +25,5 @@ return type in a resource method.
 `@Priority` for all providers.
 * <<entity_providers>>: Modified algorithm steps to add support
 for `@Priority` in selection of message body readers and writers.
+* <<exceptionmapper>>: Added requirement that JAX-RS implementations have 
+default exception mappers.

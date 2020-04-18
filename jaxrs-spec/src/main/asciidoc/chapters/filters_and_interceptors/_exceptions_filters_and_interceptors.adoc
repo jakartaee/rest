@@ -17,7 +17,8 @@
 When a filter or interceptor method throws an exception, the server
 runtime will process the exception as described in
 <<exceptions_providers_server>>. As explained in
-<<exceptionmapper>>, an application can supply exception mapping
+<<exceptionmapper>>, a JAX-RS implementation will supply a default
+exception mapping provider and an application can supply additional exception mapping
 providers. At most one exception mapper MUST be used in a single request
 processing cycle to avoid potentially infinite loops.
 

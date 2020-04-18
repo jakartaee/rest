@@ -134,34 +134,19 @@ exceptions and process them in the following order:
 
 1.  Instances of `WebApplicationException` and its subclasses MUST be
 mapped to a response as follows. If the `response` property of the
-exception does not contain an entity and an exception mapping provider
-(see <<exceptionmapper>>) is available for
-`WebApplicationException` or the corresponding subclass, an
-implementation MUST use the provider to create a new
-`Response` instance, otherwise the `response` property is used directly.
+exception is null, then an
+implementation MUST use the most appropriate
+exception mapping provider (see <<exceptionmapper>>) to create a new
+`Response` instance; otherwise the `response` property is used directly.
 The resulting `Response` instance is then processed according to
 <<resource_method_return>>.
-2.  If an exception mapping provider (see <<exceptionmapper>>) is
-available for the exception or one of its superclasses, an
-implementation MUST use the provider whose generic type is the nearest
+2. An implementation MUST use the exception mapping provider
+(see <<exceptionmapper>>) whose generic type is the nearest
 superclass of the exception to create a `Response` instance that is then
 processed according to <<resource_method_return>>. If the
 exception mapping provider throws an exception while creating a
 `Response` then return a server error (status code 500) response to the
 client.
-3.  Unchecked exceptions and errors that have not been
-mapped MUST be re-thrown and allowed to propagate to the underlying
-container.
-4.  Checked exceptions and throwables that have not been
-mapped and cannot be thrown directly MUST be wrapped in a
-container-specific exception that is then thrown and allowed to
-propagate to the underlying container. Servlet-based implementations
-MUST use `ServletException` as the wrapper. JAX-WS `Provider`-based
-implementations MUST use `WebServiceException` as the wrapper.
-
-*Note:* _Items 3 and 4 allow existing container facilities
-(e.g. a Servlet filter or error pages) to be used to handle the error if
-desired._
 
 [[head_and_options]]
 ==== HEAD and OPTIONS

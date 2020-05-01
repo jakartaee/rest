@@ -19,6 +19,7 @@
 :toclevels: 3
 :sectnumlevels: 4
 :sectanchors:
+:stem:
 ifdef::backend-pdf[]
 :pagenums:
 :numbered:

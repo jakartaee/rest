@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2011, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -187,7 +187,7 @@ public interface Configurable<C extends Configurable> {
      * feature} meta-provider) to be instantiated and used in the scope of this configurable context.
      * <p>
      * This registration method provides the same functionality as {@link #register(Class)} except that any priority
-     * specified on the registered JAX-RS component class via {@code javax.annotation.Priority} annotation is overridden
+     * specified on the registered JAX-RS component class via {@code jakarta.annotation.Priority} annotation is overridden
      * with the supplied {@code priority} value.
      * </p>
      * <p>
@@ -226,7 +226,7 @@ public interface Configurable<C extends Configurable> {
      * feature} meta-provider) to be instantiated and used in the scope of this configurable context.
      * <p>
      * This registration method provides same functionality as {@link #register(Class, Class[])} except that any priority
-     * specified on the registered JAX-RS component class via {@code javax.annotation.Priority} annotation is overridden for
+     * specified on the registered JAX-RS component class via {@code jakarta.annotation.Priority} annotation is overridden for
      * each extension provider contract type separately with an integer priority value specified as a value in the supplied
      * map of [contract type, priority] pairs.
      * </p>
@@ -274,7 +274,7 @@ public interface Configurable<C extends Configurable> {
      * feature} meta-provider) to be instantiated and used in the scope of this configurable context.
      * <p>
      * This registration method provides the same functionality as {@link #register(Object)} except that any priority
-     * specified on the registered JAX-RS component class via {@code javax.annotation.Priority} annotation is overridden
+     * specified on the registered JAX-RS component class via {@code jakarta.annotation.Priority} annotation is overridden
      * with the supplied {@code priority} value.
      * </p>
      * <p>
@@ -313,7 +313,7 @@ public interface Configurable<C extends Configurable> {
      * feature} meta-provider) to be instantiated and used in the scope of this configurable context.
      * <p>
      * This registration method provides same functionality as {@link #register(Object, Class[])} except that any priority
-     * specified on the registered JAX-RS component class via {@code javax.annotation.Priority} annotation is overridden for
+     * specified on the registered JAX-RS component class via {@code jakarta.annotation.Priority} annotation is overridden for
      * each extension provider contract type separately with an integer priority value specified as a value in the supplied
      * map of [contract type, priority] pairs.
      * </p>

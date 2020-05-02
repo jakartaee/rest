@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -29,7 +29,6 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 import javax.xml.transform.stream.StreamSource;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import jakarta.xml.bind.JAXBContext;
@@ -44,7 +43,6 @@ import jakarta.xml.bind.Unmarshaller;
  */
 public class JaxbLinkTest {
 
-    @Ignore("JAXB implementation does not yet support jakarta.* namespace")
     @Test
     public void testSerializationOfJaxbLink() throws Exception {
         JAXBContext jaxbContext = JAXBContext.newInstance(Link.JaxbLink.class);

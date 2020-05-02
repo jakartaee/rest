@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,7 +18,7 @@ package jakarta.ws.rs;
 
 /**
  * A collection of built-in priority constants for the JAX-RS components that are supposed to be ordered based on their
- * {@code javax.annotation.Priority} class-level annotation value when used or applied by JAX-RS runtime.
+ * {@code jakarta.annotation.Priority} class-level annotation value when used or applied by JAX-RS runtime.
  * <p>
  * For example, JAX-RS filters and interceptors are grouped in chains for each of the message processing extension
  * points: Pre, PreMatch, Post as well as ReadFrom and WriteTo. Each of these chains is sorted based on priorities which

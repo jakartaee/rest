@@ -23,9 +23,10 @@ endif::[]
 
 Release: {revdate}
 ....
-=== Copyright
+== Copyright
 
-Copyright (c) 2019 Eclipse Foundation.
+Copyright (c) 2018, 2020 Eclipse Foundation.
+https://www.eclipse.org/legal/efsl.php[]
 
 === Eclipse Foundation Specification License
 
@@ -44,7 +45,7 @@ document, or portions thereof, that you use:
 * All existing copyright notices, or if one does not exist, a notice
   (hypertext is preferred, but a textual representation is permitted)
   of the form: "Copyright (c) [$date-of-document]
-  Eclipse Foundation, Inc. \<<url to this license>>"
+  Eclipse Foundation, Inc. https://www.eclipse.org/legal/efsl.php[]"
 
 Inclusion of the full text of this NOTICE must be provided. We
 request that authorship attribution be provided in any software,
@@ -63,9 +64,9 @@ specification is expressly prohibited.
 
 The notice is:
 
-"Copyright (c) 2018 Eclipse Foundation. This software or
-document includes material copied from or derived from [title and URI
-of the Eclipse Foundation specification document]."
+"Copyright (c) 2018, 2020 Eclipse Foundation. This software or
+document includes material copied from or derived from Jakarta(R) RESTful
+Web Services https://jakarta.ee/specifications/restful-ws/3.0/[]."
 
 ==== Disclaimers
 

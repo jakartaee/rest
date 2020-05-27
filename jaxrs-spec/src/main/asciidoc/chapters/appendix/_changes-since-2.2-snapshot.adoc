@@ -13,3 +13,5 @@
 
 * Referencing Jakarta EE instead of Java EE
 * JAXB API is now optional
+* <<exceptionmapper>>: Added requirement that JAX-RS implementations have 
+default exception mappers.

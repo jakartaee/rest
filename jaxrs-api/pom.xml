@@ -667,7 +667,7 @@
         <spec.version.revision /> <!-- e.g. (Rev a) -->
 
         <jaxb.api.version>3.0.0-RC3</jaxb.api.version>
-        <jaxb.impl.version>3.0.0-M2</jaxb.impl.version>
+        <jaxb.impl.version>3.0.0-M4</jaxb.impl.version>
         <activation.api.version>2.0.0-RC3</activation.api.version>
         <legal.doc.folder>${project.basedir}/..</legal.doc.folder>
     </properties>

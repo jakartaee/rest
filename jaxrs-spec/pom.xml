@@ -106,6 +106,8 @@
                             </attributes>
                         </configuration>
                     </execution>
+                    <!-- Currently broken, because asciidoctorj-pdf doesn't support the 'stem' attribute for rendering math expressions -->
+                    <!--
                     <execution>
                         <id>asciidoc-to-pdf</id>
                         <phase>generate-resources</phase>
@@ -135,6 +137,7 @@
                             </attributes>
                         </configuration>
                     </execution>
+                    -->
                 </executions>
             </plugin>
         </plugins>

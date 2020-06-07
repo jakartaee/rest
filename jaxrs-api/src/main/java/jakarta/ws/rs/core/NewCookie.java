@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -47,6 +47,7 @@ public class NewCookie extends Cookie {
     private final Date expiry;
     private final boolean secure;
     private final boolean httpOnly;
+    private final SameSite sameSite;
 
     /**
      * Create a new instance.
@@ -56,7 +57,7 @@ public class NewCookie extends Cookie {
      * @throws IllegalArgumentException if name is {@code null}.
      */
     public NewCookie(final String name, final String value) {
-        this(name, value, null, null, DEFAULT_VERSION, null, DEFAULT_MAX_AGE, null, false, false);
+        this(name, value, null, null, DEFAULT_VERSION, null, DEFAULT_MAX_AGE, null, false, false, null);
     }
 
     /**
@@ -78,7 +79,7 @@ public class NewCookie extends Cookie {
             final String comment,
             final int maxAge,
             final boolean secure) {
-        this(name, value, path, domain, DEFAULT_VERSION, comment, maxAge, null, secure, false);
+        this(name, value, path, domain, DEFAULT_VERSION, comment, maxAge, null, secure, false, null);
     }
 
     /**
@@ -103,7 +104,7 @@ public class NewCookie extends Cookie {
             final int maxAge,
             final boolean secure,
             final boolean httpOnly) {
-        this(name, value, path, domain, DEFAULT_VERSION, comment, maxAge, null, secure, httpOnly);
+        this(name, value, path, domain, DEFAULT_VERSION, comment, maxAge, null, secure, httpOnly, null);
     }
 
     /**
@@ -127,7 +128,7 @@ public class NewCookie extends Cookie {
             final String comment,
             final int maxAge,
             final boolean secure) {
-        this(name, value, path, domain, version, comment, maxAge, null, secure, false);
+        this(name, value, path, domain, version, comment, maxAge, null, secure, false, null);
     }
 
     /**
@@ -156,12 +157,44 @@ public class NewCookie extends Cookie {
             final Date expiry,
             final boolean secure,
             final boolean httpOnly) {
+        this(name, value, path, domain, version, comment, maxAge, expiry, secure, httpOnly, null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param name the name of the cookie
+     * @param value the value of the cookie
+     * @param path the URI path for which the cookie is valid
+     * @param domain the host domain for which the cookie is valid
+     * @param version the version of the specification to which the cookie complies
+     * @param comment the comment
+     * @param maxAge the maximum age of the cookie in seconds
+     * @param expiry the cookie expiry date.
+     * @param secure specifies whether the cookie will only be sent over a secure connection
+     * @param httpOnly if {@code true} make the cookie HTTP only, i.e. only visible as part of an HTTP request.
+     * @param sameSite specifies the value of the {@code SameSite} cookie attribute
+     * @throws IllegalArgumentException if name is {@code null}.
+     * @since 3.1
+     */
+    public NewCookie(final String name,
+            final String value,
+            final String path,
+            final String domain,
+            final int version,
+            final String comment,
+            final int maxAge,
+            final Date expiry,
+            final boolean secure,
+            final boolean httpOnly,
+            final SameSite sameSite) {
         super(name, value, path, domain, version);
         this.comment = comment;
         this.maxAge = maxAge;
         this.expiry = expiry;
         this.secure = secure;
         this.httpOnly = httpOnly;
+        this.sameSite = sameSite;
     }
 
     /**
@@ -171,7 +204,7 @@ public class NewCookie extends Cookie {
      * @throws IllegalArgumentException if cookie is {@code null}.
      */
     public NewCookie(final Cookie cookie) {
-        this(cookie, null, DEFAULT_MAX_AGE, null, false, false);
+        this(cookie, null, DEFAULT_MAX_AGE, null, false, false, null);
     }
 
     /**
@@ -184,7 +217,7 @@ public class NewCookie extends Cookie {
      * @throws IllegalArgumentException if cookie is {@code null}.
      */
     public NewCookie(final Cookie cookie, final String comment, final int maxAge, final boolean secure) {
-        this(cookie, comment, maxAge, null, secure, false);
+        this(cookie, comment, maxAge, null, secure, false, null);
     }
 
     /**
@@ -200,6 +233,25 @@ public class NewCookie extends Cookie {
      * @since 2.0
      */
     public NewCookie(final Cookie cookie, final String comment, final int maxAge, final Date expiry, final boolean secure, final boolean httpOnly) {
+        this(cookie, comment, maxAge, expiry, secure, httpOnly, null);
+    }
+
+
+    /**
+     * Create a new instance supplementing the information in the supplied cookie.
+     *
+     * @param cookie the cookie to clone.
+     * @param comment the comment.
+     * @param maxAge the maximum age of the cookie in seconds.
+     * @param expiry the cookie expiry date.
+     * @param secure specifies whether the cookie will only be sent over a secure connection.
+     * @param httpOnly if {@code true} make the cookie HTTP only, i.e. only visible as part of an HTTP request.
+     * @param sameSite specifies the value of the {@code SameSite} cookie attribute
+     * @throws IllegalArgumentException if cookie is {@code null}.
+     * @since 3.1
+     */
+    public NewCookie(final Cookie cookie, final String comment, final int maxAge, final Date expiry, final boolean secure, final boolean httpOnly,
+            SameSite sameSite) {
         super(cookie == null ? null : cookie.getName(),
                 cookie == null ? null : cookie.getValue(),
                 cookie == null ? null : cookie.getPath(),
@@ -210,6 +262,7 @@ public class NewCookie extends Cookie {
         this.expiry = expiry;
         this.secure = secure;
         this.httpOnly = httpOnly;
+        this.sameSite = sameSite;
     }
 
     /**
@@ -289,6 +342,18 @@ public class NewCookie extends Cookie {
     }
 
     /**
+     * Returns the value of the {@code SameSite} attribute for this cookie or {@code null} if the attribute is not set.
+     * This attributes controls whether the cookie is sent with cross-origin requests, providing protection against
+     * cross-site request forgery.
+     *
+     * @return the value of the {@code SameSite} cookie attribute or {@code null}.
+     * @since 3.1
+     */
+    public SameSite getSameSite() {
+        return sameSite;
+    }
+
+    /**
      * Obtain a new instance of a {@link Cookie} with the same name, value, path, domain and version as this
      * {@code NewCookie}. This method can be used to obtain an object that can be compared for equality with another
      * {@code Cookie}; since a {@code Cookie} will never compare equal to a {@code NewCookie}.
@@ -327,6 +392,7 @@ public class NewCookie extends Cookie {
         hash = 59 + hash + (this.expiry != null ? this.expiry.hashCode() : 0);
         hash = 59 * hash + (this.secure ? 1 : 0);
         hash = 59 * hash + (this.httpOnly ? 1 : 0);
+        hash = 59 * hash + this.sameSite.ordinal();
         return hash;
     }
 
@@ -379,6 +445,34 @@ public class NewCookie extends Cookie {
         if (this.httpOnly != other.httpOnly) {
             return false;
         }
+        if (this.sameSite != other.sameSite) {
+            return false;
+        }
         return true;
     }
+
+    /**
+     * The available values for the {@code SameSite} cookie attribute.
+     * 
+     * @since 3.1
+     */
+    public enum SameSite {
+
+        /**
+         * The {@code None} mode disables protection provided by the {@code SameSite} cookie attribute.
+         */
+        NONE,
+
+        /**
+         * The {@code Lax} mode only allows to send cookies for cross-site top level navigation requests.
+         */
+        LAX,
+
+        /**
+         * The {@code Strict} mode prevents clients from sending cookies with any cross-site request.
+         */
+        STRICT
+
+    }
+
 }

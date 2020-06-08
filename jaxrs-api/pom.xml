@@ -20,6 +20,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.eclipse.ee4j</groupId>
+        <artifactId>project</artifactId>
+        <version>1.0.6</version>
+    </parent>
+
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-api</artifactId>
     <version>3.0.0-SNAPSHOT</version>
@@ -86,97 +92,6 @@
             </properties>
         </profile>
         <profile>
-            <id>release</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <!-- Enables step-by-step staging deployment -->
-                            <groupId>org.sonatype.plugins</groupId>
-                            <artifactId>nexus-staging-maven-plugin</artifactId>
-                            <version>1.6.7</version>
-                        </plugin>
-                        <plugin>
-                            <!-- Newer version then in parent -->
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-gpg-plugin</artifactId>
-                            <version>1.6</version>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-release-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-release</id>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                                <configuration>
-                                    <gpgArguments>
-                                        <arg>--pinentry-mode</arg>
-                                        <arg>loopback</arg>
-                                    </gpgArguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-deploy-plugin</artifactId>
-                        <configuration>
-                            <skip>true</skip> <!-- To prefer nexus-staging-maven-plugin -->
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <extensions>true</extensions>
-                        <executions>
-                            <execution>
-                                <id>default-deploy</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>deploy</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://jakarta.oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-
-            <distributionManagement>
-                <repository>
-                    <id>ossrh</id>
-                    <name>Sonatype Nexus Releases</name>
-                    <url>https://jakarta.oss.sonatype.org/service/local/staging/deploy/maven2</url>
-                </repository>
-
-                <snapshotRepository>
-                    <id>ossrh</id>
-                    <name>Sonatype Nexus Snapshots</name>
-                    <url>https://jakarta.oss.sonatype.org/content/repositories/snapshots</url>
-                </snapshotRepository>
-            </distributionManagement>
-        </profile>
-        <profile>
             <id>jdk11+</id>
             <activation>
                 <jdk>[11,)</jdk>
@@ -225,13 +140,6 @@
                     </plugins>
                 </pluginManagement>
             </build>
-            <repositories>
-                <!-- JAXB and JAF are not found in Maven Central yet, so we pull it from OSSRH staging instead. -->
-                <repository>
-                    <id>ossrh-staging</id>
-                    <url>https://jakarta.oss.sonatype.org/content/repositories/staging</url>
-                </repository>
-            </repositories>
         </profile>
         <profile>
             <id>jdk9-jdk10</id>
@@ -494,42 +402,6 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>2.8.2</version>
-                    <configuration>
-                        <retryFailedDeploymentCount>10</retryFailedDeploymentCount>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>2.5.3</version>
-                    <!--
-                        To release a non-final version:
-                        ===============================
-                        mvn release:prepare -DdryRun=false -DreleaseVersion=<release-version> \
-                                -DdevelopmentVersion=<next-dev-version> -Dtag=<release-version> -Prelease
-
-                        mvn release:perform -DconnectionUrl="scm:git:file://<path-to-local-jaxrs-repo>" -Dtag=<release-version> \
-                                -Prelease,skip-tests
-
-                        To release a final version:
-                        ===========================
-                        mvn release:prepare -DdryRun=false -DreleaseVersion=<release-version> \
-                                -DdevelopmentVersion=<next-dev-version> -Dtag=<release-version> -Prelease,final
-
-                        mvn release:perform -DconnectionUrl="scm:git:file://<path-to-local-jaxrs-repo>" -Dtag=<release-version> \
-                                -Prelease,skip-tests,final
-                    -->
-                    <configuration>
-                        <arguments>-Dmaven.test.skip=${skip.release.tests} ${release.arguments}</arguments>
-                        <autoVersionSubmodules>true</autoVersionSubmodules>
-                        <mavenExecutorId>forked-path</mavenExecutorId>
-                        <preparationGoals>clean install</preparationGoals>
-                        <pushChanges>false</pushChanges>
-                        <useReleaseProfile>false</useReleaseProfile>
-                    </configuration>
-                </plugin>
-                <plugin>
                     <artifactId>maven-jxr-plugin</artifactId>
                     <version>2.5</version>
                     <executions>
@@ -671,19 +543,5 @@
         <activation.api.version>2.0.0-RC3</activation.api.version>
         <legal.doc.folder>${project.basedir}/..</legal.doc.folder>
     </properties>
-
-    <distributionManagement>
-        <repository>
-            <id>repo.eclipse.org</id>
-            <name>JAX-RS API Repository - Releases</name>
-            <url>https://repo.eclipse.org/content/repositories/jax-rs-api-releases/</url>
-        </repository>
-
-        <snapshotRepository>
-            <id>repo.eclipse.org</id>
-            <name>JAX-RS API Repository - Snapshots</name>
-	    <url>https://repo.eclipse.org/content/repositories/jax-rs-api-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>

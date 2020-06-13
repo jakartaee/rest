@@ -30,9 +30,9 @@ latexmath:[$P = \{ V(\mbox{class}) \}$].
 the set of `MessageBodyWriter` that support the class of the returned
 entity object.
 3.  If latexmath:[$P = \{\}$], set
-latexmath:[$P = \{\mbox{\lq*/*\rq}\}$]
+latexmath:[$P = \{\mbox{'*/*'}\}$]
 4.  Obtain the acceptable media types latexmath:[$A$]. If
-latexmath:[$A = \{\}$], set latexmath:[$A = \{\mbox{\lq*/*\rq}\}$]
+latexmath:[$A = \{\}$], set latexmath:[$A = \{\mbox{'*/*'}\}$]
 5.  Set latexmath:[$M=\{\}$]. For each member of latexmath:[$A, a$]:
 * For each member of latexmath:[$P, p$]:
 ** If latexmath:[$a$] is compatible with latexmath:[$p$], add
@@ -49,14 +49,14 @@ secondary key of q-value and a tertiary key of qs-value.
 8.  For each member of latexmath:[$M, m$]:
 * If latexmath:[$m$] is a concrete type, set
 latexmath:[$M_{\mbox{selected}} = m$], finish.
-9.  If latexmath:[$M$] contains /* or application/*, set
-latexmath:[$M_{\mbox{selected}} = \mbox{\lq application/octet-stream\rq}$],
+9.  If latexmath:[$M$] contains '\*/*' or 'application/*', set
+latexmath:[$M_{\mbox{selected}} = \mbox{'application/octet-stream'}$],
 finish.
 10. Generate a `NotAcceptableException` (406 status) and no entity. The
 exception MUST be processed as described in <<method_exc>>.
 Finish.
 
 Note that the above renders a response with a default media type of
-application/octet-stream when a concrete type cannot be determined. It
+'application/octet-stream' when a concrete type cannot be determined. It
 is RECOMMENDED that `MessageBodyWriter` implementations specify at least
 one concrete type via `@Produces`.

@@ -62,7 +62,7 @@ latexmath:[$U$] as follows:
 * Remove members that do not match latexmath:[$U$].
 * Remove members for which the final regular expression capturing group
 (henceforth simply referred to as a capturing group) value is neither
-empty nor / and the class latexmath:[$Z$] has no sub-resource methods or
+empty nor '/' and the class latexmath:[$Z$] has no sub-resource methods or
 locators.
     d.  If latexmath:[$E$] is empty then no matching resource can be found,
 the algorithm terminates and an implementation MUST generate a
@@ -72,7 +72,7 @@ charactersfootnote:[Here, literal characters means those not resulting
 from template variable substitution.] in each member as the primary key
 (descending order), the number of capturing groups as a secondary key
 (descending order) and the number of capturing groups with non-default
-regular expressions (i.e. not ([ /]+?)) as the tertiary key (descending
+regular expressions (i.e. not '([ˆ/]+?)') as the tertiary key (descending
 order).
     f.  Set latexmath:[$R_{\mbox{match}}$] to be the first member of
 latexmath:[$E$] and set latexmath:[$U$] to be the value of the final
@@ -88,14 +88,14 @@ Input::
   latexmath:[$U=\mbox{final capturing group not yet matched}, C'=\{\mbox{root resouce classes matched so far}\}$]
 Output::
   latexmath:[$M=\{\mbox{candidate resource methods}$]}
-    a.  [check_null] If latexmath:[$U$] is null or /, set
-latexmath:[\[M = \{\mbox{resource methods of all classes in $C'$ (excluding sub-resource methods)}\}\]]
-and go to step [find_method] if latexmath:[$M \neq \{\}$]
+    a.  [[check_null,step 2a]] If latexmath:[$U$] is null or '/', set +
+latexmath:[M = \{\mbox{resource methods of all classes in $C'$ (excluding sub-resource methods)}\}] +
+and go to <<find_method>> if latexmath:[$M \neq \{\}$]
     b.  Set latexmath:[$E=\{\}$].
     c.  For each class latexmath:[$Z'$] in latexmath:[$C'$] add regular
 expressions to latexmath:[$E$] for each sub-resource method and locator
 as follows:
-        i) For each sub-resource method latexmath:[$D$], add
+        i) [[t_method_items,step 3(c)i]]For each sub-resource method latexmath:[$D$], add
 latexmath:[$R(T_D)$] where latexmath:[$T_D$] is the URI path template of
 the sub-resource method.
         ii) For each sub-resource locator latexmath:[$L$], add
@@ -104,16 +104,16 @@ the sub-resource locator.
     d.  Filter latexmath:[$E$] by matching each member against
 latexmath:[$U$] as follows:
 * Remove members that do not match latexmath:[$U$].
-* Remove members derived from latexmath:[$T_D$] (those added in step
-[t_method_items]) for which the final capturing group value is neither
-empty nor /.
+* Remove members derived from latexmath:[$T_D$] (those added in
+<<t_method_items>>) for which the final capturing group value is neither
+empty nor '/'.
     e.  If latexmath:[$E$] is empty, then no matching resource can be found
 and the algorithm terminates by generating a `NotFoundException` (404
 status) and no entity.
     f.  Sort latexmath:[$E$] using the number of literal characters in each
 member as the primary key (descending order), the number of capturing
 groups as a secondary key (descending order), the number of capturing
-groups with non-default regular expressions (i.e. not ([ /]+?)) as the
+groups with non-default regular expressions (i.e. not ([^/]+?)) as the
 tertiary key (descending order), and the source of each member as
 quaternary key sorting those derived from sub-resource methods ahead of
 those derived from sub-resource locators.
@@ -121,7 +121,7 @@ those derived from sub-resource locators.
 latexmath:[$E$]
     h.  Set latexmath:[$M$] as follows,
 latexmath:[M = \{\mbox{subresource methods of all classes in $C'$ (excluding sub-resource locators)}\}\]]
-and go to step 3 if latexmath:[$M \neq \{\}$].
+and go to <<find_method>> if latexmath:[$M \neq \{\}$].
     i.  Let latexmath:[$L$] be a sub-resource locator such that
 latexmath:[$R_{\mbox{match}} = R(T_L)$]. Implementations SHOULD report
 an error if there is more than one sub-resource locator that satisfies
@@ -129,8 +129,8 @@ this condition. Set latexmath:[$U$] to be the value of the final
 capturing group of latexmath:[$R(T_L)$] when matched against
 latexmath:[$U$], and set latexmath:[$C'$] to be the singleton set
 containing only the class that defines latexmath:[$L$].
-    j. Go to step 2a.
-3.  Identify the method that will handle the request:
+    j. Go to <<check_null>>.
+3.  [[find_method, step 3]]Identify the method that will handle the request:
 +
 Input::
   latexmath:[$M=\mbox{candidate resource methods}$]
@@ -141,15 +141,15 @@ not meet the following criteria:
 * The request method is supported. If no methods support the request
 method an implementation MUST generate a `NotAllowedException` (405
 status) and no entity. Note the additional support for `HEAD` and
-`OPTIONS` described in Section [head_and_options].
+`OPTIONS` described in Section <<head_and_options>>.
 * The media type of the request entity body (if any) is a supported
-input data format (see Section [declaring_method_capabilities]). If no
+input data format (see Section <<declaring_method_capabilities>>). If no
 methods support the media type of the request entity body an
 implementation MUST generate a `NotSupportedException` (415 status) and
 no entity.
 * At least one of the acceptable response entity body media types is a
 supported output data format (see Section
-[declaring_method_capabilities]). If no methods support one of the
+<<declaring_method_capabilities>>). If no methods support one of the
 acceptable response entity body media types an implementation MUST
 generate a `NotAcceptableException` (406 status) and no entity.
     b.  If after filtering the set latexmath:[$M$] has more than one
@@ -170,10 +170,13 @@ latexmath:[$p_1$] and a server media type latexmath:[$p_2$] as the
 function that returns the _most_ specific combined type with a distance
 factor if latexmath:[$p_1$] and latexmath:[$p_2$] are compatible and
 latexmath:[${\perp}$] otherwise. For example:
++
+--
 * latexmath:[$S(\mbox{text/html;q=1}, \mbox{text/html;qs=1}) = \mbox{text/html;q=1;qs=1;d=0}$],
 * latexmath:[$S(\mbox{text/*;q=0.5}, \mbox{text/html;qs=0.8}) = \mbox{text/html;q=0.5;qs=0.8;d=1}$],
 * latexmath:[$S(\mbox{*/*;q=0.2}, \mbox{text/*;qs=0.9}) = \mbox{text/*;q=0.2;qs=0.9;d=1}$],
 * latexmath:[$S(\mbox{text/*;q=0.4}, \mbox{application/*;qs=0.3}) = {\perp}$].
+--
 +
 where the latexmath:[$d$] factor corresponds to the number of wildcards
 matched with a concrete type or subtype. Note that q and qs are not
@@ -183,6 +186,8 @@ ordering can be defined over combined media types as follows.
 We write
 latexmath:[$\mbox{$n_1$/$m_1$;q=$v_1$;qs=$v_1'$;d=$v_1''$} \ge \mbox{$n_2$/$m_2$;q=$v_2$;qs=$v_2'$;d=$v_2''$}$]
 if one of these ordered conditions holds:
++
+--
 i)  latexmath:[$\mbox{$n_1$/$m_1$} \succ \mbox{$n_2$/$m_2$}$] where the
 partial order latexmath:[$\succ$] is defined as
 latexmath:[$\mbox{$n$/$m$} \succ \mbox{$n$/*} \succ \mbox{*/*}$],
@@ -193,6 +198,7 @@ latexmath:[$v_1 = v_2$] and latexmath:[$v_1' > v_2'$].
 iv)  latexmath:[$\mbox{$n_2$/$m_2$} \nsucc \mbox{$n_1$/$m_1$}$] and
 latexmath:[$v_1 = v_2$] and latexmath:[$v_1' = v_2'$] and
 latexmath:[$v_1'' \le v_2''$].
+--
 +
 Note that latexmath:[$\ge$] is a total order even though
 latexmath:[$\succ$] is a partial order. For example, the following holds
@@ -211,6 +217,8 @@ Given these definitions, we can now sort latexmath:[$M$] in descending
 order based on latexmath:[$\ge$] as followsfootnote:[If any of these
 types or sets of types are unspecified, latexmath:[$\mbox{*/*}$] and
 latexmath:[$\mbox{\{*/*\}}$] are assumed.]:
++
+--
 * Let latexmath:[$t$] be the request content type and latexmath:[$C_M$]
 a resource method’s `@Consumes` set of server media types, we use the
 media type
@@ -223,8 +231,9 @@ latexmath:[$\max_\ge \{ S(a,p) \, | \, (a,p) \in A \times P_M\}$] as
 secondary key. If there is more than one maximum element ,
 implementations SHOULD report a warning and select one of these types in
 an implementation dependent manner.
+--
 c.  Let latexmath:[$D$] be the first resource method
-in the set latexmath:[$M$]footnote:[Step [filter_methods] ensures the
+in the set latexmath:[$M$]footnote:[Step 3a ensures the
 set contains at least one member.] and latexmath:[$O$] an instance of
 the class that defines latexmath:[$D$]. If after sorting, there is more
 than one maximum element in latexmath:[$M$], implementations SHOULD
@@ -271,7 +280,6 @@ Step 1::
   Identify a set of candidate root resource classes matching the
   request. Let latexmath:[$R(\mbox{widgets}) = \mbox{widgets(/.*)?}$]
   and latexmath:[$R(\mbox{widget}) = \mbox{widget(/.*)?}$],
-  +
   Input;;
     latexmath:[$U = \mbox{widgets/1}$] and
     latexmath:[$C = \{\mbox{WidgetResource}, \mbox{WidgetsResource}\}$]
@@ -280,8 +288,7 @@ Step 1::
     latexmath:[$C' = \{\mbox{WidgetsResource}\}$]
 Step 2::
   Obtain a set of candidate resource methods for the request. Let
-  latexmath:[$R(\{\mbox{id}\}) = \mbox{([\^{ }/]+?)(/.*)?}$],
-  +
+  latexmath:[$R(\{\mbox{id}\}) = \mbox{([ˆ/\]+?)(/.*)?}$],
   Input;;
     latexmath:[$U = \mbox{/1}$] and
     latexmath:[$C' = \{\mbox{WidgetsResource}\}$]
@@ -289,7 +296,6 @@ Step 2::
     latexmath:[$M = \{\mbox{findWidget}\}$]
 Step 3::
   Identify the method that will handle the request,
-  +
   Input;;
     latexmath:[$M = \{\mbox{findWidget}\}$]
   Output;;
@@ -311,11 +317,11 @@ specifications.
 2.  Escape any regular expression characters in the URI template, again
 ignoring URI template variable specifications.
 3.  Replace each URI template variable with a capturing group containing
-the specified regular expression or ([ /]+?) if no regular expression is
+the specified regular expression or '([ˆ/]+?)' if no regular expression is
 specifiedfootnote:[Note that the syntax +? denotes a reluctant
 quantifier as defined in the java.util.regex.Pattern class.].
 4.  If the resulting string ends with / then remove the final character.
-5.  Append (/.*)? to the result.
+5.  Append '(/.*)?' to the result.
 
 Note that the above renders the name of template variables irrelevant
 for template matching purposes. However, implementations will need to

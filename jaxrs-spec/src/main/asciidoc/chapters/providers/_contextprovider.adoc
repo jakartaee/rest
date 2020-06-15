@@ -32,11 +32,11 @@ support <<jaxb>>.
 
 Context provider implementations MAY restrict the media types they
 support using the `@Produces` annotation. The absence of this annotation
-is equivalent to its inclusion with media type (/*), i.e. absence
+is equivalent to its inclusion with media type ("\*/*"), i.e. absence
 implies that any media type is supported.
 
 When choosing a context provider an implementation sorts the available
 providers according to the media types they declare support for. Sorting
 of media types follows the general rule: x/y latexmath:[$<$] x/*
-latexmath:[$<$] */*, i.e. a provider that explicitly lists a media type
-is sorted before a provider that lists */*.
+latexmath:[$<$] \*/*, i.e. a provider that explicitly lists a media type
+is sorted before a provider that lists \*/*.

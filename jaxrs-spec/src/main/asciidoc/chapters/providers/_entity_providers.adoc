@@ -111,15 +111,15 @@ exceptions thrown in `MessageBodyWriter.write`.
 Message body readers and writers MAY restrict the media types they
 support using the `@Consumes` and `@Produces` annotations respectively.
 The absence of these annotations is equivalent to their inclusion with
-media type (/*), i.e. absence implies that any media type is supported.
+media type ("\*/*"), i.e. absence implies that any media type is supported.
 An implementation MUST NOT use an entity provider for a media type that
 is not supported by that provider.
 
 When choosing an entity provider an implementation sorts the available
 providers according to the media types they declare support for. Sorting
 of media types follows the general rule: x/y latexmath:[$<$] x/*
-latexmath:[$<$] */*, i.e. a provider that explicitly lists a media types
-is sorted before a provider that lists */*.
+latexmath:[$<$] \*/*, i.e. a provider that explicitly lists a media types
+is sorted before a provider that lists \*/*.
 
 [[standard_entity_providers]]
 ==== Standard Entity Providers
@@ -129,24 +129,24 @@ An implementation MUST include pre-packaged `MessageBodyReader` and
 type combinations:
 
 `byte[]`::
-  All media types (`/*`).
+  All media types (`\*/*`).
 `java.lang.String`::
-  All media types (`/*`).
+  All media types (`\*/*`).
 `java.io.InputStream`::
-  All media types (`/*`).
+  All media types (`\*/*`).
 `java.io.Reader`::
-  All media types (`/*`).
+  All media types (`\*/*`).
 `java.io.File`::
-  All media types (`/*`).
+  All media types (`\*/*`).
 `jakarta.activation.DataSource`::
-  All media types (`/*`).
+  All media types (`\*/*`).
 `jakarta.xml.transform.Source`::
   XML types (`text/xml`, `application/xml` and media types of the form
   `application/*+xml`).
 `MultivaluedMap<String,String>`::
   Form content (`application/x-www-form-urlencoded`).
 `StreamingOutput`::
-  All media types (`/*`), `MessageBodyWriter` only.
+  All media types (`\*/*`), `MessageBodyWriter` only.
 `java.lang.Boolean`, `java.lang.Character`, `java.lang.Number`::
   Only for `text/plain`. Corresponding primitive types supported via
   boxing/unboxing conversion.

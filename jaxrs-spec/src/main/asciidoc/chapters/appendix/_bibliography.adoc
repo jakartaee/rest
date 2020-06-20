@@ -32,7 +32,7 @@
 - [[[bib8,8]]]  Jakarta™ Servlet Specification, Version 4.0. Available at:
                https://jakarta.ee/specifications/servlet/4.0
 
-- [[[bib9,9]]]  Jakarta XML Web Services, Version 3.0
+- [[[bib9,9]]]  Jakarta™ XML Web Services, Version 3.0
                https://jakarta.ee/specifications/xml-web-services/3.0/.
 
 - [[[bib10,10]]]  S. Bradner. RFC 2119: Keywords for use in RFCs to Indicate Requirement Levels. RFC, IETF,
@@ -64,8 +64,8 @@
 - [[[bib19,19]]]  Jakarta™ JSON Binding Specification, Version 2.0. Available at:
                https://jakarta.ee/specifications/jsonb/2.0/
 
-- [[[bib20,20]]]  Jakarta Activation, Version 2.0
+- [[[bib20,20]]]  Jakarta™ Activation, Version 2.0
                https://jakarta.ee/specifications/activation/2.0/
 
-- [[[bib21,21]]]  Jakarta XML Binding, Version 3.0
+- [[[bib21,21]]]  Jakarta™ XML Binding, Version 3.0
                https://jakarta.ee/specifications/xml-binding/3.0/

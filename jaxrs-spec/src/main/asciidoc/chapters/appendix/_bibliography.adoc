@@ -14,8 +14,6 @@
 - [[[bib1,1]]] R. Fielding. Architectural Styles and the Design of Network-based Software Architectures. Ph.d
                dissertation, University of California, Irvine, 2000. See https://roy.gbiv.com/pubs/dissertation/top.htm.
 
-- [[[bib2,2]]] REST Wiki. Web site. See http://rest.blueoxen.net/cgi-bin/wiki.pl.
-
 - [[[bib3,3]]] Representational State Transfer. Web site, Wikipedia. See
                https://en.wikipedia.org/wiki/Representational State Transfer.
 

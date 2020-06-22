@@ -32,7 +32,7 @@ import jakarta.ws.rs.core.Response;
 public class WebApplicationException extends RuntimeException {
 
     private static final long serialVersionUID = 8273970399584007146L;
-    private final Response response;
+    private final transient Response response;
 
     /**
      * Construct a new instance with a default HTTP status code of 500 and a default message generated from the HTTP status

@@ -29,10 +29,10 @@
 - [[[bib7,7]]]  J.C. Gregorio and B. de hOra. The Atom Publishing Protocol. Internet Draft, IETF, March 2007. See
                https://bitworking.org/projects/atom/draft-ietf-atompub-protocol-14.html.
 
-- [[[bib8,8]]]  Jakarta™ Servlet Specification, Version 4.0. Available at:
+- [[[bib8,8]]]  Jakarta^®^ Servlet Specification, Version 4.0. Available at:
                https://jakarta.ee/specifications/servlet/4.0
 
-- [[[bib9,9]]]  Jakarta™ XML Web Services, Version 3.0
+- [[[bib9,9]]]  Jakarta^®^ XML Web Services, Version 3.0
                https://jakarta.ee/specifications/xml-web-services/3.0/.
 
 - [[[bib10,10]]]  S. Bradner. RFC 2119: Keywords for use in RFCs to Indicate Requirement Levels. RFC, IETF,
@@ -44,28 +44,28 @@
 - [[[bib12,12]]]  RxJava 2.0: What’s different in 2.0. See
                https://github.com/ReactiveX/RxJava/wiki/What’s-different-in-2.0.
 
-- [[[bib13,13]]]  Jakarta™ Concurrency Specification, Version 2.0. Available at:
+- [[[bib13,13]]]  Jakarta^®^ Concurrency Specification, Version 2.0. Available at:
                https://jakarta.ee/specifications/concurrency/2.0/
 
-- [[[bib14,14]]]  Jakarta™ Contexts and Dependency Injection Specification, Version 2.0. Available at:
+- [[[bib14,14]]]  Jakarta^®^ Contexts and Dependency Injection Specification, Version 2.0. Available at:
                https://jakarta.ee/specifications/cdi/2.0/
 
-- [[[bib15,15]]]  Jakarta™ Annotations Specification, Version 2.0. Available at:
+- [[[bib15,15]]]  Jakarta^®^ Annotations Specification, Version 2.0. Available at:
                https://jakarta.ee/specifications/annotations/2.0/
 
-- [[[bib16,16]]]  Jakarta™ Bean Validation Specification, Version 2.0. Available at:
+- [[[bib16,16]]]  Jakarta^®^ Bean Validation Specification, Version 2.0. Available at:
                https://jakarta.ee/specifications/bean-validation/2.0/
 
 - [[[bib17,17]]]  Server-Sent Events. See https://html.spec.whatwg.org/#server-sent-events.
 
-- [[[bib18,18]]]  Jakarta™ JSON Processing Specification, Version 2.0. Available at:
+- [[[bib18,18]]]  Jakarta^®^ JSON Processing Specification, Version 2.0. Available at:
                https://jakarta.ee/specifications/jsonp/2.0/
 
-- [[[bib19,19]]]  Jakarta™ JSON Binding Specification, Version 2.0. Available at:
+- [[[bib19,19]]]  Jakarta^®^ JSON Binding Specification, Version 2.0. Available at:
                https://jakarta.ee/specifications/jsonb/2.0/
 
-- [[[bib20,20]]]  Jakarta™ Activation, Version 2.0
+- [[[bib20,20]]]  Jakarta^®^ Activation, Version 2.0
                https://jakarta.ee/specifications/activation/2.0/
 
-- [[[bib21,21]]]  Jakarta™ XML Binding, Version 3.0
+- [[[bib21,21]]]  Jakarta^®^ XML Binding, Version 3.0
                https://jakarta.ee/specifications/xml-binding/3.0/

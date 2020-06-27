@@ -39,7 +39,7 @@ parameters in a request:
 [source,java]
 ----
 @GET
-@Produces{"text/plain"}
+@Produces("text/plain")
 public String listQueryParamNames(@Context UriInfo info) {
     StringBuilder buf = new StringBuilder();
     for (String param: info.getQueryParameters().keySet()) {
@@ -65,7 +65,7 @@ all the headers in a request:
 [source,java]
 ----
 @GET
-@Produces{"text/plain"}
+@Produces("text/plain")
 public String listHeaderNames(@Context HttpHeaders headers) {
     StringBuilder buf = new StringBuilder();
     for (String header: headers.getRequestHeaders().keySet()) {

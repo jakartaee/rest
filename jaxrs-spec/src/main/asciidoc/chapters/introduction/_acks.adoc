@@ -11,7 +11,7 @@
 [[acks]]
 === Acknowledgements
 
-During the course of this JSR we received great contributions and
+During the course of this specification we received great contributions and
 suggestions from many individuals. Special thanks to Marek Potociar and
 Michal Gajdos. Also Gunnar Morling, Ondrej Mihalyi, Arjan Tijms,
 Guillermo Gonzales de Aguero, Christian Kaltepoth and many, many others.

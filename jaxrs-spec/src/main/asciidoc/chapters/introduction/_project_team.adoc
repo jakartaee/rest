@@ -8,13 +8,15 @@
 *******************************************************************
 ////
 
-[[expert_group]]
-=== Expert Group Members
+[[project_team]]
+=== Project Team Members
 
-This specification is being developed as part of JSR 370 under the Java
-Community Process. It is the result of the collaborative work of the
-members of the JSR 370 Expert Group. The following are the present
-expert group members:
+This specification is being developed as part of Jakarta EE under the
+Jakarta EE Specification Process. It is the result of the collaborative work
+of the project team and various contributors.
+
+JAX-RS 2.1 has been developed as part of JSR 370 under the Java Community
+Process. The following are former group members of the JSR 370 Expert Group:
 
 -- Sergey Beryozkin (Talend SA)
 

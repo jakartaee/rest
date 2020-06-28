@@ -32,6 +32,6 @@ include::_conventions.adoc[]
 
 include::_terminology.adoc[]
 
-include::_expert_group.adoc[]
+include::_project_team.adoc[]
 
 include::_acks.adoc[]

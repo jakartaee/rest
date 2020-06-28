@@ -19,7 +19,6 @@ RESTful Web services, see:
 
 * Architectural Styles and the Design of Network-based Software
 Architectures<<bib1>>
-* The REST Wiki<<bib2>>
 * Representational State Transfer on Wikipedia<<bib3>>
 
 

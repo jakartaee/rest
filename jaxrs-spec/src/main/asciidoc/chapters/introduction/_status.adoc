@@ -11,20 +11,20 @@
 [[status]]
 === Status
 
-This is the final release of version 2.1. The issue tracking system for
+This is the final release of version 3.0. The issue tracking system for
 this release can be found at:
 
-https://github.com/jax-rs/api/issues
+https://github.com/eclipse-ee4j/jaxrs-api/issues
 
 The corresponding Javadocs can be found online at:
 
-https://jax-rs.github.io/apidocs/2.1
+https://jakarta.ee/specifications/restful-ws/3.0/apidocs/
 
 The reference implementation can be obtained from:
 
-https://jersey.github.io
+https://eclipse-ee4j.github.io/jersey/
 
 The expert group seeks feedback from the community on any aspect of this
 specification, please send comments to:
 
-jaxrs-spec@javaee.groups.io
+jaxrs-dev@eclipse.org

@@ -14,8 +14,6 @@
 - [[[bib1,1]]] R. Fielding. Architectural Styles and the Design of Network-based Software Architectures. Ph.d
                dissertation, University of California, Irvine, 2000. See https://roy.gbiv.com/pubs/dissertation/top.htm.
 
-- [[[bib2,2]]] REST Wiki. Web site. See http://rest.blueoxen.net/cgi-bin/wiki.pl.
-
 - [[[bib3,3]]] Representational State Transfer. Web site, Wikipedia. See
                https://en.wikipedia.org/wiki/Representational State Transfer.
 
@@ -31,11 +29,11 @@
 - [[[bib7,7]]]  J.C. Gregorio and B. de hOra. The Atom Publishing Protocol. Internet Draft, IETF, March 2007. See
                https://bitworking.org/projects/atom/draft-ietf-atompub-protocol-14.html.
 
-- [[[bib8,8]]]  Jakarta™ Servlet Specification, Version 4.0. Available at:
+- [[[bib8,8]]]  Jakarta^®^ Servlet Specification, Version 4.0. Available at:
                https://jakarta.ee/specifications/servlet/4.0
 
-- [[[bib9,9]]]  Jakarta XML Web Services, Version 3.0
-               https://jakarta.ee/specifications/xml-web-services/2.3/.
+- [[[bib9,9]]]  Jakarta^®^ XML Web Services, Version 3.0
+               https://jakarta.ee/specifications/xml-web-services/3.0/.
 
 - [[[bib10,10]]]  S. Bradner. RFC 2119: Keywords for use in RFCs to Indicate Requirement Levels. RFC, IETF,
                March 1997. See https://www.ietf.org/rfc/rfc2119.txt.
@@ -46,28 +44,28 @@
 - [[[bib12,12]]]  RxJava 2.0: What’s different in 2.0. See
                https://github.com/ReactiveX/RxJava/wiki/What’s-different-in-2.0.
 
-- [[[bib13,13]]]  Jakarta™ Concurrency Specification, Version 1.1. Available at:
-               https://jakarta.ee/specifications/concurrency/1.1
+- [[[bib13,13]]]  Jakarta^®^ Concurrency Specification, Version 2.0. Available at:
+               https://jakarta.ee/specifications/concurrency/2.0/
 
-- [[[bib14,14]]]  Jakarta™ Contexts and Dependency Injection Specification, Version 2.0. Available at:
-               https://jakarta.ee/specifications/cdi/2.0
+- [[[bib14,14]]]  Jakarta^®^ Contexts and Dependency Injection Specification, Version 2.0. Available at:
+               https://jakarta.ee/specifications/cdi/2.0/
 
-- [[[bib15,15]]]  Jakarta™ Annotations Specification, Version 1.3. Available at:
-               https://jakarta.ee/specifications/annotations/1.3
+- [[[bib15,15]]]  Jakarta^®^ Annotations Specification, Version 2.0. Available at:
+               https://jakarta.ee/specifications/annotations/2.0/
 
-- [[[bib16,16]]]  Jakarta™ Bean Validation Specification, Version 2.0. Available at:
-               https://jakarta.ee/specifications/bean-validation/2.0
+- [[[bib16,16]]]  Jakarta^®^ Bean Validation Specification, Version 2.0. Available at:
+               https://jakarta.ee/specifications/bean-validation/2.0/
 
 - [[[bib17,17]]]  Server-Sent Events. See https://html.spec.whatwg.org/#server-sent-events.
 
-- [[[bib18,18]]]  Jakarta™ JSON Processing Specification, Version 1.1. Available at:
-               https://jakarta.ee/specifications/jsonp/1.1
+- [[[bib18,18]]]  Jakarta^®^ JSON Processing Specification, Version 2.0. Available at:
+               https://jakarta.ee/specifications/jsonp/2.0/
 
-- [[[bib19,19]]]  Jakarta™ JSON Binding Specification, Version 1.0. Available at:
-               https://jakarta.ee/specifications/jsonb/1.0
+- [[[bib19,19]]]  Jakarta^®^ JSON Binding Specification, Version 2.0. Available at:
+               https://jakarta.ee/specifications/jsonb/2.0/
 
-- [[[bib20,20]]]  Jakarta Activation, Version 1.2
-               https://jakarta.ee/specifications/activation/1.2/
+- [[[bib20,20]]]  Jakarta^®^ Activation, Version 2.0
+               https://jakarta.ee/specifications/activation/2.0/
 
-- [[[bib21,21]]]  Jakarta XML Binding, Version 3.0
+- [[[bib21,21]]]  Jakarta^®^ XML Binding, Version 3.0
                https://jakarta.ee/specifications/xml-binding/3.0/

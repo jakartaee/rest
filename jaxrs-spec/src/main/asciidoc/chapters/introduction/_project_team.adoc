@@ -11,7 +11,7 @@
 [[project_team]]
 === Project Team Members
 
-This specification is being developed as part of Jakarta EE under the
+This specification is being developed as part of Jakarta RESTful Web Services project under the
 Jakarta EE Specification Process. It is the result of the collaborative work
 of the project team and various contributors.
 

@@ -14,7 +14,7 @@
 * <<status>>: Updated URLs to JSR pages, etc.
 * <<non_goals>>: Removed Client APIs as non-goal.
 * <<terminology>>: Added new terminology.
-* <<expert_group>>: List 2.0 expert group members.
+* <<project_team>>: List 2.0 expert group members.
 * <<acks>>: acknowledgements for 2.0 version.
 * Chapter <<applications>>: Somewhat generic section on validation removed
 to avoid confusion with the type of validation defined in Chapter

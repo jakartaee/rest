@@ -20,11 +20,11 @@ The corresponding Javadocs can be found online at:
 
 https://jakarta.ee/specifications/restful-ws/3.0/apidocs/
 
-The reference implementation can be obtained from:
+A compatible implementation can be obtained from:
 
 https://eclipse-ee4j.github.io/jersey/
 
-The expert group seeks feedback from the community on any aspect of this
+The project team seeks feedback from the community on any aspect of this
 specification, please send comments to:
 
 jaxrs-dev@eclipse.org

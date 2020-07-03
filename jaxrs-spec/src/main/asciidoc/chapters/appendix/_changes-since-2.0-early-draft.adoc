@@ -11,7 +11,7 @@
 [[changes-since-2.0-early-draft]]
 === Changes Since 2.0 Early Draft
 
-* <<expert_group>>: Updated 2.0 expert group member list.
+* <<project_team>>: Updated 2.0 expert group member list.
 * <<acks>>: Updated acknowledgements for 2.0 version.
 * <<exceptions_providers>>: New section that describes exception
 handling for all providers. Related changes to reference this new

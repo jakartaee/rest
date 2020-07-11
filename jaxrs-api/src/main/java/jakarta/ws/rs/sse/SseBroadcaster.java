@@ -36,7 +36,7 @@ import java.util.function.Consumer;
 public interface SseBroadcaster extends AutoCloseable {
 
     /**
-     * Register a listener, which will be called when an exception was thrown by a given SSE event output when trying to
+     * Register a listener, which will be called when an exception is thrown by a given SSE event output when tries to
      * write to it or close it.
      * <p>
      * This operation is potentially slow, especially if large number of listeners get registered in the broadcaster. The
@@ -49,8 +49,9 @@ public interface SseBroadcaster extends AutoCloseable {
     void onError(BiConsumer<SseEventSink, Throwable> onError);
 
     /**
-     * Register a listener, which will be called when the SSE event output has been closed (either by client closing the
-     * connection or by calling {@link SseEventSink#close()} on the server side.
+     * Register a listener, which will be called when this SseBroadcaster closes a given event {@link SseEventSink} or
+     * tries to write to a given {@link SseEventSink} that is already closed (either by client closing the connection
+     * or by calling {@link SseEventSink#close()} on the server side.
      * <p>
      * This operation is potentially slow, especially if large number of listeners get registered in the broadcaster. The
      * {@code SseBroadcaster} implementation is optimized to efficiently handle small amounts of concurrent listener

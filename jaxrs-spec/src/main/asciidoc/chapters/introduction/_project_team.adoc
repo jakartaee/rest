@@ -15,6 +15,18 @@ This specification is being developed as part of Jakarta RESTful Web Services pr
 Jakarta EE Specification Process. It is the result of the collaborative work
 of the project team and various contributors.
 
+The following are the current committers of the Jakarta RESTful Web Services specification project:
+
+-- Sebastian Daschner (IBM)
+
+-- Christian Kaltepoth (individual)
+
+-- Markus Karg (individual)
+
+-- Andy McCright (IBM)
+
+-- Santiago Pericas-Geertsen (Oracle)
+
 JAX-RS 2.1 has been developed as part of JSR 370 under the Java Community
 Process. The following are former group members of the JSR 370 Expert Group:
 

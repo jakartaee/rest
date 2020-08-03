@@ -59,8 +59,8 @@ to limitations of the built-in `valueOf` method that is part of all Java
 enumerations, a `fromString` method is often defined by the enum
 writers. Consequently, the `fromString` method is preferred when
 available.].
-5.  `List<T>`, `Set<T>`, or `SortedSet<T>`, where `T` satisfies
-1,3 or 4 above.
+5.  `List<T>`, `Set<T>`, `SortedSet<T>` or an array `T[]`, where
+`T` satisfies 1, 3 or 4 above.
 
 The `DefaultValue` annotation may be used to supply a default value for
 some of the above, see the Javadoc for `DefaultValue` for usage details

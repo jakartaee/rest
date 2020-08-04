@@ -8,10 +8,10 @@
 *******************************************************************
 ////
 
-[[changes-since-2.2-snapshot]]
-=== Changes Since 2.2-SNAPSHOT
+[[changes-since-2.1-release]]
+=== Changes Since 2.1 Release
 
 * Referencing Jakarta EE instead of Java EE
-* JAXB API is now optional
-* <<exceptionmapper>>: Added requirement that JAX-RS implementations have 
-default exception mappers.
+* Package changes from `javax.ws.rs.*` to `jakarta.ws.rs.*`
+* <<jaxb>>: JAXB API is now optional
+* <<additional_reqs>>: Clarified injection with regard to `getSingletons()` method

@@ -26,8 +26,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import jakarta.ws.rs.core.GenericType;
-
 /**
  * Type literal construction unit tests.
  *
@@ -71,7 +69,7 @@ public class GenericTypeTest {
     @Test
     public void testConstructor() {
 
-        GenericType type = new GenericType(new ParameterizedType() {
+        GenericType<?> type = new GenericType<>(new ParameterizedType() {
             @Override
             public Type[] getActualTypeArguments() {
                 return new Type[] { String.class };
@@ -97,12 +95,12 @@ public class GenericTypeTest {
         ArrayList<String> al = new ArrayList<String>();
         Method addMethod = al.getClass().getMethod("add", Object.class);
         final Type type = addMethod.getGenericParameterTypes()[0];
-        new GenericType(type);
+        new GenericType<>(type);
     }
 
     @Test
     public void testConstructor2() {
-        GenericType gt = new GenericType(arrayListOfStringsType);
+        GenericType<?> gt = new GenericType<>(arrayListOfStringsType);
         assertEquals(ArrayList.class, gt.getRawType());
         assertEquals(arrayListOfStringsType, gt.getType());
     }
@@ -123,7 +121,7 @@ public class GenericTypeTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullGenericType() {
-        new GenericType(null);
+        new GenericType<>(null);
     }
 
     // Regression test for JAX_RS_SPEC-274

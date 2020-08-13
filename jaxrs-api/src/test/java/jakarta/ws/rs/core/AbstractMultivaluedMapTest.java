@@ -16,11 +16,10 @@
 
 package jakarta.ws.rs.core;
 
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import jakarta.ws.rs.core.AbstractMultivaluedMap;
 
 /**
  * AbstractMultivaluedMap unit tests.
@@ -36,6 +35,7 @@ public class AbstractMultivaluedMapTest {
     public void testNpeThrownFromMap() {
         try {
             new AbstractMultivaluedMap<String, Object>(null) {
+                private static final long serialVersionUID = -1290572505924705859L;
             };
             fail("NullPointerException expected.");
         } catch (NullPointerException npe) {

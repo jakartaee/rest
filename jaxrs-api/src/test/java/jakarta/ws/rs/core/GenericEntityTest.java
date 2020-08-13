@@ -33,13 +33,10 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import jakarta.ws.rs.core.GenericEntity;
-
 public class GenericEntityTest {
 
     @Test
     public void testListOfString() {
-        System.out.println("testListOfString");
         List<String> list = new ArrayList<String>();
         GenericEntity<List<String>> listOfString = new GenericEntity<List<String>>(list) {
         };
@@ -57,7 +54,6 @@ public class GenericEntityTest {
 
     @Test
     public void testMapOfStringInteger() {
-        System.out.println("testMapOfStringInteger");
         Map<String, Integer> map = new HashMap<String, Integer>();
         GenericEntity<Map<String, Integer>> mapOfString = new GenericEntity<Map<String, Integer>>(map) {
         };
@@ -79,7 +75,6 @@ public class GenericEntityTest {
     @Test
     @SuppressWarnings("unchecked")
     public void testArrayOfListOfString() {
-        System.out.println("testArrayOfListOfString");
         List<String> array[] = new List[1];
         GenericEntity<List<String>[]> arrayOfListOfString = new GenericEntity<List<String>[]>(array) {
         };
@@ -99,8 +94,7 @@ public class GenericEntityTest {
 
     @Test
     public void testNumber() {
-        System.out.println("testNumber");
-        Number n = new Integer(0);
+        Number n = Integer.valueOf(0);
         GenericEntity<Number> number = new GenericEntity<Number>(n) {
         };
         Class<?> rawType = number.getRawType();
@@ -114,15 +108,14 @@ public class GenericEntityTest {
     @Test
     @SuppressWarnings("unchecked")
     public void testCtor() {
-        System.out.println("testCtor");
         try {
             // check GenericEntity(Integer, Number) works
             Method getNumber = this.getClass().getDeclaredMethod("getNumber");
             Type rt = getNumber.getGenericReturnType();
-            GenericEntity ge = new GenericEntity(1, rt);
+            new GenericEntity<>(1, rt);
             // check GenericEntity(String, Number) fails
             try {
-                ge = new GenericEntity("foo", rt);
+                new GenericEntity<>("foo", rt);
                 fail("Expected IllegalArgumentException");
             } catch (IllegalArgumentException e) {
             }
@@ -130,11 +123,11 @@ public class GenericEntityTest {
             Method getNumbers = this.getClass().getDeclaredMethod("getNumbers");
             rt = getNumbers.getGenericReturnType();
             Integer ints[] = { 1, 2 };
-            ge = new GenericEntity(ints, rt);
+            new GenericEntity<>(ints, rt);
             // check GenericEntity(String[], Number[]) fails
             try {
                 String strings[] = { "foo", "bar" };
-                ge = new GenericEntity(strings, rt);
+                new GenericEntity<>(strings, rt);
                 fail("Expected IllegalArgumentException");
             } catch (IllegalArgumentException e) {
             }
@@ -142,15 +135,15 @@ public class GenericEntityTest {
             Method getList = this.getClass().getDeclaredMethod("getList");
             rt = getList.getGenericReturnType();
             ArrayList<String> als = new ArrayList<String>();
-            ge = new GenericEntity(als, rt);
+            new GenericEntity<>(als, rt);
             // check GenericEntity(ArrayList<Integer>, List<String>) works
             // note that erasure loses the generic type of the ArrayList
             ArrayList<Integer> ali = new ArrayList<Integer>();
-            ge = new GenericEntity(ali, rt);
+            new GenericEntity<>(ali, rt);
             // check GenericEntity(Set<String>, List<String>) fails
             try {
                 Set<String> ss = new HashSet<String>();
-                ge = new GenericEntity(ss, rt);
+                new GenericEntity<>(ss, rt);
                 fail("Expected IllegalArgumentException");
             } catch (IllegalArgumentException e) {
             }
@@ -158,36 +151,40 @@ public class GenericEntityTest {
             Method getLists = this.getClass().getDeclaredMethod("getLists");
             rt = getLists.getGenericReturnType();
             ArrayList<String>[] lists = new ArrayList[1];
-            ge = new GenericEntity(lists, rt);
+            new GenericEntity<>(lists, rt);
             // check GenericEntity(ArrayList<Integer>[], List<String>[]) works
             // note that erasure loses the generic type of the ArrayList
             ArrayList<Integer>[] ilists = new ArrayList[1];
-            ge = new GenericEntity(ilists, rt);
+            new GenericEntity<>(ilists, rt);
             // check GenericEntity(Set<String>[], List<String>[]) fails
             try {
                 Set<String>[] ss = new Set[1];
-                ge = new GenericEntity(ss, rt);
+                new GenericEntity<>(ss, rt);
                 fail("Expected IllegalArgumentException");
             } catch (IllegalArgumentException e) {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            fail("Unhandled Exception");
+            fail("Unhandled Exception: " + e);
         }
     }
 
+    @SuppressWarnings("unused")
     private Number getNumber() {
         return null;
     }
 
+    @SuppressWarnings("unused")
     private Number[] getNumbers() {
         return null;
     }
 
+    @SuppressWarnings("unused")
     private List<String> getList() {
         return null;
     }
 
+    @SuppressWarnings("unused")
     private List<String>[] getLists() {
         return null;
     }

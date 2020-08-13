@@ -23,8 +23,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import jakarta.ws.rs.core.Cookie;
-import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
 public class NewCookieTest {
@@ -44,7 +42,6 @@ public class NewCookieTest {
      */
     @Test
     public void testCtor() {
-        System.out.println("ctor");
         Cookie c = new Cookie("name", "value");
         NewCookie nc = new NewCookie(c);
         assertEquals(nc.getName(), c.getName());

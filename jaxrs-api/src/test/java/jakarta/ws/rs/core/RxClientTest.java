@@ -27,7 +27,6 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.CompletionStageRxInvoker;
 import jakarta.ws.rs.client.RxInvokerProvider;
 import jakarta.ws.rs.client.SyncInvoker;
-import jakarta.ws.rs.core.GenericType;
 
 /**
  * Class RxClientTest.
@@ -53,6 +52,7 @@ public class RxClientTest {
                 .get(new GenericType<List<String>>() {
                 });
 
+        // TODO: replace system out with in-memory stream and verify expected results
         cs.thenAccept(System.out::println);
     }
 
@@ -73,6 +73,7 @@ public class RxClientTest {
                 .get(new GenericType<List<String>>() {
                 });
 
+        // TODO: replace system out with in-memory stream and verify expected results
         cs.thenAccept(System.out::println);
     }
 
@@ -92,6 +93,7 @@ public class RxClientTest {
                 .rx(CompletionStageRxInvoker.class)
                 .get(String.class);
 
+        // TODO: replace system out with in-memory stream and verify expected results
         cs.thenAccept(System.out::println);
     }
 

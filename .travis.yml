@@ -21,7 +21,7 @@ cache:
 
 install:
   - cd $TRAVIS_BUILD_DIR/jaxrs-api
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - mvn install -Pstaging -DskipTests=true -Dmaven.javadoc.skip=true -B -V
   - cd $TRAVIS_BUILD_DIR/examples
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
   - cd $TRAVIS_BUILD_DIR/jaxrs-spec

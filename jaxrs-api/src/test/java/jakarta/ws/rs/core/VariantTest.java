@@ -20,9 +20,6 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Variant;
-
 /**
  * Variant regression unit tests.
  *

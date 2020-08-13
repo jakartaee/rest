@@ -5,8 +5,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import jakarta.ws.rs.ext.RuntimeDelegate;
-
 /**
  * {@link jakarta.ws.rs.ext.RuntimeDelegate} unit tests.
  *

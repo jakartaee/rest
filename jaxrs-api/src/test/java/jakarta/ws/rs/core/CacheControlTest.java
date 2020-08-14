@@ -23,7 +23,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import jakarta.ws.rs.core.CacheControl;
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
 /**

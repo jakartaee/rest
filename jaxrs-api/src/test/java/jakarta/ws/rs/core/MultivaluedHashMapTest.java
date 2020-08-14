@@ -30,7 +30,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
 public class MultivaluedHashMapTest {

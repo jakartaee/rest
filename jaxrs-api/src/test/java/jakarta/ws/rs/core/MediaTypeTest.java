@@ -25,8 +25,6 @@ import org.hamcrest.DiagnosingMatcher;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 
-import jakarta.ws.rs.core.MediaType;
-
 import java.util.Map;
 
 /**

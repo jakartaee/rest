@@ -278,7 +278,7 @@ public class BasicExamples {
 
         // invoke one more request using newClient
         Future<Response> response = anyCustomerUri.resolveTemplate("id", 789)
-                .request().cookie(new Cookie.Builder("fooName").value("XYZ").build()).async().get();
+                .request().cookie(new Cookie("fooName", "XYZ")).async().get();
         assert response.get() != null;
     }
 

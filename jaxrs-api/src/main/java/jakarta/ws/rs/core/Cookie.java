@@ -237,6 +237,26 @@ public class Cookie {
 
     /**
      * JAX-RS {@link Cookie} builder class.
+     * <p>
+     * Cookie builder provides methods that let you conveniently configure and subsequently build a new
+     * {@code Cookie} instance.
+     * </p>
+     * For example:
+     *
+     * <pre>
+     * Cookie cookie = new Cookie.Builder("name")
+     *         .path("/")
+     *         .domain("domain.com")
+     *         .build();
+     * </pre>
+     * <p>
+     * It should be preferred over any {@code Cookie} telescoping constructors that have following disadvantages:
+     * <ul>
+     * <li>code not easy to read: the {@code Cookie} constructors have multiple parameters of the same type
+     * and it is difficult to determine their meaning without checking the constructor signature.</li>
+     * <li>force to pass optional parameters with {@code null} or default value even if you don't need them</li>
+     * </ul>
+     * <p>
      *
      * @since 3.1
      */
@@ -323,11 +343,10 @@ public class Cookie {
             this.domain = domain;
             return (T) this;
         }
-
         /**
-         * Build a {@link Cookie} instance.
+         * Build a new {@link Cookie} instance using all the configuration previously specified in this builder.
          *
-         * @return new {@link Cookie} instance.
+         * @return a new {@link Cookie} instance.
          * @throws IllegalArgumentException if name is {@code null}.
          */
         public abstract Cookie build();

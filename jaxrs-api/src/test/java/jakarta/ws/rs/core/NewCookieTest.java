@@ -33,7 +33,7 @@ public class NewCookieTest extends BaseDelegateTest {
         NewCookie nc = new NewCookie(c);
         assertEquals(nc.getName(), c.getName());
         try {
-			nc = new NewCookie((Cookie) null);
+            nc = new NewCookie((Cookie) null);
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
         }
@@ -70,7 +70,7 @@ public class NewCookieTest extends BaseDelegateTest {
         NewCookie nc = new NewCookie.Builder(c).build();
         assertEquals(nc.getName(), c.getName());
         try {
-			nc = new NewCookie.Builder((Cookie) null).build();
+            nc = new NewCookie.Builder((Cookie) null).build();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
         }

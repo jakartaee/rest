@@ -33,12 +33,12 @@ public class NewCookieTest extends BaseDelegateTest {
         NewCookie nc = new NewCookie(c);
         assertEquals(nc.getName(), c.getName());
         try {
-            nc = new NewCookie(null);
+            nc = new NewCookie.Builder((Cookie)null).build();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
         }
         try {
-            nc = new NewCookie(null, "comment", 120, true);
+            nc = new NewCookie.Builder((Cookie) null).comment("comment").maxAge(120).secure(true).build();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
         }
@@ -46,24 +46,24 @@ public class NewCookieTest extends BaseDelegateTest {
 
     @Test
     public void testSameSite() {
-        NewCookie sameSiteOmit = new NewCookie("name", "value", "/", "localhost", 1,
-                null, 0, null, false, false);
+        NewCookie sameSiteOmit = new NewCookie.Builder("name").value("value").path("/").domain("localhost").maxAge(0)
+                .build();
         assertNull(sameSiteOmit.getSameSite());
 
-        NewCookie sameSiteNull = new NewCookie("name", "value", "/", "localhost", 1,
-                null, 0, null, false, false, null);
+        NewCookie sameSiteNull = new NewCookie.Builder("name").value("value").path("/").domain("localhost").maxAge(0)
+                .sameSite(null).build();
         assertNull(sameSiteNull.getSameSite());
 
-        NewCookie sameSiteNone = new NewCookie("name", "value", "/", "localhost", 1,
-                null, 0, null, false, false, NewCookie.SameSite.NONE);
+        NewCookie sameSiteNone = new NewCookie.Builder("name").value("value").path("/").domain("localhost").maxAge(0)
+                .sameSite(SameSite.NONE).build();
         assertEquals(NewCookie.SameSite.NONE, sameSiteNone.getSameSite());
 
-        NewCookie sameSiteLax = new NewCookie("name", "value", "/", "localhost", 1,
-                null, 0, null, false, false, NewCookie.SameSite.LAX);
+        NewCookie sameSiteLax = new NewCookie.Builder("name").value("value").path("/").domain("localhost").maxAge(0)
+                .sameSite(SameSite.LAX).build();
         assertEquals(NewCookie.SameSite.LAX, sameSiteLax.getSameSite());
 
-        NewCookie sameSiteStrict = new NewCookie("name", "value", "/", "localhost", 1,
-                null, 0, null, false, false, NewCookie.SameSite.STRICT);
+        NewCookie sameSiteStrict = new NewCookie.Builder("name").value("value").path("/").domain("localhost").maxAge(0)
+                .sameSite(SameSite.STRICT).build();
         assertEquals(NewCookie.SameSite.STRICT, sameSiteStrict.getSameSite());
     }
 }

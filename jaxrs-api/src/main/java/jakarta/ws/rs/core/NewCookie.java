@@ -266,6 +266,23 @@ public class NewCookie extends Cookie {
     }
 
     /**
+     * Create a new instance from the supplied {@link AbstractNewCookieBuilder} instance.
+     *
+     * @param builder the builder.
+     * @throws IllegalArgumentException if {@code builder.name} is {@code null}.
+     * @since 3.1
+     */
+    protected NewCookie(AbstractNewCookieBuilder<?> builder) {
+        super(builder);
+        this.comment = builder.comment;
+        this.maxAge = builder.maxAge;
+        this.expiry = builder.expiry;
+        this.secure = builder.secure;
+        this.httpOnly = builder.httpOnly;
+        this.sameSite = builder.sameSite;
+    }
+
+    /**
      * Creates a new instance of NewCookie by parsing the supplied string.
      *
      * @param value the cookie string.
@@ -472,6 +489,170 @@ public class NewCookie extends Cookie {
          * The {@code Strict} mode prevents clients from sending cookies with any cross-site request.
          */
         STRICT
+
+    }
+
+    /**
+     * JAX-RS {@link NewCookie} builder class.
+     *
+     * @since 3.1
+     */
+    public static class Builder extends AbstractNewCookieBuilder<Builder> {
+
+        /**
+         * Create a new instance.
+         *
+         * @param name the name of the cookie.
+         */
+        public Builder(String name) {
+            super(name);
+        }
+
+        /**
+         * Create a new instance supplementing the information in the supplied cookie.
+         *
+         * @param cookie the cookie to clone.
+         */
+        public Builder(Cookie cookie) {
+            super(cookie);
+        }
+
+        @Override
+        public NewCookie build() {
+            return new NewCookie(this);
+        }
+
+    }
+
+    /**
+     * JAX-RS abstract {@link NewCookie} builder class.
+     *
+     * @since 3.1
+     */
+    public static abstract class AbstractNewCookieBuilder<T extends AbstractNewCookieBuilder<T>> extends AbstractCookieBuilder<AbstractNewCookieBuilder<T>> {
+
+        private String comment;
+        private int maxAge = DEFAULT_MAX_AGE;
+        private Date expiry;
+        private boolean secure;
+        private boolean httpOnly;
+        private SameSite sameSite;
+
+        /**
+         * Create a new instance.
+         *
+         * @param name the name of the cookie.
+         */
+        public AbstractNewCookieBuilder(String name) {
+            super(name);
+        }
+
+        /**
+         * Create a new instance supplementing the information in the supplied cookie.
+         *
+         * @param cookie the cookie to clone.
+         */
+        public AbstractNewCookieBuilder(Cookie cookie) {
+            super(cookie == null ? null : cookie.getName());
+            if (cookie != null) {
+                value(cookie.getValue());
+                path(cookie.getPath());
+                domain(cookie.getDomain());
+                version(cookie.getVersion());
+            }
+        }
+
+        /**
+         * Set the comment associated with the cookie.
+         *
+         * @param comment the comment.
+         * @return the updated builder instance.
+         */
+        @SuppressWarnings("unchecked")
+        public T comment(String comment) {
+            this.comment = comment;
+            return (T) this;
+        }
+
+        /**
+         * Set the maximum age of the the cookie in seconds. Cookies older than the maximum age are discarded. A cookie can be
+         * unset by sending a new cookie with maximum age of 0 since it will overwrite any existing cookie and then be
+         * immediately discarded. The default value of {@code -1} indicates that the cookie will be discarded at the end of the
+         * browser/application session.
+         *
+         * @param maxAge the maximum age in seconds.
+         * @return the updated builder instance.
+         * @see #expiry(Date)
+         */
+        @SuppressWarnings("unchecked")
+        public T maxAge(int maxAge) {
+            this.maxAge = maxAge;
+            return (T) this;
+        }
+
+        /**
+         * Set the cookie expiry date. Cookies whose expiry date has passed are discarded. A cookie can be unset by setting a
+         * new cookie with an expiry date in the past, typically the lowest possible date that can be set.
+         * <p>
+         * Note that it is recommended to use {@link #maxAge(int) Max-Age} to control cookie expiration, however some browsers
+         * do not understand {@code Max-Age}, in which case setting {@code Expires} parameter may be necessary.
+         * </p>
+         *
+         * @param expiry the cookie expiry date
+         * @return the updated builder instance.
+         * @see #maxAge(int)
+         */
+        @SuppressWarnings("unchecked")
+        public T expiry(Date expiry) {
+            this.expiry = expiry;
+            return (T) this;
+        }
+
+        /**
+         * Whether the cookie will only be sent over a secure connection. Defaults to {@code false}.
+         *
+         * @param secure specifies whether the cookie will only be sent over a secure connection.
+         * @return the updated builder instance.
+         */
+        @SuppressWarnings("unchecked")
+        public T secure(boolean secure) {
+            this.secure = secure;
+            return (T) this;
+        }
+
+        /**
+         * Whether the cookie will only be visible as part of an HTTP request. Defaults to {@code false}.
+         *
+         * @param httpOnly if {@code true} make the cookie HTTP only, i.e. only visible as part of an HTTP request.
+         * @return the updated builder instance.
+         */
+        @SuppressWarnings("unchecked")
+        public T httpOnly(boolean httpOnly) {
+            this.httpOnly = httpOnly;
+            return (T) this;
+        }
+
+        /**
+         * Set the attribute that controls whether the cookie is sent with cross-origin requests, providing protection against
+         * cross-site request forgery.
+         *
+         * @param sameSite specifies the value of the {@code SameSite} cookie attribute.
+         * @return the updated builder instance.
+         */
+        @SuppressWarnings("unchecked")
+        public T sameSite(SameSite sameSite) {
+            this.sameSite = sameSite;
+            return (T) this;
+        }
+
+        /**
+         * Build {@link NewCookie}.
+         *
+         * @return new {@link NewCookie} instance.
+         * @throws IllegalArgumentException if name is {@code null}.
+         */
+        @Override
+        public abstract NewCookie build();
 
     }
 

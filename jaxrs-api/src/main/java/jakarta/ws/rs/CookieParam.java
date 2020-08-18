@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -35,8 +35,8 @@ import java.lang.annotation.Target;
  * example, {@link Integer#valueOf(String)})</li>
  * <li>Have a registered implementation of {@link jakarta.ws.rs.ext.ParamConverterProvider} JAX-RS extension SPI that
  * returns a {@link jakarta.ws.rs.ext.ParamConverter} instance capable of a "from string" conversion for the type.</li>
- * <li>Be {@code List<T>}, {@code Set<T>} or {@code SortedSet<T>}, where {@code T} satisfies 2, 3, 4 or 5 above. The
- * resulting collection is read-only.</li>
+ * <li>Be {@code List<T>}, {@code Set<T>}, {@code SortedSet<T>} or {@code T[]} array, where {@code T} satisfies 2, 3, 4
+ * or 5 above. The resulting collection is read-only.</li>
  * </ol>
  *
  * <p>

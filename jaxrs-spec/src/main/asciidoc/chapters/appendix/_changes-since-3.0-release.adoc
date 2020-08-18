@@ -1,0 +1,17 @@
+////
+*******************************************************************
+* Copyright (c) 2020 Eclipse Foundation
+*
+* This specification document is made available under the terms
+* of the Eclipse Foundation Specification License v1.0, which is
+* available at https://www.eclipse.org/legal/efsl.php.
+*******************************************************************
+////
+
+[[changes-since-3.0-release]]
+=== Changes Since 3.0 Release
+
+* <<exceptionmapper>>: Added requirement that JAX-RS implementations have 
+default exception mappers.
+* <<resource_field>>: Array types may be specified for `@CookieParam`,
+`@FormParam`, `@HeaderParam`, `@MatrixParam` and `@QueryParam` parameters.

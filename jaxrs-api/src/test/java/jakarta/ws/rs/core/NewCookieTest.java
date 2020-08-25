@@ -16,11 +16,13 @@
 
 package jakarta.ws.rs.core;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 public class NewCookieTest extends BaseDelegateTest {
 
@@ -65,43 +67,36 @@ public class NewCookieTest extends BaseDelegateTest {
     }
 
     @Test
-    public void testBuilder() {
-        Cookie c = new Cookie.Builder("name").value("value").build();
-        NewCookie nc = new NewCookie.Builder(c).build();
-        assertEquals(nc.getName(), c.getName());
-        try {
-            nc = new NewCookie.Builder((Cookie) null).build();
-            fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-        }
-        try {
-            nc = new NewCookie.Builder((Cookie) null).comment("comment").maxAge(120).secure(true).build();
-            fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-        }
+    public final void shouldReturnFalseWhenComparingNewCookieToNullObject() {
+        NewCookie newCookie = new NewCookie.Builder("name").value("value").build();
+        assertFalse(newCookie.equals(null));
     }
 
     @Test
-    public void testSameSiteOnInstancesBuiltWithBuilder() {
+    public final void shouldReturnFalseWhenComparingNewCookieToCookie() {
+        NewCookie thisNewCookie = new NewCookie.Builder("name").value("value").build();
+        Cookie thatCookie = new Cookie.Builder("name").value("value").build();
+        assertFalse(thisNewCookie.equals(thatCookie));
+    }
 
-        NewCookie sameSiteOmit = new NewCookie.Builder("name").value("value").path("/").domain("localhost").maxAge(0)
-                .build();
-        assertNull(sameSiteOmit.getSameSite());
+    @Test
+    public final void shouldReturnFalseWhenComparingNewCookiesThatHaveDifferentValues() {
+        NewCookie thisNewCookie = new NewCookie.Builder("name").value("value").build();
+        NewCookie thatNewCookie = new NewCookie.Builder("name").value("value2").build();
+        assertFalse(thisNewCookie.equals(thatNewCookie));
+    }
 
-        NewCookie sameSiteNull = new NewCookie.Builder("name").value("value").path("/").domain("localhost").maxAge(0)
-                .sameSite(null).build();
-        assertNull(sameSiteNull.getSameSite());
+    @Test
+    public final void shouldReturnTrueWhenComparingNewCookiesThatHaveSameValues() {
+        NewCookie thisNewCookie = new NewCookie.Builder("name").value("value").build();
+        NewCookie thatNewCookie = new NewCookie.Builder("name").value("value").build();
+        assertTrue(thisNewCookie.equals(thatNewCookie));
+    }
 
-        NewCookie sameSiteNone = new NewCookie.Builder("name").value("value").path("/").domain("localhost").maxAge(0)
-                .sameSite(NewCookie.SameSite.NONE).build();
-        assertEquals(NewCookie.SameSite.NONE, sameSiteNone.getSameSite());
-
-        NewCookie sameSiteLax = new NewCookie.Builder("name").value("value").path("/").domain("localhost").maxAge(0)
-                .sameSite(NewCookie.SameSite.LAX).build();
-        assertEquals(NewCookie.SameSite.LAX, sameSiteLax.getSameSite());
-
-        NewCookie sameSiteStrict = new NewCookie.Builder("name").value("value").path("/").domain("localhost").maxAge(0)
-                .sameSite(NewCookie.SameSite.STRICT).build();
-        assertEquals(NewCookie.SameSite.STRICT, sameSiteStrict.getSameSite());
+    @Test
+    public final void shouldReturnNullWhenComparingNewCookiesThatHaveSameValues() {
+        NewCookie thisNewCookie = new NewCookie.Builder("name").value("value").build();
+        NewCookie thatNewCookie = new NewCookie.Builder("name").value("value").build();
+        assertTrue(thisNewCookie.equals(thatNewCookie));
     }
 }

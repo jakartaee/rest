@@ -44,26 +44,35 @@ public class CookieTest extends BaseDelegateTest {
         assertFalse(newCookie.equals(newCookie2));
     }
 
-    /**
-     * Test of equals method, of class Cookie and NewCookie on instances built
-     * with builder.
-     */
     @Test
-    public void testEqualsOnInstancesBuiltWithBuilder() {
-        Object nullObj = null;
+    public final void shouldReturnFalseWhenComparingCookieToNullObject() {
         Cookie cookie = new Cookie.Builder("name").value("value").build();
-        Cookie cookie1 = new Cookie.Builder("name").value("value").build();
-        Cookie cookie2 = new Cookie.Builder("name").value("value2").build();
-        NewCookie newCookie = new NewCookie.Builder("name").value("value").build();
-        NewCookie newCookie1 = new NewCookie.Builder("name").value("value").build();
-        NewCookie newCookie2 = new NewCookie.Builder("name").value("value2").build();
-        assertFalse(cookie.equals(nullObj));
-        assertFalse(cookie.equals(newCookie));
-        assertFalse(cookie.equals(cookie2));
-        assertTrue(cookie.equals(cookie1));
-        assertTrue(cookie.equals(newCookie.toCookie()));
-        assertTrue(newCookie.equals(newCookie1));
-        assertFalse(newCookie.equals(newCookie2));
+        assertFalse(cookie.equals(null));
+    }
+
+    @Test
+    public final void shouldReturnFalseWhenComparingCookieToNewCookie() {
+        Cookie thisCookie = new Cookie.Builder("name").value("value").build();
+        NewCookie thatNewCookie = new NewCookie.Builder("name").value("value").build();
+        assertFalse(thisCookie.equals(thatNewCookie));
+    }
+
+    @Test
+    public final void shouldReturnFalseWhenComparingCookiesThatHaveDifferentValues() {
+        Cookie thisCookie = new Cookie.Builder("name").value("value").build();
+        Cookie thatCookie = new Cookie.Builder("name").value("value2").build();
+        assertFalse(thisCookie.equals(thatCookie));
+    }
+
+    @Test
+    public final void shouldReturnTrueWhenComparingCookiesThatHaveSameValues() {
+
+        Cookie thisCookie = new Cookie.Builder("name").value("value").build();
+        Cookie thatCookie = new Cookie.Builder("name").value("value").build();
+        assertTrue(thisCookie.equals(thatCookie));
+
+        thatCookie = new NewCookie.Builder("name").value("value").build().toCookie();
+        assertTrue(thisCookie.equals(thatCookie));
     }
 
 }

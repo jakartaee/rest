@@ -97,7 +97,7 @@ public final class NewCookieBuilderTest {
     }
 
     @Test
-    public final void shouldReturnSuppliedValueWhenSameSiteIsSetToNullValue() {
+    public final void shouldReturnSuppliedValueWhenSameSiteIsSetToNonNullValue() {
 
         NewCookie.Builder newCookieBuilder = new NewCookie.Builder("name");
 

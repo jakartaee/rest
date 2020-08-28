@@ -525,7 +525,7 @@
     </dependencies>
 
     <properties>
-        <apidocs.title>JAX-RS ${spec.version} API Specification ${spec.version.revision}</apidocs.title>
+        <apidocs.title>Jakarta RESTful Web Services ${spec.version} API Specification ${spec.version.revision}</apidocs.title>
         <java.version>1.8</java.version>
 
         <maven.bundle.plugin.version>3.5.0</maven.bundle.plugin.version>
@@ -535,7 +535,7 @@
         <api.package>jakarta.ws.rs</api.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skip.release.tests>false</skip.release.tests>
-        <spec.version>2.2</spec.version>
+        <spec.version>3.0</spec.version>
         <spec.version.revision /> <!-- e.g. (Rev a) -->
 
         <jaxb.api.version>3.0.0</jaxb.api.version>

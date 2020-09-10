@@ -68,9 +68,9 @@ public abstract class Response implements AutoCloseable {
     /**
      * Get the complete status information associated with the response.
      * <p>
-     * Comparing {@link StatusType} directly might unexpectedly return {@code false}.
+     * Comparing {@link StatusType} directly might unexpectedly return {@code false} if only the reason phrase differs.
      *
-     * <b>Instead compare {@code statusCode} directly</b>.
+     * Instead compare {@code statusCode} directly.
      * </p>
      *
      * @return the response status information. The returned value is never {@code null}.
@@ -1138,7 +1138,7 @@ public abstract class Response implements AutoCloseable {
         }
 
         /**
-         * @deprecated May return false when reasonPhrase differs. <b>Instead compare {@code statusCode} directly.</b>
+         * @deprecated May return false when reasonPhrase differs. Instead compare {@code statusCode} directly.
          */
         @Deprecated
         @Override

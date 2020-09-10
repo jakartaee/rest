@@ -67,6 +67,11 @@ public abstract class Response implements AutoCloseable {
 
     /**
      * Get the complete status information associated with the response.
+     * <p>
+     * Comparing {@link StatusType} directly might unexpectedly return {@code false}.
+     *
+     * <b>Instead compare {@code statusCode} directly</b>.
+     * </p>
      *
      * @return the response status information. The returned value is never {@code null}.
      * @since 2.0
@@ -1131,6 +1136,13 @@ public abstract class Response implements AutoCloseable {
         public default Status toEnum() {
             return Status.fromStatusCode(getStatusCode());
         }
+
+        /**
+         * @deprecated May return false when reasonPhrase differs. <b>Instead compare {@code statusCode} directly.</b>
+         */
+        @Deprecated
+        @Override
+        abstract boolean equals(Object obj);
     }
 
     /**

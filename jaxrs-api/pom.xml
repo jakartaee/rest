@@ -134,7 +134,7 @@
                         <plugin>
                             <artifactId>maven-surefire-plugin</artifactId>
                             <configuration>
-                                <argLine>--add-opens jakarta.ws.rs/jakarta.ws.rs.core=java.xml.bind</argLine>
+                                <argLine>--add-modules jakarta.xml.bind</argLine>
                             </configuration>
                         </plugin>
                     </plugins>
@@ -497,6 +497,7 @@
             <artifactId>jakarta.xml.bind-api</artifactId>
             <version>${jaxb.api.version}</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>jakarta.activation</groupId>

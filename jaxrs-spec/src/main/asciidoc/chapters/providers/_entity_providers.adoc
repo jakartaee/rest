@@ -140,7 +140,7 @@ type combinations:
   All media types (`\*/*`).
 `jakarta.activation.DataSource`::
   All media types (`\*/*`).
-`jakarta.xml.transform.Source`::
+`javax.xml.transform.Source`::
   XML types (`text/xml`, `application/xml` and media types of the form
   `application/*+xml`).
 `MultivaluedMap<String,String>`::

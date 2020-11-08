@@ -18,21 +18,21 @@ import jakarta.ws.rs.core.Response;
  * the HTTP protocol version that was used in the request message.
  *
  * @author Jeyvison Nascimento (jeynoronha@gmail.com)
- * @since 2.2
+ * @since 3.1
  */
 public class HttpVersionNotSupportedException extends ServerErrorException {
 
     private static final long serialVersionUID = -2162737983746617138L;
 
     /**
-     * Construct a new bad client request exception.
+     * Construct a new http version not supported exception.
      */
     public HttpVersionNotSupportedException() {
         super(Response.Status.HTTP_VERSION_NOT_SUPPORTED);
     }
 
     /**
-     * Construct a new bad client request exception.
+     * Construct a new http version not supported exception.
      *
      * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      */
@@ -41,7 +41,7 @@ public class HttpVersionNotSupportedException extends ServerErrorException {
     }
 
     /**
-     * Construct a new bad client request exception.
+     * Construct a new http version not supported exception.
      *
      * @param response error response.
      * @throws IllegalArgumentException in case the status code set in the response is not HTTP {@code 505}.
@@ -51,7 +51,7 @@ public class HttpVersionNotSupportedException extends ServerErrorException {
     }
 
     /**
-     * Construct a new bad client request exception.
+     * Construct a new http version not supported exception.
      *
      * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param response error response.
@@ -62,7 +62,7 @@ public class HttpVersionNotSupportedException extends ServerErrorException {
     }
 
     /**
-     * Construct a new bad client request exception.
+     * Construct a new http version not supported exception.
      *
      * @param cause the underlying cause of the exception.
      */
@@ -71,7 +71,7 @@ public class HttpVersionNotSupportedException extends ServerErrorException {
     }
 
     /**
-     * Construct a new bad client request exception.
+     * Construct a new http version not supported exception.
      *
      * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param cause the underlying cause of the exception.
@@ -81,7 +81,7 @@ public class HttpVersionNotSupportedException extends ServerErrorException {
     }
 
     /**
-     * Construct a new bad client request exception.
+     * Construct a new http version not supported exception.
      *
      * @param response error response.
      * @param cause the underlying cause of the exception.
@@ -92,7 +92,7 @@ public class HttpVersionNotSupportedException extends ServerErrorException {
     }
 
     /**
-     * Construct a new bad client request exception.
+     * Construct a new http version not supported exception.
      *
      * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param response error response.

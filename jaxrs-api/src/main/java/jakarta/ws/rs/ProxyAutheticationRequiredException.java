@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.Response;
  * A runtime exception indicating that the client must first authenticate itself with the proxy.
  *
  * @author Jeyvison Nascimento (jeynoronha@gmail.com)
- * @since 2.2
+ * @since 3.1
  */
 public class ProxyAutheticationRequiredException extends ClientErrorException {
 

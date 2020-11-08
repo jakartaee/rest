@@ -18,7 +18,7 @@ import jakarta.ws.rs.core.Response;
  * in a given amount of time ("rate limiting").
  *
  * @author Jeyvison Nascimento (jeynoronha@gmail.com)
- * @since 2.2
+ * @since 3.1
  */
 public class TooManyRequestsException extends ClientErrorException {
 

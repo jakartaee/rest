@@ -14,11 +14,10 @@ package jakarta.ws.rs;
 import jakarta.ws.rs.core.Response;
 
 /**
- * A runtime exception indicating that the client sent a {@link jakarta.ws.rs.core.Response.Status#REQUESTED_RANGE_NOT_SATISFIABLE}
- * by the server.
+ * A runtime exception indicating that the server cannot serve the requested ranges.
  *
  * @author Jeyvison Nascimento (jeynoronha@gmail.com)
- * @since 2.2
+ * @since 3.1
  */
 public class RequestedRangeNotSatisfiableException extends ClientErrorException {
 

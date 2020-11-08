@@ -15,10 +15,10 @@ import jakarta.ws.rs.core.Response;
 
 /**
  * A runtime exception indicating that the server, while acting as a gateway or proxy,
- * received an invalid response from the upstream server it accessed in attempting to fulfill the request.
+ * did not get a response in time from the upstream server that it needed in order to complete the request. .
  *
  * @author Jeyvison Nascimento (jeynoronha@gmail.com)
- * @since 2.2
+ * @since 3.1
  */
 public class GatewayTimeoutException extends ServerErrorException {
 

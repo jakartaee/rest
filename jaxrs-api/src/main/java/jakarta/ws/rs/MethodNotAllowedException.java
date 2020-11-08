@@ -18,7 +18,7 @@ import jakarta.ws.rs.core.Response;
  * by the server.
  *
  * @author Jeyvison Nascimento (jeynoronha@gmail.com)
- * @since 2.2
+ * @since 3.1
  */
 public class MethodNotAllowedException extends ClientErrorException {
 

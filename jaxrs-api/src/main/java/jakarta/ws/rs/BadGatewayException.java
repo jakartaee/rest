@@ -18,7 +18,7 @@ import jakarta.ws.rs.core.Response;
  * received an invalid response from the upstream server it accessed in attempting to fulfill the request.
  *
  * @author Jeyvison Nascimento (jeynoronha@gmail.com)
- * @since 2.2
+ * @since 3.1
  */
 public class BadGatewayException extends ServerErrorException {
 

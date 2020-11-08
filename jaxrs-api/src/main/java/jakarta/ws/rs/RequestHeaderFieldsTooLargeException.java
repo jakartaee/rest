@@ -18,7 +18,7 @@ import jakarta.ws.rs.core.Response;
  * the request because its header fields are too large.
  *
  * @author Jeyvison Nascimento (jeynoronha@gmail.com)
- * @since 2.2
+ * @since 3.1
  */
 public class RequestHeaderFieldsTooLargeException extends ClientErrorException {
 

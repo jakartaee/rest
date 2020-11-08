@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.Response;
  * A runtime exception indicating a request header didn't meet the expectation.
  *
  * @author Jeyvison Nascimento (jeynoronha@gmail.com)
- * @since 2.2
+ * @since 3.1
  */
 public class ExpectationFailedException extends ClientErrorException {
 

@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.Response;
  * A runtime exception that indicates that the client needs to authenticate to gain network access.
  *
  * @author Jeyvison Nascimento (jeynoronha@gmail.com)
- * @since 2.2
+ * @since 3.1
  */
 public class NetworkAuthenticationRequiredException extends ServerErrorException {
 

@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.Response;
  * A runtime exception indicating the client used a {@link jakarta.ws.rs.core.Response.Status#REQUEST_URI_TOO_LONG}.
  *
  * @author Jeyvison Nascimento (jeynoronha@gmail.com)
- * @since 2.2
+ * @since 3.1
  */
 public class RequestUriTooLong extends ClientErrorException {
 

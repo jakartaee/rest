@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.Response;
  * A runtime exception indicating that the origin server requires the request to be conditional.
  *
  * @author Jeyvison Nascimento
- * @since 2.2
+ * @since 3.1
  */
 public class PreconditionRequiredException extends ClientErrorException {
 

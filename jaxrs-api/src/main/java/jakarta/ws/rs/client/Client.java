@@ -39,7 +39,7 @@ import jakarta.ws.rs.core.UriBuilder;
  * @see jakarta.ws.rs.core.Configurable
  * @since 2.0
  */
-public interface Client extends Configurable<Client> {
+public interface Client extends Configurable<Client>, AutoCloseable {
 
     /**
      * <p>
@@ -51,6 +51,7 @@ public interface Client extends Configurable<Client> {
      * Invoking any method on such targets once the client is closed would result in an {@link IllegalStateException} being
      * thrown.
      */
+    @Override
     public void close();
 
     /**

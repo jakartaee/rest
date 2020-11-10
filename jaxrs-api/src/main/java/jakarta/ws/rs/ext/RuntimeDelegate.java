@@ -18,11 +18,14 @@ package jakarta.ws.rs.ext;
 
 import java.lang.reflect.ReflectPermission;
 import java.net.URL;
+import java.util.concurrent.CompletionStage;
 
+import jakarta.ws.rs.SeBootstrap;
+import jakarta.ws.rs.SeBootstrap.Instance;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.Link;
-import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Variant.VariantListBuilder;
 
 /**
@@ -219,4 +222,30 @@ public abstract class RuntimeDelegate {
      * @see jakarta.ws.rs.core.Link.Builder
      */
     public abstract Link.Builder createLinkBuilder();
+
+    /**
+     * Create a new instance of a {@link jakarta.ws.rs.SeBootstrap.Configuration.Builder}.
+     * <p>
+     * <em>This method is not intended to be invoked by applications. Call {@link SeBootstrap.Configuration#builder()}
+     * instead.</em>
+     * </p>
+     *
+     * @return new {@code SeBootstrap.Configuration.Builder} instance.
+     * @see SeBootstrap.Configuration.Builder
+     */
+    public abstract SeBootstrap.Configuration.Builder createConfigurationBuilder();
+
+    /**
+     * Perform startup of the application in Java SE environments.
+     * <p>
+     * <em>This method is not intended to be invoked by applications. Call {@link SeBootstrap#start(Application, Configuration)}
+     * instead.</em>
+     * </p>
+     *
+     * @param application The application to start up.
+     * @param configuration The bootstrap configuration.
+     * @return {@code CompletionStage} asynchronously producing handle of the running application {@link SeBootstrap.Instance
+     * instance}.
+     */
+    public abstract CompletionStage<Instance> bootstrap(Application application, SeBootstrap.Configuration configuration);
 }

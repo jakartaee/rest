@@ -105,12 +105,12 @@ public interface Request {
 
     /**
      * Evaluate request preconditions for a resource that does not currently exist. The primary use of this method is to
-     * support the <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24"> If-Match: *</a> and
-     * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26"> If-None-Match: *</a> preconditions.
+     * support the <a href="https://tools.ietf.org/html/rfc7232#section-3.1"> If-Match: *</a> and
+     * <a href="https://tools.ietf.org/html/rfc7232#section-3.2"> If-None-Match: *</a> preconditions.
      *
      * <p>
-     * Note that both preconditions {@code If-None-Match: *} and <code>If-None-Match: <i>something</i></code> will always be
-     * considered to have been met and it is the applications responsibility to enforce any additional method-specific
+     * Note that precondition <code>If-None-Match: <i>something</i></code> will never be
+     * considered to have been met, and it is the application's responsibility to enforce any additional method-specific
      * semantics. E.g. a {@code PUT} on a resource that does not exist might succeed whereas a {@code GET} on a resource
      * that does not exist would likely result in a 404 response. It would be the responsibility of the application to
      * generate the 404 response.

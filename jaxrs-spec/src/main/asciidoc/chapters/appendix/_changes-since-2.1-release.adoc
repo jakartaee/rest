@@ -15,5 +15,3 @@
 * Package changes from `javax.ws.rs.*` to `jakarta.ws.rs.*`
 * <<jaxb>>: JAXB API is now optional
 * <<additional_reqs>>: Clarified injection with regard to `getSingletons()` method
-* <<exceptionmapper>>: Added requirement that JAX-RS implementations have 
-default exception mappers.

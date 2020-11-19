@@ -743,7 +743,7 @@ public abstract class Response implements AutoCloseable {
      * metadata of the built {@code Response}.
      * </p>
      */
-    public static abstract class ResponseBuilder {
+    public abstract static class ResponseBuilder {
 
         /**
          * Protected constructor, use one of the static methods of {@code Response} to obtain an instance.

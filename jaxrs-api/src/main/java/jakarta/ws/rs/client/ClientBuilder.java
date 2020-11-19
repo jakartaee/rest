@@ -16,6 +16,8 @@
 
 package jakarta.ws.rs.client;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
 import java.net.URL;
 import java.security.KeyStore;
 import java.util.concurrent.ExecutorService;
@@ -23,13 +25,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-
 import jakarta.ws.rs.ProcessingException;
 import jakarta.ws.rs.core.Configurable;
 import jakarta.ws.rs.core.Configuration;
-import jakarta.ws.rs.sse.SseEventSource;
 
 /**
  * Main entry point to the client API used to bootstrap {@link jakarta.ws.rs.client.Client} instances.

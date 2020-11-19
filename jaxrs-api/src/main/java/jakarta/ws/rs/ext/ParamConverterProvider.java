@@ -45,5 +45,5 @@ public interface ParamConverterProvider {
      * {@link java.lang.reflect.Method#getParameterAnnotations}.
      * @return the string converter, otherwise {@code null}.
      */
-    public <T> ParamConverter<T> getConverter(Class<T> rawType, Type genericType, Annotation annotations[]);
+    public <T> ParamConverter<T> getConverter(Class<T> rawType, Type genericType, Annotation[] annotations);
 }

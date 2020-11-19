@@ -222,6 +222,7 @@ public class WebApplicationException extends RuntimeException {
      * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param status the HTTP status code that will be returned to the client.
      * @param cause the underlying cause of the exception.
+     * @throws IllegalArgumentException if status is {@code null}.
      * @since 2.0
      */
     public WebApplicationException(final String message, final Throwable cause, final Response.Status status)

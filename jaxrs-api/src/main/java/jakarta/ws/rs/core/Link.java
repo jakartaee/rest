@@ -16,13 +16,12 @@
 
 package jakarta.ws.rs.core;
 
+import javax.xml.namespace.QName;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.xml.namespace.QName;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
@@ -409,7 +408,7 @@ public abstract class Link {
      *
      * Note that usage of this class requires the Jakarta XML Binding API and an implementation. The Jakarta RESTful Web
      * Services implementation is not required to provide these dependencies.
-     * 
+     *
      * @see jakarta.ws.rs.core.Link.JaxbAdapter
      * @since 2.0
      */
@@ -487,10 +486,12 @@ public abstract class Link {
 
         @Override
         public boolean equals(final Object o) {
-            if (this == o)
+            if (this == o) {
                 return true;
-            if (!(o instanceof JaxbLink))
+            }
+            if (!(o instanceof JaxbLink)) {
                 return false;
+            }
 
             JaxbLink jaxbLink = (JaxbLink) o;
 
@@ -544,7 +545,7 @@ public abstract class Link {
      *
      * Note that usage of this class requires the Jakarta XML Binding API and an implementation. The Jakarta RESTful Web
      * Services implementation is not required to provide these dependencies.
-     * 
+     *
      * @see jakarta.ws.rs.core.Link.JaxbLink
      * @since 2.0
      */

@@ -84,7 +84,8 @@ public abstract class RuntimeDelegate {
             synchronized (RD_LOCK) {
                 result = cachedDelegate;
                 if (result == null) { // Second check (with locking)
-                    cachedDelegate = result = findDelegate();
+                    result = findDelegate();
+                    cachedDelegate = result;
                 }
             }
         }

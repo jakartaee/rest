@@ -27,7 +27,7 @@ import jakarta.ws.rs.core.MultivaluedMap;
  * Contract for a provider that supports the conversion of a stream to a Java type.
  *
  * A {@code MessageBodyReader} implementation may be annotated with {@link jakarta.ws.rs.Consumes} to restrict the media
- * types for which it will be considered suitable. The {@code MessageBodyReader} pipeline is executed if the matching 
+ * types for which it will be considered suitable. The {@code MessageBodyReader} pipeline is executed if the matching
  * resource method declares an entity parameter or uses at least one {@link jakarta.ws.rs.FormParam}.
  * <p>
  * Providers implementing {@code MessageBodyReader} contract must be either programmatically registered in a JAX-RS

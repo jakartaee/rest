@@ -69,7 +69,7 @@ public interface Configuration {
      * @param name property name.
      * @return {@code false} if the property with such name is not configured, {@code true} otherwise.
      */
-    default public boolean hasProperty(String name) {
+    public default boolean hasProperty(String name) {
         return getProperty(name) != null;
     }
 

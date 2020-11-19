@@ -251,19 +251,24 @@ public final class Entity<T> {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (!(o instanceof Entity))
+        }
+        if (!(o instanceof Entity)) {
             return false;
+        }
 
         Entity entity1 = (Entity) o;
 
-        if (!Arrays.equals(annotations, entity1.annotations))
+        if (!Arrays.equals(annotations, entity1.annotations)) {
             return false;
-        if (entity != null ? !entity.equals(entity1.entity) : entity1.entity != null)
+        }
+        if (entity != null ? !entity.equals(entity1.entity) : entity1.entity != null) {
             return false;
-        if (variant != null ? !variant.equals(entity1.variant) : entity1.variant != null)
+        }
+        if (variant != null ? !variant.equals(entity1.variant) : entity1.variant != null) {
             return false;
+        }
 
         return true;
     }
@@ -278,10 +283,7 @@ public final class Entity<T> {
 
     @Override
     public String toString() {
-        return "Entity{" +
-                "entity=" + entity +
-                ", variant=" + variant +
-                ", annotations=" + Arrays.toString(annotations) +
-                '}';
+        return "Entity{" + "entity=" + entity + ", variant=" + variant
+                + ", annotations=" + Arrays.toString(annotations) + '}';
     }
 }

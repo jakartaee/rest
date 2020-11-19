@@ -246,7 +246,7 @@ public class Variant {
     /**
      * A builder for a list of representation variants.
      */
-    public static abstract class VariantListBuilder {
+    public abstract static class VariantListBuilder {
 
         /**
          * Protected constructor, use the static {@code newInstance} method to obtain an instance.

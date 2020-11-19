@@ -171,11 +171,11 @@ public class CacheControl {
     /**
      * Corresponds to the s-maxage cache control directive.
      *
-     * @param sMaxAge the value of the s-maxage cache control directive, a value of -1 will disable the directive.
+     * @param smaxAge the value of the s-maxage cache control directive, a value of -1 will disable the directive.
      * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.3">HTTP/1.1 section 14.9.3</a>
      */
-    public void setSMaxAge(final int sMaxAge) {
-        this.sMaxAge = sMaxAge;
+    public void setSMaxAge(final int smaxAge) {
+        this.sMaxAge = smaxAge;
     }
 
     /**

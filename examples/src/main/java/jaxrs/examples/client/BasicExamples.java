@@ -10,6 +10,7 @@
 
 package jaxrs.examples.client;
 
+import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -20,6 +21,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
+import static jakarta.ws.rs.client.Entity.form;
+import static jakarta.ws.rs.client.Entity.text;
+import static jakarta.ws.rs.client.Entity.xml;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.InvocationCallback;
 import jakarta.ws.rs.client.WebTarget;
@@ -39,14 +43,8 @@ import jakarta.ws.rs.ext.ReaderInterceptor;
 import jakarta.ws.rs.ext.ReaderInterceptorContext;
 import jakarta.ws.rs.ext.WriterInterceptor;
 import jakarta.ws.rs.ext.WriterInterceptorContext;
-
-import javax.net.ssl.SSLContext;
 import jakarta.xml.bind.annotation.XmlRootElement;
-
 import jaxrs.examples.client.custom.ThrottledClient;
-import static jakarta.ws.rs.client.Entity.form;
-import static jakarta.ws.rs.client.Entity.text;
-import static jakarta.ws.rs.client.Entity.xml;
 
 /**
  * Basic client-side examples.
@@ -56,6 +54,9 @@ import static jakarta.ws.rs.client.Entity.xml;
  */
 public class BasicExamples {
 
+    /**
+     * Customer bean.
+     */
     @XmlRootElement
     public static class Customer {
 
@@ -279,6 +280,9 @@ public class BasicExamples {
         assert response.get() != null;
     }
 
+    /**
+     * A test feature.
+     */
     public static class TestFeature implements Feature {
 
         @Override
@@ -347,21 +351,22 @@ public class BasicExamples {
         i.invoke(); // Ok, now I can send the updated request
     }
 
+    /**
+     * Interceptor and filter.
+     */
     public static class MyProvider implements ReaderInterceptor, WriterInterceptor, ContainerRequestFilter {
 
         @Override
         public void filter(ContainerRequestContext requestContext) throws IOException {
-            // TODO: implement method.
         }
 
         @Override
         public Object aroundReadFrom(ReaderInterceptorContext context) throws IOException, WebApplicationException {
-            return null; // TODO: implement method.
+            return null;
         }
 
         @Override
         public void aroundWriteTo(WriterInterceptorContext context) throws IOException, WebApplicationException {
-            // TODO: implement method.
         }
     }
 
@@ -390,13 +395,15 @@ public class BasicExamples {
         Response response = client.target("https://github.com/jax-rs/").request().get();
 
         switch (response.getStatus()) {
-        case 200:
-            return;
-        case 201:
-            return;
-        case 404:
-            return;
-        case 500:
+            case 200:
+                return;
+            case 201:
+                return;
+            case 404:
+                return;
+            case 500:
+                return;
+            default:
         }
     }
 
@@ -406,13 +413,15 @@ public class BasicExamples {
         Response response = client.target("https://github.com/jax-rs/").request().get();
 
         switch (response.getStatusInfo().toEnum()) {
-        case OK:
-            return;
-        case CREATED:
-            return;
-        case NOT_FOUND:
-            return;
-        case INTERNAL_SERVER_ERROR:
+            case OK:
+                return;
+            case CREATED:
+                return;
+            case NOT_FOUND:
+                return;
+            case INTERNAL_SERVER_ERROR:
+                return;
+            default:
         }
     }
 }

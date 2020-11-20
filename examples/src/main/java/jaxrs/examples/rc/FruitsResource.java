@@ -36,7 +36,7 @@ public class FruitsResource {
         return rc.initResource(new TasteResource("bad"));
     }
 
-    public static class TasteResource {
+    static class TasteResource {
         @PathParam("fruit")
         private String fruitName;
         private final String taste;

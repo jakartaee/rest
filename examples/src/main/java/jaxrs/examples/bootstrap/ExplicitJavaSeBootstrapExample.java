@@ -45,6 +45,9 @@ import jakarta.ws.rs.core.UriBuilder;
  */
 public final class ExplicitJavaSeBootstrapExample {
 
+    private ExplicitJavaSeBootstrapExample() {
+    }
+
     /**
      * Runs this example.
      *

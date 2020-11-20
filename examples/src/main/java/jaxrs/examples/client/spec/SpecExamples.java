@@ -30,6 +30,9 @@ import jaxrs.examples.client.custom.ThrottledClient;
  */
 public class SpecExamples {
 
+    /**
+     * Customer bean.
+     */
     @XmlRootElement
     public static class Customer {
 

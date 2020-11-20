@@ -20,9 +20,12 @@ import jakarta.ws.rs.sse.SseEventSource;
  *
  * @author Marek Potociar (marek.potociar at oracle.com)
  */
-public class SseClient {
+public final class SseClient {
 
-    public static final WebTarget target = ClientBuilder.newClient().target("server-sent-events");
+    static final WebTarget TARGET = ClientBuilder.newClient().target("server-sent-events");
+
+    private SseClient() {
+    }
 
     public static void main(String[] args) {
         consumeAllEvents();
@@ -32,14 +35,14 @@ public class SseClient {
 
         // EventSource#register(Consumer<InboundSseEvent>)
         // consumes all events, writes then on standard out (System.out::println)
-        try (final SseEventSource eventSource = SseEventSource.target(target)
+        try (final SseEventSource eventSource = SseEventSource.target(TARGET)
                 .build()) {
 
             eventSource.register(System.out::println);
             eventSource.open();
 
             for (int counter = 0; counter < 5; counter++) {
-                target.request().post(Entity.text("message " + counter));
+                TARGET.request().post(Entity.text("message " + counter));
             }
 
             Thread.sleep(500); // make sure all the events have time to arrive
@@ -49,13 +52,13 @@ public class SseClient {
 
         // EventSource#register(Consumer<InboundSseEvent>, Consumer<Throwable>)
         // consumes all events and all exceptions, writing both on standard out.
-        try (final SseEventSource eventSource = SseEventSource.target(target).build()) {
+        try (final SseEventSource eventSource = SseEventSource.target(TARGET).build()) {
 
             eventSource.register(System.out::println, Throwable::printStackTrace);
             eventSource.open();
 
             for (int counter = 0; counter < 5; counter++) {
-                target.request().post(Entity.text("message " + counter));
+                TARGET.request().post(Entity.text("message " + counter));
             }
 
             Thread.sleep(500); // make sure all the events have time to arrive
@@ -66,7 +69,7 @@ public class SseClient {
         // EventSource#register(Consumer<InboundSseEvent>, Consumer<Throwable>, Runnable)
         // consumes all events and all exceptions, writing both on standard out.
         // registers onComplete callback, which will print out a message "There will be no further events."
-        try (final SseEventSource eventSource = SseEventSource.target(target).build()) {
+        try (final SseEventSource eventSource = SseEventSource.target(TARGET).build()) {
 
             eventSource.register(
                     System.out::println,
@@ -75,7 +78,7 @@ public class SseClient {
             eventSource.open();
 
             for (int counter = 0; counter < 5; counter++) {
-                target.request().post(Entity.text("message " + counter));
+                TARGET.request().post(Entity.text("message " + counter));
             }
 
             Thread.sleep(500); // make sure all the events have time to arrive

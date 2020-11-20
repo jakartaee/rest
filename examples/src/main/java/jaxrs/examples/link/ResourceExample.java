@@ -44,6 +44,9 @@ public class ResourceExample {
         return m;
     }
 
+    /**
+     * MyModel class.
+     */
     @XmlRootElement
     public static class MyModel {
 
@@ -69,8 +72,8 @@ public class ResourceExample {
             return atomLink;
         }
 
-        public void setAtomLink(Link link) {
-            this.atomLink = link;
+        public void setAtomLink(Link atomLink) {
+            this.atomLink = atomLink;
         }
     }
 }

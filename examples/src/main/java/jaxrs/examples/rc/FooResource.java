@@ -23,7 +23,7 @@ import jakarta.ws.rs.core.Context;
  */
 @Path("foo/{fooId}")
 public class FooResource {
-    public static class BarResource {
+    static class BarResource {
         @PathParam("fooId")
         private String fooId;
 
@@ -37,5 +37,4 @@ public class FooResource {
     public BarResource getBar(@Context ResourceContext rc) {
         return rc.getResource(BarResource.class);
     }
-
 }

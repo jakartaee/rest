@@ -18,7 +18,7 @@ import jakarta.ws.rs.container.AsyncResponse;
 import jakarta.ws.rs.container.Suspended;
 
 /**
- * TODO: javadoc.
+ * Example of a long running EJB resource.
  *
  * @author Marek Potociar
  */

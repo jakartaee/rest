@@ -96,11 +96,11 @@ public class MachineResource {
 
         switch (machine.getStatus()) {
         case STOPPED:
-            return new Link[] { self, starter };
+            return new Link[] {self, starter};
         case STARTED:
-            return new Link[] { self, stopper, suspender };
+            return new Link[] {self, stopper, suspender};
         case SUSPENDED:
-            return new Link[] { self, starter };
+            return new Link[] {self, starter};
         default:
             throw new IllegalStateException();
         }

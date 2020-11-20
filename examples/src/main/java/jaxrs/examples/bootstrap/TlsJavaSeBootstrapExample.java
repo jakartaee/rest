@@ -16,6 +16,8 @@
 
 package jaxrs.examples.bootstrap;
 
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
@@ -24,8 +26,6 @@ import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
 import jakarta.ws.rs.SeBootstrap;
 import jakarta.ws.rs.SeBootstrap.Configuration;
 import jakarta.ws.rs.core.Application;
@@ -44,6 +44,9 @@ import jakarta.ws.rs.core.UriBuilder;
  * @since 3.1
  */
 public final class TlsJavaSeBootstrapExample {
+
+    private TlsJavaSeBootstrapExample() {
+    }
 
     /**
      * Runs this example.

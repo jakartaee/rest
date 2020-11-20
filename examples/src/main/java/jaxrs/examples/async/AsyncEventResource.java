@@ -35,44 +35,36 @@ import jakarta.ws.rs.core.MediaType;
 @Produces(MediaType.TEXT_PLAIN)
 @Consumes(MediaType.TEXT_PLAIN)
 public class AsyncEventResource implements CompletionCallback {
-    private static final BlockingQueue<String> messages = new ArrayBlockingQueue<String>(5);
+    private static final BlockingQueue<String> MESSAGES = new ArrayBlockingQueue<String>(5);
 
     @GET
     public void readMessage(@Suspended final AsyncResponse ar) {
         ar.register(AsyncEventResource.class);
-        Executors.newSingleThreadExecutor().submit(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    ar.resume(messages.take());
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(AsyncEventResource.class.getName()).log(Level.SEVERE, null, ex);
-                    ar.cancel(); // close the open connection
-                }
+        Executors.newSingleThreadExecutor().submit(() -> {
+            try {
+                ar.resume(MESSAGES.take());
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AsyncEventResource.class.getName()).log(Level.SEVERE, null, ex);
+                ar.cancel(); // close the open connection
             }
         });
     }
 
     @POST
     public void postMessage(final String message, @Suspended final AsyncResponse asyncResponse) {
-        Executors.newSingleThreadExecutor().submit(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    messages.put(message);
-                    asyncResponse.resume("Message stored.");
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(AsyncEventResource.class.getName()).log(Level.SEVERE, null, ex);
-                    asyncResponse.resume(ex); // propagate info about the problem
-                }
+        Executors.newSingleThreadExecutor().submit(() -> {
+            try {
+                MESSAGES.put(message);
+                asyncResponse.resume("Message stored.");
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AsyncEventResource.class.getName()).log(Level.SEVERE, null, ex);
+                asyncResponse.resume(ex); // propagate info about the problem
             }
         });
     }
 
     @Override
-    public void onComplete(Throwable throwable) {
+    public void onComplete(final Throwable throwable) {
         if (throwable == null) {
             System.out.println("Completed with a response.");
         } else {

@@ -10,7 +10,6 @@
 
 package jaxrs.examples.client;
 
-import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -18,12 +17,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 
+import javax.net.ssl.SSLContext;
+
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
-import static jakarta.ws.rs.client.Entity.form;
-import static jakarta.ws.rs.client.Entity.text;
-import static jakarta.ws.rs.client.Entity.xml;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.InvocationCallback;
 import jakarta.ws.rs.client.WebTarget;
@@ -45,6 +43,10 @@ import jakarta.ws.rs.ext.WriterInterceptor;
 import jakarta.ws.rs.ext.WriterInterceptorContext;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jaxrs.examples.client.custom.ThrottledClient;
+
+import static jakarta.ws.rs.client.Entity.form;
+import static jakarta.ws.rs.client.Entity.text;
+import static jakarta.ws.rs.client.Entity.xml;
 
 /**
  * Basic client-side examples.

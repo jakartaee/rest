@@ -28,6 +28,9 @@ pipeline {
 				dir ('jaxrs-spec') {
 					sh "$MVN deploy"
 				}
+				dir ('jaxrs-tck') {
+					sh "$MVN deploy"
+				}
 			}
 		}
 	}

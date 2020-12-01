@@ -15,3 +15,4 @@
 default exception mappers.
 * <<resource_field>>: Array types may be specified for `@CookieParam`,
 `@FormParam`, `@HeaderParam`, `@MatrixParam` and `@QueryParam` parameters.
+* Deprecated Link.JaxbLink and Link.JaxbAdapter inner classes.

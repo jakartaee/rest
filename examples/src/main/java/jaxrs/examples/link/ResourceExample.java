@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2011, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -15,12 +15,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Link;
-import jakarta.ws.rs.core.Link.JaxbAdapter;
 import jakarta.ws.rs.core.UriInfo;
-
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * ResourceExample class.
@@ -34,7 +29,7 @@ public class ResourceExample {
     private UriInfo uriInfo;
 
     @GET
-    @Produces({ "application/xml", "application/json" })
+    @Produces({ "application/json" })
     public MyModel getIt() {
         Link self = Link.fromMethod(getClass(), "getIt").baseUri(uriInfo.getBaseUri())
                 .rel("self").buildRelativized(uriInfo.getRequestUri());
@@ -44,10 +39,6 @@ public class ResourceExample {
         return m;
     }
 
-    /**
-     * MyModel class.
-     */
-    @XmlRootElement
     public static class MyModel {
 
         private Link link;
@@ -56,8 +47,6 @@ public class ResourceExample {
         public MyModel() {
         }
 
-        @XmlElement(name = "link")
-        @XmlJavaTypeAdapter(JaxbAdapter.class)
         public Link getLink() {
             return link;
         }
@@ -66,8 +55,6 @@ public class ResourceExample {
             this.link = link;
         }
 
-        @XmlElement(namespace = "http://www.w3.org/2005/Atom", name = "link")
-        @XmlJavaTypeAdapter(JaxbAdapter.class)
         public Link getAtomLink() {
             return atomLink;
         }

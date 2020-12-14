@@ -411,7 +411,9 @@ public abstract class Link {
      *
      * @see jakarta.ws.rs.core.Link.JaxbAdapter
      * @since 2.0
+     * @deprecated
      */
+    @Deprecated
     public static class JaxbLink {
 
         private URI uri;
@@ -548,7 +550,9 @@ public abstract class Link {
      *
      * @see jakarta.ws.rs.core.Link.JaxbLink
      * @since 2.0
+     * @deprecated
      */
+    @Deprecated
     public static class JaxbAdapter extends XmlAdapter<JaxbLink, Link> {
 
         /**

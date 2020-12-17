@@ -72,7 +72,7 @@ public interface InterceptorContext {
      * the given name.
      * @see #getPropertyNames()
      */
-    default public boolean hasProperty(String name) {
+    public default boolean hasProperty(String name) {
         return getProperty(name) != null;
     }
 

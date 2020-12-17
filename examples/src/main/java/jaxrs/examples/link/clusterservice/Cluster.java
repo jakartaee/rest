@@ -23,9 +23,9 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Cluster {
 
-    public enum Status {
+    enum Status {
         OFFLINE, ONLINE
-    };
+    }
 
     private String name;
 

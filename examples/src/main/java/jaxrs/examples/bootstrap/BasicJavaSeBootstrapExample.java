@@ -37,6 +37,9 @@ import jakarta.ws.rs.core.UriBuilder;
  */
 public final class BasicJavaSeBootstrapExample {
 
+    private BasicJavaSeBootstrapExample() {
+    }
+
     /**
      * Runs this example.
      *

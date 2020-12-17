@@ -184,7 +184,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.12.1</version>
+                    <version>3.0.0</version>
                     <configuration>
                         <outputDirectory>${project.build.directory}/checkstyle</outputDirectory>
                         <outputFile>${project.build.directory}/checkstyle/checkstyle-result.xml</outputFile>

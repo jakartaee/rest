@@ -40,7 +40,7 @@ public class NewCookie extends Cookie {
      * @deprecated This field will be removed in a future version. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
      */
     @Deprecated
-    private static final HeaderDelegate<NewCookie> delegate = RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class);
+    private static final HeaderDelegate<NewCookie> DELEGATE = RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class);
 
     private final String comment;
     private final int maxAge;
@@ -251,7 +251,7 @@ public class NewCookie extends Cookie {
      * @since 3.1
      */
     public NewCookie(final Cookie cookie, final String comment, final int maxAge, final Date expiry, final boolean secure, final boolean httpOnly,
-            SameSite sameSite) {
+            final SameSite sameSite) {
         super(cookie == null ? null : cookie.getName(),
                 cookie == null ? null : cookie.getValue(),
                 cookie == null ? null : cookie.getPath(),
@@ -276,7 +276,7 @@ public class NewCookie extends Cookie {
      */
     @Deprecated
     public static NewCookie valueOf(final String value) {
-        return delegate.fromString(value);
+        return DELEGATE.fromString(value);
     }
 
     /**
@@ -376,7 +376,7 @@ public class NewCookie extends Cookie {
     @Override
     @Deprecated
     public String toString() {
-        return delegate.toString(this);
+        return DELEGATE.toString(this);
     }
 
     /**
@@ -453,7 +453,7 @@ public class NewCookie extends Cookie {
 
     /**
      * The available values for the {@code SameSite} cookie attribute.
-     * 
+     *
      * @since 3.1
      */
     public enum SameSite {

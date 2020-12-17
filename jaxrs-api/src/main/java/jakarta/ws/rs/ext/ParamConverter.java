@@ -33,8 +33,8 @@ import jakarta.ws.rs.DefaultValue;
  * {@link jakarta.ws.rs.FormParam &#64;FormParam}, {@link jakarta.ws.rs.CookieParam &#64;CookieParam} and
  * {@link jakarta.ws.rs.HeaderParam &#64;HeaderParam} is supported.
  * JAX-RS implementations MUST support the {@code ParamConverter} mechanism for all Java types. If a
- * {@code ParamConverter} is available for a type, it MUST be preferred over all other conversion strategies mentioned 
- * in section 3.2 (i.e. single {@code String} argument constructor, static {@code valueOf} or {@code fromString} 
+ * {@code ParamConverter} is available for a type, it MUST be preferred over all other conversion strategies mentioned
+ * in section 3.2 (i.e. single {@code String} argument constructor, static {@code valueOf} or {@code fromString}
  * methods, etc.).
  * <p>
  * By default, when used for injection of parameter values, a selected {@code ParamConverter} instance MUST be used

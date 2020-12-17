@@ -48,12 +48,12 @@ public class ServerSentEventsResource {
 
     @GET
     @Produces(MediaType.SERVER_SENT_EVENTS)
-    public void getMessageQueue(@Context SseEventSink eventSink) {
+    public void getMessageQueue(@Context SseEventSink sseEventSink) {
         synchronized (outputLock) {
             if (this.eventSink != null) {
                 throw new IllegalStateException("Server sink already served.");
             }
-            this.eventSink = eventSink;
+            this.eventSink = sseEventSink;
         }
     }
 
@@ -79,23 +79,23 @@ public class ServerSentEventsResource {
     @Path("domains/{id}")
     @Produces(MediaType.SERVER_SENT_EVENTS)
     public void startDomain(@PathParam("id") final String id,
-            @Context SseEventSink eventSink) {
+            @Context SseEventSink sseEventSink) {
 
         executorService.submit(() -> {
             try {
-                eventSink.send(sse.newEventBuilder().name("domain-progress")
+                sseEventSink.send(sse.newEventBuilder().name("domain-progress")
                         .data(String.class, "starting domain " + id + " ...").build());
                 Thread.sleep(200);
-                eventSink.send(sse.newEvent("domain-progress", "50%"));
+                sseEventSink.send(sse.newEvent("domain-progress", "50%"));
                 Thread.sleep(200);
-                eventSink.send(sse.newEvent("domain-progress", "60%"));
+                sseEventSink.send(sse.newEvent("domain-progress", "60%"));
                 Thread.sleep(200);
-                eventSink.send(sse.newEvent("domain-progress", "70%"));
+                sseEventSink.send(sse.newEvent("domain-progress", "70%"));
                 Thread.sleep(200);
-                eventSink.send(sse.newEvent("domain-progress", "99%"));
+                sseEventSink.send(sse.newEvent("domain-progress", "99%"));
                 Thread.sleep(200);
-                eventSink.send(sse.newEvent("domain-progress", "Done."));
-                eventSink.close();
+                sseEventSink.send(sse.newEvent("domain-progress", "Done."));
+                sseEventSink.close();
             } catch (final InterruptedException e) {
                 e.printStackTrace();
             }

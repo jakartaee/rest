@@ -15,32 +15,32 @@ package jaxrs.examples.link.clusterservice;
  *
  * @author Santiago.Pericas-Geertsen@oracle.com
  */
-public class Model {
+public final class Model {
 
-    static final Cluster cluster;
+    static final Cluster CLUSTER;
 
     static {
-        cluster = new Cluster("cluster1");
+        CLUSTER = new Cluster("cluster1");
         Machine m = new Machine("alpha");
         m.setLoad(1.4);
         m.setnOfCpus(2);
-        cluster.getMachines().add(m);
+        CLUSTER.getMachines().add(m);
         m = new Machine("beta");
         m.setLoad(0.75);
         m.setnOfCpus(4);
-        cluster.getMachines().add(m);
+        CLUSTER.getMachines().add(m);
         m = new Machine("gamma");
         m.setLoad(0.2);
         m.setnOfCpus(8);
-        cluster.getMachines().add(m);
+        CLUSTER.getMachines().add(m);
     }
 
     static Cluster getCluster() {
-        return cluster;
+        return CLUSTER;
     }
 
     static Machine getMachine(String name) {
-        for (Machine m : cluster.getMachines()) {
+        for (Machine m : CLUSTER.getMachines()) {
             if (name.equals(m.getName())) {
                 return m;
             }

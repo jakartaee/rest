@@ -60,6 +60,9 @@ import jakarta.ws.rs.core.UriBuilder;
  */
 public final class PropertyProviderJavaSeBootstrapExample {
 
+    private PropertyProviderJavaSeBootstrapExample() {
+    }
+
     /**
      * Runs this example.
      *

@@ -20,8 +20,14 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
 
+/**
+ * Example that shows how to use the Validation API.
+ */
 public class ValidatorExample {
 
+    /**
+     * Email annotation.
+     */
     @java.lang.annotation.Target({ ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER })
     @Retention(RetentionPolicy.RUNTIME)
     @Constraint(validatedBy = EmailValidator.class)
@@ -34,6 +40,9 @@ public class ValidatorExample {
         Class<? extends Payload>[] payload() default {};
     }
 
+    /**
+     * Email validator.
+     */
     public static class EmailValidator implements ConstraintValidator<Email, String> {
 
         @Override
@@ -48,6 +57,9 @@ public class ValidatorExample {
         }
     }
 
+    /**
+     * Email annotation literal.
+     */
     public class EmailImpl extends AnnotationLiteral<Email> implements Email {
 
         private static final long serialVersionUID = -3177939101972190621L;

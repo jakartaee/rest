@@ -66,7 +66,9 @@ public class ClusterResource {
         Link onliner = Link.fromMethod(getClass(), "onliner").baseUri(baseUri).rel("onliner").buildRelativized(uri);
         Link offliner = Link.fromMethod(getClass(), "offliner").baseUri(baseUri).rel("offliner").buildRelativized(uri);
 
-        return cluster.getStatus() == Status.ONLINE ? new Link[] { self, item, offliner } : new Link[] { self, item, onliner };
+        return cluster.getStatus() == Status.ONLINE
+                ? new Link[] {self, item, offliner}
+                : new Link[] {self, item, onliner};
     }
 
 }

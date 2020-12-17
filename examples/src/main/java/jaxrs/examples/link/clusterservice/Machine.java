@@ -20,11 +20,9 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Machine {
 
-    public enum Status {
+    enum Status {
         STOPPED, STARTED, SUSPENDED
     }
-
-    ;
 
     /**
      * Machine's unique name.

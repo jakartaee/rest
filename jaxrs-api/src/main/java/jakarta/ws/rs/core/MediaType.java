@@ -51,99 +51,99 @@ public class MediaType {
     /**
      * A {@code String} constant representing wildcard {@value #WILDCARD} media type .
      */
-    public final static String WILDCARD = "*/*";
+    public static final String WILDCARD = "*/*";
     /**
      * A {@link MediaType} constant representing wildcard {@value #WILDCARD} media type.
      */
-    public final static MediaType WILDCARD_TYPE = new MediaType();
+    public static final MediaType WILDCARD_TYPE = new MediaType();
     /**
      * A {@code String} constant representing {@value #APPLICATION_XML} media type.
      */
-    public final static String APPLICATION_XML = "application/xml";
+    public static final String APPLICATION_XML = "application/xml";
     /**
      * A {@link MediaType} constant representing {@value #APPLICATION_XML} media type.
      */
-    public final static MediaType APPLICATION_XML_TYPE = new MediaType("application", "xml");
+    public static final MediaType APPLICATION_XML_TYPE = new MediaType("application", "xml");
     /**
      * A {@code String} constant representing {@value #APPLICATION_ATOM_XML} media type.
      */
-    public final static String APPLICATION_ATOM_XML = "application/atom+xml";
+    public static final String APPLICATION_ATOM_XML = "application/atom+xml";
     /**
      * A {@link MediaType} constant representing {@value #APPLICATION_ATOM_XML} media type.
      */
-    public final static MediaType APPLICATION_ATOM_XML_TYPE = new MediaType("application", "atom+xml");
+    public static final MediaType APPLICATION_ATOM_XML_TYPE = new MediaType("application", "atom+xml");
     /**
      * A {@code String} constant representing {@value #APPLICATION_XHTML_XML} media type.
      */
-    public final static String APPLICATION_XHTML_XML = "application/xhtml+xml";
+    public static final String APPLICATION_XHTML_XML = "application/xhtml+xml";
     /**
      * A {@link MediaType} constant representing {@value #APPLICATION_XHTML_XML} media type.
      */
-    public final static MediaType APPLICATION_XHTML_XML_TYPE = new MediaType("application", "xhtml+xml");
+    public static final MediaType APPLICATION_XHTML_XML_TYPE = new MediaType("application", "xhtml+xml");
     /**
      * A {@code String} constant representing {@value #APPLICATION_SVG_XML} media type.
      */
-    public final static String APPLICATION_SVG_XML = "application/svg+xml";
+    public static final String APPLICATION_SVG_XML = "application/svg+xml";
     /**
      * A {@link MediaType} constant representing {@value #APPLICATION_SVG_XML} media type.
      */
-    public final static MediaType APPLICATION_SVG_XML_TYPE = new MediaType("application", "svg+xml");
+    public static final MediaType APPLICATION_SVG_XML_TYPE = new MediaType("application", "svg+xml");
     /**
      * A {@code String} constant representing {@value #APPLICATION_JSON} media type.
      */
-    public final static String APPLICATION_JSON = "application/json";
+    public static final String APPLICATION_JSON = "application/json";
     /**
      * A {@link MediaType} constant representing {@value #APPLICATION_JSON} media type.
      */
-    public final static MediaType APPLICATION_JSON_TYPE = new MediaType("application", "json");
+    public static final MediaType APPLICATION_JSON_TYPE = new MediaType("application", "json");
     /**
      * A {@code String} constant representing {@value #APPLICATION_FORM_URLENCODED} media type.
      */
-    public final static String APPLICATION_FORM_URLENCODED = "application/x-www-form-urlencoded";
+    public static final String APPLICATION_FORM_URLENCODED = "application/x-www-form-urlencoded";
     /**
      * A {@link MediaType} constant representing {@value #APPLICATION_FORM_URLENCODED} media type.
      */
-    public final static MediaType APPLICATION_FORM_URLENCODED_TYPE = new MediaType("application", "x-www-form-urlencoded");
+    public static final MediaType APPLICATION_FORM_URLENCODED_TYPE = new MediaType("application", "x-www-form-urlencoded");
     /**
      * A {@code String} constant representing {@value #MULTIPART_FORM_DATA} media type.
      */
-    public final static String MULTIPART_FORM_DATA = "multipart/form-data";
+    public static final String MULTIPART_FORM_DATA = "multipart/form-data";
     /**
      * A {@link MediaType} constant representing {@value #MULTIPART_FORM_DATA} media type.
      */
-    public final static MediaType MULTIPART_FORM_DATA_TYPE = new MediaType("multipart", "form-data");
+    public static final MediaType MULTIPART_FORM_DATA_TYPE = new MediaType("multipart", "form-data");
     /**
      * A {@code String} constant representing {@value #APPLICATION_OCTET_STREAM} media type.
      */
-    public final static String APPLICATION_OCTET_STREAM = "application/octet-stream";
+    public static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
     /**
      * A {@link MediaType} constant representing {@value #APPLICATION_OCTET_STREAM} media type.
      */
-    public final static MediaType APPLICATION_OCTET_STREAM_TYPE = new MediaType("application", "octet-stream");
+    public static final MediaType APPLICATION_OCTET_STREAM_TYPE = new MediaType("application", "octet-stream");
     /**
      * A {@code String} constant representing {@value #TEXT_PLAIN} media type.
      */
-    public final static String TEXT_PLAIN = "text/plain";
+    public static final String TEXT_PLAIN = "text/plain";
     /**
      * A {@link MediaType} constant representing {@value #TEXT_PLAIN} media type.
      */
-    public final static MediaType TEXT_PLAIN_TYPE = new MediaType("text", "plain");
+    public static final MediaType TEXT_PLAIN_TYPE = new MediaType("text", "plain");
     /**
      * A {@code String} constant representing {@value #TEXT_XML} media type.
      */
-    public final static String TEXT_XML = "text/xml";
+    public static final String TEXT_XML = "text/xml";
     /**
      * A {@link MediaType} constant representing {@value #TEXT_XML} media type.
      */
-    public final static MediaType TEXT_XML_TYPE = new MediaType("text", "xml");
+    public static final MediaType TEXT_XML_TYPE = new MediaType("text", "xml");
     /**
      * A {@code String} constant representing {@value #TEXT_HTML} media type.
      */
-    public final static String TEXT_HTML = "text/html";
+    public static final String TEXT_HTML = "text/html";
     /**
      * A {@link MediaType} constant representing {@value #TEXT_HTML} media type.
      */
-    public final static MediaType TEXT_HTML_TYPE = new MediaType("text", "html");
+    public static final MediaType TEXT_HTML_TYPE = new MediaType("text", "html");
     /**
      * {@link String} representation of Server sent events media type. ("{@value}").
      */
@@ -224,19 +224,20 @@ public class MediaType {
         this(MEDIA_TYPE_WILDCARD, MEDIA_TYPE_WILDCARD, null, null);
     }
 
-    private MediaType(final String type, final String subtype, final String charset, Map<String, String> parameterMap) {
+    private MediaType(final String type, final String subtype, final String charset, final Map<String, String> parameterMap) {
 
         this.type = type == null ? MEDIA_TYPE_WILDCARD : type;
         this.subtype = subtype == null ? MEDIA_TYPE_WILDCARD : subtype;
 
-        if (parameterMap == null) {
-            parameterMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        Map<String, String> map = parameterMap;
+        if (map == null) {
+            map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         }
 
         if (charset != null && !charset.isEmpty()) {
-            parameterMap.put(CHARSET_PARAMETER, charset);
+            map.put(CHARSET_PARAMETER, charset);
         }
-        this.parameters = Collections.unmodifiableMap(parameterMap);
+        this.parameters = Collections.unmodifiableMap(map);
         this.hash = Objects.hash(this.type.toLowerCase(), this.subtype.toLowerCase(), this.parameters);
     }
 

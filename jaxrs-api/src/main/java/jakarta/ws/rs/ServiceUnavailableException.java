@@ -16,14 +16,13 @@
 
 package jakarta.ws.rs;
 
-import static jakarta.ws.rs.core.HttpHeaders.RETRY_AFTER;
-import static jakarta.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
-
 import java.util.Date;
 
-import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.RuntimeDelegate;
+
+import static jakarta.ws.rs.core.HttpHeaders.RETRY_AFTER;
+import static jakarta.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 
 /**
  * A runtime exception indicating that the requested resource
@@ -187,8 +186,8 @@ public class ServiceUnavailableException extends ServerErrorException {
     }
 
     /**
-     * Check if the underlying response contains the information on when is it possible to {@link HttpHeaders#RETRY_AFTER
-     * retry the request}.
+     * Check if the underlying response contains the information on when is it possible to
+     * {@link jakarta.ws.rs.core.HttpHeaders#RETRY_AFTER} retry the request.
      *
      * @return {@code true} in case the retry time is specified in the underlying response, {@code false} otherwise.
      */

@@ -62,6 +62,9 @@ import jakarta.ws.rs.core.UriBuilder;
  */
 public final class ExternalConfigJavaSeBootstrapExample {
 
+    private ExternalConfigJavaSeBootstrapExample() {
+    }
+
     /**
      * Runs this example.
      *

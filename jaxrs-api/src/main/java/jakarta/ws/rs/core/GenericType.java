@@ -170,8 +170,8 @@ public class GenericType<T> {
             final Class<?> componentRawType = getClass(array.getGenericComponentType());
             return getArrayClass(componentRawType);
         }
-        throw new IllegalArgumentException("Type parameter " + type.toString() + " not a class or " +
-                "parameterized type whose raw type is a class");
+        throw new IllegalArgumentException("Type parameter " + type.toString()
+                + " not a class or parameterized type whose raw type is a class");
     }
 
     /**

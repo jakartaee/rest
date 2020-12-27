@@ -20,6 +20,15 @@ and MAY be annotated with `@Provider` for automatic discovery purposes;
 the integration of pre-packaged providers into the JAX-RS runtime is
 implementation dependent.
 
+[[extensions]]
+Providers MAY be annotated with `@Extension` to declare it as an
+extension of the runtime.
+
+Compatible products MUST automatically register a class in
+`jakarta.ws.rs.core.Configuration` runtime configurations if the
+class is a _provider class_ for the extension _service type_ according
+to the rules set out in the description of `ServiceLoader`.
+
 This chapter introduces some of the basic JAX-RS providers; other
 providers are introduced in Chapter <<client_api>> and Chapter
 <<filters_and_interceptors>>.

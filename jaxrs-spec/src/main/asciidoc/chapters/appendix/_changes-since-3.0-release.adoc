@@ -12,7 +12,7 @@
 === Changes Since 3.0 Release
 
 * <<extensions>>: Added requirement that JAX-RS implementations MUST load
-`Extension`s using the `ServiceLoader` mechanism.
+`Extension` implementations using the `ServiceLoader` mechanism.
 * <<exceptionmapper>>: Added requirement that JAX-RS implementations have 
 default exception mappers.
 * <<resource_field>>: Array types may be specified for `@CookieParam`,

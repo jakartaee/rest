@@ -54,7 +54,9 @@ public class Cookie {
      * @param domain the host domain for which the cookie is valid.
      * @param version the version of the specification to which the cookie complies.
      * @throws IllegalArgumentException if name is {@code null}.
+     * @deprecated This constructor will be removed in a future version. Please use {@link Cookie.Builder} instead.
      */
+    @Deprecated
     public Cookie(final String name, final String value, final String path, final String domain, final int version)
             throws IllegalArgumentException {
         if (name == null) {
@@ -75,7 +77,9 @@ public class Cookie {
      * @param path the URI path for which the cookie is valid.
      * @param domain the host domain for which the cookie is valid.
      * @throws IllegalArgumentException if name is {@code null}.
+     * @deprecated This constructor will be removed in a future version. Please use {@link Cookie.Builder} instead.
      */
+    @Deprecated
     public Cookie(final String name, final String value, final String path, final String domain)
             throws IllegalArgumentException {
         this(name, value, path, domain, DEFAULT_VERSION);
@@ -87,7 +91,9 @@ public class Cookie {
      * @param name the name of the cookie.
      * @param value the value of the cookie.
      * @throws IllegalArgumentException if name is {@code null}.
+     * @deprecated This constructor will be removed in a future version. Please use {@link Cookie.Builder} instead.
      */
+    @Deprecated
     public Cookie(final String name, final String value)
             throws IllegalArgumentException {
         this(name, value, null, null);
@@ -249,14 +255,6 @@ public class Cookie {
      *         .domain("domain.com")
      *         .build();
      * </pre>
-     * <p>
-     * It should be preferred over any {@code Cookie} telescoping constructors that have following disadvantages:
-     * <ul>
-     * <li>code not easy to read: the {@code Cookie} constructors have multiple parameters of the same type
-     * and it is difficult to determine their meaning without checking the constructor signature.</li>
-     * <li>force to pass optional parameters with {@code null} or default value even if you don't need them</li>
-     * </ul>
-     * <p>
      *
      * @since 3.1
      */
@@ -278,7 +276,7 @@ public class Cookie {
      *
      * @since 3.1
      */
-    public static abstract class AbstractCookieBuilder<T extends AbstractCookieBuilder<T>> {
+    public static abstract class AbstractCookieBuilder<SELF extends AbstractCookieBuilder<SELF>> {
 
         private final String name;
 
@@ -302,10 +300,9 @@ public class Cookie {
          * @param value the value of the cookie.
          * @return the updated builder instance.
          */
-        @SuppressWarnings("unchecked")
-        public T value(String value) {
+        public SELF value(String value) {
             this.value = value;
-            return (T) this;
+            return self();
         }
 
         /**
@@ -314,10 +311,9 @@ public class Cookie {
          * @param version the version of the specification to which the cookie complies.
          * @return the updated builder instance.
          */
-        @SuppressWarnings("unchecked")
-        public T version(int version) {
+        public SELF version(int version) {
             this.version = version;
-            return (T) this;
+            return self();
         }
 
         /**
@@ -326,10 +322,9 @@ public class Cookie {
          * @param path the URI path for which the cookie is valid.
          * @return the updated builder instance.
          */
-        @SuppressWarnings("unchecked")
-        public T path(String path) {
+        public SELF path(String path) {
             this.path = path;
-            return (T) this;
+            return self();
         }
 
         /**
@@ -338,11 +333,16 @@ public class Cookie {
          * @param domain the host domain for which the cookie is valid.
          * @return the updated builder instance.
          */
-        @SuppressWarnings("unchecked")
-        public T domain(String domain) {
+        public SELF domain(String domain) {
             this.domain = domain;
-            return (T) this;
+            return self();
         }
+
+        @SuppressWarnings("unchecked")
+        private SELF self() {
+            return (SELF) this;
+        }
+
         /**
          * Build a new {@link Cookie} instance using all the configuration previously specified in this builder.
          *

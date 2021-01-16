@@ -16,16 +16,15 @@
 
 package jakarta.ws.rs.core;
 
+import jakarta.ws.rs.core.NewCookie.SameSite;
+import java.util.Date;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Date;
-import jakarta.ws.rs.core.NewCookie.SameSite;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class NewCookieTest extends BaseDelegateTest {
 

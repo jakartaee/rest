@@ -82,7 +82,7 @@ public class CookieTest extends BaseDelegateTest {
         }
 
         try {
-			new Cookie(null, "value", "path", "domain");
+            new Cookie(null, "value", "path", "domain");
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
         }

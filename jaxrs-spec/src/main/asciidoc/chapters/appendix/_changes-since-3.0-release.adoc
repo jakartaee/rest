@@ -13,8 +13,10 @@
 
 * <<extensions>>: Added requirement that JAX-RS implementations MUST load
 `Extension` implementations using the `ServiceLoader` mechanism.
+* <<se-bootstrap>>: Added portable HTTP server bootstrapping on Java SE.
 * <<exceptionmapper>>: Added requirement that JAX-RS implementations have 
 default exception mappers.
 * <<resource_field>>: Array types may be specified for `@CookieParam`,
 `@FormParam`, `@HeaderParam`, `@MatrixParam` and `@QueryParam` parameters.
 * Deprecated Link.JaxbLink and Link.JaxbAdapter inner classes.
+* New method `#hasProperty(String)` wherever `#getProperty(String)` exists

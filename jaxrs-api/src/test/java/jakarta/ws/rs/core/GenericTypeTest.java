@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,7 +16,8 @@
 
 package jakarta.ws.rs.core;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -24,7 +25,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Type literal construction unit tests.
@@ -90,12 +91,12 @@ public class GenericTypeTest {
         assertEquals(arrayListOfStringsType, type.getType());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testInvalidGenericType() throws NoSuchMethodException {
         ArrayList<String> al = new ArrayList<String>();
         Method addMethod = al.getClass().getMethod("add", Object.class);
         final Type type = addMethod.getGenericParameterTypes()[0];
-        new GenericType<>(type);
+        assertThrows(IllegalArgumentException.class, () -> new GenericType<>(type));
     }
 
     @Test
@@ -119,9 +120,9 @@ public class GenericTypeTest {
         }.getRawType());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNullGenericType() {
-        new GenericType<>(null);
+        assertThrows(IllegalArgumentException.class, () -> new GenericType<>(null));
     }
 
     // Regression test for JAX_RS_SPEC-274

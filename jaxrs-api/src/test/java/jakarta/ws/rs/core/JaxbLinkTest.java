@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,7 +18,7 @@ package jakarta.ws.rs.core;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -29,7 +29,7 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 import javax.xml.transform.stream.StreamSource;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
@@ -63,9 +63,9 @@ public class JaxbLinkTest {
         final Link.JaxbLink actual = unmarshaller.unmarshal(new StreamSource(
                 new StringReader(writer.toString())), Link.JaxbLink.class).getValue();
 
-        assertEquals("Unmarshalled JaxbLink instance not equal to the marshalled one.", expected, actual);
-        assertEquals("Unmarshalled JaxbLink instance URI not equal to original.", expectedUri, actual.getUri());
-        assertEquals("Unmarshalled JaxbLink instance params not equal to original.", expectedParams, actual.getParams());
+        assertEquals(expected, actual, "Unmarshalled JaxbLink instance not equal to the marshalled one.");
+        assertEquals(expectedUri, actual.getUri(), "Unmarshalled JaxbLink instance URI not equal to original.");
+        assertEquals(expectedParams, actual.getParams(), "Unmarshalled JaxbLink instance params not equal to original.");
     }
 
     @Test

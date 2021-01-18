@@ -2,7 +2,7 @@ package jakarta.ws.rs;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -13,9 +13,9 @@ import java.util.concurrent.CompletionStage;
 
 import javax.net.ssl.SSLContext;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jakarta.ws.rs.SeBootstrap;
 import jakarta.ws.rs.SeBootstrap.Configuration;
@@ -35,7 +35,7 @@ public final class SeBootstrapTest {
      * Installs a new {@code RuntimeDelegate} mock before each test case, as some test cases need to find a pristine
      * <em>installed</em> RuntimeDelegate.
      */
-    @Before
+    @BeforeEach
     public final void setUp() {
         RuntimeDelegate.setInstance(mock(RuntimeDelegate.class));
     }
@@ -44,7 +44,7 @@ public final class SeBootstrapTest {
      * Uninstalls the {@code RuntimeDelegate} mock after each test case to be sure that the <em>next</em> test case does not
      * use a possibly cluttered instance.
      */
-    @After
+    @AfterEach
     public final void tearDown() {
         RuntimeDelegate.setInstance(null);
     }

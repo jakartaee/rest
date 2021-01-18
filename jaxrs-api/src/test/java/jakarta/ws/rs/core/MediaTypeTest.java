@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -17,13 +17,13 @@
 package jakarta.ws.rs.core;
 
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.hamcrest.Description;
 import org.hamcrest.DiagnosingMatcher;
 import org.hamcrest.Matcher;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
@@ -39,14 +39,14 @@ public class MediaTypeTest {
      */
     @Test
     public void testWithCharset() {
-        assertEquals("Unexpected produced media type content.",
-                "UTF-8",
+        assertEquals("UTF-8",
                 MediaType.APPLICATION_XML_TYPE.withCharset("UTF-8")
-                        .getParameters().get(MediaType.CHARSET_PARAMETER));
-        assertEquals("Unexpected produced media type content.",
-                "ISO-8859-13",
+                        .getParameters().get(MediaType.CHARSET_PARAMETER),
+                "Unexpected produced media type content.");
+        assertEquals("ISO-8859-13",
                 MediaType.APPLICATION_XML_TYPE.withCharset("UTF-8").withCharset("ISO-8859-13")
-                        .getParameters().get(MediaType.CHARSET_PARAMETER));
+                        .getParameters().get(MediaType.CHARSET_PARAMETER),
+                "Unexpected produced media type content.");
     }
 
     /**

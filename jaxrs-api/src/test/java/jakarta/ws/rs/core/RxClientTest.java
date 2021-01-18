@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutorService;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.CompletionStageRxInvoker;
@@ -42,7 +42,7 @@ public class RxClientTest {
      * without any arguments.
      */
     @Test
-    @Ignore
+    @Disabled
     public void testRxClient() {
         CompletionStage<List<String>> cs = client.target("remote/forecast/{destination}")
                 .resolveTemplate("destination", "mars")
@@ -61,7 +61,7 @@ public class RxClientTest {
      * {@link jakarta.ws.rs.client.Invocation.Builder#rx(Class)}.
      */
     @Test
-    @Ignore
+    @Disabled
     public void testRxClient2() {
         Client rxClient = client.register(CompletionStageRxInvokerProvider.class, RxInvokerProvider.class);
 
@@ -82,7 +82,7 @@ public class RxClientTest {
      * {@link jakarta.ws.rs.client.Invocation.Builder#rx(Class)}.
      */
     @Test
-    @Ignore
+    @Disabled
     public void testRxClient3() {
         Client rxClient = client.register(CompletionStageRxInvokerProvider.class, RxInvokerProvider.class);
 

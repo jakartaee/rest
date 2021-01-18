@@ -17,11 +17,11 @@
 package jakarta.ws.rs.core;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
@@ -29,12 +29,12 @@ import static org.mockito.Mockito.*;
 
 public class EntityTagTest {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         RuntimeDelegate.setInstance(mock(RuntimeDelegate.class));
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         RuntimeDelegate.setInstance(null);
     }

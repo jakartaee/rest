@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -19,9 +19,9 @@ package jakarta.ws.rs.core;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
@@ -32,12 +32,12 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  */
 public class CacheControlTest {
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         RuntimeDelegate.setInstance(new RuntimeDelegateStub());
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         RuntimeDelegate.setInstance(null);
     }

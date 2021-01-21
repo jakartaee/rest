@@ -160,6 +160,14 @@ public class MediaType {
      * A {@link MediaType} constant representing {@value #APPLICATION_JSON_PATCH_JSON} media type.
      */
     public static final MediaType APPLICATION_JSON_PATCH_JSON_TYPE = new MediaType("application", "json-patch+json");
+    /**
+     * A {@code String} constant representing {@value #TEXT_MARKDOWN} media type.
+     */
+    public final static String TEXT_MARKDOWN = "text/markdown";
+    /**
+     * A {@link MediaType} constant representing {@value #TEXT_MARKDOWN} media type.
+     */
+    public final static MediaType TEXT_MARKDOWN_TYPE = new MediaType("text", "markdown");
 
     /**
      * Creates a new instance of {@code MediaType} by parsing the supplied string.

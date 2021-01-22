@@ -41,7 +41,7 @@ import jakarta.ws.rs.core.UriBuilderException;
 public final class UriBuilderIT {
 
     /**
-     * Verifies that a valid can be created from scratch.
+     * Verifies that a valid instance can be created from scratch.
      * 
      * @throws ExecutionException   if the instance didn't boot correctly
      * @throws InterruptedException if the test took much longer than usually
@@ -61,7 +61,7 @@ public final class UriBuilderIT {
     }
 
     /**
-     * Verifies that an no invalid URI can be created from scratch.
+     * Verifies that no invalid URI can be created from scratch.
      * 
      * @throws ExecutionException   if the instance didn't boot correctly
      * @throws InterruptedException if the test took much longer than usually

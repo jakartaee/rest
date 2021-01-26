@@ -16,13 +16,13 @@
 
 package jakarta.ws.rs.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
@@ -34,12 +34,12 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  */
 public final class NewCookieBuilderTest {
 
-    @Before
+    @BeforeEach
     public final void setUp() throws Exception {
         RuntimeDelegate.setInstance(new RuntimeDelegateStub());
     }
 
-    @After
+    @AfterEach
     public final void tearDown() throws Exception {
         RuntimeDelegate.setInstance(null);
     }

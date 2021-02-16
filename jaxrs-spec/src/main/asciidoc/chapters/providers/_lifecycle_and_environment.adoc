@@ -29,9 +29,20 @@ all of the lifecycle options provided by that framework.
 ==== Automatic Discovery
 
 The annotation `@Provider` is used by a JAX-RS runtime to automatically
-discover provider classes via mechanisms such as class scanning. A
-JAX-RS implementation that supports automatic discovery of classes MUST
-process only those classes that are annotated with `@Provider`.
+discover provider classes via mechanisms such as class scanning.
+
+[[extensions]]
+Providers MAY implement the `Extension` interface to declare it as an
+extension of the runtime.
+Compatible products MUST automatically register a class in
+`jakarta.ws.rs.core.Configuration` runtime configurations if the
+class is a _provider class_ for the `Extension` _service type_ according
+to the rules set out in the description of `ServiceLoader`.
+
+A JAX-RS implementation that supports automatic discovery of classes MUST
+process only those classes that are annotated with `@Provider` or are
+registered via the `Extension` mechanism described above.
+
 
 [[provider_class_constructor]]
 ==== Constructors

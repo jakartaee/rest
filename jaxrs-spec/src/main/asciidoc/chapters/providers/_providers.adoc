@@ -16,18 +16,9 @@ such as filtering requests, converting representations into Java
 objects, mapping exceptions to responses, etc. A provider can be either
 _pre-packaged_ in the JAX-RS runtime or supplied by an application. All
 _application-supplied_ providers implement interfaces in the JAX-RS API
-and MAY be annotated with `@Provider` for automatic discovery purposes;
-the integration of pre-packaged providers into the JAX-RS runtime is
-implementation dependent.
-
-[[extensions]]
-Providers MAY implement the `Extension` interface to declare it as an
-extension of the runtime.
-
-Compatible products MUST automatically register a class in
-`jakarta.ws.rs.core.Configuration` runtime configurations if the
-class is a _provider class_ for the `Extension` _service type_ according
-to the rules set out in the description of `ServiceLoader`.
+and MAY be annotated with `@Provider` or implement the `Extension`
+interface for automatic discovery purposes; the integration of
+pre-packaged providers into the JAX-RS runtime is implementation dependent.
 
 This chapter introduces some of the basic JAX-RS providers; other
 providers are introduced in Chapter <<client_api>> and Chapter

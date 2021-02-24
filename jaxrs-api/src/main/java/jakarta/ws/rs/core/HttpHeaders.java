@@ -33,11 +33,12 @@ import java.util.Map;
 public interface HttpHeaders {
 
     /**
-     * Get the values of a HTTP request header. The returned List is read-only. This is a shortcut for
+     * Get the values of a HTTP request header if the header exists on the current request. The returned value will be
+     * a read-only List if the specified header exists or {@code null} if it does not. This is a shortcut for
      * {@code getRequestHeaders().get(name)}.
      *
      * @param name the header name, case insensitive.
-     * @return a read-only list of header values.
+     * @return a read-only list of header values if the specified header exists, otherwise {@code null}.
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
     public List<String> getRequestHeader(String name);

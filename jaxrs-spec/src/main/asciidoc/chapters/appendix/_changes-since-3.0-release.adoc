@@ -11,6 +11,8 @@
 [[changes-since-3.0-release]]
 === Changes Since 3.0 Release
 
+* <<services>>: Added requirement that JAX-RS implementations MUST
+automatically register certain service providers.
 * <<se-bootstrap>>: Added portable HTTP server bootstrapping on Java SE.
 * <<exceptionmapper>>: Added requirement that JAX-RS implementations have 
 default exception mappers.

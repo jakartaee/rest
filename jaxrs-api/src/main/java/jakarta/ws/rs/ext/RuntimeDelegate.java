@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -249,4 +249,17 @@ public abstract class RuntimeDelegate {
      * instance}.
      */
     public abstract CompletionStage<Instance> bootstrap(Application application, SeBootstrap.Configuration configuration);
+
+    /**
+     * Create a new instance of a {@link jakarta.ws.rs.ext.Part.Builder}.
+     * <p>
+     * <em>This method is not intended to be invoked by applications. Call {@link Part#newBuilder(String)} instead.</em>
+     * </p>
+     * 
+     * @param partName name for this part within the multipart body.
+     * @return new {@code PartBuilder} instance with specified part name
+     * @throws java.lang.IllegalArgumentException if {@code partName} is {@code null}.
+     * @since 3.1
+     */
+    public abstract Part.Builder createPartBuilder(String partName) throws IllegalArgumentException;
 }

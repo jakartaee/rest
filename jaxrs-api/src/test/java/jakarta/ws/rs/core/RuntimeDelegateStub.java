@@ -26,6 +26,7 @@ import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.Link.Builder;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Variant.VariantListBuilder;
+import jakarta.ws.rs.ext.Part;
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
 public class RuntimeDelegateStub extends RuntimeDelegate {
@@ -67,6 +68,11 @@ public class RuntimeDelegateStub extends RuntimeDelegate {
 
     @Override
     public CompletionStage<Instance> bootstrap(final Application application, final SeBootstrap.Configuration configuration) {
+        return null;
+    }
+
+    @Override
+    public Part.Builder createPartBuilder(String partName) {
         return null;
     }
 }

@@ -37,15 +37,19 @@ import jakarta.ws.rs.core.MultivaluedMap;
  * <pre>
  * Client c = ClientBuilder.newClient();
  * WebTarget target = c.target(someURL);
- * List&lt;Part&gt; parts = Arrays.asList(Part.newBuilder("name1").fileName("file1.doc").entityStream(stream1).build(),
- *         Part.newBuilder("name1").fileName("file2.doc").entityStream(stream2).build(),
- *         Part.newBuilder("name1").fileName("file3.doc").entityStream(stream3).build());
+ * List&lt;Part&gt; parts = Arrays.asList(Part.newBuilder("name1").fileName("file1.doc").content(stream1).build(),
+ *         Part.newBuilder("name1").fileName("file2.doc").content(stream2).build(),
+ *         Part.newBuilder("name1").fileName("file3.doc").content(stream3).build());
  * Entity entity = Entity.entity(parts, MediaType.MULTIPART_FORM_DATA);
  * Response r = target.request().post(entity);
  * </pre>
  * 
- * Note that when building a Part, the name and entityStream are required.
+ * Note that when building a Part, the name and content are required.
  * Other properties such as headers, file name, and media type are optional.
+ * 
+ * It is the responsibility of the implementation code to close the content input streams when sending the multipart
+ * content. Closing the stream before the implementation has sent it could result in unexpected exceptions. It is the
+ * responsibility of the calling code to close the stream when receiving the multipart content.
  * 
  * @since 3.1
  */
@@ -84,9 +88,12 @@ public interface Part {
      * and is accessed as a stream to avoid loading potentially large amounts of
      * data into the heap.
      * 
+     * It is the responsibility of the calling code to close this stream after
+     * receiving it.
+     * 
      * @return an {@code InputStream} representing the content of this part
      */
-    InputStream getEntityStream();
+    InputStream getContent();
 
     /**
      * Returns an immutable multivalued map of headers for this specific part.
@@ -165,30 +172,34 @@ public interface Part {
 
         /**
          * Sets the content for this part. This method or the convenience method,
-         * {@link #entityStream(String, InputStream)} must be invoked before invoking the
+         * {@link #content(String, InputStream)} must be invoked before invoking the
          * {@link #build()} method.
          * 
-         * @param entityStream {@code InputStream} of the content of this part
+         * The {@code InputStream} will be closed by the implementation code after
+         * sending the multipart data. Closing the stream before it is sent could
+         * result in unexpected behavior.
+         * 
+         * @param contentStream {@code InputStream} of the content of this part
          * @return the updated builder
-         * @throws IllegalArgumentException if {@code entityStream} is {@code null}
+         * @throws IllegalArgumentException if {@code content} is {@code null}
          */
-        public Builder entityStream(InputStream entityStream) throws IllegalArgumentException;
+        public Builder content(InputStream contentStream) throws IllegalArgumentException;
 
         /**
-         * Convenience method, equivalent to calling {@code fileName(fileName).entityStream(entityStream)}.
+         * Convenience method, equivalent to calling {@code fileName(fileName).content(contentStream)}.
          * 
          * @param fileName the filename of the part.
-         * @param entityStream the content stream of the part.
+         * @param content the content stream of the part.
          * @return the updated builder.
          * @throws IllegalArgumentException if either parameter is {@code null}.
          */
-        public Builder entityStream(String fileName, InputStream entityStream) throws IllegalArgumentException;
+        public Builder content(String fileName, InputStream contentStream) throws IllegalArgumentException;
 
         /**
          * Builds a new Part instance using the provided property values.
          * 
          * @return {@link Part} instance built from the provided property values.
-         * @throws IllegalStateException if the entityStream was not specified.
+         * @throws IllegalStateException if the content was not specified.
          */
         public Part build() throws IllegalStateException;
     }

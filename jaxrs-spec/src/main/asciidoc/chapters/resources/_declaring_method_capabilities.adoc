@@ -134,7 +134,7 @@ instance. For more information see <<determine_response_type>>.
 ==== Special handling for consuming multipart/form-data media types
 
 The `multipart/form-data` media type enables requests to send multiple
-entities (parts) as a single entity. Each part contains it's own set of
+entities (parts) as a single entity. Each part contains its own set of
 headers, media type and content. There are a few different ways to
 consume these requests in a resource method. First, a resource method
 may contain an entity parameter of type, `List<Part>`. For example:
@@ -150,7 +150,7 @@ public class WidgetsResource3 {
         for (Part part : parts) {
             String name = part.getName();
             Optional<String> fileName = part.getFileName();
-            InputStream is = part.getEntityStream();
+            InputStream is = part.getContent();
             MultivaluedMap<String, String> partHeaders = part.getHeaders();
             MediaType mediaType = part.getMediaType();
             doSomethingWithPart(name, fileName, is, partHeaders, mediaType);

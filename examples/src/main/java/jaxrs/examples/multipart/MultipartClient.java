@@ -8,6 +8,7 @@
 package jaxrs.examples.multipart;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,7 +42,7 @@ public class MultipartClient {
         String filename = file.getFileName().toString();
         try {
             return Part.newBuilder(filename)
-                       .entityStream(filename, Files.newInputStream(file))
+                       .content(filename, Files.newInputStream(file))
                        .mediaType("application/pdf")
                        .build();
         } catch (IOException ioex) {
@@ -56,8 +57,10 @@ public class MultipartClient {
         Response response = target.request(MediaType.MULTIPART_FORM_DATA).get();
         List<Part> parts = response.readEntity(new GenericType<List<Part>>() {});
         return parts.stream().map(part -> {
-            try {
-                return Files.createFile(Paths.get(part.getFileName().orElse(part.getName() + ".pdf")));
+            try (InputStream is = part.getContent()) {
+                Path file = Files.createFile(Paths.get(part.getFileName().orElse(part.getName() + ".pdf")));
+                Files.copy(is, file);
+                return file;
             } catch (IOException ioex) {
                 LOG.log(Level.WARNING, "Failed to process attachment part {0}", part);
                 return null;

@@ -10,6 +10,7 @@ package jaxrs.examples.multipart;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class MultipartResource {
         File dir = getDirectoryIfExists(dirName);
         List<Part> parts = new ArrayList<>();
         for (File f : dir.listFiles()) {
-            parts.add(Part.newBuilder(f.getName()).entityStream(f.getName(), new FileInputStream(f))
+            parts.add(Part.newBuilder(f.getName()).content(f.getName(), new FileInputStream(f))
                                                   .mediaType("application/pdf")
                                                   .build());
         }
@@ -49,7 +50,9 @@ public class MultipartResource {
             if (f.exists()) {
                 throw new WebApplicationException(409); // 409 CONFLICT
             }
-            Files.copy(p.getEntityStream(), f.toPath());
+            try (InputStream content = p.getContent()) {
+                Files.copy(content, f.toPath());
+            }
         }
         return Response.ok().build();
     }

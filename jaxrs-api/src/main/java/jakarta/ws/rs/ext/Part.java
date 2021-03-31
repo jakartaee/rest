@@ -20,7 +20,7 @@ import jakarta.ws.rs.core.MultivaluedMap;
  * {@code boundary} parameter indicating where one part ends the next may begin.
  * <p>
  * Multipart entities may be received in a resource method as a collection of
- * parts (ex: {@code List<Part>}) or as a form parameter (ex:
+ * parts (e.g. {@code List<Part>}) or as a form parameter (ex:
  * {@code @FormParam("part1Name") Part part1}).
  * </p>
  * <p>

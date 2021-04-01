@@ -41,7 +41,7 @@ public class MultipartClient {
     private Part toPart(Path file) {
         String filename = file.getFileName().toString();
         try {
-            return Part.newBuilder(filename)
+            return Part.withName(filename)
                        .content(filename, Files.newInputStream(file))
                        .mediaType("application/pdf")
                        .build();

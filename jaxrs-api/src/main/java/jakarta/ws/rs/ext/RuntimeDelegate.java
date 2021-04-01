@@ -253,7 +253,7 @@ public abstract class RuntimeDelegate {
     /**
      * Create a new instance of a {@link jakarta.ws.rs.ext.Part.Builder}.
      * <p>
-     * <em>This method is not intended to be invoked by applications. Call {@link Part#newBuilder(String)} instead.</em>
+     * <em>This method is not intended to be invoked by applications. Call {@link Part#withName(String)} instead.</em>
      * </p>
      * 
      * @param partName name for this part within the multipart body.

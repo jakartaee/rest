@@ -184,3 +184,7 @@ type. The `InputStream` and `String` parameter types will only provide the
 content of the part. Note that parts of a multipart entity can be quite large,
 so care should be taken when using `String` parameter types as that will load
 the entire content of the part into the Java heap.
+
+When converting the part's content, the implementation MUST use the encoding
+charset specified in the part's `Content-Type` header, or `UTF-8` if the
+charset is not specified in the header.

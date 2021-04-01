@@ -37,9 +37,9 @@ import jakarta.ws.rs.core.MultivaluedMap;
  * <pre>
  * Client c = ClientBuilder.newClient();
  * WebTarget target = c.target(someURL);
- * List&lt;Part&gt; parts = Arrays.asList(Part.newBuilder("name1").fileName("file1.doc").content(stream1).build(),
- *         Part.newBuilder("name1").fileName("file2.doc").content(stream2).build(),
- *         Part.newBuilder("name1").fileName("file3.doc").content(stream3).build());
+ * List&lt;Part&gt; parts = Arrays.asList(Part.withName("name1").fileName("file1.doc").content(stream1).build(),
+ *         Part.withName("name1").fileName("file2.doc").content(stream2).build(),
+ *         Part.withName("name1").fileName("file3.doc").content(stream3).build());
  * Entity entity = Entity.entity(parts, MediaType.MULTIPART_FORM_DATA);
  * Response r = target.request().post(entity);
  * </pre>
@@ -61,8 +61,21 @@ public interface Part {
      * @param partName name of the part to create within the multipart entity
      * @return {@link Builder} for building new {@link Part} instances
      */
-    static Builder newBuilder(String partName) {
+    static Builder withName(String partName) {
         return RuntimeDelegate.getInstance().createPartBuilder(partName);
+    }
+
+    /**
+     * Creates a new {@code Part.Builder} instance that sets the part {@code name} and
+     * {@code fileName} to the passed in {@code partAndFileName} value.
+     * <p>
+     * Logically, this is the same as {@code Part.withName(x).fileName(x)}.
+     * </p>
+     * @param partAndFileName name and filename of the part to create within the multipart entity
+     * @return {@link Builder} for building new {@link Part} instances
+     */
+    static Builder withFileName(String partAndFileName) {
+        return RuntimeDelegate.getInstance().createPartBuilder(partAndFileName).fileName(partAndFileName);
     }
 
     /**
@@ -179,11 +192,11 @@ public interface Part {
          * sending the multipart data. Closing the stream before it is sent could
          * result in unexpected behavior.
          * 
-         * @param contentStream {@code InputStream} of the content of this part
+         * @param content {@code InputStream} of the content of this part
          * @return the updated builder
          * @throws IllegalArgumentException if {@code content} is {@code null}
          */
-        public Builder content(InputStream contentStream) throws IllegalArgumentException;
+        public Builder content(InputStream content) throws IllegalArgumentException;
 
         /**
          * Convenience method, equivalent to calling {@code fileName(fileName).content(contentStream)}.
@@ -193,7 +206,7 @@ public interface Part {
          * @return the updated builder.
          * @throws IllegalArgumentException if either parameter is {@code null}.
          */
-        public Builder content(String fileName, InputStream contentStream) throws IllegalArgumentException;
+        public Builder content(String fileName, InputStream content) throws IllegalArgumentException;
 
         /**
          * Builds a new Part instance using the provided property values.

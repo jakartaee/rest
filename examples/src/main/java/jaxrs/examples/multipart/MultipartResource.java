@@ -35,9 +35,9 @@ public class MultipartResource {
         File dir = getDirectoryIfExists(dirName);
         List<Part> parts = new ArrayList<>();
         for (File f : dir.listFiles()) {
-            parts.add(Part.newBuilder(f.getName()).content(f.getName(), new FileInputStream(f))
-                                                  .mediaType("application/pdf")
-                                                  .build());
+            parts.add(Part.withFileName(f.getName()).content(new FileInputStream(f))
+                                                    .mediaType("application/pdf")
+                                                    .build());
         }
         return parts;
     }

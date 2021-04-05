@@ -7,9 +7,12 @@
 *******************************************************************/
 package jakarta.ws.rs.ext;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 
@@ -107,6 +110,56 @@ public interface Part {
      * @return an {@code InputStream} representing the content of this part
      */
     InputStream getContent();
+
+    /**
+     * Converts the content stream for this part to the specified class and returns it.
+     * The implementation must convert the stream by finding a {@link MessageBodyReader}
+     * that handles the specified type as well as the {@link MediaType} of the part.
+     * If no {@link MessageBodyReader} can be found to perform the conversion, this method
+     * will throw an {@code IllegalArgumentException}.
+     * 
+     * The implementation is required to close the content stream when this method is
+     * invoked, so it may only be invoked once. Subsequent invocations will result in
+     * an {@code IllegalStateException}. Likewise this method will throw an
+     * {@code IllegalStateException} if it is called after calling {@link #getContent}
+     * or {@link #getContent(GenericType)}.
+     * 
+     * @param type the {@code Class} that the implementation should convert this part to
+     * @return an instance of the specified {@code Class} representing the content of this part
+     * @throws IllegalArgumentException if no {@link MessageBodyReader} can handle the conversion of this part to the specified type
+     * @throws IllegalStateException if this method or any of the other {@code getContent} methods has already been invoked
+     * @throws IOException if the {@link MessageBodyReader#readFrom(Class, java.lang.reflect.Type, java.lang.annotation.Annotation[], MediaType, MultivaluedMap, InputStream)}
+     * method throws an {@code IOException}
+     * @throws WebApplicationException if the {@link MessageBodyReader#readFrom(Class, java.lang.reflect.Type, java.lang.annotation.Annotation[], MediaType, MultivaluedMap, InputStream)}
+     * method throws an {@code WebApplicationException}
+     */
+    <T> T getContent(Class<T> type) throws IllegalArgumentException, IllegalStateException, IOException,
+        WebApplicationException;
+
+    /**
+     * Converts the content stream for this part to the specified type and returns it.
+     * The implementation must convert the stream by finding a {@link MessageBodyReader}
+     * that handles the specified type as well as the {@link MediaType} of the part.
+     * If no {@link MessageBodyReader} can be found to perform the conversion, this method
+     * will throw an {@code IllegalArgumentException}.
+     * 
+     * The implementation is required to close the content stream when this method is
+     * invoked, so it may only be invoked once. Subsequent invocations will result in
+     * an {@code IllegalStateException}. Likewise this method will throw an
+     * {@code IllegalStateException} if it is called after calling {@link #getContent}
+     * or {@link #getContent(Class)}.
+     * 
+     * @param type the generic type that the implementation should convert this part to
+     * @return an instance of the specified generic type representing the content of this part
+     * @throws IllegalArgumentException if no {@link MessageBodyReader} can handle the conversion of this part to the specified type
+     * @throws IllegalStateException if this method or any of the other {@code getContent} methods has already been invoked
+     * @throws IOException if the {@link MessageBodyReader#readFrom(Class, java.lang.reflect.Type, java.lang.annotation.Annotation[], MediaType, MultivaluedMap, InputStream)}
+     * method throws an {@code IOException}
+     * @throws WebApplicationException if the {@link MessageBodyReader#readFrom(Class, java.lang.reflect.Type, java.lang.annotation.Annotation[], MediaType, MultivaluedMap, InputStream)}
+     * method throws an {@code WebApplicationException}
+     */
+    <T> T getContent(GenericType<T> type) throws IllegalArgumentException, IllegalStateException, IOException,
+        WebApplicationException;
 
     /**
      * Returns an immutable multivalued map of headers for this specific part.

@@ -36,10 +36,10 @@ process only those classes that are annotated with `@Provider`.
 [[services]]
 ==== Services
 On runtime initialization, an implementation MUST discover and register certain service providers in `jakarta.ws.rs.core.Configuration` runtime configurations.
-For each service X, where X is `jakarta.ws.rs.core.Feature` or `jakarta.ws.rs.container.DynamicFeature`, the set of providers to be registered MUST be determined as follows:
+For each service X, where X is `jakarta.ws.rs.core.Feature` or `jakarta.ws.rs.container.DynamicFeature`, the set of providers to be registered MUST be determined by the method invocations below. However, when an `Application` subclass is present, and either `getClasses` or `getSingletons` returns a non-empty collection, those invocations for which the (possibly implicit) `ClassLoader` argument equals the `Application` subclass's `ClassLoader` MUST be skipped.
 
-* first, if `ServiceLoader.load(Application.class)` returns no results, register all providers discovered with `ServiceLoader.load(X.class)`
-* additionally, if `ServiceLoader.load(Application.class, X.class.getClassLoader())` returns no results, register all providers discovered with `ServiceLoader.load(X.class, X.class.getClassLoader())`
+* first, register all providers discovered with `ServiceLoader.load(X.class)`
+* additionally, register all providers discovered with `ServiceLoader.load(X.class, X.class.getClassLoader())`
 
 [[provider_class_constructor]]
 ==== Constructors

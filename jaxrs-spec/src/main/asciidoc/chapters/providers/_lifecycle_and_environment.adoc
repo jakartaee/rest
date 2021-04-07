@@ -41,6 +41,8 @@ For each service X, where X is `jakarta.ws.rs.core.Feature` or `jakarta.ws.rs.co
 * first, register all providers discovered with `ServiceLoader.load(X.class)`
 * additionally, register all providers discovered with `ServiceLoader.load(X.class, X.class.getClassLoader())`
 
+Note that the primary target audience for this, are system integrators rather than application developers. For example, it allows to write portable libraries which integrate several Jakarta EE specifications without using any implementation-specific code.
+
 [[provider_class_constructor]]
 ==== Constructors
 

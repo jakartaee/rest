@@ -163,7 +163,9 @@ public class WidgetsResource3 {
 
 Another approach is to use `@FormParam` parameters where the value in the
 annotation corresponds to the name of the part. The parameter type may be
-a `jakarta.ws.rs.ext.Part`, a `java.io.InputStream` or a `String`. Here is
+a `jakarta.ws.rs.ext.Part`, a `java.io.InputStream`, a `String`, or any type
+that can be converted to using a registered `MessageBodyReader` or
+`ParamConverter`. Here is
 an example:
 
 [source,java]
@@ -175,15 +177,16 @@ public class WidgetsResource4 {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response postWidget(@FormParam("part1Name") String part1, 
                                @FormParam("part2Name") InputStream part2,
-                               @FormParam("part3Name") Part part3) {...}
+                               @FormParam("part3Name") Part part3,
+                               @FormParam("part4Name") Widget part4) {...}
 }
 ----
 
 The only way to access the headers for a particular part is to use the `Part`
-type. The `InputStream` and `String` parameter types will only provide the
-content of the part. Note that parts of a multipart entity can be quite large,
-so care should be taken when using `String` parameter types as that will load
-the entire content of the part into the Java heap.
+type. The `InputStream`, `String`, and additional parameter types will only
+provide the content of the part. Note that parts of a multipart entity can be
+quite large, so care should be taken when using `String` parameter types as
+that will load the entire content of the part into the Java heap.
 
 When converting the part's content, the implementation MUST use the encoding
 charset specified in the part's `Content-Type` header, or `UTF-8` if the

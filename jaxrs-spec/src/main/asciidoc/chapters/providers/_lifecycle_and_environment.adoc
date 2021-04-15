@@ -35,13 +35,14 @@ process only those classes that are annotated with `@Provider`.
 
 [[services]]
 ==== Services
-On runtime initialization, an implementation MUST discover and register certain service providers in `jakarta.ws.rs.core.Configuration` runtime configurations.
-For each service X, where X is `jakarta.ws.rs.core.Feature` or `jakarta.ws.rs.container.DynamicFeature`, the set of providers to be registered MUST be determined by the method invocations below. However, when an `Application` subclass is present, and either `getClasses` or `getSingletons` returns a non-empty collection, those invocations for which the (possibly implicit) `ClassLoader` argument equals the `Application` subclass's `ClassLoader` MUST be skipped.
+On runtime initialization, an implementation MUST discover and register certain service providers in `jakarta.ws.rs.core.Configuration` runtime configurations, if and only if service loading is enabled.
+Service loading is enabled, except when there's an `Application` subclass whose `getProperties` method returns a map which contains the key `jakarta.ws.rs.loadServices` with a value of `Boolean.FALSE`.
+For each service X, where X is `jakarta.ws.rs.core.Feature` or `jakarta.ws.rs.container.DynamicFeature`, the set of providers to be registered MUST be determined as follows:
 
 * first, register all providers discovered with `ServiceLoader.load(X.class)`
 * additionally, register all providers discovered with `ServiceLoader.load(X.class, X.class.getClassLoader())`
 
-Note that the primary target audience for this, are system integrators rather than application developers. For example, it allows to write portable libraries which integrate several Jakarta EE specifications without using any implementation-specific code.
+Note that service loading allows libraries to be self-sufficient: it allows them to register what they need with the JAX-RS implementation, without intervention from the application. From the viewpoint of an application developer, this means that they do not need to understand the inner workings of their dependent libraries when overriding `getClasses`. As another example, it allows system integrators to extend the JAX-RS implementation (e.g. to provide integrations with other Jakarta EE specifications) in a completely portable manner.
 
 [[provider_class_constructor]]
 ==== Constructors

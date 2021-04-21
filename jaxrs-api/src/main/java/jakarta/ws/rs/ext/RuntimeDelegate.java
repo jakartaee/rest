@@ -251,15 +251,15 @@ public abstract class RuntimeDelegate {
     public abstract CompletionStage<Instance> bootstrap(Application application, SeBootstrap.Configuration configuration);
 
     /**
-     * Create a new instance of a {@link jakarta.ws.rs.ext.Part.Builder}.
+     * Create a new instance of a {@link jakarta.ws.rs.ext.EntityPart.Builder}.
      * <p>
-     * <em>This method is not intended to be invoked by applications. Call {@link Part#withName(String)} instead.</em>
+     * <em>This method is not intended to be invoked by applications. Call {@link EntityPart#withName(String)} instead.</em>
      * </p>
      * 
      * @param partName name for this part within the multipart body.
-     * @return new {@code PartBuilder} instance with specified part name
+     * @return new {@code EntityPart.Builder} instance with specified part name
      * @throws java.lang.IllegalArgumentException if {@code partName} is {@code null}.
      * @since 3.1
      */
-    public abstract Part.Builder createPartBuilder(String partName) throws IllegalArgumentException;
+    public abstract EntityPart.Builder createEntityPartBuilder(String partName) throws IllegalArgumentException;
 }

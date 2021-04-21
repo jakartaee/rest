@@ -17,37 +17,37 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 /**
- * A {@code Part} is one part of a multipart entity. As defined in
+ * A {@code EntityPart} is one part of a multipart entity. As defined in
  * <a href="https://tools.ietf.org/html/rfc7578">RFC 7578</a>, a multipart
  * request or response must have a content type of "multipart/form-data" with a
  * {@code boundary} parameter indicating where one part ends the next may begin.
  * <p>
  * Multipart entities may be received in a resource method as a collection of
- * parts (e.g. {@code List<Part>}) or as a form parameter (ex:
- * {@code @FormParam("part1Name") Part part1}).
+ * parts (e.g. {@code List<EntityPart>}) or as a form parameter (ex:
+ * {@code @FormParam("part1Name") EntityPart part1}).
  * </p>
  * <p>
  * Likewise, a client may receive a
- * multipart response by reading the returned entity as a collection of Parts
- * (ex: {@code response.readEntity(new GenericType<List<Part>>() {})}).
+ * multipart response by reading the returned entity as a collection of EntityParts
+ * (ex: {@code response.readEntity(new GenericType<List<EntityPart>>() {})}).
  * </p>
  * <p>
  * In order to send a multipart entity either as a client request or a response
- * from a resource method, you may create the Lists using {@code Part.Builder}.
+ * from a resource method, you may create the Lists using {@code EntityPart.Builder}.
  * For example:
  * </p>
  * 
  * <pre>
  * Client c = ClientBuilder.newClient();
  * WebTarget target = c.target(someURL);
- * List&lt;Part&gt; parts = Arrays.asList(Part.withName("name1").fileName("file1.doc").content(stream1).build(),
- *         Part.withName("name1").fileName("file2.doc").content(stream2).build(),
- *         Part.withName("name1").fileName("file3.doc").content(stream3).build());
+ * List&lt;EntityPart&gt; parts = Arrays.asList(EntityPart.withName("name1").fileName("file1.doc").content(stream1).build(),
+ *         EntityPart.withName("name1").fileName("file2.doc").content(stream2).build(),
+ *         EntityPart.withName("name1").fileName("file3.doc").content(stream3).build());
  * Entity entity = Entity.entity(parts, MediaType.MULTIPART_FORM_DATA);
  * Response r = target.request().post(entity);
  * </pre>
  * 
- * Note that when building a Part, the name and content are required.
+ * Note that when building a EntityPart, the name and content are required.
  * Other properties such as headers, file name, and media type are optional.
  * 
  * It is the responsibility of the implementation code to close the content input streams when sending the multipart
@@ -56,29 +56,29 @@ import jakarta.ws.rs.core.MultivaluedMap;
  * 
  * @since 3.1
  */
-public interface Part {
+public interface EntityPart {
 
     /**
-     * Creates a new {@code Part.Builder} instance.
+     * Creates a new {@code EntityPart.Builder} instance.
      * 
      * @param partName name of the part to create within the multipart entity
-     * @return {@link Builder} for building new {@link Part} instances
+     * @return {@link Builder} for building new {@link EntityPart} instances
      */
     static Builder withName(String partName) {
-        return RuntimeDelegate.getInstance().createPartBuilder(partName);
+        return RuntimeDelegate.getInstance().createEntityPartBuilder(partName);
     }
 
     /**
-     * Creates a new {@code Part.Builder} instance that sets the part {@code name} and
+     * Creates a new {@code EntityPart.Builder} instance that sets the part {@code name} and
      * {@code fileName} to the passed in {@code partAndFileName} value.
      * <p>
-     * Logically, this is the same as {@code Part.withName(x).fileName(x)}.
+     * Logically, this is the same as {@code EntityPart.withName(x).fileName(x)}.
      * </p>
      * @param partAndFileName name and filename of the part to create within the multipart entity
-     * @return {@link Builder} for building new {@link Part} instances
+     * @return {@link Builder} for building new {@link EntityPart} instances
      */
     static Builder withFileName(String partAndFileName) {
-        return RuntimeDelegate.getInstance().createPartBuilder(partAndFileName).fileName(partAndFileName);
+        return RuntimeDelegate.getInstance().createEntityPartBuilder(partAndFileName).fileName(partAndFileName);
     }
 
     /**
@@ -177,15 +177,15 @@ public interface Part {
     MediaType getMediaType();
 
     /**
-     * Builder for {@link Part} instances.
+     * Builder for {@link EntityPart} instances.
      * 
      * @since 3.1
      */
     public interface Builder {
 
         /**
-         * Sets the media type for the Part. This will also set the {@code Content-Type}
-         * header for this part.
+         * Sets the media type for the EntityPart. This will also set the
+         * {@code Content-Type} header for this part.
          * 
          * @param mediaType the media type for the part to be built
          * @return the updated builder
@@ -194,13 +194,15 @@ public interface Part {
         public Builder mediaType(MediaType mediaType) throws IllegalArgumentException;
 
         /**
-         * Convenience method for setting the media type for the Part. This will also set
-         * the {@code Content-Type} header for this part. This call is effectively the
-         * same as {@code mediaType(MediaType.valueOf(mediaTypeString))}.
+         * Convenience method for setting the media type for the EntityPart. This will
+         * also set the {@code Content-Type} header for this part. This call is
+         * effectively the same as
+         * {@code mediaType(MediaType.valueOf(mediaTypeString))}.
          * 
          * @param mediaTypeString the media type for the part to be built
          * @return the updated builder
-         * @throws IllegalArgumentException if {@code mediaTypeString} cannot be parsed or is {@code null}
+         * @throws IllegalArgumentException if {@code mediaTypeString} cannot be parsed
+         *                                  or is {@code null}
          */
         public Builder mediaType(String mediaTypeString) throws IllegalArgumentException;
 
@@ -262,11 +264,11 @@ public interface Part {
         public Builder content(String fileName, InputStream content) throws IllegalArgumentException;
 
         /**
-         * Builds a new Part instance using the provided property values.
+         * Builds a new EntityPart instance using the provided property values.
          * 
-         * @return {@link Part} instance built from the provided property values.
+         * @return {@link EntityPart} instance built from the provided property values.
          * @throws IllegalStateException if the content was not specified.
          */
-        public Part build() throws IllegalStateException;
+        public EntityPart build() throws IllegalStateException;
     }
 }

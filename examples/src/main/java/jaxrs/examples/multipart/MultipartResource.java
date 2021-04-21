@@ -23,7 +23,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.ext.Part;
+import jakarta.ws.rs.ext.EntityPart;
 
 @Path("/multipart")
 public class MultipartResource {
@@ -31,21 +31,21 @@ public class MultipartResource {
     private static final String PDF_ROOT_DIR = System.getProperty("pdf.root.dir", "/myPDFs");
 
     @GET
-    public List<Part> getAllPdfFilesInDirectory(@QueryParam("dirName") String dirName) throws IOException {
+    public List<EntityPart> getAllPdfFilesInDirectory(@QueryParam("dirName") String dirName) throws IOException {
         File dir = getDirectoryIfExists(dirName);
-        List<Part> parts = new ArrayList<>();
+        List<EntityPart> parts = new ArrayList<>();
         for (File f : dir.listFiles()) {
-            parts.add(Part.withFileName(f.getName()).content(new FileInputStream(f))
-                                                    .mediaType("application/pdf")
-                                                    .build());
+            parts.add(EntityPart.withFileName(f.getName()).content(new FileInputStream(f))
+                                                          .mediaType("application/pdf")
+                                                          .build());
         }
         return parts;
     }
 
     @POST
-    public Response postNewPdfFiles(@QueryParam("dirName") String dirName, List<Part> parts) throws IOException {
+    public Response postNewPdfFiles(@QueryParam("dirName") String dirName, List<EntityPart> parts) throws IOException {
         File dir = getDirectoryIfExists(dirName);
-        for (Part p : parts) {
+        for (EntityPart p : parts) {
             File f = new File(dir, p.getFileName().orElseThrow(BadRequestException::new));
             if (f.exists()) {
                 throw new WebApplicationException(409); // 409 CONFLICT

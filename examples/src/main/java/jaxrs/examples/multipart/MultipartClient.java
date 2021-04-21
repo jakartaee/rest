@@ -24,27 +24,27 @@ import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.ext.Part;
+import jakarta.ws.rs.ext.EntityPart;
 
 public class MultipartClient {
     Logger LOG = Logger.getLogger(MultipartClient.class.getName());
 
     public boolean sendPdfs(Path dir) throws IOException {
-        List<Part> parts = Files.list(dir).map(this::toPart).collect(Collectors.toList());
+        List<EntityPart> parts = Files.list(dir).map(this::toPart).collect(Collectors.toList());
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:9080/multipart?dirName=abc");
-        Entity<List<Part>> entity = Entity.entity(parts, MediaType.MULTIPART_FORM_DATA);
+        Entity<List<EntityPart>> entity = Entity.entity(parts, MediaType.MULTIPART_FORM_DATA);
         Response response = target.request().post(entity);
         return response.getStatus() == 200;
     }
 
-    private Part toPart(Path file) {
+    private EntityPart toPart(Path file) {
         String filename = file.getFileName().toString();
         try {
-            return Part.withName(filename)
-                       .content(filename, Files.newInputStream(file))
-                       .mediaType("application/pdf")
-                       .build();
+            return EntityPart.withName(filename)
+                             .content(filename, Files.newInputStream(file))
+                             .mediaType("application/pdf")
+                             .build();
         } catch (IOException ioex) {
             LOG.log(Level.WARNING, "Failed to process file {0}", file);
             return null;
@@ -55,7 +55,7 @@ public class MultipartClient {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:9080/multipart").queryParam("dirName", remoteDirName);
         Response response = target.request(MediaType.MULTIPART_FORM_DATA).get();
-        List<Part> parts = response.readEntity(new GenericType<List<Part>>() {});
+        List<EntityPart> parts = response.readEntity(new GenericType<List<EntityPart>>() {});
         return parts.stream().map(part -> {
             try (InputStream is = part.getContent()) {
                 Path file = Files.createFile(Paths.get(part.getFileName().orElse(part.getName() + ".pdf")));

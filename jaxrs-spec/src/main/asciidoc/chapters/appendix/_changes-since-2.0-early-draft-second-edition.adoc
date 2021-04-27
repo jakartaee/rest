@@ -50,7 +50,7 @@ new semantics of `@Provider` for automatic discovery.
 be implemented by filters and entity interceptors, is replaced by
 `DynamicBinder`. A dynamic binder is a new type of provider that binds
 filters and entity interceptors with resource methods.
-* Chapter "Validation": Use media type names instead of Java constants
+* Chapter <<validation>>: Use media type names instead of Java constants
 for clarity. More descriptive names for constraint annotations. Changed
 inheritance rules for constraint annotations to follow those defined in
 <<bib16>>. New note about `@Valid` support for return values. Fixed

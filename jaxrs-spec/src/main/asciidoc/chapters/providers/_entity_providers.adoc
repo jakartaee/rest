@@ -70,15 +70,15 @@ body:
 For a return type of `Response` or subclasses, the object is the value
 of the `entity` property, for other return types it is the returned
 object.
-2.  Determine the media type of the response, see Section
-[determine_response_type].
+2.  Determine the media type of the response, see
+<<determine_response_type>>.
 3.  Select the set of `MessageBodyWriter` providers that support (see
 <<declaring_provider_capabilities>>) the object and media type of
 the message entity body.
 4.  Sort the selected `MessageBodyWriter` providers with a
 primary key of generic type where providers whose generic type is the
 nearest superclass of the object class are sorted first and a secondary
-key of media type (see Section [declaring_provider_capabilities]).
+key of media type (see <<declaring_provider_capabilities>>).
 5.  Iterate through the sorted
 `MessageBodyWriter` providers and, utilizing the `isWriteable` method of
 each, choose an `MessageBodyWriter` that supports the object that will

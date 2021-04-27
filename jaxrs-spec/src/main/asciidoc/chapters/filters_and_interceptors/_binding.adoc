@@ -28,7 +28,7 @@ a filter or interceptor can be registered manually (e.g., via
 that for a filter or interceptor to be automatically discovered it MUST
 be annotated with `@Provider` (see <<automatic_discovery>>).
 
-For example, the `LoggingFilter` defined in Section [filters] is both
+For example, the `LoggingFilter` defined in <<filters>> is both
 automatically discovered (it is annotated with `@Provider`) and bound
 globally. If this filter is part of an application, requests and
 responses will be logged for all resource methods.

@@ -45,5 +45,5 @@ In this example, two instances of `WebTarget` are created. The instance
 `hello` inherits the configuration from `base` and it is further
 configured by registering `MyProvider.class`. Note that changes to
 `hello`’s configuration do not affect `base`, i.e. inheritance performs
-a _deep_ copy of the configuration. See Section [configurable_types] for
+a _deep_ copy of the configuration. See <<configurable_types>> for
 additional information on configurable types.

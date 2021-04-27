@@ -37,7 +37,7 @@ been dropped.
 filter chain based on binding priorities.
 * Appendix C: Removed from this version after changes to Chapter
 <<filters_and_interceptors>>.
-* Chapter "Validation": Moved to an instantiate-then-validate strategy
+* Chapter <<validation>>: Moved to an instantiate-then-validate strategy
 in which validation of constructor parameters and setters is no longer
 supported. Simplified validation process to better align with Bean
 Validation 1.1 <<bib16>>. In particular, validation of resource

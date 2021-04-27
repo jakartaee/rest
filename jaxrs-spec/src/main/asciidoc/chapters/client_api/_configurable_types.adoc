@@ -24,7 +24,7 @@ Features::
   can be used to configure a JAX-RS implementation.
 Providers::
   Classes or instances of classes that implement one or more of the
-  provider interfaces from Chapter [providers]. A provider can be a
+  provider interfaces from Chapter <<providers>>. A provider can be a
   message body reader, a filter, a context resolver, etc.
 
 The configuration defined on an instance of any of the aforementioned

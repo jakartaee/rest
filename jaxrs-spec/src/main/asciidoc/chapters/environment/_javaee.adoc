@@ -20,7 +20,7 @@ following specifications.
 
 In a product that also supports the Servlet specification,
 implementations MUST support JAX-RS applications that are packaged as a
-Web application. See Section [servlet] for more information Web
+Web application. See <<servlet>> for more information Web
 application packaging.
 
 It is RECOMMENDED for a JAX-RS implementation to provide asynchronous

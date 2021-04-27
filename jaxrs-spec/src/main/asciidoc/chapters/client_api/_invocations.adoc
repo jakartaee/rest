@@ -36,16 +36,13 @@ Collection<Invocation> invs = Arrays.asList(inv1, inv2);
 
 // Executed by the submitter
 Collection<Response> ress =
-    Collections.transform(invs,
-        new F<Invocation, Response>() {
+    Collections.transform(invs, new F<Invocation, Response>() {
         @Override
         public Response apply(Invocation inv) {
-            return inv.invoke(); } });
+            return inv.invoke();
+        }
+    });
 ----
-
-// Executed by the submitter Collection<Response> ress =
-Collections.transform(invs, new F<Invocation, Response>() @Override
-public Response apply(Invocation inv) return inv.invoke(); );
 
 In this example, two invocations are prepared and stored in a collection
 by the creator. The submitter then traverses the collection applying a

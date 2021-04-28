@@ -23,6 +23,7 @@ import java.util.concurrent.CompletionStage;
 import jakarta.ws.rs.SeBootstrap;
 import jakarta.ws.rs.SeBootstrap.Instance;
 import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.EntityPart;
 import jakarta.ws.rs.core.Link;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
@@ -251,7 +252,7 @@ public abstract class RuntimeDelegate {
     public abstract CompletionStage<Instance> bootstrap(Application application, SeBootstrap.Configuration configuration);
 
     /**
-     * Create a new instance of a {@link jakarta.ws.rs.ext.EntityPart.Builder}.
+     * Create a new instance of a {@link jakarta.ws.rs.core.EntityPart.Builder}.
      * <p>
      * <em>This method is not intended to be invoked by applications. Call {@link EntityPart#withName(String)} instead.</em>
      * </p>

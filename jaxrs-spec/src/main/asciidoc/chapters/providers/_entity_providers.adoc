@@ -145,7 +145,7 @@ type combinations:
   `application/*+xml`).
 `MultivaluedMap<String,String>`::
   Form content (`application/x-www-form-urlencoded`).
-`java.util.List<Part>`::
+`java.util.List<EntityPart>`::
   Multipart data (`multipart/form-data`)
 `StreamingOutput`::
   All media types (`\*/*`), `MessageBodyWriter` only.

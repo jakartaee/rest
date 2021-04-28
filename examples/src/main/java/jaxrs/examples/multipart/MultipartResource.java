@@ -22,8 +22,8 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.EntityPart;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.ext.EntityPart;
 
 @Path("/multipart")
 public class MultipartResource {

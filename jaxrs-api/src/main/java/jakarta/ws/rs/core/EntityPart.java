@@ -283,14 +283,16 @@ public interface EntityPart {
 
         /**
          * Convenience method, equivalent to calling
-         * {@code fileName(fileName).content(contentStream)}.
+         * {@code fileName(fileName).content(content)}.
          * 
          * @param fileName the filename of the part.
          * @param content  the content stream of the part.
          * @return the updated builder.
          * @throws IllegalArgumentException if either parameter is {@code null}.
          */
-        public Builder content(String fileName, InputStream content) throws IllegalArgumentException;
+        public default Builder content(String fileName, InputStream content) throws IllegalArgumentException {
+            return this.fileName(fileName).content(content);
+        }
 
         /**
          * Sets the content for this part. The content of this builder must be specified
@@ -313,6 +315,31 @@ public interface EntityPart {
          * @throws IllegalArgumentException if {@code content} is {@code null}
          */
         public <T> Builder content(T content, Class<? extends T> type) throws IllegalArgumentException;
+
+        /**
+         * Sets the content for this part. The content of this builder must be specified
+         * before invoking the {@link #build()} method.
+         * <p>
+         * If the content is specified using this method, then the {@link #build()}
+         * method is responsible for finding a registered
+         * {@link jakarta.ws.rs.ext.MessageBodyWriter} that is capable of writing the
+         * object's class type specified here using the default {@link MediaType} or the
+         * {@link MediaType} specified in the {@link #mediaType(MediaType)} or
+         * {@link #mediaType(String)} methods and using any headers specified via the
+         * {@link #header(String, String...)} or {@link #headers(MultivaluedMap)}
+         * methods.
+         * </p>
+         * <p>
+         * This is the equivalent of calling
+         * {@code content(content, content.getClass())}.
+         * </p>
+         * 
+         * @param content the object to be used as the content
+         * @throws IllegalArgumentException if {@code content} is {@code null}
+         */
+        public default Builder content(Object content) throws IllegalArgumentException {
+            return this.content(content, content.getClass());
+        }
 
         /**
          * Sets the content for this part. The content of this builder must be specified

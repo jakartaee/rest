@@ -16,13 +16,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.NotSupportedException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.EntityPart;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/multipart")
@@ -31,6 +36,7 @@ public class MultipartResource {
     private static final String PDF_ROOT_DIR = System.getProperty("pdf.root.dir", "/myPDFs");
 
     @GET
+    @Produces(MediaType.MULTIPART_FORM_DATA)
     public List<EntityPart> getAllPdfFilesInDirectory(@QueryParam("dirName") String dirName) throws IOException {
         File dir = getDirectoryIfExists(dirName);
         List<EntityPart> parts = new ArrayList<>();
@@ -43,6 +49,7 @@ public class MultipartResource {
     }
 
     @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response postNewPdfFiles(@QueryParam("dirName") String dirName, List<EntityPart> parts) throws IOException {
         File dir = getDirectoryIfExists(dirName);
         for (EntityPart p : parts) {
@@ -57,11 +64,34 @@ public class MultipartResource {
         return Response.ok().build();
     }
 
+    @Path("/apply")
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response applyForJob(@FormParam("name") String name,
+                                @FormParam("recentPhoto") InputStream photoStream,
+                                @FormParam("resume") EntityPart resume) {
+
+        String resumeFileName = resume.getFileName().orElseThrow(NotSupportedException::new);
+
+        if (resumeFileName.toLowerCase().endsWith(".pdf")) {
+            processPdfResume(resume.getContent());
+        } else {
+            // handle other file types, like Word docs, etc.
+        }
+
+        // process new application...
+        return Response.ok("Application received").build();
+    }
+
     private File getDirectoryIfExists(String dirName) {
         File dir = new File(PDF_ROOT_DIR, dirName);
         if (!dir.exists()) {
             throw new NotFoundException("dirName, " + dirName + ", does not exist");
         }
         return dir;
+    }
+
+    private void processPdfResume(InputStream is) {
+        // ...
     }
 }

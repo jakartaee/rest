@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 /**
  * <p>This annotation is used to inject information into a class field, bean property or method parameter.</p>
  *
- * <p><Note that future versions of this API will stop supporting injection via
+ * <p>Note that future versions of this API will stop supporting injection via
  * {@code Context} as part of a tighter integration and alignment with
  * <a href="https://jakarta.ee/specifications/cdi/">Jakarta CDI</a>.</p>
  *

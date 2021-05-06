@@ -16,33 +16,19 @@
 
 package jakarta.ws.rs.core;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import jakarta.ws.rs.ext.RuntimeDelegate;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MultivaluedHashMapTest {
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        RuntimeDelegate.setInstance(new RuntimeDelegateStub());
-    }
-
-    @AfterEach
-    public void tearDown() throws Exception {
-        RuntimeDelegate.setInstance(null);
-    }
+public class MultivaluedHashMapTest extends BaseDelegateTest {
 
     @Test
     public void testEqualsIgnoreOrder() {

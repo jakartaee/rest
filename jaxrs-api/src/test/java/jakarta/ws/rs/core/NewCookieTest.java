@@ -16,27 +16,13 @@
 
 package jakarta.ws.rs.core;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import jakarta.ws.rs.ext.RuntimeDelegate;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class NewCookieTest {
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        RuntimeDelegate.setInstance(new RuntimeDelegateStub());
-    }
-
-    @AfterEach
-    public void tearDown() throws Exception {
-        RuntimeDelegate.setInstance(null);
-    }
+public class NewCookieTest extends BaseDelegateTest {
 
     /**
      * Test of valueOf method, of class NewCookie.
@@ -60,22 +46,24 @@ public class NewCookieTest {
 
     @Test
     public void testSameSite() {
-
-        NewCookie sameSiteOmit = new NewCookie("name", "value", "/", "localhost", 1, null, 0, null, false, false);
+        NewCookie sameSiteOmit = new NewCookie("name", "value", "/", "localhost", 1,
+                null, 0, null, false, false);
         assertNull(sameSiteOmit.getSameSite());
 
-        NewCookie sameSiteNull = new NewCookie("name", "value", "/", "localhost", 1, null, 0, null, false, false, null);
+        NewCookie sameSiteNull = new NewCookie("name", "value", "/", "localhost", 1,
+                null, 0, null, false, false, null);
         assertNull(sameSiteNull.getSameSite());
 
-        NewCookie sameSiteNone = new NewCookie("name", "value", "/", "localhost", 1, null, 0, null, false, false, NewCookie.SameSite.NONE);
+        NewCookie sameSiteNone = new NewCookie("name", "value", "/", "localhost", 1,
+                null, 0, null, false, false, NewCookie.SameSite.NONE);
         assertEquals(NewCookie.SameSite.NONE, sameSiteNone.getSameSite());
 
-        NewCookie sameSiteLax = new NewCookie("name", "value", "/", "localhost", 1, null, 0, null, false, false, NewCookie.SameSite.LAX);
+        NewCookie sameSiteLax = new NewCookie("name", "value", "/", "localhost", 1,
+                null, 0, null, false, false, NewCookie.SameSite.LAX);
         assertEquals(NewCookie.SameSite.LAX, sameSiteLax.getSameSite());
 
-        NewCookie sameSiteStrict = new NewCookie("name", "value", "/", "localhost", 1, null, 0, null, false, false, NewCookie.SameSite.STRICT);
+        NewCookie sameSiteStrict = new NewCookie("name", "value", "/", "localhost", 1,
+                null, 0, null, false, false, NewCookie.SameSite.STRICT);
         assertEquals(NewCookie.SameSite.STRICT, sameSiteStrict.getSameSite());
-
     }
-
 }

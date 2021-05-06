@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2020 Eclipse Foundation
+* Copyright (c) 2020, 2021 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -22,3 +22,5 @@ default exception mappers.
 * New method `#hasProperty(String)` wherever `#getProperty(String)` exists
 * `Response.created(URI)` now resolves relative URIs into an absolute URI
 against the *base* URI, not against the *request* URI anymore.
+* <<context-injection>>: New section that mentions removal of `@Context`
+injection support in future versions.

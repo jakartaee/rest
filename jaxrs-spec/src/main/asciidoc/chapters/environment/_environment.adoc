@@ -13,7 +13,7 @@
 
 The container-managed resources available to a JAX-RS root resource
 class or provider depend on the environment in which it is deployed.
-Section [contexttypes] describes the types of context available
+Section <<contexttypes>> describes the types of context available
 regardless of container. The following sections describe the additional
 container-managed resources available to a JAX-RS root resource class or
 provider deployed in a variety of environments.

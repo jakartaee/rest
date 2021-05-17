@@ -31,7 +31,7 @@ application uses `Request.selectVariant` method, see <<conneg_and_preconditions>
 |`Accept-Language`  |Processed by runtime if
 application uses `Request.selectVariant` method, see <<conneg_and_preconditions>>.
 |`Allow`            |Included in automatically
-generated 405 error responses (see Section [request_matching]) and
+generated 405 error responses (see <<request_matching>>) and
 automatically generated responses to OPTIONS requests (see <<head_and_options>>).
 |`Authorization`    |Depends on container, information
 available via `SecurityContext`, see <<security_context>>.
@@ -61,8 +61,8 @@ automatically as per HTTP/1.1.
 |`Expect`           |Depends on underlying container.
 |`Expires`          |Set by application using the `ResponseBuilder.expires` method.
 |`If-Match`         |Processed by runtime if application uses corresponding
-`Request.evaluatePreconditions` method, see Section
-[conneg_and_preconditions]. `If-Modified-Since` & Processed by runtime
+`Request.evaluatePreconditions` method, see
+<<conneg_and_preconditions>>. `If-Modified-Since` & Processed by runtime
 if application uses corresponding `Request.evaluatePreconditions`
 method, see <<conneg_and_preconditions>>.
 |`If-None-Match`    |Processed by runtime if application uses corresponding

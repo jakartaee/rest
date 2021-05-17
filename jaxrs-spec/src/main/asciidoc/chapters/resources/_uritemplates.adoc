@@ -98,7 +98,7 @@ Methods of a resource class that are annotated with `@Path` are either
 sub-resource methods or sub-resource locators. Sub-resource methods
 handle a HTTP request directly whilst sub-resource locators return an
 object or class that will handle a HTTP request. The presence or absence
-of a request method designator (e.g. @GET) differentiates between the
+of a request method designator (e.g. `@GET`) differentiates between the
 two:
 
 Present::

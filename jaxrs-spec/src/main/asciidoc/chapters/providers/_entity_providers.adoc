@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019, 2020 Eclipse Foundation
+* Copyright (c) 2019, 2021 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -145,6 +145,8 @@ type combinations:
   `application/*+xml`).
 `MultivaluedMap<String,String>`::
   Form content (`application/x-www-form-urlencoded`).
+`java.util.List<EntityPart>`::
+  Multipart data (`multipart/form-data`)
 `StreamingOutput`::
   All media types (`\*/*`), `MessageBodyWriter` only.
 `java.lang.Boolean`, `java.lang.Character`, `java.lang.Number`::

@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2021 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -71,6 +71,9 @@ An implementation MUST NOT invoke a method whose effective value of
 implementation MUST NOT invoke a method whose effective value of
 `@Consumes` does not match the request `Content-Type` header.
 
+[[selecting_from_multiple_media_types]]
+==== Selecting from multiple media types
+
 When accepting multiple media types, clients may indicate preferences by
 using a relative quality factor known as the q parameter. The value of
 the q parameter, or q-value, is used to sort the set of accepted types.
@@ -126,3 +129,62 @@ the media type `application/xml` given its higher qs-value. Note that
 qs-values, just like q-values, are relative and as such are only
 comparable to other qs-values within the same `@Produces` annotation
 instance. For more information see <<determine_response_type>>.
+
+[[consuming_multipart_formdata]]
+==== Special handling for consuming multipart/form-data media types
+
+The `multipart/form-data` media type enables requests to send multiple
+entities (parts) as a single entity. Each part contains its own set of
+headers, media type and content. There are a few different ways to
+consume these requests in a resource method. First, a resource method
+may contain an entity parameter of type, `List<EntityPart>`. For example:
+
+[source,java]
+----
+@Path("widgets3")
+public class WidgetsResource3 {
+
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response postWidget(List<EntityPart> parts) {
+        for (EntityPart part : parts) {
+            String name = part.getName();
+            Optional<String> fileName = part.getFileName();
+            InputStream is = part.getContent();
+            MultivaluedMap<String, String> partHeaders = part.getHeaders();
+            MediaType mediaType = part.getMediaType();
+            doSomethingWithPart(name, fileName, is, partHeaders, mediaType);
+        }
+        return Response.ok().build();
+    }
+
+}
+----
+
+Another approach is to use `@FormParam` parameters where the value in the
+annotation corresponds to the name of the part. The parameter type may be
+a `jakarta.ws.rs.core.EntityPart`, a `java.io.InputStream`, or a `String`.
+Here is an example:
+
+[source,java]
+----
+@Path("widgets4")
+public class WidgetsResource4 {
+
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response postWidget(@FormParam("part1Name") String part1, 
+                               @FormParam("part2Name") InputStream part2,
+                               @FormParam("part3Name") EntityPart part3) {...}
+}
+----
+
+The only way to access the headers for a particular part is to use the
+`EntityPart` type. The `InputStream` and `String` types will only provide
+the content of the part. Note that parts of a multipart entity can be quite
+large, so care should be taken when using `String` parameter types as that
+will load the entire content of the part into the Java heap.
+
+When converting the part's content, the implementation MUST use the encoding
+charset specified in the part's `Content-Type` header, or `UTF-8` if the
+charset is not specified in the header.

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -23,6 +23,7 @@ import java.util.concurrent.CompletionStage;
 import jakarta.ws.rs.SeBootstrap;
 import jakarta.ws.rs.SeBootstrap.Instance;
 import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.EntityPart;
 import jakarta.ws.rs.core.Link;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
@@ -249,4 +250,17 @@ public abstract class RuntimeDelegate {
      * instance}.
      */
     public abstract CompletionStage<Instance> bootstrap(Application application, SeBootstrap.Configuration configuration);
+
+    /**
+     * Create a new instance of a {@link jakarta.ws.rs.core.EntityPart.Builder}.
+     * <p>
+     * <em>This method is not intended to be invoked by applications. Call {@link EntityPart#withName(String)} instead.</em>
+     * </p>
+     * 
+     * @param partName name for this part within the multipart body.
+     * @return new {@code EntityPart.Builder} instance with specified part name
+     * @throws java.lang.IllegalArgumentException if {@code partName} is {@code null}.
+     * @since 3.1
+     */
+    public abstract EntityPart.Builder createEntityPartBuilder(String partName) throws IllegalArgumentException;
 }

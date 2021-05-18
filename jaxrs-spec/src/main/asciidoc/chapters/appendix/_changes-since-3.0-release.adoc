@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2020 Eclipse Foundation
+* Copyright (c) 2020, 2021 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -11,6 +11,8 @@
 [[changes-since-3.0-release]]
 === Changes Since 3.0 Release
 
+* <<consuming_multipart_formdata>>: Added portable API for handling
+multipart/form-data.
 * <<services>>: Added requirement that JAX-RS implementations MUST
 automatically register certain service providers.
 * <<se-bootstrap>>: Added portable HTTP server bootstrapping on Java SE.

@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2021 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -46,6 +46,9 @@ the same as exceptions thrown during construction of field or bean
 property values, see <<resource_field>>. Exceptions thrown during
 construction of `@FormParam` annotated parameter values are treated the
 same as if the parameter were annotated with `@HeaderParam`.
+* For resource methods that consume `multipart/form-data` media types,
+the `@FormParam` annotation may be used on `jakarta.ws.rs.core.EntityPart`
+parameters. See <<consuming_multipart_formdata>> for more details.
 
 [[entity_parameters]]
 ===== Entity Parameters

@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2021 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -11,14 +11,14 @@
 [[status]]
 === Status
 
-This is the final release of version 3.0. The issue tracking system for
+This is the final release of version 3.1. The issue tracking system for
 this release can be found at:
 
 https://github.com/eclipse-ee4j/jaxrs-api/issues
 
 The corresponding Javadocs can be found online at:
 
-https://jakarta.ee/specifications/restful-ws/3.0/apidocs/
+https://jakarta.ee/specifications/restful-ws/3.1/apidocs/
 
 A compatible implementation can be obtained from:
 
@@ -28,3 +28,11 @@ The project team seeks feedback from the community on any aspect of this
 specification, please send comments to:
 
 jaxrs-dev@eclipse.org
+
+[[context-injection]]
+==== Support for @Context Injection
+
+As part of an effort to better align with https://jakarta.ee/specifications/cdi/[Jakarta CDI],
+future versions of this API will no longer support `@Context` injection and related types such as
+`ContextResolver`. As much as possible, all injection tasks will be delegated to
+Jakarta CDI for a better integration into the https://jakarta.ee/[Jakarta EE] ecosystem.

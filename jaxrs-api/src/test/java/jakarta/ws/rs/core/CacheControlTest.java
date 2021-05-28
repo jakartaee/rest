@@ -16,31 +16,17 @@
 
 package jakarta.ws.rs.core;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import jakarta.ws.rs.ext.RuntimeDelegate;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * {@link jakarta.ws.rs.core.CacheControl} unit tests.
  *
  * @author Marek Potociar
  */
-public class CacheControlTest {
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        RuntimeDelegate.setInstance(new RuntimeDelegateStub());
-    }
-
-    @AfterEach
-    public void tearDown() throws Exception {
-        RuntimeDelegate.setInstance(null);
-    }
+public class CacheControlTest extends BaseDelegateTest {
 
     /**
      * {@code CacheControl.equals()} contract test.

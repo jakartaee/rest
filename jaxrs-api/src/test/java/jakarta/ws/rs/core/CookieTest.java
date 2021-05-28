@@ -16,26 +16,12 @@
 
 package jakarta.ws.rs.core;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import jakarta.ws.rs.ext.RuntimeDelegate;
-
-public class CookieTest {
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        RuntimeDelegate.setInstance(new RuntimeDelegateStub());
-    }
-
-    @AfterEach
-    public void tearDown() throws Exception {
-        RuntimeDelegate.setInstance(null);
-    }
+public class CookieTest extends BaseDelegateTest {
 
     /**
      * Test of equals method, of class Cookie and NewCookie.

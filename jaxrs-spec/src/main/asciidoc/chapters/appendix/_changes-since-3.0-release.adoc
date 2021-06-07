@@ -11,6 +11,9 @@
 [[changes-since-3.0-release]]
 === Changes Since 3.0 Release
 
+* <<standard_entity_providers>>: JSON-B entity providers MUST favor
+`Jsonb` instances provided by `ContextResolver<Jsonb>` over their own
+default context.
 * <<consuming_multipart_formdata>>: Added portable API for handling
 multipart/form-data.
 * <<services>>: Added requirement that JAX-RS implementations MUST

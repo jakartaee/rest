@@ -178,6 +178,13 @@ supply a `JAXBContext` for a particular type, the
 implementation-supplied entity provider MUST use its own default context
 instead.
 
+The implementation-supplied entity provider(s) for application-supplied
+JSON-B classes MUST use `Jsonb` instances provided by application-supplied
+context resolvers, see <<contextprovider>>. If an application does not
+supply a `Jsonb` instance for a particular type, the
+implementation-supplied entity provider MUST use its own default context
+instead.
+
 When writing responses, implementations SHOULD respect
 application-supplied character set metadata and SHOULD use UTF-8 if a
 character set is not specified by the application or if the application

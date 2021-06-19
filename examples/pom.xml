@@ -87,7 +87,7 @@
                     <!-- This plugin generates the buildNumber property used in maven-bundle-plugin -->
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>buildnumber-maven-plugin</artifactId>
-                    <version>1.3</version>
+                    <version>1.4</version>
                     <configuration>
                         <format>{0,date,MM/dd/yyyy hh:mm aa}</format>
                         <items>

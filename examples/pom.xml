@@ -248,7 +248,7 @@
         <dependency>
             <groupId>jakarta.enterprise</groupId>
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
-            <version>3.0.0-M4</version>
+            <version>4.0.0.Alpha1</version>
         </dependency>
 
         <dependency>

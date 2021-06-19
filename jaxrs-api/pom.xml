@@ -550,7 +550,7 @@
         <api.package>jakarta.ws.rs</api.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skip.release.tests>false</skip.release.tests>
-        <spec.version>3.0</spec.version>
+        <spec.version>3.1</spec.version>
         <spec.version.revision /> <!-- e.g. (Rev a) -->
 
         <jaxb.api.version>3.0.0</jaxb.api.version>

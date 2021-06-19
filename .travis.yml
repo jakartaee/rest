@@ -8,6 +8,7 @@ jdk:
   - openjdk8
   - openjdk11
   - openjdk16
+  - openjdk17
 
 cache:
   directories:

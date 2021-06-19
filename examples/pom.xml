@@ -61,14 +61,10 @@
 
     <developers>
         <developer>
-            <email>santiago.pericasgeertsen@oracle.com</email>
-            <id>Santiago</id>
-            <name>Santiago Pericas-Geertsen</name>
-            <organization>Oracle</organization>
-            <roles>
-                <role>JAX-RS Spec Lead</role>
-            </roles>
-            <timezone>EST</timezone>
+            <id>developers</id>
+            <name>JAX-RS API Developers</name>
+            <email>jaxrs-dev@eclipse.org</email>
+            <url>https://github.com/eclipse-ee4j/jaxrs-api/graphs/contributors</url>
         </developer>
     </developers>
 

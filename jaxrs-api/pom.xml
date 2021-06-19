@@ -199,7 +199,7 @@
             <build>
                 <plugins>
                     <plugin>
-                        <!-- TODO: overriding paren pom (profile jvnet-release) - we should find nicer way -->
+                        <!-- TODO: overriding parent pom (profile jvnet-release) - we should find nicer way -->
                         <!-- 1.8- javadoc cannot handle module-info -->
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>${maven.javadoc.plugin.version}</version>

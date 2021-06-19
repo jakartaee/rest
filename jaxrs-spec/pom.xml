@@ -29,7 +29,7 @@
         <maven.site.skip>true</maven.site.skip>
         <asciidoctor.maven.plugin.version>2.1.0</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>2.5.1</asciidoctorj.version>
-        <asciidoctorj.pdf.version>1.5.0-alpha.17</asciidoctorj.pdf.version>
+        <asciidoctorj.pdf.version>1.6.0</asciidoctorj.pdf.version>
         <jruby.version>9.2.7.0</jruby.version>
         <!-- status: DRAFT, BETA, etc., or blank for final -->
         <status></status>

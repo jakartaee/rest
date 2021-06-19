@@ -266,7 +266,7 @@
             <plugins>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.2.0</version>
                 </plugin>
                 <plugin>
                     <!-- This plugin generates the buildNumber property used in maven-bundle-plugin -->

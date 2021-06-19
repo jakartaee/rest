@@ -35,6 +35,7 @@
         <status>DRAFT</status>
         <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
         <revisiondate>${maven.build.timestamp}</revisiondate>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <scm>

@@ -15,12 +15,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>net.java</groupId>
-        <artifactId>jvnet-parent</artifactId>
-        <version>1</version>
-    </parent>
-
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-examples</artifactId>
     <version>3.1-SNAPSHOT</version>

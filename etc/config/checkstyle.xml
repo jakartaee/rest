@@ -85,13 +85,10 @@
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
 
-        <!--
-          - Turned off for now due to https://github.com/checkstyle/checkstyle/issues/5088
-          -
         <module name="JavadocMethod">
-            <property name="scope" value="protected"/>
+            <property name="accessModifiers" value="protected"/>
             <property name="validateThrows" value="false"/>
-        </module -->
+        </module>
 
         <module name="JavadocType">
             <property name="scope" value="protected"/>

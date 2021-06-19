@@ -27,7 +27,7 @@
     <properties>
         <site.output.dir>${project.build.directory}/staging</site.output.dir>
         <maven.site.skip>true</maven.site.skip>
-        <asciidoctor.maven.plugin.version>2.0.0-RC.1</asciidoctor.maven.plugin.version>
+        <asciidoctor.maven.plugin.version>2.1.0</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>2.0.0</asciidoctorj.version>
         <asciidoctorj.pdf.version>1.5.0-alpha.17</asciidoctorj.pdf.version>
         <jruby.version>9.2.7.0</jruby.version>
@@ -90,6 +90,7 @@
                         <configuration>
                             <backend>xhtml</backend>
                             <attributes>
+				<imagesdir>images</imagesdir>
                                 <revnumber>${project.version}</revnumber>
                                 <revremark>${status}</revremark>
                                 <revdate>${revisiondate}</revdate>
@@ -115,6 +116,7 @@
                         <configuration>
                             <backend>pdf</backend>
                             <attributes>
+				<imagesdir>images</imagesdir>
                                 <pdf-stylesdir>${project.basedir}/src/theme</pdf-stylesdir>
                                 <pdf-style>jakartaee</pdf-style>
                                 <revnumber>${project.version}</revnumber>

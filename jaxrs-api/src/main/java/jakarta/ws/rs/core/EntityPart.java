@@ -129,6 +129,8 @@ public interface EntityPart {
      * an {@code IllegalStateException} if it is called after calling
      * {@link #getContent} or {@link #getContent(GenericType)}.
      * 
+     * @param <T> type parameter of the value returned
+     * 
      * @param type the {@code Class} that the implementation should convert this
      *             part to
      * @return an instance of the specified {@code Class} representing the content
@@ -164,6 +166,8 @@ public interface EntityPart {
      * result in an {@code IllegalStateException}. Likewise this method will throw
      * an {@code IllegalStateException} if it is called after calling
      * {@link #getContent} or {@link #getContent(Class)}.
+     *
+     * @param <T> type parameter of the value returned
      * 
      * @param type the generic type that the implementation should convert this part
      *             to
@@ -307,7 +311,8 @@ public interface EntityPart {
          * {@link #header(String, String...)} or {@link #headers(MultivaluedMap)}
          * methods.
          * </p>
-         * 
+         *
+         * @param <T> type parameter of the content
          * @param content the object to be used as the content
          * @param type    the type of this object which will be used when selecting the
          *                appropriate {@link jakarta.ws.rs.ext.MessageBodyWriter}
@@ -335,6 +340,7 @@ public interface EntityPart {
          * </p>
          * 
          * @param content the object to be used as the content
+         * @return the updated builder.
          * @throws IllegalArgumentException if {@code content} is {@code null}
          */
         public default Builder content(Object content) throws IllegalArgumentException {
@@ -354,7 +360,8 @@ public interface EntityPart {
          * {@link #header(String, String...)} or {@link #headers(MultivaluedMap)}
          * methods.
          * </p>
-         * 
+         *
+         * @param <T> type parameter of the content
          * @param content the object to be used as the content
          * @param type    the generic type of this object which will be used when
          *                selecting the appropriate

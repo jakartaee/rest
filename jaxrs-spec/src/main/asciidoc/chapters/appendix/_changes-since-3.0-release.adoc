@@ -26,3 +26,5 @@ default exception mappers.
 against the *base* URI, not against the *request* URI anymore.
 * <<context-injection>>: New section that mentions removal of `@Context`
 injection support in future versions.
+* <<declaring_method_capabilities>>: Clarified resource matching when `Content-Type`
+or `Accept` are missing in request.

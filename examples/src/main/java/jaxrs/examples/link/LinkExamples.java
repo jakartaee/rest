@@ -51,7 +51,7 @@ public class LinkExamples {
      * 1-step process: Build Response and add a link directly to it using either a String or a URI.
      *
      * @return response.
-     * @throws URISyntaxException
+     * @throws URISyntaxException if URI is invalid
      */
     public Response example3() throws URISyntaxException {
         Response r;

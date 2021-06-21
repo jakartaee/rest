@@ -264,7 +264,7 @@ public final class SeBootstrapIT {
      */
     @Test
     public final void shouldBootInstanceUsingSelfDetectedFreeIpPort()
-            throws InterruptedException, ExecutionException, IOException {
+            throws InterruptedException, ExecutionException {
         // given
         final int expectedResponse = mockInt();
         final Application application = new StaticApplication(expectedResponse);
@@ -300,7 +300,7 @@ public final class SeBootstrapIT {
      */
     @Test
     public final void shouldBootInstanceUsingImplementationsDefaultIpPort()
-            throws InterruptedException, ExecutionException, IOException {
+            throws InterruptedException, ExecutionException {
         // given
         final int expectedResponse = mockInt();
         final Application application = new StaticApplication(expectedResponse);

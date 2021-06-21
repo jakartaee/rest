@@ -49,7 +49,7 @@ public final class UriBuilderIT {
      */
     @Test
     public final void shouldBuildValidInstanceFromScratch()
-            throws InterruptedException, ExecutionException, URISyntaxException {
+            throws InterruptedException, ExecutionException {
         // given
         final UriBuilder uriBuilder = UriBuilder.newInstance();
 

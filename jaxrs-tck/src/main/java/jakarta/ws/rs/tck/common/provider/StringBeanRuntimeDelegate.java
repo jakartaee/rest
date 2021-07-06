@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -14,14 +14,20 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.common.provider;
+ package jakarta.ws.rs.tck.common.provider;
 
 import jakarta.ws.rs.core.Application;
-import jakarta.ws.rs.core.Link.Builder;
+import jakarta.ws.rs.core.Link;
+import jakarta.ws.rs.core.EntityPart;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.Variant.VariantListBuilder;
 import jakarta.ws.rs.ext.RuntimeDelegate;
+
+import java.util.concurrent.CompletionStage;
+
+import jakarta.ws.rs.SeBootstrap;
+import jakarta.ws.rs.SeBootstrap.Instance;
 
 public class StringBeanRuntimeDelegate extends RuntimeDelegate {
 
@@ -64,6 +70,21 @@ public class StringBeanRuntimeDelegate extends RuntimeDelegate {
     return original.createVariantListBuilder();
   }
 
+  @Override
+  public EntityPart.Builder createEntityPartBuilder(String partName) {
+    return original.createEntityPartBuilder(partName);
+  }
+
+  @Override
+  public CompletionStage<Instance> bootstrap(Application application, SeBootstrap.Configuration configuration) {
+    return original.bootstrap(application, configuration);
+  }
+
+  @Override
+  public SeBootstrap.Configuration.Builder createConfigurationBuilder() {
+    return original.createConfigurationBuilder();
+  }
+
   public RuntimeDelegate getOriginal() {
     return original;
   }
@@ -85,7 +106,7 @@ public class StringBeanRuntimeDelegate extends RuntimeDelegate {
   }
 
   @Override
-  public Builder createLinkBuilder() {
+  public Link.Builder createLinkBuilder() {
     return original.createLinkBuilder();
   }
 }

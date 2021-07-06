@@ -1,7 +1,7 @@
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2007, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007, 2021 Oracle and/or its affiliates. All rights reserved.
  * Copyright (c) 2000 The Apache Software Foundation.  All rights
  * reserved.
  *
@@ -57,7 +57,7 @@
  * University of Illinois, Urbana-Champaign.
  */
 
-package com.sun.ts.tests.common.webclient.handler;
+package jakarta.ws.rs.tck.common.webclient.handler;
 
 /**
  * <PRE>

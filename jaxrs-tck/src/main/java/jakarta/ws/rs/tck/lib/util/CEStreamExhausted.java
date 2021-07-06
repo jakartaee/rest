@@ -18,8 +18,6 @@ package jakarta.ws.rs.tck.lib.util;
 
 import java.io.IOException;
 
-public class CEFormatException extends IOException {
-  public CEFormatException(String s) {
-    super(s);
-  }
-}
+/** This exception is thrown when EOF is reached */
+public class CEStreamExhausted extends IOException {
+};

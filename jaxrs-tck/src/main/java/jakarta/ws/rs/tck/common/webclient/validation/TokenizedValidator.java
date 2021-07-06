@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,15 +18,15 @@
  * $Id$
  */
 
-package com.sun.ts.tests.common.webclient.validation;
+package jakarta.ws.rs.tck.common.webclient.validation;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
-import com.sun.ts.lib.util.TestUtil;
-import com.sun.ts.tests.common.webclient.Goldenfile;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+import jakarta.ws.rs.tck.common.webclient.Goldenfile;
 
 /**
  * <pre>

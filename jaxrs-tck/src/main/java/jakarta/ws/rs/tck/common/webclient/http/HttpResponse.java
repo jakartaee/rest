@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2006, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,7 +18,7 @@
  * $Id$
  */
 
-package com.sun.ts.tests.common.webclient.http;
+package jakarta.ws.rs.tck.common.webclient.http;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -30,7 +30,7 @@ import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.commons.httpclient.HttpState;
 import org.apache.commons.httpclient.HttpVersion;
 
-import com.sun.ts.tests.common.webclient.Util;
+import jakarta.ws.rs.tck.common.webclient.Util;
 
 /**
  * This class represents an HTTP response from the server.

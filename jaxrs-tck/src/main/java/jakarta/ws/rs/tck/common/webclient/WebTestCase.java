@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,7 +18,7 @@
  * $Id$
  */
 
-package com.sun.ts.tests.common.webclient;
+package jakarta.ws.rs.tck.common.webclient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,11 +29,11 @@ import java.util.StringTokenizer;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpState;
 
-import com.sun.ts.lib.util.TestUtil;
-import com.sun.ts.tests.common.webclient.http.HttpRequest;
-import com.sun.ts.tests.common.webclient.http.HttpResponse;
-import com.sun.ts.tests.common.webclient.validation.ValidationFactory;
-import com.sun.ts.tests.common.webclient.validation.ValidationStrategy;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+import jakarta.ws.rs.tck.common.webclient.http.HttpRequest;
+import jakarta.ws.rs.tck.common.webclient.http.HttpResponse;
+import jakarta.ws.rs.tck.common.webclient.validation.ValidationFactory;
+import jakarta.ws.rs.tck.common.webclient.validation.ValidationStrategy;
 
 /**
  * A TestCase implementation for HTTP-based testing. This allows the user to set
@@ -45,12 +45,12 @@ public class WebTestCase implements TestCase {
   /**
    * Tokenized response validation strategy
    */
-  public static final String TOKENIZED_STRATEGY = "com.sun.ts.tests.common.webclient.validation.TokenizedValidator";
+  public static final String TOKENIZED_STRATEGY = "jakarta.ws.rs.tck.common.webclient.validation.TokenizedValidator";
 
   /**
    * Whitespace response validation strategy
    */
-  public static final String WHITESPACE_STRATEGY = "com.sun.ts.tests.common.webclient.validation.WhitespaceValidator";
+  public static final String WHITESPACE_STRATEGY = "jakarta.ws.rs.tck.common.webclient.validation.WhitespaceValidator";
 
   /**
    * The request for this case.

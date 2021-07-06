@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.common.client;
+package jakarta.ws.rs.tck.common.client;
 
 import java.util.Enumeration;
 import java.util.LinkedList;
@@ -22,12 +22,12 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import com.sun.ts.lib.util.BASE64Encoder;
-import com.sun.ts.lib.util.TestUtil;
-import com.sun.ts.tests.common.webclient.TestFailureException;
-import com.sun.ts.tests.common.webclient.validation.CheckOneOfStatusesTokenizedValidator;
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
-import com.sun.ts.tests.jaxrs.common.client.JaxrsWebTestCase.Execution;
+import jakarta.ws.rs.tck.lib.util.BASE64Encoder;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+import jakarta.ws.rs.tck.common.webclient.TestFailureException;
+import jakarta.ws.rs.tck.common.webclient.validation.CheckOneOfStatusesTokenizedValidator;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
+import jakarta.ws.rs.tck.common.client.JaxrsWebTestCase.Execution;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -190,10 +190,8 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
    * the properties in TEST_PROPS will be cleared.
    * </PRE>
    * 
-   * @throws Fault
-   *           If an error occurs during the test run
    */
-  protected void invoke() throws Fault {
+  protected void invoke() {
     TestUtil.logTrace("[JAXRSCommonClient] invoke");
     try {
       getTestCase().setPort(_port);
@@ -217,8 +215,8 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
       if (t != null) {
         TestUtil.logErr("Root cause of Failure: " + t.getMessage(), t);
       }
-      throw new Fault("[JAXRSCommonClient] " + _testName
-          + " failed!  Check output for cause of failure.", tfe);
+      //throw new Fault("[JAXRSCommonClient] " + _testName
+      //    + " failed!  Check output for cause of failure.", tfe);
     } finally {
       _useSavedState = false;
       _saveState = false;
@@ -229,7 +227,7 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
   }
 
   @Override
-  public void cleanup() throws Fault {
+  public void cleanup() {
     super.cleanup();
     // The client.close has to be called on cleanup, because after invoke,
     // some methods are called and resources might not be available then
@@ -241,7 +239,7 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
     clients.clear();
   }
 
-  public void setup(String[] args, Properties p) throws Fault {
+  public void setup(String[] args, Properties p) {
     super.setup(args, p);
     String property = System.getProperty("cts.tmp");
     if (property != null)
@@ -300,7 +298,7 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
   }
 
   @Override
-  protected String[] getResponseHeaders() throws Fault {
+  protected String[] getResponseHeaders() {
     return getMetadata(getResponse().getMetadata());
   }
 

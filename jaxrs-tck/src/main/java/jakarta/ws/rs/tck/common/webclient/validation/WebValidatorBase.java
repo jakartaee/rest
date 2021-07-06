@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,7 +18,7 @@
  * $Id$
  */
 
-package com.sun.ts.tests.common.webclient.validation;
+package jakarta.ws.rs.tck.common.webclient.validation;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -26,12 +26,12 @@ import java.util.List;
 
 import org.apache.commons.httpclient.Header;
 
-import com.sun.ts.lib.util.TestUtil;
-import com.sun.ts.tests.common.webclient.WebTestCase;
-import com.sun.ts.tests.common.webclient.handler.Handler;
-import com.sun.ts.tests.common.webclient.handler.HandlerFactory;
-import com.sun.ts.tests.common.webclient.http.HttpRequest;
-import com.sun.ts.tests.common.webclient.http.HttpResponse;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+import jakarta.ws.rs.tck.common.webclient.WebTestCase;
+import jakarta.ws.rs.tck.common.webclient.handler.Handler;
+import jakarta.ws.rs.tck.common.webclient.handler.HandlerFactory;
+import jakarta.ws.rs.tck.common.webclient.http.HttpRequest;
+import jakarta.ws.rs.tck.common.webclient.http.HttpResponse;
 
 /**
  * Base abstract class for WebTestCase validation.

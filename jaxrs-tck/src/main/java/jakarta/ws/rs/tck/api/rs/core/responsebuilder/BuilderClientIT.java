@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2011, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.api.rs.core.responsebuilder;
+package jakarta.ws.rs.tck.api.rs.core.responsebuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -28,10 +28,13 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
 
-import com.sun.ts.lib.util.TestUtil;
-import com.sun.ts.tests.jaxrs.api.rs.core.responseclient.VerificationResult;
-import com.sun.ts.tests.jaxrs.common.impl.SinglevaluedMap;
-import com.sun.ts.tests.jaxrs.common.util.JaxrsUtil;
+import jakarta.ws.rs.tck.api.rs.core.responseclient.VerificationResult;
+import jakarta.ws.rs.tck.common.impl.SinglevaluedMap;
+import jakarta.ws.rs.tck.common.util.JaxrsUtil;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -47,19 +50,20 @@ import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Variant;
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
-public class BuilderClient
-    extends com.sun.ts.tests.jaxrs.api.rs.core.responseclient.JAXRSClient {
+public class BuilderClientIT
+    extends jakarta.ws.rs.tck.api.rs.core.responseclient.JAXRSClient {
 
-  private static final long serialVersionUID = -6510800230328526760L;
+  //private static final long serialVersionUID = -6510800230328526760L;
 
   /**
    * Entry point for different-VM execution. It should delegate to method
    * run(String[], PrintWriter, PrintWriter), and this method should not contain
    * any test configuration.
    */
-  public static void main(String[] args) {
-    new BuilderClient().run(args);
-  }
+  //public static void main(String[] args) {
+  //  new BuilderClient().run(args);
+  //}
+
 
   /*
    * @class.setup_props: webServerHost; webServerPort; ts_home;
@@ -75,7 +79,9 @@ public class BuilderClient
    * Setting status using ResponseBuilder.status(int); verify that correct
    * status code is returned
    */
-  public void statusTest1() throws Fault {
+  @Test
+  public void statusTest1(){
+  //public void statusTest1() throws Fault {
     VerificationResult result = new VerificationResult();
     Response resp = null;
     ResponseBuilder respb = null;
@@ -85,8 +91,8 @@ public class BuilderClient
       resp = respb.build();
       result.append(verifyStatus(resp, status));
     }
-    logMsg(result);
-    assertFault(result);
+    //logMsg(result);
+    assertTrue(result.pass);
   }
 
   /*
@@ -99,7 +105,9 @@ public class BuilderClient
    * Setting status using ResponseBuilder.status(Status); verify that correct
    * status code is returned
    */
-  public void statusTest2() throws Fault {
+  @Test
+  public void statusTest2(){
+  //public void statusTest2() throws Fault {
     VerificationResult result = new VerificationResult();
     Response resp = null;
     ResponseBuilder respb = null;
@@ -109,8 +117,8 @@ public class BuilderClient
       resp = respb.build();
       result.append(verifyStatus(resp, status_codes[i]));
     }
-    logMsg(result);
-    assertFault(result);
+    //logMsg(result);
+    assertTrue(result.pass);
   }
 
   /*
@@ -121,17 +129,19 @@ public class BuilderClient
    * @test_Strategy: Set Expires to ResponseBuilder, build a response and check
    * expires timestamp.
    */
-  public void expiresTest() throws Fault {
+  @Test
+  public void expiresTest(){
+  //public void expiresTest() throws Fault {
     Date now = Calendar.getInstance().getTime();
     ResponseBuilder rs = Response.ok();
     rs.expires(now);
     Response response = rs.build();
     MultivaluedMap<String, Object> metadata = response.getMetadata();
     if (metadata == null)
-      throw new Fault("No metadata in response");
+      fail("No metadata in response");
     List<Object> expires = response.getMetadata().get("Expires");
     if (expires == null || expires.isEmpty())
-      throw new Fault("No Expires property in metadata");
+      fail("No Expires property in metadata");
     boolean condition = false;
     Object fetched = expires.iterator().next();
     if (Date.class.isInstance(fetched))
@@ -139,11 +149,11 @@ public class BuilderClient
     else if (String.class.isInstance(fetched))
       condition = formats(now).contains(fetched.toString());
     else
-      throw new Fault("Fetched object not recognised");
+      fail("Fetched object not recognised");
 
-    assertFault(condition, "Expires value not matched, set: ", now.toString(),
-        "fetched:", fetched.toString());
-    TestUtil.logMsg("Set and fetched expire dates matched");
+    assertTrue(condition, "Expires value not matched, set: " + now.toString()+
+        "fetched:"+ fetched.toString());
+    //TestUtil.logMsg("Set and fetched expire dates matched");
   }
 
   /*
@@ -153,7 +163,9 @@ public class BuilderClient
    * 
    * @test_Strategy: Set the list of allowed methods for the resource.
    */
-  public void allowStringArrayTest() throws Fault {
+  @Test
+  public void allowStringArrayTest(){
+  //public void allowStringArrayTest() throws Fault {
     String[] methods = { Request.OPTIONS.name(), Request.TRACE.name() };
     ResponseBuilder rb = RuntimeDelegate.getInstance().createResponseBuilder();
     Response response = rb.allow(methods).build();
@@ -163,7 +175,7 @@ public class BuilderClient
     for (String method : methods) {
       assertContains(responseMethods, method, "Expected allow method", method,
           "was not found in response allowed methods", responseMethods);
-      logMsg("Found expected allowed method", method);
+      //logMsg("Found expected allowed method", method);
     }
   }
 
@@ -174,7 +186,9 @@ public class BuilderClient
    * 
    * @test_Strategy: Set the list of allowed methods for the resource.
    */
-  public void allowStringArrayTruncateDuplicatesTest() throws Fault {
+  @Test
+  public void allowStringArrayTruncateDuplicatesTest(){
+  //public void allowStringArrayTruncateDuplicatesTest() throws Fault {
     String[] methods = { Request.OPTIONS.name(), Request.OPTIONS.name() };
     ResponseBuilder rb = RuntimeDelegate.getInstance().createResponseBuilder();
     Response response = rb.allow(methods).build();
@@ -182,7 +196,7 @@ public class BuilderClient
     assertEqualsInt(1, set.size(), "Only one allow method should be present");
     assertEquals(set.iterator().next(), Request.OPTIONS.name(),
         Request.OPTIONS.name(), "has not been found in allowed methods");
-    logMsg(Request.OPTIONS.name(), "has been found in allowed methods");
+    //logMsg(Request.OPTIONS.name(), "has been found in allowed methods");
   }
 
   /*
@@ -192,13 +206,15 @@ public class BuilderClient
    * 
    * @test_Strategy: if null any existing allowed method list will be removed.
    */
-  public void allowStringArrayNullRemovesAllTest() throws Fault {
+  @Test
+  public void allowStringArrayNullRemovesAllTest(){
+  //public void allowStringArrayNullRemovesAllTest() throws Fault {
     String[] methods = { Request.OPTIONS.name(), Request.GET.name() };
     ResponseBuilder rb = RuntimeDelegate.getInstance().createResponseBuilder();
     Response response = rb.allow(methods).allow((String[]) null).build();
     Set<String> set = response.getAllowedMethods();
     assertEqualsInt(0, set.size(), "No one allow method should be present");
-    logMsg("Allowed methods has been removed by null value as expected");
+    //logMsg("Allowed methods has been removed by null value as expected");
   }
 
   /*
@@ -208,7 +224,9 @@ public class BuilderClient
    * 
    * @test_Strategy: Set the list of allowed methods for the resource.
    */
-  public void allowStringSetTest() throws Fault {
+  @Test
+  public void allowStringSetTest(){
+  //public void allowStringSetTest() throws Fault {
     Set<String> methods = new TreeSet<String>();
     methods.add(Request.OPTIONS.name());
     methods.add(Request.TRACE.name());
@@ -221,7 +239,7 @@ public class BuilderClient
     for (String method : methods) {
       assertContains(responseMethods, method, "Expected allow method", method,
           "was not found in response allowed methods", responseMethods);
-      logMsg("Found expected allowed method", method);
+      //logMsg("Found expected allowed method", method);
     }
   }
 
@@ -232,7 +250,9 @@ public class BuilderClient
    * 
    * @test_Strategy: if null any existing allowed method list will be removed.
    */
-  public void allowStringSetNullRemovesAllTest() throws Fault {
+  @Test
+  public void allowStringSetNullRemovesAllTest(){
+  //public void allowStringSetNullRemovesAllTest() throws Fault {
     Set<String> methods = new TreeSet<String>();
     methods.add(Request.OPTIONS.name());
     methods.add(Request.TRACE.name());
@@ -241,7 +261,7 @@ public class BuilderClient
     Response response = rb.allow(methods).allow((Set<String>) null).build();
     Set<String> set = response.getAllowedMethods();
     assertEqualsInt(0, set.size(), "No one allow method should be present");
-    logMsg("Allowed methods has been removed by null value as expected");
+    //logMsg("Allowed methods has been removed by null value as expected");
   }
 
   /*
@@ -251,16 +271,18 @@ public class BuilderClient
    * 
    * @test_Strategy: Set the message entity content encoding.
    */
-  public void encodingTest() throws Fault {
+  @Test
+  public void encodingTest(){
+  //public void encodingTest() throws Fault {
     String[] encodings = { "gzip", "ccitt", "pic" };
     VerificationResult vr = new VerificationResult();
     for (String encoding : encodings) {
       Response response = Response.ok().encoding(encoding).build();
       vr.append(verifyEncoding(response, Collections.singletonList(encoding)));
     }
-    logMsg(vr.message);
-    assertFault(vr);
-    logMsg("Found expected encodings");
+    //logMsg(vr.message);
+    assertTrue(vr.pass);
+    //logMsg("Found expected encodings");
   }
 
   /*
@@ -270,20 +292,22 @@ public class BuilderClient
    * 
    * @test_Strategy: Add a link header.
    */
-  public void linkUriStringTest() throws Fault {
-    URI uri;
+  @Test
+  public void linkUriStringTest(){
+  //public void linkUriStringTest() throws Fault {
+    URI uri = null;
     try {
       uri = new URI(URL);
     } catch (URISyntaxException e) {
-      throw new Fault(e);
+      fail(e.getMessage());
     }
     String rel = "REL";
     Response response = Response.ok().link(uri, rel).build();
     Link link = response.getLink(rel);
-    assertFault(link != null, "link is null");
-    assertFault(link.toString().contains(URL), "link", link,
-        "does not contain expected", URL);
-    logMsg("Found expected link", link);
+    assertTrue(link != null, "link is null");
+    assertTrue(link.toString().contains(URL), "link"+ link+
+        "does not contain expected"+ URL);
+    //logMsg("Found expected link", link);
   }
 
   /*
@@ -293,14 +317,16 @@ public class BuilderClient
    * 
    * @test_Strategy: Add a link header.
    */
-  public void linkStringStringTest() throws Fault {
+  @Test
+  public void linkStringStringTest(){
+  //public void linkStringStringTest() throws Fault {
     String rel = "REL";
     Response response = Response.ok().link(URL, rel).build();
     Link link = response.getLink(rel);
-    assertFault(link != null, "link is null");
-    assertFault(link.toString().contains(URL), "link", link,
-        "does not contain expected", URL);
-    logMsg("Found expected link", link);
+    assertTrue(link != null, "link is null");
+    assertTrue(link.toString().contains(URL), "link"+ link+
+        "does not contain expected"+ URL);
+    //logMsg("Found expected link", link);
   }
 
   /*
@@ -310,7 +336,9 @@ public class BuilderClient
    * 
    * @test_Strategy: Add one or more link headers.
    */
-  public void linksTest() throws Fault {
+  @Test
+  public void linksTest(){
+  //public void linksTest() throws Fault {
     String rel = "REL";
     Link link1 = Link.fromUri(URL).rel(rel + "1").build();
     Link link11 = Link.fromUri(URL).rel(rel + "11").build();
@@ -318,19 +346,19 @@ public class BuilderClient
 
     Response response = Response.ok().links(link1, link11, link2).build();
     Link link = response.getLink(rel + "1");
-    assertFault(link != null, "link is null");
-    assertFault(link.toString().contains(URL), "link", link,
-        "does not contain expected", URL);
+    assertTrue(link != null, "link is null");
+    assertTrue(link.toString().contains(URL), "link"+ link+
+        "does not contain expected"+ URL);
     link = response.getLink(rel + "11");
-    assertFault(link != null, "link is null");
-    assertFault(link.toString().contains(URL), "link", link,
-        "does not contain expected", URL);
+    assertTrue(link != null, "link is null");
+    assertTrue(link.toString().contains(URL), "link"+ link+
+        "does not contain expected"+ URL);
     link = response.getLink(rel + "2");
-    assertFault(link != null, "link is null");
-    assertFault(link.toString().contains(URL + "/link2"), "link", link,
-        "does not contain expected", URL + "/link2");
+    assertTrue(link != null, "link is null");
+    assertTrue(link.toString().contains(URL + "/link2"), "link"+ link+
+        "does not contain expected"+ URL + "/link2");
 
-    logMsg("Found expected links");
+    //logMsg("Found expected links");
   }
 
   /*
@@ -341,7 +369,9 @@ public class BuilderClient
    * @test_Strategy: Replaces all existing headers with the newly supplied
    * headers.
    */
-  public void replaceAllTest() throws Fault {
+  @Test
+  public void replaceAllTest(){
+  //public void replaceAllTest() throws Fault {
     String[] headers = { "header1", "header2", "header3" };
     String header99 = "header99";
     MultivaluedMap<String, Object> mv = new SinglevaluedMap<String, Object>();
@@ -350,11 +380,11 @@ public class BuilderClient
         .header(headers[1], headers[1]).header(headers[2], headers[2])
         .replaceAll(mv).build();
     for (String header : headers)
-      assertFault(response.getHeaderString(header) == null,
-          "response contains non replaced header", header);
+      assertTrue(response.getHeaderString(header) == null,
+          "response contains non replaced header" + header);
 
-    assertFault(response.getHeaderString(header99).equals(header99),
-        "response does not contain header from replacedAll map", header99);
+    assertTrue(response.getHeaderString(header99).equals(header99),
+        "response does not contain header from replacedAll map"+ header99);
   }
 
   /*
@@ -365,14 +395,16 @@ public class BuilderClient
    * @test_Strategy: Replaces all existing headers with the newly supplied
    * headers. if null all existing headers will be removed.
    */
-  public void replaceAllByNullTest() throws Fault {
+  @Test
+  public void replaceAllByNullTest(){
+  //public void replaceAllByNullTest() throws Fault {
     String[] headers = { "header1", "header2", "header3" };
     Response response = Response.ok().header(headers[0], headers[0])
         .header(headers[1], headers[1]).header(headers[2], headers[2])
         .replaceAll(null).build();
     for (String header : headers)
-      assertFault(response.getHeaderString(header) == null,
-          "response contains non replaced header", header);
+      assertTrue(response.getHeaderString(header) == null,
+          "response contains non replaced header"+ header);
   }
 
   /*
@@ -382,7 +414,9 @@ public class BuilderClient
    * 
    * @test_Strategy: Add a Vary header that lists the available variants.
    */
-  public void variantsTest() throws Fault {
+  @Test
+  public void variantsTest() {
+  //public void variantsTest() throws Fault {
     List<String> encoding = Arrays.asList("gzip", "compress");
     List<String> vars = Arrays.asList(HttpHeaders.ACCEPT_LANGUAGE,
         HttpHeaders.ACCEPT_ENCODING);
@@ -392,15 +426,15 @@ public class BuilderClient
     Response response = rb.build();
     VerificationResult result = new VerificationResult();
     result.append(verifyVary(response, vars));
-    logMsg(result.message);
-    assertFault(result);
+    //logMsg(result.message);
+    assertTrue(result.pass);
   }
 
   // //////////////////////////////////////////////////////////////////
 
   private static String formats(Date date) {
     DateFormat format;
-    TestUtil.logMsg("Creating possible string format list");
+    //TestUtil.logMsg("Creating possible string format list");
     StringBuilder sb = new StringBuilder();
     for (String tz : TimeZone.getAvailableIDs()) {
       format = JaxrsUtil.createDateFormat(TimeZone.getTimeZone(tz));

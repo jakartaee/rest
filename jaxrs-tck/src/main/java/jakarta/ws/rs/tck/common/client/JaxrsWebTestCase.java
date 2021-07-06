@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.common.client;
+package jakarta.ws.rs.tck.common.client;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,13 +24,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.Future;
 
-import com.sun.ts.lib.util.TestUtil;
-import com.sun.ts.tests.common.webclient.TestFailureException;
-import com.sun.ts.tests.common.webclient.WebTestCase;
-import com.sun.ts.tests.common.webclient.http.HttpRequest;
-import com.sun.ts.tests.common.webclient.http.HttpResponse;
-import com.sun.ts.tests.common.webclient.validation.ValidationFactory;
-import com.sun.ts.tests.common.webclient.validation.ValidationStrategy;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+import jakarta.ws.rs.tck.common.webclient.TestFailureException;
+import jakarta.ws.rs.tck.common.webclient.WebTestCase;
+import jakarta.ws.rs.tck.common.webclient.http.HttpRequest;
+import jakarta.ws.rs.tck.common.webclient.http.HttpResponse;
+import jakarta.ws.rs.tck.common.webclient.validation.ValidationFactory;
+import jakarta.ws.rs.tck.common.webclient.validation.ValidationStrategy;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -180,45 +180,45 @@ public class JaxrsWebTestCase extends WebTestCase {
     }
   }
 
-  /**
-   * Executes the test case.
-   * 
-   * @throws TestFailureException
-   *           if the test fails for any reason.
-   * @throws IllegalStateException
-   *           if no request was configured or if no Validator is available at
-   *           runtime.
-   */
-  public void execute() throws TestFailureException {
-    verifyValidationStrategy();
-    verifySettings();
-    try {
-      String url = logClientRequestAndGetUrl();
+  // /**
+  //  * Executes the test case.
+  //  * 
+  //  * @throws TestFailureException
+  //  *           if the test fails for any reason.
+  //  * @throws IllegalStateException
+  //  *           if no request was configured or if no Validator is available at
+  //  *           runtime.
+  //  */
+  // public void execute() throws TestFailureException {
+  //   verifyValidationStrategy();
+  //   verifySettings();
+  //   try {
+  //     String url = logClientRequestAndGetUrl();
 
-      client = getClientWithRegisteredProviders();
-      WebTarget target = client.target(url.toString());
-      Invocation i = buildRequest(target);
-      response = invoke(i);
-      if (bufferEntity)
-        response.bufferEntity();
-    } catch (Throwable t) {
-      String message = t.getMessage();
+  //     client = getClientWithRegisteredProviders();
+  //     WebTarget target = client.target(url.toString());
+  //     Invocation i = buildRequest(target);
+  //     response = invoke(i);
+  //     if (bufferEntity)
+  //       response.bufferEntity();
+  //   } catch (Throwable t) {
+  //     String message = t.getMessage();
 
-      StringBuilder sb = new StringBuilder();
-      sb.append("[FATAL] Unexpected failure during test execution.\n");
-      // print client call code to report into JIRA when needed
-      sb.append(printClientCall().toString());
-      // Inherited message
-      sb.append((message == null ? t.toString() : message));
+  //     StringBuilder sb = new StringBuilder();
+  //     sb.append("[FATAL] Unexpected failure during test execution.\n");
+  //     // print client call code to report into JIRA when needed
+  //     sb.append(printClientCall().toString());
+  //     // Inherited message
+  //     sb.append((message == null ? t.toString() : message));
 
-      throw new TestFailureException(sb.toString(), t);
-    }
+  //     throw new TestFailureException(sb.toString(), t);
+  //   }
 
-    // Validate this test case instance
-    if (!strategy.validate(this)) {
-      throw new TestFailureException("Test FAILED!");
-    }
-  }
+  //   // Validate this test case instance
+  //   if (!strategy.validate(this)) {
+  //     throw new TestFailureException("Test FAILED!");
+  //   }
+  // }
 
   public void closeClient() {
     if (client != null)
@@ -247,19 +247,19 @@ public class JaxrsWebTestCase extends WebTestCase {
       throw new TestFailureException("No resource url request set");
   }
 
-  /**
-   * @return Client with all providers already registered
-   */
-  protected Client getClientWithRegisteredProviders() {
-    Client client = ClientBuilder.newClient();
-    client.register(new JdkLoggingFilter(isPrintedEntity()));
-    for (Object o : providersToRegister)
-      if (o instanceof Class)
-        client.register((Class<?>) o); // otherwise it does not work
-      else
-        client.register(o);
-    return client;
-  }
+  // /**
+  //  * @return Client with all providers already registered
+  //  */
+  // protected Client getClientWithRegisteredProviders() {
+  //   Client client = ClientBuilder.newClient();
+  //   client.register(new JdkLoggingFilter(isPrintedEntity()));
+  //   for (Object o : providersToRegister)
+  //     if (o instanceof Class)
+  //       client.register((Class<?>) o); // otherwise it does not work
+  //     else
+  //       client.register(o);
+  //   return client;
+  // }
 
   protected String logClientRequestAndGetUrl() {
     StringBuilder url = new StringBuilder();

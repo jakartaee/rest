@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1995, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -14,12 +14,34 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
+/*
+ * $Id$
+ */
+
 package jakarta.ws.rs.tck.lib.util;
 
-import java.io.IOException;
+/**
+ * This exception is thrown by the init method of the TestUtil class, if
+ * anything goes wrong while establishing a socket connection back to the
+ * harness host.
+ * 
+ * @author Kyle Grucci
+ */
+public class RemoteLoggingInitException extends java.lang.Exception {
+  /**
+   * creates a RemoteLoggingInitException
+   */
+  public RemoteLoggingInitException() {
+    super();
+  }
 
-public class CEFormatException extends IOException {
-  public CEFormatException(String s) {
+  /**
+   * creates a RemoteLoggingInitException with a message
+   * 
+   * @param s
+   *          the message
+   */
+  public RemoteLoggingInitException(String s) {
     super(s);
   }
 }

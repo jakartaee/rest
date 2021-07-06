@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,7 +18,7 @@
  * $Id$
  */
 
-package com.sun.ts.tests.common.webclient.http;
+package jakarta.ws.rs.tck.common.webclient.http;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -40,8 +40,8 @@ import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.commons.httpclient.protocol.SSLProtocolSocketFactory;
 
-import com.sun.ts.lib.util.TestUtil;
-import com.sun.ts.tests.common.webclient.Util;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+import jakarta.ws.rs.tck.common.webclient.Util;
 
 /**
  * Represents an HTTP client Request
@@ -52,7 +52,7 @@ public class HttpRequest {
   static {
     if (TestUtil.traceflag) {
       System.setProperty("org.apache.commons.logging.Log",
-          "com.sun.ts.tests.common.webclient.log.WebLog");
+          "jakarta.ws.rs.tck.common.webclient.log.WebLog");
       System.setProperty(
           "org.apache.commons.logging.simplelog.log.httpclient.wire", "debug");
     }

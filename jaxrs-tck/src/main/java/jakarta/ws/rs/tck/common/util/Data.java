@@ -2,7 +2,7 @@
 *
 * The Apache Software License, Version 1.1
 *
-* Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
+* Copyright (c) 2018, 2021 Oracle and/or its affiliates. All rights reserved.
 * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
 * reserved.
 *
@@ -55,7 +55,7 @@
 *
 */
 
-package com.sun.ts.tests.servlet.common.util;
+package jakarta.ws.rs.tck.common.util;
 
 public final class Data {
 

@@ -1,0 +1,90 @@
+<!--
+
+    Copyright (c) 2007, 2018 Oracle and/or its affiliates. All rights reserved.
+
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Public License v. 2.0, which is available at
+    http://www.eclipse.org/legal/epl-2.0.
+
+    This Source Code may also be made available under the following Secondary
+    Licenses when the conditions for such availability set forth in the
+    Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
+    version 2 with the GNU Classpath Exception, which is available at
+    https://www.gnu.org/software/classpath/license.html.
+
+    SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+
+-->
+
+<project name="JAX-RS TCK package" default="package">
+	<!--
+    JAX-RS TCK package target: package JAX-RS TCK test application into web archive template,
+			which does not contain implementation specific servlet.
+
+    app.name:          specified in individual test's build.xml,
+                       is used for web archive template name: ${app.name}_web.war.template
+    web.xml.template:  located in individual test's directory.
+                       Is web application's deployment descriptor template,
+                       missing name of the implementation's servlet.
+    class.dir:         TCK's class directory.  Located at $TS_HOME/classes
+    appconfig.class:   specified in individual test's build.xml.
+                       Required by JAX-RS spec to list all resources in the test application.
+    resource.classes:  specified in individual test's build.xml,
+                       contains all resource class used in the test
+    -->
+	<import file="../../../../../../../bin/xml/ts.import.xml" />
+	<!--		
+	<target name="package" if="resource.classes">
+		<mkdir dir="${ts.home}/dist/${pkg.dir}" />
+		<jar destfile="${ts.home}/dist/${pkg.dir}/${app.name}_web.war.template">
+			<zipfileset dir="${ts.home}/classes" includes="${resource.classes}, ${appconfig.class}" prefix="WEB-INF/classes" />
+			<zipfileset dir="${ts.home}/src/${pkg.dir}" includes="web.xml.template" fullpath="WEB-INF/web.xml" />
+		</jar>
+	</target>
+    -->
+	<target name="package" if="resource.classes">
+        <propertyregex property="unified.resource.classes"
+                  input="${resource.classes}"
+				  regexp="\\"
+				  replace="/"
+        	      defaultvalue="${resource.classes}"
+				  casesensitive="false" />	
+        <propertyregex property="relative.resource.classes"
+                  input="${unified.resource.classes}"
+                  regexp="(.*)/src/(.*)"
+        		  defaultvalue="${unified.resource.classes}"
+                  select="\2" />
+        <propertyregex property="resource.sources"
+                  input="${relative.resource.classes}"
+                  regexp=".class"
+                  replace=".java"
+                  casesensitive="false" />
+		
+        <propertyregex property="unified.appconfig.class"
+                  input="${appconfig.class}"
+				  regexp="\\"
+				  replace="/"
+				  casesensitive="false"
+        		  defaultvalue="${appconfig.class}"/>		
+        <propertyregex property="relative.appconfig.class"
+                  input="${unified.appconfig.class}"
+				  regexp="(.*)/src/(.*)"
+        		  defaultvalue="${unified.appconfig.class}"
+				  select="\2" />		
+        <propertyregex property="appconfig.source"
+                  input="${relative.appconfig.class}"
+                  regexp=".class"
+                  replace=".java"
+                  casesensitive="false" />
+		
+		<mkdir dir="${ts.home}/dist/${pkg.dir}" />
+		<ts.war	archivename="${app.name}" descriptor="web.xml.template">
+			<zipfileset dir="${ts.home}/classes" includes="${unified.resource.classes}, ${unified.appconfig.class}" prefix="WEB-INF/classes" />			
+		</ts.war>
+		<move file="${ts.home}/dist/${pkg.dir}/${app.name}_web.war" tofile="${ts.home}/dist/${pkg.dir}/${app.name}_web.war.template" />
+	</target>
+
+	<target name="update.war" if="resource.classes" description="Updates war with servlet adaptor">
+		<ant antfile="${jaxrs_impl_name}.xml" dir="${ts.home}/bin/xml/impl/${impl.vi}" target="all_action" />
+	</target>
+</project>

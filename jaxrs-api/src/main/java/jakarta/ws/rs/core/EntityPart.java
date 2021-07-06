@@ -131,6 +131,7 @@ public interface EntityPart {
      * 
      * @param type the {@code Class} that the implementation should convert this
      *             part to
+     * @param <T> the entity type
      * @return an instance of the specified {@code Class} representing the content
      *         of this part
      * @throws IllegalArgumentException if no
@@ -167,6 +168,7 @@ public interface EntityPart {
      * 
      * @param type the generic type that the implementation should convert this part
      *             to
+     * @param <T> the entity type
      * @return an instance of the specified generic type representing the content of
      *         this part
      * @throws IllegalArgumentException if no
@@ -207,7 +209,7 @@ public interface EntityPart {
      * 
      * @since 3.1
      */
-    public interface Builder {
+    interface Builder {
 
         /**
          * Sets the media type for the EntityPart. This will also set the
@@ -217,7 +219,7 @@ public interface EntityPart {
          * @return the updated builder
          * @throws IllegalArgumentException if {@code mediaType} is {@code null}
          */
-        public Builder mediaType(MediaType mediaType) throws IllegalArgumentException;
+        Builder mediaType(MediaType mediaType) throws IllegalArgumentException;
 
         /**
          * Convenience method for setting the media type for the EntityPart. This will
@@ -230,7 +232,7 @@ public interface EntityPart {
          * @throws IllegalArgumentException if {@code mediaTypeString} cannot be parsed
          *                                  or is {@code null}
          */
-        public Builder mediaType(String mediaTypeString) throws IllegalArgumentException;
+        Builder mediaType(String mediaTypeString) throws IllegalArgumentException;
 
         /**
          * Adds a new header or replaces a previously added header and sets the header
@@ -241,7 +243,7 @@ public interface EntityPart {
          * @return the updated builder
          * @throws IllegalArgumentException if {@code headerName} is {@code null}
          */
-        public Builder header(String headerName, String... headerValues) throws IllegalArgumentException;
+        Builder header(String headerName, String... headerValues) throws IllegalArgumentException;
 
         /**
          * Adds new headers or replaces previously added headers. The behavior of this
@@ -252,7 +254,7 @@ public interface EntityPart {
          * @return the updated builder
          * @throws IllegalArgumentException if {@code newHeaders} is {@code null}
          */
-        public Builder headers(MultivaluedMap<String, String> newHeaders) throws IllegalArgumentException;
+        Builder headers(MultivaluedMap<String, String> newHeaders) throws IllegalArgumentException;
 
         /**
          * Sets the file name for this part. The file name will be specified as an
@@ -264,7 +266,7 @@ public interface EntityPart {
          * @return the updated builder
          * @throws IllegalArgumentException if {@code fileName} is {@code null}
          */
-        public Builder fileName(String fileName) throws IllegalArgumentException;
+        Builder fileName(String fileName) throws IllegalArgumentException;
 
         /**
          * Sets the content for this part. The content of this builder must be specified
@@ -279,7 +281,7 @@ public interface EntityPart {
          * @return the updated builder
          * @throws IllegalArgumentException if {@code content} is {@code null}
          */
-        public Builder content(InputStream content) throws IllegalArgumentException;
+        Builder content(InputStream content) throws IllegalArgumentException;
 
         /**
          * Convenience method, equivalent to calling
@@ -290,7 +292,7 @@ public interface EntityPart {
          * @return the updated builder.
          * @throws IllegalArgumentException if either parameter is {@code null}.
          */
-        public default Builder content(String fileName, InputStream content) throws IllegalArgumentException {
+        default Builder content(String fileName, InputStream content) throws IllegalArgumentException {
             return this.fileName(fileName).content(content);
         }
 
@@ -311,10 +313,11 @@ public interface EntityPart {
          * @param content the object to be used as the content
          * @param type    the type of this object which will be used when selecting the
          *                appropriate {@link jakarta.ws.rs.ext.MessageBodyWriter}
+         * @param <T>     the entity type
          * @return the updated builder.
          * @throws IllegalArgumentException if {@code content} is {@code null}
          */
-        public <T> Builder content(T content, Class<? extends T> type) throws IllegalArgumentException;
+        <T> Builder content(T content, Class<? extends T> type) throws IllegalArgumentException;
 
         /**
          * Sets the content for this part. The content of this builder must be specified
@@ -336,8 +339,9 @@ public interface EntityPart {
          * 
          * @param content the object to be used as the content
          * @throws IllegalArgumentException if {@code content} is {@code null}
+         * @return the updated builder.
          */
-        public default Builder content(Object content) throws IllegalArgumentException {
+        default Builder content(Object content) throws IllegalArgumentException {
             return this.content(content, content.getClass());
         }
 
@@ -359,10 +363,11 @@ public interface EntityPart {
          * @param type    the generic type of this object which will be used when
          *                selecting the appropriate
          *                {@link jakarta.ws.rs.ext.MessageBodyWriter}
+         * @param <T> the entity type
          * @return the updated builder.
          * @throws IllegalArgumentException if {@code content} is {@code null}
          */
-        public <T> Builder content(T content, GenericType<T> type) throws IllegalArgumentException;
+        <T> Builder content(T content, GenericType<T> type) throws IllegalArgumentException;
 
         /**
          * Builds a new EntityPart instance using the provided property values.
@@ -379,6 +384,6 @@ public interface EntityPart {
          *                                 {@link jakarta.ws.rs.ext.MessageBodyWriter}
          *                                 throws a {@code WebApplicationException}
          */
-        public EntityPart build() throws IllegalStateException, IOException, WebApplicationException;
+        EntityPart build() throws IllegalStateException, IOException, WebApplicationException;
     }
 }

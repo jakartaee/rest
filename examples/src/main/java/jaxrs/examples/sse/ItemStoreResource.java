@@ -85,7 +85,7 @@ public class ItemStoreResource {
     }
 
     /**
-     * Receive & process commands sent by the test client that control the internal resource state.
+     * Receive &amp; process commands sent by the test client that control the internal resource state.
      * <p>
      * Following is the list of recognized commands:
      * <ul>

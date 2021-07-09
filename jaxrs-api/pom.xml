@@ -425,6 +425,13 @@
                         <configLocation>${basedir}/../etc/config/checkstyle.xml</configLocation>
                         <excludes>**/module-info.java</excludes>
                     </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>8.43</version>
+                        </dependency>
+                    </dependencies>
                     <executions>
                         <execution>
                             <goals>

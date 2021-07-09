@@ -4,7 +4,7 @@ pipeline {
 		pollSCM('H H * * *')
 	}
 	tools {
-		jdk 'openjdk-latest'
+		jdk 'openjdk-jdk11-latest'
 		maven 'apache-maven-latest'
 	}
 	environment {

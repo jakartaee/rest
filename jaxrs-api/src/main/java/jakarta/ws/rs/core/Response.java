@@ -74,16 +74,20 @@ public abstract class Response implements AutoCloseable {
     public abstract StatusType getStatusInfo();
 
     /**
-     * Get the message entity Java instance. Returns {@code null} if the message does not contain an entity body.
-     * <p>
-     * If the entity is represented by an un-consumed {@link InputStream input stream} the method will return the input
-     * stream.
-     * </p>
+     * Get the message entity Java instance. Returns {@code null} if the message does not contain an entity body, otherwise
+     * behaves as follow:
+     * <ul>
+     * <li>If a Java instance was supplied by a call to {@link #accepted(Object)}, {@link #ok(Object)} or {@link ResponseBuilder#entity(Object)},
+     * then that instance is returned.
+     * <li>Else if {@link #bufferEntity()} was previously invoked successfully, a copy of the reset buffered entity input stream is returned.
+     * <li>Else if the message entity is represented by the original input stream not fully consumed already (i.e <code>inputStream.read() != -1</code>),
+     * then that input stream is returned.
+     * </ul>
      *
      * @return the message entity or {@code null} if message does not contain an entity body (i.e. when {@link #hasEntity()}
      * returns {@code false}).
-     * @throws IllegalStateException if the entity was previously fully consumed as an {@link InputStream input stream}, or
-     * if the response has been {@link #close() closed}.
+     * @throws IllegalStateException if the message entity is represented by the original input stream fully consumed already
+     * (i.e <code>inputStream.read() == -1</code>), or if the response has been {@link #close() closed}.
      */
     public abstract Object getEntity();
 
@@ -93,26 +97,25 @@ public abstract class Response implements AutoCloseable {
      * <p>
      * Method throws an {@link ProcessingException} if the content of the message cannot be mapped to an entity of the
      * requested type and {@link IllegalStateException} in case the entity is not backed by an input stream or if the
-     * original entity input stream has already been consumed without {@link #bufferEntity() buffering} the entity data
-     * prior consuming.
+     * original entity input stream has already been fully consumed (i.e <code>inputStream.read() == -1</code>) without
+     * being {@link #bufferEntity() buffered} prior consuming.
      * </p>
      * <p>
-     * A message instance returned from this method will be cached for subsequent retrievals via {@link #getEntity()}.
      * Unless the supplied entity type is an {@link java.io.InputStream input stream}, this method automatically
-     * {@link #close() closes} the an unconsumed original response entity data stream if open. In case the entity data has
+     * {@link InputStream#close() closes} the original message entity input stream if open. In case the entity data has
      * been buffered, the buffer will be reset prior consuming the buffered data to enable subsequent invocations of
      * {@code readEntity(...)} methods on this response.
      * </p>
      *
      * @param <T> entity instance Java type.
      * @param entityType the type of entity.
-     * @return the message entity; for a zero-length response entities returns a corresponding Java object that represents
+     * @return the message entity; for a zero-length message entity returns a corresponding Java object that represents
      * zero-length data. In case no zero-length representation is defined for the Java type, a {@link ProcessingException}
      * wrapping the underlying {@link NoContentException} is thrown.
      * @throws ProcessingException if the content of the message cannot be mapped to an entity of the requested type.
      * @throws IllegalStateException if the entity is not backed by an input stream, the response has been {@link #close()
-     * closed} already, or if the entity input stream has been fully consumed already and has not been buffered prior
-     * consuming.
+     * closed} already, or if the entity input stream has been fully consumed already (i.e <code>inputStream.read() == -1</code>)
+     * and has not been buffered prior consuming.
      * @see jakarta.ws.rs.ext.MessageBodyReader
      * @since 2.0
      */
@@ -124,26 +127,25 @@ public abstract class Response implements AutoCloseable {
      * <p>
      * Method throws an {@link ProcessingException} if the content of the message cannot be mapped to an entity of the
      * requested type and {@link IllegalStateException} in case the entity is not backed by an input stream or if the
-     * original entity input stream has already been consumed without {@link #bufferEntity() buffering} the entity data
-     * prior consuming.
+     * original entity input stream has already been fully consumed (i.e <code>inputStream.read() == -1</code>) without
+     * being {@link #bufferEntity() buffered} prior consuming.
      * </p>
      * <p>
-     * A message instance returned from this method will be cached for subsequent retrievals via {@link #getEntity()}.
      * Unless the supplied entity type is an {@link java.io.InputStream input stream}, this method automatically
-     * {@link #close() closes} the an unconsumed original response entity data stream if open. In case the entity data has
+     * {@link InputStream#close() closes} the original message entity input stream if open. In case the entity data has
      * been buffered, the buffer will be reset prior consuming the buffered data to enable subsequent invocations of
      * {@code readEntity(...)} methods on this response.
      * </p>
      *
      * @param <T> entity instance Java type.
      * @param entityType the type of entity; may be generic.
-     * @return the message entity; for a zero-length response entities returns a corresponding Java object that represents
+     * @return the message entity; for a zero-length response entity returns a corresponding Java object that represents
      * zero-length data. In case no zero-length representation is defined for the Java type, a {@link ProcessingException}
      * wrapping the underlying {@link NoContentException} is thrown.
      * @throws ProcessingException if the content of the message cannot be mapped to an entity of the requested type.
      * @throws IllegalStateException if the entity is not backed by an input stream, the response has been {@link #close()
-     * closed} already, or if the entity input stream has been fully consumed already and has not been buffered prior
-     * consuming.
+     * closed} already, or if the entity input stream has been fully consumed already (i.e <code>inputStream.read() == -1</code>)
+     * and has not been buffered prior consuming.
      * @see jakarta.ws.rs.ext.MessageBodyReader
      * @since 2.0
      */
@@ -155,13 +157,12 @@ public abstract class Response implements AutoCloseable {
      * <p>
      * Method throws an {@link ProcessingException} if the content of the message cannot be mapped to an entity of the
      * requested type and {@link IllegalStateException} in case the entity is not backed by an input stream or if the
-     * original entity input stream has already been consumed without {@link #bufferEntity() buffering} the entity data
-     * prior consuming.
+     * original entity input stream has already been fully consumed (i.e <code>inputStream.read() == -1</code>) without
+     * being {@link #bufferEntity() buffered} prior consuming.
      * </p>
      * <p>
-     * A message instance returned from this method will be cached for subsequent retrievals via {@link #getEntity()}.
      * Unless the supplied entity type is an {@link java.io.InputStream input stream}, this method automatically
-     * {@link #close() closes} the an unconsumed original response entity data stream if open. In case the entity data has
+     * {@link InputStream#close() closes} the original message entity input stream if open. In case the entity data has
      * been buffered, the buffer will be reset prior consuming the buffered data to enable subsequent invocations of
      * {@code readEntity(...)} methods on this response.
      * </p>
@@ -169,13 +170,13 @@ public abstract class Response implements AutoCloseable {
      * @param <T> entity instance Java type.
      * @param entityType the type of entity.
      * @param annotations annotations that will be passed to the {@link MessageBodyReader}.
-     * @return the message entity; for a zero-length response entities returns a corresponding Java object that represents
+     * @return the message entity; for a zero-length response entity returns a corresponding Java object that represents
      * zero-length data. In case no zero-length representation is defined for the Java type, a {@link ProcessingException}
      * wrapping the underlying {@link NoContentException} is thrown.
      * @throws ProcessingException if the content of the message cannot be mapped to an entity of the requested type.
      * @throws IllegalStateException if the entity is not backed by an input stream, the response has been {@link #close()
-     * closed} already, or if the entity input stream has been fully consumed already and has not been buffered prior
-     * consuming.
+     * closed} already, or if the entity input stream has been fully consumed already (i.e <code>inputStream.read() == -1</code>)
+     * and has not been buffered prior consuming.
      * @see jakarta.ws.rs.ext.MessageBodyReader
      * @since 2.0
      */
@@ -187,13 +188,12 @@ public abstract class Response implements AutoCloseable {
      * <p>
      * Method throws an {@link ProcessingException} if the content of the message cannot be mapped to an entity of the
      * requested type and {@link IllegalStateException} in case the entity is not backed by an input stream or if the
-     * original entity input stream has already been consumed without {@link #bufferEntity() buffering} the entity data
-     * prior consuming.
+     * original entity input stream has already been fully consumed (i.e <code>inputStream.read() == -1</code>) without
+     * being {@link #bufferEntity() buffered} prior consuming.
      * </p>
      * <p>
-     * A message instance returned from this method will be cached for subsequent retrievals via {@link #getEntity()}.
      * Unless the supplied entity type is an {@link java.io.InputStream input stream}, this method automatically
-     * {@link #close() closes} the an unconsumed original response entity data stream if open. In case the entity data has
+     * {@link InputStream#close() closes} the original message entity input stream if open. In case the entity data has
      * been buffered, the buffer will be reset prior consuming the buffered data to enable subsequent invocations of
      * {@code readEntity(...)} methods on this response.
      * </p>
@@ -201,13 +201,13 @@ public abstract class Response implements AutoCloseable {
      * @param <T> entity instance Java type.
      * @param entityType the type of entity; may be generic.
      * @param annotations annotations that will be passed to the {@link MessageBodyReader}.
-     * @return the message entity; for a zero-length response entities returns a corresponding Java object that represents
+     * @return the message entity; for a zero-length response entity returns a corresponding Java object that represents
      * zero-length data. In case no zero-length representation is defined for the Java type, a {@link ProcessingException}
      * wrapping the underlying {@link NoContentException} is thrown.
      * @throws ProcessingException if the content of the message cannot be mapped to an entity of the requested type.
      * @throws IllegalStateException if the entity is not backed by an input stream, the response has been {@link #close()
-     * closed} already, or if the entity input stream has been fully consumed already and has not been buffered prior
-     * consuming.
+     * closed} already, or if the entity input stream has been fully consumed already (i.e <code>inputStream.read() == -1</code>)
+     * and has not been buffered prior consuming.
      * @see jakarta.ws.rs.ext.MessageBodyReader
      * @since 2.0
      */
@@ -232,19 +232,18 @@ public abstract class Response implements AutoCloseable {
     public abstract boolean hasEntity();
 
     /**
-     * Buffer the message entity data.
+     * Buffer the message entity input stream.
      * <p>
-     * In case the message entity is backed by an unconsumed entity input stream, all the bytes of the original entity input
-     * stream are read and stored in a local buffer. The original entity input stream is consumed and automatically closed
-     * as part of the operation and the method returns {@code true}.
+     * In case the message entity is backed by an input stream not consumed at all, all the bytes of that input
+     * stream are read (i.e until <code>inputStream.read() == -1</code>) and stored in a local buffer. That input
+     * stream is then automatically {@link InputStream#close() closed} as part of the operation and the method returns {@code true}.
      * </p>
      * <p>
-     * In case the response entity instance is not backed by an unconsumed input stream an invocation of
-     * {@code bufferEntity} method is ignored and the method returns {@code false}.
+     * Otherwise an invocation of {@code bufferEntity} method is ignored and the method returns {@code false}.
      * </p>
      * <p>
      * This operation is idempotent, i.e. it can be invoked multiple times with the same effect which also means that
-     * calling the {@code bufferEntity()} method on an already buffered (and thus closed) message instance is legal and has
+     * calling the {@code bufferEntity()} method on an already buffered (and thus closed) input stream instance is legal and has
      * no further effect. Also, the result returned by the {@code bufferEntity()} method is consistent across all
      * invocations of the method on the same {@code Response} instance.
      * </p>
@@ -268,13 +267,13 @@ public abstract class Response implements AutoCloseable {
      * associated with the response (e.g. {@link #bufferEntity() buffered message entity data}).
      * <p>
      * This operation is idempotent, i.e. it can be invoked multiple times with the same effect which also means that
-     * calling the {@code close()} method on an already closed message instance is legal and has no further effect.
+     * calling the {@code close()} method on an already closed message entity input stream is legal and has no further effect.
      * </p>
      * <p>
-     * The {@code close()} method should be invoked on all instances that contain an un-consumed entity input stream to
-     * ensure the resources associated with the instance are properly cleaned-up and prevent potential memory leaks. This is
-     * typical for client-side scenarios where application layer code processes only the response headers and ignores the
-     * response entity.
+     * The {@code close()} method should be invoked on all instances that contain an original entity input stream not fully
+     * consumed (i.e until inputStream.read() != -1) to ensure the resources associated with the instance are properly cleaned-up
+     * and prevent potential memory leaks. This is typical for client-side scenarios where application layer code processes only
+     * the response headers and ignores the response entity.
      * </p>
      * <p>
      * Any attempts to manipulate (read, get, buffer) a message entity on a closed response will result in an
@@ -471,9 +470,9 @@ public abstract class Response implements AutoCloseable {
      * builder.
      * </p>
      * <p>
-     * Note that if the entity is backed by an un-consumed input stream, the reference to the stream is copied. In such case
-     * make sure to {@link #bufferEntity() buffer} the entity stream of the original response instance before passing it to
-     * this method.
+     * Note that if the entity is backed by the original input stream not consumed at all, the reference to the stream is copied.
+     * In such case make sure to {@link #bufferEntity() buffer} the entity stream of the original response instance before passing
+     * it to this method.
      * </p>
      *
      * @param response a Response from which the status code, entity and {@link #getHeaders() response headers} will be

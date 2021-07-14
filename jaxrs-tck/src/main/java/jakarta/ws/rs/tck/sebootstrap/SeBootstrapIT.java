@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Markus Karg. All rights reserved.
+ * Copyright (c) 2020, 2021 Markus Karg. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,7 +16,6 @@
 
 package jakarta.ws.rs.tck.sebootstrap;
 
-import static java.util.concurrent.TimeUnit.HOURS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
@@ -29,11 +28,6 @@ import java.util.Set;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
-
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -43,13 +37,16 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.UriBuilder;
 
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
 /**
  * Compliance Test for Java SE Bootstrap API of Jakarta REST API
  *
  * @author Markus KARG (markus@headcrashing.eu)
  * @since 3.1
  */
-@Timeout(value = 1, unit = HOURS)
 public final class SeBootstrapIT {
 
     /**
@@ -328,12 +325,12 @@ public final class SeBootstrapIT {
 
     private static Client client;
 
-    @BeforeAll
+    @BeforeClass
     static void createClient() {
         SeBootstrapIT.client = ClientBuilder.newClient();
     }
 
-    @AfterAll
+    @AfterClass
     static void disposeClient() {
         SeBootstrapIT.client.close();
     }

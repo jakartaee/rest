@@ -86,12 +86,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>[5.5.2, 5.6-A00)</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>
             <version>[2.2, 2.3-A00)</version>

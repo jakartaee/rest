@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Markus Karg. All rights reserved.
+ * Copyright (c) 2020, 2021 Markus Karg. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,20 +16,17 @@
 
 package jakarta.ws.rs.tck.uribuilder;
 
-import static java.util.concurrent.TimeUnit.HOURS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.ExecutionException;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
-
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.UriBuilderException;
+
+import org.testng.annotations.Test;
 
 /**
  * Compliance Test for URI Builder API of Jakarta REST API
@@ -37,7 +34,6 @@ import jakarta.ws.rs.core.UriBuilderException;
  * @author Markus KARG (markus@headcrashing.eu)
  * @since 3.1
  */
-@Timeout(value = 1, unit = HOURS)
 public final class UriBuilderIT {
 
     /**
@@ -67,12 +63,12 @@ public final class UriBuilderIT {
      * @throws InterruptedException if the test took much longer than usually
      *                              expected
      */
-    @Test
+    @Test(expectedExceptions = UriBuilderException.class)
     public final void shouldNotBuildInvalidUriFromScratch() throws InterruptedException, ExecutionException {
         // given
         final UriBuilder uriBuilder = UriBuilder.newInstance();
 
-        // then
-        assertThrows(UriBuilderException.class, /* when */ uriBuilder::build);
+        // then UriBuilderException is thrown when
+        uriBuilder.build();
     }
 }

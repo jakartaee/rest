@@ -36,7 +36,7 @@ public class BasicResourceTest extends Arquillian {
     }
 
     @Test
-    public void test_get() throws Exception {
+    public void get() throws Exception {
         String uri = Util.getUrlFor(CONTEXT_ROOT, "app", "basic", "123");
         LOG.finest(() -> "uri = " + uri);
         HttpClient client = HttpClient.newHttpClient();
@@ -49,7 +49,7 @@ public class BasicResourceTest extends Arquillian {
     }
 
     @Test
-    public void test_post() throws Exception {
+    public void post() throws Exception {
         String uri = Util.getUrlFor(CONTEXT_ROOT, "app", "basic");
         LOG.finest(() -> "uri = " + uri);
         HttpClient client = HttpClient.newHttpClient();

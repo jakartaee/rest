@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2008, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -14,7 +14,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.lib.implementation.sun.jersey;
+
+package jakarta.ws.rs.tck.lib.implementation.sun.jersey;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,9 +30,9 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import com.sun.ts.lib.deliverable.PropertyManagerInterface;
+import jakarta.ws.rs.tck.lib.deliverable.PropertyManagerInterface;
 
-import com.sun.ts.lib.util.TestUtil;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;

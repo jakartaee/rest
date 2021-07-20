@@ -66,7 +66,8 @@ public class TSURL implements TSURLInterface, Serializable {
     if (ctsURL == null) {
       try {
         // create and initialize a new instance of TSURLInterface
-        Class c = Class.forName(TestUtil.getProperty(sClass));
+        //Class c = Class.forName(TestUtil.getProperty(sClass));
+        Class c = Class.forName("jakarta.ws.rs.tck.lib.implementation.sun.common.SunRIURL");
         ctsURL = (TSURLInterface) c.newInstance();
       } catch (Exception e) {
         e.printStackTrace();
@@ -95,7 +96,8 @@ public class TSURL implements TSURLInterface, Serializable {
     if (ctsURL == null) {
       try {
         // create and initialize a new instance of TSURLInterface
-        Class c = Class.forName(TestUtil.getProperty(sClass));
+        //Class c = Class.forName(TestUtil.getProperty(sClass));
+        Class c = Class.forName("jakarta.ws.rs.tck.lib.implementation.sun.common.SunRIURL");
         ctsURL = (TSURLInterface) c.newInstance();
       } catch (Exception e) {
         e.printStackTrace();
@@ -116,7 +118,8 @@ public class TSURL implements TSURLInterface, Serializable {
     if (ctsURL == null) {
       try {
         // create and initialize a new instance of TSURLInterface
-        Class c = Class.forName(TestUtil.getProperty(sClass));
+        //Class c = Class.forName(TestUtil.getProperty(sClass));
+        Class c = Class.forName("jakarta.ws.rs.tck.lib.implementation.sun.common.SunRIURL");
         ctsURL = (TSURLInterface) c.newInstance();
       } catch (Exception e) {
         e.printStackTrace();

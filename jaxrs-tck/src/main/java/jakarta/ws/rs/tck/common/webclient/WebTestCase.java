@@ -34,6 +34,7 @@ import jakarta.ws.rs.tck.common.webclient.http.HttpRequest;
 import jakarta.ws.rs.tck.common.webclient.http.HttpResponse;
 import jakarta.ws.rs.tck.common.webclient.validation.ValidationFactory;
 import jakarta.ws.rs.tck.common.webclient.validation.ValidationStrategy;
+import jakarta.ws.rs.tck.common.webclient.TestFailureException;
 
 /**
  * A TestCase implementation for HTTP-based testing. This allows the user to set

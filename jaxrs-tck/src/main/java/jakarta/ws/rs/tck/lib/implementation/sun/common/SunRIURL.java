@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -14,11 +14,11 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.lib.implementation.sun.common;
+package jakarta.ws.rs.tck.lib.implementation.sun.common;
 
 import java.net.*;
-import com.sun.ts.lib.util.*;
-import com.sun.ts.lib.porting.*;
+import jakarta.ws.rs.tck.lib.util.*;
+import jakarta.ws.rs.tck.lib.porting.*;
 
 /**
  * This is a J2EE Reference specific implementation of the TSURLInterface which

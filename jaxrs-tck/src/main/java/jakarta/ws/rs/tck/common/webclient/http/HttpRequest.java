@@ -50,12 +50,12 @@ import jakarta.ws.rs.tck.common.webclient.Util;
 public class HttpRequest {
 
   static {
-    if (TestUtil.traceflag) {
-      System.setProperty("org.apache.commons.logging.Log",
-          "jakarta.ws.rs.tck.common.webclient.log.WebLog");
-      System.setProperty(
-          "org.apache.commons.logging.simplelog.log.httpclient.wire", "debug");
-    }
+    // if (TestUtil.traceflag) {
+    //   System.setProperty("org.apache.commons.logging.Log",
+    //       "jakarta.ws.rs.tck.common.webclient.log.WebLog");
+    //   System.setProperty(
+    //       "org.apache.commons.logging.simplelog.log.httpclient.wire", "debug");
+    // }
   }
 
   /**

@@ -73,10 +73,10 @@ import jakarta.ws.rs.client.WebTarget;
  * In the case of an error condition response, the <code>Throwable</code> passed to the <code>onError</code> consumer
  * <i>should</i> be a WebApplicationException containing the invalid <code>Response</code> object.
  * <p>
- * Note that if, for any of the registered event consumers, invocation of {@link Consumer#accept(Object)
+ * Note that if, for any of the registered event consumers, an invocation of {@link Consumer#accept(Object)
  * Consumer&lt;InboundSseEvent&gt;#accept(InboundSseEvent)} method throws an exception, this is not an error condition.
  * Thus <code>onError</code> is not invoked and event processing is not stopped.
- * User is encouraged to handle exception himself in the event consumer code.
+ * Users are encouraged to handle exceptions on their own as part of the event processing logic.
  *
  * @author Marek Potociar
  * @since 2.1

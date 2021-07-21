@@ -1,4 +1,11 @@
-package jakarta.ws.rs.tck.resource;
+/*******************************************************************
+* Copyright (c) 2021 Eclipse Foundation
+*
+* This specification document is made available under the terms
+* of the Eclipse Foundation Specification License v1.0, which is
+* available at https://www.eclipse.org/legal/efsl.php.
+*******************************************************************/
+package jakarta.ws.rs.tck.basic;
 
 import java.util.logging.Logger;
 
@@ -17,33 +24,33 @@ public class BasicResource {
     private static final Logger LOG = Logger.getLogger(BasicResource.class.getName());
 
     @GET
+    @Path("/{id}")
     public Response getResponse(@PathParam("id") String id) {
-        LOG.info("getResponse " + id);
-        System.out.println("getResponse " + id);
+        LOG.finest("getResponse " + id);
         return Response.ok("GET basic " + id).build();
     }
 
     @POST
     public Response postResponse(String entity) {
-        LOG.info("postResponse " + entity);
+        LOG.finest("postResponse " + entity);
         return Response.ok("POST basic " + entity).build();
     }
 
     @PUT
     public Response putResponse(String entity) {
-        LOG.info("putResponse " + entity);
+        LOG.finest("putResponse " + entity);
         return Response.ok("PUT basic " + entity).build();
     }
 
     @PATCH
     public Response patchResponse(String entity) {
-        LOG.info("patchResponse " + entity);
+        LOG.finest("patchResponse " + entity);
         return Response.ok("PATCH basic " + entity).build();
     }
 
     @DELETE
     public Response deleteResponse(@QueryParam("id") String id) {
-        LOG.info("deleteResponse " + id);
+        LOG.finest("deleteResponse " + id);
         return Response.ok("DELETE basic " + id).build();
     }
 }

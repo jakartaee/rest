@@ -22,7 +22,7 @@
     <artifactId>jakarta.ws.rs-spec</artifactId>
     <version>3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Jakarta RESTful Web Services Specification</name>
+    <name>Jakarta RESTful WS Specification</name>
 
     <properties>
         <site.output.dir>${project.build.directory}/staging</site.output.dir>

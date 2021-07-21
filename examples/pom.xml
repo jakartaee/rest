@@ -19,7 +19,7 @@
     <artifactId>jakarta.ws.rs-examples</artifactId>
     <version>3.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>jakarta.ws.rs-examples</name>
+    <name>Jakarta RESTful WS Examples</name>
 
     <url>https://github.com/jax-rs/api</url>
 

@@ -24,14 +24,16 @@
         <groupId>org.eclipse.ee4j</groupId>
         <artifactId>project</artifactId>
         <version>1.0.7</version>
+        <relativePath/>
     </parent>
 
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-api</artifactId>
     <version>3.1-SNAPSHOT</version>
 
+
     <packaging>bundle</packaging>
-    <name>jakarta.ws.rs-api</name>
+    <name>Jakarta RESTful WS API</name>
     <description>Jakarta RESTful Web Services</description>
 
     <url>https://github.com/eclipse-ee4j/jaxrs-api</url>

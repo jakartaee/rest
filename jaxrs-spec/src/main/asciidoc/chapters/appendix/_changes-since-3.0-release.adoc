@@ -23,7 +23,7 @@ automatically register certain service providers.
 default exception mappers.
 * <<resource_field>>: Array types may be specified for `@CookieParam`,
 `@FormParam`, `@HeaderParam`, `@MatrixParam` and `@QueryParam` parameters.
-* Deprecated Link.JaxbLink and Link.JaxbAdapter inner classes.
+* Deprecated `Link.JaxbLink` and `Link.JaxbAdapter` inner classes.
 * New method `#hasProperty(String)` wherever `#getProperty(String)` exists
 * `Response.created(URI)` now resolves relative URIs into an absolute URI
 against the *base* URI, not against the *request* URI anymore.

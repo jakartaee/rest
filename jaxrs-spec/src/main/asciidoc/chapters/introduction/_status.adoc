@@ -11,7 +11,7 @@
 [[status]]
 === Status
 
-This is the final release of version 3.1. The issue tracking system for
+This is a draft of version 3.1. The issue tracking system for
 this release can be found at:
 
 https://github.com/eclipse-ee4j/jaxrs-api/issues

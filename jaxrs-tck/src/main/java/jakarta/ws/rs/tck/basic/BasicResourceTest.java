@@ -9,14 +9,14 @@ package jakarta.ws.rs.tck.basic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpClient.Version;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.util.logging.Logger;
-
-import okhttp3.OkHttpClient;
-import okhttp3.MediaType;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -33,7 +33,6 @@ import jakarta.ws.rs.tck.Util;
 @RunAsClient
 public class BasicResourceTest {
     private static final Logger LOG = Logger.getLogger(BasicResourceTest.class.getName());
-    private OkHttpClient client = new OkHttpClient();
 
     @Deployment
     public static WebArchive createDeployment() {
@@ -45,33 +44,31 @@ public class BasicResourceTest {
     @Test
     public void get() throws Exception {
         LOG.finest("STARTING TEST: get");
-        try {
-        Request request = new Request.Builder().url(Util.getUrlFor(this, "app", "basic", "123")).build();
-
-        try (Response response = client.newCall(request).execute()) {
-            assertEquals("GET basic 123", response.body().string());
-        }
+        String uri = Util.getUrlFor(this, "app", "basic", "123");
+        LOG.finest(() -> "uri = " + uri);
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                                         .uri(URI.create(uri))
+                                         .version(Version.HTTP_1_1)
+                                         .build();
+        String response = client.send(request, BodyHandlers.ofString()).body();
+        assertEquals("GET basic 123", response);
         LOG.finest("SUCCESS!!!");
-        } catch (Throwable t) {
-            t.printStackTrace();
-            throw new Exception(t);
-        }
     }
 
     @Test
     public void post() throws Exception {
         LOG.finest("STARTING TEST: post");
-        try {
-            RequestBody body = RequestBody.create(MediaType.parse("text/plain"), "abc");
-            Request request = new Request.Builder().url(Util.getUrlFor(this, "app", "basic")).post(body).build();
-
-            try (Response response = client.newCall(request).execute()) {
-                assertEquals("POST basic abc", response.body().string());
-            }
-            LOG.finest("SUCCESS!!!");
-        } catch (Throwable t) {
-            t.printStackTrace();
-            throw new Exception(t);
-        }
+        String uri = Util.getUrlFor(this, "app", "basic");
+        LOG.finest(() -> "uri = " + uri);
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                                         .uri(URI.create(uri))
+                                         .POST(BodyPublishers.ofString("abc"))
+                                         .version(Version.HTTP_1_1)
+                                         .build();
+        String response = client.send(request, BodyHandlers.ofString()).body();
+        assertEquals("POST basic abc", response);
+        LOG.finest("SUCCESS!!!");
     }
 }

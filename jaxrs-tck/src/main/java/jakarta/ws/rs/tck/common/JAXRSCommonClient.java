@@ -333,6 +333,13 @@ public abstract class JAXRSCommonClient {
   protected void setTestProperties(WebTestCase testCase) {
     //TestUtil.logTrace("[JAXRSCommonClient] setTestProperties");
 
+    //temporarily hardcode hostname & portnumber
+    String hostname = "localhost";
+    String portnum = "8080";
+
+    _hostname = hostname.trim();
+    _port = Integer.parseInt(portnum.trim());
+
     setStandardProperties(TEST_PROPS.get(Property.STANDARD), testCase);
     setApiTestProperties(TEST_PROPS.get(Property.APITEST), testCase);
 

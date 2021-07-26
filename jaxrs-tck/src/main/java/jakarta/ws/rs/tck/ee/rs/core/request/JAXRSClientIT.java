@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2011, 2021 Oracle and/or its affiliates. All rights reserved.
  *
@@ -19,20 +18,21 @@ package jakarta.ws.rs.tck.ee.rs.core.request;
 
 import org.apache.commons.httpclient.Header;
 import java.util.Properties;
+import java.io.File;
 import jakarta.ws.rs.tck.common.webclient.http.HttpResponse;
 import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.arquillian.container.test.api.Deployment;
-//import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.jboss.arquillian.junit5.ArquillianExtension;
-
 
 import jakarta.ws.rs.core.Response.Status;
 
@@ -49,19 +49,42 @@ public class JAXRSClientIT extends JAXRSCommonClient {
 
   public JAXRSClientIT() {
     setContextRoot("/jaxrs_ee_core_request_web/RequestTest");
+    
   }
 
 
   @Deployment(testable = false)
   public static WebArchive createDeployment() {
 
-        System.out.println("deploying");
-        return ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_request_web.war").addClass(RequestTest.class).addClass(TSAppConfig.class).addClass(JAXRSCommonClient.class);//.setWebXML("web.xml");
-        //.addAsWebInfResource("web.xml");
-        //org.glassfish.jersey.servlet.ServletContainer replaces servlet_adaptor in web.xml
-                //.addPackages(true, MethodHandles.lookup().lookupClass().getPackage().getName(),
-                //        "jakarta.ws.rs.tck.ee.rs.core.request.RequestTest")
-                //.addAsWebResource(EmptyAsset.INSTANCE, ArchivePaths.create("web.xml"));  
+    //TODO: set this via arquillian.xml
+    String servletAdaptor = "org.glassfish.jersey.servlet.ServletContainer";
+    
+    //TODO: use web.xml files 
+    String webXml = " <web-app version=\"5.0\" xmlns=\"https://jakarta.ee/xml/ns/jakartaee\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd\">" +
+    "<servlet>"+
+     "<servlet-name>CTSJAX-RSCOREREQUEST</servlet-name>"+
+        "<servlet-class>"+ servletAdaptor + "</servlet-class>"+
+        "<init-param>"+
+         "   <param-name>jakarta.ws.rs.Application</param-name>"+
+          "  <param-value>jakarta.ws.rs.tck.ee.rs.core.request.TSAppConfig</param-value>"+
+        "</init-param>"+
+        "<load-on-startup>1</load-on-startup>"+
+    "</servlet>"+
+    "<servlet-mapping>"+
+      "  <servlet-name>CTSJAX-RSCOREREQUEST</servlet-name>"+
+      "  <url-pattern>/*</url-pattern>"+
+    "</servlet-mapping>"+
+    "<session-config>"+
+     "   <session-timeout>30</session-timeout>"+
+    "</session-config>"+
+    "</web-app>";
+
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_request_web.war").addClass(RequestTest.class).addClass(TSAppConfig.class).setWebXML(new StringAsset(webXml));
+    System.out.println("archive : "+archive.toString(true));
+    //archive.as(ZipExporter.class).exportTo(new File("/temp/jaxrs_ee.war"), true); //check archive deployed locally
+    return archive;
+
   }
 
   /**

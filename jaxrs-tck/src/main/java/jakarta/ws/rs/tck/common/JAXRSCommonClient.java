@@ -18,11 +18,13 @@ package jakarta.ws.rs.tck.common;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Properties;
+
 
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpState;
@@ -247,22 +249,24 @@ public abstract class JAXRSCommonClient {
    * @exception Fault
    *              if an error occurs
    */
-  public void setup(String[] args, Properties p)   {
+  //public void setup(String[] args, Properties p)   {
+  public void setup()   {
     //TestUtil.logTrace("setup method JAXRSCommonClient");
 
-    String hostname = p.getProperty(SERVLETHOSTPROP);
-    String portnum = p.getProperty(SERVLETPORTPROP);
-    String tshome = p.getProperty(TSHOME);
+    String hostname = System.getProperty(SERVLETHOSTPROP);
+    String portnum = System.getProperty(SERVLETPORTPROP);
+    //String tshome = p.getProperty(TSHOME);
 
     assertTrue(!isNullOrEmpty(hostname),
-        "[JAXRSCommonClient] 'webServerHost' was not set in the build.properties.");
+        "[JAXRSCommonClient] 'webServerHost' was not set.");
     _hostname = hostname.trim();
     assertTrue(!isNullOrEmpty(portnum),
-        "[JAXRSCommonClient] 'webServerPort' was not set in the build.properties.");
+        "[JAXRSCommonClient] 'webServerPort' was not set.");
     _port = Integer.parseInt(portnum.trim());
-    assertTrue(!isNullOrEmpty(tshome),
-        "[JAXRSCommonClient] 'tshome' was not set in the build.properties.");
-    _tsHome = tshome.trim();
+
+    //assertTrue(!isNullOrEmpty(tshome),
+    //    "[JAXRSCommonClient] 'tshome' was not set in the build.properties.");
+    //_tsHome = tshome.trim();
 
     //TestUtil.logMsg("[JAXRSCommonClient] Test setup OK");
   }
@@ -274,8 +278,8 @@ public abstract class JAXRSCommonClient {
    * @exception Fault
    *              if an error occurs
    */
-  public void cleanup()   {
-    //TestUtil.logMsg("[JAXRSCommonClient] Test cleanup OK");
+  public void cleanup() throws Fault  {
+    TestUtil.logMsg("[JAXRSCommonClient] Test cleanup OK");
   }
 
   /*
@@ -289,10 +293,10 @@ public abstract class JAXRSCommonClient {
    * the properties in TEST_PROPS will be cleared.
    * </PRE>
    * 
-   * @ 
+   * @throws Fault
    *           If an error occurs during the test run
    */
-  protected void invoke()   {
+  protected void invoke() throws Fault {
     //TestUtil.logTrace("[JAXRSCommonClient] invoke");
     try {
       _testCase = new WebTestCase();
@@ -313,9 +317,16 @@ public abstract class JAXRSCommonClient {
       Throwable t = tfe.getRootCause();
       if (t != null) {
         //TestUtil.logErr("Root cause of Failure: " + t.getMessage(), t);
+        if (t instanceof RuntimeException) {
+          throw (RuntimeException) t;
+        } else if (t instanceof Error) {
+          throw (Error) t;
+        } else {
+          throw new RuntimeException(t);
+        }
       }
-      //throw new Fault("[JAXRSCommonClient] " + _testName
-      //    + " failed!  Check output for cause of failure.", tfe);
+      throw new Fault("[JAXRSCommonClient] " + _testName
+          + " failed!  Check output for cause of failure.", tfe);
     } finally {
       _useSavedState = false;
       _saveState = false;
@@ -332,13 +343,6 @@ public abstract class JAXRSCommonClient {
    */
   protected void setTestProperties(WebTestCase testCase) {
     //TestUtil.logTrace("[JAXRSCommonClient] setTestProperties");
-
-    //temporarily hardcode hostname & portnumber
-    String hostname = "localhost";
-    String portnum = "8080";
-
-    _hostname = hostname.trim();
-    _port = Integer.parseInt(portnum.trim());
 
     setStandardProperties(TEST_PROPS.get(Property.STANDARD), testCase);
     setApiTestProperties(TEST_PROPS.get(Property.APITEST), testCase);
@@ -532,27 +536,26 @@ public abstract class JAXRSCommonClient {
 
   /**
    * @return http response body as string
-   * @ 
+   * @throws Fault
    *           when an error occur
    */
-  protected String getResponseBody()   {
+  protected String getResponseBody() throws Fault  {
     try {
       jakarta.ws.rs.tck.common.webclient.http.HttpResponse response;
       response = _testCase.getResponse();
       boolean isNull = response.getResponseBodyAsRawStream() == null;
       return isNull ? null : response.getResponseBodyAsString();
     } catch (IOException e) {
-      //throw new Fault(e);
-      return null;
+        throw new Fault(e);
     }
   }
 
   /**
    * @return http response body as string
-   * @ 
+   * @throws Fault
    *           when an error occur
    */
-  protected String[] getResponseHeaders()   {
+  protected String[] getResponseHeaders() throws Fault  {
     Header[] headerEntities = _testCase.getResponse().getResponseHeaders();
     String[] headers = new String[headerEntities.length];
     for (int i = 0; i != headerEntities.length; i++)
@@ -563,10 +566,10 @@ public abstract class JAXRSCommonClient {
   /**
    * @param s
    *          the header to search
-   * @ 
+   * @throws Fault
    *           when header not found
    */
-  protected void assertResponseHeadersContain(String s)   {
+  protected void assertResponseHeadersContain(String s) throws Fault  {
     boolean found = false;
     for (String header : getResponseHeaders())
       if (header.contains(s)) {
@@ -579,10 +582,10 @@ public abstract class JAXRSCommonClient {
   /**
    * @param s
    *          the entity to search
-   * @ 
+   * @throws Fault
    *           when entity not found
    */
-  protected void assertResponseBodyContain(String s)   {
+  protected void assertResponseBodyContain(String s)  throws Fault {
     boolean found = getResponseBody().contains(s);
     assertTrue(found, "Response body does not contain"+ s);
   }
@@ -1095,4 +1098,107 @@ public abstract class JAXRSCommonClient {
       sb.append("/").append(method);
     return sb.toString();
   }
+
+  /**
+   * This exception must be thrown to signify a
+   * test failure. Overrides 3 printStackTrace methods to preserve the original
+   * stack trace.
+   *
+   * @author Kyle Grucci
+   */
+
+  public static class Fault extends Exception {
+    private static final long serialVersionUID = -1574745208867827913L;
+
+    public Throwable t;
+
+    /**
+     * creates a Fault with a message
+     */
+    public Fault(String msg) {
+      super(msg);
+      TestUtil.logErr(msg);
+    }
+
+    /**
+     * creates a Fault with a message.
+     *
+     * @param msg
+     *          the message
+     * @param t
+     *          prints this exception's stacktrace
+     */
+    public Fault(String msg, Throwable t) {
+      super(msg);
+      this.t = t;
+      // TestUtil.logErr(msg, t);
+    }
+
+    /**
+     * creates a Fault with a Throwable.
+     *
+     * @param t
+     *          the Throwable
+     */
+    public Fault(Throwable t) {
+      super(t);
+      this.t = t;
+    }
+
+    /**
+     * Prints this Throwable and its backtrace to the standard error stream.
+     *
+     */
+    public void printStackTrace() {
+      if (this.t != null) {
+        this.t.printStackTrace();
+      } else {
+        super.printStackTrace();
+      }
+    }
+
+    /**
+     * Prints this throwable and its backtrace to the specified print stream.
+     *
+     * @param s
+     *          <code>PrintStream</code> to use for output
+     */
+    public void printStackTrace(PrintStream s) {
+      if (this.t != null) {
+        this.t.printStackTrace(s);
+      } else {
+        super.printStackTrace(s);
+      }
+    }
+
+    /**
+     * Prints this throwable and its backtrace to the specified print writer.
+     *
+     * @param s
+     *          <code>PrintWriter</code> to use for output
+     */
+    public void printStackTrace(PrintWriter s) {
+      if (this.t != null) {
+        this.t.printStackTrace(s);
+      } else {
+        super.printStackTrace(s);
+      }
+    }
+
+    @Override
+    public Throwable getCause() {
+      return t;
+    }
+
+    @Override
+    public synchronized Throwable initCause(Throwable cause) {
+      if (t != null)
+        throw new IllegalStateException("Can't overwrite cause");
+      if (!Exception.class.isInstance(cause))
+        throw new IllegalArgumentException("Cause not permitted");
+      this.t = (Exception) cause;
+      return this;
+    }
+  }
+
 }

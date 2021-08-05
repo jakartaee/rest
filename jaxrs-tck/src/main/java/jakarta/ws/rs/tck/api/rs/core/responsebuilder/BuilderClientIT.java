@@ -80,8 +80,7 @@ public class BuilderClientIT
    * status code is returned
    */
   @Test
-  public void statusTest1(){
-  //public void statusTest1() throws Fault {
+  public void statusTest1() throws Fault {
     VerificationResult result = new VerificationResult();
     Response resp = null;
     ResponseBuilder respb = null;
@@ -106,8 +105,7 @@ public class BuilderClientIT
    * status code is returned
    */
   @Test
-  public void statusTest2(){
-  //public void statusTest2() throws Fault {
+  public void statusTest2() throws Fault {
     VerificationResult result = new VerificationResult();
     Response resp = null;
     ResponseBuilder respb = null;
@@ -130,8 +128,7 @@ public class BuilderClientIT
    * expires timestamp.
    */
   @Test
-  public void expiresTest(){
-  //public void expiresTest() throws Fault {
+  public void expiresTest() throws Fault {
     Date now = Calendar.getInstance().getTime();
     ResponseBuilder rs = Response.ok();
     rs.expires(now);
@@ -164,8 +161,7 @@ public class BuilderClientIT
    * @test_Strategy: Set the list of allowed methods for the resource.
    */
   @Test
-  public void allowStringArrayTest(){
-  //public void allowStringArrayTest() throws Fault {
+  public void allowStringArrayTest() throws Fault {
     String[] methods = { Request.OPTIONS.name(), Request.TRACE.name() };
     ResponseBuilder rb = RuntimeDelegate.getInstance().createResponseBuilder();
     Response response = rb.allow(methods).build();
@@ -187,8 +183,7 @@ public class BuilderClientIT
    * @test_Strategy: Set the list of allowed methods for the resource.
    */
   @Test
-  public void allowStringArrayTruncateDuplicatesTest(){
-  //public void allowStringArrayTruncateDuplicatesTest() throws Fault {
+  public void allowStringArrayTruncateDuplicatesTest() throws Fault {
     String[] methods = { Request.OPTIONS.name(), Request.OPTIONS.name() };
     ResponseBuilder rb = RuntimeDelegate.getInstance().createResponseBuilder();
     Response response = rb.allow(methods).build();
@@ -207,8 +202,7 @@ public class BuilderClientIT
    * @test_Strategy: if null any existing allowed method list will be removed.
    */
   @Test
-  public void allowStringArrayNullRemovesAllTest(){
-  //public void allowStringArrayNullRemovesAllTest() throws Fault {
+  public void allowStringArrayNullRemovesAllTest() throws Fault {
     String[] methods = { Request.OPTIONS.name(), Request.GET.name() };
     ResponseBuilder rb = RuntimeDelegate.getInstance().createResponseBuilder();
     Response response = rb.allow(methods).allow((String[]) null).build();
@@ -225,8 +219,7 @@ public class BuilderClientIT
    * @test_Strategy: Set the list of allowed methods for the resource.
    */
   @Test
-  public void allowStringSetTest(){
-  //public void allowStringSetTest() throws Fault {
+  public void allowStringSetTest() throws Fault {
     Set<String> methods = new TreeSet<String>();
     methods.add(Request.OPTIONS.name());
     methods.add(Request.TRACE.name());
@@ -251,8 +244,7 @@ public class BuilderClientIT
    * @test_Strategy: if null any existing allowed method list will be removed.
    */
   @Test
-  public void allowStringSetNullRemovesAllTest(){
-  //public void allowStringSetNullRemovesAllTest() throws Fault {
+  public void allowStringSetNullRemovesAllTest() throws Fault {
     Set<String> methods = new TreeSet<String>();
     methods.add(Request.OPTIONS.name());
     methods.add(Request.TRACE.name());
@@ -272,8 +264,7 @@ public class BuilderClientIT
    * @test_Strategy: Set the message entity content encoding.
    */
   @Test
-  public void encodingTest(){
-  //public void encodingTest() throws Fault {
+  public void encodingTest() throws Fault {
     String[] encodings = { "gzip", "ccitt", "pic" };
     VerificationResult vr = new VerificationResult();
     for (String encoding : encodings) {
@@ -293,8 +284,7 @@ public class BuilderClientIT
    * @test_Strategy: Add a link header.
    */
   @Test
-  public void linkUriStringTest(){
-  //public void linkUriStringTest() throws Fault {
+  public void linkUriStringTest() throws Fault {
     URI uri = null;
     try {
       uri = new URI(URL);
@@ -318,8 +308,7 @@ public class BuilderClientIT
    * @test_Strategy: Add a link header.
    */
   @Test
-  public void linkStringStringTest(){
-  //public void linkStringStringTest() throws Fault {
+  public void linkStringStringTest() throws Fault {
     String rel = "REL";
     Response response = Response.ok().link(URL, rel).build();
     Link link = response.getLink(rel);
@@ -337,8 +326,7 @@ public class BuilderClientIT
    * @test_Strategy: Add one or more link headers.
    */
   @Test
-  public void linksTest(){
-  //public void linksTest() throws Fault {
+  public void linksTest() throws Fault {
     String rel = "REL";
     Link link1 = Link.fromUri(URL).rel(rel + "1").build();
     Link link11 = Link.fromUri(URL).rel(rel + "11").build();
@@ -370,8 +358,7 @@ public class BuilderClientIT
    * headers.
    */
   @Test
-  public void replaceAllTest(){
-  //public void replaceAllTest() throws Fault {
+  public void replaceAllTest() throws Fault {
     String[] headers = { "header1", "header2", "header3" };
     String header99 = "header99";
     MultivaluedMap<String, Object> mv = new SinglevaluedMap<String, Object>();
@@ -396,8 +383,7 @@ public class BuilderClientIT
    * headers. if null all existing headers will be removed.
    */
   @Test
-  public void replaceAllByNullTest(){
-  //public void replaceAllByNullTest() throws Fault {
+  public void replaceAllByNullTest() throws Fault {
     String[] headers = { "header1", "header2", "header3" };
     Response response = Response.ok().header(headers[0], headers[0])
         .header(headers[1], headers[1]).header(headers[2], headers[2])
@@ -415,8 +401,7 @@ public class BuilderClientIT
    * @test_Strategy: Add a Vary header that lists the available variants.
    */
   @Test
-  public void variantsTest() {
-  //public void variantsTest() throws Fault {
+  public void variantsTest() throws Fault {
     List<String> encoding = Arrays.asList("gzip", "compress");
     List<String> vars = Arrays.asList(HttpHeaders.ACCEPT_LANGUAGE,
         HttpHeaders.ACCEPT_ENCODING);

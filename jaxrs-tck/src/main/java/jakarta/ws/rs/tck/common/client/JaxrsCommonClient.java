@@ -189,9 +189,11 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
    * stored in TEST_PROPS.  Once the test has completed,
    * the properties in TEST_PROPS will be cleared.
    * </PRE>
-   * 
+   *   
+   *  @throws Fault
+   *           If an error occurs during the test run
    */
-  protected void invoke() {
+  protected void invoke() throws Fault {
     TestUtil.logTrace("[JAXRSCommonClient] invoke");
     try {
       getTestCase().setPort(_port);
@@ -215,8 +217,8 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
       if (t != null) {
         TestUtil.logErr("Root cause of Failure: " + t.getMessage(), t);
       }
-      //throw new Fault("[JAXRSCommonClient] " + _testName
-      //    + " failed!  Check output for cause of failure.", tfe);
+      throw new Fault("[JAXRSCommonClient] " + _testName
+          + " failed!  Check output for cause of failure.", tfe);
     } finally {
       _useSavedState = false;
       _saveState = false;
@@ -227,7 +229,7 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
   }
 
   @Override
-  public void cleanup() {
+  public void cleanup() throws Fault{
     super.cleanup();
     // The client.close has to be called on cleanup, because after invoke,
     // some methods are called and resources might not be available then
@@ -239,12 +241,12 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
     clients.clear();
   }
 
-  public void setup(String[] args, Properties p) {
+  /*public void setup(String[] args, Properties p) {
     super.setup(args, p);
     String property = System.getProperty("cts.tmp");
     if (property != null)
       System.setProperty("java.io.tmpdir", property);
-  }
+  }*/
 
   protected JaxrsWebTestCase getTestCase() {
     if (testCase == null || isTestCaseAfterInvocation) {
@@ -298,7 +300,7 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
   }
 
   @Override
-  protected String[] getResponseHeaders() {
+  protected String[] getResponseHeaders() throws Fault {
     return getMetadata(getResponse().getMetadata());
   }
 

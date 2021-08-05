@@ -47,18 +47,17 @@ public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final String IF_NONE_MATCH = "If-None-Match: \"AAA\"";
 
+  private static final String servletAdaptor = System.getProperty("servlet_adaptor", "org.glassfish.jersey.servlet.ServletContainer");
+
   public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_ee_core_request_web/RequestTest");
-    
   }
 
 
   @Deployment(testable = false)
-  public static WebArchive createDeployment() {
+  public static WebArchive createDeployment() {    
 
-    //TODO: set this via arquillian.xml
-    String servletAdaptor = "org.glassfish.jersey.servlet.ServletContainer";
-    
     //TODO: use web.xml files 
     String webXml = " <web-app version=\"5.0\" xmlns=\"https://jakarta.ee/xml/ns/jakartaee\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd\">" +
     "<servlet>"+
@@ -81,7 +80,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
 
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_request_web.war").addClass(RequestTest.class).addClass(TSAppConfig.class).setWebXML(new StringAsset(webXml));
-    System.out.println("archive : "+archive.toString(true));
     //archive.as(ZipExporter.class).exportTo(new File("/temp/jaxrs_ee.war"), true); //check archive deployed locally
     return archive;
 
@@ -114,7 +112,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * Request.getMethod works.
    */
   @Test
-  public void getMethodGetRequestTest()  {
+  public void getMethodGetRequestTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "GetMethodGetTest"));
     setProperty(SEARCH_STRING, "PASSED");
     invoke();
@@ -129,7 +127,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * Request.getMethod works.
    */
   @Test
-  public void getMethodPutRequestTest()  {
+  public void getMethodPutRequestTest() throws Fault {
     setProperty(REQUEST, buildRequest("PUT", "GetMethodPutTest"));
     setProperty(SEARCH_STRING, "PASSED");
     invoke();
@@ -144,7 +142,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * Request.getMethod works.
    */
   @Test
-  public void getMethodPostRequestTest()  {
+  public void getMethodPostRequestTest() throws Fault {
     setProperty(REQUEST, buildRequest("POST", "GetMethodPostTest"));
     setProperty(SEARCH_STRING, "PASSED");
     invoke();
@@ -159,7 +157,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * Request.getMethod works.
    */
   @Test
-  public void getMethodDeleteRequestTest()  {
+  public void getMethodDeleteRequestTest() throws Fault {
     setProperty(REQUEST, buildRequest("DELETE", "GetMethodDeleteTest"));
     setProperty(SEARCH_STRING, "PASSED");
     invoke();
@@ -174,7 +172,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * Request.getMethod works.
    */
   @Test
-  public void getMethodHeadRequestTest()  {
+  public void getMethodHeadRequestTest() throws Fault {
     setProperty(REQUEST, buildRequest("HEAD", "GetMethodHeadTest"));
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
     invoke();
@@ -189,7 +187,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * Request.selectVariantTest(List vs) works when vs is null.
    */
   @Test
-  public void selectVariantGetRequestTest()  {
+  public void selectVariantGetRequestTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "SelectVariantTestGet"));
     setProperty(SEARCH_STRING, "PASSED");
     invoke();
@@ -204,7 +202,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * Request.selectVariantTest(List vs) works when vs is null.
    */
   @Test
-  public void selectVariantPutRequestTest()  {
+  public void selectVariantPutRequestTest() throws Fault {
     setProperty(REQUEST, buildRequest("PUT", "SelectVariantTestPut"));
     setProperty(SEARCH_STRING, "PASSED");
     invoke();
@@ -219,7 +217,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * Request.selectVariantTest(List vs) works when vs is null.
    */
   @Test
-  public void selectVariantPostRequestTest()  {
+  public void selectVariantPostRequestTest() throws Fault {
     setProperty(REQUEST, buildRequest("POST", "SelectVariantTestPost"));
     setProperty(Property.CONTENT, "POST");
     setProperty(SEARCH_STRING, "PASSED");
@@ -235,7 +233,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * Request.selectVariantTest(List vs) works when vs is null.
    */
   @Test
-  public void selectVariantDeleteRequestTest()  {
+  public void selectVariantDeleteRequestTest() throws Fault {
     setProperty(REQUEST, buildRequest("DELETE", "SelectVariantTestDelete"));
     setProperty(SEARCH_STRING, "PASSED");
     invoke();
@@ -248,8 +246,8 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @test_Strategy: Check if the response contains VARY
    */
-  //@Test
-  public void selectVariantResponseVaryTest()  {
+  @Test
+  public void selectVariantResponseVaryTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "SelectVariantTestResponse"));
     setProperty(Property.REQUEST_HEADERS, "Accept: application/json");
@@ -283,7 +281,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
-  public void evaluatePreconditionsTagNullAndSimpleGetTest()  {
+  public void evaluatePreconditionsTagNullAndSimpleGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsSimpleGet"));
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
     invoke();
@@ -297,7 +295,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Verify evaluatePreconditions for If-Match: AAA Tag for GET
    */
   @Test
-  public void evaluatePreconditionsEntityTagIfMatchAAAGetTest()  {
+  public void evaluatePreconditionsEntityTagIfMatchAAAGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsAAAGet"));
     setProperty(REQUEST_HEADERS, "If-Match: \"AAA\"");
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
@@ -312,7 +310,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Verify evaluatePreconditions for If-Match: BBB Tag for GET
    */
   @Test
-  public void evaluatePreconditionsEntityTagIfMatchBBBGetTest()  {
+  public void evaluatePreconditionsEntityTagIfMatchBBBGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsAAAGet"));
     setProperty(REQUEST_HEADERS, "If-Match: \"BBB\"");
     setProperty(STATUS_CODE, getStatusCode(Status.PRECONDITION_FAILED));
@@ -327,7 +325,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Verify evaluatePreconditions for If-Match: AAA Tag for PUT
    */
   @Test
-  public void evaluatePreconditionsEntityTagIfMatchAAAPutTest()  {
+  public void evaluatePreconditionsEntityTagIfMatchAAAPutTest() throws Fault {
     setProperty(REQUEST, buildRequest("PUT", "preconditionsAAAPut"));
     setProperty(REQUEST_HEADERS, "If-Match: \"AAA\"");
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
@@ -342,7 +340,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Verify evaluatePreconditions for If-Match: BBB Tag for PUT
    */
   @Test
-  public void evaluatePreconditionsEntityTagIfMatchBBBPutTest()  {
+  public void evaluatePreconditionsEntityTagIfMatchBBBPutTest() throws Fault {
     setProperty(REQUEST, buildRequest("PUT", "preconditionsAAAPut"));
     setProperty(REQUEST_HEADERS, "If-Match: \"BBB\"");
     setProperty(STATUS_CODE, getStatusCode(Status.PRECONDITION_FAILED));
@@ -358,7 +356,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * GET
    */
   @Test
-  public void evaluatePreconditionsTagIfNonMatchAAAGetTest()  {
+  public void evaluatePreconditionsTagIfNonMatchAAAGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsAAAGet"));
     setProperty(REQUEST_HEADERS, IF_NONE_MATCH);
     setProperty(STATUS_CODE, getStatusCode(Status.PRECONDITION_FAILED));
@@ -374,7 +372,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * PUT
    */
   @Test
-  public void evaluatePreconditionsTagIfNonMatchAAAPutTest()  {
+  public void evaluatePreconditionsTagIfNonMatchAAAPutTest() throws Fault {
     setProperty(REQUEST, buildRequest("PUT", "preconditionsAAAPut"));
     setProperty(REQUEST_HEADERS, IF_NONE_MATCH);
     setProperty(STATUS_CODE, getStatusCode(Status.PRECONDITION_FAILED));
@@ -390,7 +388,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * GET
    */
   @Test
-  public void evaluatePreconditionsTagIfNonMatchGetTest()  {
+  public void evaluatePreconditionsTagIfNonMatchGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsGet"));
     setProperty(REQUEST_HEADERS, IF_NONE_MATCH);
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
@@ -406,7 +404,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * HEAD
    */
   @Test
-  public void evaluatePreconditionsTagIfNonMatchAAAHeadTest()  {
+  public void evaluatePreconditionsTagIfNonMatchAAAHeadTest() throws Fault {
     setProperty(REQUEST, buildRequest("HEAD", "preconditionsAAAHead"));
     setProperty(REQUEST_HEADERS, IF_NONE_MATCH);
     setProperty(STATUS_CODE, getStatusCode(Status.PRECONDITION_FAILED));
@@ -422,7 +420,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * HEAD
    */
   @Test
-  public void evaluatePreconditionsIfNonMatchHeadTest()  {
+  public void evaluatePreconditionsIfNonMatchHeadTest() throws Fault {
     setProperty(REQUEST, buildRequest("HEAD", "preconditionsHead"));
     setProperty(REQUEST_HEADERS, IF_NONE_MATCH);
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
@@ -438,7 +436,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * not modified for GET
    */
   @Test
-  public void evaluatePreconditionsIfModSinceAgesAgoGetTest()  {
+  public void evaluatePreconditionsIfModSinceAgesAgoGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsAgesAgoGet"));
     setProperty(REQUEST_HEADERS, IF_MODIFIED_SINCE);
     setProperty(STATUS_CODE, getStatusCode(Status.PRECONDITION_FAILED));
@@ -454,7 +452,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * was not modified for GET
    */
   @Test
-  public void evaluatePreconditionsIfUnmodSinceAgesAgoGetTest()  {
+  public void evaluatePreconditionsIfUnmodSinceAgesAgoGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsAgesAgoGet"));
     setProperty(REQUEST_HEADERS, IF_UNMODIFIED_SINCE);
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
@@ -470,7 +468,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * was modified
    */
   @Test
-  public void evaluatePreconditionsIfModSinceNowGetTest()  {
+  public void evaluatePreconditionsIfModSinceNowGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsNowGet"));
     setProperty(REQUEST_HEADERS, IF_MODIFIED_SINCE);
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
@@ -486,7 +484,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * was modified
    */
   @Test
-  public void evaluatePreconditionsIfUnmodSinceNowGetTest()  {
+  public void evaluatePreconditionsIfUnmodSinceNowGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsNowGet"));
     setProperty(REQUEST_HEADERS, IF_UNMODIFIED_SINCE);
     setProperty(STATUS_CODE, getStatusCode(Status.PRECONDITION_FAILED));
@@ -502,7 +500,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * not modified for GET
    */
   @Test
-  public void evaluatePreconditionsTagIfModAAASinceGetTest()  {
+  public void evaluatePreconditionsTagIfModAAASinceGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsAAAAgesAgoGet"));
     setProperty(REQUEST_HEADERS, IF_MODIFIED_SINCE);
     setProperty(STATUS_CODE, getStatusCode(Status.PRECONDITION_FAILED));
@@ -518,7 +516,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * was not modified for GET
    */
   @Test
-  public void evaluatePreconditionsTagIfUnmodSinceAAAGetTest()  {
+  public void evaluatePreconditionsTagIfUnmodSinceAAAGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsAAAAgesAgoGet"));
     setProperty(REQUEST_HEADERS, IF_UNMODIFIED_SINCE);
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
@@ -534,7 +532,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * was modified
    */
   @Test
-  public void evaluatePreconditionsTagIfModSinceNowAAAGetTest()  {
+  public void evaluatePreconditionsTagIfModSinceNowAAAGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsNowAAAGet"));
     setProperty(REQUEST_HEADERS, IF_MODIFIED_SINCE);
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
@@ -550,7 +548,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * was modified
    */
   @Test
-  public void evaluatePreconditionsTagIfUnmodSinceNowAAAGetTest()  {
+  public void evaluatePreconditionsTagIfUnmodSinceNowAAAGetTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "preconditionsNowAAAGet"));
     setProperty(REQUEST_HEADERS, IF_UNMODIFIED_SINCE);
     setProperty(STATUS_CODE, getStatusCode(Status.PRECONDITION_FAILED));

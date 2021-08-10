@@ -17,7 +17,8 @@
 
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>jakarta.ws.rs</groupId>
@@ -29,8 +30,9 @@
     <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <junit.jupiter.version>5.7.2</junit.jupiter.version>
     </properties>
 
     <organization>
@@ -76,42 +78,22 @@
         <connection>scm:git:https://github.com/eclipse-ee4j/jaxrs-api</connection>
         <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
         <tag>HEAD</tag>
-    </scm>  
+    </scm>
 
-    <dependencyManagement>
-        <dependencies>
-        <dependency>
-            <groupId>org.junit</groupId>
-            <artifactId>junit-bom</artifactId>
-            <version>5.7.0</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-        <!--dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-bom</artifactId>
-                <version>1.7.0.Alpha10</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency-->
-
-        </dependencies>
-    </dependencyManagement>
-
-        <build>
+    <build>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
             <plugin>
-    <artifactId>maven-surefire-plugin</artifactId>
-    <version>3.0.0-M5</version>
-</plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+            </plugin>
 
         </plugins>
     </build>
@@ -123,24 +105,19 @@
             <version>3.1-SNAPSHOT</version>
         </dependency>
 
-        <!--dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0</version>
-        </dependency-->
-
-         <dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.7.0</version>
+            <version>${junit.jupiter.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
+            <version>1.7.2</version>
             <scope>test</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
@@ -153,25 +130,23 @@
             <version>[2.2, 2.3-A00)</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.jboss.arquillian.junit5</groupId>
             <artifactId>arquillian-junit5-container</artifactId>
             <version>1.7.0.Alpha10</version>
         </dependency>
 
-<dependency>
-    <groupId>org.glassfish.hk2</groupId>
-    <artifactId>hk2-locator</artifactId>
-    <version>3.0.0</version>
-</dependency>
+        <dependency>
+            <groupId>org.glassfish.hk2</groupId>
+            <artifactId>hk2-locator</artifactId>
+            <version>3.0.0</version>
+        </dependency>
 
-<dependency>
-    <groupId>org.jboss.arquillian.container</groupId>
-    <artifactId>arquillian-glassfish-managed-6</artifactId>
-    <version>1.0.0.Alpha1</version>
-</dependency>
-
+        <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-glassfish-managed-6</artifactId>
+            <version>1.0.0.Alpha1</version>
+        </dependency>
 
     </dependencies>
 </project>

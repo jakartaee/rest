@@ -464,6 +464,22 @@ public abstract class Response implements AutoCloseable {
     public abstract String getHeaderString(String name);
 
     /**
+     * Check if the response is closed. The method returns {@code true} if the response is closed,
+     * returns {@code false} otherwise.
+     *
+     * @return {@code true} if the response has been {@link #close() closed}, {@code false} otherwise.
+     * @since 3.1
+     */
+    public boolean isClosed() {
+        try {
+            hasEntity();
+            return false;
+        } catch (IllegalStateException ignored) {
+            return true;
+        }
+    }
+
+    /**
      * Create a new ResponseBuilder by performing a shallow copy of an existing Response.
      * <p>
      * The returned builder has its own {@link #getHeaders() response headers} but the header values are shared with the

@@ -29,8 +29,6 @@ import java.util.Properties;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpState;
 
-//import com.sun.javatest.Status;
-//import com.sun.ts.lib.harness.ServiceEETest;
 import jakarta.ws.rs.tck.lib.util.TestUtil;
 import jakarta.ws.rs.tck.common.webclient.TestFailureException;
 import jakarta.ws.rs.tck.common.webclient.WebTestCase;

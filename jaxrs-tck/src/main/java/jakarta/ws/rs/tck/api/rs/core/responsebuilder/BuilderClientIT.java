@@ -53,22 +53,8 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
 public class BuilderClientIT
     extends jakarta.ws.rs.tck.api.rs.core.responseclient.JAXRSClient {
 
-  //private static final long serialVersionUID = -6510800230328526760L;
-
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  //public static void main(String[] args) {
-  //  new BuilderClient().run(args);
-  //}
 
 
-  /*
-   * @class.setup_props: webServerHost; webServerPort; ts_home;
-   */
-  /* Run test */
   /*
    * @testName: statusTest1
    *

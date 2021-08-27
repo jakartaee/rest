@@ -110,6 +110,7 @@
                                 <servlet_adaptor>org.glassfish.jersey.servlet.ServletContainer</servlet_adaptor>
                                 <webServerHost>localhost</webServerHost>
                                 <webServerPort>8080</webServerPort>
+                                <porting.ts.url.class.1>jakarta.ws.rs.tck.lib.implementation.sun.common.SunRIURL</porting.ts.url.class.1>
                             </systemPropertyVariables>
                             <environmentVariables>
                                 <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>

@@ -85,24 +85,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
 
   }
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  //public static void main(String[] args) {
-  //  JAXRSClient theTests = new JAXRSClient();
-  //  theTests.run(args);
-  //}
-
-
-
-
-  /*
-   * @class.setup_props: webServerHost; webServerPort; ts_home;
-   */
-  /* Run test */
-
   /*
    * @testName: getMethodGetRequestTest
    * 

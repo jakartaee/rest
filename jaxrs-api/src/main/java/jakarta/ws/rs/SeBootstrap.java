@@ -16,13 +16,14 @@
 
 package jakarta.ws.rs;
 
-import javax.net.ssl.SSLContext;
 import java.net.URI;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+
+import javax.net.ssl.SSLContext;
 
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.UriBuilder;
@@ -467,11 +468,24 @@ public interface SeBootstrap {
             return (SSLClientAuthentication) property(SSL_CLIENT_AUTHENTICATION);
         }
 
+        /**
+         * Returns a {@link UriBuilder} that includes the application root path.
+         *
+         * @return a {@link UriBuilder} for the application.
+         * @since 3.1
+         */
         default UriBuilder baseUriBuilder() {
             return UriBuilder.newInstance().scheme(protocol().toLowerCase())
                     .host(host()).port(port()).path(rootPath());
         }
 
+        /**
+         * Convenience method that returns a built the {@link URI} for the application.
+         *
+         * @return a built {@link URI} for the application.
+         * @see Configuration#baseUriBuilder()
+         * @since 3.1
+         */
         default URI baseUri() {
             return baseUriBuilder().build();
         }
@@ -484,7 +498,7 @@ public interface SeBootstrap {
          */
         static Builder builder() {
             return RuntimeDelegate.getInstance().createConfigurationBuilder();
-        };
+        }
 
         /**
          * Builder for bootstrap {@link Configuration}.
@@ -721,6 +735,7 @@ public interface SeBootstrap {
          * during the JVM shutdown phase.
          *
          * @param consumer The consumer.
+         * @since 3.1
          */
         default void stopOnShutdown(Consumer<StopResult> consumer) {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> stop().thenAccept(consumer)));

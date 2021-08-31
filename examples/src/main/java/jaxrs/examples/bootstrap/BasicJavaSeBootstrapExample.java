@@ -45,7 +45,7 @@ public final class BasicJavaSeBootstrapExample {
      */
     public static void main(final String[] args) throws InterruptedException {
         SeBootstrap.start(HelloWorld.class).thenAccept(instance -> {
-            instance.exitOnShutdown(stopResult ->
+            instance.stopOnShutdown(stopResult ->
                     System.out.printf("Stop result: %s [Native stop result: %s].%n", stopResult,
                             stopResult.unwrap(Object.class)));
             final URI uri = instance.configuration().baseUri();

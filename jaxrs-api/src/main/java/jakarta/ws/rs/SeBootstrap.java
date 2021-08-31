@@ -722,7 +722,7 @@ public interface SeBootstrap {
          *
          * @param consumer The consumer.
          */
-        default void exitOnShutdown(Consumer<StopResult> consumer) {
+        default void stopOnShutdown(Consumer<StopResult> consumer) {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> stop().thenAccept(consumer)));
         }
     }

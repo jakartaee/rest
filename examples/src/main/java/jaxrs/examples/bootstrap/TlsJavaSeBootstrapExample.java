@@ -73,7 +73,7 @@ public final class TlsJavaSeBootstrapExample {
                 .sslContext(sslContext).build();
 
         SeBootstrap.start(application, requestedConfiguration).thenAccept(instance -> {
-            instance.exitOnShutdown(stopResult ->
+            instance.stopOnShutdown(stopResult ->
                     System.out.printf("Stop result: %s [Native stop result: %s].%n", stopResult,
                             stopResult.unwrap(Object.class)));
             final URI uri = instance.configuration().baseUri();

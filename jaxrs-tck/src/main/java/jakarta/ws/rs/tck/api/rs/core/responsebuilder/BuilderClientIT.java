@@ -31,10 +31,14 @@ import java.util.TreeSet;
 import jakarta.ws.rs.tck.api.rs.core.responseclient.VerificationResult;
 import jakarta.ws.rs.tck.common.impl.SinglevaluedMap;
 import jakarta.ws.rs.tck.common.util.JaxrsUtil;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -53,8 +57,16 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
 public class BuilderClientIT
     extends jakarta.ws.rs.tck.api.rs.core.responseclient.JAXRSClient {
 
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
 
-
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+  
   /*
    * @testName: statusTest1
    *
@@ -76,7 +88,7 @@ public class BuilderClientIT
       resp = respb.build();
       result.append(verifyStatus(resp, status));
     }
-    //logMsg(result);
+    logMsg(result);
     assertTrue(result.pass);
   }
 
@@ -101,7 +113,7 @@ public class BuilderClientIT
       resp = respb.build();
       result.append(verifyStatus(resp, status_codes[i]));
     }
-    //logMsg(result);
+    logMsg(result);
     assertTrue(result.pass);
   }
 
@@ -136,7 +148,7 @@ public class BuilderClientIT
 
     assertTrue(condition, "Expires value not matched, set: " + now.toString()+
         "fetched:"+ fetched.toString());
-    //TestUtil.logMsg("Set and fetched expire dates matched");
+    logMsg("Set and fetched expire dates matched");
   }
 
   /*
@@ -157,7 +169,7 @@ public class BuilderClientIT
     for (String method : methods) {
       assertContains(responseMethods, method, "Expected allow method", method,
           "was not found in response allowed methods", responseMethods);
-      //logMsg("Found expected allowed method", method);
+      logMsg("Found expected allowed method", method);
     }
   }
 
@@ -177,7 +189,7 @@ public class BuilderClientIT
     assertEqualsInt(1, set.size(), "Only one allow method should be present");
     assertEquals(set.iterator().next(), Request.OPTIONS.name(),
         Request.OPTIONS.name(), "has not been found in allowed methods");
-    //logMsg(Request.OPTIONS.name(), "has been found in allowed methods");
+    logMsg(Request.OPTIONS.name(), "has been found in allowed methods");
   }
 
   /*
@@ -194,7 +206,7 @@ public class BuilderClientIT
     Response response = rb.allow(methods).allow((String[]) null).build();
     Set<String> set = response.getAllowedMethods();
     assertEqualsInt(0, set.size(), "No one allow method should be present");
-    //logMsg("Allowed methods has been removed by null value as expected");
+    logMsg("Allowed methods has been removed by null value as expected");
   }
 
   /*
@@ -218,7 +230,7 @@ public class BuilderClientIT
     for (String method : methods) {
       assertContains(responseMethods, method, "Expected allow method", method,
           "was not found in response allowed methods", responseMethods);
-      //logMsg("Found expected allowed method", method);
+      logMsg("Found expected allowed method", method);
     }
   }
 
@@ -239,7 +251,7 @@ public class BuilderClientIT
     Response response = rb.allow(methods).allow((Set<String>) null).build();
     Set<String> set = response.getAllowedMethods();
     assertEqualsInt(0, set.size(), "No one allow method should be present");
-    //logMsg("Allowed methods has been removed by null value as expected");
+    logMsg("Allowed methods has been removed by null value as expected");
   }
 
   /*
@@ -257,9 +269,9 @@ public class BuilderClientIT
       Response response = Response.ok().encoding(encoding).build();
       vr.append(verifyEncoding(response, Collections.singletonList(encoding)));
     }
-    //logMsg(vr.message);
+    logMsg(vr.message);
     assertTrue(vr.pass);
-    //logMsg("Found expected encodings");
+    logMsg("Found expected encodings");
   }
 
   /*
@@ -283,7 +295,7 @@ public class BuilderClientIT
     assertTrue(link != null, "link is null");
     assertTrue(link.toString().contains(URL), "link"+ link+
         "does not contain expected"+ URL);
-    //logMsg("Found expected link", link);
+    logMsg("Found expected link", link);
   }
 
   /*
@@ -301,7 +313,7 @@ public class BuilderClientIT
     assertTrue(link != null, "link is null");
     assertTrue(link.toString().contains(URL), "link"+ link+
         "does not contain expected"+ URL);
-    //logMsg("Found expected link", link);
+    logMsg("Found expected link", link);
   }
 
   /*
@@ -332,7 +344,7 @@ public class BuilderClientIT
     assertTrue(link.toString().contains(URL + "/link2"), "link"+ link+
         "does not contain expected"+ URL + "/link2");
 
-    //logMsg("Found expected links");
+    logMsg("Found expected links");
   }
 
   /*
@@ -397,7 +409,7 @@ public class BuilderClientIT
     Response response = rb.build();
     VerificationResult result = new VerificationResult();
     result.append(verifyVary(response, vars));
-    //logMsg(result.message);
+    logMsg(result.message);
     assertTrue(result.pass);
   }
 
@@ -405,7 +417,7 @@ public class BuilderClientIT
 
   private static String formats(Date date) {
     DateFormat format;
-    //TestUtil.logMsg("Creating possible string format list");
+    TestUtil.logMsg("Creating possible string format list");
     StringBuilder sb = new StringBuilder();
     for (String tz : TimeZone.getAvailableIDs()) {
       format = JaxrsUtil.createDateFormat(TimeZone.getTimeZone(tz));

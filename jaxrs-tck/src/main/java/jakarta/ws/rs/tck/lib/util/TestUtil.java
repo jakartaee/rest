@@ -34,7 +34,7 @@ import java.text.SimpleDateFormat;
  *
  */
 public final class TestUtil {
-  public static boolean traceflag = true;
+  public static boolean traceflag = Boolean.getBoolean("junit.log.traceflag");
 
   // this can be set in TestUtil's start logging method!!
   public static String sTestName;
@@ -133,8 +133,8 @@ public final class TestUtil {
    */
   public static void logHarness(String s, Throwable t) {
     synchronized (System.out) {
-      System.out.println(df.format(new Date()) + ":  Harness - " + s);
-      logToAdditionalWriter(s, t);
+      System.out.println(df.format(new Date()) + ":" + s);
+      //logToAdditionalWriter(s, t);
       if (t != null) {
         t.printStackTrace();
       }
@@ -617,31 +617,7 @@ public final class TestUtil {
    *          string to print to the log stream
    */
   public static void logMsg(String s) {
-    if (iWhereAreWe == VM_JAVATEST) {
-      logHarness(s);
-    } else if (iWhereAreWe == VM_HARNESS) {
-      synchronized (out) {
-        // just print to the appropriate stream
-        out.println(df.format(new Date()) + ":  " + s);
-        out.flush();
-      }
-    } else {
-      TestReportInfo tri = new TestReportInfo("SVR: " + s, OUTPUT_STREAM,
-          NORMAL_OUTPUT_LEVEL, null);
-      writeObject(
-          tri); /*
-                 * try { synchronized(socketMutex) { objectOutputStream.flush();
-                 * objectOutputStream.writeObject(tri);
-                 * objectOutputStream.flush(); //System.out.
-                 * println("successfully wrote to objectOutputStream"); } }
-                 * catch(Exception ex) { //System.out.
-                 * println("got exception trying to write to objectOutputStream"
-                 * ); //if we have any problem, buffer the data
-                 * synchronized(vBuffereredOutput) {
-                 * vBuffereredOutput.addElement(tri); } }
-                 */
-
-    }
+    logHarness(s);
   }
 
   /**
@@ -655,28 +631,10 @@ public final class TestUtil {
    *
    */
   public static void logMsg(String s, Throwable t) {
-    if (iWhereAreWe == VM_JAVATEST) {
-      logHarnessDebug(s);
-      if (t != null) {
-        t.printStackTrace();
-      }
-    } else {
-      if (iWhereAreWe == VM_HARNESS) {
-        synchronized (out) {
-          // just print to the appropriate stream
-          out.println(df.format(new Date()) + ":  " + s);
-          out.flush();
-        }
-      } else {
-        TestReportInfo tri = new TestReportInfo("SVR: " + s, OUTPUT_STREAM,
-            NORMAL_OUTPUT_LEVEL, null);
-        writeObject(tri);
-      }
-      if (t != null) {
-        printStackTrace(t);
-      }
+    logHarnessDebug(s);
+    if (t != null) {
+      t.printStackTrace();
     }
-
   }
 
   /**
@@ -715,23 +673,7 @@ public final class TestUtil {
    */
   public static void logTrace(String s, Throwable t) {
     if (traceflag) {
-      if (iWhereAreWe == VM_JAVATEST) {
-        logHarnessDebug(s);
-      } else {
-        if (iWhereAreWe == VM_HARNESS) {
-          synchronized (out) {
-            // just print to the appropriate stream
-            if (s != null && s.startsWith("SVR-TRACE"))
-              out.println(df.format(new Date()) + ":  " + s);
-            else
-              out.println(df.format(new Date()) + ":  TRACE: " + s);
-          }
-        } else {
-          TestReportInfo tri = new TestReportInfo("SVR-TRACE: " + s,
-              OUTPUT_STREAM, DEBUG_OUTPUT_LEVEL, null);
-          writeObject(tri);
-        }
-      }
+      logHarnessDebug(s);
       if (t != null) {
         t.printStackTrace();
       }
@@ -748,28 +690,9 @@ public final class TestUtil {
    *          a Throwable whose stacktrace gets printed
    */
   public static void logErr(String s, Throwable e) {
-    if (iWhereAreWe == VM_JAVATEST) {
-      logHarness(s);
-      if (e != null) {
-        e.printStackTrace();
-      }
-    } else {
-      if (iWhereAreWe == VM_HARNESS) {
-        synchronized (err) {
-          // just print to the appropriate stream
-          if (s != null && s.startsWith("SVR-ERROR"))
-            err.println(df.format(new Date()) + ":  " + s);
-          else
-            err.println(df.format(new Date()) + ":  ERROR: " + s);
-        }
-      } else {
-        TestReportInfo tri = new TestReportInfo("SVR-ERROR: " + s, ERROR_STREAM,
-            NORMAL_OUTPUT_LEVEL, null);
-        writeObject(tri);
-      }
-      if (e != null) {
-        printStackTrace(e);
-      }
+    logHarness(s);
+    if (e != null) {
+      e.printStackTrace();
     }
   }
 

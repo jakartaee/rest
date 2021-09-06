@@ -65,7 +65,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     // Replace the servlet_adaptor in web.xml.template with the System variable set as servlet adaptor
     String webXml = editWebXmlString(inStream);
 
-    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_request_web.war");//.addClass(RequestTest.class).addClass(TSAppConfig.class).setWebXML(new StringAsset(webXml));
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_request_web.war");
     archive.addClasses(TSAppConfig.class, RequestTest.class);
     archive.setWebXML(new StringAsset(webXml));
     //archive.addAsWebInfResource(JAXRSClientIT.class.getPackage(), "web.xml.template", "web.xml"); //can use if the web.xml.template doesn't need to be modified.    

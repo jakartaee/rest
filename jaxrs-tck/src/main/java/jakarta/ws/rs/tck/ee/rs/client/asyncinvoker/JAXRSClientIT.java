@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -14,14 +14,31 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.client.asyncinvoker;
+package jakarta.ws.rs.tck.ee.rs.client.asyncinvoker;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.io.InputStream;
+import java.io.IOException;
 
-import com.sun.ts.lib.util.TestUtil;
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
-import com.sun.ts.tests.jaxrs.common.client.JdkLoggingFilter;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.client.JdkLoggingFilter;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.client.AsyncInvoker;
@@ -38,9 +55,9 @@ import jakarta.ws.rs.core.Response.Status;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = -696868584437674095L;
 
@@ -52,17 +69,38 @@ public class JAXRSClient extends JaxrsCommonClient {
 
   private final static String NONEXISTING_SITE = "somenonexisting.domain-site";
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("jaxrs_ee_rs_client_asyncinvoker_web/resource");
-  }
-
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
   }
 
   static final String[] METHODS = { "DELETE", "GET", "OPTIONS" };
 
   static final String[] ENTITY_METHODS = { "PUT", "POST" };
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/client/asyncinvoker/web.xml.template");
+    // Replace the servlet_adaptor in web.xml.template with the System variable set as servlet adaptor
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_client_asyncinvoker_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
 
   /* Run test */
   // --------------------------------------------------------------------
@@ -76,11 +114,12 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * asynchronously.
    */
-  public Future<Response> deleteTest() throws Fault {
+  @Test
+  public void deleteTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("delete");
     Future<Response> future = async.delete();
     checkFutureOkResponseNoTime(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -91,11 +130,12 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * asynchronously.
    */
-  public Future<Response> deleteWhileServerWaitTest() throws Fault {
+  @Test
+  public void deleteWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deleteandwait");
     Future<Response> future = async.delete();
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -108,6 +148,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void deleteThrowsExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("delete");
@@ -123,12 +164,13 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * asynchronously.
    */
-  public Future<String> deleteWithStringClassWhileServerWaitTest()
+  @Test
+  public void deleteWithStringClassWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deleteandwait");
     Future<String> future = async.delete(String.class);
     checkFutureString(future, "delete");
-    return future;
+    //return future;
   }
 
   /*
@@ -139,12 +181,13 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * asynchronously.
    */
-  public Future<Response> deleteWithResponseClassWhileServerWaitTest()
+  @Test
+  public void deleteWithResponseClassWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deleteandwait");
     Future<Response> future = async.delete(Response.class);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -157,6 +200,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void deleteWithClassThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("delete");
@@ -175,6 +219,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void deleteWithClassThrowsWebApplicationExceptionTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deletenotok");
     Future<String> future = async.delete(String.class);
@@ -192,6 +237,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void deleteWithClassThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deletenotok");
@@ -207,13 +253,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * asynchronously.
    */
-  public Future<String> deleteWithGenericTypeStringWhileServerWaitTest()
+  @Test
+  public void deleteWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deleteandwait");
     GenericType<String> generic = createGeneric(String.class);
     Future<String> future = async.delete(generic);
     checkFutureString(future, "delete");
-    return future;
+    //return future;
   }
 
   /*
@@ -224,13 +271,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * asynchronously.
    */
-  public Future<Response> deleteWithGenericTypeResponseWhileServerWaitTest()
+  @Test
+  public void deleteWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deleteandwait");
     GenericType<Response> generic = createGeneric(Response.class);
     Future<Response> future = async.delete(generic);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -243,6 +291,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void deleteWithGenericTypeThrowsProcessingExceptionTest()
       throws Fault {
     _hostname = NONEXISTING_SITE;
@@ -263,6 +312,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void deleteWithGenericTypeThrowsWebApplicationExceptionTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deletenotok");
@@ -283,6 +333,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void deleteWithGenericTypeThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deletenotok");
@@ -299,13 +350,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * asynchronously.
    */
-  public Future<Response> deleteWithCallbackWhileServerWaitTest() throws Fault {
+  @Test
+  public void deleteWithCallbackWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deleteandwait");
     InvocationCallback<Response> callback = createCallback(true);
     Future<Response> future = async.delete(callback);
     checkFutureOkResponse(future);
     assertCallbackCall();
-    return future;
+    //return future;
   }
 
   /*
@@ -316,14 +368,15 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * asynchronously.
    */
-  public Future<String> deleteWithCallbackStringWhileServerWaitTest()
+  @Test
+  public void deleteWithCallbackStringWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deleteandwait");
     InvocationCallback<String> callback = createStringCallback(true);
     Future<String> future = async.delete(callback);
     checkFutureString(future, "delete");
     assertCallbackCall();
-    return future;
+    //return future;
   }
 
   /*
@@ -336,6 +389,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void deleteWithCallbackStringThrowsProcessingExceptionTest()
       throws Fault {
     _hostname = NONEXISTING_SITE;
@@ -356,6 +410,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void deleteWithCallbackStringThrowsWebApplicationExceptionTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deletenotok");
@@ -375,6 +430,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void deleteWithCallbackThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("deletenotok");
@@ -394,11 +450,12 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * asynchronously.
    */
-  public Future<Response> getTest() throws Fault {
+  @Test
+  public void getTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("get");
     Future<Response> future = async.get();
     checkFutureOkResponseNoTime(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -409,11 +466,12 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * asynchronously.
    */
-  public Future<Response> getWhileServerWaitTest() throws Fault {
+  @Test
+  public void getWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getandwait");
     Future<Response> future = async.get();
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -426,6 +484,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void getThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("get");
@@ -441,11 +500,12 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * asynchronously.
    */
-  public Future<String> getWithStringClassWhileServerWaitTest() throws Fault {
+  @Test
+  public void getWithStringClassWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getandwait");
     Future<String> future = async.get(String.class);
     checkFutureString(future, "get");
-    return future;
+    //return future;
   }
 
   /*
@@ -456,12 +516,13 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * asynchronously.
    */
-  public Future<Response> getWithResponseClassWhileServerWaitTest()
+  @Test
+  public void getWithResponseClassWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getandwait");
     Future<Response> future = async.get(Response.class);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -474,6 +535,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void getWithClassThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("get");
@@ -492,6 +554,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void getWithClassThrowsWebApplicationExceptionTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getnotok");
     Future<String> future = async.get(String.class);
@@ -509,6 +572,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void getWithClassThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getnotok");
@@ -524,13 +588,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * asynchronously.
    */
-  public Future<String> getWithGenericTypeStringWhileServerWaitTest()
+  @Test
+  public void getWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getandwait");
     GenericType<String> generic = createGeneric(String.class);
     Future<String> future = async.get(generic);
     checkFutureString(future, "get");
-    return future;
+    //return future;
   }
 
   /*
@@ -541,13 +606,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * asynchronously.
    */
-  public Future<Response> getWithGenericTypeResponseWhileServerWaitTest()
+  @Test
+  public void getWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getandwait");
     GenericType<Response> generic = createGeneric(Response.class);
     Future<Response> future = async.get(generic);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -560,6 +626,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void getWithGenericTypeThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("get");
@@ -579,6 +646,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void getWithGenericTypeThrowsWebApplicationExceptionTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getnotok");
@@ -598,6 +666,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void getWithGenericTypeThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getnotok");
@@ -614,13 +683,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * asynchronously.
    */
-  public Future<Response> getWithCallbackWhileServerWaitTest() throws Fault {
+  @Test
+  public void getWithCallbackWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getandwait");
     InvocationCallback<Response> callback = createCallback(true);
     Future<Response> future = async.get(callback);
     checkFutureOkResponse(future);
     assertCallbackCall();
-    return future;
+    //return future;
   }
 
   /*
@@ -631,14 +701,15 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * asynchronously.
    */
-  public Future<String> getWithCallbackStringWhileServerWaitTest()
+  @Test
+  public void getWithCallbackStringWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getandwait");
     InvocationCallback<String> callback = createStringCallback(true);
     Future<String> future = async.get(callback);
     checkFutureString(future, "get");
     assertCallbackCall();
-    return future;
+    //return future;
   }
 
   /*
@@ -651,6 +722,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void getWithCallbackStringThrowsProcessingExceptionTest()
       throws Fault {
     _hostname = NONEXISTING_SITE;
@@ -671,6 +743,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void getWithCallbackStringThrowsWebApplicationExceptionTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getnotok");
@@ -690,6 +763,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void getWithCallbackThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("getnotok");
@@ -710,11 +784,12 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP HEAD method for the current request
    * asynchronously.
    */
-  public Future<Response> headTest() throws Fault {
+  @Test
+  public void headTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("head");
     Future<Response> future = async.head();
     checkFutureOkResponseNoTime(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -725,11 +800,12 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP HEAD method for the current request
    * asynchronously.
    */
-  public Future<Response> headWhileServerWaitTest() throws Fault {
+  @Test
+  public void headWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("headandwait");
     Future<Response> future = async.head();
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -742,6 +818,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void headThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("head");
@@ -757,13 +834,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP HEAD method for the current request
    * asynchronously.
    */
-  public Future<Response> headWithCallbackWhileServerWaitTest() throws Fault {
+  @Test
+  public void headWithCallbackWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("headandwait");
     InvocationCallback<Response> callback = createCallback(true);
     Future<Response> future = async.head(callback);
     checkFutureOkResponse(future);
     assertCallbackCall();
-    return future;
+    //return future;
   }
 
   /*
@@ -776,6 +854,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void headWithCallbackStringThrowsProcessingExceptionTest()
       throws Fault {
     _hostname = NONEXISTING_SITE;
@@ -797,14 +876,15 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<Response> methodTest() throws Fault {
+  @Test
+  public void methodTest() throws Fault {
     Future<Response> future = null;
     for (String method : METHODS) {
       AsyncInvoker async = startAsyncInvokerForMethod(method.toLowerCase());
       future = async.method(method);
       checkFutureOkResponseNoTime(future);
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -815,7 +895,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<Response> methodWhileServerWaitTest() throws Fault {
+  @Test
+  public void methodWhileServerWaitTest() throws Fault {
     Future<Response> future = null;
     for (String method : METHODS) {
       AsyncInvoker async = startAsyncInvokerForMethod(
@@ -823,7 +904,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       future = async.method(method);
       checkFutureOkResponse(future);
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -836,6 +917,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void methodThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     Future<Response> future = null;
@@ -854,7 +936,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<String> methodWithStringClassWhileServerWaitTest()
+  @Test
+  public void methodWithStringClassWhileServerWaitTest()
       throws Fault {
     Future<String> future = null;
     for (String method : METHODS) {
@@ -863,7 +946,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       future = async.method(method, String.class);
       checkFutureString(future, method);
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -874,7 +957,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<Response> methodWithResponseClassWhileServerWaitTest()
+  @Test
+  public void methodWithResponseClassWhileServerWaitTest()
       throws Fault {
     Future<Response> future = null;
     for (String method : METHODS) {
@@ -883,7 +967,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       future = async.method(method, Response.class);
       checkFutureOkResponse(future);
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -896,6 +980,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void methodWithClassThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     Future<String> future = null;
@@ -917,6 +1002,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void methodWithClassThrowsWebApplicationExceptionTest() throws Fault {
     Future<String> future = null;
     for (String method : METHODS) {
@@ -938,6 +1024,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void methodWithClassThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     Future<Response> future = null;
@@ -957,7 +1044,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<String> methodWithGenericTypeStringWhileServerWaitTest()
+  @Test
+  public void methodWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     GenericType<String> generic = createGeneric(String.class);
     Future<String> future = null;
@@ -967,7 +1055,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       future = async.method(method, generic);
       checkFutureString(future, method);
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -978,7 +1066,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<Response> methodWithGenericTypeResponseWhileServerWaitTest()
+  @Test
+  public void methodWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
     Future<Response> future = null;
@@ -988,7 +1077,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       future = async.method(method, generic);
       checkFutureOkResponse(future);
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -1001,6 +1090,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void methodWithGenericTypeThrowsProcessingExceptionTest()
       throws Fault {
     _hostname = NONEXISTING_SITE;
@@ -1024,6 +1114,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void methodWithGenericTypeThrowsWebApplicationExceptionTest()
       throws Fault {
     Future<String> future = null;
@@ -1048,6 +1139,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void methodWithGenericTypeThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     Future<Response> future = null;
@@ -1068,7 +1160,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<Response> methodWithCallbackWhileServerWaitTest() throws Fault {
+  @Test
+  public void methodWithCallbackWhileServerWaitTest() throws Fault {
     InvocationCallback<Response> callback = createCallback(true);
     Future<Response> future = null;
     for (String method : METHODS) {
@@ -1078,7 +1171,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       checkFutureOkResponse(future);
       assertCallbackCall();
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -1089,7 +1182,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<String> methodWithCallbackStringWhileServerWaitTest()
+  @Test
+  public void methodWithCallbackStringWhileServerWaitTest()
       throws Fault {
     InvocationCallback<String> callback = createStringCallback(true);
     Future<String> future = null;
@@ -1100,7 +1194,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       checkFutureString(future, method);
       assertCallbackCall();
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -1113,6 +1207,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void methodWithCallbackThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     Future<String> future = null;
@@ -1135,6 +1230,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void methodWithCallbackThrowsWebApplicationExceptionTest()
       throws Fault {
     Future<String> future = null;
@@ -1158,6 +1254,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void methodWithCallbackThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     Future<Response> future = null;
@@ -1178,7 +1275,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<Response> methodWithEntityWhileServerWaitTest() throws Fault {
+  @Test
+  public void methodWithEntityWhileServerWaitTest() throws Fault {
     Future<Response> future = null;
     for (String method : ENTITY_METHODS) {
       AsyncInvoker async = startAsyncInvokerForMethod(
@@ -1187,7 +1285,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       future = async.method(method, entity);
       checkFutureOkResponse(future);
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -1200,6 +1298,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void methodWithEntityThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     Future<Response> future = null;
@@ -1219,7 +1318,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<String> methodWithStringClassWithEntityWhileServerWaitTest()
+  @Test
+  public void methodWithStringClassWithEntityWhileServerWaitTest()
       throws Fault {
     Future<String> future = null;
     for (String method : ENTITY_METHODS) {
@@ -1229,7 +1329,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       future = async.method(method, entity, String.class);
       checkFutureString(future, method);
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -1240,7 +1340,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<Response> methodWithResponseClassWithEntityWhileServerWaitTest()
+  @Test
+  public void methodWithResponseClassWithEntityWhileServerWaitTest()
       throws Fault {
     Future<Response> future = null;
     for (String method : ENTITY_METHODS) {
@@ -1250,7 +1351,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       future = async.method(method, entity, Response.class);
       checkFutureOkResponse(future);
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -1263,6 +1364,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void methodWithClassWithEntityThrowsProcessingExceptionTest()
       throws Fault {
     _hostname = NONEXISTING_SITE;
@@ -1286,6 +1388,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void methodWithClassWithEntityThrowsWebApplicationExceptionTest()
       throws Fault {
     Future<String> future = null;
@@ -1310,6 +1413,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void methodWithClassWithEntityThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     Future<Response> future = null;
@@ -1330,7 +1434,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<String> methodWithGenericTypeStringWithEntityWhileServerWaitTest()
+  @Test
+  public void methodWithGenericTypeStringWithEntityWhileServerWaitTest()
       throws Fault {
     Future<String> future = null;
     GenericType<String> generic = createGeneric(String.class);
@@ -1341,7 +1446,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       future = async.method(method, entity, generic);
       checkFutureString(future, method);
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -1352,7 +1457,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<Response> methodWithGenericTypeResponseWithEntityWhileServerWaitTest()
+  @Test
+  public void methodWithGenericTypeResponseWithEntityWhileServerWaitTest()
       throws Fault {
     Future<Response> future = null;
     GenericType<Response> generic = createGeneric(Response.class);
@@ -1363,7 +1469,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       future = async.method(method, entity, generic);
       checkFutureOkResponse(future);
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -1376,6 +1482,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void methodWithGenericTypeWithEntityThrowsProcessingExceptionTest()
       throws Fault {
     _hostname = NONEXISTING_SITE;
@@ -1400,6 +1507,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void methodWithGenericTypeWithEntityThrowsWebApplicationExceptionTest()
       throws Fault {
     Future<String> future = null;
@@ -1425,6 +1533,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void methodWithGenericTypeWithEntityThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     Future<Response> future = null;
@@ -1446,7 +1555,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<Response> methodWithCallbackWithEntityWhileServerWaitTest()
+  @Test
+  public void methodWithCallbackWithEntityWhileServerWaitTest()
       throws Fault {
     Future<Response> future = null;
     InvocationCallback<Response> callback = createCallback(true);
@@ -1458,7 +1568,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       checkFutureOkResponse(future);
       assertCallbackCall();
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -1469,7 +1579,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * asynchronously.
    */
-  public Future<String> methodWithCallbackStringWithEntityWhileServerWaitTest()
+  @Test
+  public void methodWithCallbackStringWithEntityWhileServerWaitTest()
       throws Fault {
     Future<String> future = null;
     InvocationCallback<String> callback = createStringCallback(true);
@@ -1481,7 +1592,7 @@ public class JAXRSClient extends JaxrsCommonClient {
       checkFutureString(future, method);
       assertCallbackCall();
     }
-    return future;
+    //return future;
   }
 
   /*
@@ -1494,6 +1605,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void methodWithCallbackWithEntityThrowsProcessingExceptionTest()
       throws Fault {
     _hostname = NONEXISTING_SITE;
@@ -1518,6 +1630,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void methodWithCallbackWithEntityThrowsWebApplicationExceptionTest()
       throws Fault {
     Future<String> future = null;
@@ -1543,6 +1656,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void methodWithCallbackWithEntityThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     Future<Response> future = null;
@@ -1568,11 +1682,12 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * asynchronously.
    */
-  public Future<Response> optionsTest() throws Fault {
+  @Test
+  public void optionsTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("options");
     Future<Response> future = async.options();
     checkFutureOkResponseNoTime(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -1583,11 +1698,12 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * asynchronously.
    */
-  public Future<Response> optionsWhileServerWaitTest() throws Fault {
+  @Test
+  public void optionsWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsandwait");
     Future<Response> future = async.options();
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -1600,6 +1716,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void optionsThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("options");
@@ -1615,12 +1732,13 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * asynchronously.
    */
-  public Future<String> optionsWithStringClassWhileServerWaitTest()
+  @Test
+  public void optionsWithStringClassWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsandwait");
     Future<String> future = async.options(String.class);
     checkFutureString(future, "options");
-    return future;
+    //return future;
   }
 
   /*
@@ -1631,12 +1749,13 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * asynchronously.
    */
-  public Future<Response> optionsWithResponseClassWhileServerWaitTest()
+  @Test
+  public void optionsWithResponseClassWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsandwait");
     Future<Response> future = async.options(Response.class);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -1649,6 +1768,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void optionsWithClassThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("options");
@@ -1667,6 +1787,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void optionsWithClassThrowsWebApplicationExceptionTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsnotok");
     Future<String> future = async.options(String.class);
@@ -1684,6 +1805,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void optionsWithClassThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsnotok");
@@ -1699,13 +1821,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * asynchronously.
    */
-  public Future<String> optionsWithGenericTypeStringWhileServerWaitTest()
+  @Test
+  public void optionsWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsandwait");
     GenericType<String> generic = createGeneric(String.class);
     Future<String> future = async.options(generic);
     checkFutureString(future, "options");
-    return future;
+    //return future;
   }
 
   /*
@@ -1716,13 +1839,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * asynchronously.
    */
-  public Future<Response> optionsWithGenericTypeResponseWhileServerWaitTest()
+  @Test
+  public void optionsWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsandwait");
     GenericType<Response> generic = createGeneric(Response.class);
     Future<Response> future = async.options(generic);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -1735,6 +1859,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void optionsWithGenericTypeThrowsProcessingExceptionTest()
       throws Fault {
     _hostname = NONEXISTING_SITE;
@@ -1755,6 +1880,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void optionsWithGenericTypeThrowsWebApplicationExceptionTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsnotok");
@@ -1775,6 +1901,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void optionsWithGenericTypeThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsnotok");
@@ -1791,14 +1918,15 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * asynchronously.
    */
-  public Future<Response> optionsWithCallbackWhileServerWaitTest()
+  @Test
+  public void optionsWithCallbackWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsandwait");
     InvocationCallback<Response> callback = createCallback(true);
     Future<Response> future = async.options(callback);
     checkFutureOkResponse(future);
     assertCallbackCall();
-    return future;
+    //return future;
   }
 
   /*
@@ -1809,14 +1937,15 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * asynchronously.
    */
-  public Future<String> optionsWithStringCallbackWhileServerWaitTest()
+  @Test
+  public void optionsWithStringCallbackWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsandwait");
     InvocationCallback<String> callback = createStringCallback(true);
     Future<String> future = async.options(callback);
     checkFutureString(future, "options");
     assertCallbackCall();
-    return future;
+    //return future;
   }
 
   /*
@@ -1829,6 +1958,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void optionsWithCallbackThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("options");
@@ -1848,6 +1978,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void optionsWithCallbackThrowsWebApplicationExceptionTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsnotok");
@@ -1868,6 +1999,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void optionsWithCallbackThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("optionsnotok");
@@ -1888,12 +2020,13 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP post method for the current request
    * asynchronously.
    */
-  public Future<Response> postTest() throws Fault {
+  @Test
+  public void postTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("post");
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
     Future<Response> future = async.post(entity);
     checkFutureOkResponseNoTime(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -1904,12 +2037,13 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP post method for the current request
    * asynchronously.
    */
-  public Future<Response> postWhileServerWaitTest() throws Fault {
+  @Test
+  public void postWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("postandwait");
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
     Future<Response> future = async.post(entity);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -1922,6 +2056,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void postThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("post");
@@ -1938,12 +2073,13 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP post method for the current request
    * asynchronously.
    */
-  public Future<String> postWithStringClassWhileServerWaitTest() throws Fault {
+  @Test
+  public void postWithStringClassWhileServerWaitTest() throws Fault {
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
     AsyncInvoker async = startAsyncInvokerForMethod("postandwait");
     Future<String> future = async.post(entity, String.class);
     checkFutureString(future, "post");
-    return future;
+    //return future;
   }
 
   /*
@@ -1954,13 +2090,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP post method for the current request
    * asynchronously.
    */
-  public Future<Response> postWithResponseClassWhileServerWaitTest()
+  @Test
+  public void postWithResponseClassWhileServerWaitTest()
       throws Fault {
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
     AsyncInvoker async = startAsyncInvokerForMethod("postandwait");
     Future<Response> future = async.post(entity, Response.class);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -1973,6 +2110,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void postWithClassThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
@@ -1992,6 +2130,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void postWithClassThrowsWebApplicationExceptionTest() throws Fault {
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
     AsyncInvoker async = startAsyncInvokerForMethod("postnotok");
@@ -2010,6 +2149,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void postWithClassThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("postnotok");
@@ -2026,14 +2166,15 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP post method for the current request
    * asynchronously.
    */
-  public Future<String> postWithGenericTypeStringWhileServerWaitTest()
+  @Test
+  public void postWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     GenericType<String> generic = createGeneric(String.class);
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
     AsyncInvoker async = startAsyncInvokerForMethod("postandwait");
     Future<String> future = async.post(entity, generic);
     checkFutureString(future, "post");
-    return future;
+    //return future;
   }
 
   /*
@@ -2044,14 +2185,15 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP post method for the current request
    * asynchronously.
    */
-  public Future<Response> postWithGenericTypeResponseWhileServerWaitTest()
+  @Test
+  public void postWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
     AsyncInvoker async = startAsyncInvokerForMethod("postandwait");
     Future<Response> future = async.post(entity, generic);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -2064,6 +2206,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void postWithGenericTypeThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
@@ -2084,6 +2227,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void postWithGenericTypeThrowsWebApplicationExceptionTest()
       throws Fault {
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
@@ -2105,6 +2249,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void postWithGenericTypeThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("postnotok");
@@ -2122,14 +2267,15 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP post method for the current request
    * asynchronously.
    */
-  public Future<Response> postWithCallbackWhileServerWaitTest() throws Fault {
+  @Test
+  public void postWithCallbackWhileServerWaitTest() throws Fault {
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
     InvocationCallback<Response> callback = createCallback(true);
     AsyncInvoker async = startAsyncInvokerForMethod("postandwait");
     Future<Response> future = async.post(entity, callback);
     checkFutureOkResponse(future);
     assertCallbackCall();
-    return future;
+    //return future;
   }
 
   /*
@@ -2142,6 +2288,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void postWithCallbackThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
@@ -2162,6 +2309,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void postWithCallbackThrowsWebApplicationExceptionTest() throws Fault {
     Entity<String> entity = Entity.entity("post", MediaType.WILDCARD_TYPE);
     InvocationCallback<String> callback = createStringCallback(false);
@@ -2181,6 +2329,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void postWithCallbackThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("postnotok");
@@ -2202,12 +2351,13 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP PUT method for the current request
    * asynchronously.
    */
-  public Future<Response> putTest() throws Fault {
+  @Test
+  public void putTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("put");
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
     Future<Response> future = async.put(entity);
     checkFutureOkResponseNoTime(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -2218,12 +2368,13 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP PUT method for the current request
    * asynchronously.
    */
-  public Future<Response> putWhileServerWaitTest() throws Fault {
+  @Test
+  public void putWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("putandwait");
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
     Future<Response> future = async.put(entity);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -2236,6 +2387,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void putThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("put");
@@ -2252,12 +2404,13 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP put method for the current request
    * asynchronously.
    */
-  public Future<String> putWithStringClassWhileServerWaitTest() throws Fault {
+  @Test
+  public void putWithStringClassWhileServerWaitTest() throws Fault {
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
     AsyncInvoker async = startAsyncInvokerForMethod("putandwait");
     Future<String> future = async.put(entity, String.class);
     checkFutureString(future, "put");
-    return future;
+    //return future;
   }
 
   /*
@@ -2268,13 +2421,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP put method for the current request
    * asynchronously.
    */
-  public Future<Response> putWithResponseClassWhileServerWaitTest()
+  @Test
+  public void putWithResponseClassWhileServerWaitTest()
       throws Fault {
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
     AsyncInvoker async = startAsyncInvokerForMethod("putandwait");
     Future<Response> future = async.put(entity, Response.class);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -2287,6 +2441,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void putWithClassThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
@@ -2306,6 +2461,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void putWithClassThrowsWebApplicationExceptionTest() throws Fault {
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
     AsyncInvoker async = startAsyncInvokerForMethod("putnotok");
@@ -2324,6 +2480,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void putWithClassThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
@@ -2340,14 +2497,15 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP put method for the current request
    * asynchronously.
    */
-  public Future<String> putWithGenericTypeStringWhileServerWaitTest()
+  @Test
+  public void putWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     GenericType<String> generic = createGeneric(String.class);
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
     AsyncInvoker async = startAsyncInvokerForMethod("putandwait");
     Future<String> future = async.put(entity, generic);
     checkFutureString(future, "put");
-    return future;
+    //return future;
   }
 
   /*
@@ -2358,14 +2516,15 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP put method for the current request
    * asynchronously.
    */
-  public Future<Response> putWithGenericTypeResponseWhileServerWaitTest()
+  @Test
+  public void putWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
     AsyncInvoker async = startAsyncInvokerForMethod("putandwait");
     Future<Response> future = async.put(entity, generic);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -2378,6 +2537,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void putWithGenericTypeThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     GenericType<String> generic = createGeneric(String.class);
@@ -2398,6 +2558,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void putWithGenericTypeThrowsWebApplicationExceptionTest()
       throws Fault {
     GenericType<String> generic = createGeneric(String.class);
@@ -2418,6 +2579,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void putWithGenericTypeThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
@@ -2435,14 +2597,15 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP put method for the current request
    * asynchronously.
    */
-  public Future<Response> putWithCallbackWhileServerWaitTest() throws Fault {
+  @Test
+  public void putWithCallbackWhileServerWaitTest() throws Fault {
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
     InvocationCallback<Response> callback = createCallback(true);
     AsyncInvoker async = startAsyncInvokerForMethod("putandwait");
     Future<Response> future = async.put(entity, callback);
     checkFutureOkResponse(future);
     assertCallbackCall();
-    return future;
+    //return future;
   }
 
   /*
@@ -2453,7 +2616,8 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP put method for the current request
    * asynchronously.
    */
-  public Future<String> putWithStringCallbackWhileServerWaitTest()
+  @Test
+  public void putWithStringCallbackWhileServerWaitTest()
       throws Fault {
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
     InvocationCallback<String> callback = createStringCallback(true);
@@ -2461,7 +2625,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     Future<String> future = async.put(entity, callback);
     checkFutureString(future, "put");
     assertCallbackCall();
-    return future;
+    //return future;
   }
 
   /*
@@ -2474,6 +2638,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void putWithCallbackThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     InvocationCallback<String> callback = createStringCallback(false);
@@ -2494,6 +2659,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void putWithCallbackThrowsWebApplicationExceptionTest() throws Fault {
     InvocationCallback<String> callback = createStringCallback(false);
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
@@ -2513,6 +2679,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void putWithCallbackThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     Entity<String> entity = Entity.entity("put", MediaType.WILDCARD_TYPE);
@@ -2534,11 +2701,12 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  public Future<Response> traceTest() throws Fault {
+  @Test
+  public void traceTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("trace");
     Future<Response> future = async.trace();
     checkFutureOkResponseNoTime(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -2549,11 +2717,12 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  public Future<Response> traceWhileServerWaitTest() throws Fault {
+  @Test
+  public void traceWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("traceandwait");
     Future<Response> future = async.trace();
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -2566,6 +2735,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void traceThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("trace");
@@ -2581,11 +2751,12 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  public Future<String> traceWithStringClassWhileServerWaitTest() throws Fault {
+  @Test
+  public void traceWithStringClassWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("traceandwait");
     Future<String> future = async.trace(String.class);
     checkFutureString(future, "trace");
-    return future;
+    //return future;
   }
 
   /*
@@ -2596,12 +2767,13 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  public Future<Response> traceWithResponseClassWhileServerWaitTest()
+  @Test
+  public void traceWithResponseClassWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("traceandwait");
     Future<Response> future = async.trace(Response.class);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -2614,6 +2786,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void traceWithClassThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     AsyncInvoker async = startAsyncInvokerForMethod("trace");
@@ -2632,6 +2805,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void traceWithClassThrowsWebApplicationExceptionTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("tracenotok");
     Future<String> future = async.trace(String.class);
@@ -2649,6 +2823,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void traceWithClassThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("tracenotok");
@@ -2664,13 +2839,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  public Future<String> traceWithGenericTypeStringWhileServerWaitTest()
+  @Test
+  public void traceWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     GenericType<String> generic = createGeneric(String.class);
     AsyncInvoker async = startAsyncInvokerForMethod("traceandwait");
     Future<String> future = async.trace(generic);
     checkFutureString(future, "trace");
-    return future;
+    //return future;
   }
 
   /*
@@ -2681,13 +2857,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  public Future<Response> traceWithGenericTypeResponseWhileServerWaitTest()
+  @Test
+  public void traceWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
     AsyncInvoker async = startAsyncInvokerForMethod("traceandwait");
     Future<Response> future = async.trace(generic);
     checkFutureOkResponse(future);
-    return future;
+    //return future;
   }
 
   /*
@@ -2700,6 +2877,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void traceWithGenericTypeThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     GenericType<String> generic = createGeneric(String.class);
@@ -2719,6 +2897,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void traceWithGenericTypeThrowsWebApplicationExceptionTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("tracenotok");
@@ -2739,6 +2918,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void traceWithGenericTypeThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("tracenotok");
@@ -2755,13 +2935,14 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  public Future<Response> traceWithCallbackWhileServerWaitTest() throws Fault {
+  @Test
+  public void traceWithCallbackWhileServerWaitTest() throws Fault {
     InvocationCallback<Response> callback = createCallback(true);
     AsyncInvoker async = startAsyncInvokerForMethod("traceandwait");
     Future<Response> future = async.trace(callback);
     checkFutureOkResponse(future);
     assertCallbackCall();
-    return future;
+    //return future;
   }
 
   /*
@@ -2772,14 +2953,15 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  public Future<String> traceWithStringCallbackWhileServerWaitTest()
+  @Test
+  public void traceWithStringCallbackWhileServerWaitTest()
       throws Fault {
     InvocationCallback<String> callback = createStringCallback(true);
     AsyncInvoker async = startAsyncInvokerForMethod("traceandwait");
     Future<String> future = async.trace(callback);
     checkFutureString(future, "trace");
     assertCallbackCall();
-    return future;
+    //return future;
   }
 
   /*
@@ -2792,6 +2974,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * jakarta.ws.rs.ProcessingException thrown in case of an invocation processing
    * failure.
    */
+  @Test
   public void traceWithCallbackThrowsProcessingExceptionTest() throws Fault {
     _hostname = NONEXISTING_SITE;
     InvocationCallback<String> callback = createStringCallback(false);
@@ -2811,6 +2994,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void traceWithCallbackThrowsWebApplicationExceptionTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("tracenotok");
@@ -2830,6 +3014,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
+  @Test
   public void traceWithCallbackThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("tracenotok");
@@ -2861,8 +3046,8 @@ public class JAXRSClient extends JaxrsCommonClient {
   }
 
   protected void assertOkAndLog(Response response, Status status) throws Fault {
-    assertFault(response.getStatus() == status.getStatusCode(),
-        "Returned unexpected status", response.getStatus());
+    assertTrue(response.getStatus() == status.getStatusCode(),
+        "Returned unexpected status" +response.getStatus());
     String msg = new StringBuilder().append("Returned status ")
         .append(status.getStatusCode()).append(" (").append(status.name())
         .append(")").toString();
@@ -2887,22 +3072,22 @@ public class JAXRSClient extends JaxrsCommonClient {
 
   protected void checkFutureOkResponse(Future<Response> future) throws Fault {
     checkMaxEndTime();
-    assertFault(!future.isDone(), "Future cannot be done, yet!");
+    assertTrue(!future.isDone(), "Future cannot be done, yet!");
     checkFutureOkResponseNoTime(future);
   }
 
   protected void checkFutureString(Future<String> future, String expectedValue)
       throws Fault {
     checkMaxEndTime();
-    assertFault(!future.isDone(), "Future cannot be done, yet!");
+    assertTrue(!future.isDone(), "Future cannot be done, yet!");
     String value = null;
     try {
       value = future.get();
     } catch (Exception e) {
       throw new Fault(e);
     }
-    assertFault(expectedValue.equalsIgnoreCase(value), "expected value",
-        expectedValue, "differes from acquired value", value);
+    assertTrue(expectedValue.equalsIgnoreCase(value), "expected value"+
+        expectedValue+ "differes from acquired value"+ value);
   }
 
   protected void //
@@ -2935,7 +3120,7 @@ public class JAXRSClient extends JaxrsCommonClient {
           throws Fault {
     logMsg("ExecutionException has been thrown as expected", e);
     assertTrue(hasWrapped(e, jakarta.ws.rs.ProcessingException.class),
-        "ExecutionException wrapped", e.getCause(),
+        "ExecutionException wrapped"+ e.getCause()+
         "rather then ProcessingException");
     logMsg("ExecutionException.getCause is ProcessingException as expected");
   }
@@ -2945,7 +3130,7 @@ public class JAXRSClient extends JaxrsCommonClient {
           throws Fault {
     logMsg("ExecutionException has been thrown as expected", e);
     assertTrue(hasWrapped(e, WebApplicationException.class),
-        "ExecutionException wrapped", e.getCause(),
+        "ExecutionException wrapped"+ e.getCause()+
         "rather then WebApplicationException");
     logMsg(
         "ExecutionException.getCause is WebApplicationException as expected");
@@ -2978,7 +3163,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     long endMillis = System.currentTimeMillis();
     long diff = endMillis - millis;
     logMsg("Client was returned control in", diff, "milliseconds from request");
-    assertFault(diff <= Resource.SLEEP_TIME,
+    assertTrue(diff <= Resource.SLEEP_TIME,
         "AsyncInvoker was blocked waiting for a response");
   }
 
@@ -2986,8 +3171,8 @@ public class JAXRSClient extends JaxrsCommonClient {
     long endMillis = System.currentTimeMillis();
     long diff = endMillis - millis;
     logMsg("Callback#completed() called in", diff, "milliseconds from request");
-    assertFault(diff >= Resource.SLEEP_TIME,
-        "AsyncInvoker.completed() was called unexpectedly soon, after", diff,
+    assertTrue(diff >= Resource.SLEEP_TIME,
+        "AsyncInvoker.completed() was called unexpectedly soon, after"+ diff+
         "milliseconds");
   }
 
@@ -3052,7 +3237,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     protected void checkEndTime() {
       if (check)
         try {
-          JAXRSClient.this.checkMinEndTime();
+          JAXRSClientIT.this.checkMinEndTime();
           callbackResult = 1;
         } catch (Fault e) {
           callbackResult = 2;

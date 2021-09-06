@@ -132,5 +132,11 @@
             <version>1.7.0.Alpha10</version>
         </dependency>
 
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
     </dependencies>
 </project>

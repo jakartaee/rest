@@ -16,14 +16,13 @@
 
 package jakarta.ws.rs.tck.common;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Properties;
+import java.nio.charset.StandardCharsets;
 
 
 import org.apache.commons.httpclient.Header;
@@ -189,6 +188,8 @@ public abstract class JAXRSCommonClient {
   protected boolean _redirect = false;
 
   public static final String newline = System.getProperty("line.separator");
+
+  public static final String servletAdaptor = System.getProperty("servlet_adaptor", "org.glassfish.jersey.servlet.ServletContainer");
 
   public static final String indent = "    ";
 
@@ -530,6 +531,19 @@ public abstract class JAXRSCommonClient {
     sb.append(header).append(":").append(type.getType()).append(SL);
     sb.append(type.getSubtype());
     return sb.toString();
+  }
+
+  public static String editWebXmlString(InputStream inStream) throws IOException{
+    String line;
+    String webXmlTemplate = "";
+    try (BufferedReader bufReader = new BufferedReader(new InputStreamReader(inStream, StandardCharsets.UTF_8))) {
+      while ((line = bufReader.readLine()) != null) {
+        webXmlTemplate = webXmlTemplate + line + System.lineSeparator();
+      }
+    }
+    
+    String webXml = webXmlTemplate.replaceAll("servlet_adaptor", servletAdaptor);
+    return webXml;
   }
 
   /**

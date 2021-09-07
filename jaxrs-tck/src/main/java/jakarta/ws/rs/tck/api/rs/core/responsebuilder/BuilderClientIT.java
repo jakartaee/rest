@@ -55,7 +55,7 @@ import jakarta.ws.rs.core.Variant;
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
 public class BuilderClientIT
-    extends jakarta.ws.rs.tck.api.rs.core.responseclient.JAXRSClient {
+    extends jakarta.ws.rs.tck.api.rs.core.responseclient.JAXRSClientIT {
 
   @BeforeEach
   void logStartTest(TestInfo testInfo) {

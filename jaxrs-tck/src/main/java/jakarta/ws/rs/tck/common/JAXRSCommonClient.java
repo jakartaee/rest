@@ -754,13 +754,11 @@ public abstract class JAXRSCommonClient {
    * @param message
    *          a space separated message[i].toString() compilation for
    *          i=<0,message.length)
-   * @ 
-   *           when condition is not met with message provided
    */
-  /*public static void //
-      assertNull(Object object, Object... message)   {
-    assertTrue(object == null, message);
-  }*/
+  public static void //
+      assertNull(Object object, Object... message) {
+    assertTrue(object == null, message.toString());
+  }
 
   /**
    * Asserts that an object is not null.
@@ -770,11 +768,9 @@ public abstract class JAXRSCommonClient {
    * @param message
    *          a space separated message[i].toString() compilation for
    *          i=<0,message.length)
-   * @ 
-   *           when condition is not met with message provided
    */
   public static void //
-      assertNotNull(Object object, Object... message)   {
+      assertNotNull(Object object, Object... message) {
     assertTrue(object != null, message.toString());
   }
 

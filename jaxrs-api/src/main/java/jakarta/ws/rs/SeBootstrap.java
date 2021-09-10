@@ -180,12 +180,7 @@ public interface SeBootstrap {
      * @since 3.1
      */
     static CompletionStage<Instance> start(final Class<? extends Application> clazz, final Configuration configuration) {
-        try {
-            Application application = clazz.getDeclaredConstructor().newInstance();
-            return start(application, configuration);
-        } catch (Exception e) {
-            return CompletableFuture.failedFuture(e);
-        }
+        return RuntimeDelegate.getInstance().bootstrap(clazz, configuration);
     }
 
     /**

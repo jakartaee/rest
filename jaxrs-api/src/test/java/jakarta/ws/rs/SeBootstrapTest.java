@@ -74,6 +74,30 @@ public final class SeBootstrapTest {
     }
 
     /**
+     * Assert that {@link SeBootstrap#start(Class, Configuration)} will delegate to
+     * {@link RuntimeDelegate#bootstrap(Class, Configuration)}.
+     *
+     * @since 3.1
+     */
+    @Test
+    public void shouldDelegateClassApplicationStartupToRuntimeDelegate() {
+        // given
+        final Application application = mock(Application.class);
+        final Class<? extends Application> clazz = application.getClass();
+        final Configuration configuration = mock(Configuration.class);
+        @SuppressWarnings("unchecked")
+        final CompletionStage<SeBootstrap.Instance> nativeCompletionStage = mock(CompletionStage.class);
+        given(RuntimeDelegate.getInstance().bootstrap(clazz, configuration))
+                .willReturn(nativeCompletionStage);
+
+        // when
+        final CompletionStage<SeBootstrap.Instance> actualCompletionStage = SeBootstrap.start(clazz, configuration);
+
+        // then
+        assertThat(actualCompletionStage, is(sameInstance(nativeCompletionStage)));
+    }
+
+    /**
      * Assert that {@link SeBootstrap.Configuration#builder()} will delegate to
      * {@link RuntimeDelegate#createConfigurationBuilder()}.
      *
@@ -210,28 +234,6 @@ public final class SeBootstrapTest {
 
         // then
         verify(RuntimeDelegate.getInstance()).bootstrap(application, configuration);
-    }
-
-    /**
-     * Assert that {@code RuntimeDelegate.bootstrap} is called with some instances. We
-     * cannot mock constructors, hence the weaker assertion.
-     *
-     * @since 3.1
-     */
-    @Test
-    public void shouldCreateInstanceFromClass() {
-        // given
-        final Application application = mock(Application.class);
-        final Configuration configuration = mock(Configuration.class);
-        SeBootstrap.Configuration.Builder builder = mock(SeBootstrap.Configuration.Builder.class);
-        given(SeBootstrap.Configuration.builder()).willReturn(builder);
-        given(builder.build()).willReturn(configuration);
-
-        // when
-        SeBootstrap.start(application.getClass());
-
-        // then
-        verify(RuntimeDelegate.getInstance()).bootstrap(any(Application.class), any(Configuration.class));
     }
 
     /**

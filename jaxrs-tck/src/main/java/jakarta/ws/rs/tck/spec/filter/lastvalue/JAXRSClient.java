@@ -14,31 +14,46 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.filter.lastvalue;
+package jakarta.ws.rs.tck.spec.filter.lastvalue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.InputStream;
+import java.io.IOException;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
 /**
  * Test the interceptor is called when any entity provider is called
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = 1405911734696409993L;
 
   public static final String plaincontent = JAXRSClient.class.getName();
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_filter_lastvalue_web/resource");
   }
 
@@ -51,6 +66,27 @@ public class JAXRSClient extends JaxrsCommonClient {
     new JAXRSClient().run(args);
   }
 
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/filter/lastvalue/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_filter_lastvalue_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, ArrayListEntityProvider.class, FirstReaderInterceptor.class, FirstWriterInterceptor.class, LinkedListEntityProvider.class, SecondReaderInterceptor.class, SecondWriterInterceptor.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+
   /* Run test */
 
   /*
@@ -62,6 +98,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * set in the context object when calling the wrapped methods
    * MessageBodyReader.readFrom and MessageBodyWrite.writeTo.
    */
+  @Test
   public void readerContextOnContainerTest() throws Fault {
     addInterceptors(FirstReaderInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postlist"));
@@ -85,6 +122,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * set in the context object when calling the wrapped methods
    * MessageBodyReader.readFrom and MessageBodyWrite.writeTo.
    */
+  @Test
   public void readerContextOnClientTest() throws Fault {
     addProvider(FirstReaderInterceptor.class);
     addProvider(SecondReaderInterceptor.class);
@@ -121,6 +159,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * set in the context object when calling the wrapped methods
    * MessageBodyReader.readFrom and MessageBodyWrite.writeTo.
    */
+  @Test
   public void writerContextOnContainerTest() throws Fault {
     addInterceptors(FirstWriterInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getlist"));
@@ -143,6 +182,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * set in the context object when calling the wrapped methods
    * MessageBodyReader.readFrom and MessageBodyWrite.writeTo.
    */
+  @Test
   public void writerContextOnClientTest() throws Fault {
     addProvider(FirstReaderInterceptor.class);
     addProvider(SecondReaderInterceptor.class);

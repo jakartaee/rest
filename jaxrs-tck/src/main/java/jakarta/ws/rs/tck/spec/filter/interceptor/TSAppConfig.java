@@ -14,12 +14,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.filter.interceptor;
+package jakarta.ws.rs.tck.spec.filter.interceptor;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.sun.ts.tests.jaxrs.common.provider.StringBeanEntityProvider;
+import jakarta.ws.rs.tck.common.provider.StringBeanEntityProvider;
 
 import jakarta.ws.rs.core.Application;
 

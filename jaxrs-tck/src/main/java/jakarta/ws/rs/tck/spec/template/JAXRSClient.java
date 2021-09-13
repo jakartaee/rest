@@ -14,37 +14,54 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.template;
+package jakarta.ws.rs.tck.spec.template;
 
 import java.io.PrintWriter;
+import java.io.InputStream;
+import java.io.IOException;
 
-import com.sun.javatest.Status;
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
-public class JAXRSClient extends JAXRSCommonClient {
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
-  public void JAXRSClient() {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JAXRSCommonClient {
+
+  public void JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_templateTest_web");
   }
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  public static void main(String[] args) {
-    JAXRSClient theTests = new JAXRSClient();
-    Status s = theTests.run(args, new PrintWriter(System.out),
-        new PrintWriter(System.err));
-    s.exit();
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/templateTest/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_templateTest_web.war");
+    archive.addClasses(TSAppConfig.class, TemplateTest.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
   }
 
-  /**
-   * Entry point for same-VM execution. In different-VM execution, the main
-   * method delegates to this method.
-   */
-  public Status run(String[] args, PrintWriter out, PrintWriter err) {
-    return super.run(args, out, err);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
   }
 
   /*
@@ -59,6 +76,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Client sends a request on a resource at /TemplateTest/{id},
    * Verify that correct resource method invoked through use of URI Template
    */
+  @Test
   public void Test1() throws Fault {
     setProperty(REQUEST,
         "GET " + "/jaxrs_spec_templateTest_web/TemplateTest/xyz HTTP/1.1");
@@ -75,6 +93,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy:Client sends a request on a resource at /TemplateTest/{id],
    * Verify that correct resource method invoked through use of URI Template
    */
+  @Test
   public void Test2() throws Fault {
     setProperty(REQUEST,
         "GET " + "/jaxrs_spec_templateTest_web/TemplateTest/xyz/abc HTTP/1.1");
@@ -91,6 +110,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy:Client sends a request on a resource at /TemplateTest/{id],
    * Verify that correct resource method invoked through use of URI Template
    */
+  @Test
   public void Test3() throws Fault {
     setProperty(REQUEST, "GET "
         + "/jaxrs_spec_templateTest_web/TemplateTest/xyz/abc/def HTTP/1.1");
@@ -107,6 +127,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy:Client sends a request on a resource at /TemplateTest/{id],
    * Verify that correct resource method invoked through use of URI Template
    */
+  @Test
   public void Test4() throws Fault {
     setProperty(REQUEST, "GET "
         + "/jaxrs_spec_templateTest_web/TemplateTest/xy/abc/def HTTP/1.1");
@@ -123,6 +144,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy:Client sends a request on a resource at /TemplateTest/{id],
    * Verify that correct resource method invoked through use of URI Template
    */
+  @Test
   public void Test5() throws Fault {
     setProperty(REQUEST, "GET "
         + "/jaxrs_spec_templateTest_web/TemplateTest/abc/test.html HTTP/1.1");
@@ -139,6 +161,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy:Client sends a request on a resource at /TemplateTest/{id],
    * Verify that correct resource method invoked through use of URI Template
    */
+  @Test
   public void Test6() throws Fault {
     setProperty(REQUEST, "GET "
         + "/jaxrs_spec_templateTest_web/TemplateTest/abc/def/test.xml HTTP/1.1");

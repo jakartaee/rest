@@ -14,25 +14,40 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.resource.responsemediatype;
+package jakarta.ws.rs.tck.spec.resource.responsemediatype;
 
 import java.util.List;
+import java.io.InputStream;
+import java.io.IOException;
 
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
-public class JAXRSClient extends JAXRSCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = 1L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_resource_responsemediatype_web");
   }
 
@@ -45,6 +60,27 @@ public class JAXRSClient extends JAXRSCommonClient {
     new JAXRSClient().run(args);
   }
 
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/resource/responsemediatype/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_resource_responsemediatype_web.war");
+    archive.addClasses(TSAppConfig.class, MediaResource.class, ErrorResource.class, MediaWriter.class, NoMediaResource.class, StringWriter.class, WeightResource.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+
   /* Run test */
   /*
    * @testName: responseOverrideTest
@@ -55,6 +91,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * metadata includes the response media type (Mspecified) then set Mselected =
    * Mspecified, finish.
    */
+  @Test
   public void responseOverrideTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/responseoverride"));
@@ -74,6 +111,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * There is no way to get method body through Accept/Produces
    */
+  @Test
   public void responseNotAllowedToOverrideTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/responseoverride"));
@@ -92,6 +130,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * metadata includes the response media type (Mspecified) then set Mselected =
    * Mspecified, finish.
    */
+  @Test
   public void responseOverrideNoProducesTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "nomedia/responseoverride"));
@@ -111,6 +150,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * (method) where V (t) represents the values of @Produces on the specified
    * target t.
    */
+  @Test
   public void methodProducesTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "resource/method"));
     setProperty(Property.EXPECTED_HEADERS,
@@ -126,6 +166,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Else if the class is annotated with @Produces, set P = V
    * (class)..
    */
+  @Test
   public void classProducesTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.HEAD, "resource/class"));
     setProperty(Property.EXPECTED_HEADERS,
@@ -141,6 +182,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Else set P = V (writers) where writers is the set of
    * MessageBodyWriter that support the class of the returned entity object.
    */
+  @Test
   public void mesageBodyWriterProducesTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "nomedia/list"));
     setProperty(Property.EXPECTED_HEADERS,
@@ -154,6 +196,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * @test_Strategy: If P = {}, set P = {*\*}. untestable
    */
+  @Test
   public void noProducesTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "nomedia/nothing"));
     setProperty(Property.SEARCH_STRING, "nothing");
@@ -167,6 +210,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * @test_Strategy: If P = {}, set P = {*\*}. untestable
    */
+  @Test
   public void noProducesResponseReturnTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "nomedia/response"));
@@ -187,6 +231,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * specificity (n/m > n\* > *\*), a secondary key of q-value and a tertiary
    * key of qs-value.
    */
+  @Test
   public void noPreferenceTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "weight"));
     setProperty(Property.SEARCH_STRING, MediaType.TEXT_PLAIN);
@@ -204,6 +249,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * specificity (n/m > n\* > *\*), a secondary key of q-value and a tertiary
    * key of qs-value.
    */
+  @Test
   public void textPreferenceTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "weight"));
     setProperty(Property.REQUEST_HEADERS, "Accept: text/*");
@@ -222,6 +268,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * specificity (n/m > n\* > *\*), a secondary key of q-value and a tertiary
    * key of qs-value.
    */
+  @Test
   public void appPreferenceTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "weight"));
     setProperty(Property.REQUEST_HEADERS,
@@ -241,6 +288,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * specificity (n/m > n\* > *\*), a secondary key of q-value and a tertiary
    * key of qs-value.
    */
+  @Test
   public void imagePreferenceTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "weight"));
     setProperty(Property.REQUEST_HEADERS, "Accept: image/*");
@@ -258,6 +306,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * specificity (n/m > n\* > *\*), a secondary key of q-value and a tertiary
    * key of qs-value.
    */
+  @Test
   public void clientImagePreferenceTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "weight"));
     setProperty(Property.REQUEST_HEADERS,
@@ -276,6 +325,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * specificity (n/m > n\* > *\*), a secondary key of q-value and a tertiary
    * key of qs-value.
    */
+  @Test
   public void clientXmlHtmlPreferenceTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "weight"));
     setProperty(Property.REQUEST_HEADERS,
@@ -295,6 +345,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * specificity (n/m > n\* > *\*), a secondary key of q-value and a tertiary
    * key of qs-value.
    */
+  @Test
   public void clientXmlHtmlPreferenceNoWeightOnServerTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "resource"));
     setProperty(Property.REQUEST_HEADERS,
@@ -314,6 +365,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * specificity (n/m > n\* > *\*), a secondary key of q-value and a tertiary
    * key of qs-value.
    */
+  @Test
   public void clientHtmlXmlPreferenceTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "weight"));
     setProperty(Property.REQUEST_HEADERS,
@@ -333,6 +385,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * specificity (n/m > n\* > *\*), a secondary key of q-value and a tertiary
    * key of qs-value.
    */
+  @Test
   public void clientAnyPreferenceTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "weight"));
     setProperty(Property.REQUEST_HEADERS, "Accept: */*;q=0.8, text/xml;q=0.3");
@@ -353,6 +406,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * response (HTTP 406 status) and no entity. The exception MUST be processed
    * as described in section 3.3.4. Finish.
    */
+  @Test
   public void defaultErrorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "error"));
     setProperty(Property.REQUEST_HEADERS, "Accept: text/*");
@@ -369,6 +423,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * response (HTTP 406 status) and no entity. The exception MUST be processed
    * as described in section 3.3.4. Finish.
    */
+  @Test
   public void defaultResponseErrorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "error"));
     setProperty(Property.CONTENT, "anything");

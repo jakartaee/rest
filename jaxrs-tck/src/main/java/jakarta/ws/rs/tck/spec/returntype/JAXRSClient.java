@@ -14,25 +14,41 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.returntype;
+package jakarta.ws.rs.tck.spec.returntype;
 
 import java.util.UUID;
+import java.io.InputStream;
+import java.io.IOException;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = ReturnTypeTest.serialVersionUID;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_returntype_web/ReturnTypeTest");
   }
 
@@ -45,6 +61,27 @@ public class JAXRSClient extends JaxrsCommonClient {
     new JAXRSClient().run(args);
   }
 
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/returntype/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_returntype_web.war");
+    archive.addClasses(TSAppConfig.class, ReturnTypeTest.class, UUIDWriter.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+
   /* Run test */
   /*
    * @testName: voidTest
@@ -55,6 +92,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Client sends a request on a resource at
    * /ReturnTypeTest/void, Verify that 204 status returned.
    */
+  @Test
   public void voidTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "void"));
     setProperty(Property.STATUS_CODE, getStatusCode(Status.NO_CONTENT));
@@ -70,6 +108,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Response: 204 status code is used if the entity property is
    * null.
    */
+  @Test
   public void nullEntityResponseTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "nullEntityResponse"));
@@ -85,6 +124,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Response: A null return value results in a 204 status code.
    */
+  @Test
   public void nullResponseTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "nullResponse"));
     setProperty(Property.STATUS_CODE, getStatusCode(Status.NO_CONTENT));
@@ -100,6 +140,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Client sends a request on a resource at
    * /ReturnTypeTest/get, Verify that 204 status returned.
    */
+  @Test
   public void nullGenericEntityTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "nullGenericEntityTest"));
@@ -117,6 +158,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * of the GenericEntity. If the return value is not null a 200 status code is
    * used
    */
+  @Test
   public void genericEntityTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "genericEntityTest"));
@@ -133,6 +175,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: a null return value results in a 204 status code.
    */
+  @Test
   public void nullEntityTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "nullEntityTest"));
     setProperty(Property.STATUS_CODE, getStatusCode(Status.NO_CONTENT));
@@ -147,6 +190,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: a null return value results in a 204 status code.
    */
+  @Test
   public void defaultStatusTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "default"));
     setProperty(Property.SEARCH_STRING, "I am OK");
@@ -163,6 +207,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * the returned instance. If the return value is not null a 200 status code is
    * used
    */
+  @Test
   public void entityBodyTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS, buildAccept(MediaType.TEXT_XML_TYPE));
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entitybodytest"));
@@ -179,6 +224,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy:If the status property of the Response is not set: a 200
    * status code is used for a non-null entity property
    */
+  @Test
   public void entityResponseTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS, buildAccept(MediaType.TEXT_XML_TYPE));
     setProperty(Property.REQUEST,
@@ -195,6 +241,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Client sends a request on a resource at
    * /ReturnTypeTest/notAcceptable, Verify that 406 status returned.
    */
+  @Test
   public void notAcceptableTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildAccept(MediaType.TEXT_HTML_TYPE));

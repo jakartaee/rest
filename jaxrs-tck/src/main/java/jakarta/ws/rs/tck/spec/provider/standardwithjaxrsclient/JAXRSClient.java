@@ -14,27 +14,42 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.provider.standardwithjaxrsclient;
+package jakarta.ws.rs.tck.spec.provider.standardwithjaxrsclient;
 
 import java.math.BigDecimal;
+import java.io.InputStream;
+import java.io.IOException;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
 
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = 1L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_provider_standardwithjaxrsclient_web/resource");
   }
 
@@ -65,6 +80,27 @@ public class JAXRSClient extends JaxrsCommonClient {
   public static void main(String[] args) {
     new JAXRSClient().run(args);
   }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/provider/standardwithjaxrsclient/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_provider_standardwithjaxrsclient_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
 
   /*
    * @testName: mapElementProviderTest
@@ -106,6 +142,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * primitive types supported via boxing/unboxing conversion.
    * 
    */
+  @Test
   public void readWriteProviderBoolTest() throws Fault {
     setProperty(Property.CONTENT, "false");
     setProperty(Property.SEARCH_STRING, "false");
@@ -121,6 +158,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * primitive types supported via boxing/unboxing conversion.
    * 
    */
+  @Test
   public void readWriteProviderBooleanTest() throws Fault {
     Boolean bool = Boolean.valueOf(true);
     setRequestContentEntity(bool);
@@ -136,6 +174,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: java.lang.Character. Only for text/plain. Corresponding
    * primitive types supported via boxing/unboxing conversion.
    */
+  @Test
   public void readWriteProviderCharTest() throws Fault {
     setProperty(Property.CONTENT, "x");
     setProperty(Property.SEARCH_STRING, "x");
@@ -150,6 +189,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: java.lang.Character. Only for text/plain. Corresponding
    * primitive types supported via boxing/unboxing conversion.
    */
+  @Test
   public void readWriteProviderCharacterTest() throws Fault {
     Character c = Character.valueOf('x');
     setRequestContentEntity(c);
@@ -165,6 +205,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: java.lang.Number. Only for text/plain. Corresponding
    * primitive types supported via boxing/unboxing conversion.
    */
+  @Test
   public void readWriteProviderIntTest() throws Fault {
     setProperty(Property.CONTENT, String.valueOf(Integer.MAX_VALUE));
     setProperty(Property.SEARCH_STRING, String.valueOf(Integer.MAX_VALUE));
@@ -179,6 +220,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: java.lang.Number. Only for text/plain. Corresponding
    * primitive types supported via boxing/unboxing conversion.
    */
+  @Test
   public void readWriteProviderLongTest() throws Fault {
     setProperty(Property.CONTENT, String.valueOf(Long.MAX_VALUE));
     setProperty(Property.SEARCH_STRING, String.valueOf(Long.MAX_VALUE));
@@ -193,6 +235,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: java.lang.Number. Only for text/plain. Corresponding
    * primitive types supported via boxing/unboxing conversion.
    */
+  @Test
   public void readWriteProviderIntegerTest() throws Fault {
     Integer i = new Integer(Integer.MAX_VALUE);
     setRequestContentEntity(i);
@@ -208,6 +251,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: java.lang.Number. Only for text/plain. Corresponding
    * primitive types supported via boxing/unboxing conversion.
    */
+  @Test
   public void readWriteProviderBigLongTest() throws Fault {
     Long l = new Long(Long.MAX_VALUE);
     setRequestContentEntity(l);
@@ -223,6 +267,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: java.lang.Number. Only for text/plain. Corresponding
    * primitive types supported via boxing/unboxing conversion.
    */
+  @Test
   public void readWriteProviderDoubleTest() throws Fault {
     Double pi = Math.PI;
     setRequestContentEntity(pi);
@@ -238,6 +283,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: java.lang.Number. Only for text/plain. Corresponding
    * primitive types supported via boxing/unboxing conversion.
    */
+  @Test
   public void readWriteProviderBigDecimalTest() throws Fault {
     BigDecimal bd = new BigDecimal(Integer.MAX_VALUE);
     setRequestContentEntity(bd);

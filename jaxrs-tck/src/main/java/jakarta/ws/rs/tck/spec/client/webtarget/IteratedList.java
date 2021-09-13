@@ -14,15 +14,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.client.webtarget;
+package jakarta.ws.rs.tck.spec.client.webtarget;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.sun.ts.lib.harness.EETest.Fault;
-import com.sun.ts.lib.util.TestUtil;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient.Fault;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 /**
  * A RandomAccess collection of objects upon each a certain method is called

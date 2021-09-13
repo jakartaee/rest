@@ -14,24 +14,41 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.provider.reader;
+package jakarta.ws.rs.tck.spec.provider.reader;
 
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
+import java.io.InputStream;
+import java.io.IOException;
+
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
 
-public class JAXRSClient extends JAXRSCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = 1L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_provider_reader_web/resource");
   }
 
@@ -44,6 +61,27 @@ public class JAXRSClient extends JAXRSCommonClient {
     new JAXRSClient().run(args);
   }
 
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/provider/reader/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_provider_reader_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, AbstractReader.class, AppJavaReader.class, AppOctetReader.class, EntityForReader.class, WildCardReader.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+
   /* Run test */
   /*
    * @testName: noEntityProviderTest
@@ -53,6 +91,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: An implementation MUST NOT use an entity provider for a
    * media type that is not supported by that provider.
    */
+  @Test
   public void noEntityProviderTest() throws Fault {
     enableAppJava(false);
     String ct = buildContentType(AbstractReader.NO_PROVIDER_MEDIATYPE);
@@ -72,6 +111,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Obtain the media type of the request. If the request does
    * not contain a Content-Type header then use application/octet-stream
    */
+  @Test
   public void meadiaTypeContentTypeTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "plain"));
     setProperty(Property.REQUEST_HEADERS,
@@ -90,6 +130,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Obtain the media type of the request. If the request does
    * not contain a Content-Type header then use application/octet-stream
    */
+  @Test
   public void meadiaTypeDefaultTest() throws Fault {
     enableAppJava(false);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "plain"));
@@ -108,6 +149,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * @test_Strategy:
    */
+  @Test
   public void iterateAllAppJavaReadersTest() throws Fault {
     enableAppJava(false);
     MediaType mt = new MediaType("application", "java");
@@ -131,6 +173,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * @test_Strategy:
    */
+  @Test
   public void iterateFirstAppJavaReaderTest() throws Fault {
     enableAppJava(true);
     MediaType mt = new MediaType("application", "java");

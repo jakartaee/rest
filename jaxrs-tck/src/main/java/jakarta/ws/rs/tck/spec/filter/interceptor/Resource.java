@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.filter.interceptor;
+package jakarta.ws.rs.tck.spec.filter.interceptor;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -28,11 +28,11 @@ import java.util.List;
 import javax.xml.namespace.QName;
 import javax.xml.transform.Source;
 
-import com.sun.ts.tests.jaxrs.common.impl.StringDataSource;
-import com.sun.ts.tests.jaxrs.common.impl.StringSource;
-import com.sun.ts.tests.jaxrs.common.impl.StringStreamingOutput;
-import com.sun.ts.tests.jaxrs.common.provider.StringBean;
-import com.sun.ts.tests.jaxrs.common.util.JaxrsUtil;
+import jakarta.ws.rs.tck.common.impl.StringDataSource;
+import jakarta.ws.rs.tck.common.impl.StringSource;
+import jakarta.ws.rs.tck.common.impl.StringStreamingOutput;
+import jakarta.ws.rs.tck.common.provider.StringBean;
+import jakarta.ws.rs.tck.common.util.JaxrsUtil;
 
 import jakarta.activation.DataSource;
 import jakarta.ws.rs.Consumes;

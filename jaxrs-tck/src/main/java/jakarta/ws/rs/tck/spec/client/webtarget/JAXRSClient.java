@@ -14,38 +14,56 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.client.webtarget;
+package jakarta.ws.rs.tck.spec.client.webtarget;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.ts.lib.util.TestUtil;
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
-import com.sun.ts.tests.jaxrs.common.provider.StringBeanEntityProvider;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
+import jakarta.ws.rs.tck.common.provider.StringBeanEntityProvider;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Configuration;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
-public class JAXRSClient extends JAXRSCommonClient {
+
+public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = -9146409863180750617L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_client_webtarget_web/resource");
   }
 
   public static void main(String[] args) {
     new JAXRSClient().run(args);
   }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
 
   /* Run test */
   /*
@@ -57,6 +75,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * (or URI template): methods for specifying additional path segments and
    * parameters return a new instance of WebTarget.
    */
+  @Test
   public void imutableWithRespectToUriMatrixPathTest() throws Fault {
     IteratedList<WebTarget> targets = new IteratedList<WebTarget>(
         WebTarget.class);
@@ -90,6 +109,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * (or URI template): methods for specifying additional path segments and
    * parameters return a new instance of WebTarget.
    */
+  @Test
   public void imutableWithRespectToUriQueryResolveTemplateTest() throws Fault {
     IteratedList<WebTarget> targets = new IteratedList<WebTarget>(
         WebTarget.class);
@@ -141,6 +161,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * their configuration. Thus, configuring a WebTarget does not create new
    * instances
    */
+  @Test
   public void mutableWithRespectToConfigTest() throws Fault {
     // check no WebTarget is returned from configuration
     // cannot check subclass of Configuration if any because
@@ -171,6 +192,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * Get access to the underlying Configuration configuration.
    */
+  @Test
   public void deepCopyConfigWebTargetLevelTest() throws Fault {
     Client client = ClientBuilder.newClient();
     Configuration config = client.getConfiguration();
@@ -196,6 +218,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * The following Client API types are configurable: Client, Invocation,
    * Invocation.Builder and WebTarget.
    */
+  @Test
   public void deepCopyConfigClientLevelTest() throws Fault {
     Client client = ClientBuilder.newClient();
     // Client level inheritance
@@ -213,6 +236,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: However, any additional changes to the instance of
    * WebTarget will not impact the Client's configuration and vice versa.
    */
+  @Test
   public void webTargetConfigNotImpactClientTest() throws Fault {
     Client client = ClientBuilder.newClient();
     WebTarget target = client.target("resource");

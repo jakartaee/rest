@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.provider.sort;
+package jakarta.ws.rs.tck.spec.provider.sort;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,8 +22,8 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import com.sun.ts.tests.jaxrs.common.provider.StringBean;
-import com.sun.ts.tests.jaxrs.common.provider.StringBeanEntityProvider;
+import jakarta.ws.rs.tck.common.provider.StringBean;
+import jakarta.ws.rs.tck.common.provider.StringBeanEntityProvider;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.Produces;

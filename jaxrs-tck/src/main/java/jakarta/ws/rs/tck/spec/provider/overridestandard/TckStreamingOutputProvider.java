@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.provider.overridestandard;
+package jakarta.ws.rs.tck.spec.provider.overridestandard;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +22,7 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import com.sun.ts.tests.jaxrs.common.impl.StringStreamingOutput;
+import jakarta.ws.rs.tck.common.impl.StringStreamingOutput;
 
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;

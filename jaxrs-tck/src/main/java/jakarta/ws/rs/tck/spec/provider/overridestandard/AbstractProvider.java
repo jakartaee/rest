@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.provider.overridestandard;
+package jakarta.ws.rs.tck.spec.provider.overridestandard;
 
 public abstract class AbstractProvider {
   public long getLength() {

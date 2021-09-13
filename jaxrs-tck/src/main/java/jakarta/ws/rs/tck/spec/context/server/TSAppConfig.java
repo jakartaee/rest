@@ -14,13 +14,13 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.context.server;
+package jakarta.ws.rs.tck.spec.context.server;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.sun.ts.tests.jaxrs.common.provider.PrintingErrorHandler;
+import jakarta.ws.rs.tck.common.provider.PrintingErrorHandler;
 
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.container.ResourceContext;

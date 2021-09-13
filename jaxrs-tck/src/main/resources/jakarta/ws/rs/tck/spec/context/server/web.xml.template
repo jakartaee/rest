@@ -23,7 +23,7 @@
         <servlet-class>servlet_adaptor</servlet-class>
         <init-param>
             <param-name>jakarta.ws.rs.Application</param-name>
-            <param-value>com.sun.ts.tests.jaxrs.spec.context.server.TSAppConfig</param-value>
+            <param-value>jakarta.ws.rs.tck.spec.context.server.TSAppConfig</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

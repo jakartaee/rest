@@ -14,17 +14,18 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.provider.standardnotnull;
+package jakarta.ws.rs.tck.spec.provider.standardnotnull;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
+import java.io.IOException;
 
 import javax.xml.transform.Source;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
-import com.sun.ts.tests.jaxrs.common.util.JaxrsUtil;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.util.JaxrsUtil;
 
 import jakarta.activation.DataSource;
 import jakarta.ws.rs.ProcessingException;
@@ -37,17 +38,30 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.xml.bind.JAXBElement;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
 
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = -3528892672938533655L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_provider_standardnotnull_web/resource");
   }
 
@@ -59,6 +73,27 @@ public class JAXRSClient extends JaxrsCommonClient {
   public static void main(String[] args) {
     new JAXRSClient().run(args);
   }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/provider/standardnotnull/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_provider_standardnotnull_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
 
   /*
    * @testName: serverByteArrayProviderTest
@@ -72,6 +107,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * corresponding Java object that represents zero-length data; they MUST NOT
    * return null.
    */
+  @Test
   public void serverByteArrayProviderTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "bytearray"));
@@ -88,6 +124,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * for a zero-length response entities returns null or a corresponding Java
    * object that represents zero-length data.
    */
+  @Test
   public void clientByteArrayProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -109,6 +146,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * corresponding Java object that represents zero-length data; they MUST NOT
    * return null.
    */
+  @Test
   public void serverStringProviderTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "string"));
@@ -125,6 +163,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * for a zero-length response entities returns null or a corresponding Java
    * object that represents zero-length data.
    */
+  @Test
   public void clientStringProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -145,6 +184,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * corresponding Java object that represents zero-length data; they MUST NOT
    * return null.
    */
+  @Test
   public void serverInputStreamProviderTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "inputstream"));
@@ -161,6 +201,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * for a zero-length response entities returns null or a corresponding Java
    * object that represents zero-length data.
    */
+  @Test
   public void clientInputStreamProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -188,6 +229,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * corresponding Java object that represents zero-length data; they MUST NOT
    * return null.
    */
+  @Test
   public void serverReaderProviderTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "reader"));
@@ -204,6 +246,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * for a zero-length response entities returns null or a corresponding Java
    * object that represents zero-length data.
    */
+  @Test
   public void clientReaderProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -231,6 +274,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * corresponding Java object that represents zero-length data; they MUST NOT
    * return null.
    */
+  @Test
   public void serverFileProviderTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "file"));
@@ -247,6 +291,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * for a zero-length response entities returns null or a corresponding Java
    * object that represents zero-length data.
    */
+  @Test
   public void clientFileProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -274,6 +319,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * corresponding Java object that represents zero-length data; they MUST NOT
    * return null.
    */
+  @Test
   public void serverDataSourceProviderTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "datasource"));
@@ -290,6 +336,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * for a zero-length response entities returns null or a corresponding Java
    * object that represents zero-length data.
    */
+  @Test
   public void clientDataSourceProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -317,6 +364,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * corresponding Java object that represents zero-length data; they MUST NOT
    * return null.
    */
+  @Test
   public void serverSourceProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.APPLICATION_XML_TYPE));
@@ -334,6 +382,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * for a zero-length response entities returns null or a corresponding Java
    * object that represents zero-length data.
    */
+  @Test
   public void clientSourceProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -361,6 +410,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * corresponding Java object that represents zero-length data; they MUST NOT
    * return null.
    */
+  @Test
   public void serverMultivaluedMapProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE));
@@ -379,6 +429,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * for a zero-length response entities returns null or a corresponding Java
    * object that represents zero-length data.
    */
+  @Test
   public void clientMultivaluedMapProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -403,6 +454,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * WebApplicationException with a client error response (HTTP 400) for
    * zero-length request entities.
    */
+  @Test
   public void serverJaxbProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.APPLICATION_XML_TYPE));
@@ -421,6 +473,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * for a zero-length response entities returns null or a corresponding Java
    * object that represents zero-length data.
    */
+  @Test
   public void clientJaxbProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "null"));
     setProperty(Property.REQUEST_HEADERS,
@@ -446,6 +499,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * WebApplicationException with a client error response (HTTP 400) for
    * zero-length request entities.
    */
+  @Test
   public void serverStreamingOutputProviderTest() throws Fault {
     String content = "StreamingOutput";
     setProperty(Property.REQUEST,
@@ -466,6 +520,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * MUST throw a BadRequestException (400 status) for zero-length request
    * entities.
    */
+  @Test
   public void serverBooleanProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.TEXT_PLAIN_TYPE));
@@ -486,6 +541,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * readEntity throws Processing Exception
    */
+  @Test
   public void clientBooleanProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -515,6 +571,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * MUST throw a BadRequestException (400 status) for zero-length request
    * entities.
    */
+  @Test
   public void serverCharProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.TEXT_PLAIN_TYPE));
@@ -535,6 +592,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * readEntity throws Processing Exception
    */
+  @Test
   public void clientCharProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -564,6 +622,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * MUST throw a BadRequestException (400 status) for zero-length request
    * entities.
    */
+  @Test
   public void serverIntegerProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.TEXT_PLAIN_TYPE));
@@ -584,6 +643,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * readEntity throws Processing Exception
    */
+  @Test
   public void clientIntegerProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -613,6 +673,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * MUST throw a BadRequestException (400 status) for zero-length request
    * entities.
    */
+  @Test
   public void serverBigDecimalProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.TEXT_PLAIN_TYPE));
@@ -633,6 +694,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * readEntity throws Processing Exception
    */
+  @Test
   public void clientBigDecimalProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();

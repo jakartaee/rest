@@ -14,9 +14,9 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.client.typedentities;
+package jakarta.ws.rs.tck.spec.client.typedentities;
 
-import com.sun.ts.tests.jaxrs.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntity;
+import jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntity;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;

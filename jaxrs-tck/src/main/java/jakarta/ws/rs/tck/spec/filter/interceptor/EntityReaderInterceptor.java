@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.filter.interceptor;
+package jakarta.ws.rs.tck.spec.filter.interceptor;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

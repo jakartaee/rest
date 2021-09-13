@@ -14,24 +14,39 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.context.client;
+package jakarta.ws.rs.tck.spec.context.client;
 
-import static com.sun.ts.tests.jaxrs.spec.context.server.StringBeanEntityProviderWithInjectables.notInjected;
+import static jakarta.ws.rs.tck.spec.context.server.StringBeanEntityProviderWithInjectables.notInjected;
+import java.io.InputStream;
+import java.io.IOException;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
-import com.sun.ts.tests.jaxrs.common.provider.StringBean;
-import com.sun.ts.tests.jaxrs.spec.context.server.StringBeanEntityProviderWithInjectables;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.provider.StringBean;
+import jakarta.ws.rs.tck.spec.context.server.StringBeanEntityProviderWithInjectables;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = -2921113736906329195L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_context_client_web/resource");
   }
 
@@ -43,6 +58,27 @@ public class JAXRSClient extends JaxrsCommonClient {
   public static void main(String[] args) {
     new JAXRSClient().run(args);
   }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/context/client/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_context_client_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
 
   /* Run test */
   /*
@@ -61,6 +97,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * method is fully managed by the JAX-RS implementation or any underlying IoC
    * container supported by the implementation.
    */
+  @Test
   public void clientWriterTest() throws Fault {
     addProvider(StringBeanEntityProviderWithInjectables.class);
     setRequestContentEntity(new StringBean("stringbean"));
@@ -85,6 +122,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * method is fully managed by the JAX-RS implementation or any underlying IoC
    * container supported by the implementation.
    */
+  @Test
   public void clientReaderTest() throws Fault {
     addProvider(StringBeanEntityProviderWithInjectables.class);
     setRequestContentEntity("stringbean");

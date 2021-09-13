@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.client.typedentities;
+package jakarta.ws.rs.tck.spec.client.typedentities;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -31,35 +31,69 @@ import java.io.Reader;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
-import com.sun.ts.tests.jaxrs.common.impl.SinglevaluedMap;
-import com.sun.ts.tests.jaxrs.common.impl.StringDataSource;
-import com.sun.ts.tests.jaxrs.common.impl.StringStreamingOutput;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntity;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.impl.SinglevaluedMap;
+import jakarta.ws.rs.tck.common.impl.StringDataSource;
+import jakarta.ws.rs.tck.common.impl.StringStreamingOutput;
+import jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntity;
 
 import jakarta.activation.DataSource;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.StreamingOutput;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = 1339633069677106930L;
 
   private static final String entity = Resource.class.getName();
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_client_typedentities_web/resource");
   }
 
   public static void main(String[] args) {
     new JAXRSClient().run(args);
   }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/client/typedentities/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_client_typedentities_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, EntityMessageReader.class, EntityMessageWriter.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
 
   /* Run test */
   /*
@@ -69,6 +103,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: JAX-RS implementations are REQUIRED to use entity providers
    */
+  @Test
   public void clientAnyReaderUsageTest() throws Fault {
     addProvider(new EntityMessageReader());
     setProperty(Property.REQUEST, buildRequest(Request.GET, "readerprovider"));
@@ -91,6 +126,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: JAX-RS implementations are REQUIRED to use entity providers
    */
+  @Test
   public void clientAnyWriterUsageTest() throws Fault {
     ReadableWritableEntity entity = new ReadableWritableEntity(
         String.valueOf(serialVersionUID));
@@ -113,6 +149,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientByteArrayReaderTest() throws Fault {
     standardReaderInvocation(MediaType.WILDCARD_TYPE);
     toStringTest(byte[].class);
@@ -126,6 +163,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientStringReaderTest() throws Fault {
     standardReaderInvocation(MediaType.WILDCARD_TYPE);
     toStringTest(String.class);
@@ -139,6 +177,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientInputStreamReaderTest() throws Fault {
     standardReaderInvocation(MediaType.WILDCARD_TYPE);
     InputStream responseEntity = getResponse().readEntity(InputStream.class);
@@ -155,6 +194,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientReaderReaderTest() throws Fault {
     standardReaderInvocation(MediaType.WILDCARD_TYPE);
     Reader responseEntity = getResponse().readEntity(Reader.class);
@@ -170,6 +210,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientFileReaderTest() throws Fault {
     standardReaderInvocation(MediaType.WILDCARD_TYPE);
     File responseEntity = getResponse().readEntity(File.class);
@@ -192,6 +233,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientDataSourceReaderTest() throws Fault {
     standardReaderInvocation(MediaType.WILDCARD_TYPE);
     DataSource responseEntity = getResponse().readEntity(DataSource.class);
@@ -213,6 +255,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientSourceReaderTest() throws Fault {
     standardReaderInvocation(MediaType.TEXT_XML_TYPE);
     Source responseEntity = getResponse().readEntity(Source.class);
@@ -235,6 +278,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientMultivaluedMapReaderTest() throws Fault {
     standardReaderInvocation(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
     @SuppressWarnings("unchecked")
@@ -258,6 +302,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientByteArrayWriterTest() throws Fault {
     standardWriterInvocation(entity.getBytes());
   }
@@ -270,6 +315,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientStringWriterTest() throws Fault {
     standardWriterInvocation(entity);
   }
@@ -282,6 +328,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientInputStreamWriterTest() throws Fault {
     ByteArrayInputStream bais = new ByteArrayInputStream(entity.getBytes());
     standardWriterInvocation(bais);
@@ -296,6 +343,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientReaderWriterTest() throws Fault {
     ByteArrayInputStream bais = new ByteArrayInputStream(entity.getBytes());
     Reader reader = new InputStreamReader(bais);
@@ -311,6 +359,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientFileWriterTest() throws Fault {
     File file = createFileEntity(entity);
     standardWriterInvocation(file);
@@ -325,6 +374,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientDataSourceWriterTest() throws Fault {
     DataSource ds = new StringDataSource(entity, MediaType.WILDCARD_TYPE);
     standardWriterInvocation(ds);
@@ -338,6 +388,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientSourceWriterTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.APPLICATION_XML_TYPE));
@@ -355,6 +406,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientMultivaluedMapWriterTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE));
@@ -371,6 +423,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: See Section 4.2.4 for a list of entity providers that MUST
    * be supported by all JAX-RS implementations
    */
+  @Test
   public void clientStreamingOutputWriterTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE));

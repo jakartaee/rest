@@ -14,24 +14,40 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.resource.requestmatching;
+package jakarta.ws.rs.tck.spec.resource.requestmatching;
 
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
+import java.io.InputStream;
+import java.io.IOException;
+
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
-public class JAXRSClient extends JAXRSCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = 6493953027905734515L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_resource_requestmatching_web");
   }
 
@@ -43,6 +59,27 @@ public class JAXRSClient extends JAXRSCommonClient {
   public static void main(String[] args) {
     new JAXRSClient().run(args);
   }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/resource/requestmatching/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_resource_requestmatching_web.war");
+    archive.addClasses(TSAppConfig.class, MainResource.class, EmptyResource.class, AnotherResourceLocator.class, AnotherSubResource.class, ExceptionMatcher.class, LocatorResource.class, MainResourceLocator.class, MainSubResource.class, YetAnotherSubresource.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
 
   /* Run test */
   /*
@@ -96,6 +133,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * Make sure the server does not return 404 every time
    */
+  @Test
   public void slashUriTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, ""));
     setProperty(Property.STATUS_CODE, getStatusCode(Status.OK));
@@ -113,6 +151,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * WebApplicationException with a not found response (HTTP 404 status) and no
    * entity. The exception MUST be processed as described in section 3.3.4.
    */
+  @Test
   public void slashWrongUriTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "wrong"));
     setProperty(Property.SEARCH_STRING, getStatusCode(Status.NOT_FOUND));
@@ -129,6 +168,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * WebApplicationException with a not found response (HTTP 404 status) and no
    * entity. The exception MUST be processed as described in section 3.3.4.
    */
+  @Test
   public void wrongAppNameTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "").replace("web", "wrong"));
@@ -146,6 +186,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * WebApplicationException with a not found response (HTTP 404 status) and no
    * entity. The exception MUST be processed as described in section 3.3.4.
    */
+  @Test
   public void slashAppNameTest() throws Fault {
     setProperty(Property.REQUEST,
         Request.GET.name() + " /" + MainResource.ID + HTTP11);
@@ -164,6 +205,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * groups with non-default regular expressions as the tertiary key (descending
    * order).
    */
+  @Test
   public void descendantResourcePathValueTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/subresource"));
@@ -182,6 +224,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * groups with non-default regular expressions as the tertiary key (descending
    * order).
    */
+  @Test
   public void descendantSubResourcePathValueTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.POST, "resource/subresource/sub"));
@@ -204,6 +247,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * @Path on method has precedence over on resource locator
    */
+  @Test
   public void resourceLocatorTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/locator/locator"));
@@ -225,6 +269,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * Check Resource locator finds subresource
    */
+  @Test
   public void foundAnotherResourceLocatorByPathTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/locator/sub"));
@@ -245,6 +290,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * From Alg.2
    */
+  @Test
   public void locatorNameTooLongTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/locator/sub/locator"));
@@ -264,6 +310,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * From Alg.2
    */
+  @Test
   public void locatorNameTooLongAgainTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/locator/locator/locator"));
@@ -283,6 +330,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * From Alg.2
    */
+  @Test
   public void methodNotFoundTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/locator/test"));
@@ -301,6 +349,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * exception MUST be processed as described in section 3.3.4. Note the
    * additional support for HEAD and OPTIONS described in section 3.3.5.
    */
+  @Test
   public void requestNotSupportedOnResourceTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.PUT, "resource/something"));
@@ -320,6 +369,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * exception MUST be processed as described in section 3.3.4. Note the
    * additional support for HEAD and OPTIONS described in section 3.3.5.
    */
+  @Test
   public void requestNotSupportedOnSubResourceTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.PUT, "resource/subresource/something"));
@@ -339,6 +389,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * exception MUST be processed as described in section 3.3.4. Note the
    * additional support for HEAD and OPTIONS described in section 3.3.5.
    */
+  @Test
   public void requestNotSupportedOnResourceLocatorTest() throws Fault {
     String request = buildRequest(Request.PUT,
         "resource/subresource/consumeslocator");
@@ -359,6 +410,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * exception MUST be processed as described in section 3.3.4. Note the
    * additional support for HEAD and OPTIONS described in section 3.3.5.
    */
+  @Test
   public void requestNotSupportedOnSubResourceLocatorTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.PUT, "resource/consumeslocator"));
@@ -378,6 +430,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * exception MUST be processed as described in section 3.3.4. Note the
    * additional support for HEAD and OPTIONS described in section 3.3.5.
    */
+  @Test
   public void optionsOnSubResourceTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.OPTIONS, "resource/subresource/something"));
@@ -403,6 +456,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * exception MUST be processed as described in section 3.3.4. Note the
    * additional support for HEAD and OPTIONS described in section 3.3.5.
    */
+  @Test
   public void headOnSubResourceTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.HEAD, "resource/subresource/something"));
@@ -423,6 +477,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * status) and no entity. The exception MUST be processed as described in
    * Section 3.3.4.
    */
+  @Test
   public void consumesOnResourceTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.POST, "resource/consumes"));
@@ -445,6 +500,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * status) and no entity. The exception MUST be processed as described in
    * Section 3.3.4.
    */
+  @Test
   public void consumesCorrectContentTypeOnResourceTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.POST, "resource/consumes"));
@@ -466,6 +522,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * status) and no entity. The exception MUST be processed as described in
    * Section 3.3.4.
    */
+  @Test
   public void consumesOnResourceLocatorTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.POST, "resource/consumeslocator"));
@@ -488,6 +545,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * status) and no entity. The exception MUST be processed as described in
    * Section 3.3.4.
    */
+  @Test
   public void consumesCorrectContentTypeOnResourceLocatorTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.POST, "resource/consumeslocator"));
@@ -510,6 +568,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * status) and no entity. The exception MUST be processed as described in
    * Section 3.3.4.
    */
+  @Test
   public void consumesOnSubResourceLocatorTest() throws Fault {
     String request = buildRequest(Request.POST,
         "resource/subresource/consumeslocator");
@@ -533,6 +592,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * status) and no entity. The exception MUST be processed as described in
    * Section 3.3.4.
    */
+  @Test
   public void consumesCorrectContentTypeOnSubResourceLocatorTest()
       throws Fault {
     String request = buildRequest(Request.POST,
@@ -559,6 +619,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * acceptable response (HTTP 406 status) and no entity. The exception MUST be
    * processed as described in Section 3.3.4
    */
+  @Test
   public void producesOnResourceTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.POST, "resource/produces"));
@@ -580,6 +641,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * acceptable response (HTTP 406 status) and no entity. The exception MUST be
    * processed as described in Section 3.3.4
    */
+  @Test
   public void producesCorrectContentTypeOnResourceTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.POST, "resource/produces"));
@@ -601,6 +663,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * acceptable response (HTTP 406 status) and no entity. The exception MUST be
    * processed as described in Section 3.3.4
    */
+  @Test
   public void producesOnResourceLocatorTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.POST, "resource/produceslocator"));
@@ -622,6 +685,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * acceptable response (HTTP 406 status) and no entity. The exception MUST be
    * processed as described in Section 3.3.4
    */
+  @Test
   public void producesCorrectContentTypeOnResourceLocatorTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.POST, "resource/produceslocator"));
@@ -644,6 +708,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * acceptable response (HTTP 406 status) and no entity. The exception MUST be
    * processed as described in Section 3.3.4
    */
+  @Test
   public void producesOnSubResourceLocatorTest() throws Fault {
     String request = buildRequest(Request.POST,
         "resource/subresource/produceslocator");
@@ -666,6 +731,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * acceptable response (HTTP 406 status) and no entity. The exception MUST be
    * processed as described in Section 3.3.4
    */
+  @Test
   public void producesCorrectContentTypeOnSubResourceLocatorTest()
       throws Fault {
     String request = buildRequest(Request.POST,
@@ -685,6 +751,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * @test_Strategy: Check sub-resource locator from sub-resource locator
    */
+  @Test
   public void l2SubResourceLocatorTest() throws Fault {
     String request = buildRequest(Request.DELETE,
         "resource/l2locator/l2locator");
@@ -707,6 +774,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * Like in descendantSubResourcePathValueTest, AnotherSubResource method is
    * used, because MainSubResource is another object
    */
+  @Test
   public void consumesOverridesDescendantSubResourcePathValueTest()
       throws Fault {
     setProperty(Property.REQUEST,
@@ -732,6 +800,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * Like in descendantSubResourcePathValueTest, AnotherSubResource method is
    * used, because MainSubResource is another object
    */
+  @Test
   public void producesOverridesDescendantSubResourcePathValueTest()
       throws Fault {
     setProperty(Property.REQUEST,
@@ -759,6 +828,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    *//*
       * and a better match for AnotherSubResource#sub
       */
+  @Test
   public void producesOverridesDescendantSubResourcePathValuePostTest()
       throws Fault {
     setProperty(Property.REQUEST,
@@ -783,6 +853,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * n/* >
    *//*
      */
+  @Test
   public void concreteOverStarWhenAcceptStarTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "yas"));
     setProperty(Property.REQUEST_HEADERS, "Accept: testi/*");
@@ -803,6 +874,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * using a relative quality factor known as the q parameter. The value of the
    * q parameter, or q-value, is used to sort the set of accepted
    */
+  @Test
   public void qualityDeterminesTextATest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "yas"));
     setProperty(Property.REQUEST_HEADERS,
@@ -822,6 +894,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * using a relative quality factor known as the q parameter. The value of the
    * q parameter, or q-value, is used to sort the set of accepted
    */
+  @Test
   public void qualityDeterminesTextBTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "yas"));
     setProperty(Property.REQUEST_HEADERS,
@@ -843,6 +916,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * server preference is only examined when multiple media types are accepted
    * by a client with the same q-value.
    */
+  @Test
   public void producesOverridesDescendantSubResourcePathValueWeightTest()
       throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "yas"));
@@ -862,6 +936,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * server preference is only examined when multiple media types are accepted
    * by a client with the same q-value.
    */
+  @Test
   public void qualityOfSourceOnDifferentMediaTypesTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "yas"));
     setProperty(Property.REQUEST_HEADERS,
@@ -879,6 +954,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * @test_Strategy: n2/m2 /> n1/m1 and v1 = v2 and v1' = v2' and v1'' <= v2''
    */
+  @Test
   public void concreteOverStarTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "yas"));
     setProperty(Property.REQUEST_HEADERS, "Accept: testi/text");

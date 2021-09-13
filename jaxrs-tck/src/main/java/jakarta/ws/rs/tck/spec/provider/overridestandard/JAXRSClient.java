@@ -14,25 +14,41 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.provider.overridestandard;
+package jakarta.ws.rs.tck.spec.provider.overridestandard;
 
 import java.util.zip.Deflater;
+import java.io.InputStream;
+import java.io.IOException;
 
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
 import jakarta.ws.rs.core.MediaType;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
 
-public class JAXRSClient extends JAXRSCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = 1L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_provider_overridestandard_web/resource");
   }
 
@@ -77,6 +93,27 @@ public class JAXRSClient extends JAXRSCommonClient {
     new JAXRSClient().run(args);
   }
 
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/provider/overridestandard/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_provider_overridestandard_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, AbstractProvider.class, TckBooleanProvider.class, TckByteArrayProvider.class, TckCharacterProvider.class, TckDataSourceProvider.class, TckDataSourceProvider.class, TckFileProvider.class, TckInputStreamProvider.class, TckJaxbProvider.class, TckMapProvider.class, TckNumberProvider.class, TckReaderProvider.class, TckSourceProvider.class, TckStreamingOutputProvider.class, TckStringProvider.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+
   /* Run test */
   /*
    * @testName: readWriteByteArrayProviderTest
@@ -88,6 +125,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteByteArrayProviderTest() throws Fault {
     setPropertyAndInvoke("bytearray", MediaType.APPLICATION_XML_TYPE);
   }
@@ -102,6 +140,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteStringProviderTest() throws Fault {
     setPropertyAndInvoke("string", MediaType.APPLICATION_XML_TYPE);
   }
@@ -116,6 +155,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteInputStreamProviderTest() throws Fault {
     setPropertyAndInvoke("inputstream", MediaType.APPLICATION_XML_TYPE);
   }
@@ -130,6 +170,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteReaderProviderTest() throws Fault {
     setPropertyAndInvoke("reader", MediaType.APPLICATION_XML_TYPE);
   }
@@ -144,6 +185,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteFileProviderTest() throws Fault {
     setPropertyAndInvoke("file", MediaType.APPLICATION_XML_TYPE);
   }
@@ -158,6 +200,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteDataSourceProviderTest() throws Fault {
     setPropertyAndInvoke("datasource", MediaType.APPLICATION_XML_TYPE);
   }
@@ -172,6 +215,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteSourceProviderTest() throws Fault {
     setPropertyAndInvoke("source", MediaType.APPLICATION_XML_TYPE);
   }
@@ -186,6 +230,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteJaxbProviderTest() throws Fault {
     setPropertyAndInvoke("jaxb", MediaType.APPLICATION_XML_TYPE);
   }
@@ -200,6 +245,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteStreamingOutputProviderTest() throws Fault {
     setPropertyAndInvoke("streamingoutput", MediaType.APPLICATION_XML_TYPE);
   }
@@ -214,6 +260,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteMapProviderTest() throws Fault {
     setPropertyAndInvoke("map", MediaType.APPLICATION_FORM_URLENCODED_TYPE);
   }
@@ -228,6 +275,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteBooleanProviderTest() throws Fault {
     MediaType mt = MediaType.TEXT_PLAIN_TYPE;
     setProperty(Property.REQUEST, buildRequest(Request.POST, "boolean"));
@@ -248,6 +296,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteCharacterProviderTest() throws Fault {
     MediaType mt = MediaType.TEXT_PLAIN_TYPE;
     setProperty(Property.REQUEST, buildRequest(Request.POST, "character"));
@@ -268,6 +317,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
+  @Test
   public void readWriteIntegerProviderTest() throws Fault {
     MediaType mt = MediaType.TEXT_PLAIN_TYPE;
     setProperty(Property.REQUEST, buildRequest(Request.POST, "number"));

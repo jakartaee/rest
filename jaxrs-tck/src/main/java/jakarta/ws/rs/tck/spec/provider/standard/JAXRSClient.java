@@ -14,7 +14,10 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.provider.standard;
+package jakarta.ws.rs.tck.spec.provider.standard;
+
+import java.io.InputStream;
+import java.io.IOException;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -22,21 +25,34 @@ import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
 import jakarta.ws.rs.core.MediaType;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
 
-public class JAXRSClient extends JAXRSCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = 1L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_provider_standard_web/resource");
   }
 
@@ -123,6 +139,27 @@ public class JAXRSClient extends JAXRSCommonClient {
     new JAXRSClient().run(args);
   }
 
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/provider/standard/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_provider_standard_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+
   String[] methodsAll = { "bytearray", "string", "inputstream", "file",
       "datasource", "streamingoutput" };
 
@@ -138,6 +175,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * Java and media type combinations
    * 
    */
+  @Test
   public void byteArrayProviderTest() throws Fault {
     for (MediaType media : getMediaTypes(MediaType.class))
       setEntityAndPropertyAndInvoke(methodsAll[0], media); // All media
@@ -154,6 +192,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * Java and media type combinations
    * 
    */
+  @Test
   public void stringProviderTest() throws Fault {
     for (MediaType media : getMediaTypes(MediaType.class))
       setEntityAndPropertyAndInvoke(methodsAll[1], media); // All media
@@ -170,6 +209,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * Java and media type combinations
    * 
    */
+  @Test
   public void inputStreamProviderTest() throws Fault {
     for (MediaType media : getMediaTypes(MediaType.class))
       setEntityAndPropertyAndInvoke(methodsAll[2], media); // All media
@@ -189,6 +229,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * 
    * JIRA:1078
    */
+  @Test
   public void readerProviderTest() throws Fault {
     for (MediaType media : getMediaTypes(MediaType.class))
       setEntityAndPropertyAndInvoke("reader", media);
@@ -205,6 +246,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * Java and media type combinations
    * 
    */
+  @Test
   public void fileProviderTest() throws Fault {
     for (MediaType media : getMediaTypes(MediaType.class))
       setEntityAndPropertyAndInvoke(methodsAll[3], media); // All media
@@ -221,6 +263,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * Java and media type combinations
    * 
    */
+  @Test
   public void dataSourceProviderTest() throws Fault {
     for (MediaType media : getMediaTypes(MediaType.class))
       setEntityAndPropertyAndInvoke(methodsAll[4], media); // All media
@@ -240,6 +283,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * application/*+xml)
    * 
    */
+  @Test
   public void sourceProviderTest() throws Fault {
     setPropertyAndInvokeXml("source");
   }
@@ -254,6 +298,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * Java and media type combinations
    * 
    */
+  @Test
   public void streamingOutputProviderTest() throws Fault {
     for (MediaType media : getMediaTypes(MediaType.class))
       setEntityAndPropertyAndInvoke(methodsAll[5], media); // All media

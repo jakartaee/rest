@@ -14,23 +14,40 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.provider.exceptionmapper;
+package jakarta.ws.rs.tck.spec.provider.exceptionmapper;
 
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
+import java.io.InputStream;
+import java.io.IOException;
+
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
 import jakarta.ws.rs.core.Response.Status;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
 
-public class JAXRSClient extends JAXRSCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = -8228843141906281907L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_provider_exceptionmapper_web/resource");
   }
 
@@ -43,6 +60,27 @@ public class JAXRSClient extends JAXRSCommonClient {
     new JAXRSClient().run(args);
   }
 
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/provider/exceptionmapper/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_provider_exceptionmapper_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, ClientErrorExceptionMapper.class, ExceptionFromMappedException.class, ExceptionFromMappedExceptionMapper.class, FilterChainTestException.class, FilterChainTestExceptionMapper.class, PlainExceptionMapper.class, ResponseFilter.class, RuntimeExceptionMapper.class, ThrowableMapper.class, WebAppExceptionMapper.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+
   /* Run test */
   /*
    * @testName: throwableTest
@@ -53,6 +91,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * exception, an implementation MUST use the provider whose generic type is
    * the nearest superclass of the exception.
    */
+  @Test
   public void throwableTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "throwable"));
     setProperty(Property.SEARCH_STRING, ThrowableMapper.class.getName());
@@ -68,6 +107,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * exception, an implementation MUST use the provider whose generic type is
    * the nearest superclass of the exception.
    */
+  @Test
   public void exceptionTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "exception"));
     setProperty(Property.SEARCH_STRING, PlainExceptionMapper.class.getName());
@@ -83,6 +123,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * exception, an implementation MUST use the provider whose generic type is
    * the nearest superclass of the exception.
    */
+  @Test
   public void runtimeExceptionTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "runtime"));
     setProperty(Property.SEARCH_STRING, RuntimeExceptionMapper.class.getName());
@@ -98,6 +139,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * exception, an implementation MUST use the provider whose generic type is
    * the nearest superclass of the exception.
    */
+  @Test
   public void webapplicationExceptionTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "webapp"));
     setProperty(Property.SEARCH_STRING, WebAppExceptionMapper.class.getName());
@@ -113,6 +155,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * exception, an implementation MUST use the provider whose generic type is
    * the nearest superclass of the exception.
    */
+  @Test
   public void clientErrorExceptionTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "clienterror"));
     setProperty(Property.SEARCH_STRING,
@@ -132,6 +175,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * Section 3.3.3. In particular, a mapped Response MUST be processed using the
    * ContainerResponse filter chain defined in Chapter 6.
    */
+  @Test
   public void filterChainTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "chain"));
     setProperty(Property.SEARCH_STRING, ResponseFilter.class.getName());

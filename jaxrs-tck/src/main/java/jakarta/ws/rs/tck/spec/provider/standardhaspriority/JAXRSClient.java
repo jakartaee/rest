@@ -14,28 +14,43 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.provider.standardhaspriority;
+package jakarta.ws.rs.tck.spec.provider.standardhaspriority;
 
 import javax.xml.namespace.QName;
+import java.io.InputStream;
+import java.io.IOException;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.xml.bind.JAXBElement;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
 
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = 1L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_provider_standardhaspriority_web/resource");
   }
 
@@ -62,6 +77,27 @@ public class JAXRSClient extends JaxrsCommonClient {
     new JAXRSClient().run(args);
   }
 
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/provider/standardhaspriority/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_provider_standardhaspriority_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, AbstractProvider.class, ProviderWalker.class, TckBooleanProvider.class, TckCharacterProvider.class, TckCharacterProvider.class, TckJaxbProvider.class, TckMapProvider.class, TckNumberProvider.class, TckUniversalProvider.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+
   /* Run test */
   /*
    * @testName: readWriteJaxbProviderTest
@@ -75,6 +111,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * application-provided over pre-packaged entity providers. i.e. When have the
    * same mediaType
    */
+  @Test
   public void readWriteJaxbProviderTest() throws Fault {
     JAXBElement<String> element = new JAXBElement<String>(new QName("jaxb"),
         String.class, "jaxb");
@@ -94,6 +131,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * application-provided over pre-packaged entity providers. i.e. When have the
    * same mediaType
    */
+  @Test
   public void readWriteMapProviderTest() throws Fault {
     MultivaluedMap<String, String> map = new MultivaluedHashMap<String, String>();
     map.add("map", "map");
@@ -113,6 +151,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * application-provided over pre-packaged entity providers. i.e. When have the
    * same mediaType
    */
+  @Test
   public void readWriteBooleanProviderTest() throws Fault {
     MediaType mt = MediaType.TEXT_PLAIN_TYPE;
     setProperty(Property.REQUEST, buildRequest(Request.POST, "boolean"));
@@ -135,6 +174,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * application-provided over pre-packaged entity providers. i.e. When have the
    * same mediaType
    */
+  @Test
   public void readWriteCharacterProviderTest() throws Fault {
     MediaType mt = MediaType.TEXT_PLAIN_TYPE;
     setProperty(Property.REQUEST, buildRequest(Request.POST, "character"));
@@ -157,6 +197,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * application-provided over pre-packaged entity providers. i.e. When have the
    * same mediaType
    */
+  @Test
   public void readWriteIntegerProviderTest() throws Fault {
     MediaType mt = MediaType.TEXT_PLAIN_TYPE;
     setProperty(Property.REQUEST, buildRequest(Request.POST, "number"));

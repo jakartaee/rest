@@ -14,17 +14,35 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.inheritance;
+package jakarta.ws.rs.tck.spec.inheritance;
 
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
+import java.io.InputStream;
+import java.io.IOException;
+
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
 import jakarta.ws.rs.core.MediaType;
 
-public class JAXRSClient extends JAXRSCommonClient {
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = 4535321107880833833L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_inheritance_web");
   }
 
@@ -36,6 +54,27 @@ public class JAXRSClient extends JAXRSCommonClient {
   public static void main(String[] args) {
     new JAXRSClient().run(args);
   }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/inheritance/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_inheritance_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, ChildResource.class, ChildResource1.class, ParentResource.class, ParentResource1.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
 
   /*
    * @class.setup_props: webServerHost; webServerPort; ts_home;
@@ -49,6 +88,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Client sends a request on a resource at /InheritanceTest,
    * Verify that inheritance works.
    */
+  @Test
   public void test1() throws Fault {
     setProperty(REQUEST_HEADERS, buildAccept(MediaType.TEXT_PLAIN_TYPE));
     setProperty(REQUEST, buildRequest(Request.GET, "InheritanceTest"));
@@ -64,6 +104,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Client sends a request on a resource at /InheritanceTest1,
    * Verify that inheritance works.
    */
+  @Test
   public void test2() throws Fault {
     setProperty(REQUEST_HEADERS, buildAccept(MediaType.TEXT_HTML_TYPE));
     setProperty(REQUEST, buildRequest(Request.GET, "InheritanceTest1"));

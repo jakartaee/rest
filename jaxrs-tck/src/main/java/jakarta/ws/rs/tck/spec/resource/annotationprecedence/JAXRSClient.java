@@ -14,23 +14,39 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.resource.annotationprecedence;
+package jakarta.ws.rs.tck.spec.resource.annotationprecedence;
 
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
+import java.io.InputStream;
+import java.io.IOException;
+
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
-public class JAXRSClient extends JAXRSCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = 1L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_resource_annotationprecedence_web/resource");
   }
 
@@ -43,6 +59,27 @@ public class JAXRSClient extends JAXRSCommonClient {
     new JAXRSClient().run(args);
   }
 
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/resource/annotationprecedence/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_resource_annotationprecedence_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, ResourceInterface.class, SuperClass.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+
   /* Run test */
   /*
    * @testName: correctTest
@@ -52,6 +89,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Annotations on a super-class take precedence over those on
    * an implemented interface.
    */
+  @Test
   public void correctTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post"));
     invoke();
@@ -65,6 +103,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Annotations on a super-class take precedence over those on
    * an implemented interface. (@Path)
    */
+  @Test
   public void incorrectPathOnClassTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post")
         .replace("/resource", "/interfaceresource"));
@@ -80,6 +119,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Annotations on a super-class take precedence over those on
    * an implemented interface. (@Path)
    */
+  @Test
   public void incorrectPathOnMethodTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "get"));
     setProperty(Property.STATUS_CODE, getStatusCode(Status.NOT_FOUND));
@@ -94,6 +134,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Annotations on a super-class take precedence over those on
    * an implemented interface. (@GET)
    */
+  @Test
   public void correctRequestTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "post"));
     setProperty(Property.STATUS_CODE, "!" + getStatusCode(Status.OK));
@@ -108,6 +149,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Annotations on a super-class take precedence over those on
    * an implemented interface. (Content-Type)
    */
+  @Test
   public void incorrectConsumesTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post"));
     setProperty(Property.REQUEST_HEADERS,
@@ -125,6 +167,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Annotations on a super-class take precedence over those on
    * an implemented interface. (Accept)
    */
+  @Test
   public void incorrectProdecesTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post"));
     setProperty(Property.REQUEST_HEADERS,
@@ -141,6 +184,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Annotations on a super-class take precedence over those on
    * an implemented interface. (Accept, Content-type)
    */
+  @Test
   public void incorrectProducesConsumesTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post"));
     setProperty(Property.REQUEST_HEADERS, buildAccept(MediaType.TEXT_XML_TYPE));
@@ -158,6 +202,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Annotations on a super-class take precedence over those on
    * an implemented interface. (formparam=pqr)
    */
+  @Test
   public void formParamTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post"));
     setProperty(Property.CONTENT, "pqr=hello");
@@ -174,6 +219,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Annotations on a super-class take precedence over those on
    * an implemented interface. (queryParam=xyz)
    */
+  @Test
   public void queryParamXyzTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post?xyz=hello"));
     setProperty(Property.SEARCH_STRING, "default");
@@ -189,6 +235,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Annotations on a super-class take precedence over those on
    * an implemented interface. (queryParam=pqr)
    */
+  @Test
   public void queryParamPqrTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post?pqr=hello"));
     setProperty(Property.SEARCH_STRING, "hello");

@@ -14,12 +14,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.client.invocations;
+package jakarta.ws.rs.tck.spec.client.invocations;
 
 import java.net.URI;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
-import com.sun.ts.tests.jaxrs.common.client.JdkLoggingFilter;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.client.JdkLoggingFilter;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -28,23 +28,59 @@ import jakarta.ws.rs.core.Link;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
+import java.io.InputStream;
+import java.io.IOException;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = -3347907896017729013L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_client_invocations_web/resource");
   }
 
   public static void main(String[] args) {
     new JAXRSClient().run(args);
   }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/client/invocations/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_client_invocations_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
 
   /* Run test */
   /*
@@ -56,6 +92,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * invocation synchronously; asynchronous execution is also supported by
    * calling Invocation.submit().
    */
+  @Test
   public void synchronousTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "call"));
     setProperty(Property.SEARCH_STRING, Resource.class.getName());
@@ -71,6 +108,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * invocation synchronously; asynchronous execution is also supported by
    * calling Invocation.submit().
    */
+  @Test
   public void asynchronousTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "call"));
     setProperty(Property.SEARCH_STRING, Resource.class.getName());
@@ -97,6 +135,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * Create a new link instance initialized from an existing URI.
    */
+  @Test
   public void invocationFromLinkTextXmlMediaTypeTest() throws Fault {
     Response r = invocationFromLinkWithMediaType(MediaType.TEXT_XML);
     checkResposeForMessage(MediaType.TEXT_XML, r);
@@ -114,6 +153,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * Create a new link instance initialized from an existing URI.
    */
+  @Test
   public void invocationFromLinkApplicationJsonMediaTypeTest() throws Fault {
     Response r = invocationFromLinkWithMediaType(MediaType.APPLICATION_JSON);
     checkResposeForMessage(MediaType.APPLICATION_JSON, r);
@@ -131,6 +171,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * Create a new link instance initialized from an existing URI.
    */
+  @Test
   public void invocationFromLinkTwoMediaTypesTest() throws Fault {
     String type1 = MediaType.APPLICATION_ATOM_XML;
     String type2 = MediaType.TEXT_HTML;

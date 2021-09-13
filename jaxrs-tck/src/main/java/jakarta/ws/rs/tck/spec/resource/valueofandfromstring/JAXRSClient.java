@@ -14,22 +14,39 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.resource.valueofandfromstring;
+package jakarta.ws.rs.tck.spec.resource.valueofandfromstring;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
+import java.io.InputStream;
+import java.io.IOException;
+
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = 6626213314312507899L;
 
   private static final String DATA = "ASDFGHJKLQWERTYUIOPPPPPPP";
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_spec_resource_valueofandfromstring_web");
   }
 
@@ -42,6 +59,27 @@ public class JAXRSClient extends JaxrsCommonClient {
     new JAXRSClient().run(args);
   }
 
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/resource/valueofandfromstring/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_resource_valueofandfromstring_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, EnumWithFromStringAndValueOf.class, ParamEntityWithFromStringAndValueOf.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+
   /* Run test */
   /*
    * @testName: enumHeaderTest
@@ -51,6 +89,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: If both methods are present then valueOf MUST be used
    * unless the type is an enum in which case fromString MUST be used.
    */
+  @Test
   public void enumHeaderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS, "param:" + DATA);
     setProperty(Property.REQUEST,
@@ -68,6 +107,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: If both methods are present then valueOf MUST be used
    * unless the type is an enum in which case fromString MUST be used.
    */
+  @Test
   public void enumCookieTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS, "Cookie: param=" + DATA);
     setProperty(Property.REQUEST,
@@ -85,6 +125,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: If both methods are present then valueOf MUST be used
    * unless the type is an enum in which case fromString MUST be used.
    */
+  @Test
   public void enumMaxtrixTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/enummatrix;param=" + DATA));
@@ -101,6 +142,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: If both methods are present then valueOf MUST be used
    * unless the type is an enum in which case fromString MUST be used.
    */
+  @Test
   public void enumQueryTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/enumquery?param=" + DATA));
@@ -117,6 +159,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: If both methods are present then valueOf MUST be used
    * unless the type is an enum in which case fromString MUST be used.
    */
+  @Test
   public void enumPathTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/enumpath/" + DATA));
@@ -133,6 +176,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: If both methods are present then valueOf MUST be used
    * unless the type is an entity in which case fromString MUST be used.
    */
+  @Test
   public void entityHeaderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS, "param:" + DATA);
     setProperty(Property.REQUEST,
@@ -150,6 +194,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: If both methods are present then valueOf MUST be used
    * unless the type is an entity in which case fromString MUST be used.
    */
+  @Test
   public void entityCookieTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS, "Cookie: param=" + DATA);
     setProperty(Property.REQUEST,
@@ -167,6 +212,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: If both methods are present then valueOf MUST be used
    * unless the type is an entity in which case fromString MUST be used.
    */
+  @Test
   public void entityMaxtrixTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/entitymatrix;param=" + DATA));
@@ -183,6 +229,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: If both methods are present then valueOf MUST be used
    * unless the type is an entity in which case fromString MUST be used.
    */
+  @Test
   public void entityQueryTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/entityquery?param=" + DATA));
@@ -199,6 +246,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: If both methods are present then valueOf MUST be used
    * unless the type is an entity in which case fromString MUST be used.
    */
+  @Test
   public void entityPathTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "resource/entitypath/" + DATA));

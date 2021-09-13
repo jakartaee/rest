@@ -14,15 +14,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.spec.client.instance;
+package jakarta.ws.rs.tck.spec.client.instance;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import com.sun.ts.lib.util.TestUtil;
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
-import com.sun.ts.tests.jaxrs.common.provider.StringBeanEntityProvider;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
+import jakarta.ws.rs.tck.common.provider.StringBeanEntityProvider;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -31,12 +31,17 @@ import jakarta.ws.rs.core.Configuration;
 import jakarta.ws.rs.core.Feature;
 import jakarta.ws.rs.core.FeatureContext;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
-public class JAXRSClient extends JAXRSCommonClient {
+public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = 3031443305675236388L;
 
@@ -48,7 +53,19 @@ public class JAXRSClient extends JAXRSCommonClient {
     new JAXRSClient().run(args);
   }
 
-  public JAXRSClient() {
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+
+  public JAXRSClientIT() {
+    setup();
     Client client = ClientBuilder.newClient();
     Configuration config = client.getConfiguration();
     registeredPropertyCnt = config.getProperties().size();
@@ -57,6 +74,7 @@ public class JAXRSClient extends JAXRSCommonClient {
     logMsg("Already registered", registeredPropertyCnt, "properties");
 
   }
+
 
   /* Run test */
   /*
@@ -67,6 +85,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: This interface supports configuration of: Features,
    * Properties, Providers
    */
+  @Test
   public void defaultClientConfigurationPresetTest() throws Fault {
     Client client = ClientBuilder.newClient();
     checkConfig(client, registeredProviderCnt, registeredPropertyCnt);
@@ -80,6 +99,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: This interface supports configuration of: Features,
    * Properties, Providers
    */
+  @Test
   public void clientConfiguredTest() throws Fault {
     Client client = ClientBuilder.newClient();
     client.register(new StringBeanEntityProvider());

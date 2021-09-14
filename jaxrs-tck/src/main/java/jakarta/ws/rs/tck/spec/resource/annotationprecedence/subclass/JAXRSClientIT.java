@@ -58,7 +58,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/resource/annotationprecedence/subclass/web.xml.template");
     String webXml = editWebXmlString(inStream);
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_resource_annotationprecedence_subclass_web.war");
-    archive.addClasses(TSAppConfig.class, Resource.class, ../ResourceInterface.class);
+    archive.addClasses(TSAppConfig.class, Resource.class, jakarta.ws.rs.tck.spec.resource.annotationprecedence.ResourceInterface.class, jakarta.ws.rs.tck.spec.resource.annotationprecedence.SuperClass.class);
     archive.setWebXML(new StringAsset(webXml));
     return archive;
   }

@@ -58,7 +58,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/filter/exception/web.xml.template");
     String webXml = editWebXmlString(inStream);
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_filter_exception_web.war");
-    archive.addClasses(TSAppConfig.class, Resource.class, AbstractAddFilter.class, AbstractAddInterceptor.class, AddOneFilter.class, AddOneInterceptor.class, AddTenGlobalFilter.class, AddTenGlobalInterceptor.class, ExceptionNameBinding.class, NeverUsedExceptionMapper.class, PostMatchingThrowingFilter.class, PreMatchingThrowingFilter.class, RuntimeExceptionMapper.class);
+    archive.addClasses(TSAppConfig.class, Resource.class, AbstractAddFilter.class, AbstractAddInterceptor.class, AddOneFilter.class, AddOneInterceptor.class, AddTenGlobalFilter.class, AddTenGlobalInterceptor.class, ExceptionNameBinding.class, NeverUsedExceptionMapper.class, PostMatchingThrowingFilter.class, PreMatchingThrowingFilter.class, RuntimeExceptionMapper.class, jakarta.ws.rs.tck.common.util.JaxrsUtil.class);
     archive.setWebXML(new StringAsset(webXml));
     return archive;
   }

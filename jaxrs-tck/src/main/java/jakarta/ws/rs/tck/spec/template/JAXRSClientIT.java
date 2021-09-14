@@ -47,7 +47,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
 
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{
-    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/templateTest/web.xml.template");
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/template/web.xml.template");
     String webXml = editWebXmlString(inStream);
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_templateTest_web.war");
     archive.addClasses(TSAppConfig.class, TemplateTest.class);

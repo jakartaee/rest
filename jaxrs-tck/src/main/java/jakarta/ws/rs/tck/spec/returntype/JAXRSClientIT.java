@@ -60,7 +60,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/returntype/web.xml.template");
     String webXml = editWebXmlString(inStream);
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_returntype_web.war");
-    archive.addClasses(TSAppConfig.class, ReturnTypeTest.class, UUIDWriter.class);
+    archive.addClasses(TSAppConfig.class, ReturnTypeTest.class, UUIDWriter.class, jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.EntityMessageWriter.class, jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntity.class, jakarta.ws.rs.tck.common.AbstractMessageBodyRW.class);
     archive.setWebXML(new StringAsset(webXml));
     return archive;
   }

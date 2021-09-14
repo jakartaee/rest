@@ -53,7 +53,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/context/server/web.xml.template");
     String webXml = editWebXmlString(inStream);
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_context_server_web.war");
-    archive.addClasses(TSAppConfig.class, Resource.class, SingletonWithInjectables.class, StringBeanEntityProviderWithInjectables.class);
+    archive.addClasses(TSAppConfig.class, Resource.class, SingletonWithInjectables.class, StringBeanEntityProviderWithInjectables.class, jakarta.ws.rs.tck.common.provider.StringBeanEntityProvider.class, jakarta.ws.rs.tck.common.provider.PrintingErrorHandler.class, jakarta.ws.rs.tck.common.provider.StringBean.class);
     archive.setWebXML(new StringAsset(webXml));
     return archive;
   }

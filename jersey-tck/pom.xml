@@ -18,6 +18,7 @@
         <glassfish.container.version>6.1.0</glassfish.container.version>
         <jakarta.platform.version>9.1.0</jakarta.platform.version>
         <junit.jupiter.version>5.7.2</junit.jupiter.version>
+        <jakarta.rest.version>3.0.0</jakarta.rest.version>
     </properties>
 
     <dependencyManagement>
@@ -224,6 +225,15 @@
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
                                     <destFileName>jersey-media-json-binding.jar</destFileName>
+                                </artifactItem>
+                                 <artifactItem>
+                                    <groupId>jakarta.ws.rs</groupId>
+                                    <artifactId>jakarta.ws.rs-api</artifactId>
+                                    <version>${jakarta.rest.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <destFileName>jakarta.ws.rs-api.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>

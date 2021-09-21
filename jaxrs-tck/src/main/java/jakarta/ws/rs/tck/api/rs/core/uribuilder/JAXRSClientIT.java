@@ -64,18 +64,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     sb = new StringBuilder();
   }
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  // public static void main(String[] args) {
-  //   JAXRSClient theTests = new JAXRSClient();
-  //   theTests.run(args);
-  // }
-
-  /* Run test */
-
   @BeforeEach
   void logStartTest(TestInfo testInfo) {
     TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());

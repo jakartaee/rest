@@ -677,14 +677,11 @@ public abstract class JAXRSCommonClient {
    * @param message
    *          a space separated message[i].toString() compilation for
    *          i=<0,message.length)
-   * @ 
-   *           when conditionTrue is not met with message provided
    */
-  //public static void //
-  //    assertTrue(boolean condition, Object... message)   {
-  //  if (!condition)
-  //    fail(message);
-  //}
+  public static void //
+     assertTrue(boolean condition, Object... message)   {
+    assertTrue(condition, objectsToString(message));
+  }
 
   /**
    * Asserts that a condition is false.
@@ -694,13 +691,11 @@ public abstract class JAXRSCommonClient {
    * @param message
    *          a space separated message[i].toString() compilation for
    *          i=<0,message.length)
-   * @ 
-   *           when condition is not false with message provided
    */
-  /*public static void //
+  public static void //
       assertFalse(boolean condition, Object... message)   {
     assertTrue(!condition, message);
-  }*/
+  }
 
   /**
    * Asserts that two objects are equal. When instances of Comparable, such as

@@ -14,12 +14,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.paramconverter;
+package jakarta.ws.rs.tck.ee.rs.ext.paramconverter;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import com.sun.ts.tests.jaxrs.common.provider.StringBean;
+import jakarta.ws.rs.tck.common.provider.StringBean;
 
 import jakarta.ws.rs.ext.ParamConverter;
 import jakarta.ws.rs.ext.ParamConverterProvider;

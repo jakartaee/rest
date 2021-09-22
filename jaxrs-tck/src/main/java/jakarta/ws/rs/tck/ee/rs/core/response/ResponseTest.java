@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.core.response;
+package jakarta.ws.rs.tck.ee.rs.core.response;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-import com.sun.ts.tests.jaxrs.common.provider.StringBean;
-import com.sun.ts.tests.jaxrs.common.provider.StringBeanRuntimeDelegate;
+import jakarta.ws.rs.tck.common.provider.StringBean;
+import jakarta.ws.rs.tck.common.provider.StringBeanRuntimeDelegate;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;

@@ -14,25 +14,43 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.core.application;
+package jakarta.ws.rs.tck.ee.rs.core.application;
 
 import java.io.IOException;
 import java.util.Map;
+import java.io.InputStream;
 
-import com.sun.ts.tests.common.webclient.http.HttpResponse;
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
-import com.sun.ts.tests.jaxrs.common.util.JaxrsUtil;
+import jakarta.ws.rs.tck.common.webclient.http.HttpResponse;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
+import jakarta.ws.rs.tck.common.util.JaxrsUtil;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.Response.Status;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
+@ExtendWith(ArquillianExtension.class)
 public class JAXRSClient extends JAXRSCommonClient {
   public JAXRSClient() {
+    setup();
     setContextRoot("/jaxrs_ee_core_application_web/ApplicationTest");
   }
 
@@ -42,15 +60,29 @@ public class JAXRSClient extends JAXRSCommonClient {
 
   protected int expectedClasses = 1;
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  public static void main(String[] args) {
-    JAXRSClient theTests = new JAXRSClient();
-    theTests.run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
   }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/application/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_application_web.war");
+    archive.addClasses(TSAppConfig.class, ApplicationServlet.class, jakarta.ws.rs.tck.common.util.JaxrsUtil.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
+  }
+
 
   /*
    * @testName: getSingletonsTest
@@ -63,7 +95,7 @@ public class JAXRSClient extends JAXRSCommonClient {
     setProperty(REQUEST, buildRequest(GET, "GetSingletons"));
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
     invoke();
-    assertFault(getReturnedNumber() == expectedSingletons,
+    assertTrue(getReturnedNumber() == expectedSingletons,
         "Application.getSingletons() return incorrect value:",
         getReturnedNumber());
   }
@@ -79,7 +111,7 @@ public class JAXRSClient extends JAXRSCommonClient {
     setProperty(REQUEST, buildRequest(GET, "GetClasses"));
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
     invoke();
-    assertFault(getReturnedNumber() == expectedClasses,
+    assertTrue(getReturnedNumber() == expectedClasses,
         "Application.getClasses() return incorrect value:",
         getReturnedNumber());
   }

@@ -14,14 +14,14 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.containerreader.readerinterceptorcontext;
+package jakarta.ws.rs.tck.ee.rs.ext.interceptor.containerreader.readerinterceptorcontext;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.sun.ts.tests.jaxrs.api.rs.ext.interceptor.reader.readerinterceptorcontext.ExceptionThrowingStringBeanEntityProvider;
-import com.sun.ts.tests.jaxrs.api.rs.ext.interceptor.reader.readerinterceptorcontext.ReaderInterceptorOne;
-import com.sun.ts.tests.jaxrs.api.rs.ext.interceptor.reader.readerinterceptorcontext.ReaderInterceptorTwo;
+import jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.readerinterceptorcontext.ExceptionThrowingStringBeanEntityProvider;
+import jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.readerinterceptorcontext.ReaderInterceptorOne;
+import jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.readerinterceptorcontext.ReaderInterceptorTwo;
 
 import jakarta.ws.rs.core.Application;
 

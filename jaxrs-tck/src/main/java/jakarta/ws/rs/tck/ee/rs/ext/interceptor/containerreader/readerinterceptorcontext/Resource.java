@@ -14,9 +14,9 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.containerreader.readerinterceptorcontext;
+package jakarta.ws.rs.tck.ee.rs.ext.interceptor.containerreader.readerinterceptorcontext;
 
-import com.sun.ts.tests.jaxrs.api.rs.ext.interceptor.reader.readerinterceptorcontext.ExceptionThrowingStringBean;
+import jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.readerinterceptorcontext.ExceptionThrowingStringBean;
 
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;

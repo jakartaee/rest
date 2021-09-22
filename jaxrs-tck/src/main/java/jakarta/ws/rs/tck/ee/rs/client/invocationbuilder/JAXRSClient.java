@@ -14,12 +14,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.client.invocationbuilder;
+package jakarta.ws.rs.tck.ee.rs.client.invocationbuilder;
 
 import java.util.Locale;
+import java.io.InputStream;
+import java.io.IOException;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
-import com.sun.ts.tests.jaxrs.common.client.JdkLoggingFilter;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.client.JdkLoggingFilter;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.client.AsyncInvoker;
 import jakarta.ws.rs.client.Client;
@@ -33,22 +36,58 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
+@ExtendWith(ArquillianExtension.class)
 public class JAXRSClient extends JaxrsCommonClient {
 
   private static final long serialVersionUID = -8097693127928445210L;
 
   public JAXRSClient() {
+    setup();
     setContextRoot("/jaxrs_ee_rs_client_invocationbuilder_web/resource");
   }
 
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
   }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/client/invocationbuilder/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_client_invocationbuilder_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, jakarta.ws.rs.tck.common.util.JaxrsUtil.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
+  }
+
 
   static final String[] METHODS = { "delete", "get", "options" };
 
@@ -102,7 +141,7 @@ public class JAXRSClient extends JaxrsCommonClient {
   public void asyncTest() throws Fault {
     Invocation.Builder builder = createBuilderForMethod("forbid");
     AsyncInvoker async = builder.async();
-    assertFault(async != null, "Builder.async() does not work properly");
+    assertTrue(async != null, "Builder.async() does not work properly");
   }
 
   /*
@@ -278,7 +317,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     map.add("tck-header", "cts-header");
     String response = builder.header("unexpected-header", "unexpected-header")
         .headers(map).buildGet().invoke(String.class);
-    assertFault(!response.contains("unexpected-header"),
+    assertTrue(!response.contains("unexpected-header"),
         "unexpected-header found in the response");
     assertContainsIgnoreCase(response, "tck-header", error, response);
     assertContainsIgnoreCase(response, "cts-header", error, response);
@@ -297,7 +336,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     String response = builder.header("unexpected-header", "unexpected-header")
         .headers((MultivaluedMap<String, Object>) null).buildGet()
         .invoke(String.class);
-    assertFault(!response.contains("unexpected-header"),
+    assertTrue(!response.contains("unexpected-header"),
         "unexpected-header found in the response");
   }
 

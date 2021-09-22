@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.contextresolver;
+package jakarta.ws.rs.tck.ee.rs.ext.contextresolver;
 
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
@@ -23,7 +23,7 @@ import jakarta.ws.rs.ext.Provider;
 
 /**
  * This class is used by
- * com.sun.ts.tests.jaxrs.ee.rs.ext.providers.ProvidersServlet
+ * jakarta.ws.rs.tck.ee.rs.ext.providers.ProvidersServlet
  */
 @Provider
 @Produces(MediaType.TEXT_PLAIN)

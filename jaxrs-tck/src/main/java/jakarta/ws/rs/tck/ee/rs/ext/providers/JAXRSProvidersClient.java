@@ -14,39 +14,85 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.providers;
+package jakarta.ws.rs.tck.ee.rs.ext.providers;
 
-import com.sun.ts.tests.jaxrs.ee.rs.ext.contextresolver.EnumProvider;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntity;
+import jakarta.ws.rs.tck.ee.rs.ext.contextresolver.EnumProvider;
+import jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntity;
+import java.io.InputStream;
+import java.io.IOException;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
+@ExtendWith(ArquillianExtension.class)
 public class JAXRSProvidersClient
-    extends com.sun.ts.tests.jaxrs.ee.rs.core.application.JAXRSClient {
+    extends jakarta.ws.rs.tck.ee.rs.core.application.JAXRSClient {
 
   private static final long serialVersionUID = -935293219512493643L;
 
   public JAXRSProvidersClient() {
+    setup();
     TSAppConfig cfg = new TSAppConfig();
     setContextRoot("/jaxrs_ee_ext_providers_web/ProvidersServlet");
     expectedClasses = cfg.getClasses().size();
     expectedSingletons = cfg.getSingletons().size();
   }
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  public static void main(String[] args) {
-    JAXRSProvidersClient theTests = new JAXRSProvidersClient();
-    theTests.run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSProvidersClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/ext/client/providers/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_ext_providers_web.war");
+    archive.addClasses(TSAppConfig.class, ProvidersServlet.class, 
+      jakarta.ws.rs.tck.common.AbstractMessageBodyRW.class, 
+      jakarta.ws.rs.tck.ee.rs.core.application.ApplicationServlet.class,
+      jakarta.ws.rs.tck.ee.rs.core.application.ApplicationHolderSingleton.class,
+      jakarta.ws.rs.tck.ee.rs.ext.providers.ProvidersServlet.class,
+      jakarta.ws.rs.tck.ee.rs.ext.contextresolver.EnumProvider.class,
+      jakarta.ws.rs.tck.ee.rs.ext.contextresolver.EnumContextResolver.class,
+      jakarta.ws.rs.tck.ee.rs.ext.contextresolver.TextPlainEnumContextResolver.class,
+      jakarta.ws.rs.tck.ee.rs.ext.exceptionmapper.AnyExceptionExceptionMapper.class,
+      jakarta.ws.rs.tck.ee.rs.ext.exceptionmapper.IOExceptionExceptionMapper.class,
+      jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.EntityAnnotation.class,
+      jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.EntityMessageReader.class,
+      jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.EntityMessageWriter.class,
+      jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntity.class
+    );
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
   }
 
   /* Run test */

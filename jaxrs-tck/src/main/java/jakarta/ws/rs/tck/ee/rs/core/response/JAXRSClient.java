@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.core.response;
+package jakarta.ws.rs.tck.ee.rs.core.response;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,8 +31,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
-import com.sun.ts.tests.jaxrs.common.util.JaxrsUtil;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.util.JaxrsUtil;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.ProcessingException;
 import jakarta.ws.rs.client.Client;
@@ -53,28 +54,62 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.Response.StatusType;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /**
  * Some tests are the same as the tests in api.rs.core package except how the
  * Response is created. This is because implementation of inbound and outbound
  * Response differ.
  */
+@ExtendWith(ArquillianExtension.class)
 public class JAXRSClient extends JaxrsCommonClient {
 
   private static final long serialVersionUID = 4182256439207983256L;
 
   public JAXRSClient() {
+    setup();
     setContextRoot("/jaxrs_ee_core_response_web/resource");
     setPrintEntity(true);
   }
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
   }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/response/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_response_web.war");
+    archive.addClasses(TSAppConfig.class, jakarta.ws.rs.tck.common.util.JaxrsUtil.class, ResponseTest.class, CorruptedInputStream.class, jakarta.ws.rs.tck.common.provider.StringBean.class, jakarta.ws.rs.tck.common.provider.StringBeanHeaderDelegate.class, jakarta.ws.rs.tck.common.provider.StringBeanEntityProvider.class, jakarta.ws.rs.tck.common.provider.StringBeanRuntimeDelegate.class, jakarta.ws.rs.tck.common.provider.PrintingErrorHandler.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
+  }
+
 
   /*
    * @class.setup_props: webServerHost; webServerPort; ts_home;
@@ -116,15 +151,15 @@ public class JAXRSClient extends JaxrsCommonClient {
   public void bufferEntityBuffersDataTest() throws Fault {
     Response response = invokeGet("entity");
     boolean buffer = response.bufferEntity();
-    assertFault(buffer, "#bufferEntity() did not buffer opened stream");
+    assertTrue(buffer, "#bufferEntity() did not buffer opened stream");
     buffer = response.bufferEntity();
-    assertFault(buffer, "#bufferEntity() is not idempotent");
+    assertTrue(buffer, "#bufferEntity() is not idempotent");
 
     String read = response.readEntity(String.class);
-    assertFault(read.equals(ResponseTest.ENTITY), "Read entity", read,
+    assertTrue(read.equals(ResponseTest.ENTITY), "Read entity", read,
         "instead of", ResponseTest.ENTITY);
     read = response.readEntity(String.class);
-    assertFault(read.equals(ResponseTest.ENTITY), "Read entity", read,
+    assertTrue(read.equals(ResponseTest.ENTITY), "Read entity", read,
         "instead of", ResponseTest.ENTITY);
     logMsg("#bufferEntity did buffer opened stream as expected");
   }
@@ -188,7 +223,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     // closed response will result in an IllegalStateException being thrown
     try {
       String entity = response.readEntity(String.class);
-      assertFault(false, "IllegalStateException has not been", "thrown when",
+      assertTrue(false, "IllegalStateException has not been", "thrown when",
           "#close() and #readEntity() but entity", entity, "has been read");
     } catch (IllegalStateException e) {
       logMsg(
@@ -209,7 +244,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     Response response = invokeGet("corrupted");
     try {
       response.close(); // response.close should call stream.close()
-      assertFault(false, "ProcessingException has not been", "thrown when",
+      assertTrue(false, "ProcessingException has not been", "thrown when",
           "CorruptedInputStream#close()");
     } catch (ProcessingException e) {
       // it is corrupted, #close throws IOException
@@ -560,7 +595,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     Response response = invokePost("language",
         Locale.CANADA_FRENCH.getCountry());
     Locale locale = response.getLanguage();
-    assertFault(Locale.CANADA_FRENCH.equals(locale), "Locale",
+    assertTrue(Locale.CANADA_FRENCH.equals(locale), "Locale",
         Locale.CANADA_FRENCH, "does NOT match response#getLocale()", locale);
     logMsg("#getLocale matches the Content-Language HTTP header");
   }
@@ -635,7 +670,7 @@ public class JAXRSClient extends JaxrsCommonClient {
   public void getLengthTest() throws Fault {
     Response response = invokePost("length", "1234567890");
     int len = response.getLength();
-    assertFault(len > 9, "Expected Content-Length > 9",
+    assertTrue(len > 9, "Expected Content-Length > 9",
         "does NOT match response#getLength()", len);
     logMsg("#getLength matches expected Content-Length", len);
   }
@@ -756,8 +791,8 @@ public class JAXRSClient extends JaxrsCommonClient {
   public void getLinksIsNotNullTest() throws Fault {
     Response response = invokeGet("entity");
     Set<Link> responseLinks = response.getLinks();
-    assertFault(responseLinks != null, "#getLinks() returned null!");
-    assertFault(responseLinks.size() == 0,
+    assertTrue(responseLinks != null, "#getLinks() returned null!");
+    assertTrue(responseLinks.size() == 0,
         "#getLinks() returned non-empty map!");
     logMsg("#getLinks contains no links as expected");
   }
@@ -972,13 +1007,13 @@ public class JAXRSClient extends JaxrsCommonClient {
 
     Reader reader = response.readEntity(Reader.class);
     line = readLine(reader);
-    assertFault(ResponseTest.ENTITY.equals(line), "#readEntity(Reader)={", line,
+    assertTrue(ResponseTest.ENTITY.equals(line), "#readEntity(Reader)={", line,
         "} differs from expected", ResponseTest.ENTITY);
 
     byte[] buffer = new byte[0];
     buffer = response.readEntity(buffer.getClass());
     line = new String(buffer);
-    assertFault(ResponseTest.ENTITY.equals(line), "#readEntity(byte[].class)={",
+    assertTrue(ResponseTest.ENTITY.equals(line), "#readEntity(byte[].class)={",
         line, "} differs from expected", ResponseTest.ENTITY);
 
     logMsg("Got expected", line);
@@ -995,7 +1030,7 @@ public class JAXRSClient extends JaxrsCommonClient {
   public void readEntityClassIsNullWhenNoEntityTest() throws Fault {
     Response response = invokeGet("status?status=200");
     String entity = response.readEntity(String.class);
-    assertFault(entity == null || "".equals(entity),
+    assertTrue(entity == null || "".equals(entity),
         "entity is not null or zero length", entity);
     logMsg("Null or zero length entity returned when no entity as expected");
   }
@@ -1041,7 +1076,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     } catch (Exception e) {
       throw new Fault("Close was called", e);
     }
-    assertFault(ai.get() == 0, "Close was called");
+    assertTrue(ai.get() == 0, "Close was called");
   }
 
   /*
@@ -1079,7 +1114,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     Response response = target.request(MediaType.TEXT_PLAIN_TYPE).buildGet()
         .invoke();
     String entity = response.readEntity(String.class);
-    assertFault(ResponseTest.ENTITY.equals(entity),
+    assertTrue(ResponseTest.ENTITY.equals(entity),
         "#readEntity(String.class)={", entity, "} differs from expected",
         ResponseTest.ENTITY);
     try {
@@ -1107,16 +1142,16 @@ public class JAXRSClient extends JaxrsCommonClient {
 
     Reader reader = response.readEntity(generic(Reader.class));
     line = readLine(reader);
-    assertFault(ResponseTest.ENTITY.equals(line),
+    assertTrue(ResponseTest.ENTITY.equals(line),
         "#readEntity(GenericType<Reader>)={", line, "} differs from expected",
         ResponseTest.ENTITY);
 
     byte[] buffer = new byte[0];
     buffer = response.readEntity(generic(buffer.getClass()));
-    assertFault(buffer != null,
+    assertTrue(buffer != null,
         "response.readEntity(GenericType<byte[]>) is null");
     line = new String(buffer);
-    assertFault(ResponseTest.ENTITY.equals(line),
+    assertTrue(ResponseTest.ENTITY.equals(line),
         "#readEntity(GenericType<byte[]>)={", line, "} differs from expected",
         ResponseTest.ENTITY);
 
@@ -1137,7 +1172,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     invoke();
     Response response = getResponse();
     String entity = response.readEntity(generic(String.class));
-    assertFault(entity == null || "".equals(entity),
+    assertTrue(entity == null || "".equals(entity),
         "entity is not null or zero length", entity);
     logMsg("Null or zero length entity returned when no entity as expected");
   }
@@ -1160,7 +1195,7 @@ public class JAXRSClient extends JaxrsCommonClient {
         response.readEntity(generic(String.class));
       }
     });
-    assertFault(ai.get() == CorruptedInputStream.CLOSEVALUE,
+    assertTrue(ai.get() == CorruptedInputStream.CLOSEVALUE,
         "Close has not been called");
     logMsg("Close() has been called on an entity stream as expected");
   }
@@ -1184,7 +1219,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     } catch (Exception e) {
       throw new Fault("Close was called", e);
     }
-    assertFault(ai.get() == 0, "Close was called");
+    assertTrue(ai.get() == 0, "Close was called");
   }
 
   /*
@@ -1224,7 +1259,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     Response response = target.request(MediaType.TEXT_PLAIN_TYPE).buildGet()
         .invoke();
     String entity = response.readEntity(generic(String.class));
-    assertFault(ResponseTest.ENTITY.equals(entity),
+    assertTrue(ResponseTest.ENTITY.equals(entity),
         "#readEntity(GenericType<byte[]>)={", entity, "} differs from expected",
         ResponseTest.ENTITY);
     try {
@@ -1261,18 +1296,18 @@ public class JAXRSClient extends JaxrsCommonClient {
     response.bufferEntity();
 
     Date entity = response.readEntity(Date.class, annotations);
-    assertFault(date.equals(entity), "#readEntity(Date, annotations)={", entity,
+    assertTrue(date.equals(entity), "#readEntity(Date, annotations)={", entity,
         "} differs from expected", date);
 
-    assertFault(ai.get() == expected, ai.get(), "differes from expected",
+    assertTrue(ai.get() == expected, ai.get(), "differes from expected",
         expected, "which suggest a problem with annotation passing");
 
     String responseDate = response.readEntity(String.class, annotations);
-    assertFault(sDate.equals(responseDate),
+    assertTrue(sDate.equals(responseDate),
         "#readEntity(String.class, annotations)={", responseDate,
         "} differs from expected", sDate);
 
-    assertFault(ai.get() == expected, ai.get(), "differes from expected",
+    assertTrue(ai.get() == expected, ai.get(), "differes from expected",
         expected, "which suggest a problem with annotation passing");
 
     logMsg("Got expected date", date);
@@ -1290,7 +1325,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     Annotation[] annotations = AnnotatedClass.class.getAnnotations();
     Response response = invokeGet("status?status=200");
     String entity = response.readEntity(String.class, annotations);
-    assertFault(entity == null || "".equals(entity),
+    assertTrue(entity == null || "".equals(entity),
         "entity is not null or zero length", entity);
     logMsg("Null or zero length entity returned when no entity as expected");
   }
@@ -1339,7 +1374,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     } catch (ProcessingException e) {
       throw new Fault("Close was called", e);
     }
-    assertFault(ai.get() == 0, "Close was called");
+    assertTrue(ai.get() == 0, "Close was called");
   }
 
   /*
@@ -1381,7 +1416,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     Response response = target.request(MediaType.TEXT_PLAIN_TYPE).buildGet()
         .invoke();
     String entity = response.readEntity(String.class, annotations);
-    assertFault(ResponseTest.ENTITY.equals(entity),
+    assertTrue(ResponseTest.ENTITY.equals(entity),
         "#readEntity(String.class, annotations)={", entity,
         "} differs from expected", ResponseTest.ENTITY);
     try {
@@ -1418,19 +1453,19 @@ public class JAXRSClient extends JaxrsCommonClient {
     response.bufferEntity();
 
     Date entity = response.readEntity(generic(Date.class), annotations);
-    assertFault(date.equals(entity), "#readEntity(Date, annotations)={", entity,
+    assertTrue(date.equals(entity), "#readEntity(Date, annotations)={", entity,
         "} differs from expected", date);
 
-    assertFault(ai.get() == expected, ai.get(), "differes from expected",
+    assertTrue(ai.get() == expected, ai.get(), "differes from expected",
         expected, "which suggest a problem with annotation passing");
 
     String responseDate = response.readEntity(generic(String.class),
         annotations);
-    assertFault(sDate.equals(responseDate),
+    assertTrue(sDate.equals(responseDate),
         "#readEntity(String.class, annotations)={", responseDate,
         "} differs from expected", sDate);
 
-    assertFault(ai.get() == expected, ai.get(), "differes from expected",
+    assertTrue(ai.get() == expected, ai.get(), "differes from expected",
         expected, "which suggest a problem with annotation passing");
 
     logMsg("Got expected date", date);
@@ -1449,7 +1484,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     Annotation[] annotations = AnnotatedClass.class.getAnnotations();
     Response response = invokeGet("status?status=200");
     String entity = response.readEntity(generic(String.class), annotations);
-    assertFault(entity == null || "".equals(entity),
+    assertTrue(entity == null || "".equals(entity),
         "entity is not null or zero length", entity);
     logMsg("Null or zero length entity returned when no entity as expected");
   }
@@ -1540,7 +1575,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     Response response = target.request(MediaType.TEXT_PLAIN_TYPE).buildGet()
         .invoke();
     String entity = response.readEntity(generic(String.class), annotations);
-    assertFault(ResponseTest.ENTITY.equals(entity),
+    assertTrue(ResponseTest.ENTITY.equals(entity),
         "#readEntity(GenericType<String>, annotations)={", entity,
         "} differs from expected", ResponseTest.ENTITY);
     try {
@@ -1567,7 +1602,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     String expected = resourceUrl.substring(0, resourceUrl.length() - "resource".length()) + "created";
     Response response = invokeGet("created");
     try {
-      assertFault(expected.equals(response.getHeaderString("location")),
+      assertTrue(expected.equals(response.getHeaderString("location")),
         "#response.getHeaderString(\"location\") [" +
         response.getHeaderString("location") + "] differs from ", expected);
     } finally {

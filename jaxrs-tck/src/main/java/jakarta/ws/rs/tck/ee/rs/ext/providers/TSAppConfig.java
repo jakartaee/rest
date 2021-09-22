@@ -14,21 +14,21 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.providers;
+package jakarta.ws.rs.tck.ee.rs.ext.providers;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.sun.ts.tests.jaxrs.ee.rs.core.application.ApplicationHolderSingleton;
-import com.sun.ts.tests.jaxrs.ee.rs.core.application.ApplicationServlet;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.contextresolver.EnumContextResolver;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.contextresolver.EnumProvider;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.contextresolver.TextPlainEnumContextResolver;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.exceptionmapper.AnyExceptionExceptionMapper;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.exceptionmapper.IOExceptionExceptionMapper;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.messagebodyreaderwriter.EntityMessageReader;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.messagebodyreaderwriter.EntityMessageWriter;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntity;
+import jakarta.ws.rs.tck.ee.rs.core.application.ApplicationHolderSingleton;
+import jakarta.ws.rs.tck.ee.rs.core.application.ApplicationServlet;
+import jakarta.ws.rs.tck.ee.rs.ext.contextresolver.EnumContextResolver;
+import jakarta.ws.rs.tck.ee.rs.ext.contextresolver.EnumProvider;
+import jakarta.ws.rs.tck.ee.rs.ext.contextresolver.TextPlainEnumContextResolver;
+import jakarta.ws.rs.tck.ee.rs.ext.exceptionmapper.AnyExceptionExceptionMapper;
+import jakarta.ws.rs.tck.ee.rs.ext.exceptionmapper.IOExceptionExceptionMapper;
+import jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.EntityMessageReader;
+import jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.EntityMessageWriter;
+import jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntity;
 
 import jakarta.ws.rs.core.Application;
 

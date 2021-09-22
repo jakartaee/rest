@@ -14,12 +14,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.containerreader.interceptorcontext;
+package jakarta.ws.rs.tck.ee.rs.ext.interceptor.containerreader.interceptorcontext;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.sun.ts.tests.jaxrs.common.util.JaxrsUtil;
+import jakarta.ws.rs.tck.common.util.JaxrsUtil;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

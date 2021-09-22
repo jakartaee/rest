@@ -14,14 +14,14 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.messagebodyreaderwriter;
+package jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
  * This class is used by
- * com.sun.ts.tests.jaxrs.ee.rs.ext.providers.ProvidersServlet
+ * jakarta.ws.rs.tck.ee.rs.ext.providers.ProvidersServlet
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EntityAnnotation {

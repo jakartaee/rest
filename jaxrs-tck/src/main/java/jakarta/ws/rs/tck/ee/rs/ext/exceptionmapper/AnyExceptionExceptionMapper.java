@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.exceptionmapper;
+package jakarta.ws.rs.tck.ee.rs.ext.exceptionmapper;
 
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ import jakarta.ws.rs.ext.Provider;
 
 /**
  * This class is used by
- * com.sun.ts.tests.jaxrs.ee.rs.ext.providers.ProvidersServlet
+ * jakarta.ws.rs.tck.ee.rs.ext.providers.ProvidersServlet
  */
 @Provider
 public class AnyExceptionExceptionMapper implements ExceptionMapper<Exception> {

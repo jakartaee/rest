@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.core.responsebuilder;
+package jakarta.ws.rs.tck.ee.rs.core.responsebuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,33 +22,67 @@ import java.io.Reader;
 import java.lang.annotation.Annotation;
 import java.util.Calendar;
 import java.util.Date;
+import java.io.InputStream;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
+@ExtendWith(ArquillianExtension.class)
 public class JAXRSClient extends JaxrsCommonClient {
 
   private static final long serialVersionUID = 1L;
 
   public JAXRSClient() {
+    setup();
     setContextRoot("/jaxrs_ee_core_responsebuilder_web/resource");
   }
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
   }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/responsebuilder/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_responsebuilder_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, AnnotatedClass.class, DateContainerReaderWriter.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
+  }
+
 
   /* Run test */
 
@@ -72,13 +106,13 @@ public class JAXRSClient extends JaxrsCommonClient {
 
     Response response = getResponse();
     Date responseDate = response.readEntity(Date.class);
-    assertFault(date.equals(responseDate), "entity date", date,
+    assertTrue(date.equals(responseDate), "entity date", date,
         "differs from acquired", responseDate);
 
     Annotation[] annotations = AnnotatedClass.class.getAnnotations();
     for (Annotation annotation : annotations) {
       String name = annotation.annotationType().getName();
-      assertFault(sb.toString().contains(name), sb, "does not contain", name,
+      assertTrue(sb.toString().contains(name), sb, "does not contain", name,
           ", annotations not passed to MessageBodyWriter?");
     }
   }

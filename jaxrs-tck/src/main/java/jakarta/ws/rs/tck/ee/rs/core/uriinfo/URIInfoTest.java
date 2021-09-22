@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.core.uriinfo;
+package jakarta.ws.rs.tck.ee.rs.core.uriinfo;
 
 import java.net.URI;
 

@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.core.responsebuilder;
+package jakarta.ws.rs.tck.ee.rs.core.responsebuilder;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -14,15 +14,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.writer;
+package jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 
-import com.sun.ts.tests.jaxrs.api.rs.ext.interceptor.InterceptorCallbackMethods;
-import com.sun.ts.tests.jaxrs.api.rs.ext.interceptor.TemplateInterceptorBody;
+import jakarta.ws.rs.tck.api.rs.ext.interceptor.InterceptorCallbackMethods;
+import jakarta.ws.rs.tck.api.rs.ext.interceptor.TemplateInterceptorBody;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.ext.WriterInterceptor;

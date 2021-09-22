@@ -14,9 +14,9 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.paramconverter;
+package jakarta.ws.rs.tck.ee.rs.ext.paramconverter;
 
-import com.sun.ts.tests.jaxrs.common.impl.StringDataSource;
+import jakarta.ws.rs.tck.common.impl.StringDataSource;
 
 import jakarta.activation.DataSource;
 import jakarta.ws.rs.core.MediaType;

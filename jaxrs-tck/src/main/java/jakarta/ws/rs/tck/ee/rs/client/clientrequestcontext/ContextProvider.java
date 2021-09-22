@@ -14,11 +14,11 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.client.clientrequestcontext;
+package jakarta.ws.rs.tck.ee.rs.client.clientrequestcontext;
 
 import java.io.IOException;
 
-import com.sun.ts.lib.harness.EETest.Fault;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient.Fault;
 
 import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.client.ClientRequestFilter;

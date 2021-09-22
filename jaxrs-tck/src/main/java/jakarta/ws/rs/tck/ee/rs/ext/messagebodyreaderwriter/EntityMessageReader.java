@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.messagebodyreaderwriter;
+package jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import com.sun.ts.tests.jaxrs.common.AbstractMessageBodyRW;
+import jakarta.ws.rs.tck.common.AbstractMessageBodyRW;
 
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
@@ -34,7 +34,7 @@ import jakarta.ws.rs.ext.Provider;
 
 /**
  * This class is used by
- * com.sun.ts.tests.jaxrs.ee.rs.ext.providers.ProvidersServlet
+ * jakarta.ws.rs.tck.ee.rs.ext.providers.ProvidersServlet
  */
 @Provider
 public class EntityMessageReader extends AbstractMessageBodyRW

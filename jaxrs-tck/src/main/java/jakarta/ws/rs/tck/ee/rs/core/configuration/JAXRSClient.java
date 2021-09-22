@@ -14,14 +14,17 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.core.configuration;
+package jakarta.ws.rs.tck.ee.rs.core.configuration;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.io.InputStream;
+import java.io.IOException;
 
-import com.sun.ts.tests.jaxrs.api.rs.core.configurable.Assertable;
-import com.sun.ts.tests.jaxrs.api.rs.core.configurable.Registrar;
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.api.rs.core.configurable.Assertable;
+import jakarta.ws.rs.tck.api.rs.core.configurable.Registrar;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -34,10 +37,24 @@ import jakarta.ws.rs.core.Feature;
 import jakarta.ws.rs.core.FeatureContext;
 import jakarta.ws.rs.core.MediaType;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
 
 /**
@@ -52,22 +69,44 @@ import jakarta.ws.rs.core.MediaType;
  * configuration, i.e. it does not work on Configurable.getConfiguration()
  * </p>
  */
+@ExtendWith(ArquillianExtension.class)
 public class JAXRSClient extends JaxrsCommonClient {
 
   private static final long serialVersionUID = 7215781408688132392L;
 
   public JAXRSClient() {
+    setup();
     setContextRoot("/jaxrs_ee_core_configuration_web/resource/echo");
   }
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
   }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/configuration/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_configuration_web.war");
+    archive.addClasses(jakarta.ws.rs.tck.api.rs.core.configurable.Assertable.class, 
+      jakarta.ws.rs.tck.api.rs.core.configurable.Registrar.class, 
+      jakarta.ws.rs.tck.api.rs.core.configurable.CallableProvider.class, 
+      jakarta.ws.rs.tck.api.rs.core.configurable.SingleCheckAssertable.class, 
+      jakarta.ws.rs.tck.api.rs.core.configurable.ConfigurableObject.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
+  }
+
 
   /* Run test */
 

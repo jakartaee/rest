@@ -14,17 +14,17 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.providers;
+package jakarta.ws.rs.tck.ee.rs.ext.providers;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import com.sun.ts.tests.jaxrs.ee.rs.core.application.ApplicationServlet;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.contextresolver.EnumProvider;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.exceptionmapper.AnyExceptionExceptionMapper;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.messagebodyreaderwriter.EntityAnnotation;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntity;
+import jakarta.ws.rs.tck.ee.rs.core.application.ApplicationServlet;
+import jakarta.ws.rs.tck.ee.rs.ext.contextresolver.EnumProvider;
+import jakarta.ws.rs.tck.ee.rs.ext.exceptionmapper.AnyExceptionExceptionMapper;
+import jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.EntityAnnotation;
+import jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntity;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;

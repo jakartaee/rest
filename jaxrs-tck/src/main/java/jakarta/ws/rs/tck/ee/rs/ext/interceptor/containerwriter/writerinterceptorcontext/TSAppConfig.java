@@ -14,16 +14,16 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.containerwriter.writerinterceptorcontext;
+package jakarta.ws.rs.tck.ee.rs.ext.interceptor.containerwriter.writerinterceptorcontext;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.sun.ts.tests.jaxrs.api.rs.ext.interceptor.InputStreamReaderProvider;
-import com.sun.ts.tests.jaxrs.common.provider.StringBeanEntityProvider;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.writer.writerinterceptorcontext.ProceedExceptionMapper;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.writer.writerinterceptorcontext.WriterInterceptorOne;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.writer.writerinterceptorcontext.WriterInterceptorTwo;
+import jakarta.ws.rs.tck.api.rs.ext.interceptor.InputStreamReaderProvider;
+import jakarta.ws.rs.tck.common.provider.StringBeanEntityProvider;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.writerinterceptorcontext.ProceedExceptionMapper;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.writerinterceptorcontext.WriterInterceptorOne;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.writerinterceptorcontext.WriterInterceptorTwo;
 
 import jakarta.ws.rs.core.Application;
 

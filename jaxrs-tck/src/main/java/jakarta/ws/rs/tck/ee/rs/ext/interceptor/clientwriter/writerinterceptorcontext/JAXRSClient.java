@@ -14,42 +14,76 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.clientwriter.writerinterceptorcontext;
+package jakarta.ws.rs.tck.ee.rs.ext.interceptor.clientwriter.writerinterceptorcontext;
 
-import com.sun.ts.tests.jaxrs.api.rs.ext.interceptor.TemplateInterceptorBody;
-import com.sun.ts.tests.jaxrs.common.client.TextCaser;
-import com.sun.ts.tests.jaxrs.common.provider.StringBeanEntityProvider;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.clientwriter.WriterClient;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.writer.writerinterceptorcontext.ContextOperation;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.writer.writerinterceptorcontext.OnWriteExceptionThrowingStringBean;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.writer.writerinterceptorcontext.ProceedException;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.writer.writerinterceptorcontext.WriterInterceptorOne;
-import com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.writer.writerinterceptorcontext.WriterInterceptorTwo;
+import java.io.IOException;
+import java.io.InputStream;
+
+import jakarta.ws.rs.tck.api.rs.ext.interceptor.TemplateInterceptorBody;
+import jakarta.ws.rs.tck.common.client.TextCaser;
+import jakarta.ws.rs.tck.common.provider.StringBeanEntityProvider;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.clientwriter.WriterClient;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.writerinterceptorcontext.ContextOperation;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.writerinterceptorcontext.OnWriteExceptionThrowingStringBean;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.writerinterceptorcontext.ProceedException;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.writerinterceptorcontext.WriterInterceptorOne;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.writerinterceptorcontext.WriterInterceptorTwo;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
+@ExtendWith(ArquillianExtension.class)
 public class JAXRSClient extends WriterClient<ContextOperation> {
 
   private static final long serialVersionUID = 2500912584762173255L;
 
   public JAXRSClient() {
+    setup();
     setContextRoot(
         "/jaxrs_ee_rs_ext_interceptor_clientwriter_writerinterceptorcontext_web/resource");
     addProviders();
   }
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  public static void main(String[] args) {
-    JAXRSClient theTests = new JAXRSClient();
-    theTests.run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
   }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/ext/interceptor/clientwriter/writerinterceptorcontext/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_ext_interceptor_clientwriter_writerinterceptorcontext_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
+  }
+
 
   /* Run test */
   /*

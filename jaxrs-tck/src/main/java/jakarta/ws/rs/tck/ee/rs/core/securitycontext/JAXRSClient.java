@@ -14,21 +14,20 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.core.securitycontext;
+package jakarta.ws.rs.tck.ee.rs.core.securitycontext;
 
 import java.util.Properties;
 
 import org.apache.commons.httpclient.Header;
 
-import com.sun.ts.tests.common.webclient.http.HttpResponse;
-import com.sun.ts.tests.jaxrs.common.JAXRSCommonClient;
+import jakarta.ws.rs.tck.common.webclient.http.HttpResponse;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
 import jakarta.ws.rs.core.Response;
 
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
 public abstract class JAXRSClient extends JAXRSCommonClient {
   private static final long serialVersionUID = 1L;
@@ -52,20 +51,20 @@ public abstract class JAXRSClient extends JAXRSCommonClient {
     password = p.getProperty("password");
     authuser = p.getProperty("authuser");
     authpassword = p.getProperty("authpassword");
-    assertFault(!isNullOrEmpty(user), "user was not in build.proerties");
-    assertFault(!isNullOrEmpty(password),
+    assertTrue(!isNullOrEmpty(user), "user was not in build.proerties");
+    assertTrue(!isNullOrEmpty(password),
         "password was not in build.proerties");
-    assertFault(!isNullOrEmpty(authuser),
+    assertTrue(!isNullOrEmpty(authuser),
         "authuser was not in build.proerties");
-    assertFault(!isNullOrEmpty(authpassword),
+    assertTrue(!isNullOrEmpty(authpassword),
         "authpassword was not in build.proerties");
-    super.setup(args, p);
+    super.setup();
   }
 
   public void noAuthorizationTest() throws Fault {
     setProperty(STATUS_CODE, getStatusCode(Response.Status.UNAUTHORIZED));
     invokeRequest();
-    assertFault(wwwAuthenticate != null,
+    assertTrue(wwwAuthenticate != null,
         "Expected authentication request missing!");
   }
 

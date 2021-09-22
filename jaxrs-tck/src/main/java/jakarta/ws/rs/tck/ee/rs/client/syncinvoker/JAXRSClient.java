@@ -14,11 +14,13 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.client.syncinvoker;
+package jakarta.ws.rs.tck.ee.rs.client.syncinvoker;
 
-import com.sun.ts.lib.util.TestUtil;
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
-import com.sun.ts.tests.jaxrs.common.client.JdkLoggingFilter;
+import java.io.InputStream;
+import java.io.IOException;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.client.JdkLoggingFilter;
 
 import jakarta.ws.rs.ProcessingException;
 import jakarta.ws.rs.WebApplicationException;
@@ -32,11 +34,26 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
+@ExtendWith(ArquillianExtension.class)
 public class JAXRSClient extends JaxrsCommonClient {
 
   private static final long serialVersionUID = 4942772066511819511L;
@@ -44,12 +61,33 @@ public class JAXRSClient extends JaxrsCommonClient {
   protected long millis;
 
   public JAXRSClient() {
+    setup();
     setContextRoot("/jaxrs_ee_rs_client_syncinvoker_web/resource");
   }
 
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
   }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/client/syncinvoker/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_client_syncinvoker_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, jakarta.ws.rs.tck.common.impl.TRACE.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
+  }
+
 
   static final String[] METHODS = { "DELETE", "GET", "OPTIONS" };
 
@@ -511,7 +549,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     SyncInvoker sync = createSyncInvokerForMethod("head");
     Response response = sync.head();
     Status status = Status.fromStatusCode(response.getStatus());
-    assertFault(status == Status.OK || status == Status.NO_CONTENT,
+    assertTrue(status == Status.OK || status == Status.NO_CONTENT,
         "Incorrect status for head received");
     return response;
   }
@@ -1983,7 +2021,7 @@ public class JAXRSClient extends JaxrsCommonClient {
 
   protected static void assertStatusAndLog(Response response, Status status)
       throws Fault {
-    assertFault(response.getStatus() == status.getStatusCode(),
+    assertTrue(response.getStatus() == status.getStatusCode(),
         "Returned unexpected status", response.getStatus());
     String msg = new StringBuilder().append("Returned status ")
         .append(status.getStatusCode()).append(" (").append(status.name())
@@ -1997,7 +2035,7 @@ public class JAXRSClient extends JaxrsCommonClient {
 
   protected static void assertResponseString(String response,
       String expectedValue) throws Fault {
-    assertFault(expectedValue.equals(response), "expected value", expectedValue,
+    assertTrue(expectedValue.equals(response), "expected value", expectedValue,
         "differes from acquired value", response);
   }
 

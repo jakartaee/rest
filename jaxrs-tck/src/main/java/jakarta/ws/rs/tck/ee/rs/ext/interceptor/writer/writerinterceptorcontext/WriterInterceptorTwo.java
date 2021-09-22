@@ -14,9 +14,9 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.writer.writerinterceptorcontext;
+package jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.writerinterceptorcontext;
 
-import com.sun.ts.tests.jaxrs.ee.rs.ext.interceptor.writer.TemplateWriterInterceptor;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.TemplateWriterInterceptor;
 
 import jakarta.annotation.Priority;
 import jakarta.ws.rs.ext.Provider;

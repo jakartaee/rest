@@ -14,15 +14,17 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.jaxrs.ee.rs.core.headers;
+package jakarta.ws.rs.tck.ee.rs.core.headers;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.TimeZone;
+import java.io.InputStream;
 
-import com.sun.ts.tests.jaxrs.common.client.JaxrsCommonClient;
-import com.sun.ts.tests.jaxrs.common.provider.StringBean;
-import com.sun.ts.tests.jaxrs.common.util.JaxrsUtil;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.common.provider.StringBean;
+import jakarta.ws.rs.tck.common.util.JaxrsUtil;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.client.ClientRequestFilter;
@@ -30,27 +32,59 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Variant;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
- *                     ts_home;
  */
+@ExtendWith(ArquillianExtension.class)
 public class JAXRSClient extends JaxrsCommonClient {
 
   private static final long serialVersionUID = -5727774504018187299L;
 
   public JAXRSClient() {
+    setup();
     setContextRoot("/jaxrs_ee_core_headers_web/HeadersTest");
   }
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
   }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/headers/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_headers_web.war");
+    archive.addClasses(TSAppConfig.class, HttpHeadersTest.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
+  }
+
 
   /* Run test */
   /*
@@ -189,7 +223,7 @@ public class JAXRSClient extends JaxrsCommonClient {
     invoke();
     long responseTime = Long.parseLong(getResponseBody());
     boolean check = Math.abs(currentTime - responseTime) < 1001L;
-    assertFault(check, "HttpHeaders.getDate()=", responseTime,
+    assertTrue(check, "HttpHeaders.getDate()=", responseTime,
         "differs from expected", currentTime, "by more than 1000 ms.");
     logMsg("#getDate() returned expected Date instance");
   }
@@ -250,9 +284,9 @@ public class JAXRSClient extends JaxrsCommonClient {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "length"));
     invoke();
     String body = getResponseBody();
-    assertFault(body != null && body.length() > 0, "Nothing returned");
+    assertTrue(body != null && body.length() > 0, "Nothing returned");
     long length = Long.parseLong(body);
-    assertFault(length != 0, "Nothing returned");
+    assertTrue(length != 0, "Nothing returned");
     logMsg("#getLength() returned expected length", body);
   }
 }

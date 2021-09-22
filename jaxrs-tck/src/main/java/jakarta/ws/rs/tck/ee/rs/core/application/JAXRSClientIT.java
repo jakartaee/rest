@@ -48,8 +48,8 @@ import org.junit.jupiter.api.AfterEach;
  *                     webServerPort;
  */
 @ExtendWith(ArquillianExtension.class)
-public class JAXRSClient extends JAXRSCommonClient {
-  public JAXRSClient() {
+public class JAXRSClientIT extends JAXRSCommonClient {
+  public JAXRSClientIT() {
     setup();
     setContextRoot("/jaxrs_ee_core_application_web/ApplicationTest");
   }
@@ -73,7 +73,7 @@ public class JAXRSClient extends JAXRSCommonClient {
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{
 
-    InputStream inStream = JAXRSClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/application/web.xml.template");
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/application/web.xml.template");
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_application_web.war");

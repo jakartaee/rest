@@ -45,12 +45,12 @@ import org.junit.jupiter.api.AfterEach;
  *                     webServerPort;
  */
 @ExtendWith(ArquillianExtension.class)
-public class JAXRSProvidersClient
-    extends jakarta.ws.rs.tck.ee.rs.core.application.JAXRSClient {
+public class JAXRSProvidersClientIT
+    extends jakarta.ws.rs.tck.ee.rs.core.application.JAXRSClientIT {
 
   private static final long serialVersionUID = -935293219512493643L;
 
-  public JAXRSProvidersClient() {
+  public JAXRSProvidersClientIT() {
     setup();
     TSAppConfig cfg = new TSAppConfig();
     setContextRoot("/jaxrs_ee_ext_providers_web/ProvidersServlet");
@@ -71,7 +71,7 @@ public class JAXRSProvidersClient
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{
 
-    InputStream inStream = JAXRSProvidersClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/ext/client/providers/web.xml.template");
+    InputStream inStream = JAXRSProvidersClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/ext/client/providers/web.xml.template");
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_ext_providers_web.war");

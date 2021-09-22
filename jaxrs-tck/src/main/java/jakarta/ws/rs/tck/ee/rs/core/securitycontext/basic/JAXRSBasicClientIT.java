@@ -48,12 +48,12 @@ import org.junit.jupiter.api.AfterEach;
  *                     authpassword;
  */
 @ExtendWith(ArquillianExtension.class)
-public class JAXRSBasicClient
+public class JAXRSBasicClientIT
     extends jakarta.ws.rs.tck.ee.rs.core.securitycontext.JAXRSClient {
 
   private static final long serialVersionUID = 340277879725875946L;
 
-  public JAXRSBasicClient() {
+  public JAXRSBasicClientIT() {
     //setup();
     setContextRoot("/jaxrs_ee_core_securitycontext_basic_web/Servlet");
   }
@@ -71,7 +71,7 @@ public class JAXRSBasicClient
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{
 
-    InputStream inStream = JAXRSBasicClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/web.xml.template");
+    InputStream inStream = JAXRSBasicClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/web.xml.template");
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_securitycontext_basic_web.war");

@@ -14,10 +14,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package jakarta.ws.rs.tck.ee.rs.ext.interceptor.containerwriter.interceptorcontext;
+package jakarta.ws.rs.tck.ee.rs.ext.interceptor.clientwriter.interceptorcontext;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.annotation.Annotation;
 import java.io.InputStream;
 
@@ -26,8 +28,11 @@ import jakarta.ws.rs.tck.api.rs.ext.interceptor.InputStreamReaderProvider;
 import jakarta.ws.rs.tck.api.rs.ext.interceptor.TemplateInterceptorBody;
 import jakarta.ws.rs.tck.common.util.JaxrsUtil;
 import jakarta.ws.rs.tck.lib.util.TestUtil;
-import jakarta.ws.rs.tck.ee.rs.ext.interceptor.containerwriter.WriterClient;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.clientwriter.WriterClient;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.interceptorcontext.WriterInterceptorOne;
+import jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.interceptorcontext.WriterInterceptorTwo;
 
+import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.MediaType;
 
 import org.jboss.arquillian.junit5.ArquillianExtension;
@@ -50,14 +55,15 @@ import org.junit.jupiter.api.AfterEach;
  *                     webServerPort;
  */
 @ExtendWith(ArquillianExtension.class)
-public class JAXRSClient extends WriterClient<ContextOperation> {
+public class JAXRSClientIT extends WriterClient<ContextOperation> {
 
-  private static final long serialVersionUID = -3980167967224950515L;
+  private static final long serialVersionUID = -5479399808367387477L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
     setup();
     setContextRoot(
-        "/jaxrs_ee_rs_ext_interceptor_containerwriter_interceptorcontext_web/resource");
+        "/jaxrs_ee_rs_ext_interceptor_clientwriter_interceptorcontext_web/resource");
+    addProviders();
   }
 
   @BeforeEach
@@ -73,10 +79,10 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{
 
-    InputStream inStream = JAXRSClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/ext/interceptor/containerwriter/interceptorcontext/web.xml.template");
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/ext/interceptor/clientwriter/interceptorcontext/web.xml.template");
     String webXml = editWebXmlString(inStream);
 
-    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_ext_interceptor_containerwriter_interceptorcontext_web.war");
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_ext_interceptor_clientwriter_interceptorcontext_web.war");
     archive.addClasses(TSAppConfig.class, Resource.class);
     archive.setWebXML(new StringAsset(webXml));
     return archive;
@@ -97,10 +103,14 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    */
   public void getAnnotationsTest() throws Fault {
     Annotation[] annotations = ContextOperation.class.getAnnotations();
+    Entity<String> entity = Entity.entity(TemplateInterceptorBody.ENTITY,
+        MediaType.WILDCARD_TYPE, annotations);
+    setOperationAndEntity(ContextOperation.GETANNOTATIONS);
+    setRequestContentEntity(entity);
     for (Annotation a : annotations)
       setProperty(Property.UNORDERED_SEARCH_STRING,
           a.annotationType().getName());
-    invoke(ContextOperation.GETANNOTATIONS);
+    invoke();
   }
 
   /*
@@ -114,8 +124,9 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void getGenericTypeTest() throws Fault {
+    setOperationAndEntity(ContextOperation.GETGENERICTYPE);
     setProperty(Property.SEARCH_STRING, String.class.getName());
-    invoke(ContextOperation.GETGENERICTYPE);
+    invoke();
   }
 
   /*
@@ -128,8 +139,12 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void getMediaTypeTest() throws Fault {
+    Entity<String> entity = Entity.entity(TemplateInterceptorBody.ENTITY,
+        MediaType.APPLICATION_JSON_TYPE);
+    setOperationAndEntity(ContextOperation.GETMEDIATYPE);
+    setRequestContentEntity(entity);
     setProperty(Property.SEARCH_STRING, MediaType.APPLICATION_JSON);
-    invoke(ContextOperation.GETMEDIATYPE);
+    invoke();
   }
 
   /*
@@ -142,24 +157,9 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void getPropertyIsNullTest() throws Fault {
+    setOperationAndEntity(ContextOperation.GETPROPERTY);
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.NULL);
-    invoke(ContextOperation.GETPROPERTY);
-  }
-
-  /*
-   * @testName: getPropertyNamesIsReadOnlyTest
-   * 
-   * @assertion_ids: JAXRS:JAVADOC:1007; JAXRS:JAVADOC:930;
-   * 
-   * @test_Strategy: Returns immutable java.util.Collection containing the
-   * property names available within the context of the current request/response
-   * exchange context.
-   * 
-   * WriterInterceptor.aroundWriteTo
-   */
-  public void getPropertyNamesIsReadOnlyTest() throws Fault {
-    setProperty(Property.UNORDERED_SEARCH_STRING, TemplateInterceptorBody.NULL);
-    invoke(ContextOperation.GETPROPERTYNAMESISREADONLY);
+    invoke();
   }
 
   /*
@@ -174,10 +174,28 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void getPropertyNamesTest() throws Fault {
+    setOperationAndEntity(ContextOperation.GETPROPERTYNAMES);
     for (int i = 0; i != 5; i++)
       setProperty(Property.UNORDERED_SEARCH_STRING,
           TemplateInterceptorBody.PROPERTY + i);
-    invoke(ContextOperation.GETPROPERTYNAMES);
+    invoke();
+  }
+
+  /*
+   * @testName: getPropertyNamesIsReadOnlyTest
+   * 
+   * @assertion_ids: JAXRS:JAVADOC:1007; JAXRS:JAVADOC:930;
+   * 
+   * @test_Strategy: Returns immutable java.util.Collection containing the
+   * property names available within the context of the current request/response
+   * exchange context.
+   * 
+   * WriterInterceptor.aroundWriteTo
+   */
+  public void getPropertyNamesIsReadOnlyTest() throws Fault {
+    setOperationAndEntity(ContextOperation.GETPROPERTYNAMESISREADONLY);
+    setProperty(Property.UNORDERED_SEARCH_STRING, TemplateInterceptorBody.NULL);
+    invoke();
   }
 
   /*
@@ -191,8 +209,9 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void getTypeTest() throws Fault {
+    setOperationAndEntity(ContextOperation.GETTYPE);
     setProperty(Property.SEARCH_STRING, String.class.getName());
-    invoke(ContextOperation.GETTYPE);
+    invoke();
   }
 
   /*
@@ -208,8 +227,9 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void removePropertyTest() throws Fault {
+    setOperationAndEntity(ContextOperation.REMOVEPROPERTY);
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.NULL);
-    invoke(ContextOperation.REMOVEPROPERTY);
+    invoke();
   }
 
   /*
@@ -223,11 +243,12 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void setAnnotationsTest() throws Fault {
-    Annotation[] annotations = ContextOperation.class.getAnnotations();
+    Annotation[] annotations = WriterInterceptorOne.class.getAnnotations();
+    setOperationAndEntity(ContextOperation.SETANNOTATIONS);
     for (Annotation a : annotations)
       setProperty(Property.UNORDERED_SEARCH_STRING,
           a.annotationType().getName());
-    invoke(ContextOperation.SETANNOTATIONS);
+    invoke();
   }
 
   /*
@@ -241,8 +262,9 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void setAnnotationsNullThrowsNPETest() throws Fault {
+    setOperationAndEntity(ContextOperation.SETANNOTATIONSNULL);
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.NPE);
-    invoke(ContextOperation.SETANNOTATIONSNULL);
+    invoke();
   }
 
   /*
@@ -255,8 +277,9 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void setGenericTypeTest() throws Fault {
+    setOperationAndEntity(ContextOperation.SETGENERICTYPE);
     setProperty(Property.SEARCH_STRING, "[B");
-    invoke(ContextOperation.SETGENERICTYPE);
+    invoke();
   }
 
   /*
@@ -269,8 +292,9 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void setMediaTypeTest() throws Fault {
+    setOperationAndEntity(ContextOperation.SETMEDIATYPE);
     setProperty(Property.SEARCH_STRING, MediaType.APPLICATION_FORM_URLENCODED);
-    invoke(ContextOperation.SETMEDIATYPE);
+    invoke();
   }
 
   /*
@@ -286,8 +310,9 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void setPropertyTest() throws Fault {
+    setOperationAndEntity(ContextOperation.SETPROPERTY);
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.ENTITY2);
-    invoke(ContextOperation.SETPROPERTY);
+    invoke();
   }
 
   /*
@@ -301,8 +326,9 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void setPropertyNullTest() throws Fault {
+    setOperationAndEntity(ContextOperation.SETPROPERTYNULL);
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.NULL);
-    invoke(ContextOperation.SETPROPERTYNULL);
+    invoke();
   }
 
   /*
@@ -315,8 +341,13 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
    * WriterInterceptor.aroundWriteTo
    */
   public void setTypeTest() throws Fault {
+    ByteArrayInputStream bais = new ByteArrayInputStream(
+        TemplateInterceptorBody.ENTITY.getBytes());
+    Reader reader = new InputStreamReader(bais);
+    setOperationAndEntity(ContextOperation.SETTYPE);
+    setRequestContentEntity(reader);
     addProvider(InputStreamReaderProvider.class);
-    invoke(ContextOperation.SETTYPE);
+    invoke();
     InputStreamReader isr = getResponseBody(InputStreamReader.class);
     try {
       String entity = JaxrsUtil.readFromReader(isr);
@@ -326,5 +357,12 @@ public class JAXRSClient extends WriterClient<ContextOperation> {
     } catch (IOException e) {
       throw new Fault(e);
     }
+  }
+
+  // /////////////////////////////////////////////////////////////////////
+  @Override
+  protected void addProviders() {
+    addProvider(WriterInterceptorTwo.class);
+    addProvider(new WriterInterceptorOne());
   }
 }

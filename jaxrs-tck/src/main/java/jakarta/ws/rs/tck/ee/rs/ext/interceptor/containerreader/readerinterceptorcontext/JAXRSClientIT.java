@@ -44,11 +44,11 @@ import org.junit.jupiter.api.AfterEach;
  *                     webServerPort;
  */
 @ExtendWith(ArquillianExtension.class)
-public class JAXRSClient extends ReaderClient<ContextOperation> {
+public class JAXRSClientIT extends ReaderClient<ContextOperation> {
 
   private static final long serialVersionUID = 3006391868445878375L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
     setup();
     setContextRoot(
         "/jaxrs_ee_rs_ext_interceptor_containerreader_readerinterceptorcontext_web/resource");
@@ -67,7 +67,7 @@ public class JAXRSClient extends ReaderClient<ContextOperation> {
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{
 
-    InputStream inStream = JAXRSClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/ext/interceptor/containerreader/readerinterceptorcontext/web.xml.template");
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/ext/interceptor/containerreader/readerinterceptorcontext/web.xml.template");
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_ext_interceptor_containerreader_readerinterceptorcontext_web.war");

@@ -41,7 +41,7 @@ import org.junit.jupiter.api.AfterEach;
  *                     webServerPort;
  */
 @ExtendWith(ArquillianExtension.class)
-public class JAXRSClient extends JAXRSCommonClient {
+public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = -5479757659703717839L;
 
@@ -49,7 +49,7 @@ public class JAXRSClient extends JAXRSCommonClient {
 
   protected static final String RESOURCE = "resource";
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
     setup();
     setContextRoot("/" + ROOT + "/" + RESOURCE);
   }
@@ -68,7 +68,7 @@ public class JAXRSClient extends JAXRSCommonClient {
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{
 
-    InputStream inStream = JAXRSClient.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/uriinfo/web.xml.template");
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/uriinfo/web.xml.template");
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_uriinfo_web.war");

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.glassfish.jersey.core</groupId>
@@ -11,16 +12,28 @@
     <description>This test verifies the compliance of Eclipse Jersey with Jakarta REST</description>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <jersey.version>3.0.0</jersey.version>
+        <glassfish.container.version>6.1.0</glassfish.container.version>
+        <jakarta.platform.version>9.1.0</jakarta.platform.version>
+        <junit.jupiter.version>5.7.2</junit.jupiter.version>
+        <jakarta.rest.version>3.0.0</jakarta.rest.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.jupiter.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.glassfish.jersey</groupId>
                 <artifactId>jersey-bom</artifactId>
-                <version>3.0.0</version>
+                <version>${jersey.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -29,6 +42,18 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.glassfish.hk2</groupId>
+            <artifactId>hk2-locator</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-glassfish-managed-6</artifactId>
+            <version>1.0.0.Alpha1</version>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-tck</artifactId>
             <version>3.1-SNAPSHOT</version>
@@ -36,23 +61,37 @@
         </dependency>
 
         <dependency>
-            <groupId>org.glassfish.jersey.inject</groupId>
-            <artifactId>jersey-hk2</artifactId>
-            <scope>test</scope>
+            <groupId>org.glassfish.main.common</groupId>
+            <artifactId>simple-glassfish-api</artifactId>
+            <version>${glassfish.container.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-server</artifactId>
-            <scope>test</scope>
+            <groupId>org.jboss.arquillian.junit5</groupId>
+            <artifactId>arquillian-junit5-container</artifactId>
+            <version>1.7.0.Alpha10</version>
         </dependency>
 
         <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-grizzly2-http</artifactId>
-            <scope>test</scope>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>${jakarta.platform.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
         </dependency>
     </dependencies>
+
+
+    <profiles>
+        <profile>
+            <id>arq-glassfish-managed</id>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
@@ -67,6 +106,136 @@
                         </goals>
                         <configuration>
                             <dependenciesToScan>jakarta.ws.rs:jakarta.ws.rs-tck</dependenciesToScan>
+                            <systemPropertyVariables>
+                                <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>
+                                <servlet_adaptor>org.glassfish.jersey.servlet.ServletContainer</servlet_adaptor>
+                                <webServerHost>localhost</webServerHost>
+                                <webServerPort>8080</webServerPort>
+                                <junit.log.traceflag>true</junit.log.traceflag>
+                                <porting.ts.url.class.1>jakarta.ws.rs.tck.lib.implementation.sun.common.SunRIURL</porting.ts.url.class.1>
+                            </systemPropertyVariables>
+                            <environmentVariables>
+                                <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>
+                            </environmentVariables>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.glassfish.main.distributions</groupId>
+                                    <artifactId>glassfish</artifactId>
+                                    <version>${glassfish.container.version}</version>
+                                    <type>zip</type>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.glassfish.jersey.core</groupId>
+                                    <artifactId>jersey-client</artifactId>
+                                    <version>${jersey.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <destFileName>jersey-client.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.glassfish.jersey.core</groupId>
+                                    <artifactId>jersey-server</artifactId>
+                                    <version>${jersey.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <destFileName>jersey-server.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.glassfish.jersey.core</groupId>
+                                    <artifactId>jersey-common</artifactId>
+                                    <version>${jersey.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <destFileName>jersey-common.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.glassfish.jersey.containers</groupId>
+                                    <artifactId>jersey-container-grizzly2-http</artifactId>
+                                    <version>${jersey.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <destFileName>jersey-container-grizzly2-http.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.glassfish.jersey.containers</groupId>
+                                    <artifactId>jersey-container-servlet-core</artifactId>
+                                    <version>${jersey.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <destFileName>jersey-container-servlet-core.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.glassfish.jersey.containers</groupId>
+                                    <artifactId>jersey-container-servlet</artifactId>
+                                    <version>${jersey.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <destFileName>jersey-container-servlet.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.glassfish.jersey.media</groupId>
+                                    <artifactId>jersey-media-sse</artifactId>
+                                    <version>${jersey.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <destFileName>jersey-media-sse.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.glassfish.jersey.media</groupId>
+                                    <artifactId>jersey-media-json-binding</artifactId>
+                                    <version>${jersey.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <destFileName>jersey-media-json-binding.jar</destFileName>
+                                </artifactItem>
+                                 <artifactItem>
+                                    <groupId>jakarta.ws.rs</groupId>
+                                    <artifactId>jakarta.ws.rs-api</artifactId>
+                                    <version>${jakarta.rest.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <destFileName>jakarta.ws.rs-api.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
                         </configuration>
                     </execution>
                 </executions>

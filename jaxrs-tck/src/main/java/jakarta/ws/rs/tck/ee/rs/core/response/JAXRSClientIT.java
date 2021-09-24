@@ -125,6 +125,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * status code returned
    *
    */
+  @Test
   public void statusTest() throws Fault {
     for (Response.Status status : Response.Status.values()) {
       if (status == Status.RESET_CONTENT)
@@ -148,6 +149,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * an already buffered (and thus closed) message instance is legal and has no
    * further effect.
    */
+  @Test
   public void bufferEntityBuffersDataTest() throws Fault {
     Response response = invokeGet("entity");
     boolean buffer = response.bufferEntity();
@@ -156,11 +158,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     assertTrue(buffer, "#bufferEntity() is not idempotent");
 
     String read = response.readEntity(String.class);
-    assertTrue(read.equals(ResponseTest.ENTITY), "Read entity", read,
-        "instead of", ResponseTest.ENTITY);
+    assertTrue(read.equals(ResponseTest.ENTITY), "Read entity"+ read+
+        "instead of"+ ResponseTest.ENTITY);
     read = response.readEntity(String.class);
-    assertTrue(read.equals(ResponseTest.ENTITY), "Read entity", read,
-        "instead of", ResponseTest.ENTITY);
+    assertTrue(read.equals(ResponseTest.ENTITY), "Read entity"+ read+
+        "instead of"+ ResponseTest.ENTITY);
     logMsg("#bufferEntity did buffer opened stream as expected");
   }
 
@@ -172,6 +174,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Throws: ProcessingException - if there was an error while
    * buffering the entity input stream.
    */
+  @Test
   public void bufferEntityThrowsExceptionTest() throws Fault {
     setCorruptedStream(); // the error is on buffering, which calls close()
     Response response = invokeGet("corrupted");
@@ -187,6 +190,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: throws IllegalStateException - in case the response has
    * been #close() closed.
    */
+  @Test
   public void bufferEntityThrowsIllegalStateExceptionTest() throws Fault {
     Response response = invokeGet("entity");
     response.close();
@@ -208,6 +212,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * with the same effect which also means that calling the method on an already
    * closed message instance is legal and has no further effect
    */
+  @Test
   public void closeTest() throws Fault {
     // make new Client, the one from super class calls bufferEntity()
     Client client = ClientBuilder.newClient();
@@ -223,8 +228,8 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     // closed response will result in an IllegalStateException being thrown
     try {
       String entity = response.readEntity(String.class);
-      assertTrue(false, "IllegalStateException has not been", "thrown when",
-          "#close() and #readEntity() but entity", entity, "has been read");
+      assertTrue(false, "IllegalStateException has not been thrown when"+
+          "#close() and #readEntity() but entity"+ entity+ "has been read");
     } catch (IllegalStateException e) {
       logMsg(
           "#close() closed the stream, and consecutive reading threw IllegalStateException as expected");
@@ -239,12 +244,13 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: throws ProcessingException - if there is an error closing
    * the response.
    */
+  @Test
   public void closeThrowsExceptionWhenErrorTest() throws Fault {
     setCorruptedStream();
     Response response = invokeGet("corrupted");
     try {
       response.close(); // response.close should call stream.close()
-      assertTrue(false, "ProcessingException has not been", "thrown when",
+      assertTrue(false, "ProcessingException has not been thrown when"+
           "CorruptedInputStream#close()");
     } catch (ProcessingException e) {
       // it is corrupted, #close throws IOException
@@ -262,6 +268,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get the allowed HTTP methods from the Allow HTTP header.
    */
+  @Test
   public void getAllowedMethodsTest() throws Fault {
     String allowed = Request.POST.name() + " " + Request.TRACE.name();
     Response response = invokePost("allowedmethods", allowed);
@@ -274,7 +281,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     assertTrue(
         methods.length() < Request.TRACE.name().length()
             + Request.POST.name().length() + 3,
-        "Request contains some additional methods then expected", methods);
+        "Request contains some additional methods then expected"+ methods);
     logMsg("#getAllowedMethods returned expected methods", methods);
   }
 
@@ -285,6 +292,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get any new cookies set on the response message.
    */
+  @Test
   public void getCookiesTest() throws Fault {
     Response response = invokeGet("cookies");
     // getCookies test
@@ -310,6 +318,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: returns a read-only map of cookie name (String) to Cookie.
    */
+  @Test
   public void getCookiesIsImmutableTest() throws Fault {
     NewCookie cookie3 = new NewCookie("c3", "v3");
     Response response = invokeGet("cookies");
@@ -322,7 +331,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
       // can throw an exception or nothing or return a copy map
     }
     map = response.getCookies();
-    assertFalse(map.containsKey("c3"), "getCookies is not read-only returned",
+    assertFalse(map.containsKey("c3"), "getCookies is not read-only returned"+
         map.get("c3"));
     logMsg("#getCookies is read-only as expected");
   }
@@ -334,6 +343,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get message date.
    */
+  @Test
   public void getDateTest() throws Fault {
     long date = getCurrentTimeMillis();
     Response response = invokePost("date", String.valueOf(date));
@@ -355,6 +365,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: if the entity was previously fully consumed as an
    * InputStream input stream, or if the response has been #close() closed.
    */
+  @Test
   public void getEntityThrowsIllegalStateExceptionTestWhenClosed()
       throws Fault {
     Response response = invokeGet("entity");
@@ -375,6 +386,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: if the entity was previously fully consumed as an
    * InputStream input stream, or if the response has been #close() closed.
    */
+  @Test
   public void getEntityThrowsIllegalStateExceptionWhenConsumedTest()
       throws Fault {
     Response response = invokeGet("entity");
@@ -394,6 +406,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get the entity tag.
    */
+  @Test
   public void getEntityTagTest() throws Fault {
     String tag = "ABCDEF0123456789";
     setProperty(Property.STATUS_CODE, getStatusCode(Status.NOT_MODIFIED));
@@ -411,6 +424,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get null if not present.
    */
+  @Test
   public void getEntityTagNotPresentTest() throws Fault {
     ResponseHeaderValue<EntityTag> value = new ResponseHeaderValue<>();
     addProvider(new HeaderNotPresent<EntityTag>(value) {
@@ -433,6 +447,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get view of the response headers and their object values.
    */
+  @Test
   public void getHeadersTest() throws Fault {
     Response response = invokePost("headers", "notnull");
     logMsg("Found following objects:");
@@ -472,6 +487,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get view of the response headers and their object values.
    */
+  @Test
   public void getHeadersUsingHeaderDelegateTest() throws Fault {
     invokeGet("setstringbeanruntime");
 
@@ -498,6 +514,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Get view of the response headers and their object values.
    * Changes in the underlying header data are reflected in this view.
    */
+  @Test
   public void getHeadersIsMutableTest() throws Fault {
     String header = "header";
     Response response = invokePost("headers", null);
@@ -519,6 +536,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get a message header as a single string value.
    */
+  @Test
   public void getHeaderStringTest() throws Fault {
     Response response = invokePost("headers", "headerstring");
     logMsg("Found following objects:");
@@ -550,6 +568,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * header value is converted to String using a RuntimeDelegate.HeaderDelegate
    * or using its toString
    */
+  @Test
   public void getHeaderStringUsingHeaderDelegateTest() throws Fault {
     invokeGet("setstringbeanruntime");
 
@@ -571,6 +590,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * header value is converted to String using a RuntimeDelegate.HeaderDelegate
    * or using its toString
    */
+  @Test
   public void getHeaderStringUsingToStringTest() throws Fault {
     Response response = invokePost("headerstring", "toString");
     String header = response.getHeaderString("s1");
@@ -591,12 +611,13 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get the language of the message entity.
    */
+  @Test
   public void getLanguageTest() throws Fault {
     Response response = invokePost("language",
         Locale.CANADA_FRENCH.getCountry());
     Locale locale = response.getLanguage();
-    assertTrue(Locale.CANADA_FRENCH.equals(locale), "Locale",
-        Locale.CANADA_FRENCH, "does NOT match response#getLocale()", locale);
+    assertTrue(Locale.CANADA_FRENCH.equals(locale), "Locale"+
+        Locale.CANADA_FRENCH+ "does NOT match response#getLocale()"+ locale);
     logMsg("#getLocale matches the Content-Language HTTP header");
   }
 
@@ -607,6 +628,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get null if not present.
    */
+  @Test
   public void getLanguageNotPresentTest() throws Fault {
     ResponseHeaderValue<Locale> value = new ResponseHeaderValue<>();
     addProvider(new HeaderNotPresent<Locale>(value) {
@@ -629,6 +651,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get the last modified date.
    */
+  @Test
   public void getLastModifiedTest() throws Fault {
     long time = getCurrentTimeMillis();
     Response response = invokePost("lastmodified", String.valueOf(time));
@@ -645,6 +668,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get null if not present.
    */
+  @Test
   public void getLastModifiedNotPresentTest() throws Fault {
     ResponseHeaderValue<Date> containerValue = new ResponseHeaderValue<>();
     addProvider(new HeaderNotPresent<Date>(containerValue) {
@@ -667,11 +691,12 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get Content-Length value.
    */
+  @Test
   public void getLengthTest() throws Fault {
     Response response = invokePost("length", "1234567890");
     int len = response.getLength();
-    assertTrue(len > 9, "Expected Content-Length > 9",
-        "does NOT match response#getLength()", len);
+    assertTrue(len > 9, "Expected Content-Length > 9"+
+        "does NOT match response#getLength()"+ len);
     logMsg("#getLength matches expected Content-Length", len);
   }
 
@@ -682,6 +707,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: In other cases returns -1.
    */
+  @Test
   public void getLengthNotPresentTest() throws Fault {
     Response response = invokePost("length", null);
     int len = response.getLength();
@@ -703,6 +729,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get the link for the relation.
    */
+  @Test
   public void getLinkTest() throws Fault {
     String rel = "getLinkTest";
     Response response = invokePost("link", rel);
@@ -720,6 +747,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: returns null if not present.
    */
+  @Test
   public void getLinkNotPresentTest() throws Fault {
     ResponseHeaderValue<Link> containerValue = new ResponseHeaderValue<>();
     addProvider(new HeaderNotPresent<Link>(containerValue) {
@@ -743,6 +771,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Convenience method that returns a Link.Builder for the
    * relation.
    */
+  @Test
   public void getLinkBuilderForTheRelationTest() throws Fault {
     String rel = "anyrelation";
     Response response = invokePost("linkbuilder", rel);
@@ -758,6 +787,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: returns null if not present.
    */
+  @Test
   public void getLinkBuilderForTheNotPresentRelationTest() throws Fault {
     Response response = invokeGet("entity");
     Builder builder = response.getLinkBuilder("anyrelation");
@@ -773,6 +803,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get the links attached to the message as header.
    */
+  @Test
   public void getLinksTest() throws Fault {
     Response response = invokeGet("links");
     Set<Link> responseLinks = response.getLinks();
@@ -788,6 +819,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Does not return null.
    */
+  @Test
   public void getLinksIsNotNullTest() throws Fault {
     Response response = invokeGet("entity");
     Set<Link> responseLinks = response.getLinks();
@@ -804,6 +836,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get the location.
    */
+  @Test
   public void getLocationTest() throws Fault {
     String path = "path";
     URI serverUri = ResponseTest.createUri(path);
@@ -821,6 +854,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get null when no present.
    */
+  @Test
   public void getLocationNotPresentTest() throws Fault {
     ResponseHeaderValue<URI> containerValue = new ResponseHeaderValue<>();
     addProvider(new HeaderNotPresent<URI>(containerValue) {
@@ -843,6 +877,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get the media type of the message entity.
    */
+  @Test
   public void getMediaTypeTest() throws Fault {
     MediaType mediaType = MediaType.APPLICATION_ATOM_XML_TYPE;
     Response response = invokePost("mediatype", mediaType.toString());
@@ -860,6 +895,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Get the complete status information associated with the
    * response.
    */
+  @Test
   public void getStatusInfoTest() throws Fault {
     for (Status status : Status.values()) {
       setProperty(Property.STATUS_CODE, getStatusCode(status));
@@ -880,6 +916,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Each single header value is converted to String using a
    * RuntimeDelegate.HeaderDelegate or using its toString
    */
+  @Test
   public void getStringHeadersUsingToStringTest() throws Fault {
     Response response = invokePost("headerstring", "stringheaders");
     MultivaluedMap<String, String> headers = response.getStringHeaders();
@@ -904,6 +941,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Each single header value is converted to String using a
    * RuntimeDelegate.HeaderDelegate or using its toString
    */
+  @Test
   public void getStringHeadersUsingHeaderDelegateTest() throws Fault {
     invokeGet("setstringbeanruntime");
 
@@ -926,6 +964,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Check if there is an entity available in the response.
    */
+  @Test
   public void hasEntityWhenEntityTest() throws Fault {
     Response response = invokeGet("entity");
     assertTrue(response.hasEntity(), "#hasEntity did not found the entity");
@@ -939,6 +978,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Check if there is an entity available in the response.
    */
+  @Test
   public void hasEntityWhenNoEntityTest() throws Fault {
     Response response = invokePost("headerstring", null);
     assertFalse(response.hasEntity(), "#hasEntity did found the entity");
@@ -953,6 +993,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: throws java.lang.IllegalStateException - in case the
    * response has been closed.
    */
+  @Test
   public void hasEntityThrowsIllegalStateExceptionTest() throws Fault {
     Response response = invokeGet("entity");
     response.close();
@@ -972,6 +1013,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Check if link for relation exists.
    */
+  @Test
   public void hasLinkWhenLinkTest() throws Fault {
     Response response = invokePost("link", "path");
     assertTrue(response.hasLink("path"), "#hasLink did not found a Link");
@@ -985,6 +1027,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Check if link for relation exists.
    */
+  @Test
   public void hasLinkWhenNoLinkTest() throws Fault {
     Response response = invokeGet("entity");
     assertFalse(response.hasLink("rel"), "#has Link did found some Link");
@@ -1000,6 +1043,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * specified Java type using a MessageBodyReader that supports mapping the
    * message entity stream onto the requested type
    */
+  @Test
   public void readEntityClassTest() throws Fault {
     Response response = invokeGet("entity");
     response.bufferEntity();
@@ -1007,14 +1051,14 @@ public class JAXRSClientIT extends JaxrsCommonClient {
 
     Reader reader = response.readEntity(Reader.class);
     line = readLine(reader);
-    assertTrue(ResponseTest.ENTITY.equals(line), "#readEntity(Reader)={", line,
-        "} differs from expected", ResponseTest.ENTITY);
+    assertTrue(ResponseTest.ENTITY.equals(line), "#readEntity(Reader)={"+ line+
+        "} differs from expected"+ ResponseTest.ENTITY);
 
     byte[] buffer = new byte[0];
     buffer = response.readEntity(buffer.getClass());
     line = new String(buffer);
-    assertTrue(ResponseTest.ENTITY.equals(line), "#readEntity(byte[].class)={",
-        line, "} differs from expected", ResponseTest.ENTITY);
+    assertTrue(ResponseTest.ENTITY.equals(line), "#readEntity(byte[].class)={"+
+        line+ "} differs from expected"+ ResponseTest.ENTITY);
 
     logMsg("Got expected", line);
   }
@@ -1027,11 +1071,12 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: If the message does not contain an entity body null is
    * returned.
    */
+  @Test
   public void readEntityClassIsNullWhenNoEntityTest() throws Fault {
     Response response = invokeGet("status?status=200");
     String entity = response.readEntity(String.class);
     assertTrue(entity == null || "".equals(entity),
-        "entity is not null or zero length", entity);
+        "entity is not null or zero length"+ entity);
     logMsg("Null or zero length entity returned when no entity as expected");
   }
 
@@ -1044,6 +1089,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * method automatically closes the consumed response entity stream if it is
    * not buffered.
    */
+  @Test
   public void readEntityClassCloseIsCalledTest() throws Fault {
     AtomicInteger ai = setCorruptedStream();
     final Response response = invokeGet("corrupted");
@@ -1067,6 +1113,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * method automatically closes the consumed response entity stream if it is
    * not buffered.
    */
+  @Test
   public void readEntityClassCloseIsNotCalledOnInputStreamTest() throws Fault {
     AtomicInteger ai = setCorruptedStream();
     Response response = invokeGet("corrupted");
@@ -1087,6 +1134,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Method throws an ProcessingException if the content of the
    * message cannot be mapped to an entity of the requested type
    */
+  @Test
   public void readEntityClassThrowsProcessingExceptionTest() throws Fault {
     Response response = invokeGet("entity");
     try {
@@ -1107,6 +1155,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * entity input stream has been fully consumed already and has not been
    * buffered prior consuming.
    */
+  @Test
   public void readEntityClassThrowsIllegalStateExceptionTest() throws Fault {
     Client client = ClientBuilder.newClient(); // create a new client
     WebTarget target = client.target( // with no bufferEntity called
@@ -1115,7 +1164,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
         .invoke();
     String entity = response.readEntity(String.class);
     assertTrue(ResponseTest.ENTITY.equals(entity),
-        "#readEntity(String.class)={", entity, "} differs from expected",
+        "#readEntity(String.class)={"+ entity+ "} differs from expected"+
         ResponseTest.ENTITY);
     try {
       response.readEntity(Reader.class);
@@ -1135,6 +1184,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * specified Java type using a MessageBodyReader that supports mapping the
    * message entity stream onto the requested type
    */
+  @Test
   public void readEntityGenericTypeTest() throws Fault {
     Response response = invokeGet("entity");
     response.bufferEntity();
@@ -1143,7 +1193,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     Reader reader = response.readEntity(generic(Reader.class));
     line = readLine(reader);
     assertTrue(ResponseTest.ENTITY.equals(line),
-        "#readEntity(GenericType<Reader>)={", line, "} differs from expected",
+        "#readEntity(GenericType<Reader>)={"+ line+ "} differs from expected"+
         ResponseTest.ENTITY);
 
     byte[] buffer = new byte[0];
@@ -1152,7 +1202,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
         "response.readEntity(GenericType<byte[]>) is null");
     line = new String(buffer);
     assertTrue(ResponseTest.ENTITY.equals(line),
-        "#readEntity(GenericType<byte[]>)={", line, "} differs from expected",
+        "#readEntity(GenericType<byte[]>)={"+ line+ "} differs from expected"+
         ResponseTest.ENTITY);
 
     logMsg("Got expected", line);
@@ -1166,6 +1216,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: If the message does not contain an entity body null is
    * returned.
    */
+  @Test
   public void readEntityGenericIsNullWhenNoEntityTest() throws Fault {
     String request = buildRequest(Request.GET, "status?status=200");
     setProperty(Property.REQUEST, request);
@@ -1173,7 +1224,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     Response response = getResponse();
     String entity = response.readEntity(generic(String.class));
     assertTrue(entity == null || "".equals(entity),
-        "entity is not null or zero length", entity);
+        "entity is not null or zero length"+ entity);
     logMsg("Null or zero length entity returned when no entity as expected");
   }
 
@@ -1186,6 +1237,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * method automatically closes the consumed response entity stream if it is
    * not buffered.
    */
+  @Test
   public void readEntityGenericCloseIsCalledTest() throws Fault {
     AtomicInteger ai = setCorruptedStream();
     final Response response = invokeGet("corrupted");
@@ -1209,6 +1261,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * method automatically closes the consumed response entity stream if it is
    * not buffered.
    */
+  @Test
   public void readEntityGenericTypeCloseIsNotCalledOnInputStreamTest()
       throws Fault {
     AtomicInteger ai = setCorruptedStream();
@@ -1230,6 +1283,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Method throws an ProcessingException if the content of the
    * message cannot be mapped to an entity of the requested type
    */
+  @Test
   public void readEntityGenericTypeThrowsProcessingExceptionTest()
       throws Fault {
     Response response = invokeGet("entity");
@@ -1251,6 +1305,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * entity input stream has been fully consumed already and has not been
    * buffered prior consuming.
    */
+  @Test
   public void readEntityGenericTypeThrowsIllegalStateExceptionTest()
       throws Fault {
     Client client = ClientBuilder.newClient(); // create a new client
@@ -1260,7 +1315,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
         .invoke();
     String entity = response.readEntity(generic(String.class));
     assertTrue(ResponseTest.ENTITY.equals(entity),
-        "#readEntity(GenericType<byte[]>)={", entity, "} differs from expected",
+        "#readEntity(GenericType<byte[]>)={"+ entity+ "} differs from expected"+
         ResponseTest.ENTITY);
     try {
       response.readEntity(generic(Reader.class));
@@ -1281,6 +1336,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * message entity stream onto the requested type. annotations - annotations
    * that will be passed to the MessageBodyReader.
    */
+  @Test
   public void readEntityClassAnnotationTest() throws Fault {
     Date date = Calendar.getInstance().getTime();
     String sDate = String.valueOf(date.getTime());
@@ -1296,19 +1352,19 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     response.bufferEntity();
 
     Date entity = response.readEntity(Date.class, annotations);
-    assertTrue(date.equals(entity), "#readEntity(Date, annotations)={", entity,
-        "} differs from expected", date);
+    assertTrue(date.equals(entity), "#readEntity(Date, annotations)={"+ entity+
+        "} differs from expected"+ date);
 
-    assertTrue(ai.get() == expected, ai.get(), "differes from expected",
-        expected, "which suggest a problem with annotation passing");
+    assertTrue(ai.get() == expected, ai.get()+ "differes from expected"+
+        expected+ "which suggest a problem with annotation passing");
 
     String responseDate = response.readEntity(String.class, annotations);
     assertTrue(sDate.equals(responseDate),
-        "#readEntity(String.class, annotations)={", responseDate,
-        "} differs from expected", sDate);
+        "#readEntity(String.class, annotations)={"+ responseDate+
+        "} differs from expected"+ sDate);
 
-    assertTrue(ai.get() == expected, ai.get(), "differes from expected",
-        expected, "which suggest a problem with annotation passing");
+    assertTrue(ai.get() == expected, ai.get()+ "differes from expected"+
+        expected+ "which suggest a problem with annotation passing");
 
     logMsg("Got expected date", date);
   }
@@ -1321,12 +1377,13 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: If the message does not contain an entity body null is
    * returned.
    */
+  @Test
   public void readEntityClassAnnotationIsNullWhenNoEntityTest() throws Fault {
     Annotation[] annotations = AnnotatedClass.class.getAnnotations();
     Response response = invokeGet("status?status=200");
     String entity = response.readEntity(String.class, annotations);
     assertTrue(entity == null || "".equals(entity),
-        "entity is not null or zero length", entity);
+        "entity is not null or zero length"+ entity);
     logMsg("Null or zero length entity returned when no entity as expected");
   }
 
@@ -1339,6 +1396,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * method automatically closes the consumed response entity stream if it is
    * not buffered.
    */
+  @Test
   public void readEntityClassAnnotationCloseIsCalledTest() throws Fault {
     final Annotation[] annotations = AnnotatedClass.class.getAnnotations();
     AtomicInteger ai = setCorruptedStream();
@@ -1363,6 +1421,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * method automatically closes the consumed response entity stream if it is
    * not buffered.
    */
+  @Test
   public void readEntityClassAnnotationCloseIsNotCalledOnInputStreamTest()
       throws Fault {
     Annotation[] annotations = AnnotatedClass.class.getAnnotations();
@@ -1385,6 +1444,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Method throws an ProcessingException if the content of the
    * message cannot be mapped to an entity of the requested type
    */
+  @Test
   public void readEntityClassAnnotationThrowsProcessingExceptionTest()
       throws Fault {
     Annotation[] annotations = AnnotatedClass.class.getAnnotations();
@@ -1407,6 +1467,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * entity input stream has been fully consumed already and has not been
    * buffered prior consuming.
    */
+  @Test
   public void readEntityClassAnnotationThrowsIllegalStateExceptionTest()
       throws Fault {
     Annotation[] annotations = AnnotatedClass.class.getAnnotations();
@@ -1417,8 +1478,8 @@ public class JAXRSClientIT extends JaxrsCommonClient {
         .invoke();
     String entity = response.readEntity(String.class, annotations);
     assertTrue(ResponseTest.ENTITY.equals(entity),
-        "#readEntity(String.class, annotations)={", entity,
-        "} differs from expected", ResponseTest.ENTITY);
+        "#readEntity(String.class, annotations)={"+ entity+
+        "} differs from expected"+ ResponseTest.ENTITY);
     try {
       response.readEntity(Reader.class, annotations);
       throw new Fault(
@@ -1438,6 +1499,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * message entity stream onto the requested type. annotations - annotations
    * that will be passed to the MessageBodyReader.
    */
+  @Test
   public void readEntityGenericTypeAnnotationTest() throws Fault {
     Date date = Calendar.getInstance().getTime();
     String sDate = String.valueOf(date.getTime());
@@ -1453,20 +1515,20 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     response.bufferEntity();
 
     Date entity = response.readEntity(generic(Date.class), annotations);
-    assertTrue(date.equals(entity), "#readEntity(Date, annotations)={", entity,
-        "} differs from expected", date);
+    assertTrue(date.equals(entity), "#readEntity(Date, annotations)={"+ entity+
+        "} differs from expected"+ date);
 
-    assertTrue(ai.get() == expected, ai.get(), "differes from expected",
-        expected, "which suggest a problem with annotation passing");
+    assertTrue(ai.get() == expected, ai.get()+ "differes from expected"+
+        expected+ "which suggest a problem with annotation passing");
 
     String responseDate = response.readEntity(generic(String.class),
         annotations);
     assertTrue(sDate.equals(responseDate),
-        "#readEntity(String.class, annotations)={", responseDate,
-        "} differs from expected", sDate);
+        "#readEntity(String.class, annotations)={"+ responseDate+
+        "} differs from expected"+ sDate);
 
-    assertTrue(ai.get() == expected, ai.get(), "differes from expected",
-        expected, "which suggest a problem with annotation passing");
+    assertTrue(ai.get() == expected, ai.get()+ "differes from expected"+
+        expected+ "which suggest a problem with annotation passing");
 
     logMsg("Got expected date", date);
   }
@@ -1479,13 +1541,14 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: If the message does not contain an entity body null is
    * returned.
    */
+  @Test
   public void readEntityGenericTypeAnnotationIsNullWhenNoEntityTest()
       throws Fault {
     Annotation[] annotations = AnnotatedClass.class.getAnnotations();
     Response response = invokeGet("status?status=200");
     String entity = response.readEntity(generic(String.class), annotations);
     assertTrue(entity == null || "".equals(entity),
-        "entity is not null or zero length", entity);
+        "entity is not null or zero length"+ entity);
     logMsg("Null or zero length entity returned when no entity as expected");
   }
 
@@ -1498,6 +1561,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * method automatically closes the consumed response entity stream if it is
    * not buffered.
    */
+  @Test
   public void readEntityGenericTypeAnnotationCloseIsCalledTest() throws Fault {
     final Annotation[] annotations = AnnotatedClass.class.getAnnotations();
     AtomicInteger ai = setCorruptedStream();
@@ -1522,6 +1586,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * method automatically closes the consumed response entity stream if it is
    * not buffered.
    */
+  @Test
   public void readEntityGenericTypeAnnotationCloseIsNotCalledOnInputStreamTest()
       throws Fault {
     Annotation[] annotations = AnnotatedClass.class.getAnnotations();
@@ -1544,6 +1609,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Method throws an ProcessingException if the content of the
    * message cannot be mapped to an entity of the requested type
    */
+  @Test
   public void readEntityGenericTypeAnnotationThrowsProcessingExceptionTest()
       throws Fault {
     Annotation[] annotations = AnnotatedClass.class.getAnnotations();
@@ -1566,6 +1632,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * entity input stream has been fully consumed already and has not been
    * buffered prior consuming.
    */
+  @Test
   public void readEntityGenericTypeAnnotationThrowsIllegalStateExceptionTest()
       throws Fault {
     Annotation[] annotations = AnnotatedClass.class.getAnnotations();
@@ -1576,8 +1643,8 @@ public class JAXRSClientIT extends JaxrsCommonClient {
         .invoke();
     String entity = response.readEntity(generic(String.class), annotations);
     assertTrue(ResponseTest.ENTITY.equals(entity),
-        "#readEntity(GenericType<String>, annotations)={", entity,
-        "} differs from expected", ResponseTest.ENTITY);
+        "#readEntity(GenericType<String>, annotations)={"+ entity+
+        "} differs from expected"+ ResponseTest.ENTITY);
     try {
       response.readEntity(generic(Reader.class), annotations);
       throw new Fault(
@@ -1596,6 +1663,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * relative URI. The relative URI should be converted into an absolute URI by resolving it
    * relative to the base URI.
    */
+  @Test
   public void responseCreatedRelativeURITest()
       throws Fault {
     String resourceUrl = getAbsoluteUrl();
@@ -1604,7 +1672,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     try {
       assertTrue(expected.equals(response.getHeaderString("location")),
         "#response.getHeaderString(\"location\") [" +
-        response.getHeaderString("location") + "] differs from ", expected);
+        response.getHeaderString("location") + "] differs from "+ expected);
     } finally {
       response.close();
     }

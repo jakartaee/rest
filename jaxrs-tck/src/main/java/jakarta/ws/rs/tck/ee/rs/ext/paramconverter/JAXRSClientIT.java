@@ -31,7 +31,6 @@ import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -66,11 +65,16 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{
 
-    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/ext/client/paramconverter/web.xml.template");
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/ext/paramconverter/web.xml.template");
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_ext_paramconverter_web.war");
-    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.addClasses(Resource.class, Locator.class, DataSourceParamConverter.class, DataSourceParamConverterProvider.class,
+      StringBeanParamConverter.class, StringBeanParamConverterProvider.class, AtomicIntegerLazyParamConverter.class, AtomicIntegerLazyParamConverterProvider.class, 
+      jakarta.ws.rs.tck.common.provider.PrintingErrorHandler.class,
+      jakarta.ws.rs.tck.common.provider.StringBean.class, 
+      jakarta.ws.rs.tck.common.impl.StringDataSource.class, 
+      TSAppConfig.class);
     archive.setWebXML(new StringAsset(webXml));
     return archive;
 
@@ -87,6 +91,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Providers implementing ParamConverterProvider contract must
    * be either programmatically registered in a JAX-RS runtime
    */
+  @Test
   public void isParamCoverterInApplicationSingletonsUsedTest() throws Fault {
     String query = "ABCDEFGH";
     setPropertyRequest(Request.GET, "dsquery?param=", query);
@@ -102,6 +107,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Providers implementing ParamConverterProvider contract must
    * be either programmatically registered in a JAX-RS runtime
    */
+  @Test
   public void isParamCoverterInApplicationClassesUsedTest() throws Fault {
     String query = "ABCDEFGH";
     setPropertyRequest(Request.GET, "sbquery?param=", query);
@@ -117,6 +123,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Providers implementing ParamConverterProvider contract must
    * be either programmatically registered in a JAX-RS runtime
    */
+  @Test
   public void atomicIntegerPassesTest() throws Fault {
     String query = "10";
     setPropertyRequest(Request.GET, "aiquery?param=", query);
@@ -132,6 +139,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Providers implementing ParamConverterProvider contract must
    * be either programmatically registered in a JAX-RS runtime
    */
+  @Test
   public void atomicIntegerIsLazyDeployableAndThrowsErrorTest() throws Fault {
     setPropertyRequest(Request.GET, "aiquery");
     setProperty(Property.STATUS_CODE, getStatusCode(Status.NOT_ACCEPTABLE));
@@ -145,6 +153,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Parse the supplied value and create an instance of
    */
+  @Test
   public void pathParamUsesParamConvertorTest() throws Fault {
     String query = "ABCDEFGH";
     setPropertyRequest(Request.GET, "sbpath/", query);
@@ -159,6 +168,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Parse the supplied value and create an instance of
    */
+  @Test
   public void matrixParamUsesParamConvertorTest() throws Fault {
     String query = "ABCDEFGH";
     setPropertyRequest(Request.GET, "sbmatrix;param=", query);
@@ -173,6 +183,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Parse the supplied value and create an instance of
    */
+  @Test
   public void formParamUsesParamConvertorTest() throws Fault {
     String query = "ABCDEFGH";
     setProperty(Property.REQUEST_HEADERS,
@@ -190,6 +201,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Parse the supplied value and create an instance of
    */
+  @Test
   public void cookieParamUsesParamConvertorTest() throws Fault {
     String query = "ABCDEFGH";
     buildCookie(query);
@@ -205,6 +217,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Parse the supplied value and create an instance of
    */
+  @Test
   public void headerParamUsesParamConvertorTest() throws Fault {
     String query = "ABCDEFGH";
     setProperty(Property.REQUEST_HEADERS, "param:" + query);
@@ -223,6 +236,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * model, that is during the application deployment, before any value default
    * or otherwise is actually required
    */
+  @Test
   public void defaultValueInQueryParamTest() throws Fault {
     setPropertyRequest(Request.GET, "sbquery");
     setProperty(Property.SEARCH_STRING, Resource.DEFAULT);
@@ -239,6 +253,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * model, that is during the application deployment, before any value default
    * or otherwise is actually required
    */
+  @Test
   public void defaultValueInMatrixParamTest() throws Fault {
     setPropertyRequest(Request.GET, "sbmatrix;");
     setProperty(Property.SEARCH_STRING, Resource.DEFAULT);
@@ -255,6 +270,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * model, that is during the application deployment, before any value default
    * or otherwise is actually required
    */
+  @Test
   public void defaultValueInPathParamTest() throws Fault {
     setPropertyRequest(Request.GET, "sbpath/default");
     setProperty(Property.SEARCH_STRING, Resource.DEFAULT);
@@ -271,6 +287,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * model, that is during the application deployment, before any value default
    * or otherwise is actually required
    */
+  @Test
   public void defaultValueInFormParamTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE));
@@ -289,6 +306,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * model, that is during the application deployment, before any value default
    * or otherwise is actually required
    */
+  @Test
   public void defaultValueInCookieParamTest() throws Fault {
     setPropertyRequest(Request.GET, "sbcookie");
     setProperty(Property.SEARCH_STRING, Resource.DEFAULT);
@@ -305,6 +323,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * model, that is during the application deployment, before any value default
    * or otherwise is actually required
    */
+  @Test
   public void defaultValueInHeaderParamTest() throws Fault {
     setPropertyRequest(Request.GET, "sbheader");
     setProperty(Property.SEARCH_STRING, Resource.DEFAULT);
@@ -318,6 +337,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Parse the supplied value and create an instance of
    */
+  @Test
   public void queryParamInLocatorTest() throws Fault {
     String query = "ABCDEFGH";
     setPropertyRequestInLocator(Request.GET, "sbquery/sbquery?param=", query);
@@ -333,6 +353,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: selected ParamConverter instance MUST be used eagerly by a
    * JAX-RS runtime to convert any default value
    */
+  @Test
   public void defaultValueQueryParamInLocatorTest() throws Fault {
     String query = "ABCDEFGH";
     setPropertyRequestInLocator(Request.GET, "sbquery/sbquery?", query);
@@ -347,6 +368,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Parse the supplied value and create an instance of
    */
+  @Test
   public void pathParamInLocatorTest() throws Fault {
     String query = "ABCDEFGH";
     setPropertyRequestInLocator(Request.GET, "sbpath/sbpath/", query);
@@ -362,6 +384,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: selected ParamConverter instance MUST be used eagerly by a
    * JAX-RS runtime to convert any default value
    */
+  @Test
   public void defaultValuePathParamInLocatorTest() throws Fault {
     setPropertyRequestInLocator(Request.GET, "sbpath/sbpath/default");
     setProperty(Property.SEARCH_STRING, Resource.DEFAULT);
@@ -375,6 +398,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Parse the supplied value and create an instance of
    */
+  @Test
   public void matrixParamInLocatorTest() throws Fault {
     String query = "ABCDEFGH";
     setPropertyRequestInLocator(Request.GET, "sbmatrix/sbmatrix;param=", query);
@@ -390,6 +414,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: selected ParamConverter instance MUST be used eagerly by a
    * JAX-RS runtime to convert any default value
    */
+  @Test
   public void defaultValueMatrixParamInLocatorTest() throws Fault {
     setPropertyRequestInLocator(Request.GET, "sbmatrix/sbmatrix");
     setProperty(Property.SEARCH_STRING, Resource.DEFAULT);
@@ -403,6 +428,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Parse the supplied value and create an instance of
    */
+  @Test
   public void formParamInLocatorTest() throws Fault {
     String query = "ABCDEFGH";
     setProperty(Property.REQUEST_HEADERS,
@@ -421,6 +447,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: selected ParamConverter instance MUST be used eagerly by a
    * JAX-RS runtime to convert any default value
    */
+  @Test
   public void defaultValueFormParamInLocatorTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE));
@@ -436,6 +463,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Parse the supplied value and create an instance of
    */
+  @Test
   public void cookieParamInLocatorTest() throws Fault {
     String query = "ABCDEFGH";
     buildCookie(query);
@@ -452,6 +480,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: selected ParamConverter instance MUST be used eagerly by a
    * JAX-RS runtime to convert any default value
    */
+  @Test
   public void defaultValueCookieParamInLocatorTest() throws Fault {
     setPropertyRequestInLocator(Request.GET, "sbcookie/sbcookie");
     setProperty(Property.SEARCH_STRING, Resource.DEFAULT);
@@ -465,6 +494,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Parse the supplied value and create an instance of
    */
+  @Test
   public void headerParamInLocatorTest() throws Fault {
     String query = "ABCDEFGH";
     setProperty(Property.REQUEST_HEADERS, "param:" + query);
@@ -481,6 +511,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: selected ParamConverter instance MUST be used eagerly by a
    * JAX-RS runtime to convert any default value
    */
+  @Test
   public void defaultValueHeaderParamInLocatorTest() throws Fault {
     setPropertyRequestInLocator(Request.GET, "sbheader/sbheader");
     setProperty(Property.SEARCH_STRING, Resource.DEFAULT);

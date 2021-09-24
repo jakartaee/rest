@@ -45,6 +45,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -97,7 +98,9 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_configuration_web.war");
-    archive.addClasses(jakarta.ws.rs.tck.api.rs.core.configurable.Assertable.class, 
+    archive.addClasses(jakarta.ws.rs.tck.ee.rs.core.configurable.Resource.class,
+      jakarta.ws.rs.tck.ee.rs.core.configurable.TSAppConfig.class,
+      jakarta.ws.rs.tck.api.rs.core.configurable.Assertable.class, 
       jakarta.ws.rs.tck.api.rs.core.configurable.Registrar.class, 
       jakarta.ws.rs.tck.api.rs.core.configurable.CallableProvider.class, 
       jakarta.ws.rs.tck.api.rs.core.configurable.SingleCheckAssertable.class, 
@@ -120,6 +123,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * Returns true if the feature was successfully enabled, false otherwise
    */
+  @Test
   public void isEnabledFeatureReturningFalseTest() throws Fault {
     final CheckingFeature feature1 = new FeatureReturningFalse1();
     final CheckingFeature feature2 = new FeatureReturningFalse2();
@@ -155,8 +159,8 @@ public class JAXRSClientIT extends JaxrsCommonClient {
       void assertIsDisabled(Configurable<?> config, CheckingFeature feature)
           throws Fault {
         boolean isEnabled = config.getConfiguration().isEnabled(feature);
-        assertFalse(isEnabled, "Feature", feature.getName(),
-            "is unexpectedly enabled", getLocation());
+        assertFalse(isEnabled, "Feature"+ feature.getName()+
+            "is unexpectedly enabled"+ getLocation());
         logMsg("No feature enabled as expected", getLocation());
       }
     };
@@ -176,6 +180,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * Returns true if the feature was successfully enabled, false otherwise
    */
+  @Test
   public void isEnabledFeatureReturningTrueTest() throws Fault {
     final CheckingFeature feature1 = new FeatureReturningTrue1();
     final CheckingFeature feature2 = new FeatureReturningTrue2();
@@ -211,8 +216,8 @@ public class JAXRSClientIT extends JaxrsCommonClient {
       void assertIsRegistered(Configurable<?> config, CheckingFeature feature)
           throws Fault {
         Configuration configuration = config.getConfiguration();
-        assertTrue(configuration.isRegistered(feature), "Feature",
-            feature.getName(), "is NOT registered", getLocation());
+        assertTrue(configuration.isRegistered(feature), "Feature"+
+            feature.getName()+ "is NOT registered"+ getLocation());
         logMsg("Feature", feature.getName(), "registered as expected",
             getLocation());
       }
@@ -220,8 +225,8 @@ public class JAXRSClientIT extends JaxrsCommonClient {
       void assertIsNotRegistered(Configurable<?> config,
           CheckingFeature feature) throws Fault {
         Configuration configuration = config.getConfiguration();
-        assertFalse(configuration.isRegistered(feature), "Feature",
-            feature.getName(), "is unexpectedly registered", getLocation());
+        assertFalse(configuration.isRegistered(feature), "Feature"+
+            feature.getName()+ "is unexpectedly registered"+ getLocation());
         logMsg("Feature", feature.getName(), "NOT registered as expected",
             getLocation());
       }
@@ -244,6 +249,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Returns true if the feature was successfully enabled, false otherwise
    */
   @SuppressWarnings("unchecked")
+  @Test
   public void isEnabledClassReturningFalseTest() throws Fault {
     final CheckingFeature feature1 = new FeatureReturningFalse1();
     final CheckingFeature feature2 = new FeatureReturningFalse2();
@@ -287,8 +293,8 @@ public class JAXRSClientIT extends JaxrsCommonClient {
       void assertIsDisabled(Configurable<?> config, CheckingFeature feature)
           throws Fault {
         boolean isEnabled = config.getConfiguration().isEnabled(feature);
-        assertFalse(isEnabled, "Feature", feature.getName(),
-            "is unexpectedly enabled", getLocation());
+        assertFalse(isEnabled, "Feature"+ feature.getName()+
+            "is unexpectedly enabled"+ getLocation());
         logMsg("No feature enabled as expected", getLocation());
       }
     };
@@ -309,6 +315,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Returns true if the feature was successfully enabled, false otherwise
    */
   @SuppressWarnings("unchecked")
+  @Test
   public void isEnabledFeatureClassReturningTrueTest() throws Fault {
     final CheckingFeature feature1 = new FeatureReturningTrue1();
     final CheckingFeature feature2 = new FeatureReturningTrue2();
@@ -352,8 +359,8 @@ public class JAXRSClientIT extends JaxrsCommonClient {
       void assertIsRegistered(Configurable<?> config, CheckingFeature feature)
           throws Fault {
         Configuration configuration = config.getConfiguration();
-        assertTrue(configuration.isRegistered(feature), "Feature",
-            feature.getName(), "is NOT registered", getLocation());
+        assertTrue(configuration.isRegistered(feature), "Feature"+
+            feature.getName()+ "is NOT registered"+ getLocation());
         logMsg("Feature", feature.getName(), "registered as expected",
             getLocation());
       }
@@ -361,8 +368,8 @@ public class JAXRSClientIT extends JaxrsCommonClient {
       void assertIsNotRegistered(Configurable<?> config,
           CheckingFeature feature) throws Fault {
         Configuration configuration = config.getConfiguration();
-        assertFalse(configuration.isRegistered(feature), "Feature",
-            feature.getName(), "is unexpectedly registered", getLocation());
+        assertFalse(configuration.isRegistered(feature), "Feature"+
+            feature.getName()+ "is unexpectedly registered"+ getLocation());
         logMsg("Feature", feature.getName(), "NOT registered as expected",
             getLocation());
       }

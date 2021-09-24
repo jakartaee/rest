@@ -101,6 +101,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Add acceptable languages.
    */
+  @Test
   public void acceptLanguageByLocalesTest() throws Fault {
     Invocation.Builder builder = createBuilderForMethod("languages");
     builder = builder.acceptLanguage(Locale.GERMAN, Locale.ITALIAN,
@@ -119,6 +120,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Add acceptable languages.
    */
+  @Test
   public void acceptLanguageByStringsTest() throws Fault {
     Invocation.Builder builder = createBuilderForMethod("languages");
     builder = builder.acceptLanguage(langToString(Locale.GERMAN),
@@ -138,6 +140,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Access the asynchronous uniform request invocation
    * interface to asynchronously invoke the built request.
    */
+  @Test
   public void asyncTest() throws Fault {
     Invocation.Builder builder = createBuilderForMethod("forbid");
     AsyncInvoker async = builder.async();
@@ -152,6 +155,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Build a request invocation using an arbitrary request
    * method name.
    */
+  @Test
   public void buildTest() throws Fault {
     String error = "Unexpected response returned:";
     for (String method : METHODS) {
@@ -170,6 +174,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Build a request invocation using an arbitrary request
    * method name and request entity
    */
+  @Test
   public void buildWithEntityTest() throws Fault {
     String error = "Unexpected response returned:";
     for (String method : ENTITY_METHODS) {
@@ -188,6 +193,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Build a DELETE request invocation.
    */
+  @Test
   public void buildDeleteTest() throws Fault {
     String error = "Unexpected response returned:";
     Invocation.Builder builder = createBuilderForMethod("delete");
@@ -202,6 +208,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Build a GET request invocation.
    */
+  @Test
   public void buildGetTest() throws Fault {
     String error = "Unexpected response returned:";
     Invocation.Builder builder = createBuilderForMethod("get");
@@ -216,6 +223,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Build a POST request invocation.
    */
+  @Test
   public void buildPostTest() throws Fault {
     String error = "Unexpected response returned:";
     Invocation.Builder builder = createBuilderForMethod("post");
@@ -231,6 +239,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Build a PUT request invocation.
    */
+  @Test
   public void buildPutTest() throws Fault {
     String error = "Unexpected response returned:";
     Invocation.Builder builder = createBuilderForMethod("put");
@@ -246,6 +255,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Set the cache control data of the message.
    */
+  @Test
   public void cacheControlTest() throws Fault {
     String error = "Unexpected response returned:";
     Invocation.Builder builder = createBuilderForMethod("headerstostring");
@@ -263,6 +273,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Add a cookie to be set.
    */
+  @Test
   public void cookieCookieTest() throws Fault {
     String error = "Unexpected response returned:";
     Invocation.Builder builder = createBuilderForMethod("cookie");
@@ -278,6 +289,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Add a cookie to be set.
    */
+  @Test
   public void cookieStringStringTest() throws Fault {
     String error = "Unexpected response returned:";
     Invocation.Builder builder = createBuilderForMethod("cookie");
@@ -293,6 +305,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Add an arbitrary header.
    */
+  @Test
   public void headerObjectTest() throws Fault {
     String error = "Unexpected response returned:";
     Invocation.Builder builder = createBuilderForMethod("headerstostring");
@@ -310,6 +323,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Replaces all existing headers with the newly supplied
    * headers.
    */
+  @Test
   public void headersMultivaluedMapTest() throws Fault {
     String error = "Unexpected response returned:";
     Invocation.Builder builder = createBuilderForMethod("headerstostring");
@@ -331,6 +345,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: headers - new headers to be set, if null all existing
    * headers will be removed.
    */
+  @Test
   public void headersMultivaluedMapIsNullReplacesAllTest() throws Fault {
     Invocation.Builder builder = createBuilderForMethod("headerstostring");
     String response = builder.header("unexpected-header", "unexpected-header")

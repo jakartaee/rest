@@ -49,6 +49,7 @@ import org.junit.jupiter.api.AfterEach;
  */
 @ExtendWith(ArquillianExtension.class)
 public class JAXRSClientIT extends JAXRSCommonClient {
+  
   public JAXRSClientIT() {
     setup();
     setContextRoot("/jaxrs_ee_core_application_web/ApplicationTest");
@@ -77,7 +78,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_application_web.war");
-    archive.addClasses(TSAppConfig.class, ApplicationServlet.class, jakarta.ws.rs.tck.common.util.JaxrsUtil.class);
+    archive.addClasses(TSAppConfig.class, ApplicationServlet.class, ApplicationHolderSingleton.class, jakarta.ws.rs.tck.common.util.JaxrsUtil.class);
     archive.setWebXML(new StringAsset(webXml));
     return archive;
 
@@ -91,12 +92,13 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @test_Strategy: Check that vi does not modify the getSingletons()
    */
+  @Test
   public void getSingletonsTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "GetSingletons"));
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
     invoke();
     assertTrue(getReturnedNumber() == expectedSingletons,
-        "Application.getSingletons() return incorrect value:",
+        "Application.getSingletons() return incorrect value:"+
         getReturnedNumber());
   }
 
@@ -107,12 +109,13 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @test_Strategy: Check the implementation injects TSAppConfig
    */
+  @Test
   public void getClassesTest() throws Fault {
     setProperty(REQUEST, buildRequest(GET, "GetClasses"));
     setProperty(STATUS_CODE, getStatusCode(Status.OK));
     invoke();
     assertTrue(getReturnedNumber() == expectedClasses,
-        "Application.getClasses() return incorrect value:",
+        "Application.getClasses() return incorrect value:"+
         getReturnedNumber());
   }
 
@@ -125,6 +128,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * configuration passed to the server-side features or injected into
    * server-side JAX-RS components.
    */
+  @Test
   public void getPropertiesTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "properties"));
     setProperty(Property.STATUS_CODE, getStatusCode(Status.OK));
@@ -139,12 +143,13 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @test_Strategy: The default implementation returns an empty set.
    */
+  @Test
   public void defaultGetPropertiesIsEmptyTest() throws Fault {
     Application application = new Application();
     Map<String, Object> properties = application.getProperties();
     assertNotNull(properties,
         "Default implementation is not empty map, but null");
-    assertTrue(properties.isEmpty(), "Default implementation is not empty, but",
+    assertTrue(properties.isEmpty(), "Default implementation is not empty, but"+
         JaxrsUtil.mapToString(properties));
     logMsg("Default implementation gets empty map as expected");
   }

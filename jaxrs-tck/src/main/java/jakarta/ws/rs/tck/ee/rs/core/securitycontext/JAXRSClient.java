@@ -22,6 +22,7 @@ import org.apache.commons.httpclient.Header;
 
 import jakarta.ws.rs.tck.common.webclient.http.HttpResponse;
 import jakarta.ws.rs.tck.common.JAXRSCommonClient;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jakarta.ws.rs.core.Response;
 

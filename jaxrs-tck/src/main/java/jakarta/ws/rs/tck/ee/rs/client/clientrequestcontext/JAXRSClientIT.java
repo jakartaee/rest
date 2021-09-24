@@ -94,6 +94,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Get the entity output stream. Set a new entity output
    * stream.
    */
+  @Test
   public void getEntityStreamTest() throws Fault {
     final String entityStreamWorks = "ENTITY_STREAM_WORKS";
     ContextProvider provider = new ContextProvider() {
@@ -124,6 +125,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get the generic entity type information.
    */
+  @Test
   public void getHeadersIsMutableTest() throws Fault {
     ContextProvider provider = new ContextProvider() {
       @Override
@@ -152,6 +154,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Set the request method.
    */
+  @Test
   public void setMethodTest() throws Fault {
     String entity = "ENTITY";
     ContextProvider provider = new ContextProvider() {
@@ -178,6 +181,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Set a new request URI. Get the request URI.
    */
+  @Test
   public void setUriTest() throws Fault {
     String entity = "ENTITY";
     ContextProvider provider = new ContextProvider() {
@@ -205,7 +209,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   // ////////////////////////////////////////////////////////////////////
   protected static void assertContains(String string, String substring)
       throws Fault {
-    assertTrue(string.contains(substring), string, "does NOT contain",
+    assertTrue(string.contains(substring), string+ "does NOT contain"+
         substring);
     TestUtil.logMsg("Found expected substring: " + substring);
   }

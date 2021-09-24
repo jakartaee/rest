@@ -105,6 +105,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * synchronously.
    */
+  @Test
   public Response deleteTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("delete");
     Response response = sync.delete();
@@ -120,6 +121,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.delete throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void deleteThrowsProcessingExceptionTest() throws Fault {
     Runnable run = new Runnable() {
       @Override
@@ -139,6 +141,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * synchronously.
    */
+  @Test
   public String deleteWithStringClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("delete");
     String response = sync.delete(String.class);
@@ -154,6 +157,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * synchronously.
    */
+  @Test
   public Response deleteWithResponseClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("delete");
     Response response = sync.delete(Response.class);
@@ -169,6 +173,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.delete( Class ) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void deleteWithStringClassThrowsProcessingExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -191,6 +196,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void deleteWithStringClassThrowsWebApplicationExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -213,6 +219,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void deleteWithResponseClassThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("deletenotok");
@@ -228,6 +235,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * synchronously.
    */
+  @Test
   public String deleteWithGenericTypeStringTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("delete");
     GenericType<String> generic = createGeneric(String.class);
@@ -244,6 +252,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    * synchronously.
    */
+  @Test
   public Response deleteWithGenericTypeResponseTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("delete");
     GenericType<Response> generic = createGeneric(Response.class);
@@ -260,6 +269,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.delete( Class ) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void deleteWithGenericTypeStringThrowsProcessingExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -283,6 +293,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void deleteWithGenericTypeStringThrowsWebApplicationExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -306,6 +317,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void deleteWithGenericTypeResponseThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("deletenotok");
@@ -325,6 +337,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * synchronously.
    */
+  @Test
   public Response getTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("get");
     Response response = sync.get();
@@ -340,6 +353,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.get throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void getThrowsProcessingExceptionTest() throws Fault {
     Runnable run = new Runnable() {
       @Override
@@ -359,6 +373,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * synchronously.
    */
+  @Test
   public String getWithStringClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("get");
     String response = sync.get(String.class);
@@ -374,6 +389,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * synchronously.
    */
+  @Test
   public Response getWithResponseClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("get");
     Response response = sync.get(Response.class);
@@ -389,6 +405,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.get( Class ) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void getWithStringClassThrowsProcessingExceptionTest() throws Fault {
     Runnable run = new Runnable() {
       @Override
@@ -410,6 +427,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void getWithStringClassThrowsWebApplicationExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -432,6 +450,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void getWithResponseClassThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("getnotok");
@@ -447,6 +466,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * synchronously.
    */
+  @Test
   public String getWithGenericTypeStringTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("get");
     GenericType<String> generic = createGeneric(String.class);
@@ -463,6 +483,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP GET method for the current request
    * synchronously.
    */
+  @Test
   public Response getWithGenericTypeResponseTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("get");
     GenericType<Response> generic = createGeneric(Response.class);
@@ -479,6 +500,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.get( GenericType ) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void getWithGenericTypeStringThrowsProcessingExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -502,6 +524,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void getWithGenericTypeStringThrowsWebApplicationExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -525,6 +548,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void getWithGenericTypeResponseThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("getnotok");
@@ -545,6 +569,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP HEAD method for the current request
    * synchronously.
    */
+  @Test
   public Response headTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("head");
     Response response = sync.head();
@@ -562,6 +587,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.head throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void headThrowsProcessingExceptionTest() throws Fault {
     Runnable run = new Runnable() {
       @Override
@@ -585,6 +611,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * synchronously.
    */
+  @Test
   public void methodTest() throws Fault {
     Response response = null;
     for (String method : METHODS) {
@@ -602,6 +629,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.method(String) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void methodThrowsProcessingExceptionTest() throws Fault {
     for (final String method : METHODS) {
       Runnable run = new Runnable() {
@@ -623,6 +651,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * synchronously.
    */
+  @Test
   public void methodWithStringClassTest() throws Fault {
     String response = null;
     for (String method : METHODS) {
@@ -640,6 +669,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * synchronously.
    */
+  @Test
   public void methodWithResponseClassTest() throws Fault {
     Response response = null;
     for (String method : METHODS) {
@@ -659,6 +689,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void methodWithStringClassThrowsProcessingExceptionTest()
       throws Fault {
     for (final String method : METHODS) {
@@ -683,6 +714,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void methodWithStringClassThrowsWebApplicationExceptionTest()
       throws Fault {
     for (final String method : METHODS) {
@@ -706,6 +738,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.method(String) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void methodWithResponseClassThrowsNoWebApplicationExceptionTest()
       throws Fault {
     for (final String method : METHODS) {
@@ -724,6 +757,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * synchronously.
    */
+  @Test
   public void methodWithGenericTypeStringTest() throws Fault {
     GenericType<String> generic = createGeneric(String.class);
     String response = null;
@@ -742,6 +776,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * synchronously.
    */
+  @Test
   public void methodWithGenericTypeResponseTest() throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
     Response response = null;
@@ -760,6 +795,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.method(String) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void methodWithGenericTypeStringThrowsProcessingExceptionTest()
       throws Fault {
     final GenericType<String> generic = createGeneric(String.class);
@@ -785,6 +821,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * response returned by the server is not successful and the specified
    * response type is not Response.
    */
+  @Test
   public void methodWithGenericTypeStringThrowsWebApplicationExceptionTest()
       throws Fault {
     final GenericType<String> generic = createGeneric(String.class);
@@ -812,6 +849,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void methodWithGenericTypeResponseThrowsNoWebApplicationExceptionTest()
       throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
@@ -832,6 +870,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * synchronously.
    */
+  @Test
   public Response methodWithEntityTest() throws Fault {
     Response response = null;
     for (String method : ENTITY_METHODS) {
@@ -851,6 +890,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.method(String, Entity)
    * throws ProcessingException in case the invocation failed.
    */
+  @Test
   public void methodWithEntityThrowsProcessingExceptionTest() throws Fault {
     final Entity<String> entity = createEntity("entity");
     for (final String method : ENTITY_METHODS) {
@@ -873,6 +913,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * synchronously.
    */
+  @Test
   public String methodWithStringClassWithEntityTest() throws Fault {
     String response = null;
     for (String method : ENTITY_METHODS) {
@@ -892,6 +933,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * synchronously.
    */
+  @Test
   public String methodWithResponseClassWithEntityTest() throws Fault {
     String response = null;
     for (String method : ENTITY_METHODS) {
@@ -911,6 +953,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.method(String, Entity,
    * Class) throws ProcessingException in case the invocation failed.
    */
+  @Test
   public void methodWithStringClassWithEntityThrowsProcessingExceptionTest()
       throws Fault {
     for (final String method : ENTITY_METHODS) {
@@ -936,6 +979,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * the response returned by the server is not successful and the specified
    * response type is not Response.
    */
+  @Test
   public void methodWithStringClassWithEntityThrowsWebApplicationExceptionTest()
       throws Fault {
     for (final String method : ENTITY_METHODS) {
@@ -963,6 +1007,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * the response returned by the server is not successful and the specified
    * response type is not Response.
    */
+  @Test
   public void methodWithResponseClassWithEntityThrowsNoWebApplicationExceptionTest()
       throws Fault {
     for (final String method : ENTITY_METHODS) {
@@ -982,6 +1027,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * synchronously.
    */
+  @Test
   public void methodWithGenericTypeStringWithEntityTest() throws Fault {
     String response = null;
     for (String method : ENTITY_METHODS) {
@@ -1001,6 +1047,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke an arbitrary method for the current request
    * synchronously.
    */
+  @Test
   public void methodWithGenericTypeResponseWithEntityTest() throws Fault {
     Response response = null;
     for (String method : ENTITY_METHODS) {
@@ -1021,6 +1068,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.method(String, Entity,
    * GenericType) throws ProcessingException in case the invocation failed.
    */
+  @Test
   public void methodWithGenericTypeStringWithEntityThrowsProcessingExceptionTest()
       throws Fault {
     for (final String method : ENTITY_METHODS) {
@@ -1048,6 +1096,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * code of the response returned by the server is not successful and the
    * specified response type is not Response.
    */
+  @Test
   public void methodWithGenericTypeStringWithEntityThrowsWebApplicationExceptionTest()
       throws Fault {
     for (final String method : ENTITY_METHODS) {
@@ -1076,6 +1125,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * code of the response returned by the server is not successful and the
    * specified response type is not Response.
    */
+  @Test
   public void methodWithGenericTypeResponseWithEntityThrowsNoWebApplicationExceptionTest()
       throws Fault {
     for (final String method : ENTITY_METHODS) {
@@ -1100,6 +1150,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * synchronously.
    */
+  @Test
   public Response optionsTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("options");
     Response response = sync.options();
@@ -1115,6 +1166,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.options throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void optionsThrowsProcessingExceptionTest() throws Fault {
     Runnable run = new Runnable() {
       @Override
@@ -1134,6 +1186,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * synchronously.
    */
+  @Test
   public String optionsWithStringClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("options");
     String response = sync.options(String.class);
@@ -1149,6 +1202,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * synchronously.
    */
+  @Test
   public Response optionsWithResponseClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("options");
     Response response = sync.options(Response.class);
@@ -1164,6 +1218,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.options( Class ) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void optionsWithStringThrowsProcessingExceptionTest() throws Fault {
     Runnable run = new Runnable() {
       @Override
@@ -1185,6 +1240,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void optionsWithStringThrowsWebApplicationExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -1207,6 +1263,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void optionsWithResponseThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("optionsnotok");
@@ -1222,6 +1279,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * synchronously.
    */
+  @Test
   public String optionsWithGenericTypeStringTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("options");
     GenericType<String> generic = createGeneric(String.class);
@@ -1238,6 +1296,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP options method for the current request
    * synchronously.
    */
+  @Test
   public Response optionsWithGenericTypeResponseTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("options");
     GenericType<Response> generic = createGeneric(Response.class);
@@ -1254,6 +1313,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.options( GenericType )
    * throws ProcessingException in case the invocation failed.
    */
+  @Test
   public void optionsWithGenericTypeStringThrowsProcessingExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -1277,6 +1337,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * response returned by the server is not successful and the specified
    * response type is not Response.
    */
+  @Test
   public void optionsWithGenericTypeStringThrowsWebApplicationExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -1301,6 +1362,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * response returned by the server is not successful and the specified
    * response type is not Response.
    */
+  @Test
   public void optionsWithGenericTypeResponseThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("optionsnotok");
@@ -1321,6 +1383,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP post method for the current request
    * synchronously.
    */
+  @Test
   public Response postTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("post");
     Entity<String> entity = createEntity("post");
@@ -1337,6 +1400,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.post(Entity) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void postThrowsProcessingExceptionTest() throws Fault {
     Runnable run = new Runnable() {
       @Override
@@ -1357,6 +1421,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP post method for the current request
    * synchronously.
    */
+  @Test
   public String postWithStringClassTest() throws Fault {
     Entity<String> entity = createEntity("post");
     SyncInvoker sync = createSyncInvokerForMethod("post");
@@ -1373,6 +1438,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP post method for the current request
    * synchronously.
    */
+  @Test
   public Response postWithResponseClassTest() throws Fault {
     Entity<String> entity = createEntity("post");
     SyncInvoker sync = createSyncInvokerForMethod("post");
@@ -1389,6 +1455,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.post( Entity, Class ) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void postWithStringClassThrowsProcessingExceptionTest() throws Fault {
     Runnable run = new Runnable() {
       @Override
@@ -1411,6 +1478,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void postWithStringClassThrowsWebApplicationExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -1434,6 +1502,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void postWithResponseClassThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("postnotok");
@@ -1450,6 +1519,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP post method for the current request
    * synchronously.
    */
+  @Test
   public String postWithGenericTypeStringTest() throws Fault {
     GenericType<String> generic = createGeneric(String.class);
     Entity<String> entity = createEntity("post");
@@ -1467,6 +1537,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP post method for the current request
    * synchronously.
    */
+  @Test
   public Response postWithGenericTypeResponseTest() throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
     Entity<String> entity = createEntity("post");
@@ -1484,6 +1555,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.post( Entity, GenericType )
    * throws ProcessingException in case the invocation failed.
    */
+  @Test
   public void postWithGenericTypeStringThrowsProcessingExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -1508,6 +1580,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * response returned by the server is not successful and the specified
    * response type is not Response.
    */
+  @Test
   public void postWithGenericTypeStringThrowsWebApplicationExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -1532,6 +1605,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * response returned by the server is not successful and the specified
    * response type is not Response.
    */
+  @Test
   public void postWithGenericTypeResponseThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("postnotok");
@@ -1553,6 +1627,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP PUT method for the current request
    * synchronously.
    */
+  @Test
   public Response putTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("put");
     Entity<String> entity = createEntity("put");
@@ -1569,6 +1644,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.put(Entity) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void putThrowsProcessingExceptionTest() throws Fault {
     Runnable run = new Runnable() {
       @Override
@@ -1589,6 +1665,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP put method for the current request
    * synchronously.
    */
+  @Test
   public String putWithStringClassTest() throws Fault {
     Entity<String> entity = createEntity("put");
     SyncInvoker sync = createSyncInvokerForMethod("put");
@@ -1605,6 +1682,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP put method for the current request
    * synchronously.
    */
+  @Test
   public Response putWithResponseClassTest() throws Fault {
     Entity<String> entity = createEntity("put");
     SyncInvoker sync = createSyncInvokerForMethod("put");
@@ -1621,6 +1699,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.put( Entity, Class ) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void putWithStringClassThrowsProcessingExceptionTest() throws Fault {
     Runnable run = new Runnable() {
       @Override
@@ -1643,6 +1722,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void putWithStringClassThrowsWebApplicationExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -1666,6 +1746,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * returned by the server is not successful and the specified response type is
    * not Response.
    */
+  @Test
   public void putWithResponseClassThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("putnotok");
@@ -1682,6 +1763,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP put method for the current request
    * synchronously.
    */
+  @Test
   public String putWithGenericTypeStringTest() throws Fault {
     GenericType<String> generic = createGeneric(String.class);
     Entity<String> entity = createEntity("put");
@@ -1699,6 +1781,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP put method for the current request
    * synchronously.
    */
+  @Test
   public Response putWithGenericTypeResponseTest() throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
     Entity<String> entity = createEntity("put");
@@ -1716,6 +1799,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.put( Entity, GenericType )
    * throws ProcessingException in case the invocation failed.
    */
+  @Test
   public void putWithGenericTypeStringThrowsProcessingExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -1740,6 +1824,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * response returned by the server is not successful and the specified
    * response type is not Response.
    */
+  @Test
   public void putWithGenericTypeStringThrowsWebApplicationExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -1763,6 +1848,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * status code of the response returned by the server is not successful and
    * the specified response type is not Response.
    */
+  @Test
   public void putWithGenericTypeResponseThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("putnotok");
@@ -1784,6 +1870,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * synchronously.
    */
+  @Test
   public Response traceTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("trace");
     Response response = sync.trace();
@@ -1799,6 +1886,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.trace(Entity) throws
    * ProcessingException in case the invocation failed.
    */
+  @Test
   public void traceThrowsProcessingExceptionTest() throws Fault {
     Runnable run = new Runnable() {
       @Override
@@ -1818,6 +1906,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * synchronously.
    */
+  @Test
   public String traceWithStringClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("trace");
     String response = sync.trace(String.class);
@@ -1833,6 +1922,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * synchronously.
    */
+  @Test
   public Response traceWithResponseClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("trace");
     Response response = sync.trace(Response.class);
@@ -1848,6 +1938,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.trace( Entity, Class )
    * throws ProcessingException in case the invocation failed.
    */
+  @Test
   public void traceWithStringClassThrowsProcessingExceptionTest() throws Fault {
     Runnable run = new Runnable() {
       @Override
@@ -1869,6 +1960,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * response returned by the server is not successful and the specified
    * response type is not Response.
    */
+  @Test
   public void traceWithStringClassThrowsWebApplicationExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -1891,6 +1983,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * response returned by the server is not successful and the specified
    * response type is not Response.
    */
+  @Test
   public void traceWithResponseClassThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("tracenotok");
@@ -1906,6 +1999,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * synchronously.
    */
+  @Test
   public String traceWithGenericTypeStringTest() throws Fault {
     GenericType<String> generic = createGeneric(String.class);
     SyncInvoker sync = createSyncInvokerForMethod("trace");
@@ -1922,6 +2016,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * synchronously.
    */
+  @Test
   public Response traceWithGenericTypeResponseTest() throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
     SyncInvoker sync = createSyncInvokerForMethod("trace");
@@ -1938,6 +2033,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: jakarta.ws.rs.client.SyncInvoker.trace( Entity, GenericType )
    * throws ProcessingException in case the invocation failed.
    */
+  @Test
   public void traceWithGenericTypeStringThrowsProcessingExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -1961,6 +2057,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * response returned by the server is not successful and the specified
    * response type is not Response.
    */
+  @Test
   public void traceWithGenericTypeStringThrowsWebApplicationExceptionTest()
       throws Fault {
     Runnable run = new Runnable() {
@@ -1984,6 +2081,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * response returned by the server is not successful and the specified
    * response type is not Response.
    */
+  @Test
   public void traceWithGenericTypeResponseThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("tracenotok");
@@ -2022,7 +2120,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   protected static void assertStatusAndLog(Response response, Status status)
       throws Fault {
     assertTrue(response.getStatus() == status.getStatusCode(),
-        "Returned unexpected status", response.getStatus());
+        "Returned unexpected status"+ response.getStatus());
     String msg = new StringBuilder().append("Returned status ")
         .append(status.getStatusCode()).append(" (").append(status.name())
         .append(")").toString();
@@ -2035,8 +2133,8 @@ public class JAXRSClientIT extends JaxrsCommonClient {
 
   protected static void assertResponseString(String response,
       String expectedValue) throws Fault {
-    assertTrue(expectedValue.equals(response), "expected value", expectedValue,
-        "differes from acquired value", response);
+    assertTrue(expectedValue.equals(response), "expected value"+ expectedValue+
+        "differes from acquired value"+ response);
   }
 
   protected static <T> Entity<T> createEntity(T entity) {

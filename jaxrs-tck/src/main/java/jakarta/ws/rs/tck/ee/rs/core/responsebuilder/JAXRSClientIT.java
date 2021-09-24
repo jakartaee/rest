@@ -93,6 +93,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * 
    * @test_Strategy: Set the message entity content encoding.
    */
+  @Test
   public void entityObjectTest() throws Fault {
     Date date = Calendar.getInstance().getTime();
     String entity = DateContainerReaderWriter.dateToString(date);
@@ -106,13 +107,13 @@ public class JAXRSClientIT extends JaxrsCommonClient {
 
     Response response = getResponse();
     Date responseDate = response.readEntity(Date.class);
-    assertTrue(date.equals(responseDate), "entity date", date,
-        "differs from acquired", responseDate);
+    assertTrue(date.equals(responseDate), "entity date"+ date+
+        "differs from acquired"+ responseDate);
 
     Annotation[] annotations = AnnotatedClass.class.getAnnotations();
     for (Annotation annotation : annotations) {
       String name = annotation.annotationType().getName();
-      assertTrue(sb.toString().contains(name), sb, "does not contain", name,
+      assertTrue(sb.toString().contains(name), sb+ "does not contain"+ name+
           ", annotations not passed to MessageBodyWriter?");
     }
   }

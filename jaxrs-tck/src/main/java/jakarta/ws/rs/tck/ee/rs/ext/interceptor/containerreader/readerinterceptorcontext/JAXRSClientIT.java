@@ -31,7 +31,6 @@ import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -71,7 +70,24 @@ public class JAXRSClientIT extends ReaderClient<ContextOperation> {
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_ext_interceptor_containerreader_readerinterceptorcontext_web.war");
-    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.addClasses(TSAppConfig.class, Resource.class,
+      jakarta.ws.rs.tck.common.util.JaxrsUtil.class,
+      jakarta.ws.rs.tck.common.provider.StringBean.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.ContextOperation.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.InputStreamReaderProvider.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.InterceptorBodyOne.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.InterceptorBodyTwo.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.InterceptorCallbackMethods.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.TemplateInterceptorBody.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.ReaderClient.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.TemplateReaderInterceptor.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.readerinterceptorcontext.ExceptionThrowingStringBean.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.readerinterceptorcontext.ExceptionThrowingStringBeanEntityProvider.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.readerinterceptorcontext.ReaderInterceptorOne.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.readerinterceptorcontext.ReaderInterceptorTwo.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.readerinterceptorcontext.InterceptorOneBody.class,
+      jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.readerinterceptorcontext.InterceptorTwoBody.class
+    );
     archive.setWebXML(new StringAsset(webXml));
     return archive;
 
@@ -89,6 +105,7 @@ public class JAXRSClientIT extends ReaderClient<ContextOperation> {
    * 
    * ReaderInterceptor.aroundReadFrom
    */
+  @Test
   public void getHeadersOperationOnlyTest() throws Fault {
     setOperationAndEntity(ContextOperation.GETHEADERS);
     setProperty(Property.SEARCH_STRING_IGNORE_CASE,
@@ -106,6 +123,7 @@ public class JAXRSClientIT extends ReaderClient<ContextOperation> {
    * 
    * ReaderInterceptor.aroundReadFrom
    */
+  @Test
   public void getHeadersHeadersSetTest() throws Fault {
     Property p = Property.UNORDERED_SEARCH_STRING;
     setOperationAndEntity(ContextOperation.GETHEADERS);
@@ -128,6 +146,7 @@ public class JAXRSClientIT extends ReaderClient<ContextOperation> {
    * 
    * ReaderInterceptor.aroundReadFrom
    */
+  @Test
   public void getHeadersIsMutableTest() throws Fault {
     setOperationAndEntity(ContextOperation.GETHEADERSISMUTABLE);
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.PROPERTY);
@@ -143,6 +162,7 @@ public class JAXRSClientIT extends ReaderClient<ContextOperation> {
    * 
    * ReaderInterceptor.aroundReadFrom
    */
+  @Test
   public void getInputStreamTest() throws Fault {
     String entity = "getInputStreamEntity";
     setOperationAndEntity(ContextOperation.GETINPUTSTREAM);
@@ -163,6 +183,7 @@ public class JAXRSClientIT extends ReaderClient<ContextOperation> {
    * 
    * ReaderInterceptor.aroundReadFrom
    */
+  @Test
   public void proceedThrowsIOExceptionTest() throws Fault {
     setOperationAndEntity(ContextOperation.PROCEEDTHROWSIOEXCEPTION);
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.IOE);
@@ -181,6 +202,7 @@ public class JAXRSClientIT extends ReaderClient<ContextOperation> {
    * 
    * ReaderInterceptor.aroundReadFrom
    */
+  @Test
   public void proceedThrowsWebApplicationExceptionTest() throws Fault {
     setOperationAndEntity(ContextOperation.PROCEEDTHROWSWEBAPPEXCEPTION);
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.WAE);
@@ -196,6 +218,7 @@ public class JAXRSClientIT extends ReaderClient<ContextOperation> {
    * 
    * ReaderInterceptor.aroundReadFrom
    */
+  @Test
   public void setInputStreamTest() throws Fault {
     setOperationAndEntity(ContextOperation.SETINPUTSTREAM);
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.ENTITY2);

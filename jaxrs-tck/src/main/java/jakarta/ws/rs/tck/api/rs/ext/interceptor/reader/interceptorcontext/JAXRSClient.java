@@ -34,6 +34,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Response.Status;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
@@ -358,7 +359,7 @@ public class JAXRSClient extends ReaderClient<ContextOperation> {
     try {
       String entity = JaxrsUtil.readFromReader(isr);
       assertTrue(entity.contains(InputStreamReader.class.getName()),
-          "Expected", InputStreamReader.class.getName(), "not found");
+          "Expected"+ InputStreamReader.class.getName()+ "not found");
       logMsg("#setType set correct type", entity);
     } catch (IOException e) {
       throw new Fault(e);

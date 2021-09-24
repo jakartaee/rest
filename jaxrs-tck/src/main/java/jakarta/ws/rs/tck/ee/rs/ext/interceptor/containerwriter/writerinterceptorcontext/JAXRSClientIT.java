@@ -70,7 +70,17 @@ public class JAXRSClientIT extends WriterClient<ContextOperation> {
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_ext_interceptor_containerwriter_writerinterceptorcontext_web.war");
-    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.addClasses(TSAppConfig.class, 
+    jakarta.ws.rs.tck.common.util.JaxrsUtil.class,
+    jakarta.ws.rs.tck.common.provider.StringBean.class,
+    jakarta.ws.rs.tck.common.provider.StringBeanEntityProvider.class,
+    jakarta.ws.rs.tck.common.impl.ReplacingOutputStream.class,
+    jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.TemplateWriterInterceptor.class,
+    Resource.class);
+    archive.addPackages(false, 
+      "jakarta.ws.rs.tck.api.rs.ext.interceptor",
+      "jakarta.ws.rs.tck.ee.rs.ext.interceptor.writer.writerinterceptorcontext");
+
     archive.setWebXML(new StringAsset(webXml));
     return archive;
 
@@ -87,6 +97,7 @@ public class JAXRSClientIT extends WriterClient<ContextOperation> {
    *
    * WriterInterceptor.aroundWriteTo
    */
+  @Test
   public void getEntityTest() throws Fault {
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.ENTITY);
     invoke(ContextOperation.GETENTITY);
@@ -101,6 +112,7 @@ public class JAXRSClientIT extends WriterClient<ContextOperation> {
    * 
    * WriterInterceptor.aroundWriteTo
    */
+  @Test
   public void getHeadersOperationOnlyTest() throws Fault {
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.OPERATION);
     invoke(ContextOperation.GETHEADERS);
@@ -115,6 +127,7 @@ public class JAXRSClientIT extends WriterClient<ContextOperation> {
    *
    * WriterInterceptor.aroundWriteTo
    */
+  @Test
   public void getHeadersTest() throws Fault {
     Property p = Property.UNORDERED_SEARCH_STRING;
     setProperty(p, TemplateInterceptorBody.OPERATION);
@@ -132,6 +145,7 @@ public class JAXRSClientIT extends WriterClient<ContextOperation> {
    *
    * WriterInterceptor.aroundWriteTo
    */
+  @Test
   public void getHeadersIsMutableTest() throws Fault {
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.PROPERTY);
     invoke(ContextOperation.GETHEADERSISMUTABLE);
@@ -146,6 +160,7 @@ public class JAXRSClientIT extends WriterClient<ContextOperation> {
    *
    * WriterInterceptor.aroundWriteTo
    */
+  @Test
   public void getOutputStreamTest() throws Fault {
     Property p = Property.UNORDERED_SEARCH_STRING;
     setProperty(p, TemplateInterceptorBody.ENTITY);
@@ -169,6 +184,7 @@ public class JAXRSClientIT extends WriterClient<ContextOperation> {
    * 
    * WriterInterceptor.aroundWriteTo throws IOException
    */
+  @Test
   public void proceedThrowsIOExceptionTest() throws Fault {
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.IOE);
     invoke(ContextOperation.PROCEEDTHROWSIOEXCEPTION);
@@ -188,6 +204,7 @@ public class JAXRSClientIT extends WriterClient<ContextOperation> {
    *
    * WriterInterceptor.aroundWriteTo
    */
+  @Test
   public void proceedThrowsWebApplicationExceptionTest() throws Fault {
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.WAE);
     invoke(ContextOperation.PROCEEDTHROWSWEBAPPEXCEPTION);
@@ -202,6 +219,7 @@ public class JAXRSClientIT extends WriterClient<ContextOperation> {
    *
    * WriterInterceptor.aroundWriteTo
    */
+  @Test
   public void setEntityTest() throws Fault {
     setProperty(Property.SEARCH_STRING, TemplateInterceptorBody.OPERATION);
     invoke(ContextOperation.SETENTITY);
@@ -216,6 +234,7 @@ public class JAXRSClientIT extends WriterClient<ContextOperation> {
    *
    * WriterInterceptor.aroundWriteTo
    */
+  @Test
   public void setOutputStreamTest() throws Fault {
     setProperty(Property.SEARCH_STRING,
         TemplateInterceptorBody.ENTITY.replace('t', 'x'));

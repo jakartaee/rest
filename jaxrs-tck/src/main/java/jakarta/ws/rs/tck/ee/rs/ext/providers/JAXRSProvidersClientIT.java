@@ -21,7 +21,9 @@ import jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter.ReadableWritableEntit
 import java.io.InputStream;
 import java.io.IOException;
 import jakarta.ws.rs.tck.lib.util.TestUtil;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
+import jakarta.ws.rs.tck.common.webclient.http.HttpResponse;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -46,9 +48,14 @@ import org.junit.jupiter.api.AfterEach;
  */
 @ExtendWith(ArquillianExtension.class)
 public class JAXRSProvidersClientIT
-    extends jakarta.ws.rs.tck.ee.rs.core.application.JAXRSClientIT {
+    //extends jakarta.ws.rs.tck.ee.rs.core.application.JAXRSClientIT {
+    extends JAXRSCommonClient {
 
   private static final long serialVersionUID = -935293219512493643L;
+
+  protected int expectedSingletons = 1;
+
+  protected int expectedClasses = 1;
 
   public JAXRSProvidersClientIT() {
     setup();
@@ -71,7 +78,7 @@ public class JAXRSProvidersClientIT
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{
 
-    InputStream inStream = JAXRSProvidersClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/ext/client/providers/web.xml.template");
+    InputStream inStream = JAXRSProvidersClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/ext/providers/web.xml.template");
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_ext_providers_web.war");
@@ -79,7 +86,6 @@ public class JAXRSProvidersClientIT
       jakarta.ws.rs.tck.common.AbstractMessageBodyRW.class, 
       jakarta.ws.rs.tck.ee.rs.core.application.ApplicationServlet.class,
       jakarta.ws.rs.tck.ee.rs.core.application.ApplicationHolderSingleton.class,
-      jakarta.ws.rs.tck.ee.rs.ext.providers.ProvidersServlet.class,
       jakarta.ws.rs.tck.ee.rs.ext.contextresolver.EnumProvider.class,
       jakarta.ws.rs.tck.ee.rs.ext.contextresolver.EnumContextResolver.class,
       jakarta.ws.rs.tck.ee.rs.ext.contextresolver.TextPlainEnumContextResolver.class,
@@ -105,8 +111,15 @@ public class JAXRSProvidersClientIT
    * @test_Strategy: Check that the implementation returns set of
    * TSAppConfig.CLASSLIST
    */
+  @Test
   public void getSingletonsTest() throws Fault {
-    super.getSingletonsTest();
+    //super.getSingletonsTest();
+    setProperty(REQUEST, buildRequest(GET, "GetSingletons"));
+    setProperty(STATUS_CODE, getStatusCode(Status.OK));
+    invoke();
+    assertTrue(getReturnedNumber() == expectedSingletons,
+        "Application.getSingletons() return incorrect value:"+
+        getReturnedNumber());
   }
 
   /*
@@ -116,8 +129,15 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Check the implementation injects TSAppConfig
    */
+  @Test
   public void getClassesTest() throws Fault {
-    super.getClassesTest();
+    //super.getClassesTest();
+    setProperty(REQUEST, buildRequest(GET, "GetClasses"));
+    setProperty(STATUS_CODE, getStatusCode(Status.OK));
+    invoke();
+    assertTrue(getReturnedNumber() == expectedClasses,
+        "Application.getClasses() return incorrect value:"+
+        getReturnedNumber());
   }
 
   /*
@@ -138,6 +158,7 @@ public class JAXRSProvidersClientIT
    * Context provider implementations MAY restrict the media types they support
    * using the @Produces annotation.
    */
+  @Test
   public void isRegisteredTextPlainContextResolverTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "isRegisteredTextPlainContextResolver"));
@@ -164,6 +185,7 @@ public class JAXRSProvidersClientIT
    * using the @Produces annotation. Absence implies that any media type is
    * supported.
    */
+  @Test
   public void isRegisteredAppJsonContextResolverTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "isRegisteredAppJsonContextResolver"));
@@ -178,6 +200,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Try to get proper ExceptionMapper
    */
+  @Test
   public void isRegisteredExceptionMapperRuntimeExceptionTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "isRegisteredExceptionMapperRuntimeEx"));
@@ -193,6 +216,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Try to get proper ExceptionMapper
    */
+  @Test
   public void isRegisteredExceptionMapperNullExceptionTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "isRegisteredExceptionMapperNullEx"));
@@ -208,6 +232,7 @@ public class JAXRSProvidersClientIT
    * @test_Strategy: Try to get RuntimeExceptionExceptionMapper but there is
    * none
    */
+  @Test
   public void isRegisteredRuntimeExceptionExceptionMapperTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "isRegisteredRuntimeExceptionMapper"));
@@ -222,6 +247,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Try to get IOExceptionExceptionMapper
    */
+  @Test
   public void isRegisteredIOExceptionExceptionMapperTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "isRegisteredIOExceptionMapper"));
@@ -237,6 +263,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Check what is returned for wildcard is for text/plain
    */
+  @Test
   public void isRegisteredMessageBodyWriterWildcardTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "isRegisteredWriterWildcard"));
@@ -252,6 +279,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Check BodyWriter is returned for text/xml
    */
+  @Test
   public void isRegisteredMessageBodyWriterXmlTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "isRegisteredMessageWriterXml"));
@@ -267,6 +295,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Check what is returned for wildcard is for text/plain
    */
+  @Test
   public void isRegisteredMessageBodyReaderWildcardTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "isRegisteredMessageReaderWildCard"));
@@ -282,6 +311,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Check BodyReader is returned for text/xml
    */
+  @Test
   public void isRegisteredMessageBodReaderXmlTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "isRegisteredMessageReaderXml"));
@@ -297,6 +327,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Check BodyWriter is used for text/xml to write entity
    */
+  @Test
   public void writeBodyEntityUsingWriterTest() throws Fault {
     String ename = EnumProvider.JAXRS.name();
     String search = new ReadableWritableEntity(ename).toXmlString();
@@ -316,6 +347,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Check HeaderWriter is used for text/xml to write entity
    */
+  @Test
   public void writeHeaderEntityUsingWriterTest() throws Fault {
     String ename = EnumProvider.JAXRS.name();
     String search = new ReadableWritableEntity(ename).toXmlString();
@@ -337,6 +369,7 @@ public class JAXRSProvidersClientIT
    * @test_Strategy: Check EntityWriter is used and IOException is written using
    * mapper
    */
+  @Test
   public void writeIOExceptionUsingWriterTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS, "Accept: " + MediaType.TEXT_XML);
     setProperty(Property.REQUEST,
@@ -355,6 +388,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Check IOExceptionExceptionMapper is chosen
    */
+  @Test
   public void writeIOExceptionWithoutWriterTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS, "Accept: " + MediaType.TEXT_XML);
     setProperty(Property.REQUEST,
@@ -371,6 +405,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Put entity to header and read it using reader
    */
+  @Test
   public void readEntityFromHeaderTest() throws Fault {
     ReadableWritableEntity entity;
     entity = new ReadableWritableEntity(EnumProvider.JAXRS.name());
@@ -391,6 +426,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Put entity to body and read it using reader
    */
+  @Test
   public void readEntityFromBodyTest() throws Fault {
     ReadableWritableEntity entity;
     entity = new ReadableWritableEntity(EnumProvider.JAXRS.name());
@@ -410,6 +446,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Put entity to body and read it using reader
    */
+  @Test
   public void readEntityIOExceptionTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         "Content-Type: " + MediaType.TEXT_XML);
@@ -427,6 +464,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Put entity to body and read it using reader
    */
+  @Test
   public void readEntityWebException400Test() throws Fault {
     String code = ReadableWritableEntity.NAME + ":" + Status.BAD_REQUEST.name();
     setProperty(Property.REQUEST_HEADERS,
@@ -446,6 +484,7 @@ public class JAXRSProvidersClientIT
    * 
    * @test_Strategy: Put entity to body and read it using reader
    */
+  @Test
   public void readEntityWebException410Test() throws Fault {
     String code = ReadableWritableEntity.NAME + ":" + Status.GONE.name();
     setProperty(Property.REQUEST_HEADERS,
@@ -456,5 +495,19 @@ public class JAXRSProvidersClientIT
     setProperty(Property.STATUS_CODE, getStatusCode(Status.GONE));
     invoke();
   }
+  
+  // ///////////////////////////////////////////////////////////////////////
+
+  protected int getReturnedNumber() throws Fault {
+    HttpResponse response = _testCase.getResponse();
+    String body;
+    try {
+      body = response.getResponseBodyAsString();
+    } catch (IOException e) {
+      throw new Fault(e);
+    }
+    return Integer.parseInt(body);
+  }
+
 
 }

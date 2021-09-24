@@ -51,6 +51,8 @@ import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.Variant;
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
@@ -167,7 +169,7 @@ public class JAXRSClient extends JAXRSCommonClient {
     int indexGb = entity.indexOf("gb");
 
     assertTrue(indexDa < indexUs && indexUs < indexGb,
-        "List of acceptable languages", entity, "is not sorted by q values");
+        "List of acceptable languages"+ entity+ "is not sorted by q values");
   }
 
   /*
@@ -278,8 +280,8 @@ public class JAXRSClient extends JAXRSCommonClient {
     int indexPlain = entity.indexOf(MediaType.TEXT_PLAIN);
 
     assertTrue(indexXml < indexHtml && indexHtml < indexAny
-        && indexAny < indexJava && indexJava < indexPlain, "Media Types",
-        entity, "are not sorted");
+        && indexAny < indexJava && indexJava < indexPlain, "Media Types"+
+        entity+ "are not sorted");
   }
 
   /*
@@ -1458,15 +1460,15 @@ public class JAXRSClient extends JAXRSCommonClient {
   }
 
   protected static void assertStatus(Response r, Status status) throws Fault {
-    assertTrue(r.getStatus() == status.getStatusCode(), "Expected",
-        status.getStatusCode(), "got", r.getStatus());
+    assertTrue(r.getStatus() == status.getStatusCode(), "Expected"+
+        status.getStatusCode()+ "got"+ r.getStatus());
     TestUtil.logMsg("Found expected status: " + status.getStatusCode());
   }
 
   protected static void assertContains(String string, String substring)
       throws Fault {
-    assertTrue(string.contains(substring), string, "does NOT contain",
-        substring, ", it is:", string);
+    assertTrue(string.contains(substring), string+ "does NOT contain"+
+        substring+ ", it is:"+ string);
     TestUtil.logMsg("Found expected substring: " + substring);
   }
 

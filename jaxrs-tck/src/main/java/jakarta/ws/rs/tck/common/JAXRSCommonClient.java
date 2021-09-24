@@ -678,10 +678,11 @@ public abstract class JAXRSCommonClient {
    *          a space separated message[i].toString() compilation for
    *          i=<0,message.length)
    */
-  public static void //
-     assertTrue(boolean condition, Object... message)   {
-    assertTrue(condition, objectsToString(message));
-  }
+  //public static void //
+  //    assertTrue(boolean condition, Object... message)   {
+  //  if (!condition)
+  //    fail(message);
+  //}
 
   /**
    * Asserts that a condition is false.
@@ -692,10 +693,10 @@ public abstract class JAXRSCommonClient {
    *          a space separated message[i].toString() compilation for
    *          i=<0,message.length)
    */
-  public static void //
-      assertFalse(boolean condition, Object... message)   {
-    assertTrue(!condition, message);
-  }
+  // public static void //
+  //     assertFalse(boolean condition, Object... message)   {
+  //   assertTrue(!condition, message);
+  // }
 
   /**
    * Asserts that two objects are equal. When instances of Comparable, such as

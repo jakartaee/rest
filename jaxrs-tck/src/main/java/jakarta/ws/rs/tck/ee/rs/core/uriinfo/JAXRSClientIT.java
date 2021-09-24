@@ -90,6 +90,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * which handles the request using UriInfo. Verify that
    * UriInfo.getQueryParameters() works.
    */
+  @Test
   public void queryTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "query?stringtest=cts&inttest=-2147483648?"));
@@ -107,6 +108,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * which handles the request using UriInfo. Verify that
    * UriInfo.getQueryParameters(true) works.
    */
+  @Test
   public void queryTest1() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET,
         "query1?stringtest=cts%20&inttest=-2147483648?%2010"));
@@ -124,6 +126,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * which handles the request using UriInfo. Verify that
    * UriInfo.getQueryParameters(false) works.
    */
+  @Test
   public void queryTest2() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "query2?stringtest=cts%20&inttest=-2147483648%2010"));
@@ -141,6 +144,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * request using UriInfo. Verify that UriInfo.getAbsolutePath() and
    * getAbsolutePathBuilder() work.
    */
+  @Test
   public void aPathTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "apath"));
     setProperty(Property.SEARCH_STRING,
@@ -158,6 +162,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * request using UriInfo. Verify that UriInfo.getBaseUri() and
    * getBaseUriBuilder() work.
    */
+  @Test
   public void baseUriTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "baseuri"));
     setProperty(Property.SEARCH_STRING,
@@ -174,6 +179,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Client send a request to a resource, which handles the
    * request using UriInfo. Verify that UriInfo.getPath() work.
    */
+  @Test
   public void pathTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "path"));
     setProperty(Property.SEARCH_STRING, RESOURCE + "/path");
@@ -189,6 +195,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Client send a request to a resource, which handles the
    * request using UriInfo. Verify that UriInfo.getPath(true) work.
    */
+  @Test
   public void pathTest1() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "path1%20/%2010"));
     setProperty(Property.SEARCH_STRING, RESOURCE + "/path1 / 10");
@@ -204,6 +211,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Client send a request to a resource, which handles the
    * request using UriInfo. Verify that UriInfo.getPath(false) work.
    */
+  @Test
   public void pathTest2() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "path2%20/%2010"));
     setProperty(Property.SEARCH_STRING, RESOURCE + "/path2%20/%2010");
@@ -219,6 +227,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Client send a request to a resource, which handles the
    * request using UriInfo. Verify that UriInfo.getPathSegments() work.
    */
+  @Test
   public void pathSegTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "pathseg"));
     setProperty(Property.UNORDERED_SEARCH_STRING, RESOURCE);
@@ -235,6 +244,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Client send a request to a resource, which handles the
    * request using UriInfo. Verify that UriInfo.getPathSegments(true) work.
    */
+  @Test
   public void pathSegTest1() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "pathseg1%20/%2010"));
     setProperty(Property.UNORDERED_SEARCH_STRING, RESOURCE);
@@ -251,6 +261,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Client send a request to a resource, which handles the
    * request using UriInfo. Verify that UriInfo.getPathSegments(false) work.
    */
+  @Test
   public void pathSegTest2() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "pathseg2%20/%2010"));
     setProperty(Property.UNORDERED_SEARCH_STRING, RESOURCE);
@@ -267,6 +278,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Client send a request to a resource, which handles the
    * request using UriInfo. Verify that UriInfo.getPathParameters() work.
    */
+  @Test
   public void pathParamTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "pathparam/a/b"));
     setProperty(Property.UNORDERED_SEARCH_STRING, "a=a|b=b");
@@ -281,6 +293,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Client send a request to a resource, which handles the
    * request using UriInfo. Verify that UriInfo.getPathParameters(true) work.
    */
+  @Test
   public void pathParamTest1() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "pathparam1/%20/%2010"));
     setProperty(Property.UNORDERED_SEARCH_STRING, "a= |b= 10");
@@ -296,6 +309,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Client send a request to a resource, which handles the
    * request using UriInfo. Verify that UriInfo.getPathParameters(false) work.
    */
+  @Test
   public void pathParamTest2() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "pathparam2/%20/%2010"));
     setProperty(Property.UNORDERED_SEARCH_STRING, "a=%20|b=%2010");
@@ -312,6 +326,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * which handles the request using UriInfo. Verify that getRequestUri() and
    * getRequestUriBuilder() work.
    */
+  @Test
   public void requestURITest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "request?stringtest=cts&inttest=-2147483648"));
@@ -331,6 +346,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * which handles the request using UriInfo. Verify that getMatchedResources()
    * work.
    */
+  @Test
   public void getMatchedResourcesTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "resource"));
     setProperty(Property.SEARCH_STRING, URIInfoTest.class.getName());
@@ -345,6 +361,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: Client send a request with query parameters to a resource,
    * which handles the request using UriInfo. Verify that getMatchedURIs() work.
    */
+  @Test
   public void getMatchedURIsTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "uri"));
     setProperty(Property.SEARCH_STRING, RESOURCE + "/uri");
@@ -362,6 +379,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * which handles the request using UriInfo. Verify that getMatchedURIs(true)
    * work.
    */
+  @Test
   public void getMatchedURIsTest1() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "uri1"));
     setProperty(Property.SEARCH_STRING, RESOURCE + "/uri1");
@@ -379,6 +397,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * which handles the request using UriInfo. Verify that getMatchedURIs(false)
    * work.
    */
+  @Test
   public void getMatchedURIsTest2() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, "uri2"));
     setProperty(Property.SEARCH_STRING, RESOURCE + "/uri2");
@@ -395,6 +414,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: The normalized request URI MUST be reflected in the URIs
    * obtained from an injected UriInfo
    */
+  @Test
   public void getNormalizedUriTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, URIInfoTest.DECODED));
     invoke();
@@ -407,6 +427,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
 
   private void assertBodyGreaterThanOne() throws Fault {
     int i = Integer.parseInt(getResponseBody());
-    assertTrue(i > 1, "Got unexpected response body", getResponseBody());
+    assertTrue(i > 1, "Got unexpected response body"+ getResponseBody());
   }
 }

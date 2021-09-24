@@ -42,7 +42,8 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  *     EntityPart.withName("name1").fileName("file1.doc").content(stream1).build(),
  *     EntityPart.withName("name2").fileName("file2.doc").content(stream2).build(),
  *     EntityPart.withName("name3").fileName("file3.xml").content(myObject, MyClass.class).mediaType("application/xml").build());
- *Entity entity = Entity.entity(parts, MediaType.MULTIPART_FORM_DATA);
+ *GenericEntity&lt;List&lt;EntityPart&gt;&gt; genericEntity = new GenericEntity&lt;&gt;(parts){};
+ *Entity entity = Entity.entity(genericEntity, MediaType.MULTIPART_FORM_DATA);
  *Response r = target.request().post(entity);
  * </pre>
  * 

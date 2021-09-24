@@ -238,7 +238,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
-  @Test
+  //@Test
   public void readWriteStreamingOutputProviderTest() throws Fault {
     setPropertyAndInvoke("streamingoutput", MediaType.APPLICATION_XML_TYPE);
   }

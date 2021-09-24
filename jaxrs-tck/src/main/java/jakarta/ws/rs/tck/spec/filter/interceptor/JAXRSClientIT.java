@@ -89,7 +89,14 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/filter/interceptor/web.xml.template");
     String webXml = editWebXmlString(inStream);
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_filter_interceptor_web.war");
-    archive.addClasses(TSAppConfig.class, Resource.class, EntityReaderInterceptor.class, EntityWriterInterceptor.class);
+    archive.addClasses(TSAppConfig.class, Resource.class, EntityReaderInterceptor.class, EntityWriterInterceptor.class,
+      jakarta.ws.rs.tck.common.impl.StringStreamingOutput.class,
+      jakarta.ws.rs.tck.common.impl.StringDataSource.class,
+      jakarta.ws.rs.tck.common.impl.StringSource.class,
+      jakarta.ws.rs.tck.common.impl.ReplacingOutputStream.class,
+      jakarta.ws.rs.tck.common.util.JaxrsUtil.class,
+      jakarta.ws.rs.tck.common.provider.StringBean.class,
+      jakarta.ws.rs.tck.common.provider.StringBeanEntityProvider.class);
     archive.setWebXML(new StringAsset(webXml));
     return archive;
   }
@@ -115,6 +122,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void byteArrayReaderContainerInterceptorTest() throws Fault {
     addInterceptors(EntityReaderInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postbytearray"));
@@ -134,6 +142,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void byteArrayReaderNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postbytearray"));
     setRequestContentEntity(content);
@@ -149,6 +158,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void byteArrayWriterContainerInterceptorTest() throws Fault {
     addInterceptors(EntityWriterInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getbytearray"));
@@ -167,6 +177,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void byteArrayWriterNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getbytearray"));
     setProperty(Property.SEARCH_STRING, Resource.getName());
@@ -181,6 +192,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void byteArrayWriterClientInterceptorTest() throws Fault {
     addInterceptors(EntityWriterInterceptor.class);
     addProvider(EntityWriterInterceptor.class);
@@ -203,6 +215,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void stringReaderContainerInterceptorTest() throws Fault {
     addInterceptors(EntityReaderInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "poststring"));
@@ -222,6 +235,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void stringReaderNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "poststring"));
     setRequestContentEntity(content);
@@ -237,6 +251,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void stringWriterContainerInterceptorTest() throws Fault {
     addInterceptors(EntityWriterInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getstring"));
@@ -255,6 +270,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void stringWriterNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getstring"));
     setProperty(Property.SEARCH_STRING, Resource.getName());
@@ -269,6 +285,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void stringWriterClientInterceptorTest() throws Fault {
     addProvider(EntityWriterInterceptor.class);
     addInterceptors(EntityWriterInterceptor.class);
@@ -291,6 +308,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void inputStreamReaderContainerInterceptorTest() throws Fault {
     addInterceptors(EntityReaderInterceptor.class);
     setProperty(Property.REQUEST,
@@ -312,6 +330,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void inputStreamReaderNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.POST, "postinputstream"));
@@ -328,6 +347,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void inputStreamWriterContainerInterceptorTest() throws Fault {
     addInterceptors(EntityWriterInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getinputstream"));
@@ -347,6 +367,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void inputStreamWriterNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getinputstream"));
     setProperty(Property.SEARCH_STRING, Resource.getName());
@@ -361,6 +382,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void inputStreamWriterClientInterceptorTest() throws Fault {
     ByteArrayInputStream stream = new ByteArrayInputStream(content.getBytes());
     addProvider(EntityWriterInterceptor.class);
@@ -384,6 +406,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void readerReaderContainerInterceptorTest() throws Fault {
     addInterceptors(EntityReaderInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postreader"));
@@ -403,6 +426,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void readerReaderNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postreader"));
     setRequestContentEntity(content);
@@ -418,6 +442,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void readerWriterContainerInterceptorTest() throws Fault {
     addInterceptors(EntityWriterInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getreader"));
@@ -436,6 +461,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void readerWriterNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getreader"));
     setProperty(Property.SEARCH_STRING, Resource.getName());
@@ -450,6 +476,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void readerWriterClientInterceptorTest() throws Fault {
     ByteArrayInputStream bais = new ByteArrayInputStream(content.getBytes());
     InputStreamReader reader = new InputStreamReader(bais);
@@ -474,6 +501,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void fileReaderContainerInterceptorTest() throws Fault {
     addInterceptors(EntityReaderInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postfile"));
@@ -493,6 +521,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void fileReaderNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postfile"));
     setRequestContentEntity(content);
@@ -508,6 +537,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void fileWriterContainerInterceptorTest() throws Fault {
     addInterceptors(EntityWriterInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getfile"));
@@ -526,6 +556,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void fileWriterNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getfile"));
     setProperty(Property.SEARCH_STRING, Resource.getName());
@@ -540,6 +571,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void fileWriterClientInterceptorTest() throws Fault {
     try {
       File file = File.createTempFile("temp", "tmp");
@@ -570,6 +602,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void dataSourceReaderContainerInterceptorTest() throws Fault {
     addInterceptors(EntityReaderInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postdatasource"));
@@ -590,6 +623,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void dataSourceReaderNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postdatasource"));
     setRequestContentEntity(content);
@@ -605,6 +639,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void dataSourceWriterContainerInterceptorTest() throws Fault {
     addInterceptors(EntityWriterInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getdatasource"));
@@ -624,6 +659,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void dataSourceWriterNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getdatasource"));
     setProperty(Property.SEARCH_STRING, Resource.getName());
@@ -638,6 +674,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void dataSourceWriterClientInterceptorTest() throws Fault {
     StringDataSource source = new StringDataSource(content,
         MediaType.WILDCARD_TYPE);
@@ -663,6 +700,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void sourceWriterContainerInterceptorTest() throws Fault {
     addInterceptors(EntityWriterInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getsource"));
@@ -682,6 +720,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void sourceWriterNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getsource"));
     setProperty(Property.SEARCH_STRING, Resource.getName());
@@ -699,6 +738,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void jaxbReaderContainerInterceptorTest() throws Fault {
     addInterceptors(EntityReaderInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postjaxb"));
@@ -720,6 +760,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void jaxbReaderNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postjaxb"));
     setRequestContentEntity(getJaxbToken());
@@ -737,6 +778,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void jaxbWriterContainerInterceptorTest() throws Fault {
     addInterceptors(EntityWriterInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getjaxb"));
@@ -756,6 +798,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void jaxbWriterNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getjaxb"));
     setProperty(Property.SEARCH_STRING, Resource.getName());
@@ -771,6 +814,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
    * interceptors when mapping representations to Java types and vice versa.
    */
+  @Test
   public void jaxbWriterClientInterceptorTest() throws Fault {
     JAXBElement<String> element = new JAXBElement<String>(new QName("element"),
         String.class, content);
@@ -802,6 +846,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * interceptors when stringBeanping representations to Java types and vice
    * versa.
    */
+  @Test
   public void stringBeanReaderContainerInterceptorTest() throws Fault {
     addInterceptors(EntityReaderInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "poststringbean"));
@@ -823,6 +868,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * interceptors when stringBeanping representations to Java types and vice
    * versa.
    */
+  @Test
   public void stringBeanReaderNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "poststringbean"));
     setRequestContentEntity(content);
@@ -839,6 +885,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * interceptors when stringBeanping representations to Java types and vice
    * versa.
    */
+  @Test
   public void stringBeanWriterContainerInterceptorTest() throws Fault {
     addInterceptors(EntityWriterInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getstringbean"));
@@ -859,6 +906,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * interceptors when stringBeanping representations to Java types and vice
    * versa.
    */
+  @Test
   public void stringBeanWriterNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getstringbean"));
     setProperty(Property.SEARCH_STRING, Resource.getName());
@@ -874,6 +922,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * interceptors when stringBeanping representations to Java types and vice
    * versa.
    */
+  @Test
   public void stringBeanWriterClientInterceptorTest() throws Fault {
     addInterceptors(EntityWriterInterceptor.class);
     addProvider(EntityWriterInterceptor.class);

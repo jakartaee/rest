@@ -39,7 +39,7 @@ import org.junit.jupiter.api.AfterEach;
 @ExtendWith(ArquillianExtension.class)
 public class JAXRSClientIT extends JAXRSCommonClient {
 
-  public void JAXRSClientIT() {
+  public JAXRSClientIT() {
     setup();
     setContextRoot("/jaxrs_spec_templateTest_web");
   }

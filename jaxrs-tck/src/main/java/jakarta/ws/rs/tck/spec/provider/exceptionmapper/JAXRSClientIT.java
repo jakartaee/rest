@@ -189,6 +189,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    */
   // TODO : Use a servlet filter to verify the exception has been passed
   // to underlying container, JIRA 1613
+  @Test
   public void mappedExceptionTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "mapped"));
     setProperty(Property.UNEXPECTED_RESPONSE_MATCH,

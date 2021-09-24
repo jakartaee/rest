@@ -35,6 +35,7 @@ import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
@@ -189,7 +190,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @test_Strategy: If P = {}, set P = {*\*}. untestable
    */
-  @Test
+  @Disabled
   public void noProducesTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "nomedia/nothing"));
     setProperty(Property.SEARCH_STRING, "nothing");
@@ -203,7 +204,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @test_Strategy: If P = {}, set P = {*\*}. untestable
    */
-  @Test
+  @Disabled
   public void noProducesResponseReturnTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(Request.GET, "nomedia/response"));

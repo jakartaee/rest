@@ -4,17 +4,11 @@ language: java
 
 jdk:
   - oraclejdk8
-  - oraclejdk9
   - oraclejdk11
   - openjdk8
-  - openjdk9
-  - openjdk10
   - openjdk11
-  - openjdk12
-  - openjdk13
-  - openjdk14
-  - openjdk15
   - openjdk16
+  - openjdk17
 
 cache:
   directories:

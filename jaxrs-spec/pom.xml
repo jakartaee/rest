@@ -22,19 +22,20 @@
     <artifactId>jakarta.ws.rs-spec</artifactId>
     <version>3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Jakarta RESTful Web Services Specification</name>
+    <name>Jakarta RESTful WS Specification</name>
 
     <properties>
         <site.output.dir>${project.build.directory}/staging</site.output.dir>
         <maven.site.skip>true</maven.site.skip>
-        <asciidoctor.maven.plugin.version>2.0.0-RC.1</asciidoctor.maven.plugin.version>
-        <asciidoctorj.version>2.0.0</asciidoctorj.version>
-        <asciidoctorj.pdf.version>1.5.0-alpha.17</asciidoctorj.pdf.version>
-        <jruby.version>9.2.7.0</jruby.version>
+        <asciidoctor.maven.plugin.version>2.1.0</asciidoctor.maven.plugin.version>
+        <asciidoctorj.version>2.5.1</asciidoctorj.version>
+        <asciidoctorj.pdf.version>1.6.0</asciidoctorj.pdf.version>
+        <jruby.version>9.2.19.0</jruby.version>
         <!-- status: DRAFT, BETA, etc., or blank for final -->
-        <status></status>
+        <status>DRAFT</status>
         <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
         <revisiondate>${maven.build.timestamp}</revisiondate>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <scm>
@@ -90,6 +91,7 @@
                         <configuration>
                             <backend>xhtml</backend>
                             <attributes>
+				<imagesdir>images</imagesdir>
                                 <revnumber>${project.version}</revnumber>
                                 <revremark>${status}</revremark>
                                 <revdate>${revisiondate}</revdate>
@@ -115,6 +117,7 @@
                         <configuration>
                             <backend>pdf</backend>
                             <attributes>
+				<imagesdir>images</imagesdir>
                                 <pdf-stylesdir>${project.basedir}/src/theme</pdf-stylesdir>
                                 <pdf-style>jakartaee</pdf-style>
                                 <revnumber>${project.version}</revnumber>

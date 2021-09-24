@@ -52,6 +52,8 @@
         <property name="basedir" value="${basedir}"/>
     -->
 
+    <property name="cacheFile" value="${checkstyle.cache.file}"/>
+
     <!-- Checks that each Java package has a Javadoc file used for commenting. -->
     <!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocPackage       -->
     <module name="JavadocPackage" />
@@ -66,6 +68,11 @@
 
     <module name="FileLength"/>
 
+    <module name="LineLength">
+        <property name="max" value="160"/>
+        <property name="ignorePattern" value="@version|@see|@todo|TODO"/>
+    </module>
+
     <!-- Following interprets the header file as regular expressions. -->
     <!-- <module name="RegexpHeader"/>                                -->
 
@@ -79,19 +86,15 @@
     </module>
 
     <module name="TreeWalker">
-        <property name="cacheFile" value="${checkstyle.cache.file}"/>
         <property name="tabWidth" value="4"/>
 
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
 
-        <!--
-          - Turned off for now due to https://github.com/checkstyle/checkstyle/issues/5088
-          -
         <module name="JavadocMethod">
-            <property name="scope" value="protected"/>
+            <property name="accessModifiers" value="protected"/>
             <property name="validateThrows" value="false"/>
-        </module -->
+        </module>
 
         <module name="JavadocType">
             <property name="scope" value="protected"/>
@@ -140,10 +143,6 @@
 
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
-        <module name="LineLength">
-            <property name="max" value="160"/>
-            <property name="ignorePattern" value="@version|@see|@todo|TODO"/>
-        </module>
         <module name="MethodLength"/>
         <module name="ParameterNumber">
 	   <property name="max" value="11"/>

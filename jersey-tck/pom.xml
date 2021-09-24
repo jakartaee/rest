@@ -8,7 +8,7 @@
     <version>3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Jakarta REST Compliance</name>
+    <name>Jakarta RESTful WS Compliance</name>
     <description>This test verifies the compliance of Eclipse Jersey with Jakarta REST</description>
 
     <properties>

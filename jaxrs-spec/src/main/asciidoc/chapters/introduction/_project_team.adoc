@@ -17,8 +17,6 @@ of the project team and various contributors.
 
 The following are the current committers of the Jakarta RESTful Web Services specification project:
 
--- Sebastian Daschner (IBM)
-
 -- Christian Kaltepoth (individual)
 
 -- Markus Karg (individual)

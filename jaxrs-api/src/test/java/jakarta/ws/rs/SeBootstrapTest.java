@@ -3,12 +3,14 @@ package jakarta.ws.rs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
+import java.net.URI;
 import java.util.concurrent.CompletionStage;
 
 import javax.net.ssl.SSLContext;
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.SeBootstrap.Configuration;
 import jakarta.ws.rs.SeBootstrap.Configuration.SSLClientAuthentication;
 import jakarta.ws.rs.core.Application;
@@ -35,7 +38,7 @@ public final class SeBootstrapTest {
      * <em>installed</em> RuntimeDelegate.
      */
     @BeforeEach
-    public final void setUp() {
+    public void setUp() {
         RuntimeDelegate.setInstance(mock(RuntimeDelegate.class));
     }
 
@@ -44,7 +47,7 @@ public final class SeBootstrapTest {
      * use a possibly cluttered instance.
      */
     @AfterEach
-    public final void tearDown() {
+    public void tearDown() {
         RuntimeDelegate.setInstance(null);
     }
 
@@ -55,7 +58,7 @@ public final class SeBootstrapTest {
      * @since 3.1
      */
     @Test
-    public final void shouldDelegateApplicationStartupToRuntimeDelegate() {
+    public void shouldDelegateApplicationStartupToRuntimeDelegate() {
         // given
         final Application application = mock(Application.class);
         final Configuration configuration = mock(Configuration.class);
@@ -71,13 +74,37 @@ public final class SeBootstrapTest {
     }
 
     /**
+     * Assert that {@link SeBootstrap#start(Class, Configuration)} will delegate to
+     * {@link RuntimeDelegate#bootstrap(Class, Configuration)}.
+     *
+     * @since 3.1
+     */
+    @Test
+    public void shouldDelegateClassApplicationStartupToRuntimeDelegate() {
+        // given
+        final Application application = mock(Application.class);
+        final Class<? extends Application> clazz = application.getClass();
+        final Configuration configuration = mock(Configuration.class);
+        @SuppressWarnings("unchecked")
+        final CompletionStage<SeBootstrap.Instance> nativeCompletionStage = mock(CompletionStage.class);
+        given(RuntimeDelegate.getInstance().bootstrap(clazz, configuration))
+                .willReturn(nativeCompletionStage);
+
+        // when
+        final CompletionStage<SeBootstrap.Instance> actualCompletionStage = SeBootstrap.start(clazz, configuration);
+
+        // then
+        assertThat(actualCompletionStage, is(sameInstance(nativeCompletionStage)));
+    }
+
+    /**
      * Assert that {@link SeBootstrap.Configuration#builder()} will delegate to
      * {@link RuntimeDelegate#createConfigurationBuilder()}.
      *
      * @since 3.1
      */
     @Test
-    public final void shouldDelegateConfigurationBuilderCreationToRuntimeDelegate() {
+    public void shouldDelegateConfigurationBuilderCreationToRuntimeDelegate() {
         // given
         final SeBootstrap.Configuration.Builder nativeConfigurationBuilder = mock(SeBootstrap.Configuration.Builder.class);
         given(RuntimeDelegate.getInstance().createConfigurationBuilder()).willReturn(nativeConfigurationBuilder);
@@ -96,7 +123,7 @@ public final class SeBootstrapTest {
      * @since 3.1
      */
     @Test
-    public final void shouldReturnSameConfigurationBuilderInstanceWhenLoadingExternalConfiguration() {
+    public void shouldReturnSameConfigurationBuilderInstanceWhenLoadingExternalConfiguration() {
         // given
         final SeBootstrap.Configuration.Builder previousConfigurationBuilder = spy(SeBootstrap.Configuration.Builder.class);
         final Object someExternalConfiguration = mock(Object.class);
@@ -118,7 +145,7 @@ public final class SeBootstrapTest {
      * @since 3.1
      */
     @Test
-    public final void shouldPushCorrespondingPropertiesIntoConfigurationBuilder() {
+    public void shouldPushCorrespondingPropertiesIntoConfigurationBuilder() {
         // given
         final String someProtocolValue = mockString();
         final String someHostValue = mockString();
@@ -153,7 +180,7 @@ public final class SeBootstrapTest {
      * @since 3.1
      */
     @Test
-    public final void shouldPullCorrespondingPropertiesFromConfiguration() {
+    public void shouldPullCorrespondingPropertiesFromConfiguration() {
         // given
         final String someProtocolValue = mockString();
         final String someHostValue = mockString();
@@ -185,6 +212,53 @@ public final class SeBootstrapTest {
         assertThat(actualRootPathValue, is(sameInstance(someRootPathValue)));
         assertThat(actualSSLContextValue, is(sameInstance(someSSLContextValue)));
         assertThat(actualSSLClientAuthenticationValue, is(sameInstance(someSSLClientAuthenticationValue)));
+    }
+
+    /**
+     * Assert that a default {@code Configuration} is used when not passed to the
+     * {@code SeBootstrap.start} method.
+     *
+     * @since 3.1
+     */
+    @Test
+    public void shouldUseDefaultConfigurationIfOmitted() {
+        // given
+        final Application application = mock(Application.class);
+        final Configuration configuration = mock(Configuration.class);
+        SeBootstrap.Configuration.Builder builder = mock(SeBootstrap.Configuration.Builder.class);
+        given(SeBootstrap.Configuration.builder()).willReturn(builder);
+        given(builder.build()).willReturn(configuration);
+
+        // when
+        SeBootstrap.start(application);
+
+        // then
+        verify(RuntimeDelegate.getInstance()).bootstrap(application, configuration);
+    }
+
+    /**
+     * Assert that calling {@code Configuration.baseUri} returns the correct URI as set
+     * by the mocked classes.
+     *
+     * @since 3.1
+     */
+    @Test
+    public void shouldReturnSameUri() {
+        // given
+        final URI uri = URI.create("http://localhost:8080/foo");
+        final UriBuilder uriBuilder = mock(UriBuilder.class);
+        given(uriBuilder.build()).willReturn(uri);
+        final Configuration configuration = mock(Configuration.class);
+        given(configuration.baseUri()).willCallRealMethod();
+        given(configuration.baseUriBuilder()).willReturn(uriBuilder);
+        final SeBootstrap.Instance instance = mock(SeBootstrap.Instance.class);
+        given(instance.configuration()).willReturn(configuration);
+
+        // when
+        URI returnedUri = instance.configuration().baseUri();
+
+        // then
+        assertThat(uri, is(returnedUri));
     }
 
     private static String mockString() {

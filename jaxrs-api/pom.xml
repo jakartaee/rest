@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2011, 2020 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2011, 2021 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Public License v. 2.0, which is available at
@@ -23,15 +23,17 @@
     <parent>
         <groupId>org.eclipse.ee4j</groupId>
         <artifactId>project</artifactId>
-        <version>1.0.6</version>
+        <version>1.0.7</version>
+        <relativePath/>
     </parent>
 
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-api</artifactId>
     <version>3.1-SNAPSHOT</version>
 
+
     <packaging>bundle</packaging>
-    <name>jakarta.ws.rs-api</name>
+    <name>Jakarta RESTful WS API</name>
     <description>Jakarta RESTful Web Services</description>
 
     <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
@@ -199,7 +201,7 @@
             <build>
                 <plugins>
                     <plugin>
-                        <!-- TODO: overriding paren pom (profile jvnet-release) - we should find nicer way -->
+                        <!-- TODO: overriding parent pom (profile jvnet-release) - we should find nicer way -->
                         <!-- 1.8- javadoc cannot handle module-info -->
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>${maven.javadoc.plugin.version}</version>
@@ -266,7 +268,7 @@
             <plugins>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.2.0</version>
                 </plugin>
                 <plugin>
                     <!-- This plugin generates the buildNumber property used in maven-bundle-plugin -->
@@ -365,7 +367,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.0.1</version>
+                    <version>3.2.1</version>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -379,7 +381,7 @@
                     <!-- Adding files to jar-->
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.2.0</version>
                     <executions>
                         <execution>
                             <id>add-legal-resource</id>
@@ -404,7 +406,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-jxr-plugin</artifactId>
-                    <version>2.5</version>
+                    <version>3.1.1</version>
                     <executions>
                         <execution>
                             <goals>
@@ -416,13 +418,20 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.1.2</version>
                     <configuration>
                         <outputDirectory>${project.build.directory}/checkstyle</outputDirectory>
                         <outputFile>${project.build.directory}/checkstyle/checkstyle-result.xml</outputFile>
                         <configLocation>${basedir}/../etc/config/checkstyle.xml</configLocation>
                         <excludes>**/module-info.java</excludes>
                     </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>8.44</version>
+                        </dependency>
+                    </dependencies>
                     <executions>
                         <execution>
                             <goals>
@@ -515,7 +524,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0</version>
+            <version>5.8.0-M1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -527,7 +536,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.6.0</version>
+            <version>3.11.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -536,19 +545,19 @@
         <apidocs.title>Jakarta RESTful Web Services ${spec.version} API Specification ${spec.version.revision}</apidocs.title>
         <java.version>1.8</java.version>
 
-        <maven.bundle.plugin.version>3.5.0</maven.bundle.plugin.version>
-        <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
-        <maven.javadoc.plugin.version>3.1.0</maven.javadoc.plugin.version>
+        <maven.bundle.plugin.version>5.1.2</maven.bundle.plugin.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.javadoc.plugin.version>3.3.0</maven.javadoc.plugin.version>
 
         <api.package>jakarta.ws.rs</api.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skip.release.tests>false</skip.release.tests>
-        <spec.version>3.0</spec.version>
+        <spec.version>3.1</spec.version>
         <spec.version.revision /> <!-- e.g. (Rev a) -->
 
-        <jaxb.api.version>3.0.0</jaxb.api.version>
-        <jaxb.impl.version>3.0.0-M4</jaxb.impl.version>
-        <activation.api.version>2.0.0</activation.api.version>
+        <jaxb.api.version>3.0.1</jaxb.api.version>
+        <jaxb.impl.version>3.0.2-b01</jaxb.impl.version>
+        <activation.api.version>2.0.1</activation.api.version>
         <legal.doc.folder>${project.basedir}/..</legal.doc.folder>
     </properties>
 

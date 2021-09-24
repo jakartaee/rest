@@ -19,6 +19,7 @@ package jakarta.ws.rs.tck.uribuilder;
 import static java.util.concurrent.TimeUnit.HOURS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.net.URI;
@@ -49,7 +50,7 @@ public final class UriBuilderIT {
      */
     @Test
     public final void shouldBuildValidInstanceFromScratch()
-            throws InterruptedException, ExecutionException, URISyntaxException {
+            throws InterruptedException, ExecutionException {
         // given
         final UriBuilder uriBuilder = UriBuilder.newInstance();
 
@@ -61,18 +62,55 @@ public final class UriBuilderIT {
     }
 
     /**
-     * Verifies that no invalid URI can be created from scratch.
+     * Verifies that {@code UriBuilder#build()} creates an empty {@code URI}
+     * no other methods are called on it. The created {@code URI} should be
+     * equivalent to {@code URI.create("")}.
      * 
      * @throws ExecutionException   if the instance didn't boot correctly
      * @throws InterruptedException if the test took much longer than usually
      *                              expected
      */
     @Test
-    public final void shouldNotBuildInvalidUriFromScratch() throws InterruptedException, ExecutionException {
+    public final void emptyUriBuilderBuildsEmptyUri() throws InterruptedException, ExecutionException {
         // given
-        final UriBuilder uriBuilder = UriBuilder.newInstance();
+        final URI uri = UriBuilder.newInstance().build();
+        // then
+        assertEquals(URI.create(""), /* when */ uri);
+    }
 
+    /**
+     * Verifies that {@code UriBuilder#build()} throws a {@link UriBuilderException}
+     * when it would be asked to create an invalid URI.
+     * 
+     * @throws ExecutionException   if the instance didn't boot correctly
+     * @throws InterruptedException if the test took much longer than usually
+     *                              expected
+     */
+    @Test
+    public final void shouldThrowUriBuilderExceptionOnSchemeOnlyUri() throws InterruptedException, ExecutionException {
+        // given
+        final UriBuilder uriBuilder = UriBuilder.newInstance().scheme("http");
         // then
         assertThrows(UriBuilderException.class, /* when */ uriBuilder::build);
+    }
+
+    /**
+     * Verifies that {@code UriBuilder#build()} throws a {@code IllegalArgumentException}
+     * when it would be asked to create a URI with unresolved template variables.
+     * 
+     * @throws ExecutionException   if the instance didn't boot correctly
+     * @throws InterruptedException if the test took much longer than usually
+     *                              expected
+     */
+    @Test
+    public final void shouldThrowIllegalArgumentExceptionForUnresolvedTemplates() throws InterruptedException, 
+                                                                                         ExecutionException {
+        // given
+        final UriBuilder uriBuilder = UriBuilder.newInstance().scheme("http")
+                                                              .host("localhost")
+                                                              .path("contextroot")
+                                                              .path("{var}");
+        // then
+        assertThrows(IllegalArgumentException.class, /* when */ uriBuilder::build);
     }
 }

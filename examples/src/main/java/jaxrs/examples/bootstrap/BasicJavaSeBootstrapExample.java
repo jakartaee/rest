@@ -19,9 +19,6 @@ package jaxrs.examples.bootstrap;
 import java.net.URI;
 
 import jakarta.ws.rs.SeBootstrap;
-import jakarta.ws.rs.SeBootstrap.Configuration;
-import jakarta.ws.rs.core.Application;
-import jakarta.ws.rs.core.UriBuilder;
 
 /**
  * Basic Java SE bootstrap example.
@@ -46,21 +43,12 @@ public final class BasicJavaSeBootstrapExample {
      * @param args unused command line arguments
      * @throws InterruptedException when process is killed
      */
-    public static final void main(final String[] args) throws InterruptedException {
-        final Application application = new HelloWorld();
-
-        final SeBootstrap.Configuration requestedConfiguration = SeBootstrap.Configuration.builder().build();
-
-        SeBootstrap.start(application, requestedConfiguration).thenAccept(instance -> {
-            Runtime.getRuntime()
-                    .addShutdownHook(new Thread(() -> instance.stop()
-                            .thenAccept(stopResult -> System.out.printf("Stop result: %s [Native stop result: %s].%n",
-                                    stopResult, stopResult.unwrap(Object.class)))));
-
-            final Configuration actualConfigurarion = instance.configuration();
-            final URI uri = UriBuilder.newInstance().scheme(actualConfigurarion.protocol().toLowerCase())
-                    .host(actualConfigurarion.host()).port(actualConfigurarion.port())
-                    .path(actualConfigurarion.rootPath()).build();
+    public static void main(final String[] args) throws InterruptedException {
+        SeBootstrap.start(HelloWorld.class).thenAccept(instance -> {
+            instance.stopOnShutdown(stopResult ->
+                    System.out.printf("Stop result: %s [Native stop result: %s].%n", stopResult,
+                            stopResult.unwrap(Object.class)));
+            final URI uri = instance.configuration().baseUri();
             System.out.printf("Instance %s running at %s [Native handle: %s].%n", instance, uri,
                     instance.unwrap(Object.class));
             System.out.println("Send SIGKILL to shutdown.");

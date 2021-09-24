@@ -19,13 +19,13 @@
     <artifactId>all</artifactId>
     <version>3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Jakarta RESTful Web Service Multi-Module Project</name>
+    <name>Jakarta RESTful WS Project</name>
 
     <modules>
-	<module>jaxrs-api</module>
-	<module>jaxrs-spec</module>
-	<module>jaxrs-tck</module>
-	<module>examples</module>
-	<module>jersey-tck</module>
+        <module>jaxrs-api</module>
+        <module>jaxrs-spec</module>
+        <module>jaxrs-tck</module>
+        <module>examples</module>
+        <module>jersey-tck</module>
     </modules>
 </project>

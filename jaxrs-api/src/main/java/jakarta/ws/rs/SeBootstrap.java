@@ -16,13 +16,17 @@
 
 package jakarta.ws.rs;
 
+import java.net.URI;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 import javax.net.ssl.SSLContext;
 
 import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
 /**
@@ -141,6 +145,65 @@ public interface SeBootstrap {
     }
 
     /**
+     * Starts the provided application using a default configuration.
+     *
+     * <p>
+     * This method is intended to be used in Java SE environments only. The outcome of invocations in Jakarta EE container
+     * environments is undefined.
+     * </p>
+     *
+     * @param application The application to start up.
+     * @return {@code CompletionStage} (possibly asynchronously) producing handle of the running application
+     * {@link SeBootstrap.Instance instance}.
+     * @see Configuration
+     * @since 3.1
+     */
+    static CompletionStage<Instance> start(final Application application) {
+        Configuration configuration = Configuration.builder().build();
+        return start(application, configuration);
+    }
+
+    /**
+     * Starts the provided application using the specified configuration. Creates application instance
+     * from class using default constructor. Injection is not supported.
+     *
+     * <p>
+     * This method is intended to be used in Java SE environments only. The outcome of invocations in Jakarta EE container
+     * environments is undefined.
+     * </p>
+     *
+     * @param clazz The application class.
+     * @param configuration Provides information needed for bootstrapping the application.
+     * @return {@code CompletionStage} (possibly asynchronously) producing handle of the running application
+     * {@link SeBootstrap.Instance instance}.
+     * @see Configuration
+     * @since 3.1
+     */
+    static CompletionStage<Instance> start(final Class<? extends Application> clazz, final Configuration configuration) {
+        return RuntimeDelegate.getInstance().bootstrap(clazz, configuration);
+    }
+
+    /**
+     * Starts the provided application using a default configuration. Creates application instance
+     * from class using default constructor. Injection is not supported.
+     *
+     * <p>
+     * This method is intended to be used in Java SE environments only. The outcome of invocations in Jakarta EE container
+     * environments is undefined.
+     * </p>
+     *
+     * @param clazz The application class.
+     * @return {@code CompletionStage} (possibly asynchronously) producing handle of the running application
+     * {@link SeBootstrap.Instance instance}.
+     * @see Configuration
+     * @since 3.1
+     */
+    static CompletionStage<Instance> start(final Class<? extends Application> clazz) {
+        Configuration configuration = Configuration.builder().build();
+        return start(clazz, configuration);
+    }
+
+    /**
      * Provides information needed by the JAX-RS implementation for bootstrapping an application.
      * <p>
      * The configuration essentially consists of a set of parameters. While the set of actually effective keys is product
@@ -151,7 +214,7 @@ public interface SeBootstrap {
      * @author Markus KARG (markus@headcrashing.eu)
      * @since 3.1
      */
-    public static interface Configuration {
+    interface Configuration {
 
         /**
          * Configuration key for the protocol an application is bound to.
@@ -165,7 +228,7 @@ public interface SeBootstrap {
          *
          * @since 3.1
          */
-        static final String PROTOCOL = "jakarta.ws.rs.SeBootstrap.Protocol";
+        String PROTOCOL = "jakarta.ws.rs.SeBootstrap.Protocol";
 
         /**
          * Configuration key for the hostname or IP address an application is bound to.
@@ -182,7 +245,7 @@ public interface SeBootstrap {
          *
          * @since 3.1
          */
-        static final String HOST = "jakarta.ws.rs.SeBootstrap.Host";
+        String HOST = "jakarta.ws.rs.SeBootstrap.Host";
 
         /**
          * Configuration key for the TCP port an application is bound to.
@@ -199,7 +262,7 @@ public interface SeBootstrap {
          *
          * @since 3.1
          */
-        static final String PORT = "jakarta.ws.rs.SeBootstrap.Port";
+        String PORT = "jakarta.ws.rs.SeBootstrap.Port";
 
         /**
          * Configuration key for the root path an application is bound to.
@@ -209,7 +272,7 @@ public interface SeBootstrap {
          *
          * @since 3.1
          */
-        static final String ROOT_PATH = "jakarta.ws.rs.SeBootstrap.RootPath";
+        String ROOT_PATH = "jakarta.ws.rs.SeBootstrap.RootPath";
 
         /**
          * Configuration key for the secure socket configuration to be used.
@@ -219,7 +282,7 @@ public interface SeBootstrap {
          *
          * @since 3.1
          */
-        static final String SSL_CONTEXT = "jakarta.ws.rs.SeBootstrap.SSLContext";
+        String SSL_CONTEXT = "jakarta.ws.rs.SeBootstrap.SSLContext";
 
         /**
          * Configuration key for the secure socket client authentication policy.
@@ -233,7 +296,7 @@ public interface SeBootstrap {
          *
          * @since 3.1
          */
-        static final String SSL_CLIENT_AUTHENTICATION = "jakarta.ws.rs.SeBootstrap.SSLClientAuthentication";
+        String SSL_CLIENT_AUTHENTICATION = "jakarta.ws.rs.SeBootstrap.SSLClientAuthentication";
 
         /**
          * Secure socket client authentication policy
@@ -247,7 +310,7 @@ public interface SeBootstrap {
          * @author Markus KARG (markus@headcrashing.eu)
          * @since 3.1
          */
-        public enum SSLClientAuthentication {
+        enum SSLClientAuthentication {
 
             /**
              * Server will <em>not request</em> client authentication.
@@ -276,14 +339,14 @@ public interface SeBootstrap {
          *
          * @since 3.1
          */
-        static final int FREE_PORT = 0;
+        int FREE_PORT = 0;
 
         /**
          * Special value for {@link #PORT} property indicating that the implementation MUST use its default port.
          *
          * @since 3.1
          */
-        static final int DEFAULT_PORT = -1;
+        int DEFAULT_PORT = -1;
 
         /**
          * Returns the value of the property with the given name, or {@code null} if there is no property of that name.
@@ -361,7 +424,7 @@ public interface SeBootstrap {
          * Same as if calling {@link #property(String) (String) property(ROOT_PATH)}.
          * </p>
          *
-         * @return root path to be used, e. g. {@code "/"}.
+         * @return root path to be used, e.g. {@code "/"}.
          * @throws ClassCastException if root path is not a {@link String}.
          * @see SeBootstrap.Configuration#ROOT_PATH
          * @since 3.1
@@ -401,6 +464,28 @@ public interface SeBootstrap {
         }
 
         /**
+         * Returns a {@link UriBuilder} that includes the application root path.
+         *
+         * @return a {@link UriBuilder} for the application.
+         * @since 3.1
+         */
+        default UriBuilder baseUriBuilder() {
+            return UriBuilder.newInstance().scheme(protocol().toLowerCase())
+                    .host(host()).port(port()).path(rootPath());
+        }
+
+        /**
+         * Convenience method that returns a built the {@link URI} for the application.
+         *
+         * @return a built {@link URI} for the application.
+         * @see Configuration#baseUriBuilder()
+         * @since 3.1
+         */
+        default URI baseUri() {
+            return baseUriBuilder().build();
+        }
+
+        /**
          * Creates a new bootstrap configuration builder instance.
          *
          * @return {@link Builder} for bootstrap configuration.
@@ -408,7 +493,7 @@ public interface SeBootstrap {
          */
         static Builder builder() {
             return RuntimeDelegate.getInstance().createConfigurationBuilder();
-        };
+        }
 
         /**
          * Builder for bootstrap {@link Configuration}.
@@ -416,7 +501,7 @@ public interface SeBootstrap {
          * @author Markus KARG (markus@headcrashing.eu)
          * @since 3.1
          */
-        static interface Builder {
+        interface Builder {
 
             /**
              * Builds a bootstrap configuration instance from the provided property values.
@@ -576,7 +661,7 @@ public interface SeBootstrap {
      * @author Markus KARG (markus@headcrashing.eu)
      * @since 3.1
      */
-    public interface Instance {
+    interface Instance {
 
         /**
          * Provides access to the configuration <em>actually</em> used by the implementation used to create this instance.
@@ -590,7 +675,7 @@ public interface SeBootstrap {
          * @return The configuration actually used to create this instance.
          * @since 3.1
          */
-        public Configuration configuration();
+        Configuration configuration();
 
         /**
          * Initiate immediate shutdown of running application instance.
@@ -598,7 +683,7 @@ public interface SeBootstrap {
          * @return {@code CompletionStage} asynchronously shutting down this application instance.
          * @since 3.1
          */
-        public CompletionStage<StopResult> stop();
+        CompletionStage<StopResult> stop();
 
         /**
          * Result of stopping the application instance.
@@ -606,7 +691,7 @@ public interface SeBootstrap {
          * @author Markus KARG (markus@headcrashing.eu)
          * @since 3.1
          */
-        public interface StopResult {
+        interface StopResult {
 
             /**
              * Provides access to the wrapped native shutdown result.
@@ -622,7 +707,7 @@ public interface SeBootstrap {
              * @throws ClassCastException if the result is not {@code null} or is not assignable to the type {@code T}.
              * @since 3.1
              */
-            public <T> T unwrap(Class<T> nativeClass);
+            <T> T unwrap(Class<T> nativeClass);
         }
 
         /**
@@ -638,7 +723,18 @@ public interface SeBootstrap {
          * @throws ClassCastException if the handle is not {@code null} and is not assignable to the type {@code T}.
          * @since 3.1
          */
-        public <T> T unwrap(Class<T> nativeClass);
+        <T> T unwrap(Class<T> nativeClass);
+
+        /**
+         * Registers a consumer for a {@link StopResult} which will be executed in a new thread
+         * during the JVM shutdown phase.
+         *
+         * @param consumer The consumer.
+         * @since 3.1
+         */
+        default void stopOnShutdown(Consumer<StopResult> consumer) {
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> stop().thenAccept(consumer)));
+        }
     }
 
 }

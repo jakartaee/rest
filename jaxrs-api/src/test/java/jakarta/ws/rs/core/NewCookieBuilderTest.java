@@ -16,15 +16,11 @@
 
 package jakarta.ws.rs.core;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import jakarta.ws.rs.ext.RuntimeDelegate;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Unit tests for {@link NewCookie.Builder}
@@ -32,17 +28,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  * @author Nicolas NESMON
  * @since 3.1
  */
-public final class NewCookieBuilderTest {
-
-    @BeforeEach
-    public final void setUp() throws Exception {
-        RuntimeDelegate.setInstance(new RuntimeDelegateStub());
-    }
-
-    @AfterEach
-    public final void tearDown() throws Exception {
-        RuntimeDelegate.setInstance(null);
-    }
+public final class NewCookieBuilderTest extends BaseDelegateTest {
 
     @Test
     public final void shouldReturnSuppliedCookieInformationWhenSuppliedCookieIsNotNull() {

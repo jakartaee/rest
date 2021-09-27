@@ -36,6 +36,7 @@ import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
@@ -86,6 +87,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * be supported by all JAX-RS implementations
    */
   @Test
+  @Tag("optional")
   public void clientJaxbElementReaderTest() throws Fault {
     GenericType<JAXBElement<String>> type = new GenericType<JAXBElement<String>>() {
     };
@@ -115,6 +117,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * be supported by all JAX-RS implementations
    */
   @Test
+  @Tag("optional")
   public void clientJaxbElementWriterTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.APPLICATION_XML_TYPE));

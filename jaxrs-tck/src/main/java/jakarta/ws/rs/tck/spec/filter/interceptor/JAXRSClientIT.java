@@ -45,6 +45,7 @@ import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
@@ -815,6 +816,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * interceptors when mapping representations to Java types and vice versa.
    */
   @Test
+  @Tag("optional")
   public void jaxbWriterClientInterceptorTest() throws Fault {
     JAXBElement<String> element = new JAXBElement<String>(new QName("element"),
         String.class, content);

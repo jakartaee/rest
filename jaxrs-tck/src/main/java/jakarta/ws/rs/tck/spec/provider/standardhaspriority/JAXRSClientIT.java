@@ -37,6 +37,7 @@ import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
@@ -105,6 +106,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * same mediaType
    */
   @Test
+  @Tag("optional")
   public void readWriteJaxbProviderTest() throws Fault {
     JAXBElement<String> element = new JAXBElement<String>(new QName("jaxb"),
         String.class, "jaxb");

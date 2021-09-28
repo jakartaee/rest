@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -48,6 +48,7 @@ import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
@@ -58,8 +59,6 @@ import org.junit.jupiter.api.AfterEach;
 
 @ExtendWith(ArquillianExtension.class)
 public class JAXRSClientIT extends JaxrsCommonClient {
-
-  private static final long serialVersionUID = -3528892672938533655L;
 
   public JAXRSClientIT() {
     setup();
@@ -101,6 +100,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * return null.
    */
   @Test
+  @Tag("xml_binding")
   public void serverByteArrayProviderTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "bytearray"));
@@ -118,6 +118,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * object that represents zero-length data.
    */
   @Test
+  @Tag("xml_binding")
   public void clientByteArrayProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -140,6 +141,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * return null.
    */
   @Test
+  @Tag("xml_binding")
   public void serverStringProviderTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "string"));
@@ -157,6 +159,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * object that represents zero-length data.
    */
   @Test
+  @Tag("xml_binding")
   public void clientStringProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -178,6 +181,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * return null.
    */
   @Test
+  @Tag("xml_binding")
   public void serverInputStreamProviderTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "inputstream"));
@@ -195,6 +199,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * object that represents zero-length data.
    */
   @Test
+  @Tag("xml_binding")
   public void clientInputStreamProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -223,6 +228,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * return null.
    */
   @Test
+  @Tag("xml_binding")
   public void serverReaderProviderTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "reader"));
@@ -240,6 +246,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * object that represents zero-length data.
    */
   @Test
+  @Tag("xml_binding")
   public void clientReaderProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -268,6 +275,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * return null.
    */
   @Test
+  @Tag("xml_binding")
   public void serverFileProviderTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "file"));
@@ -285,6 +293,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * object that represents zero-length data.
    */
   @Test
+  @Tag("xml_binding")
   public void clientFileProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -313,6 +322,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * return null.
    */
   @Test
+  @Tag("xml_binding")
   public void serverDataSourceProviderTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "datasource"));
@@ -330,6 +340,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * object that represents zero-length data.
    */
   @Test
+  @Tag("xml_binding")
   public void clientDataSourceProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -358,6 +369,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * return null.
    */
   @Test
+  @Tag("xml_binding")
   public void serverSourceProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.APPLICATION_XML_TYPE));
@@ -376,6 +388,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * object that represents zero-length data.
    */
   @Test
+  @Tag("xml_binding")
   public void clientSourceProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -404,6 +417,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * return null.
    */
   @Test
+  @Tag("xml_binding")
   public void serverMultivaluedMapProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE));
@@ -423,6 +437,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * object that represents zero-length data.
    */
   @Test
+  @Tag("xml_binding")
   public void clientMultivaluedMapProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -448,6 +463,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * zero-length request entities.
    */
   @Test
+  @Tag("xml_binding")
   public void serverJaxbProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.APPLICATION_XML_TYPE));
@@ -467,6 +483,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * object that represents zero-length data.
    */
   @Test
+  @Tag("xml_binding")
   public void clientJaxbProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "null"));
     setProperty(Property.REQUEST_HEADERS,
@@ -493,6 +510,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * zero-length request entities.
    */
   @Test
+  @Tag("xml_binding")
   public void serverStreamingOutputProviderTest() throws Fault {
     String content = "StreamingOutput";
     setProperty(Property.REQUEST,
@@ -514,6 +532,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * entities.
    */
   @Test
+  @Tag("xml_binding")
   public void serverBooleanProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.TEXT_PLAIN_TYPE));
@@ -535,6 +554,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * readEntity throws Processing Exception
    */
   @Test
+  @Tag("xml_binding")
   public void clientBooleanProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -565,6 +585,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * entities.
    */
   @Test
+  @Tag("xml_binding")
   public void serverCharProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.TEXT_PLAIN_TYPE));
@@ -586,6 +607,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * readEntity throws Processing Exception
    */
   @Test
+  @Tag("xml_binding")
   public void clientCharProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -616,6 +638,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * entities.
    */
   @Test
+  @Tag("xml_binding")
   public void serverIntegerProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.TEXT_PLAIN_TYPE));
@@ -637,6 +660,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * readEntity throws Processing Exception
    */
   @Test
+  @Tag("xml_binding")
   public void clientIntegerProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();
@@ -667,6 +691,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * entities.
    */
   @Test
+  @Tag("xml_binding")
   public void serverBigDecimalProviderTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildContentType(MediaType.TEXT_PLAIN_TYPE));
@@ -688,6 +713,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * readEntity throws Processing Exception
    */
   @Test
+  @Tag("xml_binding")
   public void clientBigDecimalProviderTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
     invoke();

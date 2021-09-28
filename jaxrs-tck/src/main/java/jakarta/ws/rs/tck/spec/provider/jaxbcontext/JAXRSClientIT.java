@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -33,6 +33,7 @@ import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
@@ -44,8 +45,6 @@ import org.junit.jupiter.api.AfterEach;
 
 @ExtendWith(ArquillianExtension.class)
 public class JAXRSClientIT extends JAXRSCommonClient {
-
-  private static final long serialVersionUID = 1L;
 
   public JAXRSClientIT() {
     setup();
@@ -96,6 +95,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * see Section 4.3.
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteProviderTest() throws Fault {
     setPropertyAndInvoke("jaxb");
   }

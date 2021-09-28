@@ -241,7 +241,6 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
     clients.clear();
   }
 
-  //public void setup(String[] args, Properties p) {
   public void setup() {
     super.setup();
     String property = System.getProperty("cts.tmp", "/tmp");

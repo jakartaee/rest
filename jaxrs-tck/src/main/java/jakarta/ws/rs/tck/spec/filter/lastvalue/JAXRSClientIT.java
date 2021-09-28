@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -48,8 +48,6 @@ import org.junit.jupiter.api.AfterEach;
  */
 @ExtendWith(ArquillianExtension.class)
 public class JAXRSClientIT extends JaxrsCommonClient {
-
-  private static final long serialVersionUID = 1405911734696409993L;
 
   public static final String plaincontent = JAXRSClientIT.class.getName();
 

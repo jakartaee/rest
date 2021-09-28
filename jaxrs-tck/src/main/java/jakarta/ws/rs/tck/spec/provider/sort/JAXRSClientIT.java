@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -44,8 +44,6 @@ import org.junit.jupiter.api.AfterEach;
 @ExtendWith(ArquillianExtension.class)
 public class JAXRSClientIT extends JAXRSCommonClient {
 
-  private static final long serialVersionUID = -8228843141906281907L;
-
   public JAXRSClientIT() {
     setup();
     setContextRoot("/jaxrs_spec_provider_sort_web/resource");
@@ -73,7 +71,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   }
 
 
-  /* Run test */
   /*
    * @testName: contentTypeApplicationGotWildCardTest
    * 
@@ -82,10 +79,10 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * @test_Strategy: The absence of these annotations is equivalent to their
    * inclusion with media type (
    *//*
-      * ), i.e. absence implies that any media type is supported.
-      *
-      * Unexpected providers add "text/" to content
-      */
+   * ), i.e. absence implies that any media type is supported.
+   *
+   * Unexpected providers add "text/" to content
+   */
   @Test
   public void contentTypeApplicationGotWildCardTest() throws Fault {
     MediaType type = new MediaType("application", "plain");
@@ -107,11 +104,11 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * the available providers according to the media types they declare support
    * for. Sorting of media types follows the general rule: x/y < x/* <
    *//*
-      * , i.e. a provider that explicitly lists a media types is sorted before a
-      * provider that lists
-      *//*
-         * .
-         */
+   * , i.e. a provider that explicitly lists a media types is sorted before a
+   * provider that lists
+   *//*
+   * .
+   */
   @Test
   public void contentTypeTextHmtlGotTextWildCardTest() throws Fault {
     MediaType type = MediaType.TEXT_HTML_TYPE;
@@ -133,11 +130,11 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * the available providers according to the media types they declare support
    * for. Sorting of media types follows the general rule: x/y < x/* <
    *//*
-      * , i.e. a provider that explicitly lists a media types is sorted before a
-      * provider that lists
-      *//*
-         * .
-         */
+   * , i.e. a provider that explicitly lists a media types is sorted before a
+   * provider that lists
+   *//*
+   * .
+   */
   @Test
   public void contentTypeTextXmlGotTextWildCardTest() throws Fault {
     MediaType type = MediaType.TEXT_XML_TYPE;
@@ -159,11 +156,11 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * the available providers according to the media types they declare support
    * for. Sorting of media types follows the general rule: x/y < x/* <
    *//*
-      * , i.e. a provider that explicitly lists a media types is sorted before a
-      * provider that lists
-      *//*
-         * .
-         */
+   * , i.e. a provider that explicitly lists a media types is sorted before a
+   * provider that lists
+   *//*
+   * .
+   */
   @Test
   public void contentTypeTextPlainGotTextPlainTest() throws Fault {
     MediaType type = MediaType.TEXT_PLAIN_TYPE;

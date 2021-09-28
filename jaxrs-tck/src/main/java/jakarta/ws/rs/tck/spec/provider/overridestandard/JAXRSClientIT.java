@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -34,6 +34,7 @@ import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
@@ -45,8 +46,6 @@ import org.junit.jupiter.api.AfterEach;
 
 @ExtendWith(ArquillianExtension.class)
 public class JAXRSClientIT extends JAXRSCommonClient {
-
-  private static final long serialVersionUID = 1L;
 
   public JAXRSClientIT() {
     setup();
@@ -119,6 +118,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteByteArrayProviderTest() throws Fault {
     setPropertyAndInvoke("bytearray", MediaType.APPLICATION_XML_TYPE);
   }
@@ -134,6 +134,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteStringProviderTest() throws Fault {
     setPropertyAndInvoke("string", MediaType.APPLICATION_XML_TYPE);
   }
@@ -149,6 +150,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteInputStreamProviderTest() throws Fault {
     setPropertyAndInvoke("inputstream", MediaType.APPLICATION_XML_TYPE);
   }
@@ -164,6 +166,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteReaderProviderTest() throws Fault {
     setPropertyAndInvoke("reader", MediaType.APPLICATION_XML_TYPE);
   }
@@ -179,6 +182,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteFileProviderTest() throws Fault {
     setPropertyAndInvoke("file", MediaType.APPLICATION_XML_TYPE);
   }
@@ -194,6 +198,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteDataSourceProviderTest() throws Fault {
     setPropertyAndInvoke("datasource", MediaType.APPLICATION_XML_TYPE);
   }
@@ -209,6 +214,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteSourceProviderTest() throws Fault {
     setPropertyAndInvoke("source", MediaType.APPLICATION_XML_TYPE);
   }
@@ -224,6 +230,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteJaxbProviderTest() throws Fault {
     setPropertyAndInvoke("jaxb", MediaType.APPLICATION_XML_TYPE);
   }
@@ -239,6 +246,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   //@Test
+  @Tag("xml_binding")
   public void readWriteStreamingOutputProviderTest() throws Fault {
     setPropertyAndInvoke("streamingoutput", MediaType.APPLICATION_XML_TYPE);
   }
@@ -254,6 +262,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteMapProviderTest() throws Fault {
     setPropertyAndInvoke("map", MediaType.APPLICATION_FORM_URLENCODED_TYPE);
   }
@@ -269,6 +278,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteBooleanProviderTest() throws Fault {
     MediaType mt = MediaType.TEXT_PLAIN_TYPE;
     setProperty(Property.REQUEST, buildRequest(Request.POST, "boolean"));
@@ -290,6 +300,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteCharacterProviderTest() throws Fault {
     MediaType mt = MediaType.TEXT_PLAIN_TYPE;
     setProperty(Property.REQUEST, buildRequest(Request.POST, "character"));
@@ -311,6 +322,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteIntegerProviderTest() throws Fault {
     MediaType mt = MediaType.TEXT_PLAIN_TYPE;
     setProperty(Property.REQUEST, buildRequest(Request.POST, "number"));

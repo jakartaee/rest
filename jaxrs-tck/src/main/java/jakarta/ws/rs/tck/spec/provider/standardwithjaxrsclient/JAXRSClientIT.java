@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -46,8 +46,6 @@ import org.junit.jupiter.api.AfterEach;
 
 @ExtendWith(ArquillianExtension.class)
 public class JAXRSClientIT extends JaxrsCommonClient {
-
-  private static final long serialVersionUID = 1L;
 
   public JAXRSClientIT() {
     setup();
@@ -108,6 +106,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * (application/x-www-form-urlencoded).
    */
   @SuppressWarnings("unchecked")
+  @Test
   public void mapElementProviderTest() throws Fault {
     String element = "map";
     MultivaluedMap<String, String> map = new MultivaluedHashMap<String, String>();

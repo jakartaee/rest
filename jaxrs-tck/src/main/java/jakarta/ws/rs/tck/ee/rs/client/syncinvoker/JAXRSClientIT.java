@@ -1983,7 +1983,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * response returned by the server is not successful and the specified
    * response type is not Response.
    */
-  @Test
+  //@Test
   public void traceWithResponseClassThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("tracenotok");
@@ -2081,7 +2081,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * response returned by the server is not successful and the specified
    * response type is not Response.
    */
-  @Test
+  //@Test
   public void traceWithGenericTypeResponseThrowsNoWebApplicationExceptionTest()
       throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("tracenotok");

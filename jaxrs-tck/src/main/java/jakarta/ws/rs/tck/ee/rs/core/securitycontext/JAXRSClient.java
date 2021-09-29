@@ -47,18 +47,18 @@ public abstract class JAXRSClient extends JAXRSCommonClient {
 
   protected String authpassword;
 
-  public void setup(String[] args, Properties p) throws Fault {
-    user = p.getProperty("user");
-    password = p.getProperty("password");
-    authuser = p.getProperty("authuser");
-    authpassword = p.getProperty("authpassword");
-    assertTrue(!isNullOrEmpty(user), "user was not in build.proerties");
+  public void setup() {
+    user = System.getProperty("user");
+    password = System.getProperty("password");
+    authuser = System.getProperty("authuser");
+    authpassword = System.getProperty("authpassword");
+    assertTrue(!isNullOrEmpty(user), "user was not set");
     assertTrue(!isNullOrEmpty(password),
-        "password was not in build.proerties");
+        "password was not set");
     assertTrue(!isNullOrEmpty(authuser),
-        "authuser was not in build.proerties");
+        "authuser was not set");
     assertTrue(!isNullOrEmpty(authpassword),
-        "authpassword was not in build.proerties");
+        "authpassword was not set");
     super.setup();
   }
 

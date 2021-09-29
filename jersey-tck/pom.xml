@@ -134,6 +134,10 @@
                                 <webServerHost>localhost</webServerHost>
                                 <webServerPort>8080</webServerPort>
                                 <junit.log.traceflag>true</junit.log.traceflag>
+                                <user>8080</user>
+                                <password>8080</password>
+                                <authuser>8080</authuser>
+                                <authpassword>8080</authpassword>
                                 <porting.ts.url.class.1>jakarta.ws.rs.tck.lib.implementation.sun.common.SunRIURL</porting.ts.url.class.1>
                             </systemPropertyVariables>
                             <environmentVariables>

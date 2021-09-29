@@ -81,8 +81,8 @@ public class StringBeanRuntimeDelegate extends RuntimeDelegate {
   }
 
   @Override
-  public CompletionStage<Instance> bootstrap(Class<? extends Application> clazz, SeBootstrap.Configuration configuration){
-    return original.bootstrap(clazz, configuration);
+  public CompletionStage<Instance> bootstrap(Class<? extends Application> applicationClass, SeBootstrap.Configuration configuration) {
+    return original.bootstrap(applicationClass, configuration);
   }
 
   @Override

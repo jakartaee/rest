@@ -272,7 +272,7 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
      */
     public abstract Client build();
 
-    private static class CreateErrorMessageAction implements PrivilegedAction<String> {
+    private static final class CreateErrorMessageAction implements PrivilegedAction<String> {
         private final Object delegate;
 
         private CreateErrorMessageAction(final Object delegate) {

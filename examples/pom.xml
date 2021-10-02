@@ -173,6 +173,7 @@
                         <outputDirectory>${project.build.directory}/checkstyle</outputDirectory>
                         <outputFile>${project.build.directory}/checkstyle/checkstyle-result.xml</outputFile>
                         <configLocation>${basedir}/../etc/config/checkstyle.xml</configLocation>
+                        <failsOnError>true</failsOnError>
                     </configuration>
                     <dependencies>
                         <dependency>

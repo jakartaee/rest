@@ -424,6 +424,7 @@
                         <outputFile>${project.build.directory}/checkstyle/checkstyle-result.xml</outputFile>
                         <configLocation>${basedir}/../etc/config/checkstyle.xml</configLocation>
                         <excludes>**/module-info.java</excludes>
+                        <failsOnError>true</failsOnError>
                     </configuration>
                     <dependencies>
                         <dependency>

@@ -28,7 +28,7 @@ import jakarta.ws.rs.core.Response;
 
 
 public class MultipartClient {
-    Logger LOG = Logger.getLogger(MultipartClient.class.getName());
+    private static final Logger LOG = Logger.getLogger(MultipartClient.class.getName());
 
     public boolean sendPdfs(Path dir) throws IOException {
         List<EntityPart> parts = Files.list(dir).map(this::toPart).collect(Collectors.toList());
@@ -56,7 +56,7 @@ public class MultipartClient {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:9080/multipart").queryParam("dirName", remoteDirName);
         Response response = target.request(MediaType.MULTIPART_FORM_DATA).get();
-        List<EntityPart> parts = response.readEntity(new GenericType<List<EntityPart>>() {});
+        List<EntityPart> parts = response.readEntity(new GenericType<List<EntityPart>>() { });
         return parts.stream().map(part -> {
             try (InputStream is = part.getContent()) {
                 Path file = Files.createFile(Paths.get(part.getFileName().orElse(part.getName() + ".pdf")));

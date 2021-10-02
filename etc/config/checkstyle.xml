@@ -233,5 +233,9 @@
         <!-- module name="FinalParameters"/ -->
         <module name="TodoComment"/>
         <module name="UpperEll"/>
+
+        <!-- Enable to suppress checkstyle errors by generic comment -->
+        <!-- See https://checkstyle.sourceforge.io/config_filters.html#SuppressionCommentFilter -->
+        <module name="SuppressionCommentFilter"/>
     </module>
 </module>

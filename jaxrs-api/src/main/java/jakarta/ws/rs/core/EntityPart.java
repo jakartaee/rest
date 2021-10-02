@@ -152,8 +152,10 @@ public interface EntityPart {
      *                                  method throws an
      *                                  {@code WebApplicationException}
      */
+    //CHECKSTYLE:OFF - More than 3 Exceptions are desired here
     <T> T getContent(Class<T> type) throws IllegalArgumentException, IllegalStateException, IOException,
         WebApplicationException;
+    //CHECKSTYLE:ON
 
     /**
      * Converts the content stream for this part to the specified type and returns
@@ -191,8 +193,10 @@ public interface EntityPart {
      *                                  method throws an
      *                                  {@code WebApplicationException}
      */
+    //CHECKSTYLE:OFF - More than 3 Exceptions are desired here
     <T> T getContent(GenericType<T> type) throws IllegalArgumentException, IllegalStateException, IOException,
         WebApplicationException;
+    //CHECKSTYLE:ON
 
     /**
      * Returns an immutable multivalued map of headers for this specific part.

@@ -241,12 +241,12 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
     clients.clear();
   }
 
-  /*public void setup(String[] args, Properties p) {
-    super.setup(args, p);
-    String property = System.getProperty("cts.tmp");
+  public void setup() {
+    super.setup();
+    String property = System.getProperty("cts.tmp", "/tmp");
     if (property != null)
       System.setProperty("java.io.tmpdir", property);
-  }*/
+  }
 
   protected JaxrsWebTestCase getTestCase() {
     if (testCase == null || isTestCaseAfterInvocation) {

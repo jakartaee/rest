@@ -89,6 +89,9 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
+                <configuration>
+					<excludedGroups>optional</excludedGroups>
+				</configuration>
             </plugin>
 
         </plugins>
@@ -137,6 +140,20 @@
             <artifactId>jakarta.annotation-api</artifactId>
             <version>2.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.activation</groupId>
+            <artifactId>jakarta.activation-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
+
 
     </dependencies>
 </project>

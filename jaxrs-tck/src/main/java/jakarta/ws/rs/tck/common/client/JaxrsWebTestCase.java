@@ -180,45 +180,45 @@ public class JaxrsWebTestCase extends WebTestCase {
     }
   }
 
-  // /**
-  //  * Executes the test case.
-  //  * 
-  //  * @throws TestFailureException
-  //  *           if the test fails for any reason.
-  //  * @throws IllegalStateException
-  //  *           if no request was configured or if no Validator is available at
-  //  *           runtime.
-  //  */
-  // public void execute() throws TestFailureException {
-  //   verifyValidationStrategy();
-  //   verifySettings();
-  //   try {
-  //     String url = logClientRequestAndGetUrl();
+  /**
+   * Executes the test case.
+   * 
+   * @throws TestFailureException
+   *           if the test fails for any reason.
+   * @throws IllegalStateException
+   *           if no request was configured or if no Validator is available at
+   *           runtime.
+   */
+  public void execute() throws TestFailureException {
+    verifyValidationStrategy();
+    verifySettings();
+    try {
+      String url = logClientRequestAndGetUrl();
 
-  //     client = getClientWithRegisteredProviders();
-  //     WebTarget target = client.target(url.toString());
-  //     Invocation i = buildRequest(target);
-  //     response = invoke(i);
-  //     if (bufferEntity)
-  //       response.bufferEntity();
-  //   } catch (Throwable t) {
-  //     String message = t.getMessage();
+      client = getClientWithRegisteredProviders();
+      WebTarget target = client.target(url.toString());
+      Invocation i = buildRequest(target);
+      response = invoke(i);
+      if (bufferEntity)
+        response.bufferEntity();
+    } catch (Throwable t) {
+      String message = t.getMessage();
 
-  //     StringBuilder sb = new StringBuilder();
-  //     sb.append("[FATAL] Unexpected failure during test execution.\n");
-  //     // print client call code to report into JIRA when needed
-  //     sb.append(printClientCall().toString());
-  //     // Inherited message
-  //     sb.append((message == null ? t.toString() : message));
+      StringBuilder sb = new StringBuilder();
+      sb.append("[FATAL] Unexpected failure during test execution.\n");
+      // print client call code to report into JIRA when needed
+      sb.append(printClientCall().toString());
+      // Inherited message
+      sb.append((message == null ? t.toString() : message));
 
-  //     throw new TestFailureException(sb.toString(), t);
-  //   }
+      throw new TestFailureException(sb.toString(), t);
+    }
 
-  //   // Validate this test case instance
-  //   if (!strategy.validate(this)) {
-  //     throw new TestFailureException("Test FAILED!");
-  //   }
-  // }
+    // Validate this test case instance
+    if (!strategy.validate(this)) {
+      throw new TestFailureException("Test FAILED!");
+    }
+  }
 
   public void closeClient() {
     if (client != null)
@@ -247,19 +247,19 @@ public class JaxrsWebTestCase extends WebTestCase {
       throw new TestFailureException("No resource url request set");
   }
 
-  // /**
-  //  * @return Client with all providers already registered
-  //  */
-  // protected Client getClientWithRegisteredProviders() {
-  //   Client client = ClientBuilder.newClient();
-  //   client.register(new JdkLoggingFilter(isPrintedEntity()));
-  //   for (Object o : providersToRegister)
-  //     if (o instanceof Class)
-  //       client.register((Class<?>) o); // otherwise it does not work
-  //     else
-  //       client.register(o);
-  //   return client;
-  // }
+  /**
+   * @return Client with all providers already registered
+   */
+  protected Client getClientWithRegisteredProviders() {
+    Client client = ClientBuilder.newClient();
+    client.register(new JdkLoggingFilter(isPrintedEntity()));
+    for (Object o : providersToRegister)
+      if (o instanceof Class)
+        client.register((Class<?>) o); // otherwise it does not work
+      else
+        client.register(o);
+    return client;
+  }
 
   protected String logClientRequestAndGetUrl() {
     StringBuilder url = new StringBuilder();

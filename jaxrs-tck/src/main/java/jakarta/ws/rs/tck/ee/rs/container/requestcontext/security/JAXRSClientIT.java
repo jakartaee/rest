@@ -16,11 +16,29 @@
 
 package jakarta.ws.rs.tck.ee.rs.container.requestcontext.security;
 
+import java.io.InputStream;
+import java.io.IOException;
 import java.util.Properties;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
 
 import jakarta.ws.rs.core.Response.Status;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 /*
  * @class.setup_props: webServerHost;
@@ -29,7 +47,8 @@ import jakarta.ws.rs.core.Response.Status;
  *                     user;
  *                     password;                     
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = -3020219607348263568L;
 
@@ -37,22 +56,42 @@ public class JAXRSClient extends JaxrsCommonClient {
 
   protected String password;
 
-  public JAXRSClient() {
-    setContextRoot(
-        "/jaxrs_ee_rs_container_requestcontext_security_web/resource");
+  public JAXRSClientIT() {
+    usersetup();
+    setContextRoot("/jaxrs_ee_rs_container_requestcontext_security_web/resource");
   }
 
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
   }
 
-  public void setup(String[] args, Properties p) throws Fault {
-    user = p.getProperty("user");
-    password = p.getProperty("password");
-    assertFault(!isNullOrEmpty(user), "user was not in build.proerties");
-    assertFault(!isNullOrEmpty(password),
-        "password was not in build.proerties");
-    super.setup(args, p);
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException {
+
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/container/requestcontext/security/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_container_requestcontext_security_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, RequestFilter.class);
+    archive.addAsResource("jakarta/ws/rs/tck/ee/rs/container/requestcontext/security/jaxrs_ee_rs_container_requestcontext_security_web.war.sun-web.xml");
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
+  }
+
+  public void usersetup() {
+    user = System.getProperty("user");
+    password = System.getProperty("password");
+    assertTrue(!isNullOrEmpty(user), "user not set");
+    assertTrue(!isNullOrEmpty(password),
+        "password not set");
+    super.setup();
   }
 
   /*
@@ -63,6 +102,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Get the injectable security context information for the
    * current request, the user is authenticated.
    */
+  //@Test
   public void getSecurityContextTest() throws Fault {
     setProperty(Property.BASIC_AUTH_USER, user);
     setProperty(Property.BASIC_AUTH_PASSWD, password);
@@ -79,6 +119,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure the authorization is needed
    */
+  @Test
   public void noSecurityTest() throws Fault {
     String request = buildRequest(Request.POST, "");
     setProperty(Property.REQUEST, request);

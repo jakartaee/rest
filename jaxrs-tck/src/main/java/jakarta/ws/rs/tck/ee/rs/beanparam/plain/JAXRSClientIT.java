@@ -15,11 +15,28 @@
  */
 
 package jakarta.ws.rs.tck.ee.rs.beanparam.plain;
+import java.io.InputStream;
+import java.io.IOException;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
 
 import jakarta.ws.rs.core.MediaType;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
@@ -30,7 +47,8 @@ import jakarta.ws.rs.core.MediaType;
  * 
  * @since 2.0.1
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = 201;
 
@@ -60,12 +78,35 @@ public class JAXRSClient extends JaxrsCommonClient {
 
   private static final String TWELVENTH = "Twelveth";
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_ee_rs_beanparam_plain_web/resource");
   }
 
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/beanparam/plain/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_beanparam_plain_web.war");
+    archive.addClasses(AppConfig.class, Resource.class,
+      jakarta.ws.rs.tck.ee.rs.beanparam.bean.BeanParamEntity.class,
+      jakarta.ws.rs.tck.ee.rs.beanparam.bean.InnerBeanParamEntity.class
+    );
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
   }
 
   /*
@@ -75,6 +116,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure @QueryParam works in @BeanParam annotated bean
    */
+  @Test
   public void queryParamInParamTest() throws Fault {
     String[] reqArgs = getRequestArguments("Query");
     String request = buildRequestQuery(Request.POST, "queryparam", reqArgs[0],
@@ -89,6 +131,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure @QueryParam works in @BeanParam annotated bean
    */
+  @Test
   public void queryParamOnFieldTest() throws Fault {
     String[] reqArgs = getRequestArguments("Query");
     String request = buildRequestQuery(Request.POST, "queryfield", reqArgs[0],
@@ -103,6 +146,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure @FormParam works in @BeanParam annotated bean
    */
+  @Test
   public void formParamInParamTest() throws Fault {
     String[] reqArgs = getRequestArguments("Form");
     String request = buildRequest(Request.POST, "formparam");
@@ -116,6 +160,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure @FormParam works in @BeanParam annotated bean
    */
+  @Test
   public void formParamOnFieldTest() throws Fault {
     String[] reqArgs = getRequestArguments("Form");
     String request = buildRequest(Request.POST, "formfield");
@@ -129,6 +174,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure @HeaderParam works in @BeanParam annotated bean
    */
+  @Test
   public void headerParamInParamTest() throws Fault {
     String[] reqArgs = getRequestArguments("Header");
     String request = buildRequest(Request.POST, "headerparam");
@@ -144,6 +190,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure @HeaderParam works in @BeanParam annotated bean
    */
+  @Test
   public void headerParamOnFieldTest() throws Fault {
     String[] reqArgs = getRequestArguments("Header");
     String request = buildRequest(Request.POST, "headerfield");
@@ -159,6 +206,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure @PathParam works in @BeanParam annotated bean
    */
+  @Test
   public void pathParamInParamTest() throws Fault {
     String request = buildRequest(Request.POST, "pathparam/", FIRST, "/",
         SECOND);
@@ -172,6 +220,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure @PathParam works in @BeanParam annotated bean
    */
+  @Test
   public void pathParamOnFieldTest() throws Fault {
     String request = buildRequest(Request.POST, "pathfield/", FIRST, "/",
         SECOND);
@@ -185,6 +234,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure @MatrixParam works in @BeanParam annotated bean
    */
+  @Test
   public void matrixParamInParamTest() throws Fault {
     String[] reqArgs = getRequestArguments("Matrix");
     String request = buildRequest(Request.POST, "matrixparam;", reqArgs[0], ";",
@@ -199,6 +249,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure @MatrixParam works in @BeanParam annotated bean
    */
+  @Test
   public void matrixParamOnFieldTest() throws Fault {
     String[] reqArgs = getRequestArguments("Matrix");
     String request = buildRequest(Request.POST, "matrixfield;", reqArgs[0], ";",
@@ -213,6 +264,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure @CookieParam works in @BeanParam annotated bean
    */
+  @Test
   public void cookieParamInParamTest() throws Fault {
     String request = buildRequest(Request.POST, "cookieparam");
     buildCookie();
@@ -226,6 +278,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure @CookieParam works in @BeanParam annotated bean
    */
+  @Test
   public void cookieParamOnFieldTest() throws Fault {
     String request = buildRequest(Request.POST, "cookiefield");
     buildCookie();
@@ -240,6 +293,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure all params works in @BeanParam annotated bean
    */
+  @Test
   public void allParamsInParamTest() throws Fault {
     allParamsTest("allparam");
   }
@@ -252,6 +306,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Make sure all params works in @BeanParam annotated bean
    */
+  @Test
   public void allParamsOnFieldTest() throws Fault {
     allParamsTest("allfield");
   }

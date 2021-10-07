@@ -16,10 +16,28 @@
 
 package jakarta.ws.rs.tck.ee.rs.beanparam.form.plain;
 
+import java.io.InputStream;
+import java.io.IOException;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 import jakarta.ws.rs.tck.ee.rs.Constants;
 import jakarta.ws.rs.tck.ee.rs.beanparam.BeanParamCommonClient;
 
 import jakarta.ws.rs.core.Response.Status;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 /*
  * @class.setup_props: webServerHost;
@@ -27,20 +45,50 @@ import jakarta.ws.rs.core.Response.Status;
  *                     ts_home;
  * @since 2.0.1                     
  */
-public class JAXRSClient extends BeanParamCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends BeanParamCommonClient {
   private static final long serialVersionUID = 201L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_ee_rs_beanparam_form_plain_web/resource");
   }
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/beanparam/form/plain/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_beanparam_form_plain_web.war");
+    archive.addClasses(AppConfig.class, Resource.class,
+        jakarta.ws.rs.tck.ee.rs.beanparam.form.bean.FormBeanParamEntity.class,
+        jakarta.ws.rs.tck.ee.rs.beanparam.form.bean.InnerFormBeanParamEntity.class,
+        jakarta.ws.rs.tck.ee.rs.Constants.class,
+        jakarta.ws.rs.tck.ee.rs.ParamEntityPrototype.class,
+        jakarta.ws.rs.tck.ee.rs.ParamEntityWithConstructor.class,
+        jakarta.ws.rs.tck.ee.rs.ParamEntityWithValueOf.class,
+        jakarta.ws.rs.tck.ee.rs.ParamEntityWithFromString.class,
+        jakarta.ws.rs.tck.ee.rs.ParamTest.class,
+        jakarta.ws.rs.tck.ee.rs.JaxrsParamClient.CollectionName.class,
+        jakarta.ws.rs.tck.ee.rs.ParamEntityThrowingWebApplicationException.class,
+        jakarta.ws.rs.tck.ee.rs.ParamEntityThrowingExceptionGivenByName.class,
+        jakarta.ws.rs.tck.ee.rs.RuntimeExceptionMapper.class,
+        jakarta.ws.rs.tck.ee.rs.WebApplicationExceptionMapper.class
+    );
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
   }
 
   /* Run test */
@@ -53,6 +101,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam is handled properly
    */
+  @Test
   public void formParamEntityWithConstructorTest() throws Fault {
     super.paramEntityWithConstructorTest();
   }
@@ -65,6 +114,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam is handled properly
    */
+  @Test
   public void formParamEntityWithValueOfTest() throws Fault {
     super.paramEntityWithValueOfTest();
   }
@@ -77,6 +127,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam is handled properly
    */
+  @Test
   public void formParamEntityWithFromStringTest() throws Fault {
     super.paramEntityWithFromStringTest();
   }
@@ -89,6 +140,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam is handled properly
    */
+  @Test
   public void formParamSetEntityWithFromStringTest() throws Fault {
     super.paramCollectionEntityWithFromStringTest(CollectionName.SET);
   }
@@ -101,6 +153,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam is handled properly
    */
+  @Test
   public void formParamSortedSetEntityWithFromStringTest() throws Fault {
     super.paramCollectionEntityWithFromStringTest(CollectionName.SORTED_SET);
   }
@@ -113,6 +166,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam is handled properly
    */
+  @Test
   public void formParamListEntityWithFromStringTest() throws Fault {
     super.paramCollectionEntityWithFromStringTest(CollectionName.LIST);
   }
@@ -124,6 +178,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam is handled properly
    */
+  @Test
   public void formFieldParamEntityWithConstructorTest() throws Fault {
     super.fieldEntityWithConstructorTest();
   }
@@ -135,6 +190,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam is handled properly
    */
+  @Test
   public void formFieldParamEntityWithValueOfTest() throws Fault {
     super.fieldEntityWithValueOfTest();
   }
@@ -146,6 +202,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam is handled properly
    */
+  @Test
   public void formFieldParamEntityWithFromStringTest() throws Fault {
     super.fieldEntityWithFromStringTest();
   }
@@ -157,6 +214,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam is handled properly
    */
+  @Test
   public void formFieldParamSetEntityWithFromStringTest() throws Fault {
     super.fieldCollectionEntityWithFromStringTest(CollectionName.SET);
   }
@@ -168,6 +226,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam is handled properly
    */
+  @Test
   public void formFieldParamSortedSetEntityWithFromStringTest() throws Fault {
     super.fieldCollectionEntityWithFromStringTest(CollectionName.SORTED_SET);
   }
@@ -179,6 +238,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam is handled properly
    */
+  @Test
   public void formFieldParamListEntityWithFromStringTest() throws Fault {
     super.fieldCollectionEntityWithFromStringTest(CollectionName.LIST);
   }
@@ -190,6 +250,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam @Encoded is handled
    */
+  @Test
   public void formParamEntityWithEncodedTest() throws Fault {
     super.paramEntityWithEncodedTest();
   }
@@ -201,6 +262,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * 
    * @test_Strategy: Verify that named FormParam @Encoded is handled
    */
+  @Test
   public void formFieldParamEntityWithEncodedTest() throws Fault {
     super.fieldEntityWithEncodedTest();
   }
@@ -214,6 +276,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * are treated the same as exceptions thrown during construction of field or
    * bean property values, see Section 3.2.
    */
+  @Test
   public void formParamThrowingWebApplicationExceptionTest() throws Fault {
     super.paramThrowingWebApplicationExceptionTest();
     super.paramThrowingWebApplicationExceptionTest();
@@ -228,6 +291,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * field or property values using 2 or 3 above is processed directly as
    * described in section 3.3.4.
    */
+  @Test
   public void formFieldThrowingWebApplicationExceptionTest() throws Fault {
     super.fieldThrowingWebApplicationExceptionTest();
     super.fieldThrowingWebApplicationExceptionTest();
@@ -242,6 +306,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * are treated the same as exceptions thrown during construction of field or
    * bean property values, see section 3.2.
    */
+  @Test
   public void formParamThrowingIllegalArgumentExceptionTest() throws Fault {
     setProperty(Property.UNORDERED_SEARCH_STRING, Status.BAD_REQUEST.name());
     super.paramThrowingIllegalArgumentExceptionTest();
@@ -261,6 +326,7 @@ public class JAXRSClient extends BeanParamCommonClient {
    * an implementation MUST generate a WebApplicationException that wraps the
    * thrown exception with a client error response (400 status) and no entity.
    */
+  @Test
   public void formFieldThrowingIllegalArgumentExceptionTest() throws Fault {
     setProperty(Property.UNORDERED_SEARCH_STRING, Status.BAD_REQUEST.name());
     super.fieldThrowingIllegalArgumentExceptionTest();

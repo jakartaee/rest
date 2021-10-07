@@ -16,18 +16,74 @@
 
 package jakarta.ws.rs.tck.ee.rs.cookieparam.sub;
 
+import java.io.InputStream;
+import java.io.IOException;
+
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
  *                     ts_home;
  */
-public class JAXRSSubClient
-    extends jakarta.ws.rs.tck.ee.rs.cookieparam.JAXRSClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSSubClientIT
+    extends jakarta.ws.rs.tck.ee.rs.cookieparam.JAXRSClientIT {
 
   private static final long serialVersionUID = 1L;
 
-  public JAXRSSubClient() {
+  public JAXRSSubClientIT() {
+    setup();
     setContextRoot("/jaxrs_ee_rs_cookieparam_sub_web/Resource/subresource");
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false, name = "cookieparamsub")
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSSubClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/cookieparam/sub/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_cookieparam_sub_web.war");
+    archive.addClasses(TSAppConfig.class, CookieSubResource.class,
+      jakarta.ws.rs.tck.ee.rs.cookieparam.CookieParamTest.class,
+      jakarta.ws.rs.tck.ee.rs.ParamEntityPrototype.class,
+      jakarta.ws.rs.tck.ee.rs.ParamEntityWithConstructor.class,
+      jakarta.ws.rs.tck.ee.rs.ParamEntityWithValueOf.class,
+      jakarta.ws.rs.tck.ee.rs.ParamEntityWithFromString.class,
+      jakarta.ws.rs.tck.ee.rs.ParamTest.class,
+      jakarta.ws.rs.tck.ee.rs.JaxrsParamClient.CollectionName.class,
+      jakarta.ws.rs.tck.ee.rs.ParamEntityThrowingWebApplicationException.class,
+      jakarta.ws.rs.tck.ee.rs.ParamEntityThrowingExceptionGivenByName.class,
+      jakarta.ws.rs.tck.ee.rs.RuntimeExceptionMapper.class,
+      jakarta.ws.rs.tck.ee.rs.WebApplicationExceptionMapper.class
+    );
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
   }
 
   /*
@@ -42,6 +98,7 @@ public class JAXRSSubClient
    * received using CookieParam in the resource; Verify on the client side from
    * response.
    */
+  @Test
   public void cookieParamSubTest() throws Fault {
     super.cookieParamTest();
   }
@@ -54,6 +111,7 @@ public class JAXRSSubClient
    * 
    * @test_Strategy: Verify that named QueryParam is handled properly
    */
+  @Test
   public void cookieParamEntityWithConstructorTest() throws Fault {
     super.paramEntityWithConstructorTest();
   }
@@ -66,6 +124,7 @@ public class JAXRSSubClient
    * 
    * @test_Strategy: Verify that named QueryParam is handled properly
    */
+  @Test
   public void cookieParamEntityWithValueOfTest() throws Fault {
     super.paramEntityWithValueOfTest();
   }
@@ -78,6 +137,7 @@ public class JAXRSSubClient
    * 
    * @test_Strategy: Verify that named QueryParam is handled properly
    */
+  @Test
   public void cookieParamEntityWithFromStringTest() throws Fault {
     super.paramEntityWithFromStringTest();
   }
@@ -90,6 +150,7 @@ public class JAXRSSubClient
    * 
    * @test_Strategy: Verify that named QueryParam is handled properly
    */
+  @Test
   public void cookieParamSetEntityWithFromStringTest() throws Fault {
     super.paramCollectionEntityWithFromStringTest(CollectionName.SET);
   }
@@ -102,6 +163,7 @@ public class JAXRSSubClient
    * 
    * @test_Strategy: Verify that named QueryParam is handled properly
    */
+  @Test
   public void cookieParamListEntityWithFromStringTest() throws Fault {
     super.paramCollectionEntityWithFromStringTest(CollectionName.LIST);
   }
@@ -114,6 +176,7 @@ public class JAXRSSubClient
    * 
    * @test_Strategy: Verify that named QueryParam is handled properly
    */
+  @Test
   public void cookieParamSortedSetEntityWithFromStringTest() throws Fault {
     super.paramCollectionEntityWithFromStringTest(CollectionName.SORTED_SET);
   }
@@ -130,6 +193,7 @@ public class JAXRSSubClient
    * property values of instances created by the implementation runtime. (Check
    * the resource with resource locator is injected field properties)
    */
+  @Test
   public void cookieFieldParamEntityWithConstructorTest() throws Fault {
     super.fieldEntityWithConstructorTest();
   }
@@ -146,6 +210,7 @@ public class JAXRSSubClient
    * property values of instances created by the implementation runtime. (Check
    * the resource with resource locator is injected field properties)
    */
+  @Test
   public void cookieFieldParamEntityWithValueOfTest() throws Fault {
     super.fieldEntityWithValueOfTest();
   }
@@ -162,6 +227,7 @@ public class JAXRSSubClient
    * property values of instances created by the implementation runtime. (Check
    * the resource with resource locator is injected field properties)
    */
+  @Test
   public void cookieFieldParamEntityWithFromStringTest() throws Fault {
     super.fieldEntityWithFromStringTest();
   }
@@ -178,6 +244,7 @@ public class JAXRSSubClient
    * property values of instances created by the implementation runtime. (Check
    * the resource with resource locator is injected field properties)
    */
+  @Test
   public void cookieFieldParamSetEntityWithFromStringTest() throws Fault {
     super.fieldCollectionEntityWithFromStringTest(CollectionName.SET);
   }
@@ -194,6 +261,7 @@ public class JAXRSSubClient
    * property values of instances created by the implementation runtime. (Check
    * the resource with resource locator is injected field properties)
    */
+  @Test
   public void cookieFieldParamListEntityWithFromStringTest() throws Fault {
     super.fieldCollectionEntityWithFromStringTest(CollectionName.LIST);
   }
@@ -210,6 +278,7 @@ public class JAXRSSubClient
    * property values of instances created by the implementation runtime. (Check
    * the resource with resource locator is injected field properties)
    */
+  @Test
   public void cookieFieldSortedSetEntityWithFromStringTest() throws Fault {
     super.fieldCollectionEntityWithFromStringTest(CollectionName.SORTED_SET);
   }
@@ -225,6 +294,7 @@ public class JAXRSSubClient
    * bean property values, see section 3.2.
    * 
    */
+  @Test
   public void cookieParamThrowingWebApplicationExceptionTest() throws Fault {
     super.paramThrowingWebApplicationExceptionTest();
   }
@@ -243,6 +313,7 @@ public class JAXRSSubClient
    * property values of instances created by the implementation runtime. (Check
    * the resource with resource locator is injected field properties)
    */
+  @Test
   public void cookieFieldThrowingWebApplicationExceptionTest() throws Fault {
     super.fieldThrowingWebApplicationExceptionTest();
   }
@@ -262,6 +333,7 @@ public class JAXRSSubClient
    * entity.
    *
    */
+  @Test
   public void cookieParamThrowingIllegalArgumentExceptionTest() throws Fault {
     super.paramThrowingIllegalArgumentExceptionTest();
   }
@@ -280,9 +352,17 @@ public class JAXRSSubClient
    * property values of instances created by the implementation runtime. (Check
    * the resource with resource locator is injected field properties)
    */
+  @Test
   public void cookieFieldParamThrowingIllegalArgumentExceptionTest()
       throws Fault {
     super.fieldThrowingIllegalArgumentExceptionTest();
   }
+
+  @Override
+  public void cookieParamTest()
+      throws Fault {
+    //do nothing
+  }
+  
 
 }

@@ -19,30 +19,61 @@
  */
 package jakarta.ws.rs.tck.ee.rs.delete;
 
+import java.io.InputStream;
+import java.io.IOException;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 import jakarta.ws.rs.tck.common.JAXRSCommonClient;
 
 import jakarta.ws.rs.core.Response.Status;
 
-public class JAXRSClient extends JAXRSCommonClient {
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = 204493956987397506L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_ee_rs_delete_web");
   }
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
   }
 
-  /*
-   * @class.setup_props: webServerHost; webServerPort; ts_home;
-   */
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/delete/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_delete_web.war");
+    archive.addClasses(TSAppConfig.class, HttpMethodDeleteTest.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
+  }
+
   /* Run test */
   /*
    * @testName: deleteTest1
@@ -52,6 +83,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Client invokes Delete on root resource at /DeleteTest;
    * Verify that right Method is invoked.
    */
+  @Test
   public void deleteTest1() throws Fault {
     setProperty(REQUEST_HEADERS, "Accept:text/plain");
     setProperty(REQUEST, "DELETE " + getContextRoot() + "/DeleteTest HTTP/1.1");
@@ -67,6 +99,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Client invokes Delete on root resource at /DeleteTest;
    * Verify that right Method is invoked.
    */
+  @Test
   public void deleteTest2() throws Fault {
     setProperty(REQUEST_HEADERS, "Accept:text/html");
     setProperty(REQUEST,
@@ -84,6 +117,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Client invokes Delete on a sub resource at /DeleteTest/sub;
    * Verify that right Method is invoked.
    */
+  @Test
   public void deleteSubTest() throws Fault {
     setProperty(REQUEST_HEADERS, "Accept:text/html");
     setProperty(REQUEST,
@@ -101,6 +135,7 @@ public class JAXRSClient extends JAXRSCommonClient {
    * @test_Strategy: Client invokes Delete on a sub resource at /DeleteTest/sub;
    * Verify that no Method is invoked.
    */
+  @Test
   public void deleteSubTest1() throws Fault {
     setProperty(REQUEST_HEADERS, "Accept:text/plain");
     setProperty(REQUEST,

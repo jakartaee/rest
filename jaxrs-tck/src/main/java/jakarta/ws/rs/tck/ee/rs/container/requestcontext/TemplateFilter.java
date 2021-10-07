@@ -17,6 +17,7 @@
 package jakarta.ws.rs.tck.ee.rs.container.requestcontext;
 
 import java.io.IOException;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 import java.lang.reflect.Method;
 import java.util.Collection;
 

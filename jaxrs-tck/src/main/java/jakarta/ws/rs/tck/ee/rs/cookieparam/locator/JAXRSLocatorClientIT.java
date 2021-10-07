@@ -16,18 +16,74 @@
 
 package jakarta.ws.rs.tck.ee.rs.cookieparam.locator;
 
+import java.io.InputStream;
+import java.io.IOException;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
  *                     ts_home;
  */
-public class JAXRSLocatorClient
-    extends jakarta.ws.rs.tck.ee.rs.cookieparam.JAXRSClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSLocatorClientIT
+    extends jakarta.ws.rs.tck.ee.rs.cookieparam.JAXRSClientIT {
 
   private static final long serialVersionUID = 1L;
 
-  public JAXRSLocatorClient() {
+  public JAXRSLocatorClientIT() {
+    setup();
     setContextRoot("/jaxrs_ee_rs_cookieparam_locator_web/resource/locator");
+  }
+
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false, name = "cookieparamlocator")
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSLocatorClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/cookieparam/locator/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_cookieparam_locator_web.war");
+    archive.addClasses(TSAppConfig.class, LocatorResource.class, MiddleResource.class,
+      jakarta.ws.rs.tck.ee.rs.cookieparam.CookieParamTest.class,
+      jakarta.ws.rs.tck.ee.rs.ParamEntityPrototype.class,
+      jakarta.ws.rs.tck.ee.rs.ParamEntityWithConstructor.class,
+      jakarta.ws.rs.tck.ee.rs.ParamEntityWithValueOf.class,
+      jakarta.ws.rs.tck.ee.rs.ParamEntityWithFromString.class,
+      jakarta.ws.rs.tck.ee.rs.ParamTest.class,
+      jakarta.ws.rs.tck.ee.rs.JaxrsParamClient.CollectionName.class,
+      jakarta.ws.rs.tck.ee.rs.ParamEntityThrowingWebApplicationException.class,
+      jakarta.ws.rs.tck.ee.rs.ParamEntityThrowingExceptionGivenByName.class,
+      jakarta.ws.rs.tck.ee.rs.RuntimeExceptionMapper.class,
+      jakarta.ws.rs.tck.ee.rs.WebApplicationExceptionMapper.class
+      );
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
   }
 
   /*
@@ -42,6 +98,7 @@ public class JAXRSLocatorClient
    * received using CookieParam in the resource; Verify on the client side from
    * response.
    */
+  @Test
   public void cookieParamSubTest() throws Fault {
     super.cookieParamTest();
   }
@@ -54,6 +111,7 @@ public class JAXRSLocatorClient
    * 
    * @test_Strategy: Verify that named QueryParam is handled properly
    */
+  @Test
   public void cookieParamEntityWithConstructorTest() throws Fault {
     super.paramEntityWithConstructorTest();
   }
@@ -66,6 +124,7 @@ public class JAXRSLocatorClient
    * 
    * @test_Strategy: Verify that named QueryParam is handled properly
    */
+  @Test
   public void cookieParamEntityWithValueOfTest() throws Fault {
     super.paramEntityWithValueOfTest();
   }
@@ -78,6 +137,7 @@ public class JAXRSLocatorClient
    * 
    * @test_Strategy: Verify that named QueryParam is handled properly
    */
+  @Test
   public void cookieParamEntityWithFromStringTest() throws Fault {
     super.paramEntityWithFromStringTest();
   }
@@ -90,6 +150,7 @@ public class JAXRSLocatorClient
    * 
    * @test_Strategy: Verify that named QueryParam is handled properly
    */
+  @Test
   public void cookieParamSetEntityWithFromStringTest() throws Fault {
     super.paramCollectionEntityWithFromStringTest(CollectionName.SET);
   }
@@ -102,6 +163,7 @@ public class JAXRSLocatorClient
    * 
    * @test_Strategy: Verify that named QueryParam is handled properly
    */
+  @Test
   public void cookieParamListEntityWithFromStringTest() throws Fault {
     super.paramCollectionEntityWithFromStringTest(CollectionName.LIST);
   }
@@ -114,6 +176,7 @@ public class JAXRSLocatorClient
    * 
    * @test_Strategy: Verify that named QueryParam is handled properly
    */
+  @Test
   public void cookieParamSortedSetEntityWithFromStringTest() throws Fault {
     super.paramCollectionEntityWithFromStringTest(CollectionName.SORTED_SET);
   }
@@ -129,6 +192,7 @@ public class JAXRSLocatorClient
    * bean property values, see section 3.2.
    * 
    */
+  @Test
   public void cookieParamThrowingWebApplicationExceptionTest() throws Fault {
     super.paramThrowingWebApplicationExceptionTest();
   }
@@ -148,8 +212,55 @@ public class JAXRSLocatorClient
    * entity.
    *
    */
+  @Test
   public void cookieParamThrowingIllegalArgumentExceptionTest() throws Fault {
     super.paramThrowingIllegalArgumentExceptionTest();
+  }
+
+  @Override
+  public void cookieFieldParamEntityWithFromStringTest() throws Fault{
+    //do nothing
+  }
+
+  @Override
+  public void cookieParamTest() throws Fault {
+    //do nothing
+  }
+
+  @Override
+  public void cookieFieldParamEntityWithConstructorTest() throws Fault {
+    //do nothing
+  }
+
+  @Override
+  public void cookieFieldParamListEntityWithFromStringTest() throws Fault {
+    //do nothing
+  }
+
+  @Override
+  public void cookieFieldParamThrowingIllegalArgumentExceptionTest() throws Fault {
+    //do nothing
+  }
+
+  @Override
+  public void cookieFieldThrowingWebApplicationExceptionTest() throws Fault {
+    //do nothing
+  }
+  
+
+  @Override
+  public void cookieFieldSortedSetEntityWithFromStringTest() throws Fault {
+    //do nothing
+  }
+
+  @Override
+  public void cookieFieldParamSetEntityWithFromStringTest() throws Fault {
+    //do nothing
+  }
+
+  @Override
+  public void cookieFieldParamEntityWithValueOfTest() throws Fault {
+    //do nothing
   }
 
   @Override

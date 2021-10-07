@@ -16,25 +16,66 @@
 
 package jakarta.ws.rs.tck.ee.rs.container.requestcontext.illegalstate;
 
+import java.io.InputStream;
+import java.io.IOException;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
  *                     ts_home;
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = -8112756483664393579L;
 
-  public JAXRSClient() {
-    setContextRoot(
-        "/jaxrs_ee_rs_container_requestcontext_illegalstate_web/resource");
+  public JAXRSClientIT() {
+    setup();
+    setContextRoot("/jaxrs_ee_rs_container_requestcontext_illegalstate_web/resource");
     setPrintEntity(true);
   }
 
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException{
+
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/container/requestcontext/illegalstate/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_container_requestcontext_illegalstate_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class, RequestFilter.class, ContextOperation.class, 
+      RequestTemplateFilter.class, ResponseFilter.class, ResponseTemplateFilter.class, TemplateFilter.class, 
+      jakarta.ws.rs.tck.common.provider.PrintingErrorHandler.class, 
+      jakarta.ws.rs.tck.common.impl.SecurityContextImpl.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
   }
 
   /*
@@ -45,6 +86,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: Throws IllegalStateException - in case the method is not
    * invoked from a pre-matching request filter.
    */
+  @Test
   public void setMethodTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.ISEXCEPTION);
     invokeRequestAndCheckResponse(ContextOperation.SETMETHOD);
@@ -60,6 +102,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * ContainerRequestContext.abortWith
    */
+  @Test
   public void setRequestUriOneUriTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.ISEXCEPTION);
     invokeRequestAndCheckResponse(ContextOperation.SETREQUESTURI1);
@@ -75,6 +118,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * ContainerRequestContext.abortWith
    */
+  @Test
   public void setRequestUriTwoUrisTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.ISEXCEPTION);
     invokeRequestAndCheckResponse(ContextOperation.SETREQUESTURI2);
@@ -88,6 +132,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: throws IllegalStateException in case the method is invoked
    * from a response filter.
    */
+  @Test
   public void abortWithTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.ISEXCEPTION);
     invokeRequestAndCheckResponse(ContextOperation.ABORTWITH);
@@ -101,6 +146,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: throws IllegalStateException in case the method is invoked
    * from a response filter.
    */
+  @Test
   public void setEntityStreamTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.ISEXCEPTION);
     invokeRequestAndCheckResponse(ContextOperation.SETENTITYSTREAM);
@@ -114,6 +160,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * @test_Strategy: throws IllegalStateException in case the method is invoked
    * from a response filter.
    */
+  @Test
   public void setSecurityContextTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.ISEXCEPTION);
     invokeRequestAndCheckResponse(ContextOperation.SETSECURITYCONTEXT);

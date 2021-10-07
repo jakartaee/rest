@@ -16,7 +16,25 @@
 
 package jakarta.ws.rs.tck.ee.rs.container.resourceinfo;
 
+import java.io.IOException;
+import java.io.InputStream;
 import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 /*
  * @class.setup_props: webServerHost;
@@ -24,17 +42,38 @@ import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
  *                     ts_home;
  *
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = -2900337741491627385L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_ee_rs_container_resourceinfo_web/resource");
     setPrintEntity(true);
   }
 
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException {
+
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/container/resourceinfo/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_container_resourceinfo_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
   }
 
   /*
@@ -44,6 +83,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get the resource class that is the target of a request
    */
+  @Test
   public void getResourceClassTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "clazz"));
     setProperty(Property.SEARCH_STRING, Resource.class.getName());
@@ -58,6 +98,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: Get the resource method that is the target of a request
    */
+  @Test
   public void getResourceMethodTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "method"));
     setProperty(Property.SEARCH_STRING, "getResourceMethod");

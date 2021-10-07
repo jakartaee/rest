@@ -16,10 +16,28 @@
 
 package jakarta.ws.rs.tck.ee.rs.constrainedto;
 
+import java.io.InputStream;
+import java.io.IOException;
 import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 /*
  * @class.setup_props: webServerHost;
@@ -37,22 +55,39 @@ import jakarta.ws.rs.core.Response.Status;
  * implementation in further processing - Should not throw exception, just
  * ignore
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = 3343257931794865470L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_ee_rs_constrainedto_web/resource");
   }
 
-  /**
-   * Entry point for different-VM execution. It should delegate to method
-   * run(String[], PrintWriter, PrintWriter), and this method should not contain
-   * any test configuration.
-   */
-  public static void main(String[] args) {
-    JAXRSClient theTests = new JAXRSClient();
-    theTests.run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException {
+
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/constrainedto/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_constrainedto_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class,
+      ClientSideReader.class, ClientSideWriter.class,
+      ServerSideReader.class, ServerSideWriter.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
   }
 
   /* Run test */
@@ -63,6 +98,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: jakarta.ws.rs.ConstrainedTo.value is used
    */
+  @Test
   public void serverSideReaderIsUsedOnServerTest() throws Fault {
     setProperty(Property.CONTENT, "Anything");
     setProperty(Property.SEARCH_STRING, ServerSideReader.FAKE_MESSAGE);
@@ -79,6 +115,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: jakarta.ws.rs.ConstrainedTo.value is used
    */
+  @Test
   public void clientSideReaderIsNotUsedOnServerTest() throws Fault {
     setProperty(Property.CONTENT, Resource.MESSAGE);
     setProperty(Property.SEARCH_STRING, Resource.MESSAGE);
@@ -95,6 +132,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: jakarta.ws.rs.ConstrainedTo.value is used
    */
+  @Test
   public void serverSideWriterIsUsedOnServerTest() throws Fault {
     setProperty(Property.CONTENT, Resource.MESSAGE);
     setProperty(Property.SEARCH_STRING, ServerSideWriter.FAKE_MESSAGE);
@@ -111,6 +149,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: jakarta.ws.rs.ConstrainedTo.value is used
    */
+  @Test
   public void clientSideWriterIsNotUsedOnServerTest() throws Fault {
     setPrintEntity(true);
     setProperty(Property.CONTENT, Resource.MESSAGE);
@@ -128,6 +167,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: jakarta.ws.rs.ConstrainedTo.value is used
    */
+  @Test
   public void serverSideReaderIsNotUsedOnClientTest() throws Fault {
     addProviders();
     setProperty(Property.CONTENT, ServerSideReader.MEDIA_TYPE.toString());
@@ -145,6 +185,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: jakarta.ws.rs.ConstrainedTo.value is used
    */
+  @Test
   public void clientSideReaderIsUsedOnClientTest() throws Fault {
     addProviders();
     setProperty(Property.CONTENT, ClientSideReader.MEDIA_TYPE.toString());
@@ -162,6 +203,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * 
    * @test_Strategy: jakarta.ws.rs.ConstrainedTo.value is used
    */
+  @Test
   public void serverSideWriterIsNotUsedOnClientTest() throws Fault {
     addProviders();
     setProperty(Property.CONTENT, ServerSideWriter.MEDIA_TYPE.toString());
@@ -182,6 +224,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * worked on client rather then let it (wrongly) work on server and falsely
    * pass
    */
+  @Test
   public void clientSideWriterIsUsedOnClientTest() throws Fault {
     addProviders();
     setProperty(Property.CONTENT, Resource.MESSAGE);

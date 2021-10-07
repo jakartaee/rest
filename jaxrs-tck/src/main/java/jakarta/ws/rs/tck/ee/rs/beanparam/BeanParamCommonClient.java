@@ -24,7 +24,7 @@ import jakarta.ws.rs.tck.ee.rs.ParamEntityWithValueOf;
 import jakarta.ws.rs.tck.ee.rs.ParamTest;
 
 import jakarta.ws.rs.core.MediaType;
-
+import static org.junit.jupiter.api.Assertions.assertTrue;
 /*
  * @since 2.0.1
  */
@@ -157,7 +157,7 @@ public abstract class BeanParamCommonClient extends JaxrsParamClient {
         if (header.contains(lowCookie))
           found = true;
     }
-    assertTrue(found, "Could not find cookie", cookie, "in response headers:",
+    assertTrue(found, "Could not find cookie" + cookie+ "in response headers:" +
         JaxrsUtil.iterableToString(";", headers));
     logMsg("Found cookie", cookie, "as expected");
   }

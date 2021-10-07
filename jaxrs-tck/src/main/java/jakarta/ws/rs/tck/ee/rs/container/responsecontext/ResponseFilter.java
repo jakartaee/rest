@@ -17,6 +17,7 @@
 package jakarta.ws.rs.tck.ee.rs.container.responsecontext;
 
 import java.io.IOException;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;

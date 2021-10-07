@@ -17,6 +17,7 @@
 package jakarta.ws.rs.tck.ee.rs.container.requestcontext.security;
 
 import java.io.IOException;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;

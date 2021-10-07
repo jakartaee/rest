@@ -19,29 +19,70 @@ package jakarta.ws.rs.tck.ee.rs.container.requestcontext;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+import java.io.InputStream;
+import java.io.IOException;
 
 import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
 import jakarta.ws.rs.tck.common.util.JaxrsUtil;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
  *                     ts_home;
  */
-public class JAXRSClient extends JaxrsCommonClient {
+@ExtendWith(ArquillianExtension.class)
+public class JAXRSClientIT extends JaxrsCommonClient {
 
   private static final long serialVersionUID = 111355567568365703L;
 
-  public JAXRSClient() {
+  public JAXRSClientIT() {
+    setup();
     setContextRoot("/jaxrs_ee_rs_container_requestcontext_web/resource");
     setPrintEntity(true);
   }
 
-  public static void main(String[] args) {
-    new JAXRSClient().run(args);
+  @BeforeEach
+  void logStartTest(TestInfo testInfo) {
+    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  }
+
+  @AfterEach
+  void logFinishTest(TestInfo testInfo) {
+    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  }
+
+  @Deployment(testable = false)
+  public static WebArchive createDeployment() throws IOException {
+
+    InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/container/requestcontext/web.xml.template");
+    String webXml = editWebXmlString(inStream);
+
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_container_requestcontext_web.war");
+    archive.addClasses(TSAppConfig.class, Resource.class,
+    ContextOperation.class, RequestFilter.class, SecondRequestFilter.class,
+    TemplateFilter.class, jakarta.ws.rs.tck.common.impl.SecurityContextImpl.class);
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
+
   }
 
   /*
@@ -55,6 +96,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void abortWithTest() throws Fault {
     invokeRequestAndCheckResponse(ContextOperation.ABORTWITH);
   }
@@ -70,6 +112,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getAcceptableLanguagesTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS, "Accpet-Language:en-us");
     invokeRequestAndCheckResponse(ContextOperation.GETACCEPTABLELANGUAGES);
@@ -86,6 +129,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getAcceptableLanguagesIsSortedTest() throws Fault {
     logMsg(
         "Check the #getAcceptableLanguages is sorted according to their q-value");
@@ -108,6 +152,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getAcceptableLanguagesIsReadOnlyTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         "Accept-Language: da, en-gb;q=0.6, en-us;q=0.7");
@@ -127,6 +172,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getAcceptableMediaTypesTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildAccept(MediaType.APPLICATION_JSON_TYPE));
@@ -145,6 +191,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getAcceptableMediaTypesIsSortedTest() throws Fault {
     logMsg(
         "Check the #getAcceptableMediaTypes is sorted according to their q-value");
@@ -169,6 +216,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getAcceptableMediaTypesIsReadOnlyTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS, buildAccept(MediaType.TEXT_XML_TYPE));
     setProperty(Property.UNEXPECTED_RESPONSE_MATCH, MediaType.APPLICATION_JSON);
@@ -186,6 +234,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getCookiesTest() throws Fault {
     String[] cookies = { "cookie1", "coookkkie99", "cookiiieee999" };
     for (String cookie : cookies) {
@@ -208,6 +257,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getCookiesIsReadonlyTest() throws Fault {
     setPrintEntity(true);
     invokeRequestAndCheckResponse(ContextOperation.GETCOOKIESISREADONLY);
@@ -223,6 +273,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getDateTest() throws Fault {
     Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.MILLISECOND, 0);
@@ -244,6 +295,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getDateIsNullTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "NULL");
     invokeRequestAndCheckResponse(ContextOperation.GETDATE);
@@ -259,6 +311,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getEntityStreamTest() throws Fault {
     String entity = "EnTiTyStReAmTeSt";
     setProperty(Property.CONTENT, entity);
@@ -277,6 +330,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getHeadersTest() throws Fault {
     for (int i = 1; i != 5; i++) {
       String header = "header" + i + ":" + "header" + i;
@@ -296,6 +350,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getHeadersIsMutableTest() throws Fault {
     setPrintEntity(true);
     invokeRequestAndCheckResponse(ContextOperation.GETHEADERSISMUTABLE);
@@ -311,6 +366,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getHeaderStringTest() throws Fault {
     setProperty(Property.SEARCH_STRING,
         ContextOperation.GETHEADERSTRING2.name());
@@ -327,6 +383,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getLanguageTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         HttpHeaders.CONTENT_LANGUAGE + ":en-gb");
@@ -344,6 +401,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getLanguageIsNullTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "NULL");
     invokeRequestAndCheckResponse(ContextOperation.GETLANGUAGE);
@@ -360,6 +418,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getLengthTest() throws Fault {
     setProperty(Property.CONTENT, "12345678901234567890");
     setProperty(Property.SEARCH_STRING, "20");
@@ -377,6 +436,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getLengthWhenNoEntityTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "-1");
     invokeRequestAndCheckResponse(ContextOperation.GETLENGTH);
@@ -393,6 +453,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getMediaTypeTest() throws Fault {
     addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_SVG_XML);
     setProperty(Property.SEARCH_STRING, MediaType.APPLICATION_SVG_XML);
@@ -410,6 +471,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getMediaTypeIsNullTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "NULL");
     invokeRequestAndCheckResponse(ContextOperation.GETMEDIATYPE);
@@ -425,6 +487,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getMethodTest() throws Fault {
     String method = Request.OPTIONS.name();
     String header = RequestFilter.OPERATION + ":"
@@ -448,6 +511,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getPropertyIsNullTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "NULL");
     invokeRequestAndCheckResponse(ContextOperation.GETPROPERTY);
@@ -465,6 +529,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getPropertyNamesTest() throws Fault {
     for (int i = 0; i != 5; i++)
       setProperty(Property.UNORDERED_SEARCH_STRING,
@@ -481,6 +546,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * containing the property names available within the context of the current
    * request/response exchange context.
    */
+  @Test
   public void getPropertyNamesIsReadOnlyTest() throws Fault {
     setProperty(Property.UNORDERED_SEARCH_STRING, "0");
     invokeRequestAndCheckResponse(ContextOperation.GETPROPERTYNAMESISREADONLY);
@@ -496,6 +562,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getRequestTest() throws Fault {
     String method = Request.OPTIONS.name();
     String header = RequestFilter.OPERATION + ":"
@@ -519,6 +586,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getSecurityContextPrincipalIsNullTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "NULL");
     invokeRequestAndCheckResponse(ContextOperation.GETSECURITYCONTEXT);
@@ -534,6 +602,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void getUriInfoTest() throws Fault {
     setProperty(Property.SEARCH_STRING, getAbsoluteUrl());
     invokeRequestAndCheckResponse(ContextOperation.GETURIINFO);
@@ -550,6 +619,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void hasEntityTest() throws Fault {
     setRequestContentEntity("entity");
     setProperty(Property.SEARCH_STRING, "true");
@@ -567,6 +637,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void hasEntityWhenNoEntityTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "false");
     invokeRequestAndCheckResponse(ContextOperation.HASENTITY);
@@ -585,6 +656,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void removePropertyTest() throws Fault {
     // getProperty returns null after the property has been set and removed
     setProperty(Property.SEARCH_STRING, "NULL");
@@ -601,6 +673,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void setEntityStreamTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.SETENTITYSTREAMENTITY);
     invokeRequestAndCheckResponse(ContextOperation.SETENTITYSTREAM);
@@ -616,6 +689,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void setMethodTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Request.OPTIONS.name());
     invokeRequestAndCheckResponse(ContextOperation.SETMETHOD);
@@ -634,6 +708,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void setPropertyTest() throws Fault {
     setProperty(Property.SEARCH_STRING, TemplateFilter.PROPERTYNAME);
     invokeRequestAndCheckResponse(ContextOperation.SETPROPERTY);
@@ -651,6 +726,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException. *
    */
+  @Test
   public void setPropertyNullTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "NULL");
     invokeRequestAndCheckResponse(ContextOperation.SETPROPERTYNULL);
@@ -669,6 +745,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException. *
    */
+  @Test
   public void setPropertyIsReflectedInServletRequestTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.PROPERTYNAME);
     invokeRequestAndCheckResponse(ContextOperation.SETPROPERTYCONTEXT);
@@ -685,6 +762,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void setRequestUriOneUriTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.URI);
     invokeRequestAndCheckResponse(ContextOperation.SETREQUESTURI1);
@@ -701,6 +779,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void setRequestUriTwoUrisTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.URI);
     invokeRequestAndCheckResponse(ContextOperation.SETREQUESTURI2);
@@ -717,6 +796,7 @@ public class JAXRSClient extends JaxrsCommonClient {
    * Filter method called before a request has been dispatched to a resource.
    * Throws IOException.
    */
+  @Test
   public void setSecurityContextTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.PRINCIPAL);
     invokeRequestAndCheckResponse(ContextOperation.SETSECURITYCONTEXT);

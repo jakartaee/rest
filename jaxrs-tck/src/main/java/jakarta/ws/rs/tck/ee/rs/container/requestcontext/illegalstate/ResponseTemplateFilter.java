@@ -17,6 +17,7 @@
 package jakarta.ws.rs.tck.ee.rs.container.requestcontext.illegalstate;
 
 import java.io.IOException;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 

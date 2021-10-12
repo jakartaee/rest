@@ -270,7 +270,7 @@ public abstract class RuntimeDelegate {
      * <p>
      * <em>This method is not intended to be invoked by applications. Call {@link EntityPart#withName(String)} instead.</em>
      * </p>
-     * 
+     *
      * @param partName name for this part within the multipart body.
      * @return new {@code EntityPart.Builder} instance with specified part name
      * @throws java.lang.IllegalArgumentException if {@code partName} is {@code null}.

@@ -75,9 +75,8 @@ public class MultipartResource {
 
         if (resumeFileName.toLowerCase().endsWith(".pdf")) {
             processPdfResume(resume.getContent());
-        } else {
-            // handle other file types, like Word docs, etc.
         }
+        // handle other file types, like Word docs, etc.
 
         // process new application...
         return Response.ok("Application received").build();

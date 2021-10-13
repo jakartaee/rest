@@ -14,10 +14,13 @@
 The order in which filters and interceptors are executed as part of
 their corresponding chains is controlled by the `@Priority` annotation
 defined in <<bib15>>. Priorities are represented by integer
-numbers. Execution chains for extension points , , ,  and  are sorted in
-__ascending order__; the lower the number the higher the priority.
-Execution chains for extension points  and  are sorted in __descending
-order__; the higher the number the higher the priority. These rules
+numbers. Execution chains for extension points `ContainerRequest`,
+`PreMatchContainerRequest`, `ClientRequest`, `ReadFrom` and `WriteTo`
+are sorted in __ascending order__;
+the lower the number the higher the priority.
+Execution chains for extension points `ContainerResponse` and
+`ClientResponse` are sorted in __descending order__;
+the higher the number the higher the priority. These rules
 ensure that response filters are executed in reversed order of request
 filters.
 

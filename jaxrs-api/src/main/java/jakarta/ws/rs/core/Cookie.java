@@ -274,9 +274,11 @@ public class Cookie {
     /**
      * JAX-RS abstract {@link Cookie} builder class.
      *
+     * @param <T> the current AbstractCookieBuilder type.
+     *
      * @since 3.1
      */
-    public static abstract class AbstractCookieBuilder<T extends AbstractCookieBuilder<T>> {
+    public abstract static class AbstractCookieBuilder<T extends AbstractCookieBuilder<T>> {
 
         private final String name;
 

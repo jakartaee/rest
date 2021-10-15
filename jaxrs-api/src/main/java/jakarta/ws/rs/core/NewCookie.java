@@ -560,9 +560,11 @@ public class NewCookie extends Cookie {
     /**
      * JAX-RS abstract {@link NewCookie} builder class.
      *
+     * @param <T> the current AbstractNewCookieBuilder type.
+     *
      * @since 3.1
      */
-    public static abstract class AbstractNewCookieBuilder<T extends AbstractNewCookieBuilder<T>> extends AbstractCookieBuilder<AbstractNewCookieBuilder<T>> {
+    public abstract static class AbstractNewCookieBuilder<T extends AbstractNewCookieBuilder<T>> extends AbstractCookieBuilder<AbstractNewCookieBuilder<T>> {
 
         private String comment;
         private int maxAge = DEFAULT_MAX_AGE;

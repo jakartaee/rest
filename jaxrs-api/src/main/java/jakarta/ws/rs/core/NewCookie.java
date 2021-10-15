@@ -562,7 +562,7 @@ public class NewCookie extends Cookie {
      *
      * @since 3.1
      */
-    public static abstract class AbstractNewCookieBuilder<SELF extends AbstractNewCookieBuilder<SELF>> extends AbstractCookieBuilder<AbstractNewCookieBuilder<SELF>> {
+    public static abstract class AbstractNewCookieBuilder<T extends AbstractNewCookieBuilder<T>> extends AbstractCookieBuilder<AbstractNewCookieBuilder<T>> {
 
         private String comment;
         private int maxAge = DEFAULT_MAX_AGE;
@@ -601,7 +601,7 @@ public class NewCookie extends Cookie {
          * @param comment the comment.
          * @return the updated builder instance.
          */
-        public SELF comment(String comment) {
+        public T comment(String comment) {
             this.comment = comment;
             return self();
         }
@@ -616,7 +616,7 @@ public class NewCookie extends Cookie {
          * @return the updated builder instance.
          * @see #expiry(Date)
          */
-        public SELF maxAge(int maxAge) {
+        public T maxAge(int maxAge) {
             this.maxAge = maxAge;
             return self();
         }
@@ -633,7 +633,7 @@ public class NewCookie extends Cookie {
          * @return the updated builder instance.
          * @see #maxAge(int)
          */
-        public SELF expiry(Date expiry) {
+        public T expiry(Date expiry) {
             this.expiry = expiry;
             return self();
         }
@@ -644,7 +644,7 @@ public class NewCookie extends Cookie {
          * @param secure specifies whether the cookie will only be sent over a secure connection.
          * @return the updated builder instance.
          */
-        public SELF secure(boolean secure) {
+        public T secure(boolean secure) {
             this.secure = secure;
             return self();
         }
@@ -655,7 +655,7 @@ public class NewCookie extends Cookie {
          * @param httpOnly if {@code true} make the cookie HTTP only, i.e. only visible as part of an HTTP request.
          * @return the updated builder instance.
          */
-        public SELF httpOnly(boolean httpOnly) {
+        public T httpOnly(boolean httpOnly) {
             this.httpOnly = httpOnly;
             return self();
         }
@@ -667,14 +667,14 @@ public class NewCookie extends Cookie {
          * @param sameSite specifies the value of the {@code SameSite} cookie attribute.
          * @return the updated builder instance.
          */
-        public SELF sameSite(SameSite sameSite) {
+        public T sameSite(SameSite sameSite) {
             this.sameSite = sameSite;
             return self();
         }
 
         @SuppressWarnings("unchecked")
-        private SELF self() {
-            return (SELF) this;
+        private T self() {
+            return (T) this;
         }
 
         /**

@@ -276,7 +276,7 @@ public class Cookie {
      *
      * @since 3.1
      */
-    public static abstract class AbstractCookieBuilder<SELF extends AbstractCookieBuilder<SELF>> {
+    public static abstract class AbstractCookieBuilder<T extends AbstractCookieBuilder<T>> {
 
         private final String name;
 
@@ -300,7 +300,7 @@ public class Cookie {
          * @param value the value of the cookie.
          * @return the updated builder instance.
          */
-        public SELF value(String value) {
+        public T value(String value) {
             this.value = value;
             return self();
         }
@@ -311,7 +311,7 @@ public class Cookie {
          * @param version the version of the specification to which the cookie complies.
          * @return the updated builder instance.
          */
-        public SELF version(int version) {
+        public T version(int version) {
             this.version = version;
             return self();
         }
@@ -322,7 +322,7 @@ public class Cookie {
          * @param path the URI path for which the cookie is valid.
          * @return the updated builder instance.
          */
-        public SELF path(String path) {
+        public T path(String path) {
             this.path = path;
             return self();
         }
@@ -333,14 +333,14 @@ public class Cookie {
          * @param domain the host domain for which the cookie is valid.
          * @return the updated builder instance.
          */
-        public SELF domain(String domain) {
+        public T domain(String domain) {
             this.domain = domain;
             return self();
         }
 
         @SuppressWarnings("unchecked")
-        private SELF self() {
-            return (SELF) this;
+        private T self() {
+            return (T) this;
         }
 
         /**

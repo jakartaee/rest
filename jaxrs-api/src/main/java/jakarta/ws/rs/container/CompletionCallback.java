@@ -20,7 +20,7 @@ package jakarta.ws.rs.container;
  * A request processing callback that receives request processing completion events.
  * <p>
  * A completion callback is always invoked when the whole request processing is over, i.e. once a response for the request has
- * been processed and sent back to the client (including processing by a custom exception mapper) or in when an unmapped
+ * been processed and sent back to the client (including processing by a custom exception mapper) or when an unmapped
  * exception or error is being propagated to the default exception mapper.
  * </p>
  *

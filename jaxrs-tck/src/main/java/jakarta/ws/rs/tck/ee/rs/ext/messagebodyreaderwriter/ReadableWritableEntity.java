@@ -18,7 +18,7 @@ package jakarta.ws.rs.tck.ee.rs.ext.messagebodyreaderwriter;
 
 /**
  * This class is used by
- * com.sun.ts.tests.jaxrs.ee.rs.ext.providers.ProvidersServlet
+ * jakarta.ws.rs.tck.ee.rs.ext.providers.ProvidersServlet
  */
 public class ReadableWritableEntity {
   private String entity;

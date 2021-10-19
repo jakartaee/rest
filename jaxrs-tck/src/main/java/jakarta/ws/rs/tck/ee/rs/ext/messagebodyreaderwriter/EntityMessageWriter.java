@@ -31,7 +31,7 @@ import jakarta.ws.rs.ext.Provider;
 
 /**
  * This class is used by
- * com.sun.ts.tests.jaxrs.ee.rs.ext.providers.ProvidersServlet
+ * jakarta.ws.rs.tck.ee.rs.ext.providers.ProvidersServlet
  */
 @Provider
 public class EntityMessageWriter extends AbstractMessageBodyRW

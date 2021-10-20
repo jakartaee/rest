@@ -58,7 +58,7 @@ public class MultipartClient {
         Response response = target.request(MediaType.MULTIPART_FORM_DATA).get();
         List<EntityPart> parts = response.readEntity(new GenericType<List<EntityPart>>() { });
         return parts.stream().map(part -> {
-            try (InputStream is = part.getContent()) {
+            try (InputStream is = part.getContentStream()) {
                 Path file = Files.createFile(Paths.get(part.getFileName().orElse(part.getName() + ".pdf")));
                 Files.copy(is, file);
                 return file;

@@ -57,7 +57,7 @@ public class MultipartResource {
             if (f.exists()) {
                 throw new WebApplicationException(409); // 409 CONFLICT
             }
-            try (InputStream content = p.getContent()) {
+            try (InputStream content = p.getContentStream()) {
                 Files.copy(content, f.toPath());
             }
         }
@@ -74,7 +74,7 @@ public class MultipartResource {
         String resumeFileName = resume.getFileName().orElseThrow(NotSupportedException::new);
 
         if (resumeFileName.toLowerCase().endsWith(".pdf")) {
-            processPdfResume(resume.getContent());
+            processPdfResume(resume.getContentStream());
         }
         // handle other file types, like Word docs, etc.
 

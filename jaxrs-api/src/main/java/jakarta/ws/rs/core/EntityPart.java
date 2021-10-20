@@ -105,6 +105,18 @@ public interface EntityPart {
     Optional<String> getFileName();
 
     /**
+     * Get the content object from this part.
+     * <p>
+     * If the content is represented by an un-consumed {@link InputStream InputStream} the method will return the input
+     * stream
+     * </p>
+     *
+     * @return the an content of this part
+     * @throws IllegalStateException if the content was previously fully consumed as an {@link InputStream input stream}
+     */
+    Object getContent();
+
+    /**
      * Returns the input stream for this part. This is the content body of the part
      * and is accessed as a stream to avoid loading potentially large amounts of
      * data into the heap.
@@ -114,7 +126,8 @@ public interface EntityPart {
      *
      * @return an {@code InputStream} representing the content of this part
      */
-    InputStream getContent();
+    InputStream getContentStream();
+
 
     /**
      * Converts the content stream for this part to the specified class and returns
@@ -127,8 +140,8 @@ public interface EntityPart {
      * The implementation is required to close the content stream when this method
      * is invoked, so it may only be invoked once. Subsequent invocations will
      * result in an {@code IllegalStateException}. Likewise this method will throw
-     * an {@code IllegalStateException} if it is called after calling
-     * {@link #getContent} or {@link #getContent(GenericType)}.
+     * an {@code IllegalStateException} if it is called after {@code InputStream}
+     * fully consumed already and has not been buffered prior consuming.
      *
      * @param type the {@code Class} that the implementation should convert this
      *             part to
@@ -139,9 +152,7 @@ public interface EntityPart {
      *                                  {@link jakarta.ws.rs.ext.MessageBodyReader}
      *                                  can handle the conversion of this part to
      *                                  the specified type
-     * @throws IllegalStateException    if this method or any of the other
-     *                                  {@code getContent} methods has already been
-     *                                  invoked
+     * @throws IllegalStateException    if the content was previously fully consumed as an {@link InputStream InputStream}
      * @throws IOException              if the
      *                                  {@link jakarta.ws.rs.ext.MessageBodyReader#readFrom(Class,
      *                                  java.lang.reflect.Type, java.lang.annotation.Annotation[], MediaType, MultivaluedMap, InputStream)}
@@ -168,8 +179,8 @@ public interface EntityPart {
      * The implementation is required to close the content stream when this method
      * is invoked, so it may only be invoked once. Subsequent invocations will
      * result in an {@code IllegalStateException}. Likewise this method will throw
-     * an {@code IllegalStateException} if it is called after calling
-     * {@link #getContent} or {@link #getContent(Class)}.
+     * an {@code IllegalStateException} if it is called after if it is called after {@code InputStream}
+     * fully consumed already and has not been buffered prior consuming.
      *
      * @param type the generic type that the implementation should convert this part
      *             to
@@ -180,9 +191,7 @@ public interface EntityPart {
      *                                  {@link jakarta.ws.rs.ext.MessageBodyReader}
      *                                  can handle the conversion of this part to
      *                                  the specified type
-     * @throws IllegalStateException    if this method or any of the other
-     *                                  {@code getContent} methods has already been
-     *                                  invoked
+     * @throws IllegalStateException    if the content was previously fully consumed as an {@link InputStream InputStream}
      * @throws IOException              if the
      *                                  {@link jakarta.ws.rs.ext.MessageBodyReader#readFrom(Class,
      *                                  java.lang.reflect.Type, java.lang.annotation.Annotation[], MediaType, MultivaluedMap, InputStream)}

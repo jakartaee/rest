@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,37 +16,33 @@
 
 package jakarta.ws.rs.tck.api.rs.core.configurable;
 
-import jakarta.ws.rs.tck.common.JAXRSCommonClient.Fault;
-
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient.Fault;
 
 public abstract class Assertable {
-  final static String[] LOCATION = { "Client", "WebTarget",
-      "Invocation.Builder", "Invocation" };
+    final static String[] LOCATION = { "Client", "WebTarget", "Invocation.Builder", "Invocation" };
 
-  private int locationIndex = 0;
+    private int locationIndex = 0;
 
-  public abstract void check1OnClient(Client client) throws Fault;
+    public abstract void check1OnClient(Client client) throws Fault;
 
-  public abstract void check2OnTarget(WebTarget target) throws Fault;
+    public abstract void check2OnTarget(WebTarget target) throws Fault;
 
-  public void incrementLocation() {
-    locationIndex = (locationIndex + 1 == LOCATION.length) ? 0
-        : locationIndex + 1;
-  }
+    public void incrementLocation() {
+        locationIndex = (locationIndex + 1 == LOCATION.length) ? 0 : locationIndex + 1;
+    }
 
-  public String getLocation() {
-    return new StringBuilder().append("on ").append(LOCATION[locationIndex])
-        .append(" configuration").toString();
-  }
+    public String getLocation() {
+        return new StringBuilder().append("on ").append(LOCATION[locationIndex]).append(" configuration").toString();
+    }
 
-  public static String getLocation(int index) {
-    return LOCATION[index];
-  }
+    public static String getLocation(int index) {
+        return LOCATION[index];
+    }
 
-  public int getLocationIndex() {
-    return locationIndex;
-  }
+    public int getLocationIndex() {
+        return locationIndex;
+    }
 
 }

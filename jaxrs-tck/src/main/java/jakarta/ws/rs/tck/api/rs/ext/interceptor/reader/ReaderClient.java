@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,12 +18,11 @@ package jakarta.ws.rs.tck.api.rs.ext.interceptor.reader;
 
 import java.io.IOException;
 
-import jakarta.ws.rs.tck.api.rs.ext.interceptor.TemplateInterceptorBody;
-import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
-
 import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.client.ClientRequestFilter;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.tck.api.rs.ext.interceptor.TemplateInterceptorBody;
+import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
 
 /**
  * Client with given ContextOperation enum, so that an enum name is passed as a

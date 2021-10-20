@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,18 +16,19 @@
 
 package jakarta.ws.rs.tck.api.client.clientrequestcontext;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import jakarta.ws.rs.tck.common.JAXRSCommonClient.Fault;
-import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient.Fault;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 public class SetEntityProvider extends ContextProvider {
   private AtomicInteger counter;
@@ -76,13 +77,13 @@ public class SetEntityProvider extends ContextProvider {
       annotations = context.getEntityAnnotations();
       clz = context.getEntityType();
       // check
-      assertFault(entity != null, "there is no entity, yet");
-      assertFault(!entity.toString().equals(entityName),
+      assertTrue(entity != null, "there is no entity, yet");
+      assertTrue(!entity.toString().equals(entityName),
           "the fake entity was already set");
-      assertFault(annotations == null || annotations.length == 0,
+      assertTrue(annotations == null || annotations.length == 0,
           "there are already annotations!");
-      assertFault(!mtype.equals(type), "fake MediaType is already set");
-      assertFault(clz != String.class, "String entity is already set");
+      assertTrue(!mtype.equals(type), "fake MediaType is already set");
+      assertTrue(clz != String.class, "String entity is already set");
       // set
       context.setEntity(entityName, annos, type);
       break;
@@ -94,31 +95,18 @@ public class SetEntityProvider extends ContextProvider {
       annotations = context.getEntityAnnotations();
       clz = context.getEntityType();
       // check
-      assertFault(entity != null, "there is no entity set");
-      assertFault(entity.toString().equals(entityName),
+      assertTrue(entity != null, "there is no entity set");
+      assertTrue(entity.toString().equals(entityName),
           "there is no fake entity set, yet");
-      assertFault(annotations.length == 2,
+      assertTrue(annotations.length == 2,
           "the fake annotations were not set, yet");
-      assertFault(mtype.equals(type), "fake MediaType was not set, yet");
-      assertFault(clz == String.class, "String entity not set, yet");
+      assertTrue(mtype.equals(type), "fake MediaType was not set, yet");
+      assertTrue(clz == String.class, "String entity not set, yet");
       // set
       context.setEntity(entityName, annos, type);
       Response response = Response.ok().build();
       context.abortWith(response);
       break;
-    }
-  }
-
-  /**
-   * @param conditionTrue
-   * @param message
-   * @throws Fault
-   *           when conditionTrue is not met with message provided
-   */
-  protected static void //
-      assertFault(boolean conditionTrue, Object message) throws Fault {
-    if (!conditionTrue) {
-      throw new Fault(message.toString());
     }
   }
 }

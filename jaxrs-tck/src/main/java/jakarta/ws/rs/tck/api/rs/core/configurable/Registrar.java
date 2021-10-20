@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -23,13 +23,13 @@ import jakarta.ws.rs.core.Configurable;
  * The default behavior is for single argument register method
  */
 public class Registrar {
-  public void register(Configurable<?> config, Object registerable) {
-    if (registerable instanceof Class) // register(Class)
-      config.register((Class<?>) registerable);
-    else if (registerable instanceof String) // setProperty()
-      config.property((String) registerable, registerable);
-    else
-      // register(Object)
-      config.register(registerable);
-  }
+    public void register(Configurable<?> config, Object registerable) {
+        if (registerable instanceof Class) // register(Class)
+            config.register((Class<?>) registerable);
+        else if (registerable instanceof String) // setProperty()
+            config.property((String) registerable, registerable);
+        else
+            // register(Object)
+            config.register(registerable);
+    }
 }

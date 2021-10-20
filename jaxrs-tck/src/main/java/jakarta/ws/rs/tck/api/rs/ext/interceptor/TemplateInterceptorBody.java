@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -19,9 +19,8 @@ package jakarta.ws.rs.tck.api.rs.ext.interceptor;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-import jakarta.ws.rs.tck.common.util.JaxrsUtil;
-
 import jakarta.ws.rs.ext.InterceptorContext;
+import jakarta.ws.rs.tck.common.util.JaxrsUtil;
 
 /**
  * Body for both reader and writer interceptor body The body is injected into

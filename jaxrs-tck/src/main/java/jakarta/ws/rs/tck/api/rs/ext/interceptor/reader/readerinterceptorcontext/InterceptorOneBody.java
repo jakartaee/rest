@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -20,13 +20,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import jakarta.ws.rs.tck.api.rs.ext.interceptor.TemplateInterceptorBody;
-import jakarta.ws.rs.tck.common.provider.StringBean;
-import jakarta.ws.rs.tck.common.util.JaxrsUtil;
-
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.ext.ReaderInterceptorContext;
+import jakarta.ws.rs.tck.api.rs.ext.interceptor.TemplateInterceptorBody;
+import jakarta.ws.rs.tck.common.provider.StringBean;
+import jakarta.ws.rs.tck.common.util.JaxrsUtil;
 
 public class InterceptorOneBody
     extends TemplateInterceptorBody<ReaderInterceptorContext> {

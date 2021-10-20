@@ -106,11 +106,10 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response deleteTest() throws Fault {
+  public void deleteTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("delete");
     Response response = sync.delete();
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -142,11 +141,10 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String deleteWithStringClassTest() throws Fault {
+  public void deleteWithStringClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("delete");
     String response = sync.delete(String.class);
     assertResponseString(response, "delete");
-    return response;
   }
 
   /*
@@ -158,11 +156,10 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response deleteWithResponseClassTest() throws Fault {
+  public void deleteWithResponseClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("delete");
     Response response = sync.delete(Response.class);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -236,12 +233,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String deleteWithGenericTypeStringTest() throws Fault {
+  public void deleteWithGenericTypeStringTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("delete");
     GenericType<String> generic = createGeneric(String.class);
     String response = sync.delete(generic);
     assertResponseString(response, "delete");
-    return response;
   }
 
   /*
@@ -253,12 +249,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response deleteWithGenericTypeResponseTest() throws Fault {
+  public void deleteWithGenericTypeResponseTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("delete");
     GenericType<Response> generic = createGeneric(Response.class);
     Response response = sync.delete(generic);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -338,11 +333,10 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response getTest() throws Fault {
+  public void getTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("get");
     Response response = sync.get();
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -374,11 +368,10 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String getWithStringClassTest() throws Fault {
+  public void getWithStringClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("get");
     String response = sync.get(String.class);
     assertResponseString(response, "get");
-    return response;
   }
 
   /*
@@ -390,11 +383,10 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response getWithResponseClassTest() throws Fault {
+  public void getWithResponseClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("get");
     Response response = sync.get(Response.class);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -467,12 +459,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String getWithGenericTypeStringTest() throws Fault {
+  public void getWithGenericTypeStringTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("get");
     GenericType<String> generic = createGeneric(String.class);
     String response = sync.get(generic);
     assertResponseString(response, "get");
-    return response;
   }
 
   /*
@@ -484,12 +475,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response getWithGenericTypeResponseTest() throws Fault {
+  public void getWithGenericTypeResponseTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("get");
     GenericType<Response> generic = createGeneric(Response.class);
     Response response = sync.get(generic);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -570,13 +560,12 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response headTest() throws Fault {
+  public void headTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("head");
     Response response = sync.head();
     Status status = Status.fromStatusCode(response.getStatus());
     assertTrue(status == Status.OK || status == Status.NO_CONTENT,
         "Incorrect status for head received");
-    return response;
   }
 
   /*
@@ -871,7 +860,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response methodWithEntityTest() throws Fault {
+  public void methodWithEntityTest() throws Fault {
     Response response = null;
     for (String method : ENTITY_METHODS) {
       SyncInvoker sync = createSyncInvokerForMethod(method.toLowerCase());
@@ -879,7 +868,6 @@ public class JAXRSClientIT extends JaxrsCommonClient {
       response = sync.method(method, entity);
       assertResponseOk(response);
     }
-    return response;
   }
 
   /*
@@ -914,7 +902,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String methodWithStringClassWithEntityTest() throws Fault {
+  public void methodWithStringClassWithEntityTest() throws Fault {
     String response = null;
     for (String method : ENTITY_METHODS) {
       SyncInvoker sync = createSyncInvokerForMethod(method.toLowerCase());
@@ -922,7 +910,6 @@ public class JAXRSClientIT extends JaxrsCommonClient {
       response = sync.method(method, entity, String.class);
       assertResponseString(response, method.toLowerCase());
     }
-    return response;
   }
 
   /*
@@ -934,7 +921,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String methodWithResponseClassWithEntityTest() throws Fault {
+  public void methodWithResponseClassWithEntityTest() throws Fault {
     String response = null;
     for (String method : ENTITY_METHODS) {
       SyncInvoker sync = createSyncInvokerForMethod(method.toLowerCase());
@@ -942,7 +929,6 @@ public class JAXRSClientIT extends JaxrsCommonClient {
       response = sync.method(method, entity, String.class);
       assertResponseString(response, method.toLowerCase());
     }
-    return response;
   }
 
   /*
@@ -1151,11 +1137,10 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response optionsTest() throws Fault {
+  public void optionsTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("options");
     Response response = sync.options();
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -1187,11 +1172,10 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String optionsWithStringClassTest() throws Fault {
+  public void optionsWithStringClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("options");
     String response = sync.options(String.class);
     assertResponseString(response, "options");
-    return response;
   }
 
   /*
@@ -1203,11 +1187,10 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response optionsWithResponseClassTest() throws Fault {
+  public void optionsWithResponseClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("options");
     Response response = sync.options(Response.class);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -1280,12 +1263,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String optionsWithGenericTypeStringTest() throws Fault {
+  public void optionsWithGenericTypeStringTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("options");
     GenericType<String> generic = createGeneric(String.class);
     String response = sync.options(generic);
     assertResponseString(response, "options");
-    return response;
   }
 
   /*
@@ -1297,12 +1279,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response optionsWithGenericTypeResponseTest() throws Fault {
+  public void optionsWithGenericTypeResponseTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("options");
     GenericType<Response> generic = createGeneric(Response.class);
     Response response = sync.options(generic);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -1384,12 +1365,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response postTest() throws Fault {
+  public void postTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("post");
     Entity<String> entity = createEntity("post");
     Response response = sync.post(entity);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -1422,12 +1402,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String postWithStringClassTest() throws Fault {
+  public void postWithStringClassTest() throws Fault {
     Entity<String> entity = createEntity("post");
     SyncInvoker sync = createSyncInvokerForMethod("post");
     String response = sync.post(entity, String.class);
     assertResponseString(response, "post");
-    return response;
   }
 
   /*
@@ -1439,12 +1418,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response postWithResponseClassTest() throws Fault {
+  public void postWithResponseClassTest() throws Fault {
     Entity<String> entity = createEntity("post");
     SyncInvoker sync = createSyncInvokerForMethod("post");
     Response response = sync.post(entity, Response.class);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -1520,13 +1498,12 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String postWithGenericTypeStringTest() throws Fault {
+  public void postWithGenericTypeStringTest() throws Fault {
     GenericType<String> generic = createGeneric(String.class);
     Entity<String> entity = createEntity("post");
     SyncInvoker sync = createSyncInvokerForMethod("post");
     String response = sync.post(entity, generic);
     assertResponseString(response, "post");
-    return response;
   }
 
   /*
@@ -1538,13 +1515,12 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response postWithGenericTypeResponseTest() throws Fault {
+  public void postWithGenericTypeResponseTest() throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
     Entity<String> entity = createEntity("post");
     SyncInvoker sync = createSyncInvokerForMethod("post");
     Response response = sync.post(entity, generic);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -1628,12 +1604,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response putTest() throws Fault {
+  public void putTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("put");
     Entity<String> entity = createEntity("put");
     Response response = sync.put(entity);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -1666,12 +1641,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String putWithStringClassTest() throws Fault {
+  public void putWithStringClassTest() throws Fault {
     Entity<String> entity = createEntity("put");
     SyncInvoker sync = createSyncInvokerForMethod("put");
     String response = sync.put(entity, String.class);
     assertResponseString(response, "put");
-    return response;
   }
 
   /*
@@ -1683,12 +1657,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response putWithResponseClassTest() throws Fault {
+  public void putWithResponseClassTest() throws Fault {
     Entity<String> entity = createEntity("put");
     SyncInvoker sync = createSyncInvokerForMethod("put");
     Response response = sync.put(entity, Response.class);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -1764,13 +1737,12 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String putWithGenericTypeStringTest() throws Fault {
+  public void putWithGenericTypeStringTest() throws Fault {
     GenericType<String> generic = createGeneric(String.class);
     Entity<String> entity = createEntity("put");
     SyncInvoker sync = createSyncInvokerForMethod("put");
     String response = sync.put(entity, generic);
     assertResponseString(response, "put");
-    return response;
   }
 
   /*
@@ -1782,13 +1754,12 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response putWithGenericTypeResponseTest() throws Fault {
+  public void putWithGenericTypeResponseTest() throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
     Entity<String> entity = createEntity("put");
     SyncInvoker sync = createSyncInvokerForMethod("put");
     Response response = sync.put(entity, generic);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -1871,11 +1842,10 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response traceTest() throws Fault {
+  public void traceTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("trace");
     Response response = sync.trace();
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -1907,11 +1877,10 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String traceWithStringClassTest() throws Fault {
+  public void traceWithStringClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("trace");
     String response = sync.trace(String.class);
     assertResponseString(response, "trace");
-    return response;
   }
 
   /*
@@ -1923,11 +1892,10 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response traceWithResponseClassTest() throws Fault {
+  public void traceWithResponseClassTest() throws Fault {
     SyncInvoker sync = createSyncInvokerForMethod("trace");
     Response response = sync.trace(Response.class);
     assertResponseOk(response);
-    return response;
   }
 
   /*
@@ -2000,12 +1968,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public String traceWithGenericTypeStringTest() throws Fault {
+  public void traceWithGenericTypeStringTest() throws Fault {
     GenericType<String> generic = createGeneric(String.class);
     SyncInvoker sync = createSyncInvokerForMethod("trace");
     String response = sync.trace(generic);
     assertResponseString(response, "trace");
-    return response;
   }
 
   /*
@@ -2017,12 +1984,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * synchronously.
    */
   @Test
-  public Response traceWithGenericTypeResponseTest() throws Fault {
+  public void traceWithGenericTypeResponseTest() throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
     SyncInvoker sync = createSyncInvokerForMethod("trace");
     Response response = sync.trace(generic);
     assertResponseOk(response);
-    return response;
   }
 
   /*

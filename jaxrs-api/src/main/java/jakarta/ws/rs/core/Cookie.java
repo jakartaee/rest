@@ -54,7 +54,9 @@ public class Cookie {
      * @param domain the host domain for which the cookie is valid.
      * @param version the version of the specification to which the cookie complies.
      * @throws IllegalArgumentException if name is {@code null}.
+     * @deprecated This constructor will be removed in a future version. Please use {@link Cookie.Builder} instead.
      */
+    @Deprecated
     public Cookie(final String name, final String value, final String path, final String domain, final int version)
             throws IllegalArgumentException {
         if (name == null) {
@@ -75,7 +77,9 @@ public class Cookie {
      * @param path the URI path for which the cookie is valid.
      * @param domain the host domain for which the cookie is valid.
      * @throws IllegalArgumentException if name is {@code null}.
+     * @deprecated This constructor will be removed in a future version. Please use {@link Cookie.Builder} instead.
      */
+    @Deprecated
     public Cookie(final String name, final String value, final String path, final String domain)
             throws IllegalArgumentException {
         this(name, value, path, domain, DEFAULT_VERSION);
@@ -87,10 +91,30 @@ public class Cookie {
      * @param name the name of the cookie.
      * @param value the value of the cookie.
      * @throws IllegalArgumentException if name is {@code null}.
+     * @deprecated This constructor will be removed in a future version. Please use {@link Cookie.Builder} instead.
      */
+    @Deprecated
     public Cookie(final String name, final String value)
             throws IllegalArgumentException {
         this(name, value, null, null);
+    }
+
+    /**
+     * Create a new instance from the supplied {@link AbstractCookieBuilder} instance.
+     *
+     * @param builder the builder.
+     * @throws IllegalArgumentException if {@code builder.name} is {@code null}.
+     * @since 3.1
+     */
+    protected Cookie(AbstractCookieBuilder<?> builder) throws IllegalArgumentException {
+        if (builder.name == null) {
+            throw new IllegalArgumentException("name==null");
+        }
+        this.name = builder.name;
+        this.value = builder.value;
+        this.version = builder.version;
+        this.domain = builder.domain;
+        this.path = builder.path;
     }
 
     /**
@@ -216,4 +240,119 @@ public class Cookie {
         }
         return true;
     }
+
+    /**
+     * JAX-RS {@link Cookie} builder class.
+     * <p>
+     * Cookie builder provides methods that let you conveniently configure and subsequently build a new
+     * {@code Cookie} instance.
+     * </p>
+     * For example:
+     *
+     * <pre>
+     * Cookie cookie = new Cookie.Builder("name")
+     *         .path("/")
+     *         .domain("domain.com")
+     *         .build();
+     * </pre>
+     *
+     * @since 3.1
+     */
+    public static class Builder extends AbstractCookieBuilder<Builder> {
+
+        public Builder(String name) {
+            super(name);
+        }
+
+        @Override
+        public Cookie build() {
+            return new Cookie(this);
+        }
+
+    }
+
+    /**
+     * JAX-RS abstract {@link Cookie} builder class.
+     *
+     * @param <T> the current AbstractCookieBuilder type.
+     *
+     * @since 3.1
+     */
+    public abstract static class AbstractCookieBuilder<T extends AbstractCookieBuilder<T>> {
+
+        private final String name;
+
+        private String value;
+        private int version = DEFAULT_VERSION;
+        private String path;
+        private String domain;
+
+        /**
+         * Create a new instance.
+         *
+         * @param name the name of the cookie.
+         */
+        public AbstractCookieBuilder(String name) {
+            this.name = name;
+        }
+
+        /**
+         * Set the value of the cookie.
+         *
+         * @param value the value of the cookie.
+         * @return the updated builder instance.
+         */
+        public T value(String value) {
+            this.value = value;
+            return self();
+        }
+
+        /**
+         * Set the version of the cookie. Defaults to {@link Cookie#DEFAULT_VERSION}
+         *
+         * @param version the version of the specification to which the cookie complies.
+         * @return the updated builder instance.
+         */
+        public T version(int version) {
+            this.version = version;
+            return self();
+        }
+
+        /**
+         * Set the path of the cookie.
+         *
+         * @param path the URI path for which the cookie is valid.
+         * @return the updated builder instance.
+         */
+        public T path(String path) {
+            this.path = path;
+            return self();
+        }
+
+        /**
+         * Set the domain of the cookie.
+         *
+         * @param domain the host domain for which the cookie is valid.
+         * @return the updated builder instance.
+         */
+        public T domain(String domain) {
+            this.domain = domain;
+            return self();
+        }
+
+        @SuppressWarnings("unchecked")
+        private T self() {
+            return (T) this;
+        }
+
+        /**
+         * Build a new {@link Cookie} instance using all the configuration previously specified in this builder.
+         *
+         * @return a new {@link Cookie} instance.
+         * @throws IllegalArgumentException if name is {@code null}.
+         */
+        public abstract Cookie build();
+
+    }
+
 }

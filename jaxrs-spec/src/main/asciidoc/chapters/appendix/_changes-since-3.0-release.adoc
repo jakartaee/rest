@@ -31,3 +31,5 @@ against the *base* URI, not against the *request* URI anymore.
 injection support in future versions.
 * <<declaring_method_capabilities>>: Clarified resource matching when `Content-Type`
 or `Accept` are missing in request.
+* Constructors of `Cookie` class are deprecated in favor of new `Cookie.Builder` class.
+* Constructors of `NewCookie` are deprecated in favor of new `NewCookie.Builder` class.

@@ -60,6 +60,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 
 /*
  * @class.setup_props: webServerHost;
@@ -239,6 +240,7 @@ public class JAXRSClientIT extends SSEJAXRSClient {
    * endpoint.
    */
   @Test
+  @Disabled
   public void connectionLostForDefault500msTest() throws Fault {
     resetUnavailableServer();
 

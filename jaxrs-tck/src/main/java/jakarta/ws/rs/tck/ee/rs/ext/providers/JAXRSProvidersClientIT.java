@@ -41,6 +41,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 
 /*
  * @class.setup_props: webServerHost;
@@ -233,6 +234,7 @@ public class JAXRSProvidersClientIT
    * none
    */
   @Test
+  @Disabled("In response to accepted Platform TCK challenge https://github.com/eclipse-ee4j/jaxrs-api/issues/937")
   public void isRegisteredRuntimeExceptionExceptionMapperTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "isRegisteredRuntimeExceptionMapper"));

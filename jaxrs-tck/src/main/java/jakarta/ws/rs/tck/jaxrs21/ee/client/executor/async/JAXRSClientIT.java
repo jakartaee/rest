@@ -44,6 +44,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 
 /*
  * @class.setup_props: webServerHost;
@@ -95,6 +96,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void deleteTest() throws Fault {
     super.deleteTest();
   }
@@ -118,6 +120,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void deleteWithStringClassWhileServerWaitTest()
       throws Fault {
     super.deleteWithStringClassWhileServerWaitTest();
@@ -132,6 +135,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void deleteWithResponseClassWhileServerWaitTest()
       throws Fault {
     super.deleteWithResponseClassWhileServerWaitTest();
@@ -161,6 +165,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void deleteWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     super.deleteWithGenericTypeStringWhileServerWaitTest();
@@ -175,6 +180,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void deleteWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     super.deleteWithGenericTypeResponseWhileServerWaitTest();
@@ -204,6 +210,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void deleteWithCallbackWhileServerWaitTest() throws Fault {
     super.deleteWithCallbackWhileServerWaitTest();
   }
@@ -217,6 +224,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void deleteWithCallbackStringWhileServerWaitTest()
       throws Fault {
     super.deleteWithCallbackStringWhileServerWaitTest();
@@ -249,6 +257,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void getTest() throws Fault {
     super.getTest();
   }
@@ -272,6 +281,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void getWithStringClassWhileServerWaitTest() throws Fault {
     super.getWithStringClassWhileServerWaitTest();
   }
@@ -285,6 +295,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void getWithResponseClassWhileServerWaitTest()
       throws Fault {
     super.deleteWithResponseClassWhileServerWaitTest();
@@ -315,6 +326,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void getWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     super.getWithGenericTypeStringWhileServerWaitTest();
@@ -329,6 +341,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void getWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     super.getWithGenericTypeResponseWhileServerWaitTest();
@@ -358,6 +371,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void getWithCallbackWhileServerWaitTest() throws Fault {
     super.getWithCallbackWhileServerWaitTest();
   }
@@ -371,6 +385,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void getWithCallbackStringWhileServerWaitTest()
       throws Fault {
     super.getWithCallbackStringWhileServerWaitTest();
@@ -405,6 +420,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void headTest() throws Fault {
     super.headTest();
   }
@@ -428,6 +444,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void headWithCallbackWhileServerWaitTest() throws Fault {
     super.headWithCallbackWhileServerWaitTest();
   }
@@ -450,6 +467,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodTest() throws Fault {
     super.methodTest();
   }
@@ -473,6 +491,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithStringClassWhileServerWaitTest()
       throws Fault {
     super.methodWithStringClassWhileServerWaitTest();
@@ -487,6 +506,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithResponseClassWhileServerWaitTest()
       throws Fault {
     super.methodWithResponseClassWhileServerWaitTest();
@@ -516,6 +536,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     super.methodWithGenericTypeStringWhileServerWaitTest();
@@ -530,6 +551,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     super.methodWithGenericTypeResponseWhileServerWaitTest();
@@ -560,6 +582,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithCallbackWhileServerWaitTest() throws Fault {
     super.methodWithCallbackWhileServerWaitTest();
   }
@@ -573,6 +596,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithCallbackStringWhileServerWaitTest()
       throws Fault {
     super.methodWithCallbackStringWhileServerWaitTest();
@@ -603,6 +627,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithEntityWhileServerWaitTest() throws Fault {
     super.methodWithEntityWhileServerWaitTest();
   }
@@ -622,6 +647,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithStringClassWithEntityWhileServerWaitTest()
       throws Fault {
     super.methodWithStringClassWithEntityWhileServerWaitTest();
@@ -636,6 +662,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithResponseClassWithEntityWhileServerWaitTest()
       throws Fault {
     super.methodWithResponseClassWithEntityWhileServerWaitTest();
@@ -650,6 +677,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithGenericTypeStringWithEntityWhileServerWaitTest()
       throws Fault {
     super.methodWithGenericTypeStringWithEntityWhileServerWaitTest();
@@ -679,6 +707,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithGenericTypeResponseWithEntityWhileServerWaitTest()
       throws Fault {
     super.methodWithGenericTypeResponseWithEntityWhileServerWaitTest();
@@ -708,6 +737,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithCallbackWithEntityWhileServerWaitTest()
       throws Fault {
     super.methodWithCallbackWithEntityWhileServerWaitTest();
@@ -722,6 +752,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void methodWithCallbackStringWithEntityWhileServerWaitTest()
       throws Fault {
     super.methodWithCallbackStringWithEntityWhileServerWaitTest();
@@ -756,6 +787,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void optionsTest() throws Fault {
     super.optionsTest();
   }
@@ -780,6 +812,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void optionsWithStringClassWhileServerWaitTest()
       throws Fault {
     super.optionsWithStringClassWhileServerWaitTest();
@@ -794,6 +827,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void optionsWithResponseClassWhileServerWaitTest()
       throws Fault {
     super.optionsWithResponseClassWhileServerWaitTest();
@@ -823,6 +857,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void optionsWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     super.optionsWithGenericTypeStringWhileServerWaitTest();
@@ -837,6 +872,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void optionsWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     super.optionsWithGenericTypeResponseWhileServerWaitTest();
@@ -866,6 +902,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void optionsWithCallbackWhileServerWaitTest()
       throws Fault {
     super.optionsWithCallbackWhileServerWaitTest();
@@ -880,6 +917,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void optionsWithStringCallbackWhileServerWaitTest()
       throws Fault {
     super.optionsWithStringCallbackWhileServerWaitTest();
@@ -913,6 +951,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void postTest() throws Fault {
     super.postTest();
   }
@@ -936,6 +975,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void postWithStringClassWhileServerWaitTest() throws Fault {
     super.postWithStringClassWhileServerWaitTest();
   }
@@ -949,6 +989,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void postWithResponseClassWhileServerWaitTest()
       throws Fault {
     super.postWithResponseClassWhileServerWaitTest();
@@ -978,6 +1019,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void postWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     super.postWithGenericTypeStringWhileServerWaitTest();
@@ -992,6 +1034,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void postWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     super.postWithGenericTypeResponseWhileServerWaitTest();
@@ -1021,6 +1064,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void postWithCallbackWhileServerWaitTest() throws Fault {
     super.postWithCallbackWhileServerWaitTest();
   }
@@ -1054,6 +1098,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void putTest() throws Fault {
     super.putTest();
   }
@@ -1092,6 +1137,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void putWithStringClassWhileServerWaitTest() throws Fault {
     super.putWithStringClassWhileServerWaitTest();
   }
@@ -1121,6 +1167,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void putWithResponseClassWhileServerWaitTest()
       throws Fault {
     super.putWithResponseClassWhileServerWaitTest();
@@ -1135,6 +1182,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void putWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     super.putWithGenericTypeStringWhileServerWaitTest();
@@ -1149,6 +1197,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void putWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     super.putWithGenericTypeResponseWhileServerWaitTest();
@@ -1163,6 +1212,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void putWithCallbackWhileServerWaitTest() throws Fault {
     super.putWithCallbackWhileServerWaitTest();
   }
@@ -1176,6 +1226,7 @@ public class JAXRSClientIT
    * asynchronously.
    */
   @Test
+  @Disabled
   public void putWithStringCallbackWhileServerWaitTest()
       throws Fault {
     super.putWithStringCallbackWhileServerWaitTest();
@@ -1208,7 +1259,8 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
+  @Disabled
   public void traceTest() throws Fault {
     super.traceTest();
   }
@@ -1232,7 +1284,8 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
+  @Disabled
   public void traceWithStringClassWhileServerWaitTest() throws Fault {
     super.traceWithStringClassWhileServerWaitTest();
   }
@@ -1245,7 +1298,8 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
+  @Disabled
   public void traceWithResponseClassWhileServerWaitTest()
       throws Fault {
     super.traceWithResponseClassWhileServerWaitTest();
@@ -1275,7 +1329,8 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
+  @Disabled
   public void traceWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     super.traceWithGenericTypeStringWhileServerWaitTest();
@@ -1289,7 +1344,8 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
+  @Disabled
   public void traceWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     super.traceWithGenericTypeResponseWhileServerWaitTest();
@@ -1319,7 +1375,8 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
+  @Disabled
   public void traceWithCallbackWhileServerWaitTest() throws Fault {
     super.traceWithCallbackWhileServerWaitTest();
   }
@@ -1349,7 +1406,8 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
+  @Disabled
   public void traceWithStringCallbackWhileServerWaitTest()
       throws Fault {
     super.traceWithStringCallbackWhileServerWaitTest();

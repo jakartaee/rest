@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2021 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -36,6 +36,9 @@ set the response status to 500.
 
 When the default exception mapping provider handles a WebApplicationException, it MUST
 return the embedded Response, and it MUST respect the status code in the Response.
+
+Any registered CompletionCallback MUST be invoked with an unmapped exception before the
+default exception mapping provider maps the unmapped exception to a Response.
 
 To avoid a potentially infinite loop, a single exception mapper must be
 used during the processing of a request and its corresponding response.

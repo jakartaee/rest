@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,11 +18,10 @@ package jakarta.ws.rs.tck.api.client.clientrequestcontext;
 
 import java.io.IOException;
 
-import jakarta.ws.rs.tck.common.JAXRSCommonClient.Fault;
-
 import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.client.ClientRequestFilter;
 import jakarta.ws.rs.ext.Provider;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient.Fault;
 
 @Provider
 public class ContextProvider implements ClientRequestFilter {

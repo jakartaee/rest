@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,12 +16,13 @@
 
 package jakarta.ws.rs.tck.api.client.clientrequestcontext;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import jakarta.ws.rs.tck.common.JAXRSCommonClient.Fault;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.tck.common.JAXRSCommonClient.Fault;
 
 public class RemovePropertyProvider extends ContextProvider {
   private AtomicInteger counter;
@@ -37,36 +38,20 @@ public class RemovePropertyProvider extends ContextProvider {
     switch (counter.incrementAndGet()) {
     case 1:
       Object property = context.getProperty(propName);
-      assertFault(property == null, "property already exist");
+      assertTrue(property == null, "property already exist");
       context.setProperty(propName, propName);
       break;
     case 2:
       property = context.getProperty(propName);
-      assertFault(property != null, "property not exist");
+      assertTrue(property != null, "property not exist");
       context.removeProperty(propName);
       break;
     case 3:
       property = context.getProperty(propName);
-      assertFault(property == null, "property already exist");
+      assertTrue(property == null, "property already exist");
       Response response = Response.ok("NULL").build();
       context.abortWith(response);
       break;
-    }
-  }
-
-  /**
-   * @param conditionTrue
-   * @param message
-   * @throws Fault
-   *           when conditionTrue is not met with message provided
-   */
-  protected static void //
-      assertFault(boolean conditionTrue, Object... message) throws Fault {
-    if (!conditionTrue) {
-      StringBuilder sb = new StringBuilder();
-      for (Object msg : message)
-        sb.append(msg).append(" ");
-      throw new Fault(sb.toString());
     }
   }
 

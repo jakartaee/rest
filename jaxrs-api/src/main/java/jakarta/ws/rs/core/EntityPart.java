@@ -140,8 +140,8 @@ public interface EntityPart {
      * The implementation is required to close the content stream when this method
      * is invoked, so it may only be invoked once. Subsequent invocations will
      * result in an {@code IllegalStateException}. Likewise this method will throw
-     * an {@code IllegalStateException} if it is called after {@code InputStream}
-     * fully consumed already and has not been buffered prior consuming.
+     * an {@code IllegalStateException} if it is called after the {@code InputStream} has been
+     * fully consumed already and has not been buffered prior to consuming.
      *
      * @param type the {@code Class} that the implementation should convert this
      *             part to
@@ -179,8 +179,8 @@ public interface EntityPart {
      * The implementation is required to close the content stream when this method
      * is invoked, so it may only be invoked once. Subsequent invocations will
      * result in an {@code IllegalStateException}. Likewise this method will throw
-     * an {@code IllegalStateException} if it is called after if it is called after {@code InputStream}
-     * fully consumed already and has not been buffered prior consuming.
+     * an {@code IllegalStateException} if it is called after the {@code InputStream} has been
+     * fully consumed already and has not been buffered prior to consuming.
      *
      * @param type the generic type that the implementation should convert this part
      *             to

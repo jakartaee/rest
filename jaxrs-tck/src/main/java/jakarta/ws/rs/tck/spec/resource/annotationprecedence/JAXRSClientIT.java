@@ -83,6 +83,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void correctTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post"));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_XML_TYPE));
     invoke();
   }
 
@@ -128,6 +129,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void correctRequestTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "post"));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_XML_TYPE));
     setProperty(Property.STATUS_CODE, "!" + getStatusCode(Status.OK));
     invoke();
   }
@@ -163,6 +165,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post"));
     setProperty(Property.REQUEST_HEADERS,
         buildAccept(MediaType.TEXT_PLAIN_TYPE));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_XML_TYPE));
     setProperty(Property.STATUS_CODE, getStatusCode(Status.NOT_ACCEPTABLE));
     invoke();
   }
@@ -196,6 +199,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void formParamTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post"));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_XML_TYPE));
     setProperty(Property.CONTENT, "pqr=hello");
     setProperty(Property.SEARCH_STRING, "default");
     setProperty(Property.UNEXPECTED_RESPONSE_MATCH, "hello");
@@ -213,6 +217,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void queryParamXyzTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post?xyz=hello"));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_XML_TYPE));
     setProperty(Property.SEARCH_STRING, "default");
     setProperty(Property.UNEXPECTED_RESPONSE_MATCH, "hello");
     invoke();
@@ -229,6 +234,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void queryParamPqrTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "post?pqr=hello"));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_XML_TYPE));
     setProperty(Property.SEARCH_STRING, "hello");
     invoke();
   }

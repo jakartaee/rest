@@ -659,6 +659,8 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     setProperty(Property.REQUEST,
         buildRequest(Request.POST, "resource/produceslocator"));
     setProperty(Property.REQUEST_HEADERS,
+        buildContentType(MediaType.TEXT_PLAIN_TYPE));
+    setProperty(Property.REQUEST_HEADERS,
         buildAccept(MediaType.APPLICATION_ATOM_XML_TYPE));
     setProperty(Property.SEARCH_STRING, getStatusCode(Status.NOT_ACCEPTABLE));
     invoke();
@@ -682,6 +684,8 @@ public class JAXRSClientIT extends JAXRSCommonClient {
         buildRequest(Request.POST, "resource/produceslocator"));
     setProperty(Property.REQUEST_HEADERS,
         buildAccept(MediaType.TEXT_PLAIN_TYPE));
+    setProperty(Property.REQUEST_HEADERS,
+        buildContentType(MediaType.TEXT_PLAIN_TYPE));
     setProperty(Property.SEARCH_STRING,
         MainResourceLocator.class.getSimpleName());
     invoke();
@@ -706,6 +710,8 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     setProperty(Property.REQUEST, request);
     setProperty(Property.REQUEST_HEADERS,
         buildAccept(MediaType.APPLICATION_ATOM_XML_TYPE));
+    setProperty(Property.REQUEST_HEADERS,
+        buildContentType(MediaType.TEXT_PLAIN_TYPE));
     setProperty(Property.SEARCH_STRING, getStatusCode(Status.NOT_ACCEPTABLE));
     invoke();
   }
@@ -730,6 +736,8 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     setProperty(Property.REQUEST, request);
     setProperty(Property.REQUEST_HEADERS,
         buildAccept(MediaType.TEXT_PLAIN_TYPE));
+    setProperty(Property.REQUEST_HEADERS,
+        buildContentType(MediaType.TEXT_PLAIN_TYPE));
     setProperty(Property.SEARCH_STRING,
         AnotherResourceLocator.class.getSimpleName());
     invoke();
@@ -826,6 +834,8 @@ public class JAXRSClientIT extends JAXRSCommonClient {
         buildRequest(Request.POST, "resource/subresource/sub"));
     setProperty(Property.REQUEST_HEADERS,
         buildAccept(MediaType.TEXT_PLAIN_TYPE));
+    setProperty(Property.REQUEST_HEADERS,
+        buildContentType(MediaType.TEXT_PLAIN_TYPE));
     String clazz = AnotherSubResource.class.getSimpleName();
     setProperty(Property.SEARCH_STRING, clazz);
     setProperty(Property.UNEXPECTED_RESPONSE_MATCH, clazz + clazz);

@@ -85,6 +85,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void correctTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.PUT, "put"));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_HTML_TYPE));
     invoke();
   }
 
@@ -150,6 +151,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void correctRequestTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "put"));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_HTML_TYPE));
     setProperty(Property.STATUS_CODE, "!" + getStatusCode(Status.OK));
     invoke();
   }
@@ -186,6 +188,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   public void incorrectProdecesTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.PUT, "put"));
     setProperty(Property.REQUEST_HEADERS, buildAccept(MediaType.TEXT_XML_TYPE));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_HTML_TYPE));
     setProperty(Property.STATUS_CODE, getStatusCode(Status.NOT_ACCEPTABLE));
     invoke();
   }
@@ -222,6 +225,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void formParamTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.PUT, "put"));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_HTML_TYPE));
     setProperty(Property.CONTENT, "pqr=hello");
     setProperty(Property.SEARCH_STRING, "subclass");
     setProperty(Property.UNEXPECTED_RESPONSE_MATCH, "hello");
@@ -240,6 +244,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void queryParamXyzTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.PUT, "put?xyz=hello"));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_HTML_TYPE));
     setProperty(Property.SEARCH_STRING, "subclass");
     setProperty(Property.UNEXPECTED_RESPONSE_MATCH, "hello");
     invoke();
@@ -257,6 +262,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void queryParamPqrTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.PUT, "put?pqr=hello"));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_HTML_TYPE));
     setProperty(Property.SEARCH_STRING, "subclass");
     setProperty(Property.UNEXPECTED_RESPONSE_MATCH, "hello");
     invoke();
@@ -274,6 +280,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void matrixParamPqrTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.PUT, "put;ijk=hello"));
+    setProperty(Property.REQUEST_HEADERS, buildContentType(MediaType.TEXT_HTML_TYPE));
     setProperty(Property.SEARCH_STRING, "hello");
     invoke();
   }

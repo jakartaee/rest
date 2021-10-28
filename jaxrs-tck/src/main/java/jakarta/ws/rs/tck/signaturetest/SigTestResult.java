@@ -17,7 +17,7 @@
 /*
  * $Id$
  */
-package com.sun.ts.tests.signaturetest;
+package jakarta.ws.rs.tck.signaturetest;
 
 import java.io.Serializable;
 import java.util.ArrayList;

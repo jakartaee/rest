@@ -18,7 +18,7 @@
         <glassfish.container.version>6.1.0</glassfish.container.version>
         <jakarta.platform.version>9.1.0</jakarta.platform.version>
         <junit.jupiter.version>5.7.2</junit.jupiter.version>
-        <jakarta.rest.version>3.0.0</jakarta.rest.version>
+        <jakarta.rest.version>3.1-SNAPSHOT</jakarta.rest.version>
     </properties>
 
     <dependencyManagement>
@@ -106,6 +106,13 @@
             <scope>test</scope>
         </dependency> 
 
+        <dependency>
+            <groupId>org.netbeans.tools</groupId>
+            <artifactId>sigtest-maven-plugin</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+
     </dependencies>
 
 
@@ -139,6 +146,12 @@
                                 <authuser>javajoe</authuser>
                                 <authpassword>javajoe</authpassword>
                                 <porting.ts.url.class.1>jakarta.ws.rs.tck.lib.implementation.sun.common.SunRIURL</porting.ts.url.class.1>
+                                <jimage.dir>${project.build.directory}/jdk11-bundle</jimage.dir>
+                                <optional.tech.packages.to.ignore>jakarta.xml.bind</optional.tech.packages.to.ignore>
+                                <signature.mapfile>${project.build.directory}/signaturedirectory/jakarta/ws/rs/tck/signaturetest/sig-test.map</signature.mapfile>
+                                <signature.repositoryDir>${project.build.directory}/signaturedirectory/jakarta/ws/rs/tck/signaturetest</signature.repositoryDir>
+                                <signature.packagelist>${project.build.directory}/signaturedirectory/jakarta/ws/rs/tck/signaturetest/sig-test-pkg-list.txt</signature.packagelist>
+                                <signature.sigTestClasspath>${project.build.directory}/glassfish6/glassfish/modules/jakarta.ws.rs-api.jar:${project.build.directory}/glassfish6/glassfish/modules/jakarta.xml.bind-api.jar:${project.build.directory}/jdk11-bundle/java.base:${project.build.directory}/jdk11-bundle/java.rmi:${project.build.directory}/jdk11-bundle/java.sql:${project.build.directory}/jdk11-bundle/java.naming</signature.sigTestClasspath>
                             </systemPropertyVariables>
                             <environmentVariables>
                                 <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>
@@ -262,6 +275,27 @@
                                     <destFileName>jakarta.ws.rs-api.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-jaxrs-tck-signature-files</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                        <artifactItems>
+                            <artifactItem>
+                                <groupId>jakarta.ws.rs</groupId>
+                                <artifactId>jakarta.ws.rs-tck</artifactId>
+                                <version>3.1-SNAPSHOT</version>
+                                <type>jar</type>
+                                <overWrite>true</overWrite>
+                            </artifactItem>
+                        </artifactItems>
+                        <!-- We need the signature file, mapping file and package list file -->
+                        <includes>**/*sig-test*,**/*jakarta.ws.rs.sig_*</includes>
+                        <outputDirectory>${project.build.directory}/signaturedirectory</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

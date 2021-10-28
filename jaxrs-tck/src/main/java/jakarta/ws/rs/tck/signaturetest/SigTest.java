@@ -19,17 +19,18 @@
  * $Id$
  */
 
-package com.sun.ts.tests.signaturetest;
+package jakarta.ws.rs.tck.signaturetest;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.PrintStream;
 
 import java.util.ArrayList;
 import java.util.Properties;
 
-import com.sun.ts.lib.harness.EETest;
-import com.sun.ts.lib.util.TestUtil;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 /**
  * This class should be extended by TCK developers that wish to create a set of
@@ -37,7 +38,7 @@ import com.sun.ts.lib.util.TestUtil;
  * implement the getPackages method to specify which packages are to be tested
  * by the signature test framework.
  */
-public abstract class SigTest extends EETest {
+public abstract class SigTest {
 
   protected SignatureTestDriver driver;
 
@@ -177,94 +178,17 @@ public abstract class SigTest extends EETest {
    *           When an error occurs reading or saving the state information
    *           processed by this method.
    */
-  public void setup(String[] args, Properties p) throws Fault {
+  public void setup() {
     try {
       TestUtil.logTrace("$$$ SigTest.setup() called");
-      this.testInfo = new SigTestData(p);
+      this.testInfo = new SigTestData();
       TestUtil.logTrace("$$$ SigTest.setup() complete");
     } catch (Exception e) {
-      logErr("Unexpected exception " + e.getMessage());
-      throw new Fault("setup failed!", e);
+      TestUtil.logErr("Unexpected exception " + e.getMessage());
+      //throw new Fault("setup failed!", e);
     }
   }
 
-  /**
-   * Called by the test framework to run this test. This method utilizes the
-   * state information set in the setup method to run the signature tests. All
-   * signature test code resides in the utility class so it can be reused by the
-   * signature test framework base classes.
-   *
-   * @throws Fault
-   *           When an error occurs executing the signature tests.
-   */
-  public void signatureTest() throws Fault {
-    TestUtil.logTrace("$$$ SigTest.test1() called");
-    SigTestResult results = null;
-    String mapFile = getMapFile();
-    String repositoryDir = getRepositoryDir();
-    String[] packages = getPackages();
-    String[] classes = getClasses();
-    String packageFile = getPackageFile();
-    String testClasspath = testInfo.getTestClasspath();
-    String optionalPkgToIgnore = testInfo.getOptionalTechPackagesToIgnore();
-
-    // unlisted optional technology packages are packages for optional
-    // technologies that were not specified by the user. We want to
-    // ensure there are no full or partial implementations of an
-    // optional technology which were not declared.
-    ArrayList<String> unlistedTechnologyPkgs = getUnlistedOptionalPackages();
-
-    // If testing with Java 9+, extract the JDK's modules so they can be used
-    // on the testcase's classpath.
-    Properties sysProps = System.getProperties();
-    String version = (String) sysProps.get("java.version");
-    if (!version.startsWith("1.")) {
-      String jimageDir = testInfo.getJImageDir();
-      File f = new File(jimageDir);
-      f.mkdirs();
-
-      String javaHome = (String) sysProps.get("java.home");
-      TestUtil.logMsg("Executing JImage");
-
-      try {
-        ProcessBuilder pb = new ProcessBuilder(javaHome + "/bin/jimage", "extract", "--dir=" + jimageDir, javaHome + "/lib/modules");
-        TestUtil.logMsg(javaHome + "/bin/jimage extract --dir=" + jimageDir + " " + javaHome + "/lib/modules");
-        pb.redirectErrorStream(true);
-        Process proc = pb.start();
-        BufferedReader out = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-        String line = null;
-        while ((line = out.readLine()) != null) {
-          TestUtil.logMsg(line);
-        }
-
-        int rc = proc.waitFor();
-        TestUtil.logMsg("JImage RC = " + rc);
-        out.close();
-      } catch (Exception e) {
-        TestUtil.logMsg("Exception while executing JImage!  Some tests may fail.");
-        e.printStackTrace();
-      }
-    }
-
-    try {
-      results = getSigTestDriver().executeSigTest(packageFile, mapFile,
-          repositoryDir, packages, classes, testClasspath,
-          unlistedTechnologyPkgs, optionalPkgToIgnore);
-      TestUtil.logMsg(results.toString());
-      if (!results.passed()) {
-        TestUtil.logTrace("results.passed() returned false");
-        throw new Exception();
-      }
-      TestUtil.logTrace("$$$ SigTest.test1() returning");
-    } catch (Exception e) {
-      if (results != null && !results.passed()) {
-        throw new Fault("SigTest.test1() failed!, diffs found");
-      } else {
-        TestUtil.logErr("Unexpected exception " + e.getMessage());
-        throw new Fault("test1 failed with an unexpected exception", e);
-      }
-    }
-  }
 
   /**
    * Called by the test framework to cleanup any outstanding state. This method
@@ -281,6 +205,188 @@ public abstract class SigTest extends EETest {
       TestUtil.logTrace("$$$ SigTest.cleanup() returning");
     } catch (Exception e) {
       throw new Fault("Cleanup failed!", e);
+    }
+  }
+
+  public static class Fault extends Exception {
+    private static final long serialVersionUID = -1574745208867827913L;
+
+    public Throwable t;
+
+    /**
+     * creates a Fault with a message
+     */
+    public Fault(String msg) {
+      super(msg);
+      TestUtil.logErr(msg);
+    }
+
+    /**
+     * creates a Fault with a message.
+     *
+     * @param msg
+     *          the message
+     * @param t
+     *          prints this exception's stacktrace
+     */
+    public Fault(String msg, Throwable t) {
+      super(msg);
+      this.t = t;
+      // TestUtil.logErr(msg, t);
+    }
+
+    /**
+     * creates a Fault with a Throwable.
+     *
+     * @param t
+     *          the Throwable
+     */
+    public Fault(Throwable t) {
+      super(t);
+      this.t = t;
+    }
+
+    /**
+     * Prints this Throwable and its backtrace to the standard error stream.
+     *
+     */
+    public void printStackTrace() {
+      if (this.t != null) {
+        this.t.printStackTrace();
+      } else {
+        super.printStackTrace();
+      }
+    }
+
+    /**
+     * Prints this throwable and its backtrace to the specified print stream.
+     *
+     * @param s
+     *          <code>PrintStream</code> to use for output
+     */
+    public void printStackTrace(PrintStream s) {
+      if (this.t != null) {
+        this.t.printStackTrace(s);
+      } else {
+        super.printStackTrace(s);
+      }
+    }
+
+    /**
+     * Prints this throwable and its backtrace to the specified print writer.
+     *
+     * @param s
+     *          <code>PrintWriter</code> to use for output
+     */
+    public void printStackTrace(PrintWriter s) {
+      if (this.t != null) {
+        this.t.printStackTrace(s);
+      } else {
+        super.printStackTrace(s);
+      }
+    }
+
+    @Override
+    public Throwable getCause() {
+      return t;
+    }
+
+    @Override
+    public synchronized Throwable initCause(Throwable cause) {
+      if (t != null)
+        throw new IllegalStateException("Can't overwrite cause");
+      if (!Exception.class.isInstance(cause))
+        throw new IllegalArgumentException("Cause not permitted");
+      this.t = (Exception) cause;
+      return this;
+    }
+  }
+
+  /**
+   * This exception is used only by EETest. Overrides 3 printStackTrace methods
+   * to preserver the original stack trace. Using setStackTraceElement() would
+   * be more elegant but it is not available prior to j2se 1.4.
+   *
+   * @author Kyle Grucci
+   */
+  public static class SetupException extends Exception {
+    private static final long serialVersionUID = -7616313680616499158L;
+
+    public Exception e;
+
+    /**
+     * creates a Fault with a message
+     */
+    public SetupException(String msg) {
+      super(msg);
+    }
+
+    /**
+     * creates a SetupException with a message
+     *
+     * @param msg
+     *          the message
+     * @param e
+     *          prints this exception's stacktrace
+     */
+    public SetupException(String msg, Exception e) {
+      super(msg);
+      this.e = e;
+    }
+
+    /**
+     * Prints this Throwable and its backtrace to the standard error stream.
+     *
+     */
+    public void printStackTrace() {
+      if (this.e != null) {
+        this.e.printStackTrace();
+      } else {
+        super.printStackTrace();
+      }
+    }
+
+    /**
+     * Prints this throwable and its backtrace to the specified print stream.
+     *
+     * @param s
+     *          <code>PrintStream</code> to use for output
+     */
+    public void printStackTrace(PrintStream s) {
+      if (this.e != null) {
+        this.e.printStackTrace(s);
+      } else {
+        super.printStackTrace(s);
+      }
+    }
+
+    /**
+     * Prints this throwable and its backtrace to the specified print writer.
+     *
+     * @param s
+     *          <code>PrintWriter</code> to use for output
+     */
+    public void printStackTrace(PrintWriter s) {
+      if (this.e != null) {
+        this.e.printStackTrace(s);
+      } else {
+        super.printStackTrace(s);
+      }
+    }
+
+    @Override
+    public Throwable getCause() {
+      return e;
+    }
+
+    @Override
+    public synchronized Throwable initCause(Throwable cause) {
+      if (e != null)
+        throw new IllegalStateException("Can't overwrite cause");
+      if (!Exception.class.isInstance(cause))
+        throw new IllegalArgumentException("Cause not permitted");
+      this.e = (Exception) cause;
+      return this;
     }
   }
 

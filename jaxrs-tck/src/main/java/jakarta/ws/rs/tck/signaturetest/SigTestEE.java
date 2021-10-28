@@ -14,17 +14,19 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.signaturetest;
+package jakarta.ws.rs.tck.signaturetest;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.PrintStream;
 
 import java.util.ArrayList;
 import java.util.Properties;
 
-import com.sun.ts.lib.harness.ServiceEETest;
-import com.sun.ts.lib.util.TestUtil;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 /**
  * This class should be extended by TCK developers that wish to create a set of
@@ -32,7 +34,14 @@ import com.sun.ts.lib.util.TestUtil;
  * implement the getPackages method to specify which packages are to be tested
  * by the signature test framework within which container.
  */
-public abstract class SigTestEE extends ServiceEETest {
+public abstract class SigTestEE {
+
+  String[] sVehicles;
+
+  private Object theSharedObject;
+
+  private Object theSharedObjectArray[];
+
 
   protected SignatureTestDriver driver;
 
@@ -203,14 +212,13 @@ public abstract class SigTestEE extends ServiceEETest {
    *           When an error occurs reading or saving the state information
    *           processed by this method.
    */
-  public void setup(String[] args, Properties p) throws Fault {
+  public void setup() {
     try {
       TestUtil.logMsg("$$$ SigTestEE.setup() called");
-      this.testInfo = new SigTestData(p);
+      this.testInfo = new SigTestData();
       TestUtil.logMsg("$$$ SigTestEE.setup() complete");
     } catch (Exception e) {
-      logErr("Unexpected exception " + e.getMessage());
-      throw new Fault("setup failed!", e);
+      TestUtil.logErr("Unexpected exception " + e.getMessage());
     }
   }
 
@@ -377,6 +385,101 @@ public abstract class SigTestEE extends ServiceEETest {
       TestUtil.logMsg("$$$ SigTestEE.cleanup() returning");
     } catch (Exception e) {
       throw new Fault("Cleanup failed!", e);
+    }
+  }
+
+
+  public static class Fault extends Exception {
+    private static final long serialVersionUID = -1574745208867827913L;
+
+    public Throwable t;
+
+    /**
+     * creates a Fault with a message
+     */
+    public Fault(String msg) {
+      super(msg);
+      TestUtil.logErr(msg);
+    }
+
+    /**
+     * creates a Fault with a message.
+     *
+     * @param msg
+     *          the message
+     * @param t
+     *          prints this exception's stacktrace
+     */
+    public Fault(String msg, Throwable t) {
+      super(msg);
+      this.t = t;
+      TestUtil.logErr(msg, t);
+    }
+
+    /**
+     * creates a Fault with a Throwable.
+     *
+     * @param t
+     *          the Throwable
+     */
+    public Fault(Throwable t) {
+      super(t);
+      this.t = t;
+    }
+
+    /**
+     * Prints this Throwable and its backtrace to the standard error stream.
+     *
+     */
+    public void printStackTrace() {
+      if (this.t != null) {
+        this.t.printStackTrace();
+      } else {
+        super.printStackTrace();
+      }
+    }
+
+    /**
+     * Prints this throwable and its backtrace to the specified print stream.
+     *
+     * @param s
+     *          <code>PrintStream</code> to use for output
+     */
+    public void printStackTrace(PrintStream s) {
+      if (this.t != null) {
+        this.t.printStackTrace(s);
+      } else {
+        super.printStackTrace(s);
+      }
+    }
+
+    /**
+     * Prints this throwable and its backtrace to the specified print writer.
+     *
+     * @param s
+     *          <code>PrintWriter</code> to use for output
+     */
+    public void printStackTrace(PrintWriter s) {
+      if (this.t != null) {
+        this.t.printStackTrace(s);
+      } else {
+        super.printStackTrace(s);
+      }
+    }
+
+    @Override
+    public Throwable getCause() {
+      return t;
+    }
+
+    @Override
+    public synchronized Throwable initCause(Throwable cause) {
+      if (t != null)
+        throw new IllegalStateException("Can't overwrite cause");
+      if (!Exception.class.isInstance(cause))
+        throw new IllegalArgumentException("Cause not permitted");
+      this.t = (Exception) cause;
+      return this;
     }
   }
 

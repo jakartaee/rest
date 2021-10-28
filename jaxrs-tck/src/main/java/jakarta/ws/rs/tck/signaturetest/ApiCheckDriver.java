@@ -17,7 +17,7 @@
 /*
  * $Id$
  */
-package com.sun.ts.tests.signaturetest;
+package jakarta.ws.rs.tck.signaturetest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,8 +28,7 @@ import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.sun.javatest.Status;
-import com.sun.ts.lib.util.TestUtil;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 public final class ApiCheckDriver extends SignatureTestDriver
     implements Serializable {
@@ -150,8 +149,7 @@ public final class ApiCheckDriver extends SignatureTestDriver
     TestUtil.logMsg(
         "********** Status Report '" + packageOrClassName + "' **********\n");
     TestUtil.logMsg(rawMessages);
-
-    return Status.parse(sigTestInstance.toString().substring(7)).isPassed();
+    return sigTestInstance.toString().substring(7).startsWith("Passed.");
   }
 
   @Override

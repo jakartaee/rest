@@ -15,7 +15,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.signaturetest;
+package jakarta.ws.rs.tck.signaturetest;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import com.sun.ts.lib.util.TestUtil;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 /**
  * Allows the sigtest framework to be extended using different signature test
@@ -45,7 +45,7 @@ public abstract class SignatureTestDriver {
    */
   public String getPackageFileImpl(String binDir) {
 
-    String thePkgListFile = "sig-test-pkg-list_se8.txt";
+    String thePkgListFile = "sig-test-pkg-list.txt";
 
     TestUtil.logMsg(
         "Using the following as the SigTest Package file: " + thePkgListFile);
@@ -79,7 +79,7 @@ public abstract class SignatureTestDriver {
    */
   public String getMapFileImpl(String binDir) {
 
-    String  theMapFile = "sig-test_se8.map";
+    String  theMapFile = "sig-test.map";
 
     TestUtil
         .logMsg("Using the following as the sig-Test map file: " + theMapFile);
@@ -467,7 +467,7 @@ public abstract class SignatureTestDriver {
    *           file, can also be thrown if there is an error creating an input
    *           stream from the specified file.
    */
-  protected Properties loadMapFile(String mapFile)
+  public Properties loadMapFile(String mapFile)
       throws IOException, FileNotFoundException {
 
     FileInputStream in = null;

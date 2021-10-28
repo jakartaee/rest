@@ -18,7 +18,7 @@
  * $Id$
  */
 
-package com.sun.ts.tests.signaturetest;
+package jakarta.ws.rs.tck.signaturetest;
 
 import java.util.Properties;
 
@@ -31,8 +31,8 @@ public class SigTestData {
 
   private Properties props;
 
-  public SigTestData(Properties props) {
-    this.props = props;
+  public SigTestData() {
+    this.props = System.getProperties();;
   }
 
   public String getVehicle() {
@@ -64,7 +64,7 @@ public class SigTestData {
   }
 
   public String getOptionalTechPackagesToIgnore() {
-    return props.getProperty("optional.tech.packages.to.ignore", "");
+    return props.getProperty("optional.tech.packages.to.ignore", "jakarta.xml.bind");
   }
 
   public String getJtaJarClasspath() {

@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package com.sun.ts.tests.signaturetest;
+package jakarta.ws.rs.tck.signaturetest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -23,8 +23,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.javatest.Status;
-import com.sun.ts.lib.util.TestUtil;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 /**
  * <p>
@@ -188,8 +187,7 @@ public class SigTestDriver extends SignatureTestDriver {
         "********** Status Report '" + packageOrClassName + "' **********\n");
     TestUtil.logMsg(rawMessages);
 
-    return Status.parse(sigTestInstance.toString().substring(7)).isPassed();
-
+    return sigTestInstance.toString().substring(7).startsWith("Passed.");
   } // END runSignatureTest
 
   /*
@@ -234,7 +232,7 @@ public class SigTestDriver extends SignatureTestDriver {
         "********** Status Report '" + packageOrClassName + "' **********\n");
     TestUtil.logMsg(rawMessages);
 
-    return Status.parse(sigTestInstance.toString().substring(7)).isPassed();
+    return sigTestInstance.toString().substring(7).startsWith("Passed.");
   }
 
   /*
@@ -283,6 +281,6 @@ public class SigTestDriver extends SignatureTestDriver {
     // the rawmessages, so we will always dump this and call it a status.
     TestUtil.logMsg("********** Status Report JTA JAR validation **********\n");
     TestUtil.logMsg(rawMessages);
-    return Status.parse(sigTestInstance.toString().substring(7)).isPassed();
+    return sigTestInstance.toString().substring(7).startsWith("Passed.");
   }
 }

@@ -17,4 +17,4 @@
 ###############################################################
 # The signature test mapping file for the JAX-RS TCK.
 ###############################################################
-jakarta.ws.rs=3.0_se8
+jakarta.ws.rs=3.1-SNAPSHOT

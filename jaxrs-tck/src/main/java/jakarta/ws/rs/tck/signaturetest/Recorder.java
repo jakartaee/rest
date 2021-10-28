@@ -18,7 +18,7 @@
  * $Id$
  */
 
-package com.sun.ts.tests.signaturetest;
+package jakarta.ws.rs.tck.signaturetest;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Properties;
 
-import com.sun.ts.lib.util.TestUtil;
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 public abstract class Recorder {
 

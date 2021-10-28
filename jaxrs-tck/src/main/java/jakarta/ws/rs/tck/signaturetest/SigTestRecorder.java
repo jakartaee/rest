@@ -17,7 +17,7 @@
 /*
  * @(#)SigTestRecorder.java	1.1 03/03/05
  */
-package com.sun.ts.tests.signaturetest;
+package jakarta.ws.rs.tck.signaturetest;
 
 import java.io.File;
 import java.io.PrintWriter;

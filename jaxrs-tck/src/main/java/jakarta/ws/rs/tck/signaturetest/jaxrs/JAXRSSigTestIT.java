@@ -17,14 +17,30 @@
 /*
  * $Id:
  */
-package com.sun.ts.tests.signaturetest.jaxrs;
+package jakarta.ws.rs.tck.signaturetest.jaxrs;
 
 import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.sun.javatest.Status;
-import com.sun.ts.tests.signaturetest.SigTestEE;
+import jakarta.ws.rs.tck.signaturetest.SigTestEE;
+import jakarta.ws.rs.tck.signaturetest.SigTestResult;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.PrintStream;
+
+import java.util.ArrayList;
+import java.util.Properties;
+
+import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 /*
  * This class is a simple example of a signature test that extends the
@@ -34,7 +50,7 @@ import com.sun.ts.tests.signaturetest.SigTestEE;
  * To see a complete TCK example see the javaee directory for the Java EE
  * TCK signature test class.
  */
-public class JAXRSSigTest extends SigTestEE {
+public class JAXRSSigTestIT extends SigTestEE {
 
   private static final long serialVersionUID = 1675845761668114828L;
 
@@ -47,6 +63,10 @@ public class JAXRSSigTest extends SigTestEE {
   public static final String APP_CLIENT_VEHICLE = "appclient";
 
   public static final String NO_VEHICLE = "standalone";
+
+  public JAXRSSigTestIT(){
+    setup();
+  }
 
   /*
    * Defines the packages that are included when running signature tests for any
@@ -181,15 +201,6 @@ public class JAXRSSigTest extends SigTestEE {
 
   /***** Boilerplate Code *****/
 
-  /*
-   * Initial entry point for JavaTest.
-   */
-  public static void main(String[] args) {
-    JAXRSSigTest theTests = new JAXRSSigTest();
-    Status s = theTests.run(args, new PrintWriter(System.out),
-        new PrintWriter(System.err));
-    s.exit();
-  }
 
   /*
    * The following comments are specified in the base class that defines the
@@ -220,6 +231,111 @@ public class JAXRSSigTest extends SigTestEE {
    * classes and APIs.
    *
    */
+  @Test
+  public void signatureTest() throws Fault {
+    TestUtil.logMsg("$$$ JAXRSSigTestIT.signatureTest() called");
+    SigTestResult results = null;
+    String mapFile = System.getProperty("signature.mapfile");
+    String repositoryDir = System.getProperty("signature.repositoryDir");
+    String[] packages = getPackages(testInfo.getVehicle());
+    String[] classes = getClasses(testInfo.getVehicle());
+    String packageFile = System.getProperty("signature.packagelist");
+    String testClasspath = System.getProperty("signature.sigTestClasspath");
+    String optionalPkgToIgnore = testInfo.getOptionalTechPackagesToIgnore();
+
+    // unlisted optional packages are technology packages for those optional
+    // technologies (e.g. jsr-88) that might not have been specified by the
+    // user.
+    // We want to ensure there are no full or partial implementations of an
+    // optional technology which were not declared
+    ArrayList<String> unlistedTechnologyPkgs = getUnlistedOptionalPackages();
+
+    // If testing with Java 9+, extract the JDK's modules so they can be used
+    // on the testcase's classpath.
+    Properties sysProps = System.getProperties();
+    String version = (String) sysProps.get("java.version");
+    if (!version.startsWith("1.")) {
+      String jimageDir = testInfo.getJImageDir();
+      File f = new File(jimageDir);
+      f.mkdirs();
+
+      String javaHome = (String) sysProps.get("java.home");
+      TestUtil.logMsg("Executing JImage");
+
+      try {
+        ProcessBuilder pb = new ProcessBuilder(javaHome + "/bin/jimage", "extract", "--dir=" + jimageDir, javaHome + "/lib/modules");
+        TestUtil.logMsg(javaHome + "/bin/jimage extract --dir=" + jimageDir + " " + javaHome + "/lib/modules");
+        pb.redirectErrorStream(true);
+        Process proc = pb.start();
+        BufferedReader out = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+        String line = null;
+        while ((line = out.readLine()) != null) {
+          TestUtil.logMsg(line);
+        }
+
+        int rc = proc.waitFor();
+        TestUtil.logMsg("JImage RC = " + rc);
+        out.close();
+      } catch (Exception e) {
+        TestUtil.logMsg("Exception while executing JImage!  Some tests may fail.");
+        e.printStackTrace();
+      }
+    }
+
+    try {
+      results = getSigTestDriver().executeSigTest(packageFile, mapFile,
+          repositoryDir, packages, classes, testClasspath,
+          unlistedTechnologyPkgs, optionalPkgToIgnore);
+      TestUtil.logMsg(results.toString());
+      if (!results.passed()) {
+        TestUtil.logErr("results.passed() returned false");
+        throw new Exception();
+      }
+
+      // Call verifyJtaJarTest based on some conditions, please check the
+      // comment for verifyJtaJarTest.
+      if ("standalone".equalsIgnoreCase(testInfo.getVehicle())) {
+        Properties mapFileAsProps = getSigTestDriver().loadMapFile(mapFile);
+        if (mapFileAsProps == null || mapFileAsProps.size() == 0) {
+          // empty signature file, something unusual
+          TestUtil.logMsg("JAXRSSigTestIT.signatureTest() returning, " +
+              "as signature map file is empty.");
+          return;
+        }
+
+        boolean isJTASigTest = false;
+
+        // Determine whether the signature map file contains package 
+        // jakarta.transaction
+        String jtaVersion = mapFileAsProps.getProperty("jakarta.transaction");
+        if (jtaVersion == null || "".equals(jtaVersion.trim())) {
+          TestUtil.logMsg("JAXRSSigTestIT.signatureTest() returning, " +
+              "as this is neither JTA TCK run, not Java EE CTS run.");
+          return;
+        }
+
+        TestUtil.logMsg("jtaVersion " + jtaVersion);  
+        // Signature map packaged in JTA TCK will contain a single package 
+        // jakarta.transaction
+        if (mapFileAsProps.size() == 1) {
+            isJTASigTest = true;
+        }
+
+        if (isJTASigTest || !jtaVersion.startsWith("1.2")) {
+          verifyJtaJarTest();
+        }
+      }
+      TestUtil.logMsg("$$$ JAXRSSigTestIT.signatureTest() returning");
+    } catch (Exception e) {
+      if (results != null && !results.passed()) {
+        throw new Fault("JAXRSSigTestIT.signatureTest() failed!, diffs found");
+      } else {
+        TestUtil.logErr("Unexpected exception " + e.getMessage());
+        throw new Fault("signatureTest failed with an unexpected exception", e);
+      }
+    }
+  }
+
   /*
    * Call the parent class's cleanup method.
    */

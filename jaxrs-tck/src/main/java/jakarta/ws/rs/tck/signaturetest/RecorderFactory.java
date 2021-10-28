@@ -18,7 +18,7 @@
  * $Id$
  */
 
-package com.sun.ts.tests.signaturetest;
+package jakarta.ws.rs.tck.signaturetest;
 
 /**
  * <p>

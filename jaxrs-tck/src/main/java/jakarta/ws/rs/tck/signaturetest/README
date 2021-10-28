@@ -1,0 +1,431 @@
+The latest signature files (specific for Java SE 8 & Java SE 11)  were updated in
+the jakartaee-tck repoitory (src/com/sun/ts/tests/signaturetests/signature-repository) 
+for JakartaEE 9 release. The wikipage to generate the signature files is updated in the 
+wiki link :
+https://github.com/eclipse-ee4j/jakartaee-tck/wiki/Signature-Tests-in-JakartaEE-TCK
+
+
+
+Overview:
+1.  Summary of signature contents
+2.  Define Signature Test Map File
+3.  Record Signatures
+4.  Extend the Appropriate Framework Class
+5.  Additional Notes
+
+
+
+This directory contains a signature test framework that can be extended by
+TCK developers to produce signature tests.  This directory also contains
+a record-build.xml file.  This file allows developers to record API
+signatures.
+
+Developing TCK Signature Tests Using The Framework
+--------------------------------------------------
+Developing signature tests is a 3 step process.  First, users define a
+signature test map file to denote the versions of the packages under test.
+Second, users record the signatures of the packages under test.  Third,
+users extend one of the signature test classes and implement the getPackages
+method.  See below for more detail on each step.
+
+
+---------------------------------
+2. Define Signature Test Map File
+---------------------------------
+Developers begin by defining a sig-test.map file.  This file denotes which
+version of a package should be used when executing a signature test.  This
+file does not have to include sub-packages unless the sub-package varies
+independently from its parent package.  For instance, say a developer has
+to test the jakarta.ejb and jakarta.jms package signatures.  Their map file
+would contain the following text:
+
+###############################################################
+# The signature test mapping file for the Jakarta EE TCK.  This file
+# should be formatted as a standard java properties file.  The
+# name is the package name and the value is the version of the
+# package that should be tested by the signature tests.
+###############################################################
+jakarta.ejb=4.0
+jakarta.jms=3.0
+
+This file should be created in $TS_HOME/bin with the name "sig-test.map".
+The file should then be copied to $TS_HOME/install/<deliverable>/bin and
+source controlled in that directory.  The sig-test.map file should be
+copied to $TS_HOME/bin during the install process for a deliverable.
+
+Additionally, different sig-test.map is created specific to the JDK version.
+sig-test_se8.map for Java SE 8, sig-test_se11.map for Java SE 11.
+If the JDK specific map file does not exist by default sig-test.map will be used 
+to run the signature tests.
+
+--------------------
+3. Record Signatures
+--------------------
+Next the user should record the signatures necessary to execute their
+signature tests.  All signatures files live in the following directory:
+$TS_HOME/src/com/sun/ts/tests/signaturetest/signature-repository/
+Users should see if their signatures already exist in this directory.
+Note, every property in the sig-test.map file maps to a signature
+file.  For example the property "jakarta.ejb=4.0_se11" maps to the signature
+file:
+ $TS_HOME/src/com/sun/ts/tests/signaturetest/signature-repository/jakarta.ejb.sig_4.0_se11
+
+If the signature file already exist, the user should checkout the signature
+file (using git clone) then record the new signatures and do an "git diff"
+on each signature file to see if the signature files match.  If the only changes
+to the signature file are in the header then the new signature file can be discarded.  
+If the signature files differ elsewhere the user should
+unedit the original signature file and change the version ID in their
+sig-test.map file and rerecord.  This will create a new signature file with
+the appropriate API and leave the original signature file unaltered.  The
+new signature file must be placed under source control.
+
+As part of the recording process a "sig-test-pkg-list.txt" file will be generated
+in the $TS_HOME/bin directory.  This file should be copied to 
+$TS_HOME/install/<deliverable>/bin and source controlled in that directory.  The
+sig-test-pkg-list.txt file should be copied to $TS_HOME/bin during the install
+process for a deliverable.
+
+See the section below labeled "Example of batch mode using a map file" for
+recording instructions.
+
+
+Recording API Signatures
+------------------------
+
+  Batch mode using a signature map file
+  -------------------------------------
+  - cd $TS_HOME/src/com/sun/ts/tests/signaturetest/signature-respository
+
+        ant -find record-build.xml \
+              -Dsig.source=<location.of.APIs> \
+              -Dmap.file=<map.file.path>
+              -Drecorder.type=sigtest  \
+              record.sig.batch
+
+    Where:
+      <location.of.apis>     One or many jar files containing
+                             the target package API, separate
+                             jar files with ":" on Windows
+                             and ";" on other platforms
+                             This should also include ALL reference classes (eg rt.jar)
+      <map.file.path>        The name and path to the map file
+                             that specifies which packages to record
+      <recorder.type>        This should be sigtest EXCEPT for JBI which still uses 
+                             apicheck as of cts 5.0
+
+
+Example of batch mode using a map file
+--------------------------------------
+The following command records the packages listed in the specified map
+file including sub-packages.
+
+cd $TS_HOME/src/com/sun/ts/tests/signaturetest/signature-respository
+
+ant -find record-build.xml \
+      -Dsig.source=/appserver/lib/jakartaee-api.jar:${JAVA_HOME}/jre/lib/rt.jar  \
+      -Dmap.file=$TS_HOME/bin/sig-test.map  \
+      -Drecorder.type=sigtest  \
+      record.sig.batch
+
+The jakartaee-api.jar should be substituted by the API jar under test.
+
+The contents of the sig-test.map file is (standard java property file):
+	jakarta.jms=3.0
+	jakarta.mail=2.0
+	jakarta.servlet=5.0
+	jakarta.ejb=4.0
+
+The output of the above ant command is a set of files containing the
+signatures of the specified packages in the sig-test.map file.  The
+contents of the $TS_HOME/src/com/sun/ts/tests/signaturetest/signature-repository/
+directory is the following after the ant command is run (assuming it was empty):
+	jakarta.jms.sig_3.0
+	jakarta.mail.sig_2.0
+	jakarta.servlet.sig_5.0
+	jakarta.ejb.sig_4.0
+
+The jakarta.jms.sig_3.0 file contains the signatures for the jakarta.jms package
+including all sub-packages.  The jakarta.mail.sig_3.0 file contains all the
+signatures for the jakarta.mail package including all sub-packages so forth
+and so on.
+
+The following command records all the Jakarta EE signatures necessary for the
+Jakarta EE TCK:
+
+ant -find record-build.xml \
+-Dsig.source=$JAVAEE_HOME/lib/jakartaee-api.jar:\
+-Dmap.file=$TS_HOME/bin/sig-test.map record.sig.batch
+
+
+
+-----------------------------------------
+4. Extend the Appropriate Framework Class
+-----------------------------------------
+Next users should create a sub directory under the directory:
+$TS_HOME/src/com/sun/ts/tests/signaturetest/
+This directory will contain their signature test class and a build.xml file.
+
+The user's signature test class must extend either SigTestEE or SigTest
+located in $TS_HOME/src/com/sun/ts/tests/signaturetest.  Users running their
+tests in Jakarta EE containers must extend SigTestEE and users not running their
+tests in Jakarta EE containers must extend SigTest.  Both the SigTestEE and SigTest
+class contain a single abstract method called getPackages.  Users must
+implement this method.  The method should return a string array containing 
+names of the packages that the signature test should verify.  
+
+There is also an abstract method called getClasses that must be implemented. 
+The getClasses method can be used inplace of the getPackages method if there
+is a need to specifically list out every class instead of listing packages.
+While both of these need to be implemented with at least a stub, it should
+only be necessary to list your classes/packages under test within one of
+the packages.  As it is now, I believe we only have one area (Common Annotations)
+that makes use of the getClasses() method but explicitly listing classes to
+test.  The rest of the signature tests use the getPackages() method to identify
+what to test - the getPackages() appears to be the more common method to use.
+
+Examples of test classes and a build file are provided in the
+$TS_HOME/src/com/sun/ts/tests/signaturetest directory.  The 
+$TS_HOME/src/com/sun/ts/tests/signaturetest/javaee directory can also be used
+as an example (it contains the Jakarta EE TCK signature tests).  The files:
+  $TS_HOME/src/com/sun/ts/tests/signaturetest/build.xml.txt
+  $TS_HOME/src/com/sun/ts/tests/signaturetest/SampleSigTest.java.txt
+  $TS_HOME/src/com/sun/ts/tests/signaturetest/SampleSigTestEE.java.txt
+can be used as templates.
+
+What Goes In My Deliverable
+---------------------------
+The $TS_HOME/lib/sigtest.jar and $TS_HOME/lib/tsharness.jar must be available
+to the signature tests as well as the signature files, the signature map file
+and the package list file (the file named "sig-test-pkg-list.txt").
+User must also include the test framework classes located in the
+$TS_HOME/src/com/sun/ts/tests/signaturetest directory.
+
+In provious versions, it was necessary to include the apiCheck.jar file but 
+now we should only need to include the sigtest.jar file.  The apiCheck tool
+is an older tool used for (pre 5.0) and is not needed EXCEPT for the case of JBI
+which still appears to use apiCheck since they are still requiring j2se 1.4 
+and not 5.0.  For all other technology areas, include sigtest.jar and not 
+apicheck.jar.
+
+
+What Does NOT Go in My Deliverable
+----------------------------------
+User must not package the $TS_HOME/lib/recordApiCheck.jar nor the
+$TS_HOME/src/com/sun/ts/tests/signaturetest/record-build.xml files.
+Also, do not include sigtestdev.jar.  (sigtestdev.jar includes the
+same files as sigtest.jar as well as additional classes used for
+recording sigs.  As a general rule, we don't want folks to be able 
+to re-record sigs.
+
+
+Examples
+--------
+This is a quick example of creating a signature test with an empty
+signature repository.
+
+cd $TS_HOME/bin
+create the map file named "sig-test.map"
+cd $TS_HOME/src/com/sun/ts/tests/signaturetest/signature-repository/
+
+invoke:
+        ant -find record-build.xml \
+              -Dsig.source=/appserver/lib/jakartaee-api.jar:${JAVA_HOME}/jre/lib/rt.jar  \
+              -Dmap.file=/jakartaee-tck/install/jakartaee/bin/sig-test.map  \
+              -Drecorder.type=sigtest  \
+              record.sig.batch
+
+       where:
+         sig.source    = <jar_file_under_test>:<any_other_referenced_classes>
+                         sig.source will likely match what is being set for the
+                         $TS_HOME/bin/ts.jte files sigTestClasspath variable.
+         map.file      = file containing technology versions
+         recorder.type = signature tests (we can still support api_tests as may be case
+                                          with JBI.  ApiCheck is older way of doing things
+                                          and is being phased out as of cts 5.0)
+
+git create any signature files that you created.
+cd $TS_HOME/bin
+cp sig-test.map sig-test-pkg-list.txt $TS_HOME/install/<your_deliverable>/bin/
+cd $TS_HOME/install/<your_deliverable>/bin/
+sccs create sig-test.map sig-test-pkg-list.txt
+cd $TS_HOME/src/com/sun/ts/tests/signaturetest
+mkdir <your_deliverable>
+cd <your_deliverable>
+cp ../build.xml.txt ./build.xml
+"cp ../SampleSigTest.java.txt ./<your_deliverable>SigTest.java" for stand alone sig tests
+OR
+"cp ../SampleSigTestEE.java.txt ./<your_deliverable>SigTest.java"  for container run sig tests 
+Edit <your_deliverable>SigTest.java.java
+ - go to the bottom of the file and choose the appropriate test comment, you have
+     a choice of two, see the comments in the file to help you decide which
+     test comment to use.
+ - implement the getPackages method in <your_deliverable>SigTest.java
+ - replace the string "<your_test_dir_name>" with the name of your test directory
+ - replace the string "<your_test_class_name>" with the name of your test class.
+Edit build.xml:
+ - replace the string "<your_test_dir_name>" with the name of your test directory
+   that you created in step 3 above.
+ - replace the string "<your_test_class_name>" with the name of your test class.
+ - If your signature tests do not run in any Jakarta EE vehicles edit the package target
+   so the target is empty.  In other wordsdDelete the current package target and
+   replace it with:
+      <target name="package">
+      </target>
+git create your test class, "<your_deliverable>SigTest.java", and the build.xml file
+
+---------------------------------------------------------------------------------------
+This is a quick example of creating a signature test for the Jakarta EE TCK with a
+non-empty signature repository.
+
+cd $TS_HOME/bin
+create the map file named "sig-test.map"
+cd $TS_HOME/src/com/sun/ts/tests/signaturetest/signature-repository/
+invoke  ant -find record-build.xml \
+              -Dsig.source=/appserver/lib/jakartaee-api.jar:${JAVA_HOME}/jre/lib/rt.jar  \
+              -Dmap.file=/jakartaee-tck/install/jakartaee/bin/sig-test.map  \
+              -Drecorder.type=sigtest  \
+              record.sig.batch
+
+if you changed any version IDs in your map file, rerecord the signatures.
+cd $TS_HOME/bin
+cp sig-test.map sig-test-pkg-list.txt $TS_HOME/install/<your_deliverable>/bin/
+cd $TS_HOME/install/<your_deliverable>/bin/
+sccs create sig-test.map sig-test-pkg-list.txt
+cd $TS_HOME/src/com/sun/ts/tests/signaturetest
+mkdir <your_deliverable>
+cd <your_deliverable>
+cp ../build.xml.txt ./build.xml
+"cp ../SampleSigTest.java.txt ./<your_deliverable>SigTest.java" for stand alone sig tests
+OR
+"cp ../SampleSigTestEE.java.txt ./<your_deliverable>SigTest.java"  for container run sig tests 
+Edit <your_deliverable>SigTest.java.java
+ - go to the bottom of the file and choose the appropriate test comment, you have
+     a choice of two, see the comments in the file to help you decide which
+     test comment to use.  Make sure you have a property named "ts_home" set to
+     your install directory.  This property must be made available to your runtime
+     environment.  Normally this is done by placing the property and its value
+     in the bin/ts.jte file or bin/build.xml.
+ - implement the getPackages method in <your_deliverable>SigTest.java
+ - replace the string "<your_test_dir_name>" with the name of your test directory
+ - replace the string "<your_test_class_name>" with the name of your test class.
+Edit build.xml:
+ - replace the string "<your_test_dir_name>" with the name of your test directory
+   that you created in step 3 above.
+ - replace the string "<your_test_class_name>" with the name of your test class.
+ - If your signature tests do not run in any Jakarta EE vehicles edit the package target
+   so the target is empty.  In other wordsdDelete the current package target and
+   replace it with:
+      <target name="package">
+      </target>
+sccs create your test class, "<your_deliverable>SigTest.java", and the build.xml file
+
+
+Other Changes
+-------------
+In your $TS_HOME/install/<your_deliverable>/bin directory:
+- In build.properties make sure $TS_HOME/lib/apiCheck.jar is added to the ts.classpath property
+- In ts.jte make sure apiCheck.jar is added to the classpaths for the following properties:
+     env.ts_unix.command.testExecute
+     env.ts_unix.command.testExecuteAppClient
+     env.ts_win32.command.testExecute
+     env.ts_win32.command.testExecuteAppClient
+  You can remove the sigTestClasspath, sigTestUrl and sigTestSetupUrl properties
+  NOTE: sigTestClasspath may be required for running sigtool verification tests.  Without
+        setting this sigTestClasspath variable, the sigtool will NOT be able to detect
+        if extra classes have been added to the API/jars being verified.
+- In java.policy and server.policy.append (if it exists) add the following permissions:
+     permission java.lang.RuntimePermission "accessDeclaredMembers";
+     permission java.lang.RuntimePermission "createClassLoader";
+     permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+- Verify that your $TS_HOME/src/com/sun/ts/tests/map.jtc file contains the following line:
+     signaturetest/<your_test_dir_name>/*.java com.sun.ts.lib.harness.TSTestFinder
+     Also, ensure that this file is controlled under the install/<your_deliverable>/other
+     directory.
+
+
+
+NOTE:  If for some reason the API under test is not part of the test environment, users
+       may specify a classpath that contains the test API by setting the property
+       "sigTestClasspath" in the ts.jte file.  This should only be used when the API
+       under test can NOT be added to the test environment.  USers should prefer to
+       add the test API to the classpath of the VM running the signature tests.
+       Again - it's worth noting that setting this sigTestClasspath variable allows
+       the sigtool to detect if extra classes have been added to the API under test.
+       Without setting this variable, we will not be able to detect if the API under
+       test has extra classes in it.  This is because the current sigtool uses 
+       Reflection to detect if each entry in our sigfiles is loaded.  But there is no
+       way to use Reflection to detect if some new class is loaded thus we use this
+       property to specify a jar file to be parsed and searched for new classes that
+       might not be listed in our current sig files.
+
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+
+----------------------
+5.  Additional Notes
+----------------------
+
+A.  Using apicheck:
+-------------------
+ By default, the signature test framework will use sigtest.  If a TCK
+ wishes to use ApiCheck, the following steps must be taken:
+
+ 1.  In the TCK specific signature test client, the getSigTestDriver()
+     method *must* be overridden to return the SignatureTestDriver 
+     implementation for ApiCheck:
+      
+          /**
+           * <p>Override default implemenation to use ApiCheck vs SigTest.</p>
+           */
+         protected SignatureTestDriver getSigTestDriver() {
+              if (driver == null) {
+                  driver = SignatureTestDriverFactory.
+                      getInstance(SignatureTestDriverFactory.API_CHECK);
+              }
+              return driver;
+          } // END getSigTestDriver
+
+
+ 2.  When invoking the 'record.sig.batch' target to record the API signatures,
+     an additional property *must* be passed:  -Drecorder.type=apicheck
+      
+     tsant -find record-build.xml \
+           -Dsig.source=/appserver/lib/jakartaee-api.jar:${JAVA_HOME}/jre/lib/rt.jar  \
+           -Dmap.file=$TS_HOME/bin/sig-test.map  \
+           -Drecorder.type=apicheck  \
+           record.sig.batch
+
+
+B. Using SigTest:
+-----------------
+When running sigtests, make sure you have properly set the ts.jte files
+sigTestClasspath variable.  If your particular TCK does not have this 
+variable in the ts.jte file, add it.  This should contain the jar files
+for the classes you are testing AND any classes that will be referenced.
+Example/
+   sigTestClasspath=${javaee.home}/lib/jakartaee-api.jar:${JAVA_HOME}/lib/rt.jar
+
+
+
+C.  Differences between SigTest and APICheck:
+---------------------------------------------
+SigTest and ApiCheck are both tools used for verifying class API's but 
+they are different.  ApiCheck is being phased out as of cts 5.0 and sigtest
+is the tool of choice.  (As of cts 5.0, apicheck is still used for JBI so 
+we still need to make sure it exists but that should be the only one still
+using it.)
+
+sigtest jar file(s):
+ sigtest.jar   :  used for running/verifying sigtests
+ sigtestdev.jar : used for running/verifying sigtests AND recording sigtests
+                  note:  as a general rule, only we (cts) should record sigfiles
+                  so this means we should NOT ship sigtestdev.jar to anyone.
+
+apicheck file(s):
+ apicheck.jar  :  used for running/verifying sigtests AND recording sigtests
+                  this does NOT have any 5.0 support for annotations etc so 
+                  is only valid for pre 5.0 java versions. 
+
+

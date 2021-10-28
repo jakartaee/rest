@@ -67,14 +67,21 @@ using the `WidgetProvider` class (see <<entity_providers>> for
 more information on `MessageBodyReader`).
 
 An implementation MUST NOT invoke a method whose effective value of
-`@Produces` does not match the request `Accept` header.
+`@Produces` does not match the request `Accept` header.
 If no `Accept` header is present in the request, it is assumed that
 the client accepts any media type or `\*/*`.
 
 An implementation MUST NOT invoke a method whose effective value of
-`@Consumes` does not match the request `Content-Type` header.
-If no `Content-Type` header is present in the request, the default
-media type is assumed to be `application/octet-stream`.
+`@Consumes` does not match the request `Content-Type` header,
+with the exception of requests in which the `Content-Type` header is
+absent. In those cases, the content type shall
+be treated as the wildcard `\*/*` for matching
+purposesfootnote:[Given that content types do not include wildcards,
+this is an exceptional condition for the purpose of simplifying the
+matching algorithm.]. This rule
+enables inheritance of class-level `@Consumes` annotations on `@GET`
+resource methods that are typically matched by requests without a
+`Content-Type` header.
 
 [[selecting_from_multiple_media_types]]
 ==== Selecting from multiple media types

@@ -297,9 +297,14 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.surefire.plugin.version}</version>
                     <configuration>
                         <argLine>--add-modules jakarta.xml.bind</argLine>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -389,6 +394,7 @@
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <maven.javadoc.plugin.version>3.3.0</maven.javadoc.plugin.version>
+        <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
 
         <api.package>jakarta.ws.rs</api.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

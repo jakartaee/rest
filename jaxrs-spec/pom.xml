@@ -16,13 +16,20 @@
     SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>jakarta.ws.rs</groupId>
+
     <artifactId>jakarta.ws.rs-spec</artifactId>
     <version>3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Jakarta RESTful WS Specification</name>
+
+    <parent>
+        <groupId>jakarta.ws.rs</groupId>
+        <artifactId>all</artifactId>
+        <version>3.1-SNAPSHOT</version>
+    </parent>
 
     <properties>
         <site.output.dir>${project.build.directory}/staging</site.output.dir>
@@ -91,18 +98,18 @@
                         <configuration>
                             <backend>xhtml</backend>
                             <attributes>
-				<imagesdir>images</imagesdir>
+                                <imagesdir>images</imagesdir>
                                 <revnumber>${project.version}</revnumber>
                                 <revremark>${status}</revremark>
                                 <revdate>${revisiondate}</revdate>
                                 <doctype>book</doctype>
                                 <status>${status}</status>
-                                <data-uri />
+                                <data-uri/>
                                 <icons>font</icons>
                                 <toc>left</toc>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
-                                <idprefix />
+                                <idprefix/>
                                 <idseparator>-</idseparator>
                                 <docinfo1>true</docinfo1>
                             </attributes>
@@ -117,7 +124,7 @@
                         <configuration>
                             <backend>pdf</backend>
                             <attributes>
-				<imagesdir>images</imagesdir>
+                                <imagesdir>images</imagesdir>
                                 <pdf-stylesdir>${project.basedir}/src/theme</pdf-stylesdir>
                                 <pdf-style>jakartaee</pdf-style>
                                 <revnumber>${project.version}</revnumber>
@@ -125,13 +132,13 @@
                                 <revdate>${revisiondate}</revdate>
                                 <doctype>book</doctype>
                                 <status>${status}</status>
-                                <data-uri />
+                                <data-uri/>
                                 <icons>font</icons>
-                                <pagenums />
-                                <toc />
+                                <pagenums/>
+                                <toc/>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
-                                <idprefix />
+                                <idprefix/>
                                 <idseparator>-</idseparator>
                                 <docinfo1>true</docinfo1>
                                 <embedAssets>true</embedAssets>

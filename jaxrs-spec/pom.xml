@@ -21,7 +21,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jakarta.ws.rs-spec</artifactId>
-    <version>3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Jakarta RESTful WS Specification</name>
 

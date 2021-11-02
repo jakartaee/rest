@@ -22,7 +22,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jakarta.ws.rs-tck</artifactId>
-    <version>3.1-SNAPSHOT</version>
 
     <parent>
         <groupId>jakarta.ws.rs</groupId>

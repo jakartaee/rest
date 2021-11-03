@@ -33,6 +33,5 @@
         <module>jaxrs-spec</module>
         <module>jaxrs-tck</module>
         <module>examples</module>
-        <module>jersey-tck</module>
     </modules>
 </project>

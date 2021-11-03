@@ -21,6 +21,13 @@
     <packaging>pom</packaging>
     <name>Jakarta RESTful WS Project</name>
 
+    <parent>
+        <groupId>org.eclipse.ee4j</groupId>
+        <artifactId>project</artifactId>
+        <version>1.0.7</version>
+        <relativePath/>
+    </parent>
+
     <modules>
         <module>jaxrs-api</module>
         <module>jaxrs-spec</module>

@@ -154,7 +154,56 @@
                     </execution>
                 </executions>
             </plugin>
-
+	    
+	    <plugin>
+                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <executions>
+                    <execution>
+                        <id>StartDomain1</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
+                            <executable>asadmin</executable>
+                            <arguments>
+                                <argument>start-domain</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Enable Trace requests</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
+                            <executable>asadmin</executable>
+                            <arguments>
+                                <argument>set</argument>
+                                <argument>server-config.network-config.protocols.protocol.http-listener-1.http.trace-enabled=true</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>StopDomain2</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
+                            <executable>asadmin</executable>
+                            <arguments>
+                                <argument>stop-domain</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>

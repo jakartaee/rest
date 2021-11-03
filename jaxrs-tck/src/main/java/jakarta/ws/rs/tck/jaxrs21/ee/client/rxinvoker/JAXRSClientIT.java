@@ -1679,7 +1679,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
-  //@Test
+  @Test
   public void traceTest() throws Fault {
     CompletionStageRxInvoker rx = startRxInvokerForMethod("trace");
     Future<Response> future = rx.trace().toCompletableFuture();
@@ -1710,7 +1710,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
-  //@Test
+  @Test
   public void traceWithStringClassTest() throws Fault {
     CompletionStageRxInvoker rx = startRxInvokerForMethod("trace");
     Future<String> future = rx.trace(String.class).toCompletableFuture();
@@ -1724,7 +1724,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
-  //@Test
+  @Test
   public void traceWithResponseClassTest() throws Fault {
     CompletionStageRxInvoker rx = startRxInvokerForMethod("trace");
     Future<Response> future = rx.trace(Response.class).toCompletableFuture();
@@ -1773,7 +1773,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * of the response returned by the server is not successful and the specified
    * response type is not Response.
    */
-  //@Test
+  @Test
   public void traceWithClassThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     CompletionStageRxInvoker rx = startRxInvokerForMethod("tracenotok");
@@ -1788,7 +1788,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
-  //@Test
+  @Test
   public void traceWithGenericTypeStringTest() throws Fault {
     GenericType<String> generic = createGeneric(String.class);
     CompletionStageRxInvoker rx = startRxInvokerForMethod("trace");
@@ -1803,7 +1803,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
-  //@Test
+  @Test
   public void traceWithGenericTypeResponseTest() throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
     CompletionStageRxInvoker rx = startRxInvokerForMethod("trace");
@@ -1857,7 +1857,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * of the response returned by the server is not successful and the specified
    * response type is not Response.
    */
-  //@Test
+  @Test
   public void traceWithGenericTypeThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     CompletionStageRxInvoker rx = startRxInvokerForMethod("tracenotok");

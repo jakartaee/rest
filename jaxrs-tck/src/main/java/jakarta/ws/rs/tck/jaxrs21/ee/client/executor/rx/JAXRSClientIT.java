@@ -434,7 +434,7 @@ public class JAXRSClientIT
    * 
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
-  //@Test
+  @Test
   public void traceTest() throws Fault {
     super.traceTest();
   }
@@ -446,7 +446,7 @@ public class JAXRSClientIT
    * 
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
-  //@Test
+  @Test
   public void traceWithStringClassTest() throws Fault {
     super.traceWithStringClassTest();
   }
@@ -458,7 +458,7 @@ public class JAXRSClientIT
    * 
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
-  //@Test
+  @Test
   public void traceWithResponseClassTest() throws Fault {
     super.traceWithResponseClassTest();
   }
@@ -470,7 +470,7 @@ public class JAXRSClientIT
    * 
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
-  //@Test
+  @Test
   public void traceWithGenericTypeStringTest() throws Fault {
     super.traceWithGenericTypeStringTest();
   }
@@ -482,7 +482,7 @@ public class JAXRSClientIT
    * 
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
-  //@Test
+  @Test
   public void traceWithGenericTypeResponseTest() throws Fault {
     super.traceWithGenericTypeResponseTest();
   }

@@ -25,7 +25,7 @@ Release: {revdate}
 ....
 == Copyright
 
-Copyright (c) 2018, 2020 Eclipse Foundation.
+Copyright (c) 2018, 2021 Eclipse Foundation.
 https://www.eclipse.org/legal/efsl.php[]
 
 === Eclipse Foundation Specification License

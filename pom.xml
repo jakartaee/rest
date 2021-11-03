@@ -17,7 +17,7 @@
 
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>all</artifactId>
-    <version>3.1-SNAPSHOT</version>
+    <version>3.1.0</version>
     <packaging>pom</packaging>
     <name>Jakarta RESTful WS Project</name>
 
@@ -33,6 +33,5 @@
         <module>jaxrs-spec</module>
         <module>jaxrs-tck</module>
         <module>examples</module>
-        <module>jersey-tck</module>
     </modules>
 </project>

@@ -27,7 +27,7 @@
     <parent>
         <groupId>jakarta.ws.rs</groupId>
         <artifactId>all</artifactId>
-        <version>3.1-SNAPSHOT</version>
+        <version>3.1.0</version>
     </parent>
 
     <properties>
@@ -38,7 +38,7 @@
         <asciidoctorj.pdf.version>1.6.0</asciidoctorj.pdf.version>
         <jruby.version>9.2.19.0</jruby.version>
         <!-- status: DRAFT, BETA, etc., or blank for final -->
-        <status>DRAFT</status>
+        <status></status>
         <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
         <revisiondate>${maven.build.timestamp}</revisiondate>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -81,6 +81,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+                    <sourceDirectory>src/main/asciidoc</sourceDirectory>
                     <logHandler>
                         <failIf>
                             <severity>ERROR</severity>

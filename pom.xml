@@ -28,6 +28,27 @@
         <relativePath/>
     </parent>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>repo.eclipse.org</id>
+            <name>JAX-RS API Repository - Snapshots</name>
+            <url>https://repo.eclipse.org/content/repositories/jax-rs-api-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <profiles>
+        <profile>
+            <id>release-eclipse</id>
+            <distributionManagement>
+                <repository>
+                    <id>repo.eclipse.org</id>
+                    <name>JAX-RS API Repository - Releases</name>
+                    <url>https://repo.eclipse.org/content/repositories/jax-rs-api-releases/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+
     <modules>
         <module>jaxrs-api</module>
         <module>jaxrs-spec</module>

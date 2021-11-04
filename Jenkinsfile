@@ -15,6 +15,7 @@ pipeline {
 			when {
 				anyOf {
 					branch 'master'
+                                        branch 'release-prep2'
 				}
 			}
 			steps {

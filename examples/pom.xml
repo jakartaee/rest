@@ -283,20 +283,6 @@
             <artifactId>microprofile-config-api</artifactId>
             <version>${microprofile.config.version}</version>
         </dependency>
-
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>repo.eclipse.org</id>
-            <name>JAX-RS API Repository - Releases</name>
-            <url>https://repo.eclipse.org/content/repositories/jax-rs-api-releases/</url>
-        </repository>
-
-        <snapshotRepository>
-            <id>repo.eclipse.org</id>
-            <name>JAX-RS API Repository - Snapshots</name>
-            <url>https://repo.eclipse.org/content/repositories/jax-rs-api-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>

@@ -1351,6 +1351,13 @@ public abstract class Response implements AutoCloseable {
          */
         REQUEST_HEADER_FIELDS_TOO_LARGE(431, "Request Header Fields Too Large"),
         /**
+         * 451 Unavailable For Legal Reasons, see <a href="https://tools.ietf.org/html/rfc7725">RFC 7725:
+         * An HTTP Status Code to Report Legal Obstacles</a>.
+         *
+         * @since 3.1
+         */
+        UNAVAILABLE_FOR_LEGAL_REASONS(451, "Unavailable For Legal Reasons"),
+        /**
          * 500 Internal Server Error, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">HTTP/1.1
          * documentation</a>.
          */

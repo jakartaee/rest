@@ -18,7 +18,6 @@ package jakarta.ws.rs.tck.api.rs.ext.interceptor.reader.readerinterceptorcontext
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
@@ -35,10 +34,13 @@ import jakarta.ws.rs.tck.lib.util.TestUtil;
  *                     webServerPort;
  *                     ts_home;
  */
-@Disabled("Tests fail with IllegalStateException: HttpRequest is null")
 public class JAXRSClientIT extends ReaderClient<ContextOperation> {
 
   private static final long serialVersionUID = -6962070973647934636L;
+
+  public JAXRSClientIT() {
+    setup();
+  }
 
   @BeforeEach
   void logStartTest(TestInfo testInfo) {

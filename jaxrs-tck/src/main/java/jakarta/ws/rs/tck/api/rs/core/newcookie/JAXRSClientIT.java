@@ -23,7 +23,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
@@ -860,8 +859,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * value, String path, String domain, int version, String comment, int maxAge,
    * boolean secure) Verify that equals and hashCode methods work.
    */
-  @Test
-  @Disabled("fails: NewCookie.hashcode() throws a NullPointerException because sameSite is null")
+  //@Test //fails: NewCookie.hashcode() throws a NullPointerException because sameSite is null"
   public void equalsTest() throws Fault {
     boolean pass = true;
     StringBuffer sb = new StringBuffer();

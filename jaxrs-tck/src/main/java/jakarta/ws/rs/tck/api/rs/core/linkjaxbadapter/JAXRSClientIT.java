@@ -24,7 +24,6 @@ import java.nio.charset.Charset;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
@@ -77,8 +76,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
      * @test_Strategy:
      */
     @Test
-    @Disabled("Can't find implementation for jakarta.xml.bind-api")
-    public byte[] marshallTest() throws Fault {
+    public void marshallTest() throws Fault {
         Link link = RuntimeDelegate.getInstance().createLinkBuilder().uri(url).title(title).rel(rel).type(media)
                 .param(param_names[0], param_vals[0]).param(param_names[1], param_vals[1]).build();
         Model model = new Model(link);
@@ -113,7 +111,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
         } catch (JAXBException e) {
             throw new Fault(e);
         }
-        return array;
+        //return array;
     }
 
     /*
@@ -124,20 +122,35 @@ public class JAXRSClientIT extends JAXRSCommonClient {
      * @test_Strategy: Test whether a class with Link can be unmarshalled fine
      */
     @Test
-    @Disabled("Can't find implementation for jakarta.xml.bind-api")
     public void unmarshallTest() throws Fault {
+
+        Link link = RuntimeDelegate.getInstance().createLinkBuilder().uri(url).title(title).rel(rel).type(media)
+                .param(param_names[0], param_vals[0]).param(param_names[1], param_vals[1]).build();
+        Model model = new Model(link);
+
+        ByteArrayOutputStream ostream = new ByteArrayOutputStream(1000);
         JAXBContext jc = null;
+        Marshaller marshaller = null;
+        byte[] array = null;
+
+        
         Unmarshaller unmarshaller = null;
         ByteArrayInputStream istream = null;
         Model unmarshalledModel = null;
         try {
-            byte[] array = marshallTest();
+
+            jc = JAXBContext.newInstance(Model.class);
+            marshaller = jc.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.marshal(model, ostream);
+            array = ostream.toByteArray();
+
             istream = new ByteArrayInputStream(array);
 
             jc = JAXBContext.newInstance(Model.class);
             unmarshaller = jc.createUnmarshaller();
             unmarshalledModel = (Model) unmarshaller.unmarshal(istream);
-            Link link = unmarshalledModel.getLink();
+            link = unmarshalledModel.getLink();
 
             assertContains(link.toString(), url, "unmarshalled link", link, "does not contain expected url", url);
             assertContains(link.getRel(), rel, "unmarshalled link", link, "does not contain expected relation", rel);

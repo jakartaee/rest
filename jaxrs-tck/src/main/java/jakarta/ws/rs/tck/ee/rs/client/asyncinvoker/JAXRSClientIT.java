@@ -86,7 +86,9 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_client_asyncinvoker_web.war");
-    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.addClasses(TSAppConfig.class, Resource.class,
+      jakarta.ws.rs.tck.common.provider.StringBean.class,
+      jakarta.ws.rs.tck.common.impl.TRACE.class);
     archive.setWebXML(new StringAsset(webXml));
     return archive;
 

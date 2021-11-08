@@ -1150,181 +1150,184 @@ public abstract class Response implements AutoCloseable {
     }
 
     /**
-     * Commonly used status codes defined by HTTP, see
-     * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10">HTTP/1.1 documentation</a> for the complete
+     * Commonly used status codes defined by HTTP, see the
+     * <a href="https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml">HTTP Status Code Registry</a> for the complete
      * list. Additional status codes can be added by applications by creating an implementation of {@link StatusType}.
      */
     public enum Status implements StatusType {
 
         /**
-         * 200 OK, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">HTTP/1.1 documentation</a>.
+         * 200 OK, see <a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         OK(200, "OK"),
         /**
-         * 201 Created, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">HTTP/1.1
-         * documentation</a>.
+         * 201 Created, see <a href="https://tools.ietf.org/html/rfc7231#section-6.3.2">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         CREATED(201, "Created"),
         /**
-         * 202 Accepted, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.3">HTTP/1.1
-         * documentation</a>.
+         * 202 Accepted, see <a href="https://tools.ietf.org/html/rfc7231#section-6.3.3">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         ACCEPTED(202, "Accepted"),
         /**
-         * 204 No Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">HTTP/1.1
-         * documentation</a>.
+         * 204 No Content, see <a href="https://tools.ietf.org/html/rfc7231#section-6.3.5">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         NO_CONTENT(204, "No Content"),
         /**
-         * 205 Reset Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.6">HTTP/1.1
-         * documentation</a>.
+         * 205 Reset Content, see <a href="https://tools.ietf.org/html/rfc7231#section-6.3.6">HTTP/1.1:
+         * Semantics and Content</a>.
          *
          * @since 2.0
          */
         RESET_CONTENT(205, "Reset Content"),
         /**
-         * 206 Reset Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.7">HTTP/1.1
-         * documentation</a>.
+         * 206 Partial Content, see <a href="https://tools.ietf.org/html/rfc7233#section-4.1">HTTP/1.1:
+         * Range Requests</a>.
          *
          * @since 2.0
          */
         PARTIAL_CONTENT(206, "Partial Content"),
         /**
-         * 301 Moved Permanently, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.2">HTTP/1.1
-         * documentation</a>.
+         * 301 Moved Permanently, see <a href="https://tools.ietf.org/html/rfc7231#section-6.4.2">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         MOVED_PERMANENTLY(301, "Moved Permanently"),
         /**
-         * 302 Found, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.3">HTTP/1.1 documentation</a>.
+         * 302 Found, see <a href="https://tools.ietf.org/html/rfc7231#section-6.4.3">HTTP/1.1: Semantics
+         * and Content</a>.
          *
          * @since 2.0
          */
         FOUND(302, "Found"),
         /**
-         * 303 See Other, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.4">HTTP/1.1
-         * documentation</a>.
+         * 303 See Other, see <a href="https://tools.ietf.org/html/rfc7231#section-6.4.4">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         SEE_OTHER(303, "See Other"),
         /**
-         * 304 Not Modified, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.5">HTTP/1.1
-         * documentation</a>.
+         * 304 Not Modified, see <a href="https://tools.ietf.org/html/rfc7232#section-4.1">HTTP/1.1:
+         * Conditional Requests</a>.
          */
         NOT_MODIFIED(304, "Not Modified"),
         /**
-         * 305 Use Proxy, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.6">HTTP/1.1
-         * documentation</a>.
+         * 305 Use Proxy, see <a href="https://tools.ietf.org/html/rfc7231#section-6.4.5">HTTP/1.1:
+         * Semantics and Content</a>.
          *
          * @since 2.0
          */
         USE_PROXY(305, "Use Proxy"),
         /**
-         * 307 Temporary Redirect, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.8">HTTP/1.1
-         * documentation</a>.
+         * 307 Temporary Redirect, see <a href="https://tools.ietf.org/html/rfc7231#section-6.4.7">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         TEMPORARY_REDIRECT(307, "Temporary Redirect"),
         /**
-         * 400 Bad Request, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">HTTP/1.1
-         * documentation</a>.
+         * 400 Bad Request, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         BAD_REQUEST(400, "Bad Request"),
         /**
-         * 401 Unauthorized, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">HTTP/1.1
-         * documentation</a>.
+         * 401 Unauthorized, see <a href="https://tools.ietf.org/html/rfc7235#section-3.1">HTTP/1.1:
+         * Authentication</a>.
          */
         UNAUTHORIZED(401, "Unauthorized"),
         /**
-         * 402 Payment Required, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.3">HTTP/1.1
-         * documentation</a>.
+         * 402 Payment Required, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.2">HTTP/1.1:
+         * Semantics and Content</a>.
          *
          * @since 2.0
          */
         PAYMENT_REQUIRED(402, "Payment Required"),
         /**
-         * 403 Forbidden, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">HTTP/1.1
-         * documentation</a>.
+         * 403 Forbidden, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         FORBIDDEN(403, "Forbidden"),
         /**
-         * 404 Not Found, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">HTTP/1.1
-         * documentation</a>.
+         * 404 Not Found, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         NOT_FOUND(404, "Not Found"),
         /**
-         * 405 Method Not Allowed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.6">HTTP/1.1
-         * documentation</a>.
+         * 405 Method Not Allowed, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.5">HTTP/1.1:
+         * Semantics and Content</a>.
          *
          * @since 2.0
          */
         METHOD_NOT_ALLOWED(405, "Method Not Allowed"),
         /**
-         * 406 Not Acceptable, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.7">HTTP/1.1
-         * documentation</a>.
+         * 406 Not Acceptable, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.6">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         NOT_ACCEPTABLE(406, "Not Acceptable"),
         /**
-         * 407 Proxy Authentication Required, see
-         * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.8">HTTP/1.1 documentation</a>.
+         * 407 Proxy Authentication Required, see <a href="https://tools.ietf.org/html/rfc7235#section-3.2">
+         * HTTP/1.1: Authentication</a>.
          *
          * @since 2.0
          */
         PROXY_AUTHENTICATION_REQUIRED(407, "Proxy Authentication Required"),
         /**
-         * 408 Request Timeout, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.9">HTTP/1.1
-         * documentation</a>.
+         * 408 Request Timeout, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.7">HTTP/1.1:
+         * Semantics and Content</a>.
          *
          * @since 2.0
          */
         REQUEST_TIMEOUT(408, "Request Timeout"),
         /**
-         * 409 Conflict, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.10">HTTP/1.1
-         * documentation</a>.
+         * 409 Conflict, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.8">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         CONFLICT(409, "Conflict"),
         /**
-         * 410 Gone, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.11">HTTP/1.1 documentation</a>.
+         * 410 Gone, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.9">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         GONE(410, "Gone"),
         /**
-         * 411 Length Required, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.12">HTTP/1.1
-         * documentation</a>.
+         * 411 Length Required, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.10">HTTP/1.1:
+         * Semantics and Content</a>.
          *
          * @since 2.0
          */
         LENGTH_REQUIRED(411, "Length Required"),
         /**
-         * 412 Precondition Failed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.13">HTTP/1.1
-         * documentation</a>.
+         * 412 Precondition Failed, see <a href="https://tools.ietf.org/html/rfc7232#section-4.2">HTTP/1.1
+         * Conditional Requests documentation</a>.
          */
         PRECONDITION_FAILED(412, "Precondition Failed"),
         /**
-         * 413 Request Entity Too Large, see
-         * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.14">HTTP/1.1 documentation</a>.
+         * 413 Request Entity / Payload Too Large, see  <a href="https://tools.ietf.org/html/rfc7231#section-6.5.11">
+         * HTTP/1.1: Semantics and Content</a>.
          *
          * @since 2.0
          */
         REQUEST_ENTITY_TOO_LARGE(413, "Request Entity Too Large"),
         /**
-         * 414 Request-URI Too Long, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.15">HTTP/1.1
-         * documentation</a>.
+         * 414 Request-URI Too Long, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.12">HTTP/1.1:
+         * Semantics and Content</a>.
          *
          * @since 2.0
          */
         REQUEST_URI_TOO_LONG(414, "Request-URI Too Long"),
         /**
-         * 415 Unsupported Media Type, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.16">HTTP/1.1
-         * documentation</a>.
+         * 415 Unsupported Media Type, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.13">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         UNSUPPORTED_MEDIA_TYPE(415, "Unsupported Media Type"),
         /**
-         * 416 Requested Range Not Satisfiable, see
-         * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.17">HTTP/1.1 documentation</a>.
+         * 416 Requested Range Not Satisfiable, see <a href="https://tools.ietf.org/html/rfc7233#section-4.4">HTTP/1.1:
+         * Semantics and Content</a>.
          *
          * @since 2.0
          */
         REQUESTED_RANGE_NOT_SATISFIABLE(416, "Requested Range Not Satisfiable"),
         /**
-         * 417 Expectation Failed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.18">HTTP/1.1
-         * documentation</a>.
+         * 417 Expectation Failed, see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.14">HTTP/1.1:
+         * Range Requests</a>.
          *
          * @since 2.0
          */
@@ -1351,39 +1354,39 @@ public abstract class Response implements AutoCloseable {
          */
         REQUEST_HEADER_FIELDS_TOO_LARGE(431, "Request Header Fields Too Large"),
         /**
-         * 500 Internal Server Error, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">HTTP/1.1
-         * documentation</a>.
+         * 500 Internal Server Error, see <a href="https://tools.ietf.org/html/rfc7231#section-6.6.1">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
         /**
-         * 501 Not Implemented, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.2">HTTP/1.1
-         * documentation</a>.
+         * 501 Not Implemented, see <a href="https://tools.ietf.org/html/rfc7231#section-6.6.2">HTTP/1.1:
+         * Semantics and Content</a>.
          *
          * @since 2.0
          */
         NOT_IMPLEMENTED(501, "Not Implemented"),
         /**
-         * 502 Bad Gateway, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.3">HTTP/1.1
-         * documentation</a>.
+         * 502 Bad Gateway, see <a href="https://tools.ietf.org/html/rfc7231#section-6.6.3">HTTP/1.1:
+         * Semantics and Content</a>.
          *
          * @since 2.0
          */
         BAD_GATEWAY(502, "Bad Gateway"),
         /**
-         * 503 Service Unavailable, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">HTTP/1.1
-         * documentation</a>.
+         * 503 Service Unavailable, see <a href="https://tools.ietf.org/html/rfc7231#section-6.6.4">HTTP/1.1:
+         * Semantics and Content</a>.
          */
         SERVICE_UNAVAILABLE(503, "Service Unavailable"),
         /**
-         * 504 Gateway Timeout, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.5">HTTP/1.1
-         * documentation</a>.
+         * 504 Gateway Timeout, see <a href="https://tools.ietf.org/html/rfc7231#section-6.6.5">HTTP/1.1:
+         * Semantics and Content</a>.
          *
          * @since 2.0
          */
         GATEWAY_TIMEOUT(504, "Gateway Timeout"),
         /**
-         * 505 HTTP Version Not Supported, see
-         * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.6">HTTP/1.1 documentation</a>.
+         * 505 HTTP Version Not Supported, see <a href="https://tools.ietf.org/html/rfc7231#section-6.6.6">
+         * HTTP/1.1: Semantics and Content</a>.
          *
          * @since 2.0
          */

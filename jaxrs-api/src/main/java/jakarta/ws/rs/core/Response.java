@@ -1190,6 +1190,13 @@ public abstract class Response implements AutoCloseable {
          */
         PARTIAL_CONTENT(206, "Partial Content"),
         /**
+         * 300 Multiple Choices, see <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-6.4.1">HTTP/1.1:
+         * Semantics and Content</a>.
+         *
+         * @since 3.1
+         */
+        MULTIPLE_CHOICES(300, "Multiple Choices"),
+        /**
          * 301 Moved Permanently, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.2">HTTP/1.1
          * documentation</a>.
          */

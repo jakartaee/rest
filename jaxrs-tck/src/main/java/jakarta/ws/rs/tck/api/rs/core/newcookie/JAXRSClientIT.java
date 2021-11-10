@@ -859,7 +859,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * value, String path, String domain, int version, String comment, int maxAge,
    * boolean secure) Verify that equals and hashCode methods work.
    */
-  //@Test //fails: NewCookie.hashcode() throws a NullPointerException because sameSite is null"
+  @Test
   public void equalsTest() throws Fault {
     boolean pass = true;
     StringBuffer sb = new StringBuffer();

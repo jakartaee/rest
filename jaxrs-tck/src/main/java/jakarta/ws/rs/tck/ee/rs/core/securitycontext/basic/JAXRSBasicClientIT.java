@@ -74,7 +74,11 @@ public class JAXRSBasicClientIT
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_core_securitycontext_basic_web.war");
-    archive.addClasses(jakarta.ws.rs.tck.ee.rs.core.securitycontext.TSAppConfig.class, jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.class);
+    archive.addClasses(jakarta.ws.rs.tck.ee.rs.core.securitycontext.TSAppConfig.class, 
+      jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.class,
+      jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Security.class,
+      jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Scheme.class,
+      jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Role.class);
     archive.setWebXML(new StringAsset(webXml));
     archive.addAsResource("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/jaxrs_ee_core_securitycontext_basic_web.ear.sun-application.xml");
     archive.addAsResource("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/jaxrs_ee_core_securitycontext_basic_web.war.sun-web.xml");
@@ -104,7 +108,7 @@ public class JAXRSBasicClientIT
    * 
    * @test_Strategy: Send basic authorization, check security context
    */
-  //@Test
+  @Test
   public void basicAuthorizationAdminTest() throws Fault {
     setProperty(Property.STATUS_CODE, getStatusCode(Response.Status.OK));
     setProperty(Property.BASIC_AUTH_USER, user);
@@ -158,7 +162,7 @@ public class JAXRSBasicClientIT
    * @test_Strategy: Send basic authorization with made up Realm, check security
    * context
    */
-  //@Test
+  @Test
   public void basicAuthorizationStandardUserTest() throws Fault {
     setProperty(Property.STATUS_CODE, getStatusCode(Response.Status.OK));
     setProperty(Property.BASIC_AUTH_USER, authuser);

@@ -138,7 +138,7 @@ public class JAXRSClientIT extends SSEJAXRSClient {
    * 
    * @test_Strategy:
    */
-  //@Test
+  @Test
   public void sseBroadcastTest() throws Fault {
     int MSG_MAX = 7;
     int wait = 25;

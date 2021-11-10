@@ -21,8 +21,6 @@ import java.io.InputStreamReader;
 
 import jakarta.ws.rs.tck.common.util.JaxrsUtil;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 
@@ -31,7 +29,7 @@ public class Resource {
 
   @POST
   @Path("string")
-  public String post(@NotNull @Size(min = 2) String entity) {
+  public String post(String entity) {
     return entity;
   }
 

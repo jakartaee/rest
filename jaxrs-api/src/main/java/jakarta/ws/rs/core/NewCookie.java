@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -429,7 +429,7 @@ public class NewCookie extends Cookie {
         hash = 59 + hash + (this.expiry != null ? this.expiry.hashCode() : 0);
         hash = 59 * hash + (this.secure ? 1 : 0);
         hash = 59 * hash + (this.httpOnly ? 1 : 0);
-        hash = 59 * hash + this.sameSite.ordinal();
+        hash = 59 * hash + (this.sameSite != null ? this.sameSite.ordinal() : 0);
         return hash;
     }
 

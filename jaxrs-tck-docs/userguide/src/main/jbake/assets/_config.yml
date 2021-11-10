@@ -1,0 +1,15 @@
+remote_theme: jakartaee/jekyll-theme-jakarta-ee
+
+title: [tck_jaxrs_v3_0]
+description: [Oracle Technology Compatibility Kit User's Guide for Jakarta RESTful Web Services 3.0 for
+                Technology Licensees, Release 3.0]
+
+# sidebar links url
+links:
+  source: https://github.com/eclipse-ee4j/jakartaee-tck
+  download: https://jakarta.ee/specifications/restful-ws/3.0/
+  #mailinglist: https://javaee.groups.io/g/tck_jaxrs_v2_1
+  #javadocs:
+  docs: https://jakarta.ee/specifications/restful-ws/3.0/apidocs/
+  #faq:
+

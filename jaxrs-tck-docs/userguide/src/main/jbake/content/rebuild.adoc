@@ -1,0 +1,20 @@
+type=page
+status=published
+title=Appendix B: Rebuild Rules
+prev=faq.html
+~~~~~~
+include::attributes.conf[]
+
+Appendix B: Rebuild Rules
+=========================
+
+
+ifdef::rebuild[]
+include::rebuild.inc[]
+endif::rebuild[]
+ifndef::rebuild[]
+
+<<<
+Appendix B is not used for the {TechnologyShortName} TCK.
+
+endif::rebuild[]

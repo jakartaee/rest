@@ -1,0 +1,86 @@
+type=page
+status=published
+title=Installation
+next=config.html
+prev=rules.html
+~~~~~~
+include::attributes.conf[]
+Installation
+============
+
+[[GBFTP]]
+
+
+[[installation]]
+3 Installation
+--------------
+
+This chapter explains how to install the {TechnologyFullName} TCK software.
+
+After installing the software according to the instructions in this
+chapter, proceed to link:config.html#GBFVV[Chapter 4, "Setup and
+Configuration,"] for instructions on configuring your test environment.
+
+[[GBFUD]][[obtaining-the-reference-implementation]]
+
+3.1 Obtaining a Compatible Implementation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Each compatible implementation (CI) will provide instructions for obtaining
+their implementation.
+{TechnologyRI} is a compatible implementation which may be obtained
+from {TechnologyRIURL}
+
+[[GBFTS]][[installing-the-software]]
+
+3.2 Installing the Software
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Before you can run the {TechnologyShortName} TCK tests, you must
+install and set up the following software components:
+
+include::req-software.inc[]
+* Java SE {SEversion}
+* Apache Ant {AntVersion}
+* A CI for {TechnologyShortName} {TechnologyVersion}, one example is {TechnologyRI}
+* {TechnologyShortName} TCK version {TechnologyVersion}, which includes:
+include::tck-packages.inc[]
+* The {TechnologyShortName} {TechnologyVersion} Vendor Implementation (VI)
+
+Follow these steps:
+
+.  Install the Java SE {SEversion} software, if it is not already installed. +
+Download and install the Java SE {SEversion} software from
+http://www.oracle.com/technetwork/java/javase/downloads/index.html.
+Refer to the installation instructions that accompany the software for
+additional information.
+.  Install the Apache Ant {AntVersion} software, if it is not already installed. +
+Download and install Apache Ant {AntVersion} software from Apache Ant
+Project. For complete information about Ant, refer to the extensive documentation 
+on the Apache Ant Project site. The Apache Ant Manual is available at
+`http://ant.apache.org/manual/index.html`.
+Apache Ant is protected under the Apache Software, License 2.0, which is
+is available on the Apache Ant Project license page at 
+`http://ant.apache.org/license.html`.
+.  Install the {TechnologyShortName} TCK {TechnologyVersion} software.
+  a.  Copy or download the {TechnologyShortName} TCK software to your
+      local system. +
+      You can obtain the {TechnologyShortName} TCK software from the
+      Jakarta EE site {SpecificationURL}.
+  b.  Use the `unzip` command to extract the bundle in the directory of
+      your choice: +
+      +unzip {TCKPackageName}+ +
+      This creates the TCK directory. The TCK is the test suite home,
+      `<TS_HOME>`.
+include::install-server.inc[]
+.  Install a {TechnologyShortName} {TechnologyVersion} Compatible
+Implementation. +
+A Compatible Implementation is used to validate your initial
+configuration and setup of the {TechnologyShortName} TCK
+{TechnologyVersion} tests, which are explained further in
+link:config.html#GBFVV[Chapter 4, "Setup and Configuration."] +
+The Compatible Implementations for {TechnologyShortName} are listed on
+the Jakarta EE Specifications web site: {SpecificationURL}.
+include::install-server-vi.inc[]
+.  Install the {TechnologyShortName} VI to be tested. +
+Follow the installation instructions for the particular VI under test.

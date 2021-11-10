@@ -1,0 +1,62 @@
+type=page
+status=published
+title=Appendix A: Frequently Asked Questions
+next=rebuild.html
+prev=debug.html
+~~~~~~
+include::attributes.conf[]
+Appendix A: Frequently Asked Questions
+======================================
+
+[[GBFYD]]
+
+
+[[a-frequently-asked-questions]]
+A Frequently Asked Questions
+----------------------------
+
+This appendix contains the following questions.
+
+* link:#GBFYQ[Where do I start to debug a test failure?]
+* link:#GBFYR[How do I restart a crashed test run?]
+* link:#GBFWU[What would cause tests be added to the exclude list?]
+
+[[GBFYQ]][[a.1-where-do-i-start-to-debug-a-test-failure]]
+
+A.1 Where do I start to debug a test failure?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+From the JavaTest GUI, you can view recently run tests using the Test
+Results Summary, by selecting the red Failed tab or the blue Error tab.
+See link:debug.html#GBFUV[Chapter 6, "Debugging Test Problems,"] for more
+information.
+
+[[GBFYR]][[a.2-how-do-i-restart-a-crashed-test-run]]
+
+A.2 How do I restart a crashed test run?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to restart a test run, you can figure out which test crashed
+the test suite by looking at the `harness.trace` file. The
+`harness.trace` file is in the report directory that you supplied to the
+JavaTest GUI or parameter file. Examine this trace file, then change the
+JavaTest GUI initial files to that location or to a directory location
+below that file, and restart. This will overwrite only `.jtr` files that
+you rerun. As long as you do not change the value of the GUI work
+directory, you can continue testing and then later compile a complete
+report to include results from all such partial runs.
+
+[[GBFWU]][[a.3-what-would-cause-tests-be-added-to-the-exclude-list]]
+
+A.3 What would cause tests be added to the exclude list?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The JavaTest exclude file (+{jtxFileName}+) contains all tests that are not
+required to be run. The following is a list of reasons for a test to be
+included in the Exclude List:
+
+* An error in a Compatible Implementation that does not allow the test to
+execute properly has been discovered.
+* An error in the specification that was used as the basis of the test
+has been discovered.
+* An error in the test has been discovered.

@@ -1,0 +1,147 @@
+type=page
+status=published
+title=Preface
+next=intro.html
+prev=title.html
+~~~~~~
+include::attributes.conf[]
+Preface
+=======
+
+[[TCJRS00001]][[GBFTI]]
+
+
+[[preface]]
+Preface
+-------
+
+This guide describes how to install, configure, and run the Technology
+Compatibility Kit (TCK) that is used to test the {TechnologyFullName}
+({TechnologyShortName} {TechnologyVersion}) technology.
+
+The {TechnologyShortName} TCK is a portable, configurable automated
+test suite for verifying the compatibility of a vendor's
+implementation of the {TechnologyShortName} {TechnologyVersion}
+Specification (hereafter referred to as the vendor implementation or VI).
+The {TechnologyShortName} TCK uses the JavaTest harness version
+{JavaTestVersion} to run the test suite
+
+
+[NOTE]
+=======================================================================
+
+Note All references to specific Web URLs are given for the sake of your
+convenience in locating the resources quickly. These references are
+always subject to changes that are in many cases beyond the control of
+the authors of this guide.
+
+=======================================================================
+
+Jakarta EE is a community sponsored and community run program. 
+Organizations contribute, along side individual contributors who use, evolve 
+and assist others.
+Commercial support is not available through the Eclipse Foundation resources.
+Please refer to the Eclipse EE4J project site
+(https://projects.eclipse.org/projects/ee4j).
+There, you will find additional details as well as a list of all the associated sub-projects 
+(Implementations and APIs), that make up Jakarta EE and define these specifications. 
+If you have questions about this Specification you may
+send inquiries to {SpecificationInquiryList}. 
+If you have questions about this TCK, you may send inquiries to 
+{TCKInquiryList}.
+
+[[TCJRS00034]][[GBFUS]]
+
+
+[[who-should-use-this-book]]
+Who Should Use This Book
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This guide is for vendors that implement the {TechnologyShortName}
+{TechnologyVersion} technology to assist them in running the test suite
+that verifies compatibility of their implementation of the
+{TechnologyShortName} {TechnologyVersion} Specification.
+
+
+[[TCJRS00035]][[GBFPO]]
+
+
+[[before-you-read-this-book]]
+Before You Read This Book
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You should be familiar with the {TechnologyShortName}
+{TechnologyVersion}, version {TechnologyVersion} Specification, 
+which can be found at {SpecificationURL}.
+
+Before running the tests in the {TechnologyShortName} TCK, you should
+familiarize yourself with the JavaTest documentation which can be
+accessed at the
+link:https://wiki.openjdk.java.net/display/CodeTools/JT+Harness[JT Harness web site].
+
+[[TCJRS00036]][[GBFWF]]
+
+
+[[typographic-conventions]]
+Typographic Conventions
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The following table describes the typographic conventions that are used
+in this book.
+
+[width="100%",cols="15%,40%,45%",options="header",]
+|=======================================================================
+|Convention |Meaning |Example
+|*Boldface* |Boldface type indicates graphical user interface elements
+associated with an action, terms defined in text, or what you type,
+contrasted with onscreen computer output. a|
+From the *File* menu, select *Open Project*.
+
+A *cache* is a copy that is stored locally.
+
+`machine_name% *su*` +
+`Password:`
+
+|`Monospace` |Monospace type indicates the names of files and
+directories, commands within a paragraph, URLs, code in examples, text
+that appears on the screen, or text that you enter. a|
+Edit your `.login` file.
+
+Use `ls` `-a` to list all files.
+
+`machine_name% you have mail.`
+
+|_Italic_ |Italic type indicates book titles, emphasis, or placeholder
+variables for which you supply particular values. a|
+Read Chapter 6 in the _User's Guide_.
+
+Do _not_ save the file.
+
+The command to remove a file is `rm` _filename_.
+
+|=======================================================================
+
+
+[[TCJRS00037]][[FWBSD]]
+
+
+[[shell-prompts-in-command-examples]]
+Shell Prompts in Command Examples
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following table shows the default UNIX system prompt and superuser
+prompt for the C shell, Bourne shell, and Korn shell.
+
+[width="100%",cols="50%,50%",options="header",]
+|=====================================================
+|Shell |Prompt
+|C shell |`machine_name%`
+|C shell for superuser |`machine_name#`
+|Bourne shell and Korn shell |`$` +
+|Bourne shell and Korn shell for superuser |`#` +
+|Bash shell |`shell_name-shell_version$`
+|Bash shell for superuser |`shell_name-shell_version#`
+|=====================================================
+
+
+

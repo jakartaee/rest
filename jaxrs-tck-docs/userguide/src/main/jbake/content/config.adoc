@@ -1,0 +1,353 @@
+type=page
+status=published
+title=Setup and Configuration
+next=using.html
+prev=install.html
+~~~~~~
+include::attributes.conf[]
+Setup and Configuration
+=======================
+
+[[GBFVV]]
+
+
+
+[[setup-and-configuration]]
+4 Setup and Configuration
+-------------------------
+
+
+[NOTE]
+====
+The Jakarta EE Specification process provides for any number of compatible implementations.
+As additional implementations become available, refer to project or product documentation from
+those vendors for specific TCK setup and operational guidance.
+
+====
+
+This chapter describes how to set up the {TechnologyShortName} TCK and
+JavaTest harness software. Before proceeding with the instructions in
+this chapter, be sure to install all required software, as described in
+link:install.html#GBFTP[Chapter 3, "Installation."]
+
+After completing the instructions in this chapter, proceed to
+link:using.html#GBFWO[Chapter 5, "Executing Tests,"] for instructions on
+running the {TechnologyShortName} TCK.
+
+include::config.inc[]
+
+[[GHGDH]][[custom-configuration-handlers]]
+
+4.4 Custom Configuration Handlers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Configuration handlers are used to configure and unconfigure a
+{TechnologyShortName} {TechnologyVersion} implementation during the
+certification process.  These are similar to deployment handlers but
+used for configuration.  A configuration handler is an Ant build file
+that contains at least the required targets listed below:
+
+  * `config.vi` - to configure the vendor implementation
+  * `clean.vi` - to unconfigure the vendor implementation
+
+These targets are called from the `<TS_HOME>/bin/build.xml` file and
+call down into the implementation-specific configuration handlers.
+
+To provide your own configuration handler, create a config.vi.xml file
+with the necessary configuration steps for your implementation and place
+the file under the `<TS_HOME>/bin/xml/impl/<your_impl>` directory.
+
+For more information, you may wish to view `<TS_HOME>/bin/xml/impl/glassfish/config.vi.xml`,
+the configuration file for Jakarta EE {JakartaEEVersion} Compatible Implementation, Eclipse GlassFish.
+
+[[GBFWG]][[custom-deployment-handlers]]
+
+4.5 Custom Deployment Handlers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Deployment handlers are used to deploy and undeploy the WAR files that
+contain the tests to be run during the certification process. A deployment
+handler is an Ant build file that contains at least the required targets
+listed in the table below.
+
+The {TechnologyShortName} TCK provides these deployment handlers:
+
+* `<TS_HOME>/bin/xml/impl/none/deploy.xml`
+* `<TS_HOME>/bin/xml/impl/glassfish/deploy.xml`
+* `<TS_HOME>/bin/xml/impl/tomcat/deploy.xml`
+
+The `deploy.xml` files in each of these directories are used to control
+deployment to a specific container (no deployment, deployment to
+the Eclipse GlassFish Web container, deployment to the Tomcat Web container)
+denoted by the name of the directory in which each `deploy.xml` file
+resides. The primary `build.xml` file in the `<TS_HOME>/bin` directory
+has a target to invoke any of the required targets (`-deploy`, `-undeploy`,
+`-deploy.all`, `-undeploy.all`).
+
+[[GBFVA]][[create-custom-deployment-handler]]
+
+4.5.1 To Create a Custom Deployment Handler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To deploy tests to another {TechnologyShortName} implementation, you
+must create a custom handler.
+
+1. Create a new directory in the `<TS_HOME>/bin/xml/impl` directory tree.
+  For example, create the `<TS_HOME>/bin/xml/impl/my_deployment_handler` directory.
+  Replace my_deployment_handler with the value of the impl.vi
+  property that you set in Step 5 of the configuration procedure
+  described in Section 4.2, "Configuring Your Environment to Repackage
+  and Run the TCK Against the Vendor Implementation".
+
+2.  Copy the deploy.xml file from the `<TS_HOME>/bin/xml/impl/none`
+  directory to the directory that you created.
+
+3.  Modify the required targets in the `deploy.xml` file.  This is what
+    the `deploy.xml` file for the "none" deployment handler looks like.
+
++
+[source,oac_no_warn]
+----
+<project name="No-op Deployment" default="deploy">
+    <!-- No-op deployment target -->
+    <target name="-deploy">
+        <echo message="No deploy target implemented for this deliverable"/>
+    </target>
+    <target name="-undeploy">
+        <echo message="No undeploy target implemented for this deliverable"/>
+    </target>
+    <target name="-deploy.all">
+        <echo message="No deploy target implemented for this deliverable"/>
+    </target>
+    <target name="-undeploy.all">
+        <echo message="No undeploy target implemented for this deliverable"/>
+    </target>
+</project>
+----
++
+Although this example just echoes messages, it does include the four
+required Ant targets (`-deploy`, `-undeploy`, `-deploy.all`, `-undeploy.all`)
+that your custom `deploy.xml` file must contain. With this as your
+starting point, look at the required targets in the `deploy.xml` files
+in the Tomcat and Eclipse Glassfish directories for guidance as you create
+the same targets for the Web container in which you will run your
+implementation of {TechnologyShortName}.
+
+The following Ant targets can be called from anywhere under the
+`<TS_HOME>/src` directory:
+
+* `deploy`
+* `undeploy`
+* `deploy.all`
+* `undeploy.all`
+
+The `deploy.all` and `undeploy.all` targets can also be called from the
+`<TS_HOME>/bin` directory.
+
+[NOTE]
+=======================================================================
+The targets in the `deploy.xml` file are never called directly.
+They are called indirectly by the targets listed above.
+=======================================================================
+
+[[GBFUY]][[using-the-javatest-harness-software]]
+
+4.6 Using the JavaTest Harness Software
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are two general ways to run the {TechnologyShortName} TCK test
+suite using the JavaTest harness software:
+
+* Through the JavaTest GUI; if using this method, please continue on to
+link:#GBFWG[Section 4.7, "Using the JavaTest Harness Configuration
+GUI."]
+* In JavaTest batch mode, from the command line in your shell
+environment; if using this method, please proceed directly to
+link:using.html#GBFWO[Chapter 5, "Executing Tests."]
+
+[[GBFWG]][[using-the-javatest-harness-configuration-gui]]
+
+4.7 Using the JavaTest Harness Configuration GUI
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use the JavaTest harness GUI to modify general test settings and
+to quickly get started with the default {TechnologyShortName} TCK test
+environment.  This section covers the following topics:
+
+* link:#GBFVA[Configuration GUI Overview]
+* link:#GBFVD[Starting the Configuration GUI]
+* link:#GBFVX[To Configure the JavaTest Harness to Run the
+{TechnologyShortName} TCK Tests]
+* link:#GBFUU[Modifying the Default Test Configuration]
+
+
+[NOTE]
+=======================================================================
+
+It is only necessary to proceed with this section if you want to run the
+JavaTest harness in GUI mode. If you plan to run the JavaTest harness in
+command-line mode, skip the remainder of this chapter, and continue with
+link:using.html#GBFWO[Chapter 5, "Executing Tests."]
+
+=======================================================================
+
+
+[[GBFVA]][[configuration-gui-overview]]
+
+4.7.1 Configuration GUI Overview
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order for the JavaTest harness to execute the test suite, it requires
+information about how your computing environment is configured. The
+JavaTest harness requires two types of configuration information:
+
+* Test environment: This is data used by the tests. For example, the
+path to the Java runtime, how to start the product being tested, network
+resources, and other information required by the tests in order to run.
+This information does not change frequently and usually stays constant
+from test run to test run.
+* Test parameters: This is information used by the JavaTest harness to
+run the tests. Test parameters are values used by the JavaTest harness
+that determine which tests in the test suite are run, how the tests
+should be run, and where the test reports are stored. This information
+often changes from test run to test run.
+
+The first time you run the JavaTest harness software, you are asked to
+specify the test suite and work directory that you want to use. (These
+parameters can be changed later from within the JavaTest harness GUI.)
+
+Once the JavaTest harness GUI is displayed, whenever you choose Start,
+then Run Tests to begin a test run, the JavaTest harness determines
+whether all of the required configuration information has been supplied:
+
+* If the test environment and parameters have been completely
+configured, the test run starts immediately.
+* If any required configuration information is missing, the
+configuration editor displays a series of questions asking you the
+necessary information. This is called the configuration interview. When
+you have entered the configuration data, you are asked if you wish to
+proceed with running the test.
+
+[[GBFVD]][[starting-the-configuration-gui]]
+
+4.7.2 Starting the Configuration GUI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Before you start the JavaTest harness software, you must have a valid
+test suite and Java SE {SEversion} installed on your system.
+
+The {TechnologyShortName} TCK includes an Ant script that is used to execute the
+JavaTest harness from the `<TS_HOME>` directory. Using this Ant script
+to start the JavaTest harness is part of the procedure described in
+link:#GBFVX[Section 4.7.3, "To Configure the JavaTest Harness to Run the
+TCK Tests."]
+
+When you execute the JavaTest harness software for the first time, the
+JavaTest harness displays a Welcome dialog box that guides you through
+the initial startup configuration.
+
+* If it is able to open a test suite, the JavaTest harness displays a
+Welcome to JavaTest dialog box that guides you through the process of
+either opening an existing work directory or creating a new work
+directory as described in the JavaTest online help.
+* If the JavaTest harness is unable to open a test suite, it displays a
+Welcome to JavaTest dialog box that guides you through the process of
+opening both a test suite and a work directory as described in the
+JavaTest documentation.
+
+After you specify a work directory, you can use the Test Manager to
+configure and run tests as described in link:#GBFVX[Section 4.7.3, "To
+Configure the JavaTest Harness to Run the TCK Tests."]
+
+[[GBFVX]][[to-configure-the-javatest-harness-to-run-the-tck-tests]]
+
+4.7.3 To Configure the JavaTest Harness to Run the TCK Tests
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The answers you give to some of the configuration interview questions
+are specific to your site. For example, the name of the host on which
+the JavaTest harness is running. Other configuration parameters can be
+set however you wish. For example, where you want test report files to
+be stored.
+
+Note that you only need to complete all these steps the first time you
+start the JavaTest test harness. After you complete these steps, you can
+either run all of the tests by completing the steps in
+link:using.html#GBFUZ[Section 5.1, "Starting JavaTest,"] or run a subset
+of the tests by completing the steps in link:using.html#GBFWM[Section
+5.2, "Running a Subset of the Tests."]
+
+1.  Change to the `<TS_HOME>/bin` directory and start the JavaTest test
+harness: +
+`cd <TS_HOME>/bin` +
+`ant gui`
+2.  From the File menu, click *Open Quick Start Wizard*. +
+The Welcome screen displays.
+3.  Select *Start a new test run*, and then click *Next*. +
+You are prompted to create a new configuration or use a configuration
+template.
+4.  Select *Create a new configuration*, and then click *Next*. +
+You are prompted to select a test suite.
+5.  Accept the default suite (`<TS_HOME>/src`), and then click *Next*. +
+You are prompted to specify a work directory to use to store your test
+results.
+6.  Type a work directory name or use the *Browse* button to select a work
+directory, and then click *Next*. +
+You are prompted to start the configuration editor or start a test run.
+At this point, the {TechnologyShortName} TCK is configured to run the
+default test suite.
+7.  Deselect the *Start the configuration editor* option, and then click
+*Finish*.
+8.  Click *Run Tests*, then click *Start*. +
+The JavaTest harness starts running the tests.
+9.  To reconfigure the JavaTest test harness, do one of the following:
+* Click *Configuration*, then click *New Configuration*.
+* Click *Configuration*, then click *Change Configuration*.
+10. Click *Report*, and then click *Create Report*.
+11. Specify the directory in which the JavaTest test harness will write
+the report, and then click *OK*. +
+A report is created, and you are asked whether you want to view it.
+12. Click *Yes* to view the report.
+
+[[GBFUU]][[modifying-the-default-test-configuration]]
+
+4.7.4 Modifying the Default Test Configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The JavaTest GUI enables you to configure numerous test options. These
+options are divided into two general dialog box groups:
+
+* Group 1: Available from the JavaTest *Configure/Change Configuration*
+submenus, the following options are displayed in a tabbed dialog box:
+
+** *Tests to Run*
+
+** *Exclude List*
+
+** *Keywords*
+
+** *Prior Status*
+
+** *Test Environment*
+
+** *Concurrency*
+
+** *Timeout Factor*
+* Group 2: Available from the JavaTest *Configure/Change
+Configuration/Other Values* submenu, or by pressing `Ctrl+E`, the following
+options are displayed in a paged dialog box:
+
+** *Environment Files*
+
+** *Test Environment*
+
+** *Specify Tests to Run*
+
+** *Specify an Exclude List*
+
+Note that there is some overlap between the functions in these two
+dialog boxes; for those functions use the dialog box that is most
+convenient for you. Please refer to the JavaTest Harness documentation
+or the online help for complete information about these various options.
+
+

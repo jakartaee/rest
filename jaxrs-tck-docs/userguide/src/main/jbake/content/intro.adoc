@@ -1,0 +1,349 @@
+type=page
+status=published
+title=Introduction
+next=rules.html
+prev=preface.html
+~~~~~~
+include::attributes.conf[]
+Introduction
+============
+
+[[GBFOW]]
+
+
+[[introduction]]
+1 Introduction
+--------------
+
+This chapter provides an overview of the principles that apply
+generally to all Technology Compatibility Kits (TCKs) and describes the
+{TechnologyFullName} TCK ({TechnologyShortName} {TechnologyVersion} TCK). 
+It also includes a high level listing
+of what is needed to get up and running with the {TechnologyShortName}
+TCK.
+
+This chapter includes the following topics:
+
+* link:#GBFTK[Compatibility Testing]
+* link:#GBFQR[About the TCK]
+* link:#GBFQW[Getting Started With the TCK]
+
+[[GBFTK]][[compatibility-testing]]
+
+1.1 Compatibility Testing
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Compatibility testing differs from traditional product testing in a
+number of ways. The focus of compatibility testing is to test those
+features and areas of an implementation that are likely to differ across
+other implementations, such as those features that:
+
+* Rely on hardware or operating system-specific behavior
+* Are difficult to port
+* Mask or abstract hardware or operating system behavior
+
+Compatibility test development for a given feature relies on a complete
+specification and compatible implementation (CI) for that feature.
+Compatibility testing is not primarily concerned with robustness,
+performance, nor ease of use.
+
+[[GBFQN]][[why-compatibility-testing-is-important]]
+
+1.1.1 Why Compatibility Testing is Important
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Jakarta platform compatibility is important to different groups involved
+with Jakarta technologies for different reasons:
+
+* Compatibility testing ensures that the Jakarta platform does not become
+fragmented as it is ported to different operating systems and hardware
+environments.
+* Compatibility testing benefits developers working in the Jakarta
+programming language, allowing them to write applications once and then
+to deploy them across heterogeneous computing environments without
+porting.
+* Compatibility testing allows application users to obtain applications
+from disparate sources and deploy them with confidence.
+* Conformance testing benefits Jakarta platform implementors by ensuring a
+level playing field for all Jakarta platform ports.
+
+[[GBFPR]][[tck-compatibility-rules]]
+
+1.1.2 TCK Compatibility Rules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Compatibility criteria for all technology implementations are embodied
+in the TCK Compatibility Rules that apply to a specified technology.
+Each TCK tests for adherence to these Rules as described in
+link:rules.html#GBFSN[Chapter 2, "Procedure for Certification."]
+
+[[GBFPW]][[tck-overview]]
+
+1.1.3 TCK Overview
+^^^^^^^^^^^^^^^^^^
+
+A TCK is a set of tools and tests used to verify that a vendor's compatible
+implementation of a Jakarta EE technology conforms to the applicable
+specification. All tests in the TCK are based on the written
+specifications for the Jakarta EE platform. A TCK tests compatibility of a
+vendor's compatible implementation of the technology to the applicable
+specification of the technology. Compatibility testing is a means of
+ensuring correctness, completeness, and consistency across all
+implementations developed by technology licensees.
+
+The set of tests included with each TCK is called the test suite. Most
+tests in a TCK's test suite are self-checking, but some tests may
+require tester interaction. Most tests return either a Pass or Fail
+status. For a given platform to be certified, all of the required tests
+must pass. The definition of required tests may change from platform to
+platform.
+
+The definition of required tests will change over time. Before your
+final certification test pass, be sure to download the latest version
+of this TCK.
+
+[[GBFPB]][[java-community-process-jcp-program-and-compatibility-testing]]
+
+1.1.4 Jakarta EE Specification Process (JESP) Program and Compatibility Testing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Jakarta EE Specification Process (JESP) program is the formalization of the
+open process that has been used since 2019 to develop and revise Jakarta EE
+technology specifications in cooperation with the international Jakarta EE
+community. The JESP program specifies that the following three major
+components must be included as deliverables in a final Jakarta EE technology
+release under the direction of the responsible Expert Group:
+
+* Technology Specification
+* Compatible Implementation (CI)
+* Technology Compatibility Kit (TCK)
+
+For further information about the JESP program, go to Jakarta EE Specification
+Process community page https://jakarta.ee/specifications.
+
+[[GBFQR]][[about-the-tck]]
+
+1.2 About the TCK
+~~~~~~~~~~~~~~~~~
+
+The {TechnologyShortName} TCK {TechnologyVersion} is designed as a
+portable, configurable, automated test suite for verifying the
+compatibility of a vendor's implementation of the
+{TechnologyShortName} {TechnologyVersion} Specification.
+
+[[GBFQV]][[tck-specifications-and-requirements]]
+
+1.2.1 TCK Specifications and Requirements
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This section lists the applicable requirements and specifications.
+
+* Specification Requirements: Software requirements for a
+{TechnologyShortName} implementation are described in detail in the
+{TechnologyShortName} {TechnologyVersion} Specification.  Links to the
+{TechnologyShortName} specification and other product information can
+be found at {SpecificationURL}.
+* {TechnologyShortName} Version: The {TechnologyShortName} {TechnologyVersion} TCK
+is based on the {TechnologyShortName}
+Specification, Version {TechnologyVersion}.
+* Compatible Implementation: One {TechnologyShortName}
+{TechnologyVersion} Compatible Implementation, {TechnologyRI} is
+available from the Eclipse EE4J project
+(https://projects.eclipse.org/projects/ee4j). See the CI documentation page at
+{TechnologyRIURL} for more information.
+
+See the {TechnologyShortName} TCK Release Notes for more specific
+information about Java SE version requirements, supported platforms,
+restrictions, and so on.
+
+[[GBFSQ]][[tck-components]]
+
+1.2.2 TCK Components
+^^^^^^^^^^^^^^^^^^^^
+
+The {TechnologyShortName} TCK {TechnologyVersion} includes the
+following components:
+
+* JavaTest harness version {JavaTestVersion} and related documentation. See
+link:https://wiki.openjdk.java.net/display/CodeTools/JT+Harness[JT Harness web site]
+for additional information.
+* {TechnologyShortName} TCK signature tests; check that all public APIs
+are supported and/or defined as specified in the {TechnologyShortName}
+Version {TechnologyVersion} implementation under test.
+* If applicable, an exclude list, which provides a list of tests that your
+implementation is not required to pass.
+ifndef::no-api-tests[]
+* API tests for all of the {TechnologyShortName} API in all related packages:
+include::packages.inc[]
+endif::no-api-tests[]
+ifdef::end-to-end-tests[]
+* End-to-end tests that demonstrate compliance with the {TechnologyFullName}
+Specification.
+endif::end-to-end-tests[]
+
+The {TechnologyShortName} TCK tests run on the following platforms:
+
+include::platforms.inc[]
+
+[[GBFSA]][[javatest-harness]]
+
+1.2.3 JavaTest Harness
+^^^^^^^^^^^^^^^^^^^^^^
+
+The JavaTest harness version {JavaTestVersion} is a set of tools
+designed to run and manage test suites on different Java platforms.
+To JavaTest, Jakarta EE can be considered another platform.
+The JavaTest harness can be described as both a Java application and a set
+of compatibility testing tools. It can run tests on different kinds of
+Java platforms and it allows the results to be browsed online within
+the JavaTest GUI, or offline in the HTML reports that the JavaTest
+harness generates.
+
+The JavaTest harness includes the applications and tools that are used
+for test execution and test suite management. It supports the following
+features:
+
+* Sequencing of tests, allowing them to be loaded and executed automatically
+* Graphic user interface (GUI) for ease of use
+* Automated reporting capability to minimize manual errors
+* Failure analysis
+* Test result auditing and auditable test specification framework
+* Distributed testing environment support
+
+To run tests using the JavaTest harness, you specify which tests in the
+test suite to run, how to run them, and where to put the results as
+described in link:config.html#GBFVV[Chapter 4, "Setup and
+Configuration."]
+
+[[GBFRA]][[tck-compatibility-test-suite]]
+
+1.2.4 TCK Compatibility Test Suite
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The test suite is the collection of tests used by the JavaTest harness
+to test a particular technology implementation. In this case, it is the
+collection of tests used by the {TechnologyShortName} TCK
+{TechnologyVersion} to test a {TechnologyShortName} {TechnologyVersion}
+implementation. The tests are designed to verify that a vendor's
+runtime implementation of the technology complies with the appropriate
+specification. The individual tests correspond to assertions of the
+specification.
+
+The tests that make up the TCK compatibility test suite are precompiled
+and indexed within the TCK test directory structure. When a test run is
+started, the JavaTest harness scans through the set of tests that are
+located under the directories that have been selected. While scanning,
+the JavaTest harness selects the appropriate tests according to any
+matches with the filters you are using and queues them up for execution.
+
+[[GBFSH]][[exclude-lists]]
+
+1.2.5 Exclude Lists
+^^^^^^^^^^^^^^^^^^^
+
+Each version of a TCK includes an Exclude List contained in a `.jtx`
+file. 
+This is a list of test file URLs that identify tests which do not
+have to be run for the specific version of the TCK being used. 
+Whenever tests are run, the JavaTest harness automatically excludes
+any test on the Exclude List from being executed.
+
+A vendor's compatible implementation is not required to pass or run any test on the Exclude List.
+The Exclude List file, +{jtxFileName}+, is included in the
+{TechnologyShortName} TCK.
+
+
+[NOTE]
+=======================================================================
+
+From time to time, updates to the Exclude List are made available.
+The exclude list is included in the Jakarta TCK ZIP archive.
+Each time an update is approved and released, the version number 
+will be incremented.
+You should always make sure you are using an up-to-date copy of the
+Exclude List before running the {TechnologyShortName} TCK to verify your
+implementation.
+
+=======================================================================
+
+
+A test might be in the Exclude List for reasons such as:
+
+* An error in an underlying implementation API has been discovered which
+does not allow the test to execute properly.
+* An error in the specification that was used as the basis of the test
+has been discovered.
+* An error in the test itself has been discovered.
+* The test fails due to a bug in the tools (such as the JavaTest
+harness, for example).
+
+In addition, all tests are run against the compatible implementations.
+Any tests that fail when run on a compatible Jakarta platform are put on the
+Exclude List. Any test that is not specification-based, or for which the
+specification is vague, may be excluded. Any test that is found to be
+implementation dependent (based on a particular thread scheduling model,
+based on a particular file system behavior, and so on) may be excluded.
+
+
+[NOTE]
+=======================================================================
+
+Vendors are not permitted to alter or modify Exclude Lists. Changes to
+an Exclude List can only be made by using the procedure described in
+link:rules.html#CJAJEAEI[Section 2.3.1, "TCK Test Appeals Steps."]
+
+=======================================================================
+
+
+[[GBFRR]][[tck-configuration]]
+
+1.2.6 TCK Configuration
+^^^^^^^^^^^^^^^^^^^^^^^
+
+You need to set several variables in your test environment, modify
+properties in the +{jteFileName}+ file, and then use the JavaTest
+harness to configure and run the {TechnologyShortName} tests, as described in
+link:config.html#GBFVV[Chapter 4, "Setup and Configuration."]
+
+include::intro.inc[]
+
+[[GBFQW]][[getting-started-with-the-tck]]
+
+[NOTE]
+====
+The Jakarta EE Specification Process support multiple compatible implementations. 
+These instructions explain how to get started with the {TechnologyRI} CI.
+If you are using another compatible implementation, refer to material provided
+by that implementation for specific instructions and procedures.
+
+====
+
+1.3 Getting Started With the TCK
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This section provides an general overview of what needs to be done to
+install, set up, test, and use the {TechnologyShortName} TCK. These
+steps are explained in more detail in subsequent chapters of this
+guide.
+
+1.  Make sure that the following software has been correctly installed
+on the system hosting the JavaTest harness:
+include::req-software.inc[]
+* Java SE {SEversion}
+* Apache Ant {AntVersion}
+* A CI for {TechnologyShortName} {TechnologyVersion}. One example is {TechnologyRI}.
+* {TechnologyShortName} TCK version {TechnologyVersion}, which includes:
+include::tck-packages.inc[]
+* The {TechnologyShortName} {TechnologyVersion} Vendor Implementation (VI) +
+See the documentation for each of these software applications for
+installation instructions. See link:install.html#GBFTP[Chapter 3,
+"Installation,"] for instructions on installing the {TechnologyShortName} TCK.
+2.  Set up the {TechnologyShortName} TCK software. +
+See link:config.html#GBFVV[Chapter 4, "Setup and Configuration,"] for
+details about the following steps.
+  a.  Set up your shell environment.
+  b.  Modify the required properties in the +{jteFileName}+ file.
+  c.  Configure the JavaTest harness.
+3.  Test the {TechnologyShortName} {TechnologyVersion} implementation. +
+Test the {TechnologyShortName} implementation installation by running
+the test suite.  See link:using.html#GBFWO[Chapter 5, "Executing Tests."]

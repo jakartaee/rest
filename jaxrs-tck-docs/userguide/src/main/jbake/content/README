@@ -1,0 +1,77 @@
+The file attributes.conf defines several attributes (variables) that
+need to be customized for each technology.
+
+The *.adoc files should not be modified.
+
+The following "include" files should be customized as necessary
+for the specific technology:
+
+- rules.inc
+
+	Additional compatibility rules needed by some technologies.
+	The rules in rules.adoc should NOT be changed.
+
+- defns.inc
+
+	Additional definitions needed by additional compatibility
+	rules in rules.inc.
+
+- config.inc
+
+	Detailed instructions for configuring the TCK, included in
+	Chapter 4.  Unfortunately, these are sections 4.1 - 4.3,
+	so even if the TCK doesn't require 3 sections you need to
+	make up something, or else change the sections to "N/A".
+
+- packages.inc
+
+	A simple list of Jakarta EE package names for the technology.
+
+- tck-packages.inc
+
+	A list of additional software packages included in the TCK.
+
+- req-software.inc
+
+	A list of software required in addition to the TCK and CI.
+
+- install-server.inc
+
+	Steps to install the Jakarta EE CI, if needed.
+	For standalone technologies, no server may be required,
+	and this file can be empty.
+	This is used in install.adoc in section 3.2.
+
+- install-server-vi.inc
+
+	Steps to install a Vendor's web server, if needed.
+	For standalone technologies, no web server may be required,
+	and this file can be empty.
+	This is used in install.adoc in section 3.2.
+
+- using-examples.inc
+
+	Command line examples showing how to run the TCK.
+
+- using.inc
+
+	Optional additional instructions for running the TCK.
+
+- debug-tips.inc
+
+	Technology-specific troubleshooting tips for Chapter 6.
+	If this isn't needed, it can be an empty file, but toc.adoc
+	will need to be fixed.
+
+- rebuild.inc
+
+	Special instructions for rebuilding the WAR files used by some TCKs.
+	If needed, customize it appropriately and define the "rebuild"
+	attribute in attributes.conf.
+
+- title.inc
+	Add acronym references as required do distinguish between legacy and 
+	current APIs.
+
+Note that this template is NOT sufficient for the Jakarta EE platform
+or Jakarta EE Web Profile.

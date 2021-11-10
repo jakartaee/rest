@@ -1,0 +1,174 @@
+type=page
+status=published
+title=Debugging Test Problems
+next=faq.html
+prev=using.html
+~~~~~~
+include::attributes.conf[]
+Debugging Test Problems
+=======================
+
+[[GBFUV]]
+
+
+[[debugging-test-problems]]
+6 Debugging Test Problems
+-------------------------
+
+There are a number of reasons that tests can fail to execute properly.
+This chapter provides some approaches for dealing with these failures.
+Please note that most of these suggestions are only relevant when
+running the test harness in GUI mode.
+
+This chapter includes the following topics:
+
+* link:#GBFYP[Overview]
+* link:#GBFVF[Test Tree]
+* link:#GBFWI[Folder Information]
+* link:#GBFVP[Test Information]
+* link:#GBFVZ[Report Files]
+* link:#GBFYF[Configuration Failures]
+
+[[GBFYP]][[overview]]
+
+6.1 Overview
+~~~~~~~~~~~~
+
+The goal of a test run is for all tests in the test suite that are not
+filtered out to have passing results. If the root test suite folder
+contains tests with errors or failing results, you must troubleshoot and
+correct the cause to satisfactorily complete the test run.
+
+* Errors: Tests with errors could not be executed by the JavaTest
+harness. These errors usually occur because the test environment is not
+properly configured.
+* Failures: Tests that fail were executed but had failing results.
+
+The Test Manager GUI provides you with a number of tools for effectively
+troubleshooting a test run. See the JavaTest User's Guide and JavaTest
+online help for detailed descriptions of the tools described in this
+chapter.  Ant test execution tasks provide command-line users with
+immediate test execution feedback to the display. Available JTR report
+files and log files can also help command-line users troubleshoot test
+run problems.
+
+For every test run, the JavaTest harness creates a set of report files
+in the reports directory, which you specified by setting the
+`report.dir` property in the +{jteFileName}+ file. The report files contain
+information about the test description, environment, messages,
+properties used by the test, status of the test, and test result. After
+a test run is completed, the JavaTest harness writes HTML reports for
+the test run. You can view these files in the JavaTest ReportBrowser
+when running in GUI mode, or in the Web browser of your choice outside
+the JavaTest interface. To see all of the HTML report files, enter the
+URL of the `report.html` file. This file is the root file that links to
+all of the other HTML reports.
+
+The JavaTest harness also creates a `summary.txt` file in the report
+directory that you can open in any text editor. The `summary.txt` file
+contains a list of all tests that were run, their test results, and
+their status messages.
+
+The work directory, which you specified by setting the `work.dir`
+property in the +{jteFileName}+ file, contains several files that were
+deposited there during test execution: `harness.trace`, `log.txt`,
+`lastRun.txt`, and `testsuite`. Most of these files provide information
+about the harness and environment in which the tests were executed.
+
+[NOTE]
+=======================================================================
+
+You can set `harness.log.traceflag=true` in +{jteFileName}+ to
+get more debugging information.
+
+=======================================================================
+
+If a large number of tests failed, you should read
+link:#GBFYF[Configuration Failures] to see if a
+configuration issue is the cause of the failures.
+
+
+[[GBFVF]][[test-tree]]
+
+6.2 Test Tree
+~~~~~~~~~~~~~
+
+Use the test tree in the JavaTest GUI to identify specific folders and
+tests that had errors or failing results. Color codes are used to
+indicate status as follows:
+
+* Green: Passed
+* Blue: Test Error
+* Red: Failed to pass test
+* White: Test not run
+* Gray: Test filtered out (not run)
+
+[[GBFWI]][[folder-information]]
+
+6.3 Folder Information
+~~~~~~~~~~~~~~~~~~~~~~
+
+Click a folder in the test tree in the JavaTest GUI to display its tabs.
+
+Choose the Error and the Failed tabs to view the lists of all tests in
+and under a folder that were not successfully run. You can double-click
+a test in the lists to view its test information.
+
+[[GBFVP]][[test-information]]
+
+6.4 Test Information
+~~~~~~~~~~~~~~~~~~~~
+
+To display information about a test in the JavaTest GUI, click its icon
+in the test tree or double-click its name in a folder status tab. The
+tab contains detailed information about the test run and, at the bottom
+of the window, a brief status message identifying the type of failure or
+error. This message may be sufficient for you to identify the cause of
+the error or failure.
+
+If you need more information to identify the cause of the error or
+failure, use the following tabs listed in order of importance:
+
+* Test Run Messages contains a Message list and a Message section that
+display the messages produced during the test run.
+* Test Run Details contains a two-column table of name/value pairs
+recorded when the test was run.
+* Configuration contains a two-column table of the test environment
+name/value pairs derived from the configuration data actually used to
+run the test.
+
+
+[NOTE]
+=======================================================================
+
+You can set `harness.log.traceflag=true` in +{jteFileName}+ to
+get more debugging information.
+
+=======================================================================
+
+
+[[GBFVZ]][[report-files]]
+
+6.5 Report Files
+~~~~~~~~~~~~~~~~
+
+Report files are another good source of troubleshooting information. You
+may view the individual test results of a batch run in the JavaTest
+Summary window, but there are also a wide range of HTML report files
+that you can view in the JavaTest ReportBrowser or in the external
+browser or your choice following a test run. See
+link:using.html#GBFVK[Section 5.5, "Test Reports,"] for more information.
+
+[[GBFYF]][[configuration-failures]]
+
+6.6 Configuration Failures
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Configuration failures are easily recognized because many tests fail the
+same way. When all your tests begin to fail, you may want to stop the
+run immediately and start viewing individual test output. However, in
+the case of full-scale launching problems where no tests are actually
+processed, report files are usually not created (though sometimes a
+small `harness.trace` file in the report directory is written).
+
+include::debug-tips.inc[]

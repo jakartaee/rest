@@ -90,7 +90,15 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/provider/overridestandard/web.xml.template");
     String webXml = editWebXmlString(inStream);
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_provider_overridestandard_web.war");
-    archive.addClasses(TSAppConfig.class, Resource.class, AbstractProvider.class, TckBooleanProvider.class, TckByteArrayProvider.class, TckCharacterProvider.class, TckDataSourceProvider.class, TckDataSourceProvider.class, TckFileProvider.class, TckInputStreamProvider.class, TckJaxbProvider.class, TckMapProvider.class, TckNumberProvider.class, TckReaderProvider.class, TckSourceProvider.class, TckStreamingOutputProvider.class, TckStringProvider.class);
+    archive.addClasses(TSAppConfig.class, Resource.class, 
+      AbstractProvider.class, TckBooleanProvider.class, 
+      TckByteArrayProvider.class, TckCharacterProvider.class, 
+      TckDataSourceProvider.class, TckDataSourceProvider.class, 
+      TckFileProvider.class, TckInputStreamProvider.class, 
+      TckJaxbProvider.class, TckMapProvider.class, 
+      TckNumberProvider.class, TckReaderProvider.class, 
+      TckSourceProvider.class, TckStreamingOutputProvider.class, 
+      TckStringProvider.class, jakarta.ws.rs.tck.common.impl.StringStreamingOutput.class);
     archive.setWebXML(new StringAsset(webXml));
     return archive;
   }
@@ -245,7 +253,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * providers when either could handle the same request.
    * 
    */
-  //@Test
+  @Test
   @Tag("xml_binding")
   public void readWriteStreamingOutputProviderTest() throws Fault {
     setPropertyAndInvoke("streamingoutput", MediaType.APPLICATION_XML_TYPE);

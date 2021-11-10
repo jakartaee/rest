@@ -1223,6 +1223,13 @@ public abstract class Response implements AutoCloseable {
          */
         TEMPORARY_REDIRECT(307, "Temporary Redirect"),
         /**
+         * 308 Permanent Redirect, see <a href="https://tools.ietf.org/html/rfc7538">RFC 7538:
+         * The Hypertext Transfer Protocol Status Code 308 (Permanent Redirect)</a>.
+         *
+         * @since 3.1
+         */
+        PERMANENT_REDIRECT(308, "Permanent Redirect"),
+        /**
          * 400 Bad Request, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">HTTP/1.1
          * documentation</a>.
          */

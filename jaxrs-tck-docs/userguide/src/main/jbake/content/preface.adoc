@@ -23,9 +23,8 @@ The {TechnologyShortName} TCK is a portable, configurable automated
 test suite for verifying the compatibility of a vendor's
 implementation of the {TechnologyShortName} {TechnologyVersion}
 Specification (hereafter referred to as the vendor implementation or VI).
-The {TechnologyShortName} TCK uses the JavaTest harness version
-{JavaTestVersion} to run the test suite
-
+The {TechnologyShortName} TCK uses the Junit framework to run the test suite
+along with Arquillian to run container tests.
 
 [NOTE]
 =======================================================================
@@ -74,10 +73,6 @@ You should be familiar with the {TechnologyShortName}
 {TechnologyVersion}, version {TechnologyVersion} Specification, 
 which can be found at {SpecificationURL}.
 
-Before running the tests in the {TechnologyShortName} TCK, you should
-familiarize yourself with the JavaTest documentation which can be
-accessed at the
-link:https://wiki.openjdk.java.net/display/CodeTools/JT+Harness[JT Harness web site].
 
 [[TCJRS00036]][[GBFWF]]
 

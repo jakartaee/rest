@@ -21,6 +21,18 @@ After installing the software according to the instructions in this
 chapter, proceed to link:config.html#GBFVV[Chapter 4, "Setup and
 Configuration,"] for instructions on configuring your test environment.
 
+[NOTE]
+=======================================================================
+
+Although the {TechnologyShortName} {TechnologyVersion} TCK is not 
+depended on any particular build tool, it is convenient to install 
+Apache Maven {MavenVersion} for setup and execution of tests. 
+Any other build tools like Gradle and JUnit 5 Console Runner can also 
+be used that is Jupiter API compatible.
+
+=======================================================================
+
+
 [[GBFUD]][[obtaining-the-reference-implementation]]
 
 3.1 Obtaining a Compatible Implementation
@@ -41,11 +53,10 @@ install and set up the following software components:
 
 include::req-software.inc[]
 * Java SE {SEversion}
-* Apache Ant {AntVersion}
 * A CI for {TechnologyShortName} {TechnologyVersion}, one example is {TechnologyRI}
-* {TechnologyShortName} TCK version {TechnologyVersion}, which includes:
-include::tck-packages.inc[]
+* {TechnologyShortName} TCK version {TechnologyVersion}
 * The {TechnologyShortName} {TechnologyVersion} Vendor Implementation (VI)
+* Any Jupiter API compatible test runner (eg. Apache Maven {MavenVersion})
 
 Follow these steps:
 
@@ -54,14 +65,11 @@ Download and install the Java SE {SEversion} software from
 http://www.oracle.com/technetwork/java/javase/downloads/index.html.
 Refer to the installation instructions that accompany the software for
 additional information.
-.  Install the Apache Ant {AntVersion} software, if it is not already installed. +
-Download and install Apache Ant {AntVersion} software from Apache Ant
-Project. For complete information about Ant, refer to the extensive documentation 
-on the Apache Ant Project site. The Apache Ant Manual is available at
-`http://ant.apache.org/manual/index.html`.
-Apache Ant is protected under the Apache Software, License 2.0, which is
-is available on the Apache Ant Project license page at 
-`http://ant.apache.org/license.html`.
+
+.  Install the build tool that will be used to run the TCK, if it is not already installed. +
+It will be convenient to use Apache Maven {MavenVersion} for running the tests. The test kit 
+is not depended on Maven, any build tool compatible with Jupiter API is suffitient.
+
 .  Install the {TechnologyShortName} TCK {TechnologyVersion} software.
   a.  Copy or download the {TechnologyShortName} TCK software to your
       local system. +
@@ -70,8 +78,7 @@ is available on the Apache Ant Project license page at
   b.  Use the `unzip` command to extract the bundle in the directory of
       your choice: +
       +unzip {TCKPackageName}+ +
-      This creates the TCK directory. The TCK is the test suite home,
-      `<TS_HOME>`.
+      
 include::install-server.inc[]
 .  Install a {TechnologyShortName} {TechnologyVersion} Compatible
 Implementation. +

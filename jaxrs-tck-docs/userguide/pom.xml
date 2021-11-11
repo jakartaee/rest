@@ -27,8 +27,8 @@
     <groupId>org.glassfish</groupId>
     <artifactId>tck_jaxrs</artifactId>
     <packaging>pom</packaging>
-    <version>3.0.2</version>
-    <name>Eclipse Foundation Technology Compatibility Kit User's Guide for Jakarta RESTful Web Services for Jakarta EE, Release 3.0</name>
+    <version>3.1.0</version>
+    <name>Eclipse Foundation Technology Compatibility Kit User's Guide for Jakarta RESTful Web Services for Jakarta EE, Release 3.1</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,14 +41,14 @@
         <jbake.maven.plugin.version>0.3.3</jbake.maven.plugin.version>
         <freemarker.version>2.3.30</freemarker.version>
         <!-- status: DRAFT, BETA, etc., or blank for final -->
-        <status></status>
+        <status>DRAFT</status>
         <doc.pdf>Jakarta-RESTful-Web-Services-TCK-Users-Guide.pdf</doc.pdf>
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
     <distributionManagement>
         <site>
-            <url>scm:git:git@github.com:eclipse-ee4j/jakartaee-tck.git</url>
+            <url>scm:git:git@github.com:eclipse-ee4j/jaxrs-api.git</url>
         </site>
     </distributionManagement>
 
@@ -81,8 +81,8 @@
                         <configuration>
                             <rules>
                                 <requireJavaVersion>
-                                    <version>[1.8.0,)</version>
-                                    <message>You need JDK8 or newer</message>
+                                    <version>[11.0,)</version>
+                                    <message>You need JDK11 or newer</message>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>

@@ -164,9 +164,6 @@ restrictions, and so on.
 The {TechnologyShortName} TCK {TechnologyVersion} includes the
 following components:
 
-* JavaTest harness version {JavaTestVersion} and related documentation. See
-link:https://wiki.openjdk.java.net/display/CodeTools/JT+Harness[JT Harness web site]
-for additional information.
 * {TechnologyShortName} TCK signature tests; check that all public APIs
 are supported and/or defined as specified in the {TechnologyShortName}
 Version {TechnologyVersion} implementation under test.
@@ -185,44 +182,15 @@ The {TechnologyShortName} TCK tests run on the following platforms:
 
 include::platforms.inc[]
 
-[[GBFSA]][[javatest-harness]]
-
-1.2.3 JavaTest Harness
-^^^^^^^^^^^^^^^^^^^^^^
-
-The JavaTest harness version {JavaTestVersion} is a set of tools
-designed to run and manage test suites on different Java platforms.
-To JavaTest, Jakarta EE can be considered another platform.
-The JavaTest harness can be described as both a Java application and a set
-of compatibility testing tools. It can run tests on different kinds of
-Java platforms and it allows the results to be browsed online within
-the JavaTest GUI, or offline in the HTML reports that the JavaTest
-harness generates.
-
-The JavaTest harness includes the applications and tools that are used
-for test execution and test suite management. It supports the following
-features:
-
-* Sequencing of tests, allowing them to be loaded and executed automatically
-* Graphic user interface (GUI) for ease of use
-* Automated reporting capability to minimize manual errors
-* Failure analysis
-* Test result auditing and auditable test specification framework
-* Distributed testing environment support
-
-To run tests using the JavaTest harness, you specify which tests in the
-test suite to run, how to run them, and where to put the results as
-described in link:config.html#GBFVV[Chapter 4, "Setup and
-Configuration."]
 
 [[GBFRA]][[tck-compatibility-test-suite]]
 
-1.2.4 TCK Compatibility Test Suite
+1.2.3 TCK Compatibility Test Suite
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The test suite is the collection of tests used by the JavaTest harness
+The test suite is the collection of tests 
 to test a particular technology implementation. In this case, it is the
-collection of tests used by the {TechnologyShortName} TCK
+collection of JUnit tests used by the {TechnologyShortName} TCK
 {TechnologyVersion} to test a {TechnologyShortName} {TechnologyVersion}
 implementation. The tests are designed to verify that a vendor's
 runtime implementation of the technology complies with the appropriate
@@ -230,34 +198,31 @@ specification. The individual tests correspond to assertions of the
 specification.
 
 The tests that make up the TCK compatibility test suite are precompiled
-and indexed within the TCK test directory structure. When a test run is
-started, the JavaTest harness scans through the set of tests that are
-located under the directories that have been selected. While scanning,
-the JavaTest harness selects the appropriate tests according to any
-matches with the filters you are using and queues them up for execution.
+and indexed within the TCK jar directory structure. 
 
 [[GBFSH]][[exclude-lists]]
 
-1.2.5 Exclude Lists
+1.2.4 Exclude Lists
 ^^^^^^^^^^^^^^^^^^^
 
 Each version of a TCK includes an Exclude List contained in a `.jtx`
 file. 
 This is a list of test file URLs that identify tests which do not
 have to be run for the specific version of the TCK being used. 
-Whenever tests are run, the JavaTest harness automatically excludes
-any test on the Exclude List from being executed.
+Whenever tests are run, the Junit framework automatically excludes
+these tests from being executed as those are disabled using '@Disabled' tag in JUnit.
 
 A vendor's compatible implementation is not required to pass or run any test on the Exclude List.
-The Exclude List file, +{jtxFileName}+, is included in the
-{TechnologyShortName} TCK.
+The Exclude List file, +{jtxFileName}+, is documented in the
+{TechnologyShortName} TCK. Please note this file is not parsed to exclude any test and is only
+for documentation purpose.
 
 
 [NOTE]
 =======================================================================
 
 From time to time, updates to the Exclude List are made available.
-The exclude list is included in the Jakarta TCK ZIP archive.
+The exclude list is included in the TCK ZIP archive.
 Each time an update is approved and released, the version number 
 will be incremented.
 You should always make sure you are using an up-to-date copy of the
@@ -274,8 +239,7 @@ does not allow the test to execute properly.
 * An error in the specification that was used as the basis of the test
 has been discovered.
 * An error in the test itself has been discovered.
-* The test fails due to a bug in the tools (such as the JavaTest
-harness, for example).
+* The test fails due to a bug in the tools used to run the test.
 
 In addition, all tests are run against the compatible implementations.
 Any tests that fail when run on a compatible Jakarta platform are put on the
@@ -297,12 +261,11 @@ link:rules.html#CJAJEAEI[Section 2.3.1, "TCK Test Appeals Steps."]
 
 [[GBFRR]][[tck-configuration]]
 
-1.2.6 TCK Configuration
+1.2.5 TCK Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-You need to set several variables in your test environment, modify
-properties in the +{jteFileName}+ file, and then use the JavaTest
-harness to configure and run the {TechnologyShortName} tests, as described in
+You need to set several variables in your test environment, 
+and run the {TechnologyShortName} tests, as described in
 link:config.html#GBFVV[Chapter 4, "Setup and Configuration."]
 
 include::intro.inc[]
@@ -330,10 +293,8 @@ guide.
 on the system hosting the JavaTest harness:
 include::req-software.inc[]
 * Java SE {SEversion}
-* Apache Ant {AntVersion}
 * A CI for {TechnologyShortName} {TechnologyVersion}. One example is {TechnologyRI}.
-* {TechnologyShortName} TCK version {TechnologyVersion}, which includes:
-include::tck-packages.inc[]
+* {TechnologyShortName} TCK version {TechnologyVersion}
 * The {TechnologyShortName} {TechnologyVersion} Vendor Implementation (VI) +
 See the documentation for each of these software applications for
 installation instructions. See link:install.html#GBFTP[Chapter 3,
@@ -342,8 +303,7 @@ installation instructions. See link:install.html#GBFTP[Chapter 3,
 See link:config.html#GBFVV[Chapter 4, "Setup and Configuration,"] for
 details about the following steps.
   a.  Set up your shell environment.
-  b.  Modify the required properties in the +{jteFileName}+ file.
-  c.  Configure the JavaTest harness.
+  b.  Set the required System properties.
 3.  Test the {TechnologyShortName} {TechnologyVersion} implementation. +
 Test the {TechnologyShortName} implementation installation by running
 the test suite.  See link:using.html#GBFWO[Chapter 5, "Executing Tests."]

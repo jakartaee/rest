@@ -234,7 +234,6 @@ public class JAXRSProvidersClientIT
    * none
    */
   @Test
-  @Disabled("In response to accepted Platform TCK challenge https://github.com/eclipse-ee4j/jaxrs-api/issues/937")
   public void isRegisteredRuntimeExceptionExceptionMapperTest() throws Fault {
     setProperty(Property.REQUEST,
         buildRequest(GET, "isRegisteredRuntimeExceptionMapper"));

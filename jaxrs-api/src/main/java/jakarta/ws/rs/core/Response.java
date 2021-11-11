@@ -1190,6 +1190,13 @@ public abstract class Response implements AutoCloseable {
          */
         PARTIAL_CONTENT(206, "Partial Content"),
         /**
+         * 300 Multiple Choices, see <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-6.4.1">HTTP/1.1:
+         * Semantics and Content</a>.
+         *
+         * @since 3.1
+         */
+        MULTIPLE_CHOICES(300, "Multiple Choices"),
+        /**
          * 301 Moved Permanently, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.2">HTTP/1.1
          * documentation</a>.
          */
@@ -1222,6 +1229,13 @@ public abstract class Response implements AutoCloseable {
          * documentation</a>.
          */
         TEMPORARY_REDIRECT(307, "Temporary Redirect"),
+        /**
+         * 308 Permanent Redirect, see <a href="https://tools.ietf.org/html/rfc7538">RFC 7538:
+         * The Hypertext Transfer Protocol Status Code 308 (Permanent Redirect)</a>.
+         *
+         * @since 3.1
+         */
+        PERMANENT_REDIRECT(308, "Permanent Redirect"),
         /**
          * 400 Bad Request, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">HTTP/1.1
          * documentation</a>.
@@ -1350,6 +1364,13 @@ public abstract class Response implements AutoCloseable {
          * @since 2.1
          */
         REQUEST_HEADER_FIELDS_TOO_LARGE(431, "Request Header Fields Too Large"),
+        /**
+         * 451 Unavailable For Legal Reasons, see <a href="https://tools.ietf.org/html/rfc7725">RFC 7725:
+         * An HTTP Status Code to Report Legal Obstacles</a>.
+         *
+         * @since 3.1
+         */
+        UNAVAILABLE_FOR_LEGAL_REASONS(451, "Unavailable For Legal Reasons"),
         /**
          * 500 Internal Server Error, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">HTTP/1.1
          * documentation</a>.

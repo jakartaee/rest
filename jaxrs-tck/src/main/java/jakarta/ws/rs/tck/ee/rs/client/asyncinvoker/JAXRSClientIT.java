@@ -86,7 +86,9 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_client_asyncinvoker_web.war");
-    archive.addClasses(TSAppConfig.class, Resource.class);
+    archive.addClasses(TSAppConfig.class, Resource.class,
+      jakarta.ws.rs.tck.common.provider.StringBean.class,
+      jakarta.ws.rs.tck.common.impl.TRACE.class);
     archive.setWebXML(new StringAsset(webXml));
     return archive;
 
@@ -2701,7 +2703,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
   public void traceTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("trace");
     Future<Response> future = async.trace();
@@ -2717,7 +2719,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
   public void traceWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("traceandwait");
     Future<Response> future = async.trace();
@@ -2751,7 +2753,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
   public void traceWithStringClassWhileServerWaitTest() throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("traceandwait");
     Future<String> future = async.trace(String.class);
@@ -2767,7 +2769,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
   public void traceWithResponseClassWhileServerWaitTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("traceandwait");
@@ -2823,7 +2825,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
-  //@Test
+  @Test
   public void traceWithClassThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("tracenotok");
@@ -2839,7 +2841,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
   public void traceWithGenericTypeStringWhileServerWaitTest()
       throws Fault {
     GenericType<String> generic = createGeneric(String.class);
@@ -2857,7 +2859,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
   public void traceWithGenericTypeResponseWhileServerWaitTest()
       throws Fault {
     GenericType<Response> generic = createGeneric(Response.class);
@@ -2918,7 +2920,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
-  //@Test
+  @Test
   public void traceWithGenericTypeThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("tracenotok");
@@ -2935,7 +2937,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
   public void traceWithCallbackWhileServerWaitTest() throws Fault {
     InvocationCallback<Response> callback = createCallback(true);
     AsyncInvoker async = startAsyncInvokerForMethod("traceandwait");
@@ -2953,7 +2955,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Invoke HTTP trace method for the current request
    * asynchronously.
    */
-  //@Test
+  @Test
   public void traceWithStringCallbackWhileServerWaitTest()
       throws Fault {
     InvocationCallback<String> callback = createStringCallback(true);
@@ -3014,7 +3016,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * received response status code is not successful and the specified response
    * type is not Response.
    */
-  //@Test
+  @Test
   public void traceWithCallbackThrowsNoWebApplicationExceptionForResponseTest()
       throws Fault {
     AsyncInvoker async = startAsyncInvokerForMethod("tracenotok");

@@ -214,10 +214,7 @@ For convenience, we defined latexmath:[$p \ge {\perp}$] for every media
 type latexmath:[$p$].
 +
 Given these definitions, we can now sort latexmath:[$M$] in descending
-order based on latexmath:[$\ge$] as followsfootnote:[If the request content type
-is missing, it is assumed to be `application/octet-stream`. If any of the other
-types or sets of types here are unspecified, then
-latexmath:[$\mbox{*/*}$] and latexmath:[$\mbox{\{*/*\}}$] are assumed.]:
+order based on latexmath:[$\ge$] as follows:
 +
 --
 * Let latexmath:[$t$] be the request content type and latexmath:[$C_M$]

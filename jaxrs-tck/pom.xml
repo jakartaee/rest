@@ -21,9 +21,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-tck</artifactId>
-    <version>3.1-SNAPSHOT</version>
+
+    <parent>
+        <groupId>jakarta.ws.rs</groupId>
+        <artifactId>all</artifactId>
+        <version>3.1.0</version>
+    </parent>
 
     <name>Jakarta RESTful WS TCK</name>
     <description>Technology Compatibility Kit for Jakarta RESTful Web Services</description>
@@ -101,7 +105,7 @@
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>3.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
@@ -138,25 +142,19 @@
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
-            <version>2.0.0</version>
+            <version>2.1.0-B1</version>
         </dependency>
 
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>3.0.1</version>
+            <version>4.0.0-RC2</version>
         </dependency>
 
         <dependency>
             <groupId>jakarta.activation</groupId>
             <artifactId>jakarta.activation-api</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-            <version>3.0.0</version>
+            <version>2.1.0-RC1</version>
         </dependency>
 
         <dependency>
@@ -165,7 +163,6 @@
             <version>5.0.0</version>
             <scope>provided</scope>
         </dependency>
-
 
     </dependencies>
 </project>

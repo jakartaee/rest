@@ -14,21 +14,11 @@ pipeline {
 		stage('Nightly Build') {
 			when {
 				anyOf {
-					branch 'EE4J_8'
 					branch 'master'
 				}
 			}
 			steps {
-				dir ('jaxrs-api') {
-					sh "$MVN deploy"
-				}
-				dir ('examples') {
-					sh "$MVN deploy"
-				}
-				dir ('jaxrs-spec') {
-					sh "$MVN deploy"
-				}
-				dir ('jaxrs-tck') {
+				dir ('.') {
 					sh "$MVN deploy"
 				}
 			}

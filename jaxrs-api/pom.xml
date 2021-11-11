@@ -20,20 +20,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.eclipse.ee4j</groupId>
-        <artifactId>project</artifactId>
-        <version>1.0.7</version>
-        <relativePath/>
-    </parent>
-
-    <groupId>jakarta.ws.rs</groupId>
     <artifactId>jakarta.ws.rs-api</artifactId>
-    <version>3.1-SNAPSHOT</version>
-
     <packaging>bundle</packaging>
     <name>Jakarta RESTful WS API</name>
     <description>Jakarta RESTful Web Services</description>
+
+    <parent>
+        <groupId>jakarta.ws.rs</groupId>
+        <artifactId>all</artifactId>
+        <version>3.1.0</version>
+    </parent>
 
     <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
 
@@ -297,9 +293,14 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.surefire.plugin.version}</version>
                     <configuration>
                         <argLine>--add-modules jakarta.xml.bind</argLine>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -389,6 +390,7 @@
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <maven.javadoc.plugin.version>3.3.0</maven.javadoc.plugin.version>
+        <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
 
         <api.package>jakarta.ws.rs</api.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

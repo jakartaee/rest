@@ -1,5 +1,5 @@
 #Signature file v4.1
-#Version 3.1-SNAPSHOT
+#Version 3.1.0
 
 CLSS public abstract interface !annotation jakarta.ws.rs.ApplicationPath
  anno 0 java.lang.annotation.Documented()
@@ -960,10 +960,16 @@ CLSS public abstract interface !annotation jakarta.ws.rs.core.Context
 intf java.lang.annotation.Annotation
 
 CLSS public jakarta.ws.rs.core.Cookie
+cons protected init(jakarta.ws.rs.core.Cookie$AbstractCookieBuilder<?>)
 cons public init(java.lang.String,java.lang.String)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 cons public init(java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 cons public init(java.lang.String,java.lang.String,java.lang.String,java.lang.String,int)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 fld public final static int DEFAULT_VERSION = 1
+innr public abstract static AbstractCookieBuilder
+innr public static Builder
 meth public boolean equals(java.lang.Object)
 meth public int getVersion()
 meth public int hashCode()
@@ -977,6 +983,23 @@ meth public static jakarta.ws.rs.core.Cookie valueOf(java.lang.String)
  anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 supr java.lang.Object
 hfds HEADER_DELEGATE,domain,name,path,value,version
+
+CLSS public abstract static jakarta.ws.rs.core.Cookie$AbstractCookieBuilder<%0 extends jakarta.ws.rs.core.Cookie$AbstractCookieBuilder<{jakarta.ws.rs.core.Cookie$AbstractCookieBuilder%0}>>
+ outer jakarta.ws.rs.core.Cookie
+cons public init(java.lang.String)
+meth public abstract jakarta.ws.rs.core.Cookie build()
+meth public {jakarta.ws.rs.core.Cookie$AbstractCookieBuilder%0} domain(java.lang.String)
+meth public {jakarta.ws.rs.core.Cookie$AbstractCookieBuilder%0} path(java.lang.String)
+meth public {jakarta.ws.rs.core.Cookie$AbstractCookieBuilder%0} value(java.lang.String)
+meth public {jakarta.ws.rs.core.Cookie$AbstractCookieBuilder%0} version(int)
+supr java.lang.Object
+hfds domain,name,path,value,version
+
+CLSS public static jakarta.ws.rs.core.Cookie$Builder
+ outer jakarta.ws.rs.core.Cookie
+cons public init(java.lang.String)
+meth public jakarta.ws.rs.core.Cookie build()
+supr jakarta.ws.rs.core.Cookie$AbstractCookieBuilder<jakarta.ws.rs.core.Cookie$Builder>
 
 CLSS public abstract interface jakarta.ws.rs.core.EntityPart
 innr public abstract interface static Builder
@@ -1235,18 +1258,31 @@ meth public abstract void putSingle({jakarta.ws.rs.core.MultivaluedMap%0},{jakar
 meth public abstract {jakarta.ws.rs.core.MultivaluedMap%1} getFirst({jakarta.ws.rs.core.MultivaluedMap%0})
 
 CLSS public jakarta.ws.rs.core.NewCookie
+cons protected init(jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder<?>)
 cons public init(jakarta.ws.rs.core.Cookie)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 cons public init(jakarta.ws.rs.core.Cookie,java.lang.String,int,boolean)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 cons public init(jakarta.ws.rs.core.Cookie,java.lang.String,int,java.util.Date,boolean,boolean)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 cons public init(jakarta.ws.rs.core.Cookie,java.lang.String,int,java.util.Date,boolean,boolean,jakarta.ws.rs.core.NewCookie$SameSite)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 cons public init(java.lang.String,java.lang.String)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 cons public init(java.lang.String,java.lang.String,java.lang.String,java.lang.String,int,java.lang.String,int,boolean)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 cons public init(java.lang.String,java.lang.String,java.lang.String,java.lang.String,int,java.lang.String,int,java.util.Date,boolean,boolean)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 cons public init(java.lang.String,java.lang.String,java.lang.String,java.lang.String,int,java.lang.String,int,java.util.Date,boolean,boolean,jakarta.ws.rs.core.NewCookie$SameSite)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 cons public init(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,int,boolean)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 cons public init(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,int,boolean,boolean)
+ anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 fld public final static int DEFAULT_MAX_AGE = -1
+innr public abstract static AbstractNewCookieBuilder
 innr public final static !enum SameSite
+innr public static Builder
 meth public boolean equals(java.lang.Object)
 meth public boolean isHttpOnly()
 meth public boolean isSecure()
@@ -1262,6 +1298,27 @@ meth public static jakarta.ws.rs.core.NewCookie valueOf(java.lang.String)
  anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
 supr jakarta.ws.rs.core.Cookie
 hfds DELEGATE,comment,expiry,httpOnly,maxAge,sameSite,secure
+
+CLSS public abstract static jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder<%0 extends jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder<{jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder%0}>>
+ outer jakarta.ws.rs.core.NewCookie
+cons public init(jakarta.ws.rs.core.Cookie)
+cons public init(java.lang.String)
+meth public abstract jakarta.ws.rs.core.NewCookie build()
+meth public {jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder%0} comment(java.lang.String)
+meth public {jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder%0} expiry(java.util.Date)
+meth public {jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder%0} httpOnly(boolean)
+meth public {jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder%0} maxAge(int)
+meth public {jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder%0} sameSite(jakarta.ws.rs.core.NewCookie$SameSite)
+meth public {jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder%0} secure(boolean)
+supr jakarta.ws.rs.core.Cookie$AbstractCookieBuilder<jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder<{jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder%0}>>
+hfds comment,expiry,httpOnly,maxAge,sameSite,secure
+
+CLSS public static jakarta.ws.rs.core.NewCookie$Builder
+ outer jakarta.ws.rs.core.NewCookie
+cons public init(jakarta.ws.rs.core.Cookie)
+cons public init(java.lang.String)
+meth public jakarta.ws.rs.core.NewCookie build()
+supr jakarta.ws.rs.core.NewCookie$AbstractNewCookieBuilder<jakarta.ws.rs.core.NewCookie$Builder>
 
 CLSS public final static !enum jakarta.ws.rs.core.NewCookie$SameSite
  outer jakarta.ws.rs.core.NewCookie
@@ -1402,6 +1459,7 @@ fld public final static jakarta.ws.rs.core.Response$Status INTERNAL_SERVER_ERROR
 fld public final static jakarta.ws.rs.core.Response$Status LENGTH_REQUIRED
 fld public final static jakarta.ws.rs.core.Response$Status METHOD_NOT_ALLOWED
 fld public final static jakarta.ws.rs.core.Response$Status MOVED_PERMANENTLY
+fld public final static jakarta.ws.rs.core.Response$Status MULTIPLE_CHOICES
 fld public final static jakarta.ws.rs.core.Response$Status NETWORK_AUTHENTICATION_REQUIRED
 fld public final static jakarta.ws.rs.core.Response$Status NOT_ACCEPTABLE
 fld public final static jakarta.ws.rs.core.Response$Status NOT_FOUND
@@ -1411,6 +1469,7 @@ fld public final static jakarta.ws.rs.core.Response$Status NO_CONTENT
 fld public final static jakarta.ws.rs.core.Response$Status OK
 fld public final static jakarta.ws.rs.core.Response$Status PARTIAL_CONTENT
 fld public final static jakarta.ws.rs.core.Response$Status PAYMENT_REQUIRED
+fld public final static jakarta.ws.rs.core.Response$Status PERMANENT_REDIRECT
 fld public final static jakarta.ws.rs.core.Response$Status PRECONDITION_FAILED
 fld public final static jakarta.ws.rs.core.Response$Status PRECONDITION_REQUIRED
 fld public final static jakarta.ws.rs.core.Response$Status PROXY_AUTHENTICATION_REQUIRED
@@ -1425,6 +1484,7 @@ fld public final static jakarta.ws.rs.core.Response$Status SERVICE_UNAVAILABLE
 fld public final static jakarta.ws.rs.core.Response$Status TEMPORARY_REDIRECT
 fld public final static jakarta.ws.rs.core.Response$Status TOO_MANY_REQUESTS
 fld public final static jakarta.ws.rs.core.Response$Status UNAUTHORIZED
+fld public final static jakarta.ws.rs.core.Response$Status UNAVAILABLE_FOR_LEGAL_REASONS
 fld public final static jakarta.ws.rs.core.Response$Status UNSUPPORTED_MEDIA_TYPE
 fld public final static jakarta.ws.rs.core.Response$Status USE_PROXY
 innr public final static !enum Family

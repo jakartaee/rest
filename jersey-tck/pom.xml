@@ -122,7 +122,6 @@
         </profile>
     </profiles>
 
-
     <build>	    
     <plugins>
             <plugin>
@@ -305,7 +304,7 @@
                         <configuration>
                             <dependenciesToScan>jakarta.ws.rs:jakarta.ws.rs-tck</dependenciesToScan>
                             <systemPropertyVariables>
-                                <web.home>${project.build.directory}/glassfish6/glassfish</web.home>
+                                <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>
                                 <servlet_adaptor>org.glassfish.jersey.servlet.ServletContainer</servlet_adaptor>
                                 <webServerHost>localhost</webServerHost>
                                 <webServerPort>8080</webServerPort>

@@ -63,7 +63,7 @@
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-tck</artifactId>
-            <version>3.1.0</version>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -111,6 +111,11 @@
             <artifactId>sigtest-maven-plugin</artifactId>
             <version>1.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-sse</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
 
 
     </dependencies>
@@ -122,45 +127,8 @@
         </profile>
     </profiles>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.0.0-M5</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                        <configuration>
-                            <dependenciesToScan>jakarta.ws.rs:jakarta.ws.rs-tck</dependenciesToScan>
-                            <systemPropertyVariables>
-                                <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>
-                                <servlet_adaptor>org.glassfish.jersey.servlet.ServletContainer</servlet_adaptor>
-                                <webServerHost>localhost</webServerHost>
-                                <webServerPort>8080</webServerPort>
-                                <junit.log.traceflag>true</junit.log.traceflag>
-                                <user>j2ee</user>
-                                <password>j2ee</password>
-                                <authuser>javajoe</authuser>
-                                <authpassword>javajoe</authpassword>
-                                <porting.ts.url.class.1>jakarta.ws.rs.tck.lib.implementation.sun.common.SunRIURL</porting.ts.url.class.1>
-                                <jimage.dir>${project.build.directory}/jdk11-bundle</jimage.dir>
-                                <optional.tech.packages.to.ignore>jakarta.xml.bind</optional.tech.packages.to.ignore>
-                                <signature.mapfile>${project.build.directory}/signaturedirectory/jakarta/ws/rs/tck/signaturetest/sig-test.map</signature.mapfile>
-                                <signature.repositoryDir>${project.build.directory}/signaturedirectory/jakarta/ws/rs/tck/signaturetest</signature.repositoryDir>
-                                <signature.packagelist>${project.build.directory}/signaturedirectory/jakarta/ws/rs/tck/signaturetest/sig-test-pkg-list.txt</signature.packagelist>
-                                <signature.sigTestClasspath>${project.build.directory}/glassfish6/glassfish/modules/jakarta.ws.rs-api.jar:${project.build.directory}/glassfish6/glassfish/modules/jakarta.xml.bind-api.jar:${project.build.directory}/jdk11-bundle/java.base:${project.build.directory}/jdk11-bundle/java.rmi:${project.build.directory}/jdk11-bundle/java.sql:${project.build.directory}/jdk11-bundle/java.naming</signature.sigTestClasspath>
-                            </systemPropertyVariables>
-                            <environmentVariables>
-                                <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>
-                            </environmentVariables>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
+    <build>	    
+    <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -296,6 +264,92 @@
                         <!-- We need the signature file, mapping file and package list file -->
                         <includes>**/*sig-test*,**/*jakarta.ws.rs.sig_*</includes>
                         <outputDirectory>${project.build.directory}/signaturedirectory</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <executions>
+                    <execution>
+                        <id>StartDomain1</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
+                            <executable>asadmin</executable>
+                            <arguments>
+                                <argument>start-domain</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Enable Trace requests</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
+                            <executable>asadmin</executable>
+                            <arguments>
+                                <argument>set</argument>
+                                <argument>server-config.network-config.protocols.protocol.http-listener-1.http.trace-enabled=true</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>StopDomain2</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
+                            <executable>asadmin</executable>
+                            <arguments>
+                                <argument>stop-domain</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <dependenciesToScan>jakarta.ws.rs:jakarta.ws.rs-tck</dependenciesToScan>
+                            <systemPropertyVariables>
+                                <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>
+                                <servlet_adaptor>org.glassfish.jersey.servlet.ServletContainer</servlet_adaptor>
+                                <webServerHost>localhost</webServerHost>
+                                <webServerPort>8080</webServerPort>
+                                <junit.log.traceflag>true</junit.log.traceflag>
+                                <user>j2ee</user>
+                                <password>j2ee</password>
+                                <authuser>javajoe</authuser>
+                                <authpassword>javajoe</authpassword>
+                                <porting.ts.url.class.1>jakarta.ws.rs.tck.lib.implementation.sun.common.SunRIURL</porting.ts.url.class.1>
+                                <jimage.dir>${project.build.directory}/jdk11-bundle</jimage.dir>
+                                <optional.tech.packages.to.ignore>jakarta.xml.bind</optional.tech.packages.to.ignore>
+                                <signature.mapfile>${project.build.directory}/signaturedirectory/jakarta/ws/rs/tck/signaturetest/sig-test.map</signature.mapfile>
+                                <signature.repositoryDir>${project.build.directory}/signaturedirectory/jakarta/ws/rs/tck/signaturetest</signature.repositoryDir>
+                                <signature.packagelist>${project.build.directory}/signaturedirectory/jakarta/ws/rs/tck/signaturetest/sig-test-pkg-list.txt</signature.packagelist>
+                                <signature.sigTestClasspath>${project.build.directory}/glassfish6/glassfish/modules/jakarta.ws.rs-api.jar:${project.build.directory}/glassfish6/glassfish/modules/jakarta.xml.bind-api.jar:${project.build.directory}/jdk11-bundle/java.base:${project.build.directory}/jdk11-bundle/java.rmi:${project.build.directory}/jdk11-bundle/java.sql:${project.build.directory}/jdk11-bundle/java.naming</signature.sigTestClasspath>
+                            </systemPropertyVariables>
+                            <environmentVariables>
+                                <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>
+                            </environmentVariables>
                         </configuration>
                     </execution>
                 </executions>

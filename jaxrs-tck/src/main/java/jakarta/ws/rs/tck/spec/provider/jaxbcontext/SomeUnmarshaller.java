@@ -48,7 +48,7 @@ import jakarta.xml.bind.attachment.AttachmentUnmarshaller;
 public class SomeUnmarshaller implements Unmarshaller {
 
   @Override
-  public <A extends XmlAdapter> A getAdapter(Class<A> type) {
+  public <A extends XmlAdapter<?, ?>> A getAdapter(Class<A> type) {
     return null;
   }
 
@@ -83,16 +83,11 @@ public class SomeUnmarshaller implements Unmarshaller {
   }
 
   @Override
-  public boolean isValidating() throws JAXBException {
-    return false;
-  }
-
-  @Override
   public void setAdapter(XmlAdapter adapter) {
   }
 
   @Override
-  public <A extends XmlAdapter> void setAdapter(Class<A> type, A adapter) {
+  public <A extends XmlAdapter<?, ?>> void setAdapter(Class<A> type, A adapter) {
   }
 
   @Override
@@ -114,10 +109,6 @@ public class SomeUnmarshaller implements Unmarshaller {
 
   @Override
   public void setSchema(Schema schema) {
-  }
-
-  @Override
-  public void setValidating(boolean validating) throws JAXBException {
   }
 
   @Override

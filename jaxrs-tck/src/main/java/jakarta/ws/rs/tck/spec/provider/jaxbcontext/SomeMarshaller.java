@@ -45,7 +45,7 @@ import jakarta.xml.bind.attachment.AttachmentMarshaller;
 public class SomeMarshaller implements Marshaller {
 
   @Override
-  public <A extends XmlAdapter> A getAdapter(Class<A> arg0) {
+  public <A extends XmlAdapter<?, ?>> A getAdapter(Class<A> arg0) {
     return null;
   }
 
@@ -165,11 +165,11 @@ public class SomeMarshaller implements Marshaller {
   }
 
   @Override
-  public void setAdapter(XmlAdapter adapter) {
+  public <A extends XmlAdapter<?, ?>> void setAdapter( A adapter ) {
   }
 
   @Override
-  public <A extends XmlAdapter> void setAdapter(Class<A> type, A adapter) {
+  public <A extends XmlAdapter<?, ?>> void setAdapter( Class<A> type, A adapter ) {
   }
 
   @Override

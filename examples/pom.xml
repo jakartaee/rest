@@ -22,7 +22,7 @@
     <parent>
         <groupId>jakarta.ws.rs</groupId>
         <artifactId>all</artifactId>
-        <version>3.1-SNAPSHOT</version>
+        <version>3.1.0</version>
     </parent>
 
     <url>https://github.com/jax-rs/api</url>
@@ -245,7 +245,7 @@
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>3.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
@@ -283,20 +283,6 @@
             <artifactId>microprofile-config-api</artifactId>
             <version>${microprofile.config.version}</version>
         </dependency>
-
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>repo.eclipse.org</id>
-            <name>JAX-RS API Repository - Releases</name>
-            <url>https://repo.eclipse.org/content/repositories/jax-rs-api-releases/</url>
-        </repository>
-
-        <snapshotRepository>
-            <id>repo.eclipse.org</id>
-            <name>JAX-RS API Repository - Snapshots</name>
-            <url>https://repo.eclipse.org/content/repositories/jax-rs-api-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>

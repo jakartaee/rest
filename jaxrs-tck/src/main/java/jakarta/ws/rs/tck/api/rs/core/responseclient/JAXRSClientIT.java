@@ -66,10 +66,12 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   protected final Response.Status[] resp_status = { Response.Status.OK,
       Response.Status.CREATED, Response.Status.ACCEPTED,
       Response.Status.NO_CONTENT, Response.Status.RESET_CONTENT,
-      Response.Status.PARTIAL_CONTENT, Response.Status.MOVED_PERMANENTLY,
+      Response.Status.PARTIAL_CONTENT, Status.MULTIPLE_CHOICES,
+      Response.Status.MOVED_PERMANENTLY,
       Response.Status.FOUND, Response.Status.SEE_OTHER,
       Response.Status.NOT_MODIFIED, Response.Status.USE_PROXY,
-      Response.Status.TEMPORARY_REDIRECT, Response.Status.BAD_REQUEST,
+      Response.Status.TEMPORARY_REDIRECT, Status.PERMANENT_REDIRECT,
+      Response.Status.BAD_REQUEST,
       Response.Status.UNAUTHORIZED, Response.Status.PAYMENT_REQUIRED,
       Response.Status.FORBIDDEN, Response.Status.NOT_FOUND,
       Response.Status.METHOD_NOT_ALLOWED, Response.Status.NOT_ACCEPTABLE,
@@ -84,6 +86,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       Response.Status.EXPECTATION_FAILED, Response.Status.PRECONDITION_REQUIRED,
       Response.Status.TOO_MANY_REQUESTS,
       Response.Status.REQUEST_HEADER_FIELDS_TOO_LARGE,
+      Response.Status.UNAVAILABLE_FOR_LEGAL_REASONS,
       Response.Status.INTERNAL_SERVER_ERROR, Response.Status.NOT_IMPLEMENTED,
       Response.Status.BAD_GATEWAY, Response.Status.SERVICE_UNAVAILABLE,
       Response.Status.GATEWAY_TIMEOUT,
@@ -91,9 +94,9 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       Response.Status.NETWORK_AUTHENTICATION_REQUIRED };
 
   // name it to ensure sorting
-  protected final int[] status_codes = { 200, 201, 202, 204, 205, 206, 301, 302,
-      303, 304, 305, 307, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410,
-      411, 412, 413, 414, 415, 416, 417, 428, 429, 431, 500, 501, 502, 503, 504,
+  protected final int[] status_codes = { 200, 201, 202, 204, 205, 206, 300, 301, 302,
+      303, 304, 305, 307, 308, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410,
+      411, 412, 413, 414, 415, 416, 417, 428, 429, 431, 451, 500, 501, 502, 503, 504,
       505, 511 };
 
   // name it to ensure sorting
@@ -104,6 +107,8 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       Response.Status.Family.REDIRECTION, Response.Status.Family.REDIRECTION,
       Response.Status.Family.REDIRECTION, Response.Status.Family.REDIRECTION,
       Response.Status.Family.REDIRECTION, Response.Status.Family.REDIRECTION,
+      Response.Status.Family.REDIRECTION, Response.Status.Family.REDIRECTION,
+      Response.Status.Family.CLIENT_ERROR,
       Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
       Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
       Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
@@ -126,8 +131,8 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       Response.Status.Family.SERVER_ERROR, Response.Status.Family.SUCCESSFUL };
 
   protected final String[] status = { "OK", "Created", "Accepted", "No Content",
-      "Reset Content", "Partial Content", "Moved Permanently", "Found",
-      "See Other", "Not Modified", "Use Proxy", "Temporary Redirect",
+      "Reset Content", "Partial Content", "Multiple Choices", "Moved Permanently", "Found",
+      "See Other", "Not Modified", "Use Proxy", "Temporary Redirect", "Permanent Redirect",
       "Bad Request", "Unauthorized", "Payment Required", "Forbidden",
       "Not Found", "Method Not Allowed", "Not Acceptable",
       "Proxy Authentication Required", "Request Timeout", "Conflict", "Gone",
@@ -135,7 +140,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       "Request-URI Too Long", "Unsupported Media Type",
       "Requested Range Not Satisfiable", "Expectation Failed",
       "Precondition Required", "Too Many Requests",
-      "Request Header Fields Too Large", "Internal Server Error",
+      "Request Header Fields Too Large", "Unavailable For Legal Reasons", "Internal Server Error",
       "Not Implemented", "Bad Gateway", "Service Unavailable",
       "Gateway Timeout", "HTTP Version Not Supported",
       "Network Authentication Required" };

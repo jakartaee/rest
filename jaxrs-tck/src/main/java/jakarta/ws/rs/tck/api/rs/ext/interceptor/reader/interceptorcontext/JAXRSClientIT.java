@@ -26,7 +26,6 @@ import java.lang.annotation.Annotation;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
@@ -47,10 +46,13 @@ import jakarta.ws.rs.tck.lib.util.TestUtil;
  *                     webServerPort;
  *                     ts_home;
  */
-@Disabled("Tests fail with IllegalStateException: HttpRequest is null")
 public class JAXRSClientIT extends ReaderClient<ContextOperation> {
 
   private static final long serialVersionUID = -8828149277776372718L;
+
+  public JAXRSClientIT() {
+    setup();
+  }
 
   @BeforeEach
   void logStartTest(TestInfo testInfo) {

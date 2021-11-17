@@ -47,12 +47,30 @@
                 </repository>
             </distributionManagement>
         </profile>
+        <profile>
+            <id>dependentModules</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>jaxrs.all.build</name>
+                </property>
+            </activation>
+            <modules>
+                <module>jaxrs-api</module>
+                <module>jaxrs-tck</module>
+                <module>examples</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>dependentSpecification</id>
+            <activation>
+                <property>
+                    <name>jaxrs.all.build</name>
+                </property>
+            </activation>
+            <modules>
+                <module>jaxrs-spec</module>
+            </modules>
+        </profile>
     </profiles>
-
-    <modules>
-        <module>jaxrs-api</module>
-        <module>jaxrs-spec</module>
-        <module>jaxrs-tck</module>
-        <module>examples</module>
-    </modules>
 </project>

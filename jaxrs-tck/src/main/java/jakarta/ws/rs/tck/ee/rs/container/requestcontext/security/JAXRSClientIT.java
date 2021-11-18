@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,7 +18,6 @@ package jakarta.ws.rs.tck.ee.rs.container.requestcontext.security;
 
 import java.io.InputStream;
 import java.io.IOException;
-import java.util.Properties;
 import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
@@ -30,10 +29,8 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
@@ -79,7 +76,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_container_requestcontext_security_web.war");
     archive.addClasses(TSAppConfig.class, Resource.class, RequestFilter.class);
-    archive.addAsResource("jakarta/ws/rs/tck/ee/rs/container/requestcontext/security/jaxrs_ee_rs_container_requestcontext_security_web.war.sun-web.xml");
+    archive.addAsWebInfResource("jakarta/ws/rs/tck/ee/rs/container/requestcontext/security/jaxrs_ee_rs_container_requestcontext_security_web.war.sun-web.xml", "sun-web.xml");
     archive.setWebXML(new StringAsset(webXml));
     return archive;
 
@@ -102,7 +99,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * @test_Strategy: Get the injectable security context information for the
    * current request, the user is authenticated.
    */
-  //@Test
+  @Test
   public void getSecurityContextTest() throws Fault {
     setProperty(Property.BASIC_AUTH_USER, user);
     setProperty(Property.BASIC_AUTH_PASSWD, password);

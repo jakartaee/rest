@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -80,8 +80,7 @@ public class JAXRSBasicClientIT
       jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Scheme.class,
       jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Role.class);
     archive.setWebXML(new StringAsset(webXml));
-    archive.addAsResource("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/jaxrs_ee_core_securitycontext_basic_web.ear.sun-application.xml");
-    archive.addAsResource("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/jaxrs_ee_core_securitycontext_basic_web.war.sun-web.xml");
+    archive.addAsWebInfResource("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/jaxrs_ee_core_securitycontext_basic_web.war.sun-web.xml", "sun-web.xml");
     return archive;
 
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -17,11 +17,8 @@
 package jakarta.ws.rs.tck.jaxrs21.ee.sse.ssebroadcaster;
 
 import java.util.List;
-import java.util.Properties;
 import java.io.InputStream;
 import java.io.IOException;
-
-import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
@@ -38,10 +35,8 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
@@ -64,8 +59,8 @@ public class JAXRSClientIT extends SSEJAXRSClient {
   private static final int CLIENTS = 5;
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_jaxrs21_ee_sse_ssebroadcaster_web");
+    setup();
   }
 
   @Override

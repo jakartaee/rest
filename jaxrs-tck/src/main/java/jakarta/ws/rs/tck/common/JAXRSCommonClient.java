@@ -533,15 +533,19 @@ public abstract class JAXRSCommonClient {
     return sb.toString();
   }
 
-  public static String editWebXmlString(InputStream inStream) throws IOException{
+  public static String toString(InputStream inStream) throws IOException{
     String line;
-    String webXmlTemplate = "";
+    String str = "";
     try (BufferedReader bufReader = new BufferedReader(new InputStreamReader(inStream, StandardCharsets.UTF_8))) {
       while ((line = bufReader.readLine()) != null) {
-        webXmlTemplate = webXmlTemplate + line + System.lineSeparator();
+        str = str + line + System.lineSeparator();
       }
+      return str;
     }
-    
+  }
+  
+  public static String editWebXmlString(InputStream inStream) throws IOException{
+    String webXmlTemplate = toString(inStream);
     String webXml = webXmlTemplate.replaceAll("servlet_adaptor", servletAdaptor);
     return webXml;
   }

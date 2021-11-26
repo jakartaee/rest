@@ -16,8 +16,11 @@
 
 package jakarta.ws.rs.tck.ee.rs.container.requestcontext.security;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.IOException;
+import java.util.Properties;
+
 import jakarta.ws.rs.tck.lib.util.TestUtil;
 
 import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
@@ -70,14 +73,21 @@ public class JAXRSClientIT extends JaxrsCommonClient {
 
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException {
+    Properties properties = getVendorDescriptorProperties();
+    String descriptorName = properties.getProperty(VENDOR_DESCRIPTOR_NAME);
+    String descriptorFile = properties.getProperty("jakarta.ws.rs.tck.ee.rs.container.requestcontext.security");
 
     InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/container/requestcontext/security/web.xml.template");
     String webXml = editWebXmlString(inStream);
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_container_requestcontext_security_web.war");
     archive.addClasses(TSAppConfig.class, Resource.class, RequestFilter.class);
-    archive.addAsWebInfResource("jakarta/ws/rs/tck/ee/rs/container/requestcontext/security/jaxrs_ee_rs_container_requestcontext_security_web.war.sun-web.xml", "sun-web.xml");
     archive.setWebXML(new StringAsset(webXml));
+
+    //archive.addAsWebInfResource("jakarta/ws/rs/tck/ee/rs/container/requestcontext/security/jaxrs_ee_rs_container_requestcontext_security_web.war.sun-web.xml", "sun-web.xml");
+    TestUtil.logMsg("Using " + properties.getProperty(VENDOR_DESCRIPTORS) + "/" + descriptorFile);
+    archive.addAsWebInfResource(new File(properties.getProperty(VENDOR_DESCRIPTORS) + "/" + descriptorFile), descriptorName);
+
     return archive;
 
   }

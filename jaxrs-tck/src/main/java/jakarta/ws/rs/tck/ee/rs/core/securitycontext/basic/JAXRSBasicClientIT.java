@@ -16,8 +16,11 @@
 
 package jakarta.ws.rs.tck.ee.rs.core.securitycontext.basic;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.IOException;
+import java.util.Properties;
+
 import jakarta.ws.rs.tck.lib.util.TestUtil;
 import jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet;
 import jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Scheme;
@@ -29,7 +32,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
@@ -69,6 +71,9 @@ public class JAXRSBasicClientIT
 
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException {
+    Properties properties = getVendorDescriptorProperties();
+    String descriptorName = properties.getProperty(VENDOR_DESCRIPTOR_NAME);
+    String descriptorFile = properties.getProperty("jakarta.ws.rs.tck.ee.rs.core.securitycontext.basic");
 
     InputStream inStream = JAXRSBasicClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/web.xml.template");
     String webXml = editWebXmlString(inStream);
@@ -80,7 +85,11 @@ public class JAXRSBasicClientIT
       jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Scheme.class,
       jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Role.class);
     archive.setWebXML(new StringAsset(webXml));
-    archive.addAsWebInfResource("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/jaxrs_ee_core_securitycontext_basic_web.war.sun-web.xml", "sun-web.xml");
+
+    //archive.addAsWebInfResource("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/jaxrs_ee_core_securitycontext_basic_web.war.sun-web.xml", "sun-web.xml");
+    TestUtil.logMsg("Using " + properties.getProperty(VENDOR_DESCRIPTORS) + "/" + descriptorFile);
+    archive.addAsWebInfResource(new File(properties.getProperty(VENDOR_DESCRIPTORS) + "/" + descriptorFile), descriptorName);
+
     return archive;
 
   }

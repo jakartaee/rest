@@ -392,6 +392,7 @@
                                 <password>j2ee</password>
                                 <authuser>javajoe</authuser>
                                 <authpassword>javajoe</authpassword>
+                                <vendor.descriptors>${project.basedir}/descriptors</vendor.descriptors>
                                 <porting.ts.url.class.1>jakarta.ws.rs.tck.lib.implementation.sun.common.SunRIURL</porting.ts.url.class.1>
                             </systemPropertyVariables>
                             <environmentVariables>

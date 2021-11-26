@@ -133,6 +133,16 @@ public abstract class JAXRSCommonClient {
   protected static final String GF_SUFFIX = ".gf";
 
   /**
+   * Folder name of vendor descriptor property files
+   */
+  protected static final String VENDOR_DESCRIPTORS = "vendor.descriptors";
+
+  /**
+   * Vendor descriptor name
+   */
+  protected static final String VENDOR_DESCRIPTOR_NAME = "vendor.descriptor.name";
+
+  /**
    * JSP suffix
    */
   /**
@@ -1203,6 +1213,22 @@ public abstract class JAXRSCommonClient {
       this.t = (Exception) cause;
       return this;
     }
+  }
+
+  protected static Properties getVendorDescriptorProperties() throws IOException {
+    Properties vendorDescriptors = new Properties();
+    String propertyFolder = System.getProperty(VENDOR_DESCRIPTORS);
+    if (vendorDescriptors == null) {
+      throw new IOException(VENDOR_DESCRIPTORS + " property not set");
+    }
+
+    vendorDescriptors.load(new FileReader(propertyFolder + "/descriptor.properties"));
+    if (vendorDescriptors.getProperty(VENDOR_DESCRIPTOR_NAME) == null) {
+      throw new IOException(VENDOR_DESCRIPTOR_NAME + " property not defined in descriptor.properties");
+    }
+
+    vendorDescriptors.put(VENDOR_DESCRIPTORS, propertyFolder);
+    return vendorDescriptors;
   }
 
 }

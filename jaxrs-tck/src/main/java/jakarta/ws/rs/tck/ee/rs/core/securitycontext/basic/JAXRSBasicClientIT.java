@@ -24,14 +24,13 @@ import jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Scheme;
 
 import jakarta.ws.rs.core.Response;
 
+import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
@@ -67,7 +66,7 @@ public class JAXRSBasicClientIT
     TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
   }
 
-  @Deployment(testable = false)
+  @Deployment(testable = true)
   public static WebArchive createDeployment() throws IOException {
 
     InputStream inStream = JAXRSBasicClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/web.xml.template");
@@ -80,7 +79,7 @@ public class JAXRSBasicClientIT
       jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Scheme.class,
       jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Role.class);
     archive.setWebXML(new StringAsset(webXml));
-    archive.addAsWebInfResource("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/jaxrs_ee_core_securitycontext_basic_web.war.sun-web.xml", "sun-web.xml");
+//    archive.addAsWebInfResource("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/jaxrs_ee_core_securitycontext_basic_web.war.sun-web.xml", "sun-web.xml");
     return archive;
 
   }
@@ -95,6 +94,7 @@ public class JAXRSBasicClientIT
    * @test_Strategy: Send no authorization, make sure of 401 response
    */
   @Test
+  @RunAsClient
   public void noAuthorizationTest() throws Fault {
     super.noAuthorizationTest();
   }
@@ -108,6 +108,7 @@ public class JAXRSBasicClientIT
    * @test_Strategy: Send basic authorization, check security context
    */
   @Test
+  @RunAsClient
   public void basicAuthorizationAdminTest() throws Fault {
     setProperty(Property.STATUS_CODE, getStatusCode(Response.Status.OK));
     setProperty(Property.BASIC_AUTH_USER, user);
@@ -128,6 +129,7 @@ public class JAXRSBasicClientIT
    * @test_Strategy: Send basic authorization, check security context
    */
   @Test
+  @RunAsClient
   public void basicAuthorizationIncorrectUserTest() throws Fault {
     setProperty(Property.STATUS_CODE,
         getStatusCode(Response.Status.UNAUTHORIZED));
@@ -144,6 +146,7 @@ public class JAXRSBasicClientIT
    * @test_Strategy: Send basic authorization, check security context
    */
   @Test
+  @RunAsClient
   public void basicAuthorizationIncorrectPasswordTest() throws Fault {
     setProperty(Property.STATUS_CODE,
         getStatusCode(Response.Status.UNAUTHORIZED));
@@ -162,6 +165,7 @@ public class JAXRSBasicClientIT
    * context
    */
   @Test
+  @RunAsClient
   public void basicAuthorizationStandardUserTest() throws Fault {
     setProperty(Property.STATUS_CODE, getStatusCode(Response.Status.OK));
     setProperty(Property.BASIC_AUTH_USER, authuser);

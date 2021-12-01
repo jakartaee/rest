@@ -23,7 +23,7 @@
     <groupId>org.glassfish.jersey.core</groupId>
     <artifactId>jersey-tck</artifactId>
     <version>3.1.0</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>Jakarta RESTful WS Compliance</name>
     <description>This test verifies the compliance of Eclipse Jersey with Jakarta REST</description>

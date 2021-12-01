@@ -21,7 +21,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Properties;
+import java.util.stream.Collectors;
 import java.nio.charset.StandardCharsets;
 
 
@@ -49,7 +49,7 @@ import jakarta.ws.rs.core.Response;
  */
 //public abstract class JAXRSCommonClient extends ServiceEETest {
 public abstract class JAXRSCommonClient {
-
+  @SuppressWarnings("unused")
   private static final long serialVersionUID = 1L;
 
   /**
@@ -533,17 +533,14 @@ public abstract class JAXRSCommonClient {
     return sb.toString();
   }
 
-  public static String editWebXmlString(InputStream inStream) throws IOException{
-    String line;
-    String webXmlTemplate = "";
+  public static String toString(InputStream inStream) throws IOException{
     try (BufferedReader bufReader = new BufferedReader(new InputStreamReader(inStream, StandardCharsets.UTF_8))) {
-      while ((line = bufReader.readLine()) != null) {
-        webXmlTemplate = webXmlTemplate + line + System.lineSeparator();
-      }
+      return bufReader.lines().collect(Collectors.joining(System.lineSeparator()));
     }
-    
-    String webXml = webXmlTemplate.replaceAll("servlet_adaptor", servletAdaptor);
-    return webXml;
+  }
+
+  public static String editWebXmlString(InputStream inStream) throws IOException{
+    return toString(inStream).replaceAll("servlet_adaptor", servletAdaptor);
   }
 
   /**

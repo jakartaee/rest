@@ -55,8 +55,11 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   public static WebArchive createDeployment() throws IOException{
     InputStream inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/resourceconstructor/web.xml.template");
     String webXml = editWebXmlString(inStream);
+    inStream = JAXRSClientIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/spec/resourceconstructor/beans.xml");
+    String beansXml = toString(inStream);
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_spec_resourceconstructor_web.war");
     archive.addClasses(TSAppConfig.class, Resource.class, CookieResource.class, HeaderResource.class, MatrixResource.class, PathResource.class, QueryResource.class);
+    archive.addAsWebInfResource(new StringAsset(beansXml), "beans.xml");
     archive.setWebXML(new StringAsset(webXml));
     return archive;
   }

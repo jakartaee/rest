@@ -77,10 +77,17 @@ public class JAXRSClientIT extends JaxrsCommonClient {
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_ee_rs_container_requestcontext_security_web.war");
     archive.addClasses(TSAppConfig.class, Resource.class, RequestFilter.class);
-//    archive.addAsWebInfResource("jakarta/ws/rs/tck/ee/rs/container/requestcontext/security/jaxrs_ee_rs_container_requestcontext_security_web.war.sun-web.xml", "sun-web.xml");
+
+//  This TCK test needs additional information about roles and principals (DIRECTOR:j2ee).
+//  In GlassFish, the following sun-web.xml descriptor can be added:
+//  archive.addAsWebInfResource("jakarta/ws/rs/tck/ee/rs/container/requestcontext/security/jaxrs_ee_rs_container_requestcontext_security_web.war.sun-web.xml", "sun-web.xml");
+
+//  Vendor implementations are encouraged to utilize Arqullian SPI (LoadableExtension, ApplicationArchiveProcessor)
+//  to extend the archive with vendor deployment descriptors as needed.
+//  For Jersey in GlassFish, this is demonstrated in the jersey-tck module of the Jakarta RESTful Web Services GitHub repository.
+
     archive.setWebXML(new StringAsset(webXml));
     return archive;
-
   }
 
   public void usersetup() {

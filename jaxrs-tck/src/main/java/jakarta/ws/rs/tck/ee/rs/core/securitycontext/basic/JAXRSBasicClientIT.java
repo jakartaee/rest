@@ -78,10 +78,17 @@ public class JAXRSBasicClientIT
       jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Security.class,
       jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Scheme.class,
       jakarta.ws.rs.tck.ee.rs.core.securitycontext.TestServlet.Role.class);
-    archive.setWebXML(new StringAsset(webXml));
-//    archive.addAsWebInfResource("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/jaxrs_ee_core_securitycontext_basic_web.war.sun-web.xml", "sun-web.xml");
-    return archive;
 
+//  This TCK test needs additional information about roles and principals (DIRECTOR:j2ee, OTHERROLE:javajoe).
+//  In GlassFish, the following sun-web.xml descriptor can be added:
+//  archive.addAsWebInfResource("jakarta/ws/rs/tck/ee/rs/core/securitycontext/basic/jaxrs_ee_core_securitycontext_basic_web.war.sun-web.xml", "sun-web.xml");
+
+//  Vendor implementations are encouraged to utilize Arqullian SPI (LoadableExtension, ApplicationArchiveProcessor)
+//  to extend the archive with vendor deployment descriptors as needed.
+//  For Jersey in GlassFish, this is demonstrated in the jersey-tck module of the Jakarta RESTful Web Services GitHub repository.
+
+    archive.setWebXML(new StringAsset(webXml));
+    return archive;
   }
 
   /* Run test */

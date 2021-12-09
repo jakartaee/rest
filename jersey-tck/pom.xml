@@ -42,6 +42,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+        </dependency>
+        
+        <dependency>
             <groupId>org.glassfish.hk2</groupId>
             <artifactId>hk2-locator</artifactId>
             <version>3.0.0</version>

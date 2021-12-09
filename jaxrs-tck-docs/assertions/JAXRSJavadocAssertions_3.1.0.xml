@@ -9810,23 +9810,6 @@
     <!-- ********************************************************************************** -->
     <!-- ********************************************************************************** -->
     <!-- MODIFIED ASSERTIONS LISTED BELOW -->
-    <!-- The original assertion is followed by the modified version -->
-    <!-- of the assertion. Users must edit the file to verify -->
-    <!-- that the modified assertion is correct. User should then -->
-    <!-- delete the original assertion or use the style sheet -->
-    <!-- that removes them automatically.  The original and modified -->
-    <!-- assertions differ by their IDs, notice the original assertion -->
-    <!-- now ends with "__OLD" -->
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>1__OLD</id>
-      <description>A list of media types. Each entry may specify a single type or consist of a comma separated list of types, with any leading or trailing white-spaces in a single type entry being ignored. For example: {"image/jpeg, image/gif ", " image/png"} Use of the comma-separated form allows definition of a common string constant for use on multiple targets.</description>
-      <package>jakarta.ws.rs</package>
-      <class-interface>Consumes</class-interface>
-      <method name="value" return-type="java.lang.String[]" />
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>1</id>
       <description>A list of media types. Each entry may specify a single type or consist of a comma separated list of types, with any leading or trailing white-spaces in a single type entry being ignored. For example: { "image/jpeg, image/gif ", " image/png" } Use of the comma-separated form allows definition of a common string constant for use on multiple targets.</description>
@@ -9834,16 +9817,6 @@
       <class-interface>Consumes</class-interface>
       <method name="value" return-type="java.lang.String[]" />
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>10__OLD</id>
-      <description>A list of media types. Each entry may specify a single type or consist of a comma separated list of types, with any leading or trailing white-spaces in a single type entry being ignored. For example: {"image/jpeg, image/gif ", " image/png"} Use of the comma-separated form allows definition of a common string constant for use on multiple targets.</description>
-      <package>jakarta.ws.rs</package>
-      <class-interface>Produces</class-interface>
-      <method name="value" return-type="java.lang.String[]" />
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>10</id>
       <description>A list of media types. Each entry may specify a single type or consist of a comma separated list of types, with any leading or trailing white-spaces in a single type entry being ignored. For example: { "image/jpeg, image/gif ", " image/png" } Use of the comma-separated form allows definition of a common string constant for use on multiple targets.</description>
@@ -9851,20 +9824,6 @@
       <class-interface>Produces</class-interface>
       <method name="value" return-type="java.lang.String[]" />
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>80__OLD</id>
-      <description>Get the values of a HTTP request header. The returned List is read-only. This is a shortcut for getRequestHeaders().get(name).</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>HttpHeaders</class-interface>
-      <method name="getRequestHeader" return-type="java.util.List">
-        <parameters>
-          <parameter>java.lang.String</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>80</id>
       <description>Get the values of a HTTP request header if the header exists on the current request. The returned value will be a read-only List if the specified header exists or null if it does not. This is a shortcut for getRequestHeaders().get(name).</description>
@@ -9876,20 +9835,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>87__OLD</id>
-      <description>Check if this media type is compatible with another media type. E.g. image/* is compatible with image/jpeg, image/png, etc. Media type parameters are ignored. The function is commutative.</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>MediaType</class-interface>
-      <method name="isCompatible" return-type="boolean">
-        <parameters>
-          <parameter>jakarta.ws.rs.core.MediaType</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>87</id>
       <description>Check if this media type is compatible with another media type. Two media types are considered to be compatible if and only if their types are equal, or one of them has a wildcard type, and their subtypes are equal or one of them has a wildcard subtype. Media type parameters are ignored. The function is commutative.</description>
@@ -9901,16 +9846,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>240__OLD</id>
-      <description>Get a read-only list of the currently matched resource class instances. Each entry is a resource class instance that matched the request URI either directly or via a sub-resource method or a sub-resource locator. Entries are ordered according to reverse request URI matching order, with the current resource first. E.g. given the following resource classes: #064;Path("foo") public class FooResource { #064;GET public String getFoo() {...} #064;Path("bar") public BarResource getBarResource() {...} } public class BarResource { #064;GET public String getBar() {...} } The values returned by this method based on request uri and where the method is called from are: Request Called from Value(s) GET /foo FooResource.getFoo FooResource GET /foo/bar FooResource.getBarResource FooResource GET /foo/bar BarResource.getBar BarResource, FooResource In case the method is invoked prior to the request matching (e.g. from a pre-matching filter), the method returns an empty list.</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>UriInfo</class-interface>
-      <method name="getMatchedResources" return-type="java.util.List" />
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>240</id>
       <description>Get a read-only list of the currently matched resource class instances. Each entry is a resource class instance that matched the request URI either directly or via a sub-resource method or a sub-resource locator. Entries are ordered according to reverse request URI matching order, with the current resource first. E.g. given the following resource classes: #064;Path("foo") public class FooResource { #064;GET public String getFoo() {...} #064;Path("bar") public BarResource getBarResource() {...} } public class BarResource { #064;GET public String getBar() {...} } The values returned by this method based on request uri and where the method is called from are: Matched resources from requests Request Called from Value(s) GET /foo FooResource.getFoo FooResource GET /foo/bar FooResource.getBarResource FooResource GET /foo/bar BarResource.getBar BarResource, FooResource In case the method is invoked prior to the request matching (e.g. from a pre-matching filter), the method returns an empty list.</description>
@@ -9918,16 +9853,6 @@
       <class-interface>UriInfo</class-interface>
       <method name="getMatchedResources" return-type="java.util.List" />
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>241__OLD</id>
-      <description>Get a read-only list of URIs for matched resources. Each entry is a relative URI that matched a resource class, a sub-resource method or a sub-resource locator. All sequences of escaped octets are decoded, equivalent to getMatchedURIs(true). Entries do not include query parameters but do include matrix parameters if present in the request URI. Entries are ordered in reverse request URI matching order, with the current resource URI first. E.g. given the following resource classes: #064;Path("foo") public class FooResource { #064;GET public String getFoo() {...} #064;Path("bar") public BarResource getBarResource() {...} } public class BarResource { #064;GET public String getBar() {...} } The values returned by this method based on request uri and where the method is called from are: Request Called from Value(s) GET /foo FooResource.getFoo foo GET /foo/bar FooResource.getBarResource foo/bar, foo GET /foo/bar BarResource.getBar foo/bar, foo In case the method is invoked prior to the request matching (e.g. from a pre-matching filter), the method returns an empty list.</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>UriInfo</class-interface>
-      <method name="getMatchedURIs" return-type="java.util.List" />
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>241</id>
       <description>Get a read-only list of URIs for matched resources. Each entry is a relative URI that matched a resource class, a sub-resource method or a sub-resource locator. All sequences of escaped octets are decoded, equivalent to getMatchedURIs(true). Entries do not include query parameters but do include matrix parameters if present in the request URI. Entries are ordered in reverse request URI matching order, with the current resource URI first. E.g. given the following resource classes: #064;Path("foo") public class FooResource { #064;GET public String getFoo() {...} #064;Path("bar") public BarResource getBarResource() {...} } public class BarResource { #064;GET public String getBar() {...} } The values returned by this method based on request uri and where the method is called from are: Matched URIs from requests Request Called from Value(s) GET /foo FooResource.getFoo foo GET /foo/bar FooResource.getBarResource foo/bar, foo GET /foo/bar BarResource.getBar foo/bar, foo In case the method is invoked prior to the request matching (e.g. from a pre-matching filter), the method returns an empty list.</description>
@@ -9935,21 +9860,6 @@
       <class-interface>UriInfo</class-interface>
       <method name="getMatchedURIs" return-type="java.util.List" />
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>280__OLD</id>
-      <description>Get a context resolver for a particular type of context and media type. The set of resolvers is first filtered by comparing the supplied value of mediaType with the value of each resolver's jakarta.ws.rs.Produces, ensuring the generic type of the context resolver is assignable to the supplied value of contextType, and eliminating those that do not match. If only one resolver matches the criteria then it is returned. If more than one resolver matches then the list of matching resolvers is ordered with those with the best matching values of jakarta.ws.rs.Produces (x/y &gt; x #47;* &gt; * #47;*) sorted first. A proxy is returned that delegates calls to ContextResolver#getContext(java.lang.Class) to each matching context resolver in order and returns the first non-null value it obtains or null if all matching context resolvers return null.</description>
-      <package>jakarta.ws.rs.ext</package>
-      <class-interface>Providers</class-interface>
-      <method name="getContextResolver" return-type="jakarta.ws.rs.ext.ContextResolver">
-        <parameters>
-          <parameter>java.lang.Class</parameter>
-          <parameter>jakarta.ws.rs.core.MediaType</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>280</id>
       <description>Get a context resolver for a particular type of context and media type. The set of resolvers is first filtered by comparing the supplied value of mediaType with the value of each resolver's jakarta.ws.rs.Produces, ensuring the generic type of the context resolver is assignable to the supplied value of contextType, and eliminating those that do not match. If only one resolver matches the criteria then it is returned. If more than one resolver matches then the list of matching resolvers is ordered with those with the best matching values of jakarta.ws.rs.Produces (x/y gt; x #47;* gt; * #47;*) sorted first. A proxy is returned that delegates calls to ContextResolver#getContext(java.lang.Class) to each matching context resolver in order and returns the first non-null value it obtains or null if all matching context resolvers return null.</description>
@@ -9962,23 +9872,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>282__OLD</id>
-      <description>Get a message body reader that matches a set of criteria. The set of readers is first filtered by comparing the supplied value of mediaType with the value of each reader's jakarta.ws.rs.Consumes, ensuring the supplied value of type is assignable to the generic type of the reader, and eliminating those that do not match. The list of matching readers is then ordered with those with the best matching values of jakarta.ws.rs.Consumes (x/y &gt; x #47;* &gt; * #47;*) sorted first. Finally, the MessageBodyReader#isReadable(Class, Type, Annotation[], MediaType) method is called on each reader in order using the supplied criteria and the first reader that returns true is selected and returned.</description>
-      <package>jakarta.ws.rs.ext</package>
-      <class-interface>Providers</class-interface>
-      <method name="getMessageBodyReader" return-type="jakarta.ws.rs.ext.MessageBodyReader">
-        <parameters>
-          <parameter>java.lang.Class</parameter>
-          <parameter>java.lang.reflect.Type</parameter>
-          <parameter>java.lang.annotation.Annotation[]</parameter>
-          <parameter>jakarta.ws.rs.core.MediaType</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>282</id>
       <description>Get a message body reader that matches a set of criteria. The set of readers is first filtered by comparing the supplied value of mediaType with the value of each reader's jakarta.ws.rs.Consumes, ensuring the supplied value of type is assignable to the generic type of the reader, and eliminating those that do not match. The list of matching readers is then ordered with those with the best matching values of jakarta.ws.rs.Consumes (x/y gt; x #47;* gt; * #47;*) sorted first. Finally, the MessageBodyReader#isReadable(Class, Type, Annotation[], MediaType) method is called on each reader in order using the supplied criteria and the first reader that returns true is selected and returned.</description>
@@ -9993,23 +9886,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>283__OLD</id>
-      <description>Get a message body writer that matches a set of criteria. The set of writers is first filtered by comparing the supplied value of mediaType with the value of each writer's jakarta.ws.rs.Produces, ensuring the supplied value of type is assignable to the generic type of the reader, and eliminating those that do not match. The list of matching writers is then ordered with those with the best matching values of jakarta.ws.rs.Produces (x/y &gt; x #47;* &gt; * #47;*) sorted first. Finally, the MessageBodyWriter#isWriteable(Class, Type, Annotation[], MediaType) method is called on each writer in order using the supplied criteria and the first writer that returns true is selected and returned.</description>
-      <package>jakarta.ws.rs.ext</package>
-      <class-interface>Providers</class-interface>
-      <method name="getMessageBodyWriter" return-type="jakarta.ws.rs.ext.MessageBodyWriter">
-        <parameters>
-          <parameter>java.lang.Class</parameter>
-          <parameter>java.lang.reflect.Type</parameter>
-          <parameter>java.lang.annotation.Annotation[]</parameter>
-          <parameter>jakarta.ws.rs.core.MediaType</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>283</id>
       <description>Get a message body writer that matches a set of criteria. The set of writers is first filtered by comparing the supplied value of mediaType with the value of each writer's jakarta.ws.rs.Produces, ensuring the supplied value of type is assignable to the generic type of the reader, and eliminating those that do not match. The list of matching writers is then ordered with those with the best matching values of jakarta.ws.rs.Produces (x/y gt; x #47;* gt; * #47;*) sorted first. Finally, the MessageBodyWriter#isWriteable(Class, Type, Annotation[], MediaType) method is called on each writer in order using the supplied criteria and the first writer that returns true is selected and returned.</description>
@@ -10024,16 +9900,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>298__OLD</id>
-      <description>Evaluate request preconditions for a resource that does not currently exist. The primary use of this method is to support the If-Match: * and If-None-Match: * preconditions. Note that both preconditions If-None-Match: * and If-None-Match: something will always be considered to have been met and it is the applications responsibility to enforce any additional method-specific semantics. E.g. a PUT on a resource that does not exist might succeed whereas a GET on a resource that does not exist would likely result in a 404 response. It would be the responsibility of the application to generate the 404 response.</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>Request</class-interface>
-      <method name="evaluatePreconditions" return-type="jakarta.ws.rs.core.Response.Response.ResponseBuilder" />
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>298</id>
       <description>Evaluate request preconditions for a resource that does not currently exist. The primary use of this method is to support the If-Match: * and If-None-Match: * preconditions. Note that precondition If-None-Match: something will never be considered to have been met, and it is the application's responsibility to enforce any additional method-specific semantics. E.g. a PUT on a resource that does not exist might succeed whereas a GET on a resource that does not exist would likely result in a 404 response. It would be the responsibility of the application to generate the 404 response.</description>
@@ -10041,16 +9907,6 @@
       <class-interface>Request</class-interface>
       <method name="evaluatePreconditions" return-type="jakarta.ws.rs.core.Response.Response.ResponseBuilder" />
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>358__OLD</id>
-      <description>Check if the underlying response contains the information on when is it possible to HttpHeaders#RETRY_AFTER retry the request.</description>
-      <package>jakarta.ws.rs</package>
-      <class-interface>ServiceUnavailableException</class-interface>
-      <method name="hasRetryAfter" return-type="boolean" />
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>358</id>
       <description>Check if the underlying response contains the information on when is it possible to jakarta.ws.rs.core.HttpHeaders#RETRY_AFTER retry the request.</description>
@@ -10058,21 +9914,6 @@
       <class-interface>ServiceUnavailableException</class-interface>
       <method name="hasRetryAfter" return-type="boolean" />
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>479__OLD</id>
-      <description>Filter method called after a response has been provided for a request (either by a ClientRequestFilter request filter or when the HTTP invocation returns. Filters in the filter chain are ordered according to their jakarta.annotation.Priority class-level annotation value.</description>
-      <package>jakarta.ws.rs.client</package>
-      <class-interface>ClientResponseFilter</class-interface>
-      <method name="filter" return-type="void">
-        <parameters>
-          <parameter>jakarta.ws.rs.client.ClientRequestContext</parameter>
-          <parameter>jakarta.ws.rs.client.ClientResponseContext</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>479</id>
       <description>Filter method called after a response has been provided for a request (either by a ClientRequestFilter request filter or when the HTTP invocation returns). Filters in the filter chain are ordered according to their jakarta.annotation.Priority class-level annotation value.</description>
@@ -10085,20 +9926,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>498__OLD</id>
-      <description>Create an form entity. re.MediaType#APPLICATION_FORM_URLENCODED form entity.</description>
-      <package>jakarta.ws.rs.client</package>
-      <class-interface>Entity</class-interface>
-      <method name="form" return-type="jakarta.ws.rs.client.Entity">
-        <parameters>
-          <parameter>jakarta.ws.rs.core.Form</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>498</id>
       <description>Create an form entity. .core.MediaType#APPLICATION_FORM_URLENCODED form entity.</description>
@@ -10110,20 +9937,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>499__OLD</id>
-      <description>Create an form entity. re.MediaType#APPLICATION_FORM_URLENCODED form entity.</description>
-      <package>jakarta.ws.rs.client</package>
-      <class-interface>Entity</class-interface>
-      <method name="form" return-type="jakarta.ws.rs.client.Entity">
-        <parameters>
-          <parameter>jakarta.ws.rs.core.MultivaluedMap</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>499</id>
       <description>Create an form entity. .core.MediaType#APPLICATION_FORM_URLENCODED form entity.</description>
@@ -10135,20 +9948,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>506__OLD</id>
-      <description>Create a entity. .rs.core.MediaType#TEXT_HTML entity.</description>
-      <package>jakarta.ws.rs.client</package>
-      <class-interface>Entity</class-interface>
-      <method name="html" return-type="jakarta.ws.rs.client.Entity">
-        <parameters>
-          <parameter>java.lang.Object</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>506</id>
       <description>Create a entity. ws.rs.core.MediaType#TEXT_HTML entity.</description>
@@ -10160,20 +9959,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>507__OLD</id>
-      <description>Create an entity. .rs.core.MediaType#APPLICATION_JSON entity.</description>
-      <package>jakarta.ws.rs.client</package>
-      <class-interface>Entity</class-interface>
-      <method name="json" return-type="jakarta.ws.rs.client.Entity">
-        <parameters>
-          <parameter>java.lang.Object</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>507</id>
       <description>Create an entity. ws.rs.core.MediaType#APPLICATION_JSON entity.</description>
@@ -10185,20 +9970,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>508__OLD</id>
-      <description>Create a entity. .rs.core.MediaType#TEXT_PLAIN entity.</description>
-      <package>jakarta.ws.rs.client</package>
-      <class-interface>Entity</class-interface>
-      <method name="text" return-type="jakarta.ws.rs.client.Entity">
-        <parameters>
-          <parameter>java.lang.Object</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>508</id>
       <description>Create a entity. ws.rs.core.MediaType#TEXT_PLAIN entity.</description>
@@ -10210,20 +9981,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>509__OLD</id>
-      <description>Create an entity. .rs.core.MediaType#APPLICATION_XHTML_XML entity.</description>
-      <package>jakarta.ws.rs.client</package>
-      <class-interface>Entity</class-interface>
-      <method name="xhtml" return-type="jakarta.ws.rs.client.Entity">
-        <parameters>
-          <parameter>java.lang.Object</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>509</id>
       <description>Create an entity. ws.rs.core.MediaType#APPLICATION_XHTML_XML entity.</description>
@@ -10235,20 +9992,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>510__OLD</id>
-      <description>Create an entity. .rs.core.MediaType#APPLICATION_XML entity.</description>
-      <package>jakarta.ws.rs.client</package>
-      <class-interface>Entity</class-interface>
-      <method name="xml" return-type="jakarta.ws.rs.client.Entity">
-        <parameters>
-          <parameter>java.lang.Object</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>510</id>
       <description>Create an entity. ws.rs.core.MediaType#APPLICATION_XML entity.</description>
@@ -10260,16 +10003,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>683__OLD</id>
-      <description>Get the annotations attached to the entity instance. Note that the returned annotations array contains only those annotations explicitly attached to entity instance (such as the ones attached using jakarta.ws.rs.core.Response.ResponseBuilder#entity(Object, java.lang.annotation.Annotation[]) method as well as the ones attached to the resource method that has returned the response). The entity instance annotations array does not include annotations declared on the entity implementation class or its ancestors. Note that container response filters invoked earlier in the filter chain may modify the entity annotations value, in which case this getter method would return the last annotations value set by a container response filter invoked earlier in the filter chain. For example: #64;Path("my-resource") public class MyResource { private final Annotations[] extras = ... ; #64;GET #64;Custom public String getAnnotatedMe() { return Response.ok().entity("Annotated me", extras).build(); } ... } The container response context for a response returned from the getMe() method above would contain all the annotations declared on the getAnnotatedMe() method ( #64;GET, #64;Custom) as well as all the annotations from the extras field, provided this value has not been replaced by any container response filter invoked earlier. Similarly: #64;Custom public class AnnotatedMe { ... } #64;Path("my-resource") public class MyResource { private final Annotations[] extras = ... ; #64;GET public AnnotatedMe getMe() { return Response.ok().entity(new AnnotatedMe(), extras).build(); } ... } Provided that the value has not been replaced by any container response filter invoked earlier, the container response context for a response returned from the getMe() method above would contain all the annotations on the getMe() method ( #64;GET) as well as all the annotations from the extras field. It would however not contain any annotations declared on the AnnotatedMe class.</description>
-      <package>jakarta.ws.rs.container</package>
-      <class-interface>ContainerResponseContext</class-interface>
-      <method name="getEntityAnnotations" return-type="java.lang.annotation.Annotation[]" />
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>683</id>
       <description>Get the annotations attached to the entity instance. Note that the returned annotations array contains only those annotations explicitly attached to entity instance (such as the ones attached using jakarta.ws.rs.core.Response.ResponseBuilder#entity(Object, java.lang.annotation.Annotation[]) method as well as the ones attached to the resource method that has returned the response). The entity instance annotations array does not include annotations declared on the entity implementation class or its ancestors. Note that container response filters invoked earlier in the filter chain may modify the entity annotations value, in which case this getter method would return the last annotations value set by a container response filter invoked earlier in the filter chain. For example: #64;Path("my-resource") public class MyResource { private final Annotations[] extras = ... ; #64;GET #64;Custom public String getAnnotatedMe() { return Response.ok().entity("Annotated me", extras).build(); } ... } The container response context for a response returned from the getMe() method above would contain all the annotations declared on the getAnnotatedMe() method (@GET, @Custom) as well as all the annotations from the extras field, provided this value has not been replaced by any container response filter invoked earlier. Similarly: #64;Custom public class AnnotatedMe { ... } #64;Path("my-resource") public class MyResource { private final Annotations[] extras = ... ; #64;GET public AnnotatedMe getMe() { return Response.ok().entity(new AnnotatedMe(), extras).build(); } ... } Provided that the value has not been replaced by any container response filter invoked earlier, the container response context for a response returned from the getMe() method above would contain all the annotations on the getMe() method (@GET) as well as all the annotations from the extras field. It would however not contain any annotations declared on the AnnotatedMe class.</description>
@@ -10277,20 +10010,6 @@
       <class-interface>ContainerResponseContext</class-interface>
       <method name="getEntityAnnotations" return-type="java.lang.annotation.Annotation[]" />
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>735__OLD</id>
-      <description>This implementation delegates the method call to to the the underlying [key, multi-value] store. This implementation delegates the method call to to the the underlying [key, multi-value] store.</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>AbstractMultivaluedMap</class-interface>
-      <method name="equals" return-type="boolean">
-        <parameters>
-          <parameter>java.lang.Object</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>735</id>
       <description>This implementation delegates the method call to to the the underlying [key, multi-value] store.</description>
@@ -10302,16 +10021,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>739__OLD</id>
-      <description>This implementation delegates the method call to to the the underlying [key, multi-value] store. This implementation delegates the method call to to the the underlying [key, multi-value] store.</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>AbstractMultivaluedMap</class-interface>
-      <method name="hashCode" return-type="int" />
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>739</id>
       <description>This implementation delegates the method call to to the the underlying [key, multi-value] store.</description>
@@ -10319,20 +10028,6 @@
       <class-interface>AbstractMultivaluedMap</class-interface>
       <method name="hashCode" return-type="int" />
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>801__OLD</id>
-      <description>Simple parser to convert link header string representations into a link. link ::= '' (';' link-param)* link-param ::= name '=' quoted-string See RFC 5988 for more information.</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>Link</class-interface>
-      <method name="valueOf" return-type="jakarta.ws.rs.core.Link">
-        <parameters>
-          <parameter>java.lang.String</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>801</id>
       <description>Simple parser to convert link header string representations into a link. link ::= ' lt;' uri 'gt;' (';' link-param)* link-param ::= name '=' quoted-string See RFC 5988 for more information.</description>
@@ -10344,22 +10039,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>825__OLD</id>
-      <description>Creates a new instance of MediaType with the supplied type, subtype and parameter. RAMETER parameter.</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>MediaType</class-interface>
-      <method name="MediaType" return-type="MediaType">
-        <parameters>
-          <parameter>java.lang.String</parameter>
-          <parameter>java.lang.String</parameter>
-          <parameter>java.lang.String</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>825</id>
       <description>Creates a new instance of MediaType with the supplied type, subtype and parameter. AMETER parameter.</description>
@@ -10373,20 +10052,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>985__OLD</id>
-      <description>A completion callback notification method that will be invoked when the request processing is finished, after a response is processed and is sent back to the client or when an unmapped throwable has been propagated to the hosting I/O container. An unmapped throwable is propagated to the hosting I/O container in case no jakarta.ws.rs.ext.ExceptionMapper exception mapper has been found for a throwable indicating a request processing failure. In this case a non-null unmapped throwable instance is passed to the method. Note that the throwable instance represents the actual unmapped exception thrown during the request processing, before it has been wrapped into an I/O container-specific exception that was used to propagate the throwable to the hosting I/O container.</description>
-      <package>jakarta.ws.rs.container</package>
-      <class-interface>CompletionCallback</class-interface>
-      <method name="onComplete" return-type="void">
-        <parameters>
-          <parameter>java.lang.Throwable</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>985</id>
       <description>An unmapped throwable is propagated to the default exception mapper in case no jakarta.ws.rs.ext.ExceptionMapper exception mapper has been found for a request processing failure. In this case a non-null unmapped throwable instance is passed to the method. Note that the throwable instance represents the actual unmapped exception thrown during the request processing before it has been mapped to the response by the default exception mapper.</description>
@@ -10398,16 +10063,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>992__OLD</id>
-      <description>Get the immutable set of registered JAX-RS component (such as provider or Feature feature) classes to be instantiated, injected and utilized in the scope of the configurable instance. For each component type, there can be only a single class-based or instance-based registration present in the configuration context at any given time.</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>Configuration</class-interface>
-      <method name="getClasses" return-type="java.util.Set" />
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>992</id>
       <description>Get the immutable set of registered JAX-RS component (such as provider, root resource or Feature feature) classes to be instantiated, injected and utilized in the scope of the configurable instance. In contrast to Application#getClasses() this method returns a complete runtime view and therefore also includes auto-discovered components. For each component type, there can be only a single class-based or instance-based registration present in the configuration context at any given time.</description>
@@ -10415,21 +10070,6 @@
       <class-interface>Configuration</class-interface>
       <method name="getClasses" return-type="java.util.Set" />
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>1037__OLD</id>
-      <description>Convenience method to build a link from a resource. Equivalent to Link.fromUriBuilder(UriBuilder#fromMethod(Class, String) UriBuilder.fromMethod(resource, method)). Note that the link URI passed to the Link.Builder instance returned by this method is relative. Should the link be built as absolute, a Link.Builder#baseUri(URI) base URI has to be specified in the builder prior to building the new link instance. For example, on a server side a UriInfo#getBaseUri() may be typically used to define the base URI of a link created using this method.</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>Link</class-interface>
-      <method name="fromMethod" return-type="jakarta.ws.rs.core.Link.Link.Builder">
-        <parameters>
-          <parameter>java.lang.Class</parameter>
-          <parameter>java.lang.String</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>1037</id>
       <description>Convenience method to build a link from a resource. Equivalent to Link.fromUriBuilder( UriBuilder#fromMethod(Class, String) UriBuilder.fromMethod(resource, method)). Note that the link URI passed to the Link.Builder instance returned by this method is relative. Should the link be built as absolute, a Link.Builder#baseUri(URI) base URI has to be specified in the builder prior to building the new link instance. For example, on a server side a UriInfo#getBaseUri() may be typically used to define the base URI of a link created using this method.</description>
@@ -10442,20 +10082,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>1039__OLD</id>
-      <description>Convenience method to build a link from a resource. Equivalent to Link.fromUriBuilder(UriBuilder#fromResource UriBuilder.fromResource(resource)). Note that the link URI passed to the Link.Builder instance returned by this method is relative. Should the link be built as absolute, a Link.Builder#baseUri(URI) base URI has to be specified in the builder prior to building the new link instance. For example, on a server side a UriInfo#getBaseUri() may be typically used to define the base URI of a link created using this method.</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>Link</class-interface>
-      <method name="fromResource" return-type="jakarta.ws.rs.core.Link.Link.Builder">
-        <parameters>
-          <parameter>java.lang.Class</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>1039</id>
       <description>Convenience method to build a link from a resource. Equivalent to Link.fromUriBuilder( UriBuilder#fromResource UriBuilder.fromResource(resource)). Note that the link URI passed to the Link.Builder instance returned by this method is relative. Should the link be built as absolute, a Link.Builder#baseUri(URI) base URI has to be specified in the builder prior to building the new link instance. For example, on a server side a UriInfo#getBaseUri() may be typically used to define the base URI of a link created using this method.</description>
@@ -10467,20 +10093,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>1043__OLD</id>
-      <description>Initialize builder using another link represented as a string. Uses simple parser to convert string representation into a link. link ::= '' (';' link-param)* link-param ::= name '=' quoted-string See RFC 5988 for more information.</description>
-      <package>jakarta.ws.rs.core</package>
-      <class-interface>Link.Builder</class-interface>
-      <method name="link" return-type="jakarta.ws.rs.core.Link.Link.Builder">
-        <parameters>
-          <parameter>java.lang.String</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>1043</id>
       <description>Initialize builder using another link represented as a string. Uses simple parser to convert string representation into a link. link ::= ' lt;' uri 'gt;' (';' link-param)* link-param ::= name '=' quoted-string See RFC 5988 for more information.</description>
@@ -10492,20 +10104,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>JAXRS:JAVADOC:1131__OLD</id>
-      <description>Set the client-side ExecutorService. Provided executor service will be used for executing asynchronous tasks. When running in a Java EE container, implementations are required to use the container-managed executor service.</description>
-      <package>jakarta.ws.rs.client</package>
-      <class-interface>ClientBuilder</class-interface>
-      <method name="executorService" return-type="jakarta.ws.rs.client.ClientBuilder">
-        <parameters>
-          <parameter>java.util.concurrent.ExecutorService</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>JAXRS:JAVADOC:1131</id>
       <description>Set the client-side ExecutorService. Provided executor service will be used for executing asynchronous tasks. When running in a Jakarta EE container, implementations are required to use the container-managed executor service by default. In Java SE, the default is implementation-specific. In either case, calling this method will override the default.</description>
@@ -10517,20 +10115,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>JAXRS:JAVADOC:1133__OLD</id>
-      <description>Set the client-side ScheduledExecutorService. Provided executor service will be used for executing scheduled asynchronous tasks. When running in a Java EE container, implementations are required to use the container-managed scheduled executor service.</description>
-      <package>jakarta.ws.rs.client</package>
-      <class-interface>ClientBuilder</class-interface>
-      <method name="scheduledExecutorService" return-type="jakarta.ws.rs.client.ClientBuilder">
-        <parameters>
-          <parameter>java.util.concurrent.ScheduledExecutorService</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>JAXRS:JAVADOC:1133</id>
       <description>Set the client-side ScheduledExecutorService. Provided executor service will be used for executing scheduled asynchronous tasks. When running in a Jakarta EE container, implementations are required to use the container-managed scheduled executor service by default. In Java SE the default is implementation-specific. In either case, calling this method will override the default.</description>
@@ -10542,16 +10126,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>JAXRS:JAVADOC:1221__OLD</id>
-      <description>Close the broadcaster and all registered SseEventSink instances. Any other resources associated with the SseBroadcaster should be released. Subsequent calls have no effect and are ignored. Once the SseBroadcaster is closed, invoking any other method on the broadcaster instance would result in an IllegalStateException being thrown.</description>
-      <package>jakarta.ws.rs.sse</package>
-      <class-interface>SseBroadcaster</class-interface>
-      <method name="close" return-type="void" />
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>JAXRS:JAVADOC:1221</id>
       <description>Close the broadcaster and all registered SseEventSink instances. Any other resources associated with the SseBroadcaster should be released. This method is equivalent to calling close(true). Subsequent calls have no effect and are ignored. Once the SseBroadcaster is closed, invoking any other method on the broadcaster instance would result in an IllegalStateException being thrown.</description>
@@ -10559,20 +10133,6 @@
       <class-interface>SseBroadcaster</class-interface>
       <method name="close" return-type="void" />
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>JAXRS:JAVADOC:1222__OLD</id>
-      <description>Register a listener, which will be called when the SSE event output has been closed (either by client closing the connection or by calling SseEventSink#close() on the server side. This operation is potentially slow, especially if large number of listeners get registered in the broadcaster. The SseBroadcaster implementation is optimized to efficiently handle small amounts of concurrent listener registrations and removals and large amounts of registered listener notifications.</description>
-      <package>jakarta.ws.rs.sse</package>
-      <class-interface>SseBroadcaster</class-interface>
-      <method name="onClose" return-type="void">
-        <parameters>
-          <parameter>java.util.function.Consumer</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>JAXRS:JAVADOC:1222</id>
       <description>Register a listener, which will be called when this SseBroadcaster closes a given event SseEventSink or tries to write to a given SseEventSink that is already closed (either by client closing the connection or by calling SseEventSink#close() on the server side. This operation is potentially slow, especially if large number of listeners get registered in the broadcaster. The SseBroadcaster implementation is optimized to efficiently handle small amounts of concurrent listener registrations and removals and large amounts of registered listener notifications.</description>
@@ -10584,20 +10144,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>JAXRS:JAVADOC:1223__OLD</id>
-      <description>Register a listener, which will be called when an exception was thrown by a given SSE event output when trying to write to it or close it. This operation is potentially slow, especially if large number of listeners get registered in the broadcaster. The SseBroadcaster implementation is optimized to efficiently handle small amounts of concurrent listener registrations and removals and large amounts of registered listener notifications.</description>
-      <package>jakarta.ws.rs.sse</package>
-      <class-interface>SseBroadcaster</class-interface>
-      <method name="onError" return-type="void">
-        <parameters>
-          <parameter>java.util.function.BiConsumer</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>JAXRS:JAVADOC:1223</id>
       <description>Register a listener, which will be called when an exception is thrown by a given SseEventSink when this SseBroadcaster tries to write to it or close it. This operation is potentially slow, especially if large number of listeners get registered in the broadcaster. The SseBroadcaster implementation is optimized to efficiently handle small amounts of concurrent listener registrations and removals and large amounts of registered listener notifications.</description>
@@ -10609,22 +10155,6 @@
         </parameters>
       </method>
     </assertion>
-    <!-- ****** ORIGINAL ASSERTION ****** -->
-    <assertion required="true" impl-spec="false" status="active" testable="true">
-      <modified />
-      <id>JAXRS:JAVADOC:1239__OLD</id>
-      <description>Register InboundSseEvent and Throwable consumers and onComplete callback. Event consumer is invoked once per each received event, Throwable consumer is invoked invoked upon a unrecoverable error encountered by a SseEventSource, onComplete callback is invoked when there are no further events to be received.</description>
-      <package>jakarta.ws.rs.sse</package>
-      <class-interface>SseEventSource</class-interface>
-      <method name="register" return-type="void">
-        <parameters>
-          <parameter>java.util.function.Consumer</parameter>
-          <parameter>java.util.function.Consumer</parameter>
-          <parameter>java.lang.Runnable</parameter>
-        </parameters>
-      </method>
-    </assertion>
-    <!-- ****** MODIFIED ASSERTION ****** -->
     <assertion required="true" impl-spec="false" status="active" testable="true">
       <id>JAXRS:JAVADOC:1239</id>
       <description>Register InboundSseEvent and Throwable consumers and onComplete callback. Event consumer is invoked once per each received event, Throwable consumer is invoked invoked upon a unrecoverable error encountered by a SseEventSource, onComplete callback is invoked after a successful connection and when there are no further events to be received. Note that the onComplete callback will not be invoked if the onError callback has been invoked.</description>

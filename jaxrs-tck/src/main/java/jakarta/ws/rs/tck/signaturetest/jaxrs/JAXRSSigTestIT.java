@@ -314,7 +314,7 @@ public class JAXRSSigTestIT extends SigTestEE {
   
     mapFileAsProps = getSigTestDriver().loadMapFile(mapFile);
     String packageVersion = mapFileAsProps.getProperty("jakarta.ws.rs");
-    TestUtil.logMsg("Package version from mapfile :"+ );
+    TestUtil.logMsg("Package version from mapfile :"+packageVersion);
 
     InputStream inStreamSigFile = JAXRSSigTestIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/signaturetest/jakarta.ws.rs.sig_"+packageVersion);
     File sigFile = writeStreamToSigFile(inStreamSigFile, packageVersion);

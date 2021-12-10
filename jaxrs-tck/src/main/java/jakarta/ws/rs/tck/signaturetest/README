@@ -25,55 +25,19 @@ For TCK developers  :-
 
 For TCK users (to run the signature test as a Junit test) :-
 
-  1. The signature test related files will need to be extracted from the jar to a known location to be used for running the test.
-For eg: in maven we can use the below code to extract the signature file, mapping file and package list file to ${project.build.directory}/signaturedirectory.
 
-<plugin>
- <groupId>org.apache.maven.plugins</groupId>
- <artifactId>maven-dependency-plugin</artifactId>
- <version>3.2.0</version>
- <execution>
-   <id>copy-jaxrs-tck-signature-files</id>
-   <phase>generate-test-sources</phase>
-   <goals>
-     <goal>unpack</goal>
-   </goals>
-   <configuration>
-   <artifactItems>
-     <artifactItem>
-     <groupId>jakarta.ws.rs</groupId>
-     <artifactId>jakarta.ws.rs-tck</artifactId>
-     <version>3.1-SNAPSHOT</version>
-     <type>jar</type>
-     <overWrite>true</overWrite>
-   </artifactItem>
- </artifactItems>
-<!-- We need the signature file, mapping file and package list file -->
-<includes>**/*sig-test*,**/*jakarta.ws.rs.sig_*</includes>
-<outputDirectory>${project.build.directory}/signaturedirectory</outputDirectory>
-</configuration>
-</execution>
-</executions>
-</plugin>
-
-  2. Set the below system properties correctly :
+  1. Set the below system properties correctly :
 
     jimage.dir //The jdk9+(jdk11 for this release) will be extracted to this location as to use the Java modules in the path.
     optional.tech.packages.to.ignore // The optional package that should be ignored while running the signature test
-    signature.mapfile //The full path of the signature mapping file
-    signature.repositoryDir // The directory where the signature file is placed.
-    signature.packagelist //The full path of the list of packages that will be tested.
     signature.sigTestClasspath // the sigTestClasspath that will contain the implementation jar that needs to be tested along with dependent jars.
 
     For eg:
 
     <jimage.dir>${project.build.directory}/jdk11-bundle</jimage.dir>
     <optional.tech.packages.to.ignore>jakarta.xml.bind</optional.tech.packages.to.ignore>
-    <signature.mapfile>${project.build.directory}/signaturedirectory/jakarta/ws/rs/tck/signaturetest/sig-test.map</signature.mapfile>
-    <signature.repositoryDir>${project.build.directory}/signaturedirectory/jakarta/ws/rs/tck/signaturetest</signature.repositoryDir>
-    <signature.packagelist>${project.build.directory}/signaturedirectory/jakarta/ws/rs/tck/signaturetest/sig-test-pkg-list.txt</signature.packagelist>
     <signature.sigTestClasspath>${project.build.directory}/glassfish6/glassfish/modules/jakarta.ws.rs-api.jar:${project.build.directory}/glassfish6/glassfish/modules/jakarta.xml.bind-api.jar:${project.build.directory}/jdk11-bundle/java.base:${project.build.directory}/jdk11-bundle/java.rmi:${project.build.directory}/jdk11-bundle/java.sql:${project.build.directory}/jdk11-bundle/java.naming</signature.sigTestClasspath>
 
-  3. The signature test alone can be run using below command within jersey-tck/ directory.
+  2. The signature test alone can be run using below command within jersey-tck/ directory.
 
   mvn clean verify -Parq-glassfish-managed -Dit.test=jakarta.ws.rs.tck.signaturetest.**

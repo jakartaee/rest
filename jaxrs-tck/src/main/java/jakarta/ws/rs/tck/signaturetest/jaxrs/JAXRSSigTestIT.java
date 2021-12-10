@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2008, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -27,7 +27,6 @@ import jakarta.ws.rs.tck.signaturetest.SigTestEE;
 import jakarta.ws.rs.tck.signaturetest.SigTestResult;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -37,7 +36,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.PrintStream;
 
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Properties;
+import java.io.InputStream;
+import java.io.FileNotFoundException;
 import java.util.Properties;
 
 import jakarta.ws.rs.tck.lib.util.TestUtil;
@@ -199,6 +203,62 @@ public class JAXRSSigTestIT extends SigTestEE {
     return packages.toArray(new String[packages.size()]);
   }
 
+  public File writeStreamToTempFile(InputStream inputStream, String tempFilePrefix, String tempFileSuffix) throws IOException {
+    FileOutputStream outputStream = null;
+
+    try {
+        File file = File.createTempFile(tempFilePrefix, tempFileSuffix);
+        outputStream = new FileOutputStream(file);
+        byte[] buffer = new byte[1024];
+        while (true) {
+            int bytesRead = inputStream.read(buffer);
+            if (bytesRead == -1) {
+                break;
+            }
+            outputStream.write(buffer, 0, bytesRead);
+        }
+        return file;
+    }
+
+    finally {
+        if (outputStream != null) {
+            outputStream.close();
+        }
+    }
+  }
+
+  public File writeStreamToSigFile(InputStream inputStream, String packageVersion) throws IOException {
+    FileOutputStream outputStream = null;
+    String tmpdir = System.getProperty("java.io.tmpdir");
+    try {
+        File sigfile = new File(tmpdir+File.separator+"jakarta.ws.rs.sig_"+packageVersion);
+        if(sigfile.exists()){
+          sigfile.delete();
+          TestUtil.logMsg("Existing signature file deleted to create new one");
+        }
+        if(!sigfile.createNewFile()){
+          TestUtil.logErr("signature file is not created");
+        }
+        outputStream = new FileOutputStream(sigfile);
+        byte[] buffer = new byte[1024];
+        while (true) {
+            int bytesRead = inputStream.read(buffer);
+            if (bytesRead == -1) {
+                break;
+            }
+            outputStream.write(buffer, 0, bytesRead);
+        }
+        return sigfile;
+    }
+
+    finally {
+        if (outputStream != null) {
+            outputStream.close();
+        }
+    }
+  }
+
+
   /***** Boilerplate Code *****/
 
 
@@ -216,6 +276,7 @@ public class JAXRSSigTestIT extends SigTestEE {
   // of the VM running the signature tests. Use either the first
   // comment or the one below it depending on which properties your
   // signature tests need. Please do not use both comments.
+
 
   /*
    * @class.setup_props: ts_home, The base path of this TCK; sigTestClasspath;
@@ -235,11 +296,38 @@ public class JAXRSSigTestIT extends SigTestEE {
   public void signatureTest() throws Fault {
     TestUtil.logMsg("$$$ JAXRSSigTestIT.signatureTest() called");
     SigTestResult results = null;
-    String mapFile = System.getProperty("signature.mapfile");
-    String repositoryDir = System.getProperty("signature.repositoryDir");
+    String mapFile = null;
+    String packageFile = null;
+    String repositoryDir = null;
+    Properties mapFileAsProps = null;
+    try {
+
+    InputStream inStreamMapfile = JAXRSSigTestIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/signaturetest/sig-test.map");
+    File mFile = writeStreamToTempFile(inStreamMapfile, "sig-test", ".map");
+    mapFile = mFile.getCanonicalPath();
+    TestUtil.logMsg("mapFile location is :"+mapFile);
+
+    InputStream inStreamPackageFile = JAXRSSigTestIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/signaturetest/sig-test-pkg-list.txt");
+    File pFile = writeStreamToTempFile(inStreamPackageFile, "sig-test-pkg-list", ".txt");
+    packageFile = pFile.getCanonicalPath();
+    TestUtil.logMsg("packageFile location is :"+packageFile);
+  
+    mapFileAsProps = getSigTestDriver().loadMapFile(mapFile);
+    String packageVersion = mapFileAsProps.getProperty("jakarta.ws.rs");
+    TestUtil.logMsg("Package version from mapfile :"+ );
+
+    InputStream inStreamSigFile = JAXRSSigTestIT.class.getClassLoader().getResourceAsStream("jakarta/ws/rs/tck/signaturetest/jakarta.ws.rs.sig_"+packageVersion);
+    File sigFile = writeStreamToSigFile(inStreamSigFile, packageVersion);
+    TestUtil.logMsg("signature File location is :"+sigFile.getCanonicalPath());
+    repositoryDir = System.getProperty("java.io.tmpdir");
+
+
+    } catch(IOException ex){
+        TestUtil.logMsg("Exception while creating temp files :"+ex);
+    }
+
     String[] packages = getPackages(testInfo.getVehicle());
     String[] classes = getClasses(testInfo.getVehicle());
-    String packageFile = System.getProperty("signature.packagelist");
     String testClasspath = System.getProperty("signature.sigTestClasspath");
     String optionalPkgToIgnore = testInfo.getOptionalTechPackagesToIgnore();
 
@@ -295,7 +383,6 @@ public class JAXRSSigTestIT extends SigTestEE {
       // Call verifyJtaJarTest based on some conditions, please check the
       // comment for verifyJtaJarTest.
       if ("standalone".equalsIgnoreCase(testInfo.getVehicle())) {
-        Properties mapFileAsProps = getSigTestDriver().loadMapFile(mapFile);
         if (mapFileAsProps == null || mapFileAsProps.size() == 0) {
           // empty signature file, something unusual
           TestUtil.logMsg("JAXRSSigTestIT.signatureTest() returning, " +

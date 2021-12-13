@@ -205,7 +205,7 @@ and indexed within the TCK jar directory structure.
 1.2.4 Exclude Lists
 ^^^^^^^^^^^^^^^^^^^
 
-Each version of a TCK includes an Exclude List contained in a `.jtx`
+Each version of a TCK includes an Exclude List contained in a `TCK-Exclude-List.txt`
 file. 
 This is a list of test file URLs that identify tests which do not
 have to be run for the specific version of the TCK being used. 
@@ -213,7 +213,7 @@ Whenever tests are run, the Junit framework automatically excludes
 these tests from being executed as those are disabled using '@Disabled' tag in JUnit.
 
 A vendor's compatible implementation is not required to pass or run any test on the Exclude List.
-The Exclude List file, +{jtxFileName}+, is documented in the
+The Exclude List file, +{excludeListFileName}+, is documented in the
 {TechnologyShortName} TCK. Please note this file is not parsed to exclude any test and is only
 for documentation purpose.
 

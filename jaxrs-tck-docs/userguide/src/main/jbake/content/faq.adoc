@@ -42,7 +42,7 @@ the test suite by looking at the logs.
 A.3 What would cause tests be added to the exclude list?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The exclude file (+{jtxFileName}+) contains all tests that are not
+The exclude file (+{excludeListFileName}+) contains all tests that are not
 required to be run. The file is used only for documentation purpose. The tests are excluded using
 @Disabled tag in Junit when necessary. The following is a list of reasons for a test to be
 included in the Exclude List:

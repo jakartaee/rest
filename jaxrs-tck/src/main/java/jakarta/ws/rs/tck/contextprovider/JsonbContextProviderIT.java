@@ -17,29 +17,28 @@
 package jakarta.ws.rs.tck.contextprovider;
 
 import static java.util.concurrent.TimeUnit.HOURS;
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import static jakarta.ws.rs.RuntimeType.CLIENT;
 import static jakarta.ws.rs.RuntimeType.SERVER;
-import static jakarta.ws.rs.SeBootstrap.Configuration.FREE_PORT;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 
 import java.lang.reflect.Type;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.Set;
-import java.util.concurrent.CompletionStage;
-import java.util.concurrent.ExecutionException;
 
+import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.RuntimeType;
-import jakarta.ws.rs.SeBootstrap;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -56,6 +55,12 @@ import jakarta.json.bind.serializer.SerializationContext;
 import jakarta.json.stream.JsonParser;
 import jakarta.json.stream.JsonGenerator;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
@@ -66,34 +71,35 @@ import org.junit.jupiter.api.Timeout;
  * @since 3.1
  */
 @Timeout(value = 1, unit = HOURS)
+@ExtendWith(ArquillianExtension.class)
 public final class JsonbContextProviderIT {
+
+    @ArquillianResource
+    private URL baseUrl;
+
+    @Deployment(testable = false)
+    public static WebArchive createDeployment() {
+        WebArchive archive = ShrinkWrap.create(WebArchive.class, "jaxrs_contextprovider_jsonb_web.war");
+        archive.addClasses(JsonbContextProviderIT.class);
+
+        return archive;
+    }
 
     /**
      * Verifies that an implementation will use the {@link Jsonb} instance
      * offered by an application-provided context resolver.
-     *
-     * @throws ExecutionException
-     *             if the instance didn't boot correctly
-     * @throws InterruptedException
-     *             if the test took much longer than usually expected
+     * @throws URISyntaxException if the baseUrl cannot be converted to a URI
      */
     @Test
-    public final void shouldUseApplicationProvidedJsonbInstance() throws InterruptedException, ExecutionException {
-        // given
-        final Application application = new EchoApplication();
-        final UriBuilder baseUri = UriBuilder.newInstance().scheme("http").host("localhost").port(FREE_PORT);
-        final SeBootstrap.Configuration requestedConfiguration = SeBootstrap.Configuration.builder().build();
-        final CompletionStage<SeBootstrap.Instance> completionStage = SeBootstrap.start(application, requestedConfiguration);
-        final SeBootstrap.Instance instance = completionStage.toCompletableFuture().get();
-        final SeBootstrap.Configuration actualConfiguration = instance.configuration();
-        final int actualPort = actualConfiguration.port();
-        final UriBuilder effectiveUri = baseUri.port(actualPort).path("echo");
+    public final void shouldUseApplicationProvidedJsonbInstance() throws URISyntaxException {
 
         try (final Client client = ClientBuilder.newBuilder().register(new CustomJsonbProvider(CLIENT)).build()) {
             // when
             final String origin = String.format("Origin(%d)", mockInt());
             final POJO requestPojo = new POJO();
             requestPojo.setSeenBy(origin);
+
+            final URI effectiveUri = UriBuilder.fromUri(baseUrl.toURI()).path("echo").build();
             final POJO responsePojo = client.target(effectiveUri)
                                             .request(APPLICATION_JSON_TYPE)
                                             .buildPost(Entity.entity(requestPojo, APPLICATION_JSON_TYPE))
@@ -108,8 +114,6 @@ public final class JsonbContextProviderIT {
                                                               "CustomDeserializer(CLIENT)");
             assertThat(responsePojo.getSeenBy(), is(expectedWaypoints));
         }
-
-        instance.stop().toCompletableFuture().get();
     }
 
     public static final class CustomJsonbProvider implements ContextResolver<Jsonb> {
@@ -157,6 +161,7 @@ public final class JsonbContextProviderIT {
         }
     }
 
+    @ApplicationPath("")
     private static final class EchoApplication extends Application {
         @Override
         public final Set<Class<?>> getClasses() {

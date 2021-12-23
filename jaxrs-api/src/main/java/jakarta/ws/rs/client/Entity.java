@@ -19,6 +19,7 @@ package jakarta.ws.rs.client;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Objects;
 
 import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.MediaType;
@@ -260,13 +261,13 @@ public final class Entity<T> {
 
         Entity entity1 = (Entity) o;
 
-        if (!Arrays.equals(annotations, entity1.annotations)) {
+        if (!Objects.equals(annotations, entity1.annotations)) {
             return false;
         }
-        if (entity != null ? !entity.equals(entity1.entity) : entity1.entity != null) {
+        if (!Objects.equals(entity, entity1.entity)) {
             return false;
         }
-        if (variant != null ? !variant.equals(entity1.variant) : entity1.variant != null) {
+        if (!Objects.equals(variant, entity1.variant)) {
             return false;
         }
 
@@ -275,10 +276,7 @@ public final class Entity<T> {
 
     @Override
     public int hashCode() {
-        int result = entity != null ? entity.hashCode() : 0;
-        result = 31 * result + (variant != null ? variant.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(annotations);
-        return result;
+        return Objects.hash(annotations, entity, variant);
     }
 
     @Override

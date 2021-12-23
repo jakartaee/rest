@@ -17,6 +17,7 @@
 package jakarta.ws.rs.core;
 
 import java.util.Date;
+import java.util.Objects;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
 import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
@@ -423,14 +424,8 @@ public class NewCookie extends Cookie {
      */
     @Override
     public int hashCode() {
-        int hash = super.hashCode();
-        hash = 59 * hash + (this.comment != null ? this.comment.hashCode() : 0);
-        hash = 59 * hash + this.maxAge;
-        hash = 59 + hash + (this.expiry != null ? this.expiry.hashCode() : 0);
-        hash = 59 * hash + (this.secure ? 1 : 0);
-        hash = 59 * hash + (this.httpOnly ? 1 : 0);
-        hash = 59 * hash + (this.sameSite != null ? this.sameSite.ordinal() : 0);
-        return hash;
+        return Objects.hash(this.getName(), this.getValue(), this.getVersion(), this.getPath(), this.getDomain(),
+                this.comment, this.maxAge, this.expiry, this.secure, this.httpOnly, this.sameSite);
     }
 
     /**
@@ -450,29 +445,29 @@ public class NewCookie extends Cookie {
             return false;
         }
         final NewCookie other = (NewCookie) obj;
-        if (this.getName() != other.getName() && (this.getName() == null || !this.getName().equals(other.getName()))) {
+        if (!Objects.equals(this.getName(), other.getName())) {
             return false;
         }
-        if (this.getValue() != other.getValue() && (this.getValue() == null || !this.getValue().equals(other.getValue()))) {
+        if (!Objects.equals(this.getValue(), other.getValue())) {
             return false;
         }
         if (this.getVersion() != other.getVersion()) {
             return false;
         }
-        if (this.getPath() != other.getPath() && (this.getPath() == null || !this.getPath().equals(other.getPath()))) {
+        if (!Objects.equals(this.getPath(), other.getPath())) {
             return false;
         }
-        if (this.getDomain() != other.getDomain() && (this.getDomain() == null || !this.getDomain().equals(other.getDomain()))) {
+        if (!Objects.equals(this.getDomain(), other.getDomain())) {
             return false;
         }
-        if (this.comment != other.comment && (this.comment == null || !this.comment.equals(other.comment))) {
+        if (!Objects.equals(this.comment, other.comment)) {
             return false;
         }
         if (this.maxAge != other.maxAge) {
             return false;
         }
 
-        if (this.expiry != other.expiry && (this.expiry == null || !this.expiry.equals(other.expiry))) {
+        if (!Objects.equals(this.expiry, other.expiry)) {
             return false;
         }
 

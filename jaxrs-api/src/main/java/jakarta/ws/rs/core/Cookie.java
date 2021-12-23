@@ -260,6 +260,11 @@ public class Cookie {
      */
     public static class Builder extends AbstractCookieBuilder<Builder> {
 
+        /**
+         * Create a new instance.
+         *
+         * @param name the name of the cookie.
+         */
         public Builder(String name) {
             super(name);
         }

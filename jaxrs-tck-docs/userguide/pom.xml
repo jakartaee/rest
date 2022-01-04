@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2017, 2021 Oracle and/or its affiliates. All rights reserved.
+
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Public License v. 2.0, which is available at
+    http://www.eclipse.org/legal/epl-2.0.
+
+    This Source Code may also be made available under the following Secondary
+    Licenses when the conditions for such availability set forth in the
+    Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
+    version 2 with the GNU Classpath Exception, which is available at
+    https://www.gnu.org/software/classpath/license.html.
+
+    SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.eclipse.ee4j</groupId>
+        <artifactId>project</artifactId>
+        <version>1.0.7</version>
+    </parent>
+    <groupId>org.glassfish</groupId>
+    <artifactId>tck_jaxrs</artifactId>
+    <packaging>pom</packaging>
+    <version>3.1.0</version>
+    <name>Eclipse Foundation Technology Compatibility Kit User's Guide for Jakarta RESTful Web Services for Jakarta EE, Release 3.1</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <site.output.dir>${project.build.directory}/staging</site.output.dir>
+        <maven.site.skip>true</maven.site.skip>
+        <asciidoctorj.version>2.4.2</asciidoctorj.version>
+        <asciidoctorj.diagram.version>2.1.0</asciidoctorj.diagram.version>
+        <asciidoctorj.maven.plugin.version>2.1.0</asciidoctorj.maven.plugin.version>
+        <asciidoctorj.pdf.version>1.5.3</asciidoctorj.pdf.version>
+        <jbake.maven.plugin.version>0.3.3</jbake.maven.plugin.version>
+        <freemarker.version>2.3.30</freemarker.version>
+        <!-- status: DRAFT, BETA, etc., or blank for final -->
+        <status>DRAFT</status>
+        <doc.pdf>Jakarta-RESTful-Web-Services-TCK-Users-Guide.pdf</doc.pdf>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
+    <distributionManagement>
+        <site>
+            <url>scm:git:git@github.com:eclipse-ee4j/jaxrs-api.git</url>
+        </site>
+    </distributionManagement>
+
+    <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>src/main/jbake/content</directory>
+                            <includes>
+                                <include>toc.adoc</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>[11.0,)</version>
+                                    <message>You need JDK11 or newer</message>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.glassfish.doc</groupId>
+                <artifactId>glassfish-doc-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-toc</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>toc</goal>
+                        </goals>
+                        <configuration>
+                            <chapterPatterns>
+                                [0-9]+\s.*,Preface.*,Part\s.*
+                            </chapterPatterns>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-book</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>book</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jbake</groupId>
+                <artifactId>jbake-maven-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>${site.output.dir}</outputDirectory>
+                    <properties>
+                        <status>${status}</status>
+                    </properties>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>build-site</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <configuration>
+                    <sourceDirectory>${project.build.directory}/book</sourceDirectory>
+                    <sourceDocumentName>book.adoc</sourceDocumentName>
+                    <!-- XXX - below depends on running jbake first -->
+                    <imagesDir>${project.build.directory}/staging/</imagesDir>
+                    <backend>pdf</backend>
+                    <outputFile>${doc.pdf}</outputFile>
+                    <attributes>
+                        <pdf-stylesdir>${project.basedir}/src/theme</pdf-stylesdir>
+                        <pdf-style>jakartaee</pdf-style>
+                        <doctype>book</doctype>
+                        <status>${status}</status>
+                        <compat-mode />
+                        <data-uri />
+                        <icons>font</icons>
+                        <pagenums />
+                        <toc />
+                        <icons>font</icons>
+                        <sectanchors>true</sectanchors>
+                        <idprefix />
+                        <idseparator>-</idseparator>
+                        <docinfo1>true</docinfo1>
+                        <embedAssets>true</embedAssets>
+                    </attributes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-pdf-doc</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-publish-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>deploy-site</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>publish-scm</goal>
+                        </goals>
+                        <configuration>
+                            <scmBranch>gh-pages</scmBranch>
+                            <skipDeletedFiles>false</skipDeletedFiles>
+                            <checkinComment>Update site</checkinComment>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+	    </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.glassfish.doc</groupId>
+                    <artifactId>glassfish-doc-maven-plugin</artifactId>
+                    <version>1.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.0.0-M3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.3.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-scm-publish-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jbake</groupId>
+                    <artifactId>jbake-maven-plugin</artifactId>
+                    <version>${jbake.maven.plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj</artifactId>
+                            <version>${asciidoctorj.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj-diagram</artifactId>
+                            <version>${asciidoctorj.diagram.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.freemarker</groupId>
+                            <artifactId>freemarker</artifactId>
+                            <version>${freemarker.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>${asciidoctorj.maven.plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj-pdf</artifactId>
+                            <version>${asciidoctorj.pdf.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

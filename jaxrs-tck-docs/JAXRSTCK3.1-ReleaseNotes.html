@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <title>Jakarta RESTful Web Services TCK Release Notes</title>
+    <!--
+    Copyright (c) 2021 Oracle and/or its affiliates. All rights reserved.    This program and the accompanying materials are made available under the    terms of the Eclipse Public License v. 2.0, which is available at    http://www.eclipse.org/legal/epl-2.0.    This Source Code may also be made available under the following Secondary
+    Licenses when the conditions for such availability set forth in the    Eclipse Public License v. 2.0 are satisfied: GNU General Public License,    version 2 with the GNU Classpath Exception, which is available at    https://www.gnu.org/software/classpath/license.html.    SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0-->
+    <style type="text/css">
+<!--
+body {  background-color: #ffffdd; color: #000000}
+pre {  background-color: #eeeeee; color: #000099}
+code {  color: #000099; font-size: smaller}
+h1 {  color: #000099}
+h2 {  color: #000099}
+h3 {  color: #000099; text-decoration: underline}
+h4 {  font-style: italic; color: #000099}
+.tabletitle {  font-style: italic; color: #ffffcc; font-size: small; font-variant: small-caps}
+.subtitle {  font-style: italic; color: #ffffcc; font-variant: small-caps}
+.emphasize  {  font-style: italic; color: #000099}
+.step  { font-weight: bold}
+.note { background-color: #fffff0; border-bottom-width: thin; border-top-width: thin; border-top-style: inset; border-bottom-style: inset; font-size: -10%; font-style: italic;}
+th {  background-color: #eeeeee; padding-left: 2pt; padding-right: 2pt; text-align: left;}
+td {  padding-left: 3pt;}
+-->
+  </style>
+  </head>
+  <body>
+    <div align="center">
+      <h1>Jakarta EE RESTful Web Services Technology Compatibility
+        Kit, Version 3.1<br>
+        <span class="emphasize">Release Notes, November 2021</span></h1>
+    </div>
+    <hr size="3">
+    <h2>Release Notes Update For Eclipse Jersey 3.1.0 Compatible Implementation
+      Release November 2021 </h2>
+    <p> A couple of changes made in Eclipse Jersey 3.1.0 Compatible
+      Implementation (CI) prompts this note. </p>
+    <ul>
+      <li>
+        <p>The Eclipse Jersey 3.1.0 release requires the use of Java SE 11
+          and this is also required when running the Jakarta EE RESTful Web
+          Services TCK against Jersey 3.1. </p>
+      </li>
+    </ul>
+    <p></p>
+    <hr>
+    <h2>Kit Contents </h2>
+    <p>The Jakarta EE RESTful Web Services 3.1 Technology Compatibility Kit
+      (TCK) includes the following items:</p>
+    <ul>
+      <li>
+        <p><strong>Jakarta EE RESTful Web Services TCK, signature, API, and
+            specification tests:</strong></p>
+        <ul type="circle">
+          <li>
+            <p>A <strong>signature test</strong> that checks that all of the
+              public APIs are supported or defined in the Jakarta EE RESTful Web
+              Services 3.1 implementation that is under test.</p>
+          </li>
+          <li>
+            <p><strong>Specification tests</strong> for the testable assertions
+              required by the Jakarta EE RESTful Web Services 3.1 Specification.</p>
+          </li>
+          <li>
+            <p><strong>API tests</strong> for the public APIs and language
+              elements defined by the Jakarta EE RESTful Web Services 3.1
+              Specification.</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <hr>
+    <h2>Jakarta EE RESTful Web Services 3.1 TCK Facts</h2>
+    <p>The test suite bundle contains the following:</p>
+    <ul>
+      <li>2792 total tests</li>
+    </ul>
+    <hr>
+    <h2>Platform Notes</h2>
+    <p>The Jakarta EE RESTful Web Services 3.1 TCK tests and the Jakarta EE
+      RESTful Web Services 3.1 Compatible Implementation (CI) can be run with
+      Java Platform, Standard Edition version 11.0 (Java SE 11). 
+      See <a href="#ReferenceRuntime">Compatible
+        Runtime for Jakarta EE RESTful Web Services 3.1</a> for additional
+      information.</p>
+    <p>Refer to the <cite>Technology Compatibility Kit User's Guide for Jakarta
+        EE RESTful Web Services</cite> (<a href="./userguide/target/staging/title.html" title="Jakarta EE RESTful Web Services 3.1 TCK User's Guide (HTML)">HTML</a>,
+      <a href="./userguide/target/generated-docs/Jakarta-RESTful-Web-Services-TCK-Users-Guide.pdf"
+
+        title="Jakarta EE RESTful Web Services 3.1 TCK User's Guide (PDF)">PDF</a>)
+      for platform compatibility requirements and notes.</p>
+    <hr> <a name="ReferenceRuntime"></a>
+    <h2>Compatible Runtime for Jakarta EE RESTful Web Services 3.1</h2>
+    <p>A Compatible Runtime for compatibility testing of implementations based
+      upon the Jakarta EE RESTful Web Services 3.1 Specification is as follows:</p>
+    <ul>
+      <li>
+        <p>Java SE 11 which must be used with a Jakarta EE
+          profile/application server, such as the  
+          GlassFish 6.1+ (with Java SE 11+)</p>
+      </li>
+      <li>A Compatible Implementation (CI) of Jakarta EE RESTful Web Services
+        3.1 is available as part of the Eclipse GlassFish 6.1+ full
+        profile, or the Eclipse GlassFish 6.1+, Web Profile</li>
+    </ul>
+    <p>The Jakarta EE RESTful Web Services 3.1 TCK tests have been run on the
+      following platforms: </p>
+    <ul>
+      <li>CentOS Linux 7 </li>
+    </ul>
+    <hr> <a name="install_setup_run"></a>
+    <h2>Installing, Setting Up, and Running the Jakarta EE RESTful Web Services
+      3.1 TCK</h2>
+    <p>Refer to the <cite>Technology Compatibility Kit User's Guide for Jakarta
+        EE RESTful Web Services 3.1</cite> for complete instructions on
+      installing, setting up, and running the Jakarta EE RESTful Web Services
+      3.1 TCK. </p>
+    
+    <hr>
+   
+    <p><small> </small></p>
+    <small>
+      <address> Copyright � 2009, 2021 Oracle and/or its affiliates. All rights
+        reserved. </address>
+    </small>
+    <p></p>
+  </body>
+</html>

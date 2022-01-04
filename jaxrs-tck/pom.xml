@@ -84,6 +84,39 @@
         <tag>HEAD</tag>
     </scm>
 
+<profiles>
+<profile>
+  <id>record-signature</id>
+  <activation>
+    <activeByDefault>false</activeByDefault>
+  </activation>
+  <build>
+  <plugins>
+    <plugin>
+                <groupId>org.netbeans.tools</groupId>
+                <artifactId>sigtest-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <FileName>${project.build.directory}/jakarta.ws.rs.sig_${version}</FileName>
+                    <packages>jakarta.ws.rs,jakarta.ws.rs.client,jakarta.ws.rs.core,jakarta.ws.rs.container,jakarta.ws.rs.ext,jakarta.ws.rs.sse</packages>
+                </configuration>
+            </plugin>
+            </plugins>
+  </build>
+</profile>
+
+<profile>
+     <id>tck-build</id>
+  <activation>
+    <activeByDefault>true</activeByDefault>
+  </activation>
     <build>
         <plugins>
             <plugin>
@@ -93,14 +126,19 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
-                <configuration>
-					<excludedGroups>optional</excludedGroups>
-				</configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
             </plugin>
 
         </plugins>
     </build>
+</profile>
 
+       
+    </profiles>
     <dependencies>
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
@@ -162,6 +200,12 @@
             <artifactId>jakarta.servlet-api</artifactId>
             <version>5.0.0</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.netbeans.tools</groupId>
+            <artifactId>sigtest-maven-plugin</artifactId>
+            <version>1.4</version>
         </dependency>
 
     </dependencies>

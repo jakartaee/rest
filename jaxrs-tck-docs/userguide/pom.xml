@@ -41,7 +41,7 @@
         <jbake.maven.plugin.version>0.3.3</jbake.maven.plugin.version>
         <freemarker.version>2.3.30</freemarker.version>
         <!-- status: DRAFT, BETA, etc., or blank for final -->
-        <status>DRAFT</status>
+        <status></status>
         <doc.pdf>Jakarta-RESTful-Web-Services-TCK-Users-Guide.pdf</doc.pdf>
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>

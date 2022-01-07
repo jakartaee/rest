@@ -21,7 +21,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jakarta.ws.rs-tck</artifactId>
+    <artifactId>${tck.artifactId}</artifactId>
 
     <parent>
         <groupId>jakarta.ws.rs</groupId>
@@ -37,6 +37,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <junit.jupiter.version>[5.7.2, 5.8-A00)</junit.jupiter.version>
+        <tck.artifactId>jakarta-restful-ws-tck</tck.artifactId>            
     </properties>
 
     <organization>
@@ -104,7 +105,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <FileName>${project.build.directory}/jakarta.ws.rs.sig_${version}</FileName>
+                    <FileName>${project.build.directory}/jakarta.ws.rs.sig_${project.version}</FileName>
                     <packages>jakarta.ws.rs,jakarta.ws.rs.client,jakarta.ws.rs.core,jakarta.ws.rs.container,jakarta.ws.rs.ext,jakarta.ws.rs.sse</packages>
                 </configuration>
             </plugin>
@@ -113,7 +114,7 @@
 </profile>
 
 <profile>
-     <id>tck-build</id>
+  <id>tck-build</id>
   <activation>
     <activeByDefault>true</activeByDefault>
   </activation>
@@ -131,6 +132,18 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+              </executions>
             </plugin>
 
         </plugins>

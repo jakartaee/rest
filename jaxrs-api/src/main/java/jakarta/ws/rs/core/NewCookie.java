@@ -424,8 +424,8 @@ public class NewCookie extends Cookie {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(), this.getValue(), this.getVersion(), this.getPath(), this.getDomain(),
-                this.comment, this.maxAge, this.expiry, this.secure, this.httpOnly, this.sameSite);
+        return Objects.hash(getName(), getValue(), getVersion(), getPath(), getDomain(),
+                comment, maxAge, expiry, secure, httpOnly, sameSite);
     }
 
     /**

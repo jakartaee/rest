@@ -4,13 +4,23 @@ These CLI examples can be customized as necessary.
 ///////////////////////////////////////////////////////////////////////
 
 Start the Junit tests using the following command:
-+
+
 --
 [source,oac_no_warn]
 ----
 mvn verify
 ----
 --
+
+Run the tests by excluding the optional jaxb tests using the following command:
+
+--
+[source,oac_no_warn]
+----
+mvn verify -DexcludedGroups="xml_binding"
+----
+--
+
 
 [[GCMCU]]
 

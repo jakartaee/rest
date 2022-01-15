@@ -1,0 +1,82 @@
+#
+# Copyright (c) 2021 Oracle and/or its affiliates. All rights reserved.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Eclipse Public License v. 2.0, which is available at
+# http://www.eclipse.org/legal/epl-2.0.
+#
+# This Source Code may also be made available under the following Secondary
+# Licenses when the conditions for such availability set forth in the
+# Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
+# version 2 with the GNU Classpath Exception, which is available at
+# https://www.gnu.org/software/classpath/license.html.
+#
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+#
+
+# This file lists the excluded tests from Jakarta REST TCK. 
+# This is intended only for documentation purpose and is not used to exclude any tests.
+# The tests are excluded from the test source using @Disabled tag in JUnit framework.
+#
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#deleteTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#deleteWithCallbackStringWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#deleteWithCallbackWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#deleteWithGenericTypeResponseWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#deleteWithGenericTypeStringWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#deleteWithResponseClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#deleteWithStringClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#getTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#getWithCallbackStringWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#getWithCallbackWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#getWithGenericTypeResponseWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#getWithGenericTypeStringWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#getWithResponseClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#getWithStringClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#headTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#headWithCallbackWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithCallbackStringWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithCallbackStringWithEntityWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithCallbackWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithCallbackWithEntityWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithEntityWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithGenericTypeResponseWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithGenericTypeResponseWithEntityWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithGenericTypeStringWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithGenericTypeStringWithEntityWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithResponseClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithResponseClassWithEntityWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithStringClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#methodWithStringClassWithEntityWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#optionsTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#optionsWithCallbackWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#optionsWithGenericTypeResponseWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#optionsWithGenericTypeStringWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#optionsWithResponseClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#optionsWithStringCallbackWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#optionsWithStringClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#postTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#postWithCallbackWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#postWithGenericTypeResponseWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#postWithGenericTypeStringWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#postWithResponseClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#postWithStringClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#putTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#putWithCallbackWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#putWithGenericTypeResponseWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#putWithGenericTypeStringWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#putWithResponseClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#putWithStringCallbackWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#putWithStringClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#traceTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#traceWithCallbackWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#traceWithGenericTypeResponseWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#traceWithGenericTypeStringWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#traceWithResponseClassWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#traceWithStringCallbackWhileServerWaitTest
+jakarta/ws/rs/tck/jaxrs21/ee/client/executor/async/JAXRSClient.java#traceWithStringClassWhileServerWaitTest
+
+#
+#
+jakarta/ws/rs/tck/jaxrs21/ee/sse/sseeventsource/JAXRSClient.java#connectionLostForDefault500msTest
+

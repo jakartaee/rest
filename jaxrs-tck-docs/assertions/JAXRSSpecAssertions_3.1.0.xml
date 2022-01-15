@@ -1,0 +1,1441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE spec SYSTEM "https://raw.githubusercontent.com/eclipse-ee4j/jakartaee-tck/master/internal/docs/dtd/spec_assertions.dtd">
+<!--
+
+    Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
+
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Public License v. 2.0, which is available at
+    http://www.eclipse.org/legal/epl-2.0.
+
+    This Source Code may also be made available under the following Secondary
+    Licenses when the conditions for such availability set forth in the
+    Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
+    version 2 with the GNU Classpath Exception, which is available at
+    https://www.gnu.org/software/classpath/license.html.
+
+    SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+
+-->
+
+<?xml-stylesheet type="text/xsl" href="https://raw.githubusercontent.com/eclipse-ee4j/jakartaee-tck/master/internal/docs/dtd/spec_assertions.xsl"?>
+<spec>
+    <next-available-id>139</next-available-id>
+    <previous-id>138</previous-id>
+    <technology>RESTful Web Services</technology>
+    <id>JAX-RS</id>
+    <name>Java(TM) API for RESTful Web Services</name>
+    <version>3.1</version>
+    <location-names>
+        <chapters>
+            <chapter id="2" name="Applications">
+                <sections>
+                    <section id="1" name="Configuration"/>
+                    <section id="2" name="Validation"/>
+                    <section id="3" name="Publication"/>
+                    <section id="3.1" name="Java SE"/>
+                    <section id="3.1.1" name="JAX-WS"/>
+                    <section id="3.2" name="Servlet"/>
+                    <section id="3.3" name="Other Container"/>
+                </sections>
+            </chapter>
+            <chapter id="3" name="Resources">
+                <sections>
+                    <section id="1" name="Resource Classes"/>
+                    <section id="1.1" name="Lifecycle and Environment"/>
+                    <section id="1.2" name="Constructors"/>
+                    <section id="2" name="Fields and Bean Properties"/>
+                    <section id="3" name="Resource Methods"/>
+                    <section id="3.1" name="Visibility"/>
+                    <section id="3.2" name="Parameters"/>
+                    <section id="3.2.1" name="Entity Parameters"/>
+                    <section id="3.3" name="Return Type"/>
+                    <section id="3.4" name="Exceptions"/>
+                    <section id="3.5" name="HEAD and OPTIONS"/>
+                    <section id="4" name="URI Templates"/>
+                    <section id="4.1" name="Sub Resources"/>
+                    <section id="5" name="Declaring Media Type Capabilities"/>
+                    <section id="6" name="Annotation Inheritance"/>
+                    <section id="7" name="Matching Requests to Resource Methods"/>
+                    <section id="7.1" name="Request Preprocessing"/>
+                    <section id="7.2" name="Request Matching"/>
+                    <section id="7.3" name="Converting URI Templates to Regular Expressions"/>
+                    <section id="8" name="Determining the MediaType of Responses"/>
+                </sections>
+            </chapter>
+            <chapter id="4" name="Providers">
+                <sections>
+                    <section id="1" name="Lifecycle and Environment"/>
+                    <section id="1.1" name="Automatic Discovery"/>
+                    <section id="1.2" name="Constructors"/>
+                    <section id="1.3" name="Priorities"/>
+                    <section id="2" name="Entity Providers"/>
+                    <section id="2.1" name="Message Body Reader"/>
+                    <section id="2.2" name="Message Body Writer"/>
+                    <section id="2.3" name="Declaring Media Type Capabilities"/>
+                    <section id="2.4" name="Standard Entity Providers"/>
+                    <section id="2.5" name="Transfer Encoding"/>
+                    <section id="2.6" name="Content Encoding"/>
+                    <section id="3" name="Context Providers"/>
+                    <section id="3.1" name="Declaring Media Type Capabilities"/>
+                    <section id="4" name="Exception Mapping Providers"/>
+                    <section id="5" name="Exceptions"/>
+                    <section id="5.1" name="Server Runtime"/>
+                    <section id="5.2" name="Client Runtime"/>
+                </sections>
+            </chapter>
+            <chapter id="5" name="Client API">
+                <sections>
+                    <section id="1" name="Bootstrapping a Client Instance"/>
+                    <section id="2" name="Resource Access"/>
+                    <section id="3" name="Client Targets"/>
+                    <section id="4" name="Typed Entities"/>
+                    <section id="5" name="Invocations"/>
+                    <section id="6" name="Configurable Types"/>
+                    <section id="6.1" name="Filters and Entity Interceptors"/>
+                    <section id="7" name="Reactive Clients"/>
+                    <section id="7.1" name="Reactive API Extensions"/>
+                    <section id="8" name="Executor Services"/>
+                </sections>
+            </chapter>
+            <chapter id="6" name="Filters and Interceptors">
+                <sections>
+                    <section id="1" name="Introduction"/>
+                    <section id="2" name="Filters"/>
+                    <section id="3" name="Entity Interceptors"/>
+                    <section id="4" name="Lifecycle"/>
+                    <section id="5" name="Binding"/>
+                    <section id="5.1" name="Global Binding"/>
+                    <section id="5.2" name="Name Bindings"/>
+                    <section id="5.3" name="Dynamic Binding"/>
+                    <section id="5.4" name="Binding in Client API"/>
+                    <section id="6" name="Priorities"/>
+                    <section id="7" name="Exceptions"/>
+                    <section id="7.1" name="Server Runtime"/>
+                    <section id="7.2" name="Client Runtime"/>
+                </sections>
+            </chapter>
+            <chapter id="7" name="Validation">
+                <sections>
+                    <section id="1" name="Constraint Annotations"/>
+                    <section id="2" name="Annotations and Validators"/>
+                    <section id="3" name="Entity Validation"/>
+                    <section id="4" name="Default Validation Mode"/>
+                    <section id="5" name="Annotations Inheritance"/>
+                    <section id="6" name="Validation and Error Reporting"/>
+                </sections>
+            </chapter>
+            <chapter id="8" name="Asynchronous Processing">
+                <sections>
+                    <section id="1" name="Introduction"/>
+                    <section id="2" name="Server API"/>
+                    <section id="2.1" name="AsyncResponse"/>
+                    <section id="2.1.1" name="Timeouts and Callbacks"/>
+                    <section id="2.2" name="CompletionStage"/>
+                    <section id="3" name="EJB Resource Classes"/>
+                    <section id="4" name="Client API"/>
+                </sections>
+            </chapter>
+            <chapter id="9" name="Server-Sent Events">
+                <sections>
+                    <section id="1" name="Introduction"/>
+                    <section id="2" name="Client API"/>
+                    <section id="3" name="Server API"/>
+                    <section id="4" name="Broadcasting"/>
+                    <section id="5" name="Environment"/>
+                </sections>
+            </chapter>
+            <chapter id="10" name="Context">
+                <sections>
+                    <section id="1" name="Concurrency"/>
+                    <section id="2" name="Context Types"/>
+                    <section id="2.1" name="Application"/>
+                    <section id="2.2" name="URIs and URI Templates"/>
+                    <section id="2.3" name="Headers"/>
+                    <section id="2.4" name="Content Negotiation and Preconditions"/>
+                    <section id="2.5" name="Security Context"/>
+                    <section id="2.6" name="Providers"/>
+                    <section id="2.7" name="Resource Context"/>
+                    <section id="2.8" name="Configuration"/>
+                </sections>
+            </chapter>
+            <chapter id="11" name="Environment">
+                <sections>
+                    <section id="1" name="Servlet Container"/>
+                    <section id="2" name="Integration with Java EE Technologies"/>
+                    <section id="2.1" name="Servlets"/>
+                    <section id="2.2" name="Managed Beans"/>
+                    <section id="2.3" name="Context and Dependency Injection (CDI)"/>
+                    <section id="2.4" name="Enterprise Java Beans (EJBs)"/>
+                    <section id="2.5" name="Bean Validation"/>
+                    <section id="2.6" name="Java API for JSON Processing"/>
+                    <section id="2.7" name="Java API for JSON Binding"/>
+                    <section id="2.8" name="Additional Requirements"/>
+                    <section id="3" name="Other"/>
+                </sections>
+            </chapter>
+            <chapter id="12" name="Runtime Delegate">
+                <sections>
+                    <section id="1" name="Configuration"/>
+                </sections>
+            </chapter>
+            <chapter id="A" name="Summary of Annotations">
+                <sections/>
+            </chapter>
+            <chapter id="B" name="HTTP Header Support">
+                <sections/>
+            </chapter>
+        </chapters>
+    </location-names>
+
+    <assertions>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:1</id>
+            <description>Root resource classes are instantiated by the RESTful Web Services runtime and MUST have a public constructor for which the RESTful Web Services runtime can provide all parameter values. Note that a zero argument constructor is permissible under this rule. </description>
+            <location chapter="3" section="1.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:2</id>
+            <description>If more than one public constructor is suitable then an implementation MUST use the one with the most parameters. </description>
+            <location chapter="3" section="1.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:3</id>
+            <description>When a resource class is instantiated, the values of ﬁelds and bean properties annotated with one the following annotations are set according to the semantics of the annotation: </description>
+            <location chapter="3" section="2"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:3.1</id>
+                    <description>@MatrixParam Extracts the value of a URI matrix parameter.</description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:3.2</id>
+                    <description>@QueryParam Extracts the value of a URI query parameter.</description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:3.3</id>
+                    <description>@PathParam Extracts the value of a URI template parameter. </description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:3.4</id>
+                    <description>@CookieParam Extracts the value of a cookie.</description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:3.5</id>
+                    <description>@HeaderParam Extracts the value of a header.</description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:3.6</id>
+                    <description>@Context Injects an instance of a supported resource, </description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:4</id>
+            <description>An implementation is only required to set the annotated ﬁeld and bean property values of instances created by the implementation runtime. Objects returned by sub-resource locators (see section 3.4.1) are expected to be initialized by their creator and ﬁeld and bean properties are not modiﬁed by the implementation runtime. </description>
+            <location chapter="3" section="2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:5</id>
+            <description>Valid parameter types for each of the above annotations are listed in the corresponding Javadoc, however in general (excluding @Context) the following types are supported: </description>
+            <location chapter="3" section="2"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:5.1</id>
+                    <description>Primitive types.</description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:5.2</id>
+                    <description>Types that have a constructor that accepts a single String argument.</description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:5.3</id>
+                    <description>Types that have a static method named valueOf or fromString with a single String argument. </description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:5.4</id>
+                    <description>List&lt;T&gt;, Set&lt;T&gt;, or SortedSet&lt;T&gt;, where T satisﬁes 2 or 3 above.</description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:5.5</id>
+                    <description>If both methods are present then valueOf MUST be used unless the type is an enum in which case fromString MUST be used.</description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:5.6</id>
+                    <description>Types for which a ParamConverter is available via a registered ParamConverterProvider</description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:6</id>
+            <description>The DefaultValue annotation may be used to supply a default value for some of the above, see the Javadoc for DefaultValue for usage details and rules for generating a value in the absence of this annotation and the requested data. </description>
+            <location chapter="3" section="2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:7</id>
+            <description>The Encoded annotation may be used to disable automatic URI decoding for @MatrixParam, @QueryParam, and @PathParam annotated ﬁelds and properties. </description>
+            <location chapter="3" section="2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:8</id>
+            <description>A WebApplicationException thrown during construction of ﬁeld or property values using 3 or 4 above is processed directly as described in section 3.3.4. </description>
+            <location chapter="3" section="2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:9</id>
+            <description>Other exceptions thrown during construction of ﬁeld or property values using 3 or 4 above are treated as client errors: </description>
+            <location chapter="3" section="2"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:9.1</id>
+                    <description>if the ﬁeld or property is annotated with @MatrixParam, @QueryParam or @PathParam then an implementation MUST generate a WebApplicationException that wraps the thrown exception with a not found response (404 status) and no entity;</description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:9.2</id>
+                    <description> if the ﬁeld or property is annotated with @HeaderParam or @CookieParam then an implementation MUST generate a WebApplicationException that wraps the thrown exception with a client error response (400 status) and no entity.</description>
+                    <location chapter="3" section="2"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:10</id>
+            <description>Exceptions MUST be processed as described in section 3.3.4. </description>
+            <location chapter="3" section="2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:11</id>
+            <description>Only public methods may be exposed as resource methods. </description>
+            <location chapter="3" section="3.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:12</id>
+            <description>When a resource method is invoked, parameters annotated with @FormParam or one of the annotations listed in section 3.2 are mapped from the request according to the semantics of the annotation. Similar to ﬁelds and bean properties: </description>
+            <location chapter="3" section="3.2"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:12.1</id>
+                    <description> The DefaultValue annotation may be used to supply a default value for parameters</description>
+                    <location chapter="3" section="3.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:12.2</id>
+                    <description>The Encoded annotation may be used to disable automatic URI decoding of parameter values</description>
+                    <location chapter="3" section="3.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:12.3</id>
+                    <description>Exceptions thrown during construction of parameter values are treated the same as exceptions thrown during construction of ﬁeld or bean property values, see section 3.2.</description>
+                    <location chapter="3" section="3.2"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="false">
+            <id>JAXRS:SPEC:13</id>
+            <description>Resource methods MUST have at most one entity parameter.</description>
+            <location chapter="3" section="3.2.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:14</id>
+            <description>Resource methods MAY return void, Response, GenericEntity, or another Java type, these return types are mapped to a response entity body as follows: </description>
+            <location chapter="3" section="3.3"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:14.1</id>
+                    <description>void: Results in an empty entity body with a 204 status code.</description>
+                    <location chapter="3" section="3.3"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:14.2</id>
+                    <description>Response: Results in an entity body mapped from the entity property of the Response with the status code speciﬁed by the status property of the Response.</description>
+                    <location chapter="3" section="3.3"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:14.3</id>
+                    <description>Response: A null return value results in a 204 status code.</description>
+                    <location chapter="3" section="3.3"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:14.4</id>
+                    <description>Response:If the status property of the Response is not set: a 200 status code is used for a non-null entity property and a 204 status code is used if the entity property is null.</description>
+                    <location chapter="3" section="3.3"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:14.5</id>
+                    <description>GenericEntity: Results in an entity body mapped from the Entity property of the GenericEntity. If the return value is not null a 200 status code is used</description>
+                    <location chapter="3" section="3.3"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:14.6</id>
+                    <description>GenericEntity: a null return value results in a 204 status code.</description>
+                    <location chapter="3" section="3.3"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:14.7</id>
+                    <description>Other: Results in an entity body mapped from the class of the returned instance. If the return value is not null a 200 status code is used</description>
+                    <location chapter="3" section="3.3"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:14.8</id>
+                    <description>Other: a null return value results in a 204 status code. </description>
+                    <location chapter="3" section="3.3"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:15</id>
+            <description>The return type of a resource method and the type of the returned instance are used to determine the raw type and generic type supplied to the isWritable method of MessageBodyWriteras follows:  </description>
+            <location chapter="3" section="3.3"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:15.1</id>
+                    <description>Return Type</description>
+                    <location chapter="3" section="3.3"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:15.2</id>
+                    <description>Returned Instance </description>
+                    <location chapter="3" section="3.3"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:15.3</id>
+                    <description>Raw Type</description>
+                    <location chapter="3" section="3.3"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:15.4</id>
+                    <description>Generic Type </description>
+                    <location chapter="3" section="3.3"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:16</id>
+            <description>A resource method, sub-resource method or sub-resource locator may throw any checked or unchecked exception. An implementation MUST catch all exceptions and process them as follows:  </description>
+            <location chapter="3" section="3.4"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:16.1</id>
+                    <description>Instances of WebApplicationException MUST be mapped to a response as follows. If the response property of the exception does not contain an entity and an exception mapping provider (see section 4.4) is available for WebApplicationException an implementation MUST use the provider to create a new Response instance, otherwise the response property is used directly. The resulting Response instance is then processed according to section 3.3.3. </description>
+                    <location chapter="3" section="3.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:16.2</id>
+                    <description> If an exception mapping provider (see section 4.4) is available for the exception or one of its superclasses, an implementation MUST use the provider whose generic type is the nearest superclass of the exception to create a Response instance that is then processed according to section 3.3.3. If the exception mapping provider throws an exception while creating a Response then return a server error (status code 500) response to the client.  </description>
+                    <location chapter="3" section="3.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="removed" testable="true">
+                    <id>JAXRS:SPEC:16.3</id>
+                    <description>Unchecked exceptions and errors MUST be re-thrown and allowed to propagate to the underlying container. </description>
+                    <location chapter="3" section="3.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="removed" testable="false">
+                    <id>JAXRS:SPEC:16.4</id>
+                    <description>Checked exceptions and throwables that cannot be thrown directly MUST be wrapped in a container-speciﬁc exception that is then thrown and allowed to propagate to the underlying container. Servlet-based implementations MUST use ServletException as the wrapper. JAX-WS Provider-based implementations MUST use WebServiceException as the wrapper. </description>
+                    <location chapter="3" section="3.4"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:17</id>
+            <description>On receipt of a HEAD request an implementation MUST either: </description>
+            <location chapter="3" section="3.5"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:17.1</id>
+                    <description>Call a method annotated with a request method designator for HEAD</description>
+                    <location chapter="3" section="3.5"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:17.2</id>
+                    <description>or, if none present, Call a method annotated with a request method designator for GET and discard any returned entity.</description>
+                    <location chapter="3" section="3.5"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:18</id>
+            <description>On receipt of an OPTIONS request an implementation MUST either: </description>
+            <location chapter="3" section="3.5"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:18.1</id>
+                    <description>Call a method annotated with a request method designator for OPTIONS or, if none present, </description>
+                    <location chapter="3" section="3.5"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:18.2</id>
+                    <description>Generate an automatic response from the declared metadata of the matching class.</description>
+                    <location chapter="3" section="3.5"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="false" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:19</id>
+            <description>Template parameters can optionally specify the regular expression used to match their values.</description>
+            <location chapter="3" section="4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:20</id>
+            <description>The presence or absence of a request method designator (e.g. @GET) differentiates between the two: </description>
+            <location chapter="3" section="4.1"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:20.1</id>
+                    <description>Present Such methods, known as sub-resource methods, are treated like a normal resource method (see section 3.3) except the method is only invoked for request URIs that match a URI template created by concatenating the URI template of the resource class with the URI template of the method </description>
+                    <location chapter="3" section="4.1"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:20.2</id>
+                    <description>Absent Such methods, known as sub-resource locators, are used to dynamically resolve the object that will handle the request. Any returned object is treated as a resource class instance and used to either handle the request or to further resolve the object that will handle the request, see 3.7 for further details. An implementation MUST dynamically determine the class of object returned rather than relying on the static sub-resource locator return type since the returned instance may be a subclass of the declared type with potentially different annotations, see section 3.6 for rules on annotation inheritance.</description>
+                    <location chapter="3" section="4.1"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:20.3</id>
+                    <description>Sub-resource locators may have all the same parameters as a normal resource method (see section 3.3) except that they MUST NOT have an entity parameter.</description>
+                    <location chapter="3" section="4.1"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:21</id>
+            <description>An implementation MUST NOT invoke a method whose effective value of @Produces does not match the request Accept header.</description>
+            <location chapter="3" section="5"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:22</id>
+            <description>An implementation MUST NOT invoke a method whose effective value of @Consumes does not match the request Content-Type header.</description>
+            <location chapter="3" section="5"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:23</id>
+            <description>Annotations on a super-class take precedence over those on an implemented interface.</description>
+            <location chapter="3" section="6"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:24</id>
+            <description>If a subclass or implementation method has any RESTful Web Services annotations then all of the annotations on the super class or interface method are ignored.</description>
+            <location chapter="3" section="6"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:25</id>
+            <description>Implementations are not required to use the algorithm as written but MUST produce results equivalent to those produced by the algorithm. </description>
+            <location chapter="3" section="7"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:25.1</id>
+                    <description>If E is empty then no matching resource can be found, the algorithm terminates and an implementation MUST generate a WebApplicationException with a not found response (HTTP 404 status) and no entity. The exception MUST be processed as described in section 3.3.4. </description>
+                    <location chapter="3" section="7.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:25.2</id>
+                    <description>Sort E using the number of literal characters in each member as the primary key (descending order), the number of capturing groups as a secondary key (descending order) and the number of capturing groups with non-default regular expressions (i.e. not ‘([ˆ/]+?)’) as the tertiary key (descending order). </description>
+                    <location chapter="3" section="7.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:25.3</id>
+                    <description>Sort E using the number of literal characters in each member as the primary key (descending order), the number of capturing groups as a secondary key (descending order), the number of capturing groups with non-default regular expressions (i.e. not ‘([ˆ/]+?)’) as the tertiary key (descending order), and the source of each member as quaternary key sorting those derived from Tmethod ahead of those derived from Tlocator. </description>
+                    <location chapter="3" section="7.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:25.4</id>
+                    <description>The request method is supported. If no methods support the request method an implementation MUST generate a WebApplicationException with a method not allowed response (HTTP 405 status) and no entity. The exception MUST be processed as described in section 3.3.4. Note the additional support for HEAD and OPTIONS described in section 3.3.5. </description>
+                    <location chapter="3" section="7.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:25.5</id>
+                    <description>The media type of the request entity body (if any) is a supported input data format (see section 3.5). If no methods support the media type of the request entity body an implementation MUST generate a WebApplicationException with an unsupported media type response (HTTP 415 status) and no entity. The exception MUST be processed as described in section 3.3.4. </description>
+                    <location chapter="3" section="7.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:25.6</id>
+                    <description>At least one of the acceptable response entity body media types is a supported output data format (see section 3.5). If no methods support one of the acceptable response entity body media types an implementation MUST generate a WebApplicationException with a not acceptable response (HTTP 406 status) and no entity. The exception MUST be processed as described in section 3.3.4. </description>
+                    <location chapter="3" section="7.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:25.7</id>
+                    <description>Let t be the request content type and CM a resource method’s @Consumes set of server media types, we use the media type max>={S(t,c) | (t, c) e {t} X CM} as primary key</description>
+                    <location chapter="3" section="7.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:25.8</id>
+                    <description>Let A be the request accept header set of client media types and PM a resource method’s @Produces set of server media types, we use the media type max>={S(a, p) | (a, p) e A X PM} as secondary key.</description>
+                    <location chapter="3" section="7.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:25.9</id>
+                    <description>n1/m1 > n2/m2 where the partial order > is defined as n/m > n/* > */*</description>
+                    <location chapter="3" section="7.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:25.10</id>
+                    <description>n2/m2 /> n1/m1 and v1 > v2</description>
+                    <location chapter="3" section="7.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:25.11</id>
+                    <description>n2/m2 /> n1/m1 and v1 = v2 and v1' > v2'</description>
+                    <location chapter="3" section="7.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:25.12</id>
+                    <description>n2/m2 /> n1/m1 and v1 = v2 and v1' = v2' and v1'' &lt;= v2''</description>
+                    <location chapter="3" section="7.2"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:26</id>
+            <description>The following algorithm is used to determine the response media type, Mselected, at run time</description>
+            <location chapter="3" section="8"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:26.1</id>
+                    <description>If the method returns an instance of Response whose metadata includes the response media type (Mspecified) then set Mselected = Mspecified, finish</description>
+                    <location chapter="3" section="8"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:26.2</id>
+                    <description>If the method is annotated with @Produces, set P = V (method) where V (t) represents the values of @Produces on the specified target t.</description>
+                    <location chapter="3" section="8"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:26.3</id>
+                    <description>Else if the class is annotated with @Produces, set P = V (class).</description>
+                    <location chapter="3" section="8"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:26.4</id>
+                    <description>Else set P = V (writers) where ‘writers’ is the set of MessageBodyWriter that support the class of the returned entity object</description>
+                    <location chapter="3" section="8"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="false">
+                    <id>JAXRS:SPEC:26.5</id>
+                    <description>If P = , set P = ‘*/*’</description>
+                    <location chapter="3" section="8"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:26.6</id>
+                    <description>If A = , set A = ‘*/*’</description>
+                    <location chapter="3" section="8"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:26.7</id>
+                    <description>If M =  ,then generate a WebApplicationException with a not acceptable response (HTTP 406 status) and no entity. The exception MUST be processed as described in Section 3.3.4. Finish</description>
+                    <location chapter="3" section="8"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:26.8</id>
+                    <description>Sort M in descending order, with a primary key of specificity (n/m > n/* > */*), a secondary key of q-value and a tertiary key of qs-value.</description>
+                    <location chapter="3" section="8"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="false">
+                    <id>JAXRS:SPEC:26.9</id>
+                    <description>If M contains ‘*/*’ or ‘application/*’, set Mselected = ‘application/octet-stream’, finish. </description>
+                    <location chapter="3" section="8"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:26.10</id>
+                    <description>Generate a WebApplicationException with a not acceptable response (HTTP 406 status) and no entity. The exception MUST be processed as described in section 3.3.4. Finish. </description>
+                    <location chapter="3" section="8"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:27</id>
+            <description>Provider classes are instantiated by the RESTful Web Services runtime and MUST have a public constructor for which the RESTful Web Services runtime can provide all parameter values. Note that a zero argument constructor is permissible under this rule. </description>
+            <location chapter="4" section="1.3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:28</id>
+            <description>If more than one public constructor can be used then an implementation MUST use the one with the most parameters. </description>
+            <location chapter="4" section="1.3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="removed" testable="false">
+            <id>JAXRS:SPEC:29</id>
+            <description>In the absence of a suitable entity provider, RESTful Web Services implementations are REQUIRED to use to the JavaBeans Activation Framework[11] to try to obtain a suitable data handler to perform the mapping instead. </description>
+            <location chapter="4" section="1.3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:30</id>
+            <description>The absence of these annotations is equivalent to their inclusion with media type (“*/*”), i.e. absence implies that any media type is supported. </description>
+            <location chapter="4" section="2.3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:31</id>
+            <description>An implementation MUST NOT use an entity provider for a media type that is not supported by that provider. </description>
+            <location chapter="4" section="2.3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:32</id>
+            <description>When choosing an entity provider an implementation sorts the available providers according to the media types they declare support for. Sorting of media types follows the general rule: x/y &lt; x/* &lt; */*, i.e. a provider that explicitly lists a media types is sorted before a provider that lists */*. </description>
+            <location chapter="4" section="2.3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:33</id>
+            <description>An implementation MUST include pre-packaged MessageBodyReader and MessageBodyWriter implementations for the following Java and media type combinations: </description>
+            <location chapter="4" section="2.4"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.1</id>
+                    <description>byte[] All media types (*/*).</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.2</id>
+                    <description>java.lang.String All media types (*/*).</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.3</id>
+                    <description>java.io.InputStream All media types (*/*).</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.4</id>
+                    <description>java.io.Reader All media types (*/*).</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.5</id>
+                    <description>java.io.File All media types (*/*).</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.6</id>
+                    <description>jakarta.activation.DataSource All media types (*/*).</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.7</id>
+                    <description>javax.xml.transform.Source XML types (text/xml, application/xml and application/*+xml).</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.8</id>
+                    <description>jakarta.xml.bind.JAXBElement and application-supplied JAXB classes XML media types (text/xml, application/xml and application/*+xml).</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.9</id>
+                    <description>MultivaluedMap&lt;String,String&gt; Form content (application/x-www-form-urlencoded).</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.10</id>
+                    <description>StreamingOutput All media types (*/*), MessageBodyWriter only.</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.11</id>
+                    <description>java.lang.Boolean. Only for text/plain. Corresponding primitive types supported via boxing/unboxing conversion.</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.12</id>
+                    <description>java.lang.Character. Only for text/plain. Corresponding primitive types supported via boxing/unboxing conversion.</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:33.13</id>
+                    <description>java.lang.Number. Only for text/plain. Corresponding primitive types supported via boxing/unboxing conversion.</description>
+                    <location chapter="4" section="2.4"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:34</id>
+            <description>The implementation-supplied entity provider(s) for jakarta.xml.bind.JAXBElement and application-supplied JAXB classes MUST use JAXBContext instances provided by application-supplied context resolvers, see section 4.3. If an application does not supply a JAXBContext for a particular type, the implementation-supplied entity provider MUST use its own default context instead.</description>
+            <location chapter="4" section="2.4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:35</id>
+            <description>An implementation MUST support application-provided entity providers and MUST use those in preference to its own pre-packaged providers when either could handle the same request. More precisely, step 4 in Section 4.2.1 and step 5 in Section 4.2.2 MUST prefer application-provided over pre-packaged entity providers.</description>
+            <location chapter="4" section="2.4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="false">
+            <id>JAXRS:SPEC:36</id>
+            <description>MessageBodyReader providers always operate on the decoded HTTP entity body rather than directly on the HTTP message body.</description>
+            <location chapter="4" section="2.5"/>
+        </assertion>
+        <assertion required="false" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:37</id>
+            <description>Content encoding is the responsibility of the application. Application-supplied entity providers MAY perform such encoding and manipulate the HTTP headers accordingly.</description>
+            <location chapter="4" section="2.6"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:38</id>
+            <description>When choosing a context provider an implementation sorts the available providers according to the media types they declare support for. Sorting of media types follows the general rule: x/y &lt; x/* &lt; */*, i.e. a provider that explicitly lists a media type is sorted before a provider that lists */*.</description>
+            <location chapter="4" section="3.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:39</id>
+            <description>When choosing an exception mapping provider to map an exception, an implementation MUST use the provider whose generic type is the nearest superclass of the exception.</description>
+            <location chapter="4" section="4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:40</id>
+            <description>When injecting an instance of one of the types listed in section 9.2, the instance supplied MUST be capable of selecting the correct context for a particular request.</description>
+            <location chapter="10" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:41</id>
+            <description>The @Context annotation can be used to indicate a dependency on a Servlet-deﬁned resource. </description>
+            <location chapter="10" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:42</id>
+            <description>A Servlet-based implementation MUST support injection of the following Servlet-deﬁned types: ServletConfig, ServletContext, HttpServletRequest and HttpServletResponse.</description>
+            <location chapter="11" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:43</id>
+            <description>An injected HttpServletRequest allows a resource method to stream the contents of a request entity. If the resource method has a parameter whose value is derived from the request entity then the stream will have already been consumed and an attempt to access it MAY result in an exception. .</description>
+            <location chapter="11" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:44</id>
+            <description>An injected HttpServletResponse allows a resource method to commit the HTTP response prior to returning. An implementation MUST check the committed status and only process the return value if the response is not yet committed.</description>
+            <location chapter="11" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:45</id>
+            <description>Servlet ﬁlters may trigger consumption of a request body by accessing request parameters. </description>
+            <location chapter="11" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:46</id>
+            <description>In a servlet container the @FormParam annotation and the standard entity provider for application/x-www-form--urlencoded MUST obtain their values from the servlet request parameters if the request body has already been consumed. </description>
+            <location chapter="11" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:47</id>
+            <description>Servlet APIs do not differentiate between parameters in the URI and body of a request so URI-based query parameters may be included in the entity parameter. </description>
+            <location chapter="11" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:48</id>
+            <description>In a product that also supports the Servlet speciﬁcation, implementations MUST support RESTful Web Services applications that are packaged as a web application, </description>
+            <location chapter="11" section="2.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:49</id>
+            <description>In a product that also supports Managed Beans, implementations MUST support use of Managed Beans as root resource classes, providers and Application subclasses.</description>
+            <location chapter="11" section="2.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:50</id>
+            <description>In a product that also supports JSR 299, implementations MUST similarly support use of JSR299-style managed beans. Providers and Application subclasses MUST be singletons or use application scope.</description>
+            <location chapter="11" section="2.3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:51</id>
+            <description>In a product that also supports EJB, an implementation MUST support use of stateless and singleton session beans as root resource classes, providers and Application subclasses. RESTful Web Services annotations MAY be applied to a bean’s local interface or directly to a no-interface bean. </description>
+            <location chapter="11" section="2.4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:52</id>
+            <description>If an ExceptionMapper for a EJBException or subclass is not included with an application then exceptions thrown by an EJB resource class or provider method MUST be treated as EJB application exceptions: the embedded cause of the EJBException MUST be unwrapped and processed. </description>
+            <location chapter="11" section="2.4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:53</id>
+            <description>The following additional requirements apply when using Managed Beans, JSR299-style Managed Beans or EJBs as resource classes, providers or Application subclasses: </description>
+            <location chapter="11" section="2.8"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+                    <id>JAXRS:SPEC:53.1</id>
+                    <description>Field and property injection of RESTful Web Services resources MUST be performed prior to the container invoking any @PostConstruct annotated method. </description>
+                    <location chapter="11" section="2.8"/>
+                </assertion>
+                <assertion required="false" impl-spec="false" defined-by="platform" status="active" testable="true">
+                    <id>JAXRS:SPEC:53.2</id>
+                    <description>Support for constructor injection of RESTful Web Services resources is OPTIONAL. Portable applications MUST instead use ﬁelds or bean properties in conjunction with a @PostConstruct annotated method. Implementations SHOULD warn users about use of non-portable constructor injection. </description>
+                    <location chapter="11" section="2.8"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+                    <id>JAXRS:SPEC:53.3</id>
+                    <description>Implementations MUST NOT require use of @Inject or @Resource to trigger injection of RESTful Web Services annotated ﬁelds or properties. Implementations MAY support such usage but SHOULD warn users about non-portability. </description>
+                    <location chapter="11" section="2.8"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="no">
+            <id>JAXRS:SPEC:54</id>
+            <description>Other container technologies MAY specify their own set of injectable resources but MUST, at a minimum, support access to the types of context listed in section 5.2. </description>
+            <location chapter="11" section="3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="false">
+            <id>JAXRS:SPEC:55</id>
+            <description>The resources and providers that make up a RESTful Web Services application are conﬁgured via an application-supplied subclass of Application. An implementation MAY provide alternate mechanisms for locating resource classes and providers (e.g. runtime class scanning) but use of Application is the only portable means of conﬁguration. </description>
+            <location chapter="2" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:56</id>
+            <description>(deploy with Servlet container)If no Application subclass is present the added servlet MUST be named: jakarta.ws.rs.core.Application, and all root resource classes and providers packaged in the web application MUST be included in the published RESTful Web Services application. The application MUST be packaged with a web.xml that speciﬁes a servlet mapping for the added servlet.</description>
+            <location chapter="2" section="3.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:57</id>
+            <description>(deploy with Servlet container)If an Application subclass is present and there is already a servlet deﬁned that has a servlet initialization parameter named: jakarta.ws.rs.Application, whose value is the fully qualiﬁed name of the Application subclass then no new servlet should be added by the RESTful Web Services implementation’s ContainerInitializer since the application is already being handled by an existing servlet.</description>
+            <location chapter="2" section="3.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:58</id>
+            <description>(deploy with Servlet container)If an Application subclass is present that is not being handled by an existing servlet then the servlet added by the ContainerInitializer MUST be named with the fully qualiﬁed name of the Application subclass. If the Application subclass is annotated with @ApplicationPath and no servlet-mapping exists for the added servlet then a new servlet mapping is added with the value of the @ApplicationPath annotation with ”/*” appended otherwise the existing mapping is used. If the Application subclass is not annotated with @ApplicationPath then the application MUST be packaged with a web.xml that speciﬁes a servlet mapping for the added servlet. It is an error for more than one application to be deployed at the same effective servlet mapping</description>
+            <location chapter="2" section="3.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:59</id>
+            <description>(deploy with Servlet container)In either of the latter two cases, if both Application.getClasses and Application.getSingletons return an empty list then all root resource classes and providers packaged in the web application MUST be included in the published RESTful Web Services application. If either getClasses or getSingletons return a non-empty list then only those classes or singletons returned MUST be included in the published RESTful Web Services application. </description>
+            <location chapter="2" section="3.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="platform" status="active" testable="true">
+            <id>JAXRS:SPEC:60</id>
+            <description>(deploy with Servlet container)If not using the Servlet 3 framework pluggability mechanism (e.g. in a pre-Servet 3.0 container), the servlet-class or filter-class element of the web.xml descriptor SHOULD name the RESTful Web Services implementation-supplied servlet or ﬁlter class respectively. The Application subclass SHOULD be identiﬁed using an init-param with a param-name of jakarta.ws.rs.Application.</description>
+            <location chapter="2" section="3.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:61</id>
+            <description>The normalized request URI MUST be reflected in the URIs obtained from an injected UriInfo.</description>
+            <location chapter="3" section="7.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:62</id>
+            <description>The following describes the logical1 steps taken by a RESTful Web Services implementation when mapping a request entity body to a Java method parameter</description>
+            <location chapter="4" section="2.1"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:62.1</id>
+                    <description>Obtain the media type of the request. If the request does not contain a Content-Type header then use application/octet-stream</description>
+                    <location chapter="4" section="2.1"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:62.2</id>
+                    <description>Select the set of MessageBodyReader classes that support the media type of the request, see Section 4.2.3.</description>
+                    <location chapter="4" section="2.1"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:62.3</id>
+                    <description>Iterate through the selected MessageBodyReader classes and, utilizing the isReadable method of each, choose a MessageBodyReader provider that supports the desired Java type</description>
+                    <location chapter="4" section="2.1"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:62.4</id>
+                    <description>If step 4 locates a suitable MessageBodyReader then use its readFrom method to map the entity body to the desired Java type</description>
+                    <location chapter="4" section="2.1"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:62.5</id>
+                    <description>Else generate a WebApplicationException that contains an unsupported media type response (HTTP 415 status) and no entity. The exception MUST be processed as described in Section 3.3.4.</description>
+                    <location chapter="4" section="2.1"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:63</id>
+            <description>The following describes the logical steps taken by a RESTful Web Services implementation when mapping a return value to a response entity body</description>
+            <location chapter="4" section="2.2"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:63.1</id>
+                    <description>Obtain the object that will be mapped to the response entity body. For a return type of Response or subclasses the object is the value of the entity property, for other return types it is the returned object.</description>
+                    <location chapter="4" section="2.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:63.2</id>
+                    <description>Select the set of MessageBodyWriter providers that support (see Section 4.2.3) the object and media type of the response entity body.</description>
+                    <location chapter="4" section="2.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:63.3</id>
+                    <description>Sort the selected MessageBodyWriter providers with a primary key of generic type where providers whose generic type is the nearest superclass of the object class are sorted first and a secondary key of media type (see Section 4.2.3).</description>
+                    <location chapter="4" section="2.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:63.4</id>
+                    <description>Iterate through the sorted MessageBodyWriter providers and, utilizing the isWriteable method of each, choose an MessageBodyWriter that supports the object that will be mapped to the entity body.</description>
+                    <location chapter="4" section="2.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:63.5</id>
+                    <description>If step 5 locates a suitable MessageBodyWriter then use its writeTo method to map the object to the entity body</description>
+                    <location chapter="4" section="2.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="false">
+                    <id>JAXRS:SPEC:63.6</id>
+                    <description>Else generate a WebApplicationException with an internal server error response (HTTP 500 status) and no entity. The exception MUST be processed as described in Section 3.3.4</description>
+                    <location chapter="4" section="2.2"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="removed" testable="true">
+            <id>JAXRS:SPEC:64</id>
+            <description>Client instances can be configured by calling the configuration method; the object returned, of type Configuration provides access to providers, properties and features</description>
+            <location chapter="5" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:65</id>
+            <description>Conceptually, the steps required to submit a request are the following: (i) obtain an instance of Client (ii) create a WebTarget (iii) create a request from the WebTarget and (iv) submit a request or get a prepared Invocation for later submission</description>
+            <location chapter="5" section="2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:66</id>
+            <description>WebTarget instances are immutable with respect to their URI (or URI template): methods for specifying additional path segments and parameters return a new instance of WebTarget.</description>
+            <location chapter="5" section="3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:67</id>
+            <description>However, WebTarget instances are mutable with respect to their configuration. Thus, configuring a WebTarget does not create new instances</description>
+            <location chapter="5" section="3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:68</id>
+            <description>Note that changes to hello’s configuration do not affect base, i.e. inheritance performs a deep copy of the configuration.</description>
+            <location chapter="5" section="3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:69</id>
+            <description>RESTful Web Services implementations are REQUIRED to use entity providers</description>
+            <location chapter="5" section="4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:70</id>
+            <description>See Section 4.2.4 for a list of entity providers that MUST be supported by all RESTful Web Services implementations</description>
+            <location chapter="5" section="4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:71</id>
+            <description>The mapping calls Invocation.invoke() to execute the invocation synchronously; asynchronous execution is also supported by calling Invocation.submit().</description>
+            <location chapter="5" section="5"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:72</id>
+            <description>The following Client API types are configurable: Client, Invocation, Invocation.Builder and WebTarget. Configuration methods are inherited from the Configurable interface implemented by all these classes.</description>
+            <location chapter="5" section="6"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:73</id>
+            <description>This interface supports configuration of: Features, Properties, Providers</description>
+            <location chapter="5" section="6"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:74</id>
+            <description>However, any additional changes to the instance of WebTarget will not impact the Client’s configuration and vice versa.</description>
+            <location chapter="5" section="6"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:75</id>
+            <description>When reading zero-length request entities all pre-packaged MessageBodyReader implementations, except the JAXB-related one and those for the (boxed) primitive types above, MUST create a corresponding Java object that represents zero-length data; they MUST NOT return null.</description>
+            <location chapter="4" section="2.4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:76</id>
+            <description>The pre-packaged JAXB and the prepackaged primitive type MessageBodyReader’s MUST throw a BadRequestException (400 status) for zero-length request entities.</description>
+            <location chapter="4" section="2.4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:77</id>
+            <description>A public constructor MAY include parameters annotated with one of the following:</description>
+            <location chapter="3" section="1.2"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:77.1</id>
+                    <description>@Context</description>
+                    <location chapter="3" section="1.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:77.2</id>
+                    <description>@HeaderParam</description>
+                    <location chapter="3" section="1.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:77.3</id>
+                    <description>@CookieParam</description>
+                    <location chapter="3" section="1.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:77.4</id>
+                    <description>@MatrixParam</description>
+                    <location chapter="3" section="1.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:77.5</id>
+                    <description>@QueryParam</description>
+                    <location chapter="3" section="1.2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:77.6</id>
+                    <description>@PathParam</description>
+                    <location chapter="3" section="1.2"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:78</id>
+            <description>When accepting multiple media types, clients may indicate preferences by using a relative quality factor known as the q parameter. The value of the q parameter, or q-value, is used to sort the set of accepted</description>
+            <location chapter="3" section="5"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:79</id>
+            <description>A server can also indicate media type preference using the qs parameter; server preference is only examined when multiple media types are accepted by a client with the same q-value.</description>
+            <location chapter="3" section="5"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:80</id>
+            <description>Context providers MAY return null from the getContext method if they do not wish to provide their context for a particular Java type.</description>
+            <location chapter="4" section="3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:81</id>
+            <description>Context provider implementations MAY restrict the media types they support using the @Produces annotation. The absence of this annotation is equivalent to its inclusion with media type (“*/*”), i.e. absence implies that any media type is supported.</description>
+            <location chapter="4" section="3.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:82</id>
+            <description>When a resource class or provider method throws an exception for which there is an exception mapping provider, the matching provider is used to obtain a Response instance. The resulting Response is processed as if a web resource method had returned the Response, see Section 3.3.3. In particular, a mapped Response MUST be processed using the ContainerResponse filter chain defined in Chapter 6.</description>
+            <location chapter="4" section="4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:83</id>
+            <description>To avoid a potentially infinite loop, a single exception mapper must be used during the processing of a request and its corresponding response. RESTful Web Services implementations MUST NOT attempt to map exceptions thrown while processing a response previously mapped from an exception. Instead, this exception MUST be processed as described in steps 3 and 4 in Section 3.3.4.</description>
+            <location chapter="4" section="4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:84</id>
+            <description>RESTful Web Services implementations are REQUIRED to call registered interceptors when mapping representations to Java types and vice versa.</description>
+            <location chapter="6" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:85</id>
+            <description>Request filters implementing ClientRequestFilter or ContainerRequestFilter can stop the execution of their corresponding chains by calling abortWith(Response) in their corresponding context object. If this method is invoked, RESTful Web Services implementations are REQUIRED to abort execution of the chain and treat the response object as if produced by calling the resource method (Server API) or executing the HTTP invocation (Client API).</description>
+            <location chapter="6" section="2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:86</id>
+            <description>RESTful Web Services implementations MUST use the last parameter values set in the context object when calling the wrapped methods MessageBodyReader.readFrom and MessageBodyWrite.writeTo.</description>
+            <location chapter="6" section="3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:87</id>
+            <description>Binding annotations that decorate resource classes apply to all the resource methods defined in them. A filter or interceptor class can be decorated with multiple binding annotations.</description>
+            <location chapter="6" section="5.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:88</id>
+            <description>Similarly, a resource method can be decorated with multiple binding annotations. Each binding annotation instance in a resource method denotes a set of filters and interceptors whose class definitions are decorated with that annotation (possibly among others). The final set of (static) filters and interceptors is the union of all these sets</description>
+            <location chapter="6" section="5.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:89</id>
+            <description>returning filters or interceptors from the methods getClasses or getSingletons in an application subclass will bind them globally only if they are not decorated with a name binding annotation. If they are decorated with at least one name binding annotation, the application subclass must be annotated as shown above in order for those filters or interceptors to be globally bound</description>
+            <location chapter="6" section="5.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:90</id>
+            <description>When a filter or interceptor method throws an exception, the RESTful Web Services runtime will attempt to map the exception as described in Section 4.5. As explained in Section 4.4, an application can supply exception mapping providers to customize this mapping</description>
+            <location chapter="6" section="7.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:91</id>
+            <description>At most one exception mapper will be used in a single request processing cycle to avoid potentially infinite loops. A response mapped from an exception MUST be filtered as follows</description>
+            <location chapter="6" section="7.1"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:91.1</id>
+                    <description>If a web resource had been matched before the exception was thrown, then all the filters in the ContainerResponse chain for that resource MUST be invoked;</description>
+                    <location chapter="6" section="7.1"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:91.2</id>
+                    <description>Otherwise, only globally bound filters in the ContainerResponse chain MUST be invoked</description>
+                    <location chapter="6" section="7.1"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:92</id>
+            <description>Execution chains for extension points ContainerRequest, PreMatchContainerRequest, ClientRequest, ReadFrom and WriteTo are sorted in ascending order; the lower the number the higher the priority. Execution chains for extension points ContainerResponse and ClientResponse are sorted in descending order; the higher the number the higher the priority.</description>
+            <location chapter="6" section="6"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:93</id>
+            <description>This section describes the types of context available to</description>
+            <location chapter="10" section="2"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:93.1</id>
+                    <description>Application subclasses</description>
+                    <location chapter="10" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:93.2</id>
+                    <description>resource classes</description>
+                    <location chapter="10" section="2"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:93.3</id>
+                    <description>providers</description>
+                    <location chapter="10" section="2"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:94</id>
+            <description>The instance of the application-supplied Application subclass can be injected into a class field or method parameter using the @Context annotation.</description>
+            <location chapter="10" section="2.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:95</id>
+            <description>An instance of UriInfo can be injected into a class field or method parameter using the @Context annotation.</description>
+            <location chapter="10" section="2.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:96</id>
+            <description>An instance of HttpHeaders can be injected into a class field or method parameter using the @Context annotation.</description>
+            <location chapter="10" section="2.3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:97</id>
+            <description>An instance of Request can be injected into a class field or method parameter using the @Context annotation.</description>
+            <location chapter="10" section="2.4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:98</id>
+            <description>An instance of SecurityContext can be injected into a class field or method parameter using the @Context annotation.</description>
+            <location chapter="10" section="2.5"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:99</id>
+            <description>An instance of Providers can be injected into a class field or method parameter using the @Context annotation.</description>
+            <location chapter="10" section="2.6"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:100</id>
+            <description>It (ResourceContext) can be injected to help with creation and initialization, or just initialization, of instances created by an application.</description>
+            <location chapter="10" section="2.7"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:101</id>
+            <description>RESTful Web Services implementations MUST follow the constraint annotation rules defined in Bean Validation 1.1. JSR</description>
+            <location chapter="7" section="5"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:102</id>
+            <description>RESTful Web Services implementations MUST provide a default exception mapper (see Section 4.4) for jakarta.validation.ValidationException according to the following rules</description>
+            <location chapter="7" section="6"/>
+            <sub-assertions>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:102.1</id>
+                    <description>If the exception is of type jakarta.validation.ValidationException or any of its subclasses excluding jakarta.validation.ConstraintViolationException, then it is mapped to a response with status code 500 (Internal Server Error).</description>
+                    <location chapter="7" section="6"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:102.2</id>
+                    <description>If the exception is an instance of jakarta.validation.ConstraintViolationException, then: (a) If the exception was thrown while validating a method return type, then it is mapped to a response with status code 500 (Internal Server Error) 1</description>
+                    <location chapter="7" section="6"/>
+                </assertion>
+                <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+                    <id>JAXRS:SPEC:102.3</id>
+                    <description>If the exception is an instance of jakarta.validation.ConstraintViolationException, then: (b) Otherwise, it is mapped to a response with status code 400 (Bad Request).</description>
+                    <location chapter="7" section="6"/>
+                </assertion>
+            </sub-assertions>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:103</id>
+            <description>RESTful Web Services implementations are REQUIRED to generate a ServiceUnavailableException, a subclass of WebApplicationException with its status set to 503, if the timeout value is reached and no timeout handler is registered.</description>
+            <location chapter="8" section="2.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:104</id>
+            <description>The exception MUST be processed as described in section 3.3.4.</description>
+            <location chapter="8" section="2.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:105</id>
+            <description>If a registered timeout handler resets the timeout value or resumes the connection and returns a response, RESTful Web Services implementations MUST NOT generate an exception.</description>
+            <location chapter="8" section="2.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:106</id>
+            <description>When an EJB method is annotated with @Asynchronous, the EJB container automatically allocates the necessary resources for its execution.</description>
+            <location chapter="8" section="3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:107</id>
+            <description>In a product that supports the Java API for JSON Processing (JSON-P) [15], implementations MUST support entity providers for the following types: JsonStructure, JsonObject and JsonArray. Therefore, the standard set of entity providers from Section 4.2.4 is extended to support these types in combinations with the application/json media type.</description>
+            <location chapter="11" section="2.6"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:108</id>
+            <description>The value of the annotation is automatically encoded</description>
+            <location chapter="3" section="4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:109</id>
+            <description>Converting URI Templates to Regular Expressions</description>
+            <location chapter="3" section="7.3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:110</id>
+            <description>A RESTful Web Services implementation that supports automatic discovery of classes MUST process only those classes that are annotated with @Provider.</description>
+            <location chapter="4" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:111</id>
+            <description>When a provider method throws an exception, the RESTful Web Services server runtime will attempt to map the exception to a suitable HTTP response in the same way as described for methods and locators in Section 3.3.4.</description>
+            <location chapter="4" section="5.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:112</id>
+            <description>If the exception is thrown while generating a response, RESTful Web Services implementations are required to map the exception only when the response has not been committed yet.</description>
+            <location chapter="4" section="5.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:113</id>
+            <description>When a provider method throws an exception, the RESTful Web Services client runtime will map it to an instance of ProcessingException if thrown while processing a request, and to a ResponseProcessingException if thrown while processing a response.</description>
+            <location chapter="4" section="5.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:114</id>
+            <description>filters and interceptors are defined as RESTful Web Services providers. Therefore, they can be registered in any of the configurable types</description>
+            <location chapter="5" section="6.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:115</id>
+            <description>Filters and entity interceptors are providers and, as such, may be annotated with @Provider for automatic discovery</description>
+            <location chapter="6" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:116</id>
+            <description>Execution chains for extension points ContainerRequest, PreMatchContainerRequest, ClientRequest, ReadFrom and WriteTo are sorted in ascending order; the lower the number the higher the priority. Execution chains for extension poits ContainerResponse and ClientResponse are sorted in descending order; the higher the number the higher the priority.</description>
+            <location chapter="6" section="6"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:117</id>
+            <description>When a filter or interceptor method throws an exception, the client runtime will process the exception as described in Section 4.5.2</description>
+            <location chapter="6" section="7.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:118</id>
+            <description>These constraint annotations are not restricted to method parameters, they can be used in any location in which the RESTful Web Services binding annotations are allowed with the exception of constructors and property setters. Constraint annotations are also allowed on resource classes.</description>
+            <location chapter="7" section="1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:119</id>
+            <description>Constraint annotations must also define a groups element to indicate which processing groups they are associated with. If no groups are specified (as in the example above) the Default group is assumed. For simplicity, RESTful Web Services implementations are NOT REQUIRED to support processing groups other than Default.</description>
+            <location chapter="7" section="2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:120</id>
+            <description>Response entity bodies returned from resource methods can be validated in a similar manner by annotating the resource method itself.</description>
+            <location chapter="7" section="3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:121</id>
+            <description>According to BeanValidation 1.1 JSR, validation is enabled by default only for the so called constrained methods. Getter methods as defined by the Java Beans specification are not constrained methods, so they will not be validated by default.</description>
+            <location chapter="7" section="4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:122</id>
+            <description>Both the client and the server runtime configurations are available for injection via @Context. These configurations are available for injection in providers (client or server) and resource classes (server only) </description>
+            <location chapter="10" section="2.8"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:123</id>
+            <description>Injection of Servlet-defined types is possible using the @Context annotation. Additionally, web application’s &lt;context-param&gt; and servlet’s &lt;init-param&gt; can be used to define application properties passed to server-side features or injected into server-side RESTful Web Services components. See Javadoc for Application.getProperties for more information.</description>
+            <location chapter="11" section="2.1"/>
+        </assertion>
+        <!-- JAXRS 2.1-->
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:124</id>
+            <description>A request method designator is a runtime annotation that is annotated with the @HttpMethod annotation. RESTful Web Services defines a set of request method designators for the common HTTP methods: @GET, @POST, @PUT, @DELETE, @PATCH, @HEAD and @OPTIONS.</description>
+            <location chapter="3" section="3"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:125</id>
+            <description>A set of sub-resource methods annotated with the same URI template value are functionally equivalent to a similarly annotated sub-resource locator that returns an instance of a resource class with the same set of resource methods.</description>
+            <location chapter="3" section="4.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:126</id>
+            <description>Therefore, an application-supplied provider MUST always be preferred over a pre-packaged one if a single one is required.</description>
+            <location chapter="4" section="1.4"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:127</id>
+            <description>Application-supplied providers may be annotated with @Priority. If two or more providers are candidates for a certain task, the one with the highest priority is chosen</description>
+            <location chapter="4" section="1.4"/>
+        </assertion>
+      <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:128</id>
+            <description>An alternative approach to the injection of AsyncResponse is for a resource method to return an instance of CompletionStage as an indication to the underlying RESTful Web Services implementation that asynchronous processing is enabled.</description>
+            <location chapter="8" section="2.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:129</id>
+            <description>In a product that supports the Java API for JSON Processing (JSON-P) [18], implementations MUST support entity providers for JsonValue and all of its sub-types: JsonString and JsonNumber.</description>
+            <location chapter="11" section="2.6"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:130</id>
+            <description>In a product that supports the Java API for JSON Binding (JSON-B) [19], implementations MUST support entity providers for all Java types supported by JSON-B in combination with the application/json media type. Note that if JSON-B and JSON-P are both supported in the same environment, entity providers for JSON-B take precedence over those for JSON-P for all types except JsonValue and its sub-types.</description>
+            <location chapter="11" section="2.7"/>
+        </assertion>
+
+        <!-- JAXRS 3.1-->
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:131</id>
+            <description>There are two alternative ways of publishing on Java SE: Creating SE endpoints directly or using the SE bootstrap API. A compliant implementation MUST support both alternatives on Java SE.</description>
+            <location chapter="2" section="3.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:132</id>
+            <description>In a Java SE environment a configured instance of an endpoint class can be obtained using the createEndpoint method of RuntimeDelegate. The application supplies an instance of Application and the type of endpoint required. An implementation MAY support zero or more endpoint types of any desired type. An implementation that supports publication via JAX-WS MUST support createEndpoint with an endpoint type of jakarta.xml.ws.Provider. JAX-WS describes how a Provider based endpoint can be published in an SE environment.</description>
+            <location chapter="2" section="3.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:133</id>
+            <description>In a Java SE environment an application can be published using an embedded HTTP server bootstrapped by the implementation. An application invokes SeBootstrap.start(app, config) with an implementation of Application and a configuration built by calling build() on a configuration builder. The builder is created by SeBootstrap.Configuration.builder() and assembles all information needed to configure the embedded HTTP server using properties. A compliant implementation MUST support all properties explicitly defined by SeBootstrap.Configuration, but MAY support additional properties using a product-specific namespace prefix.The namespace prefix jakarta is reserved and MUST NOT be extended by vendors, but only by future revisions of the Jakarta RESTful Web Services API, Javadoc and / or specification. </description>
+            <location chapter="2" section="3.1"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:134</id>
+            <description>For resource methods that consume multipart/form-data media types, the @FormParam annotation may be used on jakarta.ws.rs.core.EntityPart parameters.</description>
+            <location chapter="3" section="3.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:135</id>
+            <description>The multipart/form-data media type enables requests to send multiple entities (parts) as a single entity. Each part contains its own set of headers, media type and content. There are a few different ways to consume these requests in a resource method. First, a resource method may contain an entity parameter of type, List. Another approach is to use @FormParam parameters where the value in the annotation corresponds to the name of the part. The parameter type may be a jakarta.ws.rs.core.EntityPart, a java.io.InputStream, or a String. The only way to access the headers for a particular part is to use the EntityPart type. The InputStream and String types will only provide the content of the part. Note that parts of a multipart entity can be quite large, so care should be taken when using String parameter types as that will load the entire content of the part into the Java heap. When converting the part’s content, the implementation MUST use the encoding charset specified in the part’s Content-Type header, or UTF-8 if the charset is not specified in the header.</description>
+            <location chapter="3" section="5.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:136</id>
+            <description>On runtime initialization, an implementation MUST discover and register certain service providers in jakarta.ws.rs.core.Configuration runtime configurations, if and only if service loading is enabled. Service loading is enabled, except when there is an Application subclass whose getProperties method returns a map which contains the key jakarta.ws.rs.loadServices with a value of Boolean.FALSE.</description>
+            <location chapter="4" section="1.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:137</id>
+            <description>For each service X, where X is jakarta.ws.rs.core.Feature or jakarta.ws.rs.container.DynamicFeature, the set of providers to be registered MUST be determined as follows: • first, register all providers discovered with ServiceLoader.load(X.class) •additionally, register all providers discovered with ServiceLoader.load(X.class, X.class.getClassLoader()) </description>
+            <location chapter="4" section="1.2"/>
+        </assertion>
+        <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
+            <id>JAXRS:SPEC:138</id>
+            <description> A JAX-RS implementation MUST include a default exception mapping provider that implements ExceptionMapper and which SHOULD set the response status to 500. When the default exception mapping provider handles a WebApplicationException, it MUST return the embedded Response, and it MUST respect the status code in the Response. Any registered CompletionCallback MUST be invoked with an unmapped exception before the default exception mapping provider maps the unmapped exception to a Response.</description>
+            <location chapter="4" section="4"/>
+        </assertion>
+    </assertions>
+</spec>

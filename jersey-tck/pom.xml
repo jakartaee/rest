@@ -280,8 +280,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
-                            <executable>asadmin</executable>
+                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>start-domain</argument>
                             </arguments>
@@ -294,8 +293,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
-                            <executable>asadmin</executable>
+                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>set</argument>
                                 <argument>server-config.network-config.protocols.protocol.http-listener-1.http.trace-enabled=true</argument>
@@ -309,8 +307,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
-                            <executable>asadmin</executable>
+                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>--passwordfile</argument>
                                 <argument>${project.basedir}/j2ee.pass</argument>
@@ -328,8 +325,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
-                            <executable>asadmin</executable>
+                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>--passwordfile</argument>
                                 <argument>${project.basedir}/javajoe.pass</argument>
@@ -347,8 +343,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
-                            <executable>asadmin</executable>
+                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>list-file-users</argument>
                             </arguments>
@@ -361,8 +356,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
-                            <executable>asadmin</executable>
+                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>stop-domain</argument>
                             </arguments>

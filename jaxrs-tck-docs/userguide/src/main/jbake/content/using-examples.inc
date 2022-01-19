@@ -31,7 +31,7 @@ following commands:
 
 [source,subs="attributes"]
 ----
-mvn verify -Dit.test=jakarta.ws.rs.tck.signaturetest.** 
+mvn verify -Dit.test=ee.jakarta.tck.ws.rs.signaturetest.**
 ----
 
 [[GCMBV]]

@@ -1,0 +1,403 @@
+type=page
+status=published
+title=Procedure for Certification
+next=install.html
+prev=intro.html
+~~~~~~
+include::attributes.conf[]
+Procedure for Certification
+===========================
+
+[[GBFSN]]
+
+
+[[procedure-for-certification]]
+2 Procedure for Certification
+-----------------------------
+
+This chapter describes the compatibility testing procedure and
+compatibility requirements for {TechnologyFullName}.
+This chapter contains the following sections:
+
+* link:#CJAFFDGI[Certification Overview]
+* link:#CJAFGIGG[Compatibility Requirements]
+* link:#CJAIIBDJ[Test Appeals Process]
+* link:#CJAJECIE[Specifications for {TechnologyFullName}]
+* link:#CJABAHGI[Libraries for {TechnologyFullName}]
+
+[[CJAFFDGI]][[certification-overview]]
+
+2.1 Certification Overview
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The certification process for {technologyShortName} {TechnologyVersion}
+consists of the following activities:
+
+* Install the appropriate version of the Technology Compatibility Kit
+(TCK) and execute it in accordance with the instructions in this User's
+Guide.
+* Ensure that you meet the requirements outlined in
+link:#CJAFGIGG[Compatibility Requirements] below.
+* Certify to the Eclipse Foundation that you have finished
+testing and that you meet all of the compatibility requirements,
+as required by the Eclipse Foundation TCK License.
+
+[[CJAFGIGG]][[compatibility-requirements]]
+
+2.2 Compatibility Requirements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The compatibility requirements for {TechnologyShortName}
+{TechnologyVersion} consist of meeting the requirements set forth by
+the rules and associated definitions contained in this section.
+
+[[sthref4]][[definitions]]
+
+2.2.1 Definitions
+^^^^^^^^^^^^^^^^^
+
+These definitions are for use only with these compatibility requirements
+and are not intended for any other purpose.
+
+[[sthref5]][[sthref6]]
+
+Table 2-1 Definitions 
+
+[width="100%",cols="25%,75%",options="header",]
+|=======================================================================
+|Term |Definition
+|API Definition Product |A Product for which the only Java class files
+contained in the product are those corresponding to the application
+programming interfaces defined by the Specifications, and which is
+intended only as a means for formally specifying the application
+programming interfaces defined by the Specifications.
+
+|Computational Resource a|
+A piece of hardware or software that may vary in quantity, existence, or
+version, which may be required to exist in a minimum quantity and/or at
+a specific or minimum revision level so as to satisfy the requirements
+of the Test Suite.
+
+Examples of computational resources that may vary in quantity are RAM
+and file descriptors.
+
+Examples of computational resources that may vary in existence (that is,
+may or may not exist) are graphics cards and device drivers.
+
+Examples of computational resources that may vary in version are
+operating systems and device drivers.
+
+|Configuration Descriptor |Any file whose format is well defined by a
+specification and which contains configuration information for a set of
+Java classes, archive, or other feature defined in the specification.
+
+|Conformance Tests |All tests in the Test Suite for an indicated
+Technology Under Test, as released and distributed by the 
+Eclipse Foundation, excluding those tests on the 
+published Exclude List for the Technology Under Test.
+
+|Container |An implementation of the associated Libraries, as specified
+in the Specifications, and a version of a Java Platform, Standard
+Edition Runtime Product, as specified in the Specifications, or a later
+version of a Java Platform, Standard Edition Runtime Product that also
+meets these compatibility requirements.
+
+|Documented |Made technically accessible and made known to users,
+typically by means such as marketing materials, product documentation,
+usage messages, or developer support programs.
+
+|Exclude List |The most current list of tests, released and distributed by the
+Eclipse Foundation, that are not required to be passed to certify
+conformance. The Jakarta EE Specification Committee may add to the Exclude List for that
+Test Suite as needed at any time, in which case the updated TCK version
+supplants any previous Exclude Lists for that Test Suite.
+
+|Libraries a|
+The class libraries, as specified through the Jakarta EE Specification Process
+(JESP), for the Technology Under Test.
+
+The Libraries for {TechnologyFullName} are listed at the end of this chapter.
+
+|Location Resource a|
+A location of classes or native libraries that are components of the
+test tools or tests, such that these classes or libraries may be
+required to exist in a certain location in order to satisfy the
+requirements of the test suite.
+
+For example, classes may be required to exist in directories named in a
+CLASSPATH variable, or native libraries may be required to exist in
+directories named in a PATH variable.
+
+|Maintenance Lead |The corresponding Jakarta EE Specification Project
+is responsible for maintaining the Specification, and the TCK for the
+Technology.  The Specification Project Team will propose revisions and
+updates to the Jakarta EE Specification Committee which will approve
+and release new versions of the specification and TCK.
+
+|Operating Mode a|
+Any Documented option of a Product that can be changed by a user in
+order to modify the behavior of the Product.
+
+For example, an Operating Mode can be binary (enable/disable
+optimization), an enumeration (select from a list of protocols), or a
+range (set the maximum number of active threads).
+
+Note that an Operating Mode may be selected by a command line switch, an
+environment variable, a GUI user interface element, a configuration or
+control file, etc.
+
+|Product |A vendor's product in which the Technology Under Test is
+implemented or incorporated, and that is subject to compatibility
+testing.
+
+|Product Configuration a|
+A specific setting or instantiation of an Operating Mode.
+
+For example, a Product supporting an Operating Mode that permits user
+selection of an external encryption package may have a Product
+Configuration that links the Product to that encryption package.
+
+|Rebuildable Tests |Tests that must be built using an
+implementation-specific mechanism. This mechanism must produce
+specification-defined artifacts. Rebuilding and running these tests
+against a known compatible implementation verifies that the mechanism generates
+compatible artifacts.
+
+|Resource |A Computational Resource, a Location Resource, or a Security
+Resource.
+
+|Rules |These definitions and rules in this Compatibility Requirements
+section of this User's Guide.
+
+|Runtime |The Containers specified in the Specifications.
+
+|Security Resource a|
+A security privilege or policy necessary for the proper execution of the
+Test Suite.
+
+For example, the user executing the Test Suite will need the privilege
+to access the files and network resources necessary for use of the
+Product.
+
+|Specifications a|
+The documents produced through the Jakarta EE Specification Process (JESP)
+that define a particular Version of a Technology.
+
+The Specifications for the Technology Under Test are referenced later in
+this chapter.
+
+|Technology |Specifications and one or more compatible implementations produced
+through the Jakarta EE Specification Process (JESP).
+
+|Technology Under Test |Specifications and a compatible implementation
+for {TechnologyFullName} Version {TechnologyVersion}.
+
+|Test Suite |The requirements, tests, and testing tools distributed by
+the Maintenance Lead as applicable to a given Version of the Technology.
+
+|Version |A release of the Technology, as produced through the
+Jakarta EE Specification Process (JESP).
+
+include::defns.inc[]
+|=======================================================================
+
+
+[[sthref7]][[rules-for-products]]
+
+2.2.2 Rules for {TechnologyFullName} Products
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following rules apply for each version of an operating system,
+software component, and hardware platform Documented as supporting the
+Product:
+
+*{techID}1* The Product must be able to satisfy all applicable compatibility
+requirements, including passing all Conformance Tests, in every Product
+Configuration and in every combination of Product Configurations, except
+only as specifically exempted by these Rules.
+
+For example, if a Product provides distinct Operating Modes to optimize
+performance, then that Product must satisfy all applicable compatibility
+requirements for a Product in each Product Configuration, and
+combination of Product Configurations, of those Operating Modes.
+
+*{techID}1.1* If an Operating Mode controls a Resource necessary for the
+basic execution of the Test Suite, testing may always use a Product
+Configuration of that Operating Mode providing that Resource, even if
+other Product Configurations do not provide that Resource.
+Notwithstanding such exceptions, each Product must have at least one set
+of Product Configurations of such Operating Modes that is able to pass
+all the Conformance Tests.
+
+For example, a Product with an Operating Mode that controls a security
+policy (i.e., Security Resource) which has one or more Product
+Configurations that cause Conformance Tests to fail may be tested using
+a Product Configuration that allows all Conformance Tests to pass.
+
+*{techID}1.2* A Product Configuration of an Operating Mode that causes the
+Product to report only version, usage, or diagnostic information is
+exempted from these compatibility rules.
+
+*{techID}1.3* An API Definition Product is exempt from all functional
+testing requirements defined here, except the signature tests.
+
+*{techID}2* Some Conformance Tests may have properties that may be changed.
+Properties that can be changed are identified in the configuration
+interview. Properties that can be changed are identified in the JavaTest
+Environment (.jte) files in the Test Suite
+installation. Apart from changing such properties and other allowed
+modifications described in this User's Guide (if any), no source or
+binary code for a Conformance Test may be altered in any way without
+prior written permission. Any such allowed alterations to the
+Conformance Tests will be provided via the Jakarta EE Specification Project 
+website and apply to all vendor compatible implementations.
+
+*{techID}3* The testing tools supplied as part of the Test Suite or as
+updated by the Maintenance Lead must be used to certify compliance.
+
+*{techID}4* The Exclude List associated with the Test Suite cannot be
+modified.
+
+*{techID}5* The Maintenance Lead can define exceptions to these Rules. Such
+exceptions would be made available as above, and will apply to all vendor implementations.
+
+*{techID}6* All hardware and software component additions, deletions, and
+modifications to a Documented supporting hardware/software platform,
+that are not part of the Product but required for the Product to satisfy
+the compatibility requirements, must be Documented and available to
+users of the Product.
+
+For example, if a patch to a particular version of a supporting
+operating system is required for the Product to pass the Conformance
+Tests, that patch must be Documented and available to users of the
+Product.
+
+*{techID}7* The Product must contain the full set of public and protected
+classes and interfaces for all the Libraries. Those classes and
+interfaces must contain exactly the set of public and protected methods,
+constructors, and fields defined by the Specifications for those
+Libraries. No subsetting, supersetting, or modifications of the public
+and protected API of the Libraries are allowed except only as
+specifically exempted by these Rules.
+
+*{techID}7.1* If a Product includes Technologies in addition to the
+Technology Under Test, then it must contain the full set of combined
+public and protected classes and interfaces. The API of the Product
+must contain the union of the included Technologies. No further
+modifications to the APIs of the included Technologies are allowed.
+
+ifdef::subset-allowed[]
+*{techID}7.2* The Product may contain a subset of the classes and
+interfaces for the Libraries.
+endif::subset-allowed[]
+
+*{techID}8* Except for tests specifically required by this TCK to be rebuilt
+(if any), the binary Conformance Tests supplied as part of the Test
+Suite or as updated by the Maintenance Lead must be used to certify
+compliance.
+
+*{techID}9* The functional programmatic behavior of any binary class or
+interface must be that defined by the Specifications.
+
+include::rules.inc[]
+
+[[CJAIIBDJ]][[test-appeals-process]]
+
+2.3 Test Appeals Process
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Jakarta has a well established process for managing challenges to its
+TCKs. Any implementor may submit a challenge to one or more tests in the
+{TechnologyShortName} TCK as it relates to their implementation.  Implementor
+means the entity as a whole in charge of producing the final certified release.
+*Challenges filed should represent the consensus of that entity*.
+
+2.3.1 Valid Challenges
+^^^^^^^^^^^^^^^^^^^^^^
+Any test case (e.g., test class, @Test method), test case configuration (e.g., deployment descriptor), test beans, annotations, and other resources considered part of the TCK may be challenged.
+
+The following scenarios are considered in scope for test challenges:
+
+* Claims that a test assertion conflicts with the specification.
+* Claims that a test asserts requirements over and above that of the specification.
+* Claims that an assertion of the specification is not sufficiently implementable.
+* Claims that a test is not portable or depends on a particular implementation.
+
+2.3.2 Invalid Challenges
+^^^^^^^^^^^^^^^^^^^^^^^^
+The following scenarios are considered out of scope for test challenges and will be immediately closed if filed:
+
+* Challenging an implementation’s claim of passing a test.  Certification is an honor system and these issues must be raised directly with the implementation.
+* Challenging the usefulness of a specification requirement.  The challenge process cannot be used to bypass the specification process and raise in question the need or relevance of a specification requirement.
+* Claims the TCK is inadequate or missing assertions required by the specification.  See the Improvement section, which is outside the scope of test challenges.
+* Challenges that do not represent a consensus of the implementing community will be closed until such time that the community does agree or agreement cannot be made.  The test challenge process is not the place for implementations to initiate their own internal discussions.
+* Challenges to tests that are already excluded for any reason.
+* Challenges that an excluded test should not have been excluded and should be re-added should be opened as a new enhancement request
+
+Test challenges must be made in writing via the {TechnologyShortName} specification project issue tracker
+as described in link:#CJAJEAEI[Section 2.3.3, "TCK Test Appeals Steps."]
+
+All tests found to be invalid will be placed on the Exclude List
+for that version of the {TechnologyShortName} TCK.
+
+
+[[CJAJEAEI]][[tck-test-appeals-steps]]
+
+2.3.3 TCK Test Appeals Steps
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1. Challenges should be filed via the {TechnologyFullName} specification project’s issue tracker using the label `challenge` and include the following information:
+* The relevant specification version and section number(s)
+* The coordinates of the challenged test(s)
+* The exact TCK and exclude list versions
+* The implementation being tested, including name and company
+* The full test name
+* A full description of why the test is invalid and what the correct behavior is believed to be
+* Any supporting material; debug logs, test output, test logs, run scripts, etc.
+
+
+
+2. Specification project evaluates the challenge. +
+Challenges can be resolved by a specification project lead, or a project challenge triage team, after a consensus of the specification project committers is reached or attempts to gain consensus fails.
+Specification projects may exercise lazy consensus, voting or any practice that follows the principles of Eclipse Foundation Development Process.
+The expected timeframe for a response is two weeks or less.
+If consensus cannot be reached by the specification project for a prolonged period of time, the default recommendation is to exclude the tests and address the dispute in a future revision of the specification.
+
+3.  Accepted Challenges. +
+A consensus that a test produces invalid results will result in the exclusion of that test from certification requirements, and an immediate update and release of an official distribution of the TCK including the new exclude list. The associated `challenge` issue must be closed with an `accepted` label to indicate it has been resolved.
+
+4.  Rejected Challenges and Remedy. +
+When a`challenge` issue is rejected, it must be closed with a label of `invalid` to indicate it has been rejected.
+There appeal process for challenges rejected on technical terms is outlined in Escalation Appeal.
+If, however, an implementer feels the TCK challenge process was not followed, an appeal issue should be filed with specification project’s TCK issue tracker using the label `challenge-appeal`.
+A project lead should escalate the issue with the Jakarta EE Specification Committee via email (jakarta.ee-spec@eclipse.org).
+The committee will evaluate the matter purely in terms of due process.
+If the appeal is accepted, the original TCK challenge issue will be reopened and a label of `appealed-challenge` added, along with a discussion of the appeal decision, and the `challenge-appeal` issue with be closed.
+If the appeal is rejected, the `challenge-appeal` issue should closed with a label of `invalid`.
+
+5. Escalation Appeal. +
+If there is a concern that a TCK process issue has not been resolved satisfactorily, the
+https://www.eclipse.org/projects/dev_process/#6_5_Grievance_Handling[Eclipse Development Process Grievance Handling] procedure should be followed to escalate the resolution. Note that this is not a mechanism to attempt to handle implementation specific issues.
+
+
+[[CJAJECIE]][[specifications-for-technology]]
+
+2.4 Specifications for {TechnologyFullName}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The {TechnologyFullName} specification is available from the specification
+project web-site: {SpecificationURL}.
+
+[[CJABAHGI]][[libraries-for-technology]]
+
+2.5 Libraries for {TechnologyFullName}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following is a list of the packages comprising the required class
+libraries for {TechnologyShortName} {TechnologyVersion}:
+
+include::packages.inc[]
+
+For the latest list of packages, also see:
+
+{SpecificationURL}

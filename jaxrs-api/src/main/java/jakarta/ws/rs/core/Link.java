@@ -21,6 +21,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Map.Entry;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
@@ -518,9 +519,7 @@ public abstract class Link {
 
         @Override
         public int hashCode() {
-            int result = uri != null ? uri.hashCode() : 0;
-            result = 31 * result + (params != null && !params.isEmpty() ? params.hashCode() : 0);
-            return result;
+            return Objects.hash(uri, params);
         }
 
     }

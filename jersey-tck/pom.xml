@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
 
-    Copyright (c) 2021 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2021, 2022 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Public License v. 2.0, which is available at
@@ -23,7 +23,7 @@
     <groupId>org.glassfish.jersey.core</groupId>
     <artifactId>jersey-tck</artifactId>
     <version>3.1.0</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>Jakarta RESTful WS Compliance</name>
     <description>This test verifies the compliance of Eclipse Jersey with Jakarta REST</description>
@@ -32,7 +32,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <jersey.version>3.0.0</jersey.version>
-        <glassfish.container.version>6.1.0</glassfish.container.version>
+        <glassfish.container.version>6.2.3</glassfish.container.version>
         <jakarta.platform.version>9.1.0</jakarta.platform.version>
         <junit.jupiter.version>5.7.2</junit.jupiter.version>
         <jakarta.rest.version>3.1.0</jakarta.rest.version>
@@ -58,6 +58,12 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+        </dependency>
+        
         <dependency>
             <groupId>org.glassfish.hk2</groupId>
             <artifactId>hk2-locator</artifactId>
@@ -121,6 +127,11 @@
             <version>${jersey.version}</version>
             <scope>test</scope>
         </dependency> 
+        <dependency>
+            <groupId>org.netbeans.tools</groupId>
+            <artifactId>sigtest-maven-plugin</artifactId>
+            <version>1.4</version>
+        </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-binding</artifactId>
@@ -274,6 +285,20 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <executions>
                     <execution>
+                        <id>StopDomain1</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
+                            <executable>asadmin</executable>
+                            <arguments>
+                                <argument>stop-domain</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>StartDomain1</id>
                         <phase>pre-integration-test</phase>
                         <goals>
@@ -301,6 +326,27 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>Delete User j2ee</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
+                            <executable>asadmin</executable>
+                            <arguments>
+                                <argument>--passwordfile</argument>
+                                <argument>${project.basedir}/j2ee.pass</argument>
+                                <argument>delete-file-user</argument>
+                                <argument>j2ee</argument>
+                            </arguments>
+                            <successCodes>
+                                <successCode>0</successCode>
+                                <successCode>1</successCode>
+                            </successCodes>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>Add User j2ee</id>
                         <phase>pre-integration-test</phase>
                         <goals>
@@ -316,6 +362,27 @@
                                 <argument>staff:mgr</argument>
                                 <argument>j2ee</argument>
                             </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Delete User javajoe</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/glassfish6/glassfish/bin</workingDirectory>
+                            <executable>asadmin</executable>
+                            <arguments>
+                                <argument>--passwordfile</argument>
+                                <argument>${project.basedir}/javajoe.pass</argument>
+                                <argument>delete-file-user</argument>
+                                <argument>javajoe</argument>
+                            </arguments>
+                            <successCodes>
+                                <successCode>0</successCode>
+                                <successCode>1</successCode>
+                            </successCodes>
                         </configuration>
                     </execution>
                     <execution>
@@ -387,6 +454,9 @@
                                 <authuser>javajoe</authuser>
                                 <authpassword>javajoe</authpassword>
                                 <porting.ts.url.class.1>jakarta.ws.rs.tck.lib.implementation.sun.common.SunRIURL</porting.ts.url.class.1>
+                                <jimage.dir>${project.build.directory}/jdk11-bundle</jimage.dir>
+                                <optional.tech.packages.to.ignore>jakarta.xml.bind</optional.tech.packages.to.ignore>
+                                <signature.sigTestClasspath>${project.build.directory}/glassfish6/glassfish/modules/jakarta.ws.rs-api.jar:${project.build.directory}/glassfish6/glassfish/modules/jakarta.xml.bind-api.jar:${project.build.directory}/jdk11-bundle/java.base:${project.build.directory}/jdk11-bundle/java.rmi:${project.build.directory}/jdk11-bundle/java.sql:${project.build.directory}/jdk11-bundle/java.naming</signature.sigTestClasspath>
                             </systemPropertyVariables>
                             <environmentVariables>
                                 <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>

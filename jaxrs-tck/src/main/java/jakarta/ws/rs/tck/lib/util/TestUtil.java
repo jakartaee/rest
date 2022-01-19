@@ -34,7 +34,7 @@ import java.text.SimpleDateFormat;
  *
  */
 public final class TestUtil {
-  public static boolean traceflag = Boolean.getBoolean("junit.log.traceflag");
+  public static boolean traceflag = true;
 
   // this can be set in TestUtil's start logging method!!
   public static String sTestName;
@@ -405,9 +405,7 @@ public final class TestUtil {
         }
         if (true) {
           // System.out.println("INIT_CALLED AND SOCKET = NULL");
-          traceflag = Boolean
-              .valueOf(p.getProperty("harness.log.traceflag", "true"))
-              .booleanValue();
+          traceflag =   Boolean.getBoolean("junit.log.traceflag");
           hostOfHarness = p.getProperty("harness.host");
           portOfHarness = Integer
               .parseInt(p.getProperty("harness.log.port", "2000"));
@@ -443,9 +441,7 @@ public final class TestUtil {
         try {
           // System.out.println("INIT_CALLED AND TRYING TO ESABLISH CONN. AFTER
           // IOEXCEPTION");
-          traceflag = Boolean
-              .valueOf(p.getProperty("harness.log.traceflag", "true"))
-              .booleanValue();
+          traceflag =   Boolean.getBoolean("junit.log.traceflag");
           hostOfHarness = p.getProperty("harness.host");
           portOfHarness = Integer
               .parseInt(p.getProperty("harness.log.port", "2000"));
@@ -506,8 +502,7 @@ public final class TestUtil {
 
     testProps = p;
     NEW_LINE = p.getProperty("line.separator");
-    traceflag = Boolean.valueOf(p.getProperty("harness.log.traceflag", "true"))
-        .booleanValue();
+    traceflag =   Boolean.getBoolean("junit.log.traceflag");
     iWhereAreWe = VM_HARNESS;
     bAlreadyInitialized = true;
   }
@@ -527,9 +522,7 @@ public final class TestUtil {
     try {
       testProps = p;
       NEW_LINE = p.getProperty("line.separator");
-      traceflag = Boolean
-          .valueOf(p.getProperty("harness.log.traceflag", "true"))
-          .booleanValue();
+      traceflag =   Boolean.getBoolean("junit.log.traceflag");
       iWhereAreWe = VM_HARNESS;
       ServerSocket ss = getServerSocket(p);
       new Acceptor(ss);

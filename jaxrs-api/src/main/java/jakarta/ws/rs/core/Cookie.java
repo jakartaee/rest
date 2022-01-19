@@ -16,6 +16,8 @@
 
 package jakarta.ws.rs.core;
 
+import java.util.Objects;
+
 import jakarta.ws.rs.ext.RuntimeDelegate;
 import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
 
@@ -197,13 +199,7 @@ public class Cookie {
      */
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + (this.name != null ? this.name.hashCode() : 0);
-        hash = 97 * hash + (this.value != null ? this.value.hashCode() : 0);
-        hash = 97 * hash + this.version;
-        hash = 97 * hash + (this.path != null ? this.path.hashCode() : 0);
-        hash = 97 * hash + (this.domain != null ? this.domain.hashCode() : 0);
-        return hash;
+        return Objects.hash(this.name, this.value, this.version, this.path, this.domain);
     }
 
     /**
@@ -223,19 +219,19 @@ public class Cookie {
             return false;
         }
         final Cookie other = (Cookie) obj;
-        if (this.name != other.name && (this.name == null || !this.name.equals(other.name))) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (this.value != other.value && (this.value == null || !this.value.equals(other.value))) {
+        if (!Objects.equals(this.value, other.value)) {
             return false;
         }
-        if (this.version != other.version) {
+        if (!Objects.equals(this.version, other.version)) {
             return false;
         }
-        if (this.path != other.path && (this.path == null || !this.path.equals(other.path))) {
+        if (!Objects.equals(this.path, other.path)) {
             return false;
         }
-        if (this.domain != other.domain && (this.domain == null || !this.domain.equals(other.domain))) {
+        if (!Objects.equals(this.domain, other.domain)) {
             return false;
         }
         return true;
@@ -260,6 +256,11 @@ public class Cookie {
      */
     public static class Builder extends AbstractCookieBuilder<Builder> {
 
+        /**
+         * Create a new instance.
+         *
+         * @param name the name of the cookie.
+         */
         public Builder(String name) {
             super(name);
         }

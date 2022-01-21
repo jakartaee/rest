@@ -25,13 +25,19 @@
     <version>3.1.0</version>
     <packaging>jar</packaging>
 
+    <parent>
+        <groupId>jakarta.ws.rs</groupId>
+        <artifactId>all</artifactId>
+        <version>3.1.0</version>
+    </parent>
+
     <name>Jakarta RESTful WS Compliance</name>
     <description>This test verifies the compliance of Eclipse Jersey with Jakarta REST</description>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <jersey.version>3.0.0</jersey.version>
+        <jersey.version>3.1.0-M1</jersey.version>
         <glassfish.container.version>6.2.3</glassfish.container.version>
         <jakarta.platform.version>9.1.0</jakarta.platform.version>
         <junit.jupiter.version>5.7.2</junit.jupiter.version>

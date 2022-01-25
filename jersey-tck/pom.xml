@@ -42,6 +42,7 @@
         <jakarta.platform.version>9.1.0</jakarta.platform.version>
         <junit.jupiter.version>5.7.2</junit.jupiter.version>
         <jakarta.rest.version>3.1.0</jakarta.rest.version>
+        <tck.artifactId>jakarta-restful-ws-tck</tck.artifactId>
     </properties>
 
     <dependencyManagement>
@@ -91,7 +92,7 @@
 
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
-            <artifactId>jakarta.ws.rs-tck</artifactId>
+            <artifactId>${tck.artifactId}</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
@@ -445,7 +446,7 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <dependenciesToScan>jakarta.ws.rs:jakarta.ws.rs-tck</dependenciesToScan>
+                            <dependenciesToScan>jakarta.ws.rs:${tck.artifactId}</dependenciesToScan>
                             <systemPropertyVariables>
                                 <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>
                                 <servlet_adaptor>org.glassfish.jersey.servlet.ServletContainer</servlet_adaptor>

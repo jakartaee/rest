@@ -17,12 +17,14 @@
 package ee.jakarta.tck.ws.rs.sebootstrap;
 
 import static java.util.concurrent.TimeUnit.HOURS;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
+import static jakarta.ws.rs.tck.common.util.JaxrsUtil.unprivilegedPort;
+
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
@@ -369,9 +371,7 @@ public final class SeBootstrapIT {
     };
 
     private static final int someFreeIpPort() throws IOException {
-        try (final ServerSocket serverSocket = new ServerSocket(0)) {
-            return serverSocket.getLocalPort();
-        }
+        return unprivilegedPort();
     }
 
     private static final int mockInt() {

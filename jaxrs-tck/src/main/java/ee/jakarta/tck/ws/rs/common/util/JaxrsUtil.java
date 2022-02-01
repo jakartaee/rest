@@ -36,13 +36,14 @@ import java.util.TimeZone;
 public abstract class JaxrsUtil {
 
   public static final int unprivilegedPort() throws IOException {
-    int port = 0;
-    while (port < 1024) {
+    for (int i = 0; i < 1025; i++) {
       try (final ServerSocket serverSocket = new ServerSocket(0)) {
-        port = serverSocket.getLocalPort();
+        final int port = serverSocket.getLocalPort();
+        if (port > 1024)
+          return port;
       }
     }
-    return port;
+    throw new IOException("No free unprivileged port");
   }
 
   public static final//

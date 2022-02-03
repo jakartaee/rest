@@ -87,7 +87,7 @@ for generating deployment descriptor files.
 
 Each test that has a {TechnologyShortName} resource class to publish, comes with a
 template deployment descriptor file. For example, the file
-`jakarta/ws/rs/tck/ee/rs/get/web.xml.template`
+`ee/jakarta/tck/ws/rs/ee/rs/get/web.xml.template`
 contains the following elements:
 
 [source,oac_no_warn]
@@ -102,7 +102,7 @@ https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd">
         <servlet-class>servlet_adaptor</servlet-class>
         <init-param>
             <param-name>jakarta.ws.rs.core.Application</param-name>
-            <param-value>jakarta.ws.rs.tck.ee.rs.get.TSAppConfig</param-value>
+            <param-value>ee.jakarta.tck.ws.rs.ee.rs.get.TSAppConfig</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -137,7 +137,7 @@ https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd">
         </servlet-class>
         <init-param>
             <param-name>jakarta.ws.rs.core.Application</param-name>
-            <param-value>jakarta.ws.rs.tck.ee.rs.get.TSAppConfig</param-value>
+            <param-value>ee.jakarta.tck.ws.rs.ee.rs.get.TSAppConfig</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

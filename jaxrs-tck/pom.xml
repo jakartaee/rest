@@ -25,7 +25,7 @@
     <artifactId>jakarta-restful-ws-tck</artifactId>
     <name>Jakarta RESTful WS TCK</name>
     <description>Technology Compatibility Kit for Jakarta RESTful Web Services</description>
-    <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
+    <url>https://github.com/jakartaee/rest</url>
 
     <parent>
         <groupId>jakarta.ws.rs</groupId>

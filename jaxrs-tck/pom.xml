@@ -18,10 +18,14 @@
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>${tck.artifactId}</artifactId>
+    <artifactId>jakarta-restful-ws-tck</artifactId>
+    <name>Jakarta RESTful WS TCK</name>
+    <description>Technology Compatibility Kit for Jakarta RESTful Web Services</description>
+    <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
 
     <parent>
         <groupId>jakarta.ws.rs</groupId>
@@ -29,15 +33,11 @@
         <version>3.1.0</version>
     </parent>
 
-    <name>Jakarta RESTful WS TCK</name>
-    <description>Technology Compatibility Kit for Jakarta RESTful Web Services</description>
-    <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
-
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <junit.jupiter.version>[5.7.2, 5.8-A00)</junit.jupiter.version>
-        <tck.artifactId>jakarta-restful-ws-tck</tck.artifactId>            
+        <tck.artifactId>jakarta-restful-ws-tck</tck.artifactId>
     </properties>
 
     <organization>
@@ -85,72 +85,74 @@
         <tag>HEAD</tag>
     </scm>
 
-<profiles>
-<profile>
-  <id>record-signature</id>
-  <activation>
-    <activeByDefault>false</activeByDefault>
-  </activation>
-  <build>
-  <plugins>
-    <plugin>
-                <groupId>org.netbeans.tools</groupId>
-                <artifactId>sigtest-maven-plugin</artifactId>
-                <version>1.4</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <FileName>${project.build.directory}/jakarta.ws.rs.sig_${project.version}</FileName>
-                    <packages>jakarta.ws.rs,jakarta.ws.rs.client,jakarta.ws.rs.core,jakarta.ws.rs.container,jakarta.ws.rs.ext,jakarta.ws.rs.sse</packages>
-                </configuration>
-            </plugin>
-            </plugins>
-  </build>
-</profile>
+    <profiles>
+        <profile>
+            <id>record-signature</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.netbeans.tools</groupId>
+                        <artifactId>sigtest-maven-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <FileName>${project.build.directory}/jakarta.ws.rs.sig_${project.version}</FileName>
+                            <packages>
+                                jakarta.ws.rs,jakarta.ws.rs.client,jakarta.ws.rs.core,jakarta.ws.rs.container,jakarta.ws.rs.ext,jakarta.ws.rs.sse
+                            </packages>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
-<profile>
-  <id>tck-build</id>
-  <activation>
-    <activeByDefault>true</activeByDefault>
-  </activation>
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-              </executions>
-            </plugin>
+        <profile>
+            <id>tck-build</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>2.3.2</version>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M5</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>3.2.0</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
 
-        </plugins>
-    </build>
-</profile>
+                </plugins>
+            </build>
+        </profile>
 
-       
+
     </profiles>
     <dependencies>
         <dependency>

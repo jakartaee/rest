@@ -22,7 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-import static jakarta.ws.rs.tck.common.util.JaxrsUtil.unprivilegedPort;
+import static ee.jakarta.tck.ws.rs.common.util.JaxrsUtil.unprivilegedPort;
 
 import java.io.IOException;
 import java.util.Collections;

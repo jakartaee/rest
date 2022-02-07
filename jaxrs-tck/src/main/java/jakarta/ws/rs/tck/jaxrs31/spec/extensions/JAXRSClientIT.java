@@ -20,26 +20,20 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.container.DynamicFeature;
 import jakarta.ws.rs.core.Feature;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.tck.common.client.JaxrsCommonClient;
-import jakarta.ws.rs.tck.common.client.JdkLoggingFilter;
-import jakarta.ws.rs.tck.jaxrs21.spec.completionstage.CompletionStageResource;
-import jakarta.ws.rs.tck.lib.util.TestUtil;
+import ee.jakarta.tck.ws.rs.common.client.JaxrsCommonClient;
+import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.IOException;
-import java.util.concurrent.Future;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /*
  * @class.setup_props: webServerHost;

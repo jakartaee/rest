@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Array;
+import java.net.ServerSocket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -33,6 +34,17 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public abstract class JaxrsUtil {
+
+  public static final int unprivilegedPort() throws IOException {
+    for (int i = 0; i < 1025; i++) {
+      try (final ServerSocket serverSocket = new ServerSocket(0)) {
+        final int port = serverSocket.getLocalPort();
+        if (port > 1024)
+          return port;
+      }
+    }
+    throw new IOException("No free unprivileged port");
+  }
 
   public static final//
   String readFromStream(InputStream stream) throws IOException {

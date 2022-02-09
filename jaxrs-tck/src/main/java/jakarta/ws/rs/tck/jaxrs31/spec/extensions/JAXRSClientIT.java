@@ -21,6 +21,8 @@ import jakarta.ws.rs.container.DynamicFeature;
 import jakarta.ws.rs.core.Feature;
 import jakarta.ws.rs.core.Response;
 import ee.jakarta.tck.ws.rs.common.client.JaxrsCommonClient;
+import ee.jakarta.tck.ws.rs.common.client.JdkLoggingFilter;
+import ee.jakarta.tck.ws.rs.jaxrs21.spec.completionstage.CompletionStageResource;
 import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;

@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package jakarta.ws.rs.tck.jaxrs31.spec.extensions;
+package ee.jakarta.tck.ws.rs.jaxrs31.spec.extensions;
 
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.container.DynamicFeature;

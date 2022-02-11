@@ -27,7 +27,10 @@ if [ -z "$VERSION" ]; then
 fi
 
 if [[ "$1" == "epl" || "$1" == "EPL" ]]; then
-    mvn clean install -Dtck.artifactId=restful-ws-tck
+    mvn clean install
+    sed "s/jakarta-restful-ws-tck/restful-ws-tck/g" $WORKSPACE/jaxrs-tck/pom.xml > $WORKSPACE/jaxrs-tck/pom.epl.xml
+    cd $WORKSPACE/jaxrs-tck
+    mvn clean install -f pom.epl.xml
 else
     mvn clean install
 fi
@@ -55,7 +58,7 @@ cd $WORKSPACE/bundle
 
 if [[ "$1" == "epl" || "$1" == "EPL" ]]; then
     cp $WORKSPACE/LICENSE.md $WORKSPACE/bundle/LICENSE.md
-    cp $WORKSPACE/jaxrs-tck/pom.xml $WORKSPACE/bundle/restful-ws-tck-"$VERSION".pom
+    cp $WORKSPACE/jaxrs-tck/pom.epl.xml $WORKSPACE/bundle/restful-ws-tck-"$VERSION".pom
     zip -r restful-ws-tck-"$VERSION".zip *
 else
     cp $WORKSPACE/jaxrs-tck-docs/LICENSE_EFTL.md $WORKSPACE/bundle/LICENSE.md

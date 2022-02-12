@@ -31,3 +31,5 @@ include::_configurable_types.adoc[]
 include::_reactive_clients.adoc[]
 
 include::_executor_services.adoc[]
+
+include::_client_exceptions.adoc[]

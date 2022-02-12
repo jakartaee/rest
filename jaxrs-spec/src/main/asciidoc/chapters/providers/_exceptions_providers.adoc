@@ -46,3 +46,4 @@ while processing a response.
 Note that the client runtime will only throw an instance of
 `WebApplicationException` (or any of its subclasses) as a result of a
 response from the server with status codes 3xx, 4xx or 5xx.
+See <<client_exceptions>> for more details on `WebApplicationException`.

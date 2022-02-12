@@ -1,0 +1,31 @@
+////
+*******************************************************************
+* Copyright (c) 2022 Eclipse Foundation
+*
+* This specification document is made available under the terms
+* of the Eclipse Foundation Specification License v1.0, which is
+* available at https://www.eclipse.org/legal/efsl.php.
+*******************************************************************
+////
+
+[[client_exceptions]]
+=== Client Exceptions
+
+A method of the JAX-RS Client API that _nominally_ throws `WebApplicationException`
+MUST _actually_ throw the _most specific_ exception subclass for the current response status code,
+unless no such subclass is defined by the JAX-RS API.
+
+Only in the latter case the method MAY throw the `WebApplicationException`
+class directly.
+
+The method MAY throw a direct or indirect subclass of the mandatory exception.
+
+Example: If a response has the status 404, a compliant implementation MUST NOT
+throw `WebApplicationException(404)`, but instead MUST throw `NotFoundException`,
+or a subclass of `NotFoundException`, because the description of `NotFoundException`
+_exactly_ matches the status code 404.
+
+Example: If a response has the status 567, a compliant implementation MUST NOT
+throw `WebApplicationException(567)` but instead MUST throw `ServerErrorException`,
+or a subclass of `ServerErrorException`, because the description of `ServerErrorException`
+_indirectly_ matches the status code 567 by matching the whole 5XX family of codes.

@@ -72,5 +72,16 @@
                 <module>jaxrs-spec</module>
             </modules>
         </profile>
+        <profile>
+            <id>jersey-tck</id>
+            <activation>
+                <property>
+                    <name>jaxrs.jerseytck.build</name>
+                </property>
+            </activation>
+            <modules>
+                <module>jersey-tck</module>
+            </modules>
+        </profile>
     </profiles>
 </project>

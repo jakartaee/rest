@@ -32,6 +32,7 @@ import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -53,6 +54,8 @@ import jakarta.ws.rs.core.UriBuilder;
  */
 @Timeout(value = 1, unit = HOURS)
 public final class SeBootstrapIT {
+
+    private static final String HOST = System.getProperty("se.bootstrap.host", "localhost");
 
     /**
      * Verifies that an instance will boot using default configuration.
@@ -80,8 +83,9 @@ public final class SeBootstrapIT {
 
         // then
         assertThat(actualResponse, is(expectedResponse));
-        assertThat(actualConfiguration.protocol(), is("HTTP"));
-        assertThat(actualConfiguration.host(), is("localhost"));
+        Assertions.assertTrue("HTTP".equalsIgnoreCase(actualConfiguration.protocol()),
+                () -> String.format("Expected HTTP but got %s", actualConfiguration.protocol()));
+        assertThat(actualConfiguration.host(), is(HOST));
         assertThat(actualConfiguration.port(), is(greaterThan(0)));
         assertThat(actualConfiguration.rootPath(), is("/"));
         instance.stop().toCompletableFuture().get();
@@ -104,7 +108,7 @@ public final class SeBootstrapIT {
         final SeBootstrap.Configuration.Builder bootstrapConfigurationBuilder = SeBootstrap.Configuration.builder();
         final SeBootstrap.Configuration requestedConfiguration = bootstrapConfigurationBuilder
                 .property(SeBootstrap.Configuration.PROTOCOL, "HTTP")
-                .property(SeBootstrap.Configuration.HOST, "localhost")
+                .property(SeBootstrap.Configuration.HOST, HOST)
                 .property(SeBootstrap.Configuration.PORT, someFreeIpPort())
                 .property(SeBootstrap.Configuration.ROOT_PATH, "/root/path").build();
 
@@ -143,7 +147,7 @@ public final class SeBootstrapIT {
         final Application application = new StaticApplication(expectedResponse);
         final SeBootstrap.Configuration.Builder bootstrapConfigurationBuilder = SeBootstrap.Configuration.builder();
         final SeBootstrap.Configuration requestedConfiguration = bootstrapConfigurationBuilder.protocol("HTTP")
-                .host("localhost").port(someFreeIpPort()).rootPath("/root/path").build();
+                .host(HOST).port(someFreeIpPort()).rootPath("/root/path").build();
 
         // when
         final CompletionStage<SeBootstrap.Instance> completionStage = SeBootstrap.start(application,
@@ -185,7 +189,7 @@ public final class SeBootstrapIT {
                         case SeBootstrap.Configuration.PROTOCOL:
                             return Optional.of("HTTP");
                         case SeBootstrap.Configuration.HOST:
-                            return Optional.of("localhost");
+                            return Optional.of(HOST);
                         case SeBootstrap.Configuration.PORT:
                             return Optional.of(someFreeIpPort);
                         case SeBootstrap.Configuration.ROOT_PATH:
@@ -229,7 +233,7 @@ public final class SeBootstrapIT {
         final Application application = new StaticApplication(expectedResponse);
         final SeBootstrap.Configuration.Builder bootstrapConfigurationBuilder = SeBootstrap.Configuration.builder();
         final SeBootstrap.Configuration requestedConfiguration = bootstrapConfigurationBuilder.protocol("HTTP")
-                .host("localhost").port(someFreeIpPort()).rootPath("/root/path").from((property, type) -> {
+                .host(HOST).port(someFreeIpPort()).rootPath("/root/path").from((property, type) -> {
                     switch (property) {
                         case "ee.jakarta.tck.ws.rs.sebootstrap.SeBootstrapIT$Unknown_1":
                             return Optional.of("Silently ignored value A");
@@ -272,7 +276,7 @@ public final class SeBootstrapIT {
         final Application application = new StaticApplication(expectedResponse);
         final SeBootstrap.Configuration.Builder bootstrapConfigurationBuilder = SeBootstrap.Configuration.builder();
         final SeBootstrap.Configuration requestedConfiguration = bootstrapConfigurationBuilder.protocol("HTTP")
-                .host("localhost").port(SeBootstrap.Configuration.FREE_PORT).rootPath("/root/path").build();
+                .host(HOST).port(SeBootstrap.Configuration.FREE_PORT).rootPath("/root/path").build();
 
         // when
         final CompletionStage<SeBootstrap.Instance> completionStage = SeBootstrap.start(application,
@@ -308,7 +312,7 @@ public final class SeBootstrapIT {
         final Application application = new StaticApplication(expectedResponse);
         final SeBootstrap.Configuration.Builder bootstrapConfigurationBuilder = SeBootstrap.Configuration.builder();
         final SeBootstrap.Configuration requestedConfiguration = bootstrapConfigurationBuilder.protocol("HTTP")
-                .host("localhost").port(SeBootstrap.Configuration.DEFAULT_PORT).rootPath("/root/path").build();
+                .host(HOST).port(SeBootstrap.Configuration.DEFAULT_PORT).rootPath("/root/path").build();
 
         // when
         final CompletionStage<SeBootstrap.Instance> completionStage = SeBootstrap.start(application,

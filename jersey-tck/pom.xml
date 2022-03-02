@@ -450,7 +450,7 @@
                             <excludes>
                                 <exclude>**/SeBootstrapIT.java</exclude>
                             </excludes>
-                            <dependenciesToScan>jakarta.ws.rs:jakarta-restful-ws-tck</dependenciesToScan>
+                            <dependenciesToScan>jakarta.ws.rs:${tck.artifactId}</dependenciesToScan>
                             <systemPropertyVariables>
                                 <GLASSFISH_HOME>${glassfish.home}</GLASSFISH_HOME>
                                 <servlet_adaptor>org.glassfish.jersey.servlet.ServletContainer</servlet_adaptor>
@@ -481,7 +481,7 @@
                             <includes>
                                 <include>**/SeBootstrapIT.java</include>
                             </includes>
-                            <dependenciesToScan>jakarta.ws.rs:jakarta-restful-ws-tck</dependenciesToScan>
+                            <dependenciesToScan>jakarta.ws.rs:${tck.artifactId}</dependenciesToScan>
                         </configuration>
                     </execution>
                 </executions>

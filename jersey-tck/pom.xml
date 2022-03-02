@@ -37,8 +37,9 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <jersey.version>3.1.0-M1</jersey.version>
+        <jersey.version>3.1.0-M3</jersey.version>
         <glassfish.container.version>6.2.3</glassfish.container.version>
+        <glassfish.home>${project.build.directory}/glassfish6</glassfish.home>
         <jakarta.platform.version>9.1.0</jakarta.platform.version>
         <junit.jupiter.version>5.7.2</junit.jupiter.version>
         <jakarta.rest.version>3.1.0</jakarta.rest.version>
@@ -207,7 +208,7 @@
                                     <version>${jersey.version}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <outputDirectory>${glassfish.home}/glassfish/modules</outputDirectory>
                                     <destFileName>jersey-client.jar</destFileName>
                                 </artifactItem>
                                 <artifactItem>
@@ -216,7 +217,7 @@
                                     <version>${jersey.version}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <outputDirectory>${glassfish.home}/glassfish/modules</outputDirectory>
                                     <destFileName>jersey-server.jar</destFileName>
                                 </artifactItem>
                                 <artifactItem>
@@ -225,7 +226,7 @@
                                     <version>${jersey.version}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <outputDirectory>${glassfish.home}/glassfish/modules</outputDirectory>
                                     <destFileName>jersey-common.jar</destFileName>
                                 </artifactItem>
                                 <artifactItem>
@@ -234,7 +235,7 @@
                                     <version>${jersey.version}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <outputDirectory>${glassfish.home}/glassfish/modules</outputDirectory>
                                     <destFileName>jersey-container-grizzly2-http.jar</destFileName>
                                 </artifactItem>
                                 <artifactItem>
@@ -243,7 +244,7 @@
                                     <version>${jersey.version}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <outputDirectory>${glassfish.home}/glassfish/modules</outputDirectory>
                                     <destFileName>jersey-container-servlet-core.jar</destFileName>
                                 </artifactItem>
                                 <artifactItem>
@@ -252,7 +253,7 @@
                                     <version>${jersey.version}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <outputDirectory>${glassfish.home}/glassfish/modules</outputDirectory>
                                     <destFileName>jersey-container-servlet.jar</destFileName>
                                 </artifactItem>
                                 <artifactItem>
@@ -261,7 +262,7 @@
                                     <version>${jersey.version}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <outputDirectory>${glassfish.home}/glassfish/modules</outputDirectory>
                                     <destFileName>jersey-media-sse.jar</destFileName>
                                 </artifactItem>
                                 <artifactItem>
@@ -270,7 +271,7 @@
                                     <version>${jersey.version}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <outputDirectory>${glassfish.home}/glassfish/modules</outputDirectory>
                                     <destFileName>jersey-media-json-binding.jar</destFileName>
                                 </artifactItem>
                                  <artifactItem>
@@ -279,7 +280,7 @@
                                     <version>${jakarta.rest.version}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/glassfish6/glassfish/modules</outputDirectory>
+                                    <outputDirectory>${glassfish.home}/glassfish/modules</outputDirectory>
                                     <destFileName>jakarta.ws.rs-api.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
@@ -446,9 +447,12 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <dependenciesToScan>jakarta.ws.rs:${tck.artifactId}</dependenciesToScan>
+                            <excludes>
+                                <exclude>**/SeBootstrapIT.java</exclude>
+                            </excludes>
+                            <dependenciesToScan>jakarta.ws.rs:jakarta-restful-ws-tck</dependenciesToScan>
                             <systemPropertyVariables>
-                                <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>
+                                <GLASSFISH_HOME>${glassfish.home}</GLASSFISH_HOME>
                                 <servlet_adaptor>org.glassfish.jersey.servlet.ServletContainer</servlet_adaptor>
                                 <webServerHost>localhost</webServerHost>
                                 <webServerPort>8080</webServerPort>
@@ -460,11 +464,24 @@
                                 <porting.ts.url.class.1>ee.jakarta.tck.ws.rs.lib.implementation.sun.common.SunRIURL</porting.ts.url.class.1>
                                 <jimage.dir>${project.build.directory}/jdk11-bundle</jimage.dir>
                                 <optional.tech.packages.to.ignore>jakarta.xml.bind</optional.tech.packages.to.ignore>
-                                <signature.sigTestClasspath>${project.build.directory}/glassfish6/glassfish/modules/jakarta.ws.rs-api.jar:${project.build.directory}/glassfish6/glassfish/modules/jakarta.xml.bind-api.jar:${project.build.directory}/jdk11-bundle/java.base:${project.build.directory}/jdk11-bundle/java.rmi:${project.build.directory}/jdk11-bundle/java.sql:${project.build.directory}/jdk11-bundle/java.naming</signature.sigTestClasspath>
+                                <signature.sigTestClasspath>${glassfish.home}/glassfish/modules/jakarta.ws.rs-api.jar:${glassfish.home}/glassfish/modules/jakarta.xml.bind-api.jar:${project.build.directory}/jdk11-bundle/java.base:${project.build.directory}/jdk11-bundle/java.rmi:${project.build.directory}/jdk11-bundle/java.sql:${project.build.directory}/jdk11-bundle/java.naming</signature.sigTestClasspath>
                             </systemPropertyVariables>
                             <environmentVariables>
-                                <GLASSFISH_HOME>${project.build.directory}/glassfish6</GLASSFISH_HOME>
+                                <GLASSFISH_HOME>${glassfish.home}</GLASSFISH_HOME>
                             </environmentVariables>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>se-tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>**/SeBootstrapIT.java</include>
+                            </includes>
+                            <dependenciesToScan>jakarta.ws.rs:jakarta-restful-ws-tck</dependenciesToScan>
                         </configuration>
                     </execution>
                 </executions>

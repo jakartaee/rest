@@ -442,6 +442,7 @@
                 <version>3.0.0-M5</version>
                 <executions>
                     <execution>
+                        <id>gf-tests</id>
                         <goals>
                             <goal>integration-test</goal>
                             <goal>verify</goal>

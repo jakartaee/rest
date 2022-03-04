@@ -162,7 +162,7 @@ public final class JsonbContextProviderIT {
     }
 
     @ApplicationPath("")
-    private static final class EchoApplication extends Application {
+    public static final class EchoApplication extends Application {
         @Override
         public final Set<Class<?>> getClasses() {
             return Collections.singleton(EchoResource.class);

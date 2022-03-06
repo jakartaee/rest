@@ -22,7 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-import static ee.jakarta.tck.ws.rs.common.util.JaxrsUtil.unprivilegedPort;
+import static ee.jakarta.tck.ws.rs.common.util.JaxrsUtil.freePort;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -371,7 +371,7 @@ public final class SeBootstrapIT {
     };
 
     private static final int someFreeIpPort() throws IOException {
-        return unprivilegedPort();
+        return freePort();
     }
 
     private static final int mockInt() {

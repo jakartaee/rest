@@ -20,7 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-import static ee.jakarta.tck.ws.rs.common.util.JaxrsUtil.unprivilegedPort;
+import static ee.jakarta.tck.ws.rs.common.util.JaxrsUtil.freePort;
 
 import java.io.IOException;
 
@@ -29,12 +29,12 @@ import org.junit.jupiter.api.Test;
 final class JaxrsUtilTest {
 
     @Test
-    final void shouldReturnPortLarger1024() throws IOException {
+    final void shouldReturnPortFreePort() throws IOException {
         // when
-        final int chosenPort = unprivilegedPort();
+        final int chosenPort = freePort();
 
         // then
-        assertThat(chosenPort, is(greaterThan(1024)));
+        assertThat(chosenPort, is(greaterThan(0)));
     }
 
 }

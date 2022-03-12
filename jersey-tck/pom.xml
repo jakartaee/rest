@@ -46,6 +46,14 @@
         <tck.artifactId>jakarta-restful-ws-tck</tck.artifactId>
     </properties>
 
+    <repositories>
+        <repository>
+            <name>Jakarta Staging</name>
+            <id>jakarta-staging</id>
+            <url>https://jakarta.oss.sonatype.org/content/repositories/staging</url>
+        </repository>
+    </repositories>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

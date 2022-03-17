@@ -290,7 +290,7 @@ steps are explained in more detail in subsequent chapters of this
 guide.
 
 1.  Make sure that the following software has been correctly installed
-on the system hosting the JavaTest harness:
+on the system :
 include::req-software.inc[]
 * Java SE {SEversion}
 * A CI for {TechnologyShortName} {TechnologyVersion}. One example is {TechnologyRI}.

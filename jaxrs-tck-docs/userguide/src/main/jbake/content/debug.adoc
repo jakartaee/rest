@@ -63,23 +63,8 @@ get more debugging information.
 6.2 Test Information
 ~~~~~~~~~~~~~~~~~~~~
 
-To display information about a test in the JavaTest GUI, click its icon
-in the test tree or double-click its name in a folder status tab. The
-tab contains detailed information about the test run and, at the bottom
-of the window, a brief status message identifying the type of failure or
-error. This message may be sufficient for you to identify the cause of
-the error or failure.
-
 If you need more information to identify the cause of the error or
-failure, use the following tabs listed in order of importance:
-
-* Test Run Messages contains a Message list and a Message section that
-display the messages produced during the test run.
-* Test Run Details contains a two-column table of name/value pairs
-recorded when the test was run.
-* Configuration contains a two-column table of the test environment
-name/value pairs derived from the configuration data actually used to
-run the test.
+failure, use the Junit reports generated after running the tests.
 
 
 [[GBFYF]][[configuration-failures]]

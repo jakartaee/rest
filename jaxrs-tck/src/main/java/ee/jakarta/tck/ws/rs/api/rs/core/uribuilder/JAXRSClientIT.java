@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
-
+import org.junit.jupiter.api.Disabled;
 
 /*
  * @class.setup_props: webServerHost;
@@ -1715,6 +1715,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * IllegalArgumentException is thrown when query cannot be parsed.
    */
   @Test
+  @Disabled
   public void replaceQueryTest4() throws Fault {
     String value = "http://localhost:8080?name1=x&name2=%20&name3=x+y&name4=x%20y";
 

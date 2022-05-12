@@ -96,7 +96,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   // name it to ensure sorting
   protected final int[] status_codes = { 200, 201, 202, 204, 205, 206, 300, 301, 302,
       303, 304, 305, 307, 308, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410,
-      411, 412, 413, 414, 415, 416, 417, 428, 429, 431, 451, 500, 501, 502, 503, 504,
+      411, 412, 413, 414, 415, 416, 417, 422, 428, 429, 431, 451, 500, 501, 502, 503, 504,
       505, 511 };
 
   // name it to ensure sorting
@@ -119,10 +119,10 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
       Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
       Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
-      Response.Status.Family.CLIENT_ERROR, Response.Status.Family.SERVER_ERROR,
+      Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
       Response.Status.Family.SERVER_ERROR, Response.Status.Family.SERVER_ERROR,
       Response.Status.Family.SERVER_ERROR, Response.Status.Family.SERVER_ERROR,
-      Response.Status.Family.SERVER_ERROR,
+      Response.Status.Family.SERVER_ERROR, Response.Status.Family.SERVER_ERROR,
       Response.Status.Family.SERVER_ERROR };
 
   protected final Response.Status.Family[] status_family_list = {
@@ -138,7 +138,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       "Proxy Authentication Required", "Request Timeout", "Conflict", "Gone",
       "Length Required", "Precondition Failed", "Request Entity Too Large",
       "Request-URI Too Long", "Unsupported Media Type",
-      "Requested Range Not Satisfiable", "Expectation Failed",
+      "Requested Range Not Satisfiable", "Expectation Failed", "Unprocessable Entity",
       "Precondition Required", "Too Many Requests",
       "Request Header Fields Too Large", "Unavailable For Legal Reasons", "Internal Server Error",
       "Not Implemented", "Bad Gateway", "Service Unavailable",

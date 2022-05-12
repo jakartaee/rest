@@ -53,7 +53,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   // name it to ensure sorting
   static final int[] status_codes = { 200, 201, 202, 204, 205, 206, 301, 302,
       303, 304, 305, 307, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410,
-      411, 412, 413, 414, 415, 416, 417, 500, 501, 502, 503, 504, 505 };
+      411, 412, 413, 414, 415, 416, 417, 422, 500, 501, 502, 503, 504, 505 };
 
   // name it to ensure sorting
   static final Response.Status.Family[] status_family = {
@@ -72,9 +72,9 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
       Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
       Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
+      Response.Status.Family.CLIENT_ERROR, Response.Status.Family.SERVER_ERROR,
       Response.Status.Family.SERVER_ERROR, Response.Status.Family.SERVER_ERROR,
       Response.Status.Family.SERVER_ERROR, Response.Status.Family.SERVER_ERROR,
-      Response.Status.Family.SERVER_ERROR,
       Response.Status.Family.SERVER_ERROR };
 
   final String[] status = { "OK", "Created", "Accepted", "No Content",
@@ -85,7 +85,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       "Proxy Authentication Required", "Request Timeout", "Conflict", "Gone",
       "Length Required", "Precondition Failed", "Request Entity Too Large",
       "Request-URI Too Long", "Unsupported Media Type",
-      "Requested Range Not Satisfiable", "Expectation Failed",
+      "Requested Range Not Satisfiable", "Expectation Failed", "Unprocessable Entity",
       "Internal Server Error", "Not Implemented", "Bad Gateway",
       "Service Unavailable", "Gateway Timeout", "HTTP Version Not Supported" };
 

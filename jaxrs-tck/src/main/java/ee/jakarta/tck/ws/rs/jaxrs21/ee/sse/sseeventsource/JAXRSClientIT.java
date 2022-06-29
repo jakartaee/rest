@@ -63,6 +63,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
@@ -496,6 +497,7 @@ public class JAXRSClientIT extends SSEJAXRSClient {
    * @test_Strategy:
    */
   @Test
+  @Tag("xml_binding")
   public void jaxbElementTest() throws Fault {
     mediaTestLevel = 3;
     @SuppressWarnings("unchecked")
@@ -519,6 +521,7 @@ public class JAXRSClientIT extends SSEJAXRSClient {
    * @test_Strategy:
    */
   @Test
+  @Tag("xml_binding")
   public void xmlTest() throws Fault {
     mediaTestLevel = 2;
     BiPredicate<Object, Object> p = (a, b) -> ((JaxbKeyValueBean) b).getValue().equals(a);

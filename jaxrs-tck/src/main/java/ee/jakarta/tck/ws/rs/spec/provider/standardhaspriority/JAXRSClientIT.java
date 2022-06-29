@@ -124,6 +124,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * same mediaType
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteMapProviderTest() throws Fault {
     MultivaluedMap<String, String> map = new MultivaluedHashMap<String, String>();
     map.add("map", "map");
@@ -144,6 +145,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * same mediaType
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteBooleanProviderTest() throws Fault {
     MediaType mt = MediaType.TEXT_PLAIN_TYPE;
     setProperty(Property.REQUEST, buildRequest(Request.POST, "boolean"));
@@ -167,6 +169,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * same mediaType
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteCharacterProviderTest() throws Fault {
     MediaType mt = MediaType.TEXT_PLAIN_TYPE;
     setProperty(Property.REQUEST, buildRequest(Request.POST, "character"));
@@ -190,6 +193,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * same mediaType
    */
   @Test
+  @Tag("xml_binding")
   public void readWriteIntegerProviderTest() throws Fault {
     MediaType mt = MediaType.TEXT_PLAIN_TYPE;
     setProperty(Property.REQUEST, buildRequest(Request.POST, "number"));

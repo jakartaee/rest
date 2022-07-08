@@ -47,6 +47,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
@@ -284,6 +285,7 @@ public class JAXRSClientIT extends SSEJAXRSClient {
    * @test_Strategy:
    */
   @Test
+  @Tag("xml_binding")
   public void jaxbElementTest() throws Fault {
     Holder<InboundSseEvent> holder = querySSEEndpoint("mbw/jaxbelement");
     logTrace("Received", holder.get());

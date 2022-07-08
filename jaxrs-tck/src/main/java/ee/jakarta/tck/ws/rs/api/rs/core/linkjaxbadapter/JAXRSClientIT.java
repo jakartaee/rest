@@ -37,6 +37,8 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 
+import org.junit.jupiter.api.Tag;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
@@ -76,6 +78,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
      * @test_Strategy:
      */
     @Test
+    @Tag("xml_binding")
     public void marshallTest() throws Fault {
         Link link = RuntimeDelegate.getInstance().createLinkBuilder().uri(url).title(title).rel(rel).type(media)
                 .param(param_names[0], param_vals[0]).param(param_names[1], param_vals[1]).build();
@@ -122,6 +125,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
      * @test_Strategy: Test whether a class with Link can be unmarshalled fine
      */
     @Test
+    @Tag("xml_binding")
     public void unmarshallTest() throws Fault {
 
         Link link = RuntimeDelegate.getInstance().createLinkBuilder().uri(url).title(title).rel(rel).type(media)

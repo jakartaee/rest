@@ -27,7 +27,7 @@
     <groupId>org.glassfish</groupId>
     <artifactId>tck_jaxrs</artifactId>
     <packaging>pom</packaging>
-    <version>3.1.0</version>
+    <version>3.1.1</version>
     <name>Eclipse Foundation Technology Compatibility Kit User's Guide for Jakarta RESTful Web Services for Jakarta EE, Release 3.1</name>
 
     <properties>

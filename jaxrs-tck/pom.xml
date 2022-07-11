@@ -26,6 +26,7 @@
     <name>Jakarta RESTful WS TCK</name>
     <description>Technology Compatibility Kit for Jakarta RESTful Web Services</description>
     <url>https://github.com/jakartaee/rest</url>
+    <version>3.1.1</version>
 
     <parent>
         <groupId>jakarta.ws.rs</groupId>
@@ -105,7 +106,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <FileName>${project.build.directory}/jakarta.ws.rs.sig_${project.version}</FileName>
+                            <FileName>${project.build.directory}/jakarta.ws.rs.sig_${project.parent.version}</FileName>
                             <packages>
                                 jakarta.ws.rs,jakarta.ws.rs.client,jakarta.ws.rs.core,jakarta.ws.rs.container,jakarta.ws.rs.ext,jakarta.ws.rs.sse
                             </packages>
@@ -158,7 +159,7 @@
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <dependency>

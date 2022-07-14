@@ -21,6 +21,23 @@ mvn verify -DexcludedGroups="xml_binding"
 ----
 --
 
+Run the tests by excluding the security tests using the following command:
+
+--
+[source,oac_no_warn]
+----
+mvn verify -DexcludedGroups="security"
+----
+--
+
+Run the tests by excluding the servlet tests using the following command:
+
+--
+[source,oac_no_warn]
+----
+mvn verify -DexcludedGroups="servlet"
+----
+--
 
 [[GCMCU]]
 

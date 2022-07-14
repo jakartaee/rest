@@ -111,6 +111,30 @@ mvn verify -Dit.test={subsetTestDirectoryExample}.**
 
 The tests in the directory and its subdirectories are run.
 
+[[GBFEP]][[to-exclude-a-subset-of-tests-in-command-line-mode]]
+
+5.2.2 To Exclude a Subset of Tests in Command-Line Mode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Start the test run by executing the following command: +
+
+[source,subs="attributes"]
+----
+mvn verify -DexcludedGroups={excludedGroupsExample}
+----
+
+The tests in the exclude group `{excludedGroupsExample}` is exclued from the run. 
+
+[NOTE]
+=======================================================================
+
+The Junit test groupings(tags) available in the TCK are `xml_binding`, 
+`security` and `servlet`. These can be used to select or deselect the 
+tests for the execution.
+
+=======================================================================
+
+
 [[GCLRR]][[running-the-tck-against-the-ri]]
 
 5.3 Running the TCK Against another CI

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -42,6 +42,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.AfterEach;
 
 /*
@@ -97,6 +98,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void abortWithTest() throws Fault {
     invokeRequestAndCheckResponse(ContextOperation.ABORTWITH);
   }
@@ -113,6 +115,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getAcceptableLanguagesTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS, "Accpet-Language:en-us");
     invokeRequestAndCheckResponse(ContextOperation.GETACCEPTABLELANGUAGES);
@@ -130,6 +133,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getAcceptableLanguagesIsSortedTest() throws Fault {
     logMsg(
         "Check the #getAcceptableLanguages is sorted according to their q-value");
@@ -153,6 +157,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getAcceptableLanguagesIsReadOnlyTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         "Accept-Language: da, en-gb;q=0.6, en-us;q=0.7");
@@ -173,6 +178,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getAcceptableMediaTypesTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildAccept(MediaType.APPLICATION_JSON_TYPE));
@@ -192,6 +198,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getAcceptableMediaTypesIsSortedTest() throws Fault {
     logMsg(
         "Check the #getAcceptableMediaTypes is sorted according to their q-value");
@@ -217,6 +224,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getAcceptableMediaTypesIsReadOnlyTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS, buildAccept(MediaType.TEXT_XML_TYPE));
     setProperty(Property.UNEXPECTED_RESPONSE_MATCH, MediaType.APPLICATION_JSON);
@@ -235,6 +243,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getCookiesTest() throws Fault {
     String[] cookies = { "cookie1", "coookkkie99", "cookiiieee999" };
     for (String cookie : cookies) {
@@ -258,6 +267,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getCookiesIsReadonlyTest() throws Fault {
     setPrintEntity(true);
     invokeRequestAndCheckResponse(ContextOperation.GETCOOKIESISREADONLY);
@@ -274,6 +284,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getDateTest() throws Fault {
     Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.MILLISECOND, 0);
@@ -296,6 +307,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getDateIsNullTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "NULL");
     invokeRequestAndCheckResponse(ContextOperation.GETDATE);
@@ -312,6 +324,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getEntityStreamTest() throws Fault {
     String entity = "EnTiTyStReAmTeSt";
     setProperty(Property.CONTENT, entity);
@@ -331,6 +344,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getHeadersTest() throws Fault {
     for (int i = 1; i != 5; i++) {
       String header = "header" + i + ":" + "header" + i;
@@ -351,6 +365,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getHeadersIsMutableTest() throws Fault {
     setPrintEntity(true);
     invokeRequestAndCheckResponse(ContextOperation.GETHEADERSISMUTABLE);
@@ -367,6 +382,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getHeaderStringTest() throws Fault {
     setProperty(Property.SEARCH_STRING,
         ContextOperation.GETHEADERSTRING2.name());
@@ -384,6 +400,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getLanguageTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         HttpHeaders.CONTENT_LANGUAGE + ":en-gb");
@@ -402,6 +419,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getLanguageIsNullTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "NULL");
     invokeRequestAndCheckResponse(ContextOperation.GETLANGUAGE);
@@ -419,6 +437,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getLengthTest() throws Fault {
     setProperty(Property.CONTENT, "12345678901234567890");
     setProperty(Property.SEARCH_STRING, "20");
@@ -437,6 +456,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getLengthWhenNoEntityTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "-1");
     invokeRequestAndCheckResponse(ContextOperation.GETLENGTH);
@@ -454,6 +474,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getMediaTypeTest() throws Fault {
     addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_SVG_XML);
     setProperty(Property.SEARCH_STRING, MediaType.APPLICATION_SVG_XML);
@@ -472,6 +493,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getMediaTypeIsNullTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "NULL");
     invokeRequestAndCheckResponse(ContextOperation.GETMEDIATYPE);
@@ -488,6 +510,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getMethodTest() throws Fault {
     String method = Request.OPTIONS.name();
     String header = RequestFilter.OPERATION + ":"
@@ -512,6 +535,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getPropertyIsNullTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "NULL");
     invokeRequestAndCheckResponse(ContextOperation.GETPROPERTY);
@@ -530,6 +554,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getPropertyNamesTest() throws Fault {
     for (int i = 0; i != 5; i++)
       setProperty(Property.UNORDERED_SEARCH_STRING,
@@ -547,6 +572,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * request/response exchange context.
    */
   @Test
+  @Tag("servlet")
   public void getPropertyNamesIsReadOnlyTest() throws Fault {
     setProperty(Property.UNORDERED_SEARCH_STRING, "0");
     invokeRequestAndCheckResponse(ContextOperation.GETPROPERTYNAMESISREADONLY);
@@ -563,6 +589,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getRequestTest() throws Fault {
     String method = Request.OPTIONS.name();
     String header = RequestFilter.OPERATION + ":"
@@ -587,6 +614,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getSecurityContextPrincipalIsNullTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "NULL");
     invokeRequestAndCheckResponse(ContextOperation.GETSECURITYCONTEXT);
@@ -603,6 +631,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void getUriInfoTest() throws Fault {
     setProperty(Property.SEARCH_STRING, getAbsoluteUrl());
     invokeRequestAndCheckResponse(ContextOperation.GETURIINFO);
@@ -620,6 +649,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void hasEntityTest() throws Fault {
     setRequestContentEntity("entity");
     setProperty(Property.SEARCH_STRING, "true");
@@ -638,6 +668,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void hasEntityWhenNoEntityTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "false");
     invokeRequestAndCheckResponse(ContextOperation.HASENTITY);
@@ -657,6 +688,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void removePropertyTest() throws Fault {
     // getProperty returns null after the property has been set and removed
     setProperty(Property.SEARCH_STRING, "NULL");
@@ -674,6 +706,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void setEntityStreamTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.SETENTITYSTREAMENTITY);
     invokeRequestAndCheckResponse(ContextOperation.SETENTITYSTREAM);
@@ -690,6 +723,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void setMethodTest() throws Fault {
     setProperty(Property.SEARCH_STRING, Request.OPTIONS.name());
     invokeRequestAndCheckResponse(ContextOperation.SETMETHOD);
@@ -709,6 +743,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void setPropertyTest() throws Fault {
     setProperty(Property.SEARCH_STRING, TemplateFilter.PROPERTYNAME);
     invokeRequestAndCheckResponse(ContextOperation.SETPROPERTY);
@@ -727,6 +762,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException. *
    */
   @Test
+  @Tag("servlet")
   public void setPropertyNullTest() throws Fault {
     setProperty(Property.SEARCH_STRING, "NULL");
     invokeRequestAndCheckResponse(ContextOperation.SETPROPERTYNULL);
@@ -746,6 +782,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException. *
    */
   @Test
+  @Tag("servlet")
   public void setPropertyIsReflectedInServletRequestTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.PROPERTYNAME);
     invokeRequestAndCheckResponse(ContextOperation.SETPROPERTYCONTEXT);
@@ -763,6 +800,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void setRequestUriOneUriTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.URI);
     invokeRequestAndCheckResponse(ContextOperation.SETREQUESTURI1);
@@ -780,6 +818,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void setRequestUriTwoUrisTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.URI);
     invokeRequestAndCheckResponse(ContextOperation.SETREQUESTURI2);
@@ -797,6 +836,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Tag("servlet")
   public void setSecurityContextTest() throws Fault {
     setProperty(Property.SEARCH_STRING, RequestFilter.PRINCIPAL);
     invokeRequestAndCheckResponse(ContextOperation.SETSECURITYCONTEXT);

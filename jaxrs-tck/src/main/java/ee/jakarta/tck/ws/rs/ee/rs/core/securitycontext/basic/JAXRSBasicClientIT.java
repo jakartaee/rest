@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -38,6 +38,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.AfterEach;
 
 /*
@@ -104,6 +105,7 @@ public class JAXRSBasicClientIT
    * @test_Strategy: Send no authorization, make sure of 401 response
    */
   @Test
+  @Tag("security")
   @RunAsClient
   public void noAuthorizationTest() throws Fault {
     super.noAuthorizationTest();
@@ -118,6 +120,7 @@ public class JAXRSBasicClientIT
    * @test_Strategy: Send basic authorization, check security context
    */
   @Test
+  @Tag("security")
   @RunAsClient
   public void basicAuthorizationAdminTest() throws Fault {
     setProperty(Property.STATUS_CODE, getStatusCode(Response.Status.OK));
@@ -139,6 +142,7 @@ public class JAXRSBasicClientIT
    * @test_Strategy: Send basic authorization, check security context
    */
   @Test
+  @Tag("security")
   @RunAsClient
   public void basicAuthorizationIncorrectUserTest() throws Fault {
     setProperty(Property.STATUS_CODE,
@@ -156,6 +160,7 @@ public class JAXRSBasicClientIT
    * @test_Strategy: Send basic authorization, check security context
    */
   @Test
+  @Tag("security")
   @RunAsClient
   public void basicAuthorizationIncorrectPasswordTest() throws Fault {
     setProperty(Property.STATUS_CODE,
@@ -175,6 +180,7 @@ public class JAXRSBasicClientIT
    * context
    */
   @Test
+  @Tag("security")
   @RunAsClient
   public void basicAuthorizationStandardUserTest() throws Fault {
     setProperty(Property.STATUS_CODE, getStatusCode(Response.Status.OK));

@@ -117,7 +117,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   @Test
   @Tag("servlet")
   public void getAcceptableLanguagesTest() throws Fault {
-    setProperty(Property.REQUEST_HEADERS, "Accpet-Language:en-us");
+    setProperty(Property.REQUEST_HEADERS, "Accept-Language:en-us");
     invokeRequestAndCheckResponse(ContextOperation.GETACCEPTABLELANGUAGES);
   }
 

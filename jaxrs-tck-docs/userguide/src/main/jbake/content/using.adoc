@@ -96,7 +96,6 @@ Use the following modes to run a subset of the tests:
 * link:#GBFWK[Section 5.2.1, "To Run a Subset of Tests in Command-Line Mode"]
 
 
-
 [[GBFWK]][[to-run-a-subset-of-tests-in-command-line-mode]]
 
 5.2.1 To Run a Subset of Tests in Command-Line Mode
@@ -111,29 +110,45 @@ mvn verify -Dit.test={subsetTestDirectoryExample}.**
 
 The tests in the directory and its subdirectories are run.
 
-[[GBFEP]][[to-exclude-a-subset-of-tests-in-command-line-mode]]
-
-5.2.2 To Exclude a Subset of Tests in Command-Line Mode
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Start the test run by executing the following command: +
-
-[source,subs="attributes"]
-----
-mvn verify -DexcludedGroups={excludedGroupsExample}
-----
-
-The tests in the exclude group `{excludedGroupsExample}` is exclued from the run. 
-
 [NOTE]
 =======================================================================
 
-The Junit test groupings(tags) available in the TCK are `xml_binding`, 
+The Junit test tags(groups) available in the TCK are `xml_binding`, 
 `security` and `servlet`. These can be used to select or deselect the 
 tests for the execution.
 
 =======================================================================
 
+[[GBFQA]][[to-run-a-group-of-tests-in-command-line-mode]]
+
+5.2.2 To Run a Group of Tests in Command-Line Mode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Start the test run by executing the following command: +
+
+[source,subs="attributes"]
+----
+mvn verify -Dgroups={groupsExample}
+----
+
+The tests in the group `{groupsExample}` is exclued from the run. 
+Multiple groups can be separated by comma.
+
+
+[[GBFEP]][[to-exclude-a-group-of-tests-in-command-line-mode]]
+
+5.2.3 To Exclude a Group of Tests in Command-Line Mode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Start the test run by executing the following command: +
+
+[source,subs="attributes"]
+----
+mvn verify -DexcludedGroups={groupsExample}
+----
+
+The tests in the group `{groupsExample}` is exclued from the run. 
+Multiple groups can be separated by comma.
 
 [[GCLRR]][[running-the-tck-against-the-ri]]
 

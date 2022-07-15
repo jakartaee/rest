@@ -17,25 +17,25 @@ Run the tests by excluding the optional jaxb tests using the following command:
 --
 [source,oac_no_warn]
 ----
-mvn verify -DexcludedGroups="xml_binding"
+mvn verify -DexcludedGroups=xml_binding
 ----
 --
-
-Run the tests by excluding the security tests using the following command:
-
---
-[source,oac_no_warn]
-----
-mvn verify -DexcludedGroups="security"
-----
---
-
-Run the tests by excluding the servlet tests using the following command:
+Run only the optional jaxb tests using the following command:
 
 --
 [source,oac_no_warn]
 ----
-mvn verify -DexcludedGroups="servlet"
+mvn verify -Dgroups=xml_binding
+----
+--
+
+Run the tests by excluding the security & servlet tests using the following 
+command:
+
+--
+[source,oac_no_warn]
+----
+mvn verify -DexcludedGroups=security,servlet
 ----
 --
 

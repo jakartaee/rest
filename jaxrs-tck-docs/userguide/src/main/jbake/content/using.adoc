@@ -131,7 +131,7 @@ Start the test run by executing the following command: +
 mvn verify -Dgroups={groupsExample}
 ----
 
-The tests in the group `{groupsExample}` is exclued from the run. 
+Only the tests in the group +{groupsExample}+ is run. 
 Multiple groups can be separated by comma.
 
 
@@ -147,7 +147,7 @@ Start the test run by executing the following command: +
 mvn verify -DexcludedGroups={groupsExample}
 ----
 
-The tests in the group `{groupsExample}` is exclued from the run. 
+The tests in the group +{groupsExample}+ is exclued from the run. 
 Multiple groups can be separated by comma.
 
 [[GCLRR]][[running-the-tck-against-the-ri]]

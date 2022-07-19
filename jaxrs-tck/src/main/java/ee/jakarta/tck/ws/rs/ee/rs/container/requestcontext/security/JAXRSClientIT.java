@@ -37,6 +37,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Tag;
 
 /*
  * @class.setup_props: webServerHost;
@@ -109,6 +110,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    */
   @RunAsClient
   @Test
+  @Tag("security")
   public void getSecurityContextTest() throws Fault {
     setProperty(Property.BASIC_AUTH_USER, user);
     setProperty(Property.BASIC_AUTH_PASSWD, password);
@@ -127,6 +129,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    */
   @RunAsClient
   @Test
+  @Tag("security")
   public void noSecurityTest() throws Fault {
     String request = buildRequest(Request.POST, "");
     setProperty(Property.REQUEST, request);

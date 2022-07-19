@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2011, 2021 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2011, 2022 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Public License v. 2.0, which is available at
@@ -387,10 +387,10 @@
         <java.version>11</java.version>
 
         <maven.bundle.plugin.version>5.1.2</maven.bundle.plugin.version>
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <maven.javadoc.plugin.version>3.3.0</maven.javadoc.plugin.version>
-        <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
+        <maven.surefire.plugin.version>3.0.0-M7</maven.surefire.plugin.version>
 
         <api.package>jakarta.ws.rs</api.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -398,9 +398,9 @@
         <spec.version>3.1</spec.version>
         <spec.version.revision /> <!-- e.g. (Rev a) -->
 
-        <jaxb.api.version>3.0.1</jaxb.api.version>
-        <jaxb.impl.version>3.0.2-b01</jaxb.impl.version>
-        <activation.api.version>2.0.1</activation.api.version>
+        <jaxb.api.version>4.0.0</jaxb.api.version>
+        <jaxb.impl.version>4.0.0</jaxb.impl.version>
+        <activation.api.version>2.1.0</activation.api.version>
         <legal.doc.folder>${project.basedir}/..</legal.doc.folder>
     </properties>
 

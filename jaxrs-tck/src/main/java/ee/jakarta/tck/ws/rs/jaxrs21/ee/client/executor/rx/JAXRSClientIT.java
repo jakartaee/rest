@@ -106,6 +106,7 @@ public class JAXRSClientIT
    * 
    */
   @Test
+  @Disabled
   public void deleteWithStringClassTest() throws Fault {
     super.deleteWithStringClassTest();
   }
@@ -119,6 +120,7 @@ public class JAXRSClientIT
    * 
    */
   @Test
+  @Disabled
   public void deleteWithResponseClassTest() throws Fault {
     super.deleteWithResponseClassTest();
   }
@@ -131,6 +133,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    */
   @Test
+  @Disabled
   public void deleteWithGenericTypeStringTest() throws Fault {
     super.deleteWithGenericTypeStringTest();
   }
@@ -143,6 +146,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP DELETE method for the current request
    */
   @Test
+  @Disabled
   public void deleteWithGenericTypeResponseTest() throws Fault {
     super.deleteWithGenericTypeResponseTest();
   }
@@ -159,6 +163,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP GET method for the current request
    */
   @Test
+  @Disabled
   public void getTest() throws Fault {
     super.getTest();
   }
@@ -171,6 +176,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP GET method for the current request
    */
   @Test
+  @Disabled
   public void getWithStringClassTest() throws Fault {
     super.getWithStringClassTest();
   }
@@ -183,6 +189,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP GET method for the current request
    */
   @Test
+  @Disabled
   public void getWithResponseClassTest() throws Fault {
     super.getWithResponseClassTest();
   }
@@ -195,6 +202,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP GET method for the current request
    */
   @Test
+  @Disabled
   public void getWithGenericTypeStringTest() throws Fault {
     super.getWithGenericTypeStringTest();
   }
@@ -207,6 +215,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP GET method for the current request
    */
   @Test
+  @Disabled
   public void getWithGenericTypeResponseTest() throws Fault {
     super.getWithGenericTypeResponseTest();
   }
@@ -223,6 +232,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP HEAD method for the current request
    */
   @Test
+  @Disabled
   public void headTest() throws Fault {
     super.headTest();
   }
@@ -251,6 +261,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP options method for the current request
    */
   @Test
+  @Disabled
   public void optionsWithStringClassTest() throws Fault {
     super.optionsWithStringClassTest();
   }
@@ -263,6 +274,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP options method for the current request
    */
   @Test
+  @Disabled
   public void optionsWithResponseClassTest() throws Fault {
     super.optionsWithResponseClassTest();
   }
@@ -275,6 +287,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP options method for the current request
    */
   @Test
+  @Disabled
   public void optionsWithGenericTypeStringTest() throws Fault {
     super.optionsWithGenericTypeStringTest();
   }
@@ -287,6 +300,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP options method for the current request
    */
   @Test
+  @Disabled
   public void optionsWithGenericTypeResponseTest() throws Fault {
     super.optionsWithGenericTypeResponseTest();
   }
@@ -303,6 +317,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP post method for the current request
    */
   @Test
+  @Disabled
   public void postTest() throws Fault {
     super.postTest();
   }
@@ -315,6 +330,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP post method for the current request
    */
   @Test
+  @Disabled
   public void postWithStringClassTest() throws Fault {
     super.postWithStringClassTest();
   }
@@ -327,6 +343,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP post method for the current request
    */
   @Test
+  @Disabled
   public void postWithResponseClassTest() throws Fault {
     super.postWithResponseClassTest();
   }
@@ -339,6 +356,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP post method for the current request
    */
   @Test
+  @Disabled
   public void postWithGenericTypeStringTest() throws Fault {
     super.postWithGenericTypeStringTest();
   }
@@ -351,6 +369,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP post method for the current request
    */
   @Test
+  @Disabled
   public void postWithGenericTypeResponseTest() throws Fault {
     super.postWithGenericTypeResponseTest();
   }
@@ -367,6 +386,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP PUT method for the current request
    */
   @Test
+  @Disabled
   public void putTest() throws Fault {
     super.putTest();
   }
@@ -379,6 +399,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP put method for the current request
    */
   @Test
+  @Disabled
   public void putWithStringClassTest() throws Fault {
     super.putWithStringClassTest();
   }
@@ -391,6 +412,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP put method for the current request
    */
   @Test
+  @Disabled
   public void putWithResponseClassTest() throws Fault {
     super.putWithResponseClassTest();
   }
@@ -403,6 +425,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP put method for the current request
    */
   @Test
+  @Disabled
   public void putWithGenericTypeStringTest() throws Fault {
     super.putWithGenericTypeStringTest();
   }
@@ -415,6 +438,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP put method for the current request
    */
   @Test
+  @Disabled
   public void putWithGenericTypeResponseTest() throws Fault {
     super.putWithGenericTypeResponseTest();
   }
@@ -431,6 +455,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
   @Test
+  @Disabled
   public void traceTest() throws Fault {
     super.traceTest();
   }
@@ -443,6 +468,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
   @Test
+  @Disabled
   public void traceWithStringClassTest() throws Fault {
     super.traceWithStringClassTest();
   }
@@ -455,6 +481,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
   @Test
+  @Disabled
   public void traceWithResponseClassTest() throws Fault {
     super.traceWithResponseClassTest();
   }
@@ -467,6 +494,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
   @Test
+  @Disabled
   public void traceWithGenericTypeStringTest() throws Fault {
     super.traceWithGenericTypeStringTest();
   }
@@ -479,6 +507,7 @@ public class JAXRSClientIT
    * @test_Strategy: Invoke HTTP trace method for the current request
    */
   @Test
+  @Disabled
   public void traceWithGenericTypeResponseTest() throws Fault {
     super.traceWithGenericTypeResponseTest();
   }

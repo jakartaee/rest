@@ -129,7 +129,7 @@ public interface ContainerResponseContext {
      * @see #getHeaders()
      * @see #getHeaderString(String)
      */
-    public boolean containsHeaderValue(String name, String value, boolean ignoreCase);
+    public boolean containsHeaderString(String name, String value, boolean ignoreCase);
 
     /**
      * Get the allowed HTTP methods from the Allow HTTP header.

@@ -74,6 +74,7 @@ public interface HttpHeaders {
      * comma-separated header string contains value as a whole word.
      * @see #getRequestHeaders()
      * @see #getHeaderString(String)
+     * @since 4.0
      */
     public boolean containsHeaderString(String name, String value, boolean ignoreCase);
 

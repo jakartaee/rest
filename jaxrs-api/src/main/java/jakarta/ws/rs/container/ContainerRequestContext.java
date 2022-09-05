@@ -229,6 +229,19 @@ public interface ContainerRequestContext {
     public String getHeaderString(String name);
 
     /**
+     * Checks whether a header with a specific name and value (or item of the comma-separated value list) exists.
+     *
+     * @param name the message header.
+     * @param value the message header value.
+     * @param ignoreCase whether to ignore upper/lower case.
+     * @return {@code true} if and only if a header with the provided name exists having either the exact value or whose
+     * comma-separated header string contains value as a whole word.
+     * @see #getHeaders()
+     * @see #getHeaderString(String)
+     */
+    public boolean containsHeaderString(String name, String value, boolean ignoreCase);
+
+    /**
      * Get message date.
      *
      * @return the message date, otherwise {@code null} if not present.

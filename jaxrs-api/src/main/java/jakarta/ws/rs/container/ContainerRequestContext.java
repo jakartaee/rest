@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import jakarta.ws.rs.core.Cookie;
 import jakarta.ws.rs.core.MediaType;
@@ -232,15 +233,14 @@ public interface ContainerRequestContext {
      * Checks whether a header with a specific name and value (or item of the comma-separated value list) exists.
      *
      * @param name the message header.
-     * @param value the message header value.
-     * @param ignoreCase whether to ignore upper/lower case.
+     * @param valuePredicate value must fulfil this predicate.
      * @return {@code true} if and only if a header with the provided name exists having either the exact value or whose
      * comma-separated header string contains value as a whole word.
      * @see #getHeaders()
      * @see #getHeaderString(String)
      * @since 4.0
      */
-    public boolean containsHeaderString(String name, String value, boolean ignoreCase);
+    public boolean containsHeaderString(String name, Predicate<String> valuePredicate);
 
     /**
      * Get message date.

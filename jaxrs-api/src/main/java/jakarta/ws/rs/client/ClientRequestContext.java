@@ -202,8 +202,8 @@ public interface ClientRequestContext {
      *
      * @param name the message header.
      * @param valuePredicate value must fulfil this predicate.
-     * @return {@code true} if and only if a header with the provided name exists having either the exact value or whose
-     * comma-separated header string contains value as a whole word.
+     * @return {@code true} if and only if a header with the given name exists, having either a whitespace-trimmed value
+     * matching the predicate, or having at least one whitespace-trimmed single value in a comma-separated list of single values.
      * @see #getHeaders()
      * @see #getHeaderString(String)
      * @since 4.0

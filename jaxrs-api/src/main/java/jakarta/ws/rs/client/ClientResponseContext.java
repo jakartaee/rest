@@ -92,6 +92,12 @@ public interface ClientResponseContext {
     /**
      * Checks whether a header with a specific name and value (or item of the comma-separated value list) exists.
      *
+     * <p>
+     * For example: {@code containsHeaderString("cache-control", "no-store"::equalsIgnoreCase)} will return {@code true} if
+     * a {@code Cache-Control} header exists that has the value {@code no-store}, the value {@code No-Store} or the value
+     * {@code Max-Age, NO-STORE, no-transform}, but {@code false} when it has the value {@code no-store;no-transform}
+     * (missing comma), or the value {@code no - store} (whitespace within value).
+     *
      * @param name the message header.
      * @param valuePredicate value must fulfil this predicate.
      * @return {@code true} if and only if a header with the given name exists, having either a whitespace-trimmed value

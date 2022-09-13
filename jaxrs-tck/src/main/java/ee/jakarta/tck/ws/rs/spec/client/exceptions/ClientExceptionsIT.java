@@ -197,7 +197,7 @@ public class ClientExceptionsIT {
     }
 
     @ApplicationPath("")
-    public static final class StatusApplication extends Application {
+    public static class StatusApplication extends Application {
 
         @Override
         public Set<Class<?>> getClasses() {

@@ -162,14 +162,14 @@ public final class JsonbContextProviderIT {
     }
 
     @ApplicationPath("")
-    public static final class EchoApplication extends Application {
+    public static class EchoApplication extends Application {
         @Override
-        public final Set<Class<?>> getClasses() {
+        public Set<Class<?>> getClasses() {
             return Collections.singleton(EchoResource.class);
         }
 
         @Override
-        public final Set<Object> getSingletons() {
+        public Set<Object> getSingletons() {
             return Collections.singleton(new CustomJsonbProvider(SERVER));
         }
 

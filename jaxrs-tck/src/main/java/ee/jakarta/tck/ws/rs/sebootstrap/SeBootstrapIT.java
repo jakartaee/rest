@@ -35,6 +35,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.Tag;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.GET;
@@ -62,6 +63,7 @@ public final class SeBootstrapIT {
      *                              expected
      */
     @Test
+    @Tag("se_bootstrap")
     public final void shouldBootInstanceUsingDefaults() throws InterruptedException, ExecutionException {
         // given
         final int expectedResponse = mockInt();
@@ -97,6 +99,7 @@ public final class SeBootstrapIT {
      * @throws IOException          if no IP port was free
      */
     @Test
+    @Tag("se_bootstrap")
     public final void shouldBootInstanceUsingProperties() throws InterruptedException, ExecutionException, IOException {
         // given
         final int expectedResponse = mockInt();
@@ -136,6 +139,7 @@ public final class SeBootstrapIT {
      * @throws IOException          if no IP port was free
      */
     @Test
+    @Tag("se_bootstrap")
     public final void shouldBootInstanceUsingConvenienceMethods()
             throws InterruptedException, ExecutionException, IOException {
         // given
@@ -172,6 +176,7 @@ public final class SeBootstrapIT {
      * @throws IOException          if no IP port was free
      */
     @Test
+    @Tag("se_bootstrap")
     public final void shouldBootInstanceUsingExternalConfiguration()
             throws InterruptedException, ExecutionException, IOException {
         // given
@@ -222,6 +227,7 @@ public final class SeBootstrapIT {
      * @throws IOException          if no IP port was free
      */
     @Test
+    @Tag("se_bootstrap")
     public final void shouldBootInstanceDespiteUnknownConfigurationParameters()
             throws InterruptedException, ExecutionException, IOException {
         // given
@@ -265,6 +271,7 @@ public final class SeBootstrapIT {
      *                              expected
      */
     @Test
+    @Tag("se_bootstrap")
     public final void shouldBootInstanceUsingSelfDetectedFreeIpPort()
             throws InterruptedException, ExecutionException {
         // given
@@ -301,6 +308,7 @@ public final class SeBootstrapIT {
      *                              expected
      */
     @Test
+    @Tag("se_bootstrap")
     public final void shouldBootInstanceUsingImplementationsDefaultIpPort()
             throws InterruptedException, ExecutionException {
         // given

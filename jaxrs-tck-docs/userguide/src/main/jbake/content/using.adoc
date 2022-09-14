@@ -114,8 +114,8 @@ The tests in the directory and its subdirectories are run.
 =======================================================================
 
 The Junit test tags(groups) available in the TCK are `xml_binding`, 
-`security` and `servlet`. These can be used to select or deselect the 
-tests for the execution.
+`security`, `servlet` and `se_bootstrap`. These can be used to select or 
+deselect the tests for the execution. 
 
 =======================================================================
 

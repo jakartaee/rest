@@ -83,7 +83,7 @@ public interface HttpHeaders {
      * @see #getHeaderString(String)
      * @since 4.0
      */
-    public boolean containsHeaderString(String name, String valuleSeparatorRegex, Predicate<String> valuePredicate);
+    public boolean containsHeaderString(String name, String valueSeparatorRegex, Predicate<String> valuePredicate);
 
     /**
      * Get the values of HTTP request headers. The returned Map is case-insensitive wrt. keys and is read-only. The method

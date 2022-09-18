@@ -69,12 +69,13 @@ public interface HttpHeaders {
      * class or using its {@code toString} method if a header delegate is not available.
      *
      * <p>
-     * For example: {@code containsHeaderString("cache-control", "no-store"::equalsIgnoreCase)} will return {@code true} if
+     * For example: {@code containsHeaderString("cache-control", null, "no-store"::equalsIgnoreCase)} will return {@code true} if
      * a {@code Cache-Control} header exists that has the value {@code no-store}, the value {@code No-Store} or the value
      * {@code Max-Age, NO-STORE, no-transform}, but {@code false} when it has the value {@code no-store;no-transform}
      * (missing comma), or the value {@code no - store} (whitespace within value).
      *
      * @param name the message header.
+     * @param valueSeparatorRegex Separates the header value into single values. Defaults to {@code \s*,\s*} when {@code null}.
      * @param valuePredicate value must fulfil this predicate.
      * @return {@code true} if and only if a header with the given name exists, having either a whitespace-trimmed value
      * matching the predicate, or having at least one whitespace-trimmed single value in a comma-separated list of single values.
@@ -82,7 +83,7 @@ public interface HttpHeaders {
      * @see #getHeaderString(String)
      * @since 4.0
      */
-    public boolean containsHeaderString(String name, Predicate<String> valuePredicate);
+    public boolean containsHeaderString(String name, String valuleSeparatorRegex, Predicate<String> valuePredicate);
 
     /**
      * Get the values of HTTP request headers. The returned Map is case-insensitive wrt. keys and is read-only. The method

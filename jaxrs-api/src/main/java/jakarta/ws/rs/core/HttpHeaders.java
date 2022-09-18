@@ -48,7 +48,7 @@ public interface HttpHeaders {
      * <p>
      * Get a HTTP header as a single string value.
      * </p>
-     * Each single header value is converted to String using a {@link jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one
+     * Each single non-string header value is converted to String using a {@link jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one
      * is available via {@link jakarta.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the header value
      * class or using its {@code toString} method if a header delegate is not available.
      *
@@ -64,7 +64,7 @@ public interface HttpHeaders {
     /**
      * Checks whether a header with a specific name and value (or item of the comma-separated value list) exists.
      *
-     * Each single header value is converted to String using a {@link jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one
+     * Each single non-string header value is converted to String using a {@link jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one
      * is available via {@link jakarta.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the header value
      * class or using its {@code toString} method if a header delegate is not available.
      *

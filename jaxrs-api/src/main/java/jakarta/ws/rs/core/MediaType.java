@@ -82,7 +82,9 @@ public class MediaType {
     public static final MediaType APPLICATION_XHTML_XML_TYPE = new MediaType("application", "xhtml+xml");
     /**
      * A {@code String} constant representing {@value #APPLICATION_SVG_XML} media type.
+     * @deprecated since 4.0, use a custom string instead. Will be removed in a future release of this API.
      */
+    @Deprecated(forRemoval = true)
     public static final String APPLICATION_SVG_XML = "application/svg+xml";
     /**
      * A {@link MediaType} constant representing {@value #APPLICATION_SVG_XML} media type.
@@ -90,7 +92,9 @@ public class MediaType {
     public static final MediaType APPLICATION_SVG_XML_TYPE = new MediaType("application", "svg+xml");
     /**
      * A {@code String} constant representing {@value #APPLICATION_JSON} media type.
+     * @deprecated since 4.0, use a custom {@code MediaType} instead. Will be removed in a future release of this API.
      */
+    @Deprecated(forRemoval = true)
     public static final String APPLICATION_JSON = "application/json";
     /**
      * A {@link MediaType} constant representing {@value #APPLICATION_JSON} media type.

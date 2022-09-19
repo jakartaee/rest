@@ -238,7 +238,7 @@ public interface ClientRequestContext {
      * @see #getHeaderString(String)
      * @since 4.0
      */
-    default public boolean containsHeaderString(String name, Predicate<String> valuePredicate) {
+    public default boolean containsHeaderString(String name, Predicate<String> valuePredicate) {
         return containsHeaderString(name, ",", valuePredicate);
     }
 

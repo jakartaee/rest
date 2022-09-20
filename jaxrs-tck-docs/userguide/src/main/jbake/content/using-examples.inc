@@ -28,6 +28,15 @@ Run only the optional jaxb tests using the following command:
 mvn verify -Dgroups=xml_binding
 ----
 --
+Run the tests by excluding the optional SEBootstrap tests using the 
+following command:
+
+--
+[source,oac_no_warn]
+----
+mvn verify -DexcludedGroups=se_bootstrap
+----
+--
 
 Run the tests by excluding the security & servlet tests using the following 
 command:

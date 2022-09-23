@@ -16,6 +16,7 @@
 
 package jakarta.ws.rs.sse;
 
+import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
 /**
@@ -71,7 +72,8 @@ public interface SseEventSink extends AutoCloseable {
      * <p>
      * Subsequent calls have no effect and are ignored. Once the {@link SseEventSink} is closed, invoking any method other
      * than this one and {@link #isClosed()} would result in an {@link IllegalStateException} being thrown.
+     * @throws  IOException  if an I/O error occurs.
      */
     @Override
-    void close();
+    void close() throws IOException;
 }

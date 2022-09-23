@@ -98,7 +98,10 @@ public class ServerSentEventsResource {
                 sseEventSink.close();
             } catch (final InterruptedException e) {
                 e.printStackTrace();
+            } catch (IOException ioe) {
+                //handle I/O error
             }
+
         });
     }
 }

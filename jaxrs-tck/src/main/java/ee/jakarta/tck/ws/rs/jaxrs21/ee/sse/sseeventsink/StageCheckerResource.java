@@ -18,6 +18,7 @@ package ee.jakarta.tck.ws.rs.jaxrs21.ee.sse.sseeventsink;
 
 import static ee.jakarta.tck.ws.rs.jaxrs21.ee.sse.SSEJAXRSClient.MESSAGE;
 
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 import jakarta.ws.rs.GET;
@@ -34,7 +35,7 @@ public class StageCheckerResource {
 
   @GET
   @Produces(MediaType.SERVER_SENT_EVENTS)
-  public void send(@Context SseEventSink sink, @Context Sse sse) {
+  public void send(@Context SseEventSink sink, @Context Sse sse) throws IOException{
     try (SseEventSink s = sink) {
       CompletableFuture<?> stage = s.send(sse.newEvent(MESSAGE))
           .toCompletableFuture();
@@ -48,6 +49,8 @@ public class StageCheckerResource {
         }
       }
       s.send(sse.newEvent(DONE));
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 }

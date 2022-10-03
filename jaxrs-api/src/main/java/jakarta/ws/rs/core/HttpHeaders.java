@@ -52,6 +52,8 @@ public interface HttpHeaders {
      * is available via {@link jakarta.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the header value
      * class or using its {@code toString} method if a header delegate is not available.
      *
+     * This is a convenience method for {@code getHeaderString(name, ",")}.
+     *
      * @param name the HTTP header.
      * @return the HTTP header value. If the HTTP header is not present then {@code null} is returned. If the HTTP header is
      * present but has no value then the empty string is returned. If the HTTP header is present more than once then the
@@ -59,7 +61,27 @@ public interface HttpHeaders {
      * @see #getRequestHeader(java.lang.String)
      * @since 2.0
      */
-    public String getHeaderString(String name);
+    public default String getHeaderString(String name) {
+        return getHeaderString(name, ",");
+    }
+
+    /**
+     * <p>
+     * Get a HTTP header as a single string value.
+     * </p>
+     * Each single non-string header value is converted to String using a {@link jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate} if one
+     * is available via {@link jakarta.ws.rs.ext.RuntimeDelegate#createHeaderDelegate(java.lang.Class)} for the header value
+     * class or using its {@code toString} method if a header delegate is not available.
+     *
+     * @param name the HTTP header.
+     * @param separator the separation character.
+     * @return the HTTP header value. If the HTTP header is not present then {@code null} is returned. If the HTTP header is
+     * present but has no value then the empty string is returned. If the HTTP header is present more than once then the
+     * values of joined together and separated by the provided separation character.
+     * @see #getRequestHeader(java.lang.String)
+     * @since 4.0
+     */
+    public String getHeaderString(String name, String separator);
 
     /**
      * Checks whether a header with a specific name and value (or item of the token-separated value list) exists.

@@ -16,6 +16,9 @@
 
 package ee.jakarta.tck.ws.rs.jaxrs21.ee.sse.sseeventsource;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 
 import ee.jakarta.tck.ws.rs.common.impl.JaxbKeyValueBean;
@@ -31,11 +34,11 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.sse.Sse;
 import jakarta.ws.rs.sse.SseEventSink;
 import jakarta.xml.bind.JAXBElement;
-
+import java.util.logging.Logger;
 @Path("media")
 public class MediaTypeResource {
   private static MediaType mediaType = MediaType.WILDCARD_TYPE;
-
+  private static final Logger LOG = Logger.getLogger(MediaTypeResource.class.getName());
   @POST
   @Path("set")
   public String setMediaType(String media) {
@@ -51,6 +54,8 @@ public class MediaTypeResource {
     try (SseEventSink s = sink) {
       s.send(sse.newEventBuilder().data(SSEMessage.MESSAGE).mediaType(mediaType)
           .build());
+    } catch (IOException e) {
+      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -62,6 +67,8 @@ public class MediaTypeResource {
       JAXBElement<String> element = new JAXBElement<String>(new QName("name"),
           String.class, SSEMessage.MESSAGE);
       s.send(sse.newEventBuilder().data(element).mediaType(mediaType).build());
+    } catch (IOException e) {
+      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -73,6 +80,8 @@ public class MediaTypeResource {
       JaxbKeyValueBean bean = new JaxbKeyValueBean();
       bean.set("key", SSEMessage.MESSAGE);
       s.send(sse.newEventBuilder().data(bean).mediaType(mediaType).build());
+    } catch (IOException e) {
+      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -84,6 +93,8 @@ public class MediaTypeResource {
       SinglevaluedMap<String, String> map = new SinglevaluedMap<>();
       map.add("key", SSEMessage.MESSAGE);
       s.send(sse.newEventBuilder().data(map).mediaType(mediaType).build());
+    } catch (IOException e) {
+      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 }

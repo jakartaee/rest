@@ -152,3 +152,6 @@ ee/jakarta/tck/ws/rs/jaxrs21/ee/client/rxinvoker/JAXRSClientIT.java#traceWithStr
 ee/jakarta/tck/ws/rs/jaxrs21/ee/client/rxinvoker/JAXRSClientIT.java#traceWithResponseClassTest
 ee/jakarta/tck/ws/rs/jaxrs21/ee/client/rxinvoker/JAXRSClientIT.java#traceWithGenericTypeStringTest
 ee/jakarta/tck/ws/rs/jaxrs21/ee/client/rxinvoker/JAXRSClientIT.java#traceWithGenericTypeResponseTest
+
+https://github.com/jakartaee/rest/issues/1138
+ee/jakarta/tck/ws/rs/ee/rs/core/uriinfo/JAXRSClientIT#getNormalizedUriTest

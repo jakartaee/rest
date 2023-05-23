@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package jakarta.ws.rs.core;
+package jakarta.ws.rs;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -23,24 +23,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>This annotation is used to inject information into a class field, bean property or method parameter.</p>
+ * <p>Annotation that identifies the entity parameter.</p>
  *
- * <p>Note that future versions of this API will stop supporting injection via
- * {@code Context} as part of a tighter integration and alignment with
- * <a href="https://jakarta.ee/specifications/cdi/">Jakarta CDI</a>.</p>
- *
- * @author Paul Sandoz
- * @author Marc Hadley
- * @see Application
- * @see UriInfo
- * @see Request
- * @see HttpHeaders
- * @see SecurityContext
- * @see jakarta.ws.rs.ext.Providers
- * @since 1.0
+ * @author Santiago Pericas-Geertsen
+ * @since 4.0
  */
-@Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
+@Target({ ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Context {
+public @interface Entity {
 }

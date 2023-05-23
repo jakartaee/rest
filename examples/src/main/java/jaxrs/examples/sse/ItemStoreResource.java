@@ -17,6 +17,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.FormParam;
@@ -27,16 +29,12 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.ServiceUnavailableException;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.sse.OutboundSseEvent;
 import jakarta.ws.rs.sse.Sse;
 import jakarta.ws.rs.sse.SseBroadcaster;
 import jakarta.ws.rs.sse.SseEventSink;
-
-import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
 
 /**
  * A resource for storing named items.
@@ -85,7 +83,7 @@ public class ItemStoreResource {
     }
 
     /**
-     * Receive &amp; process commands sent by the test client that control the internal resource state.
+     * Receive & process commands sent by the test client that control the internal resource state.
      * <p>
      * Following is the list of recognized commands:
      * <ul>
@@ -136,7 +134,7 @@ public class ItemStoreResource {
     @Produces(MediaType.SERVER_SENT_EVENTS)
     public void itemEvents(
             @HeaderParam(HttpHeaders.LAST_EVENT_ID_HEADER) @DefaultValue("-1") int lastEventId,
-            @Context SseEventSink serverSink) {
+            SseEventSink serverSink) {
 
         if (lastEventId >= 0) {
             LOGGER.info("Received last event id :" + lastEventId);

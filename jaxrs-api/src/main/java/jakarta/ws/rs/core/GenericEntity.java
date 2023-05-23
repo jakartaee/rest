@@ -23,7 +23,6 @@ package jakarta.ws.rs.core;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Objects;
 
 /**
  * Represents a message entity of a generic type {@code T}.
@@ -180,7 +179,7 @@ public class GenericEntity<T> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(entity, type);
+        return entity.hashCode() + type.hashCode() * 37 + 5;
     }
 
     @Override

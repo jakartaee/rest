@@ -27,7 +27,9 @@ import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 
 import jakarta.ws.rs.SeBootstrap;
+import jakarta.ws.rs.SeBootstrap.Configuration;
 import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.UriBuilder;
 
 /**
  * Java SE bootstrap example using TLS customization.
@@ -54,7 +56,7 @@ public final class TlsJavaSeBootstrapExample {
      * @throws IOException in case file access fails
      * @throws InterruptedException when process is killed
      */
-    public static void main(final String[] args)
+    public static final void main(final String[] args)
             throws GeneralSecurityException, IOException, InterruptedException {
         final Application application = new HelloWorld();
 
@@ -73,10 +75,15 @@ public final class TlsJavaSeBootstrapExample {
                 .sslContext(sslContext).build();
 
         SeBootstrap.start(application, requestedConfiguration).thenAccept(instance -> {
-            instance.stopOnShutdown(stopResult ->
-                    System.out.printf("Stop result: %s [Native stop result: %s].%n", stopResult,
-                            stopResult.unwrap(Object.class)));
-            final URI uri = instance.configuration().baseUri();
+            Runtime.getRuntime()
+                    .addShutdownHook(new Thread(() -> instance.stop()
+                            .thenAccept(stopResult -> System.out.printf("Stop result: %s [Native stop result: %s].%n",
+                                    stopResult, stopResult.unwrap(Object.class)))));
+
+            final Configuration actualConfigurarion = instance.configuration();
+            final URI uri = UriBuilder.newInstance().scheme(actualConfigurarion.protocol().toLowerCase())
+                    .host(actualConfigurarion.host()).port(actualConfigurarion.port())
+                    .path(actualConfigurarion.rootPath()).build();
             System.out.printf("Instance %s running at %s [Native handle: %s].%n", instance, uri,
                     instance.unwrap(Object.class));
             System.out.println("Send SIGKILL to shutdown.");

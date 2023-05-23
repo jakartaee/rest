@@ -1,9 +1,9 @@
 package jakarta.ws.rs.ext;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link jakarta.ws.rs.ext.RuntimeDelegate} unit tests.

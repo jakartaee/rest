@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -72,11 +72,6 @@ import jakarta.ws.rs.client.WebTarget;
  * <p>
  * In the case of an error condition response, the <code>Throwable</code> passed to the <code>onError</code> consumer
  * <i>should</i> be a WebApplicationException containing the invalid <code>Response</code> object.
- * <p>
- * Note that if, for any of the registered event consumers, an invocation of {@link Consumer#accept(Object)
- * Consumer&lt;InboundSseEvent&gt;#accept(InboundSseEvent)} method throws an exception, this is not an error condition.
- * Thus <code>onError</code> is not invoked and event processing is not stopped.
- * Users are encouraged to handle exceptions on their own as part of the event processing logic.
  *
  * @author Marek Potociar
  * @since 2.1
@@ -141,13 +136,6 @@ public interface SseEventSource extends AutoCloseable {
             }
         }
 
-        /**
-         * Set the SSE streaming endpoint.
-         *
-         * @param endpoint SSE streaming endpoint. Must not be {@code null}.
-         * @return updated event source builder instance.
-         * @throws NullPointerException in case the supplied web target is {@code null}.
-         */
         protected abstract Builder target(WebTarget endpoint);
 
         /**

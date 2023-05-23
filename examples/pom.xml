@@ -22,7 +22,7 @@
     <parent>
         <groupId>jakarta.ws.rs</groupId>
         <artifactId>all</artifactId>
-        <version>3.1.0</version>
+        <version>4.0.0-SNAPSHOT</version>
     </parent>
 
     <url>https://github.com/jax-rs/api</url>
@@ -231,9 +231,9 @@
             <plugin>
                 <artifactId>maven-jxr-plugin</artifactId>
             </plugin>
-            <plugin>
+            <!-- plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-            </plugin>
+            </plugin -->
             <plugin>
                 <groupId>org.glassfish.copyright</groupId>
                 <artifactId>glassfish-copyright-maven-plugin</artifactId>

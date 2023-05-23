@@ -14,14 +14,11 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-/**
- * Defines the Jakarta RESTful Web Services API
- */
 module jakarta.ws.rs {
 
-    requires static jakarta.xml.bind;
-
     requires java.logging;
+    requires jakarta.inject;
+    requires jakarta.cdi;
 
     exports jakarta.ws.rs;
     exports jakarta.ws.rs.client;
@@ -34,5 +31,4 @@ module jakarta.ws.rs {
     uses jakarta.ws.rs.ext.RuntimeDelegate;
     uses jakarta.ws.rs.sse.SseEventSource.Builder;
 
-    opens jakarta.ws.rs.core to jakarta.xml.bind;
 }

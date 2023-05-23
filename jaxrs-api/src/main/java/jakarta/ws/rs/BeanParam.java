@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -22,13 +22,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import jakarta.inject.Qualifier;
+
 /**
  * The annotation that may be used to inject custom JAX-RS "parameter aggregator" value object into a resource class
  * field, property or resource method parameter.
  * <p>
  * The JAX-RS runtime will instantiate the object and inject all it's fields and properties annotated with either one of
  * the {@code @XxxParam} annotation ({@link PathParam &#64;PathParam}, {@link FormParam &#64;FormParam} ...) or the
- * {@link jakarta.ws.rs.core.Context &#64;Context} annotation. For the POJO classes same instantiation and injection rules
+ * {@link Entity &#64;Context} annotation. For the POJO classes same instantiation and injection rules
  * apply as in case of instantiation and injection of request-scoped root resource classes.
  * </p>
  * For example:
@@ -68,5 +70,6 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface BeanParam {
 }

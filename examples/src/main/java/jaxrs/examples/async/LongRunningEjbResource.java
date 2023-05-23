@@ -15,7 +15,6 @@ import jakarta.ejb.Stateless;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.container.AsyncResponse;
-import jakarta.ws.rs.container.Suspended;
 
 /**
  * Example of a long running EJB resource.
@@ -27,7 +26,7 @@ import jakarta.ws.rs.container.Suspended;
 public class LongRunningEjbResource {
     @GET
     @Asynchronous
-    public void longRunningOperation(@Suspended AsyncResponse ar) {
+    public void longRunningOperation(AsyncResponse ar) {
         final String result = executeLongRunningOperation();
         ar.resume(result);
     }

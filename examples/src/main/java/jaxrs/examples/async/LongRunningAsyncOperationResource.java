@@ -15,14 +15,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.container.AsyncResponse;
-import jakarta.ws.rs.container.Suspended;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * Long-running asynchronous processing examples.
@@ -46,8 +46,7 @@ public class LongRunningAsyncOperationResource {
 
     @GET
     @Path("async")
-    public void asyncExample(
-            @Suspended final AsyncResponse ar) {
+    public void asyncExample(AsyncResponse ar) {
         ar.setTimeout(15, SECONDS);
         Executors.newSingleThreadExecutor().submit(() -> {
             try {
@@ -61,7 +60,7 @@ public class LongRunningAsyncOperationResource {
 
     @GET
     @Path("asyncSelective")
-    public void selectiveSuspend(@QueryParam("query") final String query, @Suspended final AsyncResponse ar) {
+    public void selectiveSuspend(@QueryParam("query") final String query, AsyncResponse ar) {
         if (!isComplex(query)) {
             // process simple queries synchronously
             ar.resume("Simple result for " + query);
@@ -85,7 +84,7 @@ public class LongRunningAsyncOperationResource {
     @GET
     @Path("asyncTimeoutOverride")
     public void overriddenTimeoutAsync(@QueryParam("timeOut") Long timeOut, @QueryParam("timeUnit") TimeUnit timeUnit,
-            @Suspended final AsyncResponse ar) {
+            AsyncResponse ar) {
         if (timeOut != null && timeUnit != null) {
             ar.setTimeout(timeOut, timeUnit);
         } else {
@@ -105,7 +104,7 @@ public class LongRunningAsyncOperationResource {
 
     @GET
     @Path("asyncHandleUsage")
-    public void suspendHandleUsageExample(@Suspended final AsyncResponse ar) {
+    public void suspendHandleUsageExample(AsyncResponse ar) {
         ar.setTimeout(15, SECONDS);
         Executors.newSingleThreadExecutor().submit(() -> {
             try {

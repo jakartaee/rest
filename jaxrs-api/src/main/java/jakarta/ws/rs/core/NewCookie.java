@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -17,7 +17,6 @@
 package jakarta.ws.rs.core;
 
 import java.util.Date;
-import java.util.Objects;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
 import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
@@ -56,9 +55,7 @@ public class NewCookie extends Cookie {
      * @param name the name of the cookie.
      * @param value the value of the cookie.
      * @throws IllegalArgumentException if name is {@code null}.
-     * @deprecated This constructor will be removed in a future version. Please use {@link NewCookie.Builder} instead.
      */
-    @Deprecated
     public NewCookie(final String name, final String value) {
         this(name, value, null, null, DEFAULT_VERSION, null, DEFAULT_MAX_AGE, null, false, false, null);
     }
@@ -74,9 +71,7 @@ public class NewCookie extends Cookie {
      * @param maxAge the maximum age of the cookie in seconds.
      * @param secure specifies whether the cookie will only be sent over a secure connection.
      * @throws IllegalArgumentException if name is {@code null}.
-     * @deprecated This constructor will be removed in a future version. Please use {@link NewCookie.Builder} instead.
      */
-    @Deprecated
     public NewCookie(final String name,
             final String value,
             final String path,
@@ -100,9 +95,7 @@ public class NewCookie extends Cookie {
      * @param httpOnly if {@code true} make the cookie HTTP only, i.e. only visible as part of an HTTP request.
      * @throws IllegalArgumentException if name is {@code null}.
      * @since 2.0
-     * @deprecated This constructor will be removed in a future version. Please use {@link NewCookie.Builder} instead.
      */
-    @Deprecated
     public NewCookie(final String name,
             final String value,
             final String path,
@@ -126,9 +119,7 @@ public class NewCookie extends Cookie {
      * @param maxAge the maximum age of the cookie in seconds
      * @param secure specifies whether the cookie will only be sent over a secure connection
      * @throws IllegalArgumentException if name is {@code null}.
-     * @deprecated This constructor will be removed in a future version. Please use {@link NewCookie.Builder} instead.
      */
-    @Deprecated
     public NewCookie(final String name,
             final String value,
             final String path,
@@ -155,9 +146,7 @@ public class NewCookie extends Cookie {
      * @param httpOnly if {@code true} make the cookie HTTP only, i.e. only visible as part of an HTTP request.
      * @throws IllegalArgumentException if name is {@code null}.
      * @since 2.0
-     * @deprecated This constructor will be removed in a future version. Please use {@link NewCookie.Builder} instead.
      */
-    @Deprecated
     public NewCookie(final String name,
             final String value,
             final String path,
@@ -187,9 +176,7 @@ public class NewCookie extends Cookie {
      * @param sameSite specifies the value of the {@code SameSite} cookie attribute
      * @throws IllegalArgumentException if name is {@code null}.
      * @since 3.1
-     * @deprecated This constructor will be removed in a future version. Please use {@link NewCookie.Builder} instead.
      */
-    @Deprecated
     public NewCookie(final String name,
             final String value,
             final String path,
@@ -215,9 +202,7 @@ public class NewCookie extends Cookie {
      *
      * @param cookie the cookie to clone.
      * @throws IllegalArgumentException if cookie is {@code null}.
-     * @deprecated This constructor will be removed in a future version. Please use {@link NewCookie.Builder} instead.
      */
-    @Deprecated
     public NewCookie(final Cookie cookie) {
         this(cookie, null, DEFAULT_MAX_AGE, null, false, false, null);
     }
@@ -230,9 +215,7 @@ public class NewCookie extends Cookie {
      * @param maxAge the maximum age of the cookie in seconds.
      * @param secure specifies whether the cookie will only be sent over a secure connection.
      * @throws IllegalArgumentException if cookie is {@code null}.
-     * @deprecated This constructor will be removed in a future version. Please use {@link NewCookie.Builder} instead.
      */
-    @Deprecated
     public NewCookie(final Cookie cookie, final String comment, final int maxAge, final boolean secure) {
         this(cookie, comment, maxAge, null, secure, false, null);
     }
@@ -248,9 +231,7 @@ public class NewCookie extends Cookie {
      * @param httpOnly if {@code true} make the cookie HTTP only, i.e. only visible as part of an HTTP request.
      * @throws IllegalArgumentException if cookie is {@code null}.
      * @since 2.0
-     * @deprecated This constructor will be removed in a future version. Please use {@link NewCookie.Builder} instead.
      */
-    @Deprecated
     public NewCookie(final Cookie cookie, final String comment, final int maxAge, final Date expiry, final boolean secure, final boolean httpOnly) {
         this(cookie, comment, maxAge, expiry, secure, httpOnly, null);
     }
@@ -268,9 +249,7 @@ public class NewCookie extends Cookie {
      * @param sameSite specifies the value of the {@code SameSite} cookie attribute
      * @throws IllegalArgumentException if cookie is {@code null}.
      * @since 3.1
-     * @deprecated This constructor will be removed in a future version. Please use {@link NewCookie.Builder} instead.
      */
-    @Deprecated
     public NewCookie(final Cookie cookie, final String comment, final int maxAge, final Date expiry, final boolean secure, final boolean httpOnly,
             final SameSite sameSite) {
         super(cookie == null ? null : cookie.getName(),
@@ -284,23 +263,6 @@ public class NewCookie extends Cookie {
         this.secure = secure;
         this.httpOnly = httpOnly;
         this.sameSite = sameSite;
-    }
-
-    /**
-     * Create a new instance from the supplied {@link AbstractNewCookieBuilder} instance.
-     *
-     * @param builder the builder.
-     * @throws IllegalArgumentException if {@code builder.name} is {@code null}.
-     * @since 3.1
-     */
-    protected NewCookie(AbstractNewCookieBuilder<?> builder) {
-        super(builder);
-        this.comment = builder.comment;
-        this.maxAge = builder.maxAge;
-        this.expiry = builder.expiry;
-        this.secure = builder.secure;
-        this.httpOnly = builder.httpOnly;
-        this.sameSite = builder.sameSite;
     }
 
     /**
@@ -424,8 +386,14 @@ public class NewCookie extends Cookie {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getValue(), getVersion(), getPath(), getDomain(),
-                comment, maxAge, expiry, secure, httpOnly, sameSite);
+        int hash = super.hashCode();
+        hash = 59 * hash + (this.comment != null ? this.comment.hashCode() : 0);
+        hash = 59 * hash + this.maxAge;
+        hash = 59 + hash + (this.expiry != null ? this.expiry.hashCode() : 0);
+        hash = 59 * hash + (this.secure ? 1 : 0);
+        hash = 59 * hash + (this.httpOnly ? 1 : 0);
+        hash = 59 * hash + this.sameSite.ordinal();
+        return hash;
     }
 
     /**
@@ -445,29 +413,29 @@ public class NewCookie extends Cookie {
             return false;
         }
         final NewCookie other = (NewCookie) obj;
-        if (!Objects.equals(this.getName(), other.getName())) {
+        if (this.getName() != other.getName() && (this.getName() == null || !this.getName().equals(other.getName()))) {
             return false;
         }
-        if (!Objects.equals(this.getValue(), other.getValue())) {
+        if (this.getValue() != other.getValue() && (this.getValue() == null || !this.getValue().equals(other.getValue()))) {
             return false;
         }
         if (this.getVersion() != other.getVersion()) {
             return false;
         }
-        if (!Objects.equals(this.getPath(), other.getPath())) {
+        if (this.getPath() != other.getPath() && (this.getPath() == null || !this.getPath().equals(other.getPath()))) {
             return false;
         }
-        if (!Objects.equals(this.getDomain(), other.getDomain())) {
+        if (this.getDomain() != other.getDomain() && (this.getDomain() == null || !this.getDomain().equals(other.getDomain()))) {
             return false;
         }
-        if (!Objects.equals(this.comment, other.comment)) {
+        if (this.comment != other.comment && (this.comment == null || !this.comment.equals(other.comment))) {
             return false;
         }
         if (this.maxAge != other.maxAge) {
             return false;
         }
 
-        if (!Objects.equals(this.expiry, other.expiry)) {
+        if (this.expiry != other.expiry && (this.expiry == null || !this.expiry.equals(other.expiry))) {
             return false;
         }
 
@@ -504,184 +472,6 @@ public class NewCookie extends Cookie {
          * The {@code Strict} mode prevents clients from sending cookies with any cross-site request.
          */
         STRICT
-
-    }
-
-    /**
-     * JAX-RS {@link NewCookie} builder class.
-     * <p>
-     * New Cookie builder provides methods that let you conveniently configure and subsequently build a new
-     * {@code NewCookie} instance.
-     * </p>
-     * For example:
-     *
-     * <pre>
-     * NewCookie cookie = new NewCookie.Builder("name")
-     *         .path("/")
-     *         .domain("domain.com")
-     *         .sameSite(SameSite.LAX)
-     *         .build();
-     * </pre>
-     *
-     * @since 3.1
-     */
-    public static class Builder extends AbstractNewCookieBuilder<Builder> {
-
-        /**
-         * Create a new instance.
-         *
-         * @param name the name of the cookie.
-         */
-        public Builder(String name) {
-            super(name);
-        }
-
-        /**
-         * Create a new instance supplementing the information in the supplied cookie.
-         *
-         * @param cookie the cookie to clone.
-         */
-        public Builder(Cookie cookie) {
-            super(cookie);
-        }
-
-        @Override
-        public NewCookie build() {
-            return new NewCookie(this);
-        }
-
-    }
-
-    /**
-     * JAX-RS abstract {@link NewCookie} builder class.
-     *
-     * @param <T> the current AbstractNewCookieBuilder type.
-     *
-     * @since 3.1
-     */
-    public abstract static class AbstractNewCookieBuilder<T extends AbstractNewCookieBuilder<T>> extends AbstractCookieBuilder<AbstractNewCookieBuilder<T>> {
-
-        private String comment;
-        private int maxAge = DEFAULT_MAX_AGE;
-        private Date expiry;
-        private boolean secure;
-        private boolean httpOnly;
-        private SameSite sameSite;
-
-        /**
-         * Create a new instance.
-         *
-         * @param name the name of the cookie.
-         */
-        public AbstractNewCookieBuilder(String name) {
-            super(name);
-        }
-
-        /**
-         * Create a new instance supplementing the information in the supplied cookie.
-         *
-         * @param cookie the cookie to clone.
-         */
-        public AbstractNewCookieBuilder(Cookie cookie) {
-            super(cookie == null ? null : cookie.getName());
-            if (cookie != null) {
-                value(cookie.getValue());
-                path(cookie.getPath());
-                domain(cookie.getDomain());
-                version(cookie.getVersion());
-            }
-        }
-
-        /**
-         * Set the comment associated with the cookie.
-         *
-         * @param comment the comment.
-         * @return the updated builder instance.
-         */
-        public T comment(String comment) {
-            this.comment = comment;
-            return self();
-        }
-
-        /**
-         * Set the maximum age of the the cookie in seconds. Cookies older than the maximum age are discarded. A cookie can be
-         * unset by sending a new cookie with maximum age of 0 since it will overwrite any existing cookie and then be
-         * immediately discarded. The default value of {@code -1} indicates that the cookie will be discarded at the end of the
-         * browser/application session.
-         *
-         * @param maxAge the maximum age in seconds.
-         * @return the updated builder instance.
-         * @see #expiry(Date)
-         */
-        public T maxAge(int maxAge) {
-            this.maxAge = maxAge;
-            return self();
-        }
-
-        /**
-         * Set the cookie expiry date. Cookies whose expiry date has passed are discarded. A cookie can be unset by setting a
-         * new cookie with an expiry date in the past, typically the lowest possible date that can be set.
-         * <p>
-         * Note that it is recommended to use {@link #maxAge(int) Max-Age} to control cookie expiration, however some browsers
-         * do not understand {@code Max-Age}, in which case setting {@code Expires} parameter may be necessary.
-         * </p>
-         *
-         * @param expiry the cookie expiry date
-         * @return the updated builder instance.
-         * @see #maxAge(int)
-         */
-        public T expiry(Date expiry) {
-            this.expiry = expiry;
-            return self();
-        }
-
-        /**
-         * Whether the cookie will only be sent over a secure connection. Defaults to {@code false}.
-         *
-         * @param secure specifies whether the cookie will only be sent over a secure connection.
-         * @return the updated builder instance.
-         */
-        public T secure(boolean secure) {
-            this.secure = secure;
-            return self();
-        }
-
-        /**
-         * Whether the cookie will only be visible as part of an HTTP request. Defaults to {@code false}.
-         *
-         * @param httpOnly if {@code true} make the cookie HTTP only, i.e. only visible as part of an HTTP request.
-         * @return the updated builder instance.
-         */
-        public T httpOnly(boolean httpOnly) {
-            this.httpOnly = httpOnly;
-            return self();
-        }
-
-        /**
-         * Set the attribute that controls whether the cookie is sent with cross-origin requests, providing protection against
-         * cross-site request forgery.
-         *
-         * @param sameSite specifies the value of the {@code SameSite} cookie attribute.
-         * @return the updated builder instance.
-         */
-        public T sameSite(SameSite sameSite) {
-            this.sameSite = sameSite;
-            return self();
-        }
-
-        @SuppressWarnings("unchecked")
-        private T self() {
-            return (T) this;
-        }
-
-        /**
-         * Build a new {@link NewCookie} instance using all the configuration previously specified in this builder.
-         *
-         * @return a new {@link NewCookie} instance.
-         * @throws IllegalArgumentException if name is {@code null}.
-         */
-        @Override
-        public abstract NewCookie build();
 
     }
 

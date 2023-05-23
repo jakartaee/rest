@@ -10,11 +10,11 @@
 
 package jaxrs.examples.rc;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.container.ResourceContext;
-import jakarta.ws.rs.core.Context;
 
 /**
  * Example of using resource context to get a resource instance for a class.
@@ -23,7 +23,8 @@ import jakarta.ws.rs.core.Context;
  */
 @Path("fruits")
 public class FruitsResource {
-    @Context
+
+    @Inject
     private ResourceContext rc;
 
     @Path("good/{fruit}")

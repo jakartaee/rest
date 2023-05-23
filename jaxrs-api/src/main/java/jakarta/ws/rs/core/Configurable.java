@@ -18,6 +18,8 @@ package jakarta.ws.rs.core;
 
 import java.util.Map;
 
+import jakarta.ws.rs.Entity;
+
 /**
  * Represents a client or server-side configurable context in JAX-RS.
  *
@@ -261,7 +263,7 @@ public interface Configurable<C extends Configurable> {
      * As opposed to components registered via {@link #register(Class)} method, the lifecycle of providers registered using
      * this instance-based {@code register(...)} is not managed by JAX-RS runtime. The same registered component instance is
      * used during the whole lifespan of the configurable context. Fields and properties of all registered JAX-RS component
-     * instances are injected with their declared dependencies (see {@link Context}) by the JAX-RS runtime prior to use.
+     * instances are injected with their declared dependencies (see {@link Entity}) by the JAX-RS runtime prior to use.
      * </p>
      *
      * @param component JAX-RS component instance to be configured in the scope of this configurable context.

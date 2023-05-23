@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  * An injectable JAX-RS asynchronous response that provides means for asynchronous server side response processing.
  * <p>
  * A new instance of {@code AsyncResponse} may be injected into a {@link jakarta.ws.rs.HttpMethod resource or sub-resource
- * method} parameter using the {@link Suspended &#64;Suspended} annotation.
+ * method} parameter.
  * </p>
  * Each asynchronous response instance is bound to the running request and can be used to asynchronously provide the
  * request processing result or otherwise manipulate the suspended client connection. The available operations include:
@@ -44,7 +44,7 @@ import java.util.concurrent.TimeUnit;
  *     private static final BlockingQueue&lt;AsyncResponse&gt; suspended = new ArrayBlockingQueue&lt;AsyncResponse&gt;(5);
  *
  *     &#64;GET
- *     public void readMessage(&#64;Suspended AsyncResponse ar) throws InterruptedException {
+ *     public void readMessage(AsyncResponse ar) throws InterruptedException {
  *         suspended.put(ar);
  *     }
  *

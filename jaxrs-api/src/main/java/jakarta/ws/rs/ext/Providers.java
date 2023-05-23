@@ -19,6 +19,7 @@ package jakarta.ws.rs.ext;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import jakarta.ws.rs.Entity;
 import jakarta.ws.rs.core.MediaType;
 
 /**
@@ -26,7 +27,7 @@ import jakarta.ws.rs.core.MediaType;
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see jakarta.ws.rs.core.Context
+ * @see Entity
  * @see MessageBodyReader
  * @see MessageBodyWriter
  * @see ContextResolver

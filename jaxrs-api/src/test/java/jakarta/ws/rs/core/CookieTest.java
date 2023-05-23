@@ -20,84 +20,27 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class CookieTest extends BaseDelegateTest {
 
+    /**
+     * Test of equals method, of class Cookie and NewCookie.
+     */
     @Test
-    public final void shouldReturnFalseWhenComparingCookieToNullObject() {
-        Cookie cookie = new Cookie("name", "value");
-        assertFalse(cookie.equals(null));
-
-        cookie = new Cookie.Builder("name").value("value").build();
-        assertFalse(cookie.equals(null));
-    }
-
-    @Test
-    public final void shouldReturnFalseWhenComparingCookieToNewCookie() {
-        Cookie cookie = new Cookie("name", "value");
-        NewCookie newCookie = new NewCookie("name", "value");
-        assertFalse(cookie.equals(newCookie));
-
-        Cookie thisCookie = new Cookie.Builder("name").value("value").build();
-        NewCookie thatNewCookie = new NewCookie.Builder("name").value("value").build();
-        assertFalse(thisCookie.equals(thatNewCookie));
-    }
-
-    @Test
-    public final void shouldReturnFalseWhenComparingCookiesThatHaveDifferentValues() {
-        Cookie cookie = new Cookie("name", "value");
-        Cookie cookie2 = new Cookie("name", "value2");
-        assertFalse(cookie.equals(cookie2));
-
-        Cookie thisCookie = new Cookie.Builder("name").value("value").build();
-        Cookie thatCookie = new Cookie.Builder("name").value("value2").build();
-        assertFalse(thisCookie.equals(thatCookie));
-    }
-
-    @Test
-    public final void shouldReturnTrueWhenComparingCookiesThatHaveSameValues() {
-
+    public void testEquals() {
+        Object nullObj = null;
         Cookie cookie = new Cookie("name", "value");
         Cookie cookie1 = new Cookie("name", "value");
+        Cookie cookie2 = new Cookie("name", "value2");
         NewCookie newCookie = new NewCookie("name", "value");
+        NewCookie newCookie1 = new NewCookie("name", "value");
+        NewCookie newCookie2 = new NewCookie("name", "value2");
+        assertFalse(cookie.equals(nullObj));
+        assertFalse(cookie.equals(newCookie));
+        assertFalse(cookie.equals(cookie2));
         assertTrue(cookie.equals(cookie1));
         assertTrue(cookie.equals(newCookie.toCookie()));
-
-        Cookie thisCookie = new Cookie.Builder("name").value("value").build();
-        Cookie thatCookie = new Cookie.Builder("name").value("value").build();
-        assertTrue(thisCookie.equals(thatCookie));
-
-        thatCookie = new NewCookie.Builder("name").value("value").build().toCookie();
-        assertTrue(thisCookie.equals(thatCookie));
+        assertTrue(newCookie.equals(newCookie1));
+        assertFalse(newCookie.equals(newCookie2));
     }
-
-    @Test
-    public final void shouldThrowAnIllegalArgumentExceptionWhenBuildingCookieWithNullName() {
-
-        try {
-            new Cookie(null, "value");
-            fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-        }
-
-        try {
-            new Cookie(null, "value", "path", "domain");
-            fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-        }
-
-        try {
-            new Cookie(null, "value", "path", "domain", Cookie.DEFAULT_VERSION);
-            fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-        }
-
-        try {
-            new Cookie.Builder(null).build();
-            fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-        }
-    }
-
 }

@@ -14,7 +14,6 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.container.ResourceContext;
-import jakarta.ws.rs.core.Context;
 
 /**
  * Example of using resource context to get a resource instance for a class.
@@ -34,7 +33,7 @@ public class FooResource {
     }
 
     @Path("bar")
-    public BarResource getBar(@Context ResourceContext rc) {
+    public BarResource getBar(ResourceContext rc) {
         return rc.getResource(BarResource.class);
     }
 }

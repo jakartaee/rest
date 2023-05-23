@@ -10,10 +10,10 @@
 
 package jaxrs.examples.link;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Link;
 import jakarta.ws.rs.core.UriInfo;
 
@@ -25,7 +25,7 @@ import jakarta.ws.rs.core.UriInfo;
 @Path("/myresource")
 public class ResourceExample {
 
-    @Context
+    @Inject
     private UriInfo uriInfo;
 
     @GET

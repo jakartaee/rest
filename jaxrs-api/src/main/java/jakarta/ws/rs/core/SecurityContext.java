@@ -18,12 +18,14 @@ package jakarta.ws.rs.core;
 
 import java.security.Principal;
 
+import jakarta.ws.rs.Entity;
+
 /**
  * An injectable interface that provides access to security related information.
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see Context
+ * @see Entity
  * @since 1.0
  */
 public interface SecurityContext {

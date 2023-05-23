@@ -12,15 +12,14 @@ package jaxrs.examples.link.clusterservice;
 
 import java.net.URI;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Link;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-
 import jaxrs.examples.link.clusterservice.Cluster.Status;
 
 /**
@@ -31,7 +30,7 @@ import jaxrs.examples.link.clusterservice.Cluster.Status;
 @Path("/cluster")
 public class ClusterResource {
 
-    @Context
+    @Inject
     private UriInfo uriInfo;
 
     private Cluster cluster = Model.getCluster();

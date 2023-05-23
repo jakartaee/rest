@@ -19,7 +19,6 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.container.AsyncResponse;
-import jakarta.ws.rs.container.Suspended;
 import jakarta.ws.rs.core.MediaType;
 
 /**
@@ -34,7 +33,7 @@ public class SimpleAsyncEventResource {
     private static final BlockingQueue<AsyncResponse> SUSPENDED = new ArrayBlockingQueue<AsyncResponse>(5);
 
     @GET
-    public void readMessage(@Suspended final AsyncResponse ar) throws InterruptedException {
+    public void readMessage(AsyncResponse ar) throws InterruptedException {
         SUSPENDED.put(ar);
     }
 

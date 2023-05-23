@@ -20,12 +20,14 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import jakarta.ws.rs.Entity;
+
 /**
  * Defines the components of a JAX-RS application and supplies additional meta-data. A JAX-RS application or
  * implementation supplies a concrete subclass of this abstract class.
  * <p>
  * The implementation-created instance of an Application subclass may be injected into resource classes and providers
- * using {@link jakarta.ws.rs.core.Context}.
+ * using {@link Entity}.
  * </p>
  * <p>
  * In case any of the {@code Application} subclass methods or it's constructor throws a {@link RuntimeException}, the
@@ -62,7 +64,7 @@ public class Application {
     /**
      * Get a set of root resource, provider and {@link Feature feature} instances.
      *
-     * Fields and properties of returned instances are injected with their declared dependencies (see {@link Context}) by
+     * Fields and properties of returned instances are injected with their declared dependencies (see {@link Entity}) by
      * the runtime prior to use.
      * <p>
      * Implementations should warn about and ignore classes that do not conform to the requirements of root resource or

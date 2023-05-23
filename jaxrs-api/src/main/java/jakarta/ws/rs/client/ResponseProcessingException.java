@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -31,9 +31,6 @@ public class ResponseProcessingException extends ProcessingException {
 
     private static final long serialVersionUID = -4923161617935731839L;
 
-    /**
-     * The response instance for which the processing failed.
-     */
     private final Response response;
 
     /**

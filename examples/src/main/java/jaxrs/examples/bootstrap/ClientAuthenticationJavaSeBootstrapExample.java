@@ -19,7 +19,10 @@ package jaxrs.examples.bootstrap;
 import java.net.URI;
 
 import jakarta.ws.rs.SeBootstrap;
+import jakarta.ws.rs.SeBootstrap.Configuration;
 import jakarta.ws.rs.SeBootstrap.Configuration.SSLClientAuthentication;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.UriBuilder;
 
 /**
  * Java SE Bootstrap Example using TLS Client Authentication.
@@ -31,8 +34,11 @@ import jakarta.ws.rs.SeBootstrap.Configuration.SSLClientAuthentication;
  * (e. g. 443, 8443, or someting completely different). The actual configuration needs to be queried after
  * bootstrapping, otherwise callers would be unaware of the actual chosen port. If the client's certificate is invalid
  * or cannot be validated, the server will reject the connection.
+ * </p>
  * <p>
  * This example uses some basic <em>external</em> JSSE configuration:
+ * </p>
+ * <p>
  * <ul>
  * <li>{@code javax.net.ssl.keyStore=~/.keystore} - HTTPS: Path to a keystore holding an X.509 certificate for
  * {@code CN=localhost}</li>
@@ -40,6 +46,7 @@ import jakarta.ws.rs.SeBootstrap.Configuration.SSLClientAuthentication;
  * <li>Client Authentication: The default truststore ({@code $JAVA_HOME/lib/security/cacerts}) must hold the root
  * certificate of the CA and all intermediate certificates used for signing the client's certificate.</li>
  * </ul>
+ * </p>
  *
  * @author Markus KARG (markus@headcrashing.eu)
  * @since 3.1
@@ -55,15 +62,22 @@ public final class ClientAuthenticationJavaSeBootstrapExample {
      * @param args unused command line arguments
      * @throws InterruptedException when process is killed
      */
-    public static void main(final String[] args) throws InterruptedException {
+    public static final void main(final String[] args) throws InterruptedException {
+        final Application application = new HelloWorld();
+
         final SeBootstrap.Configuration requestedConfiguration = SeBootstrap.Configuration.builder().protocol("HTTPS")
                 .sslClientAuthentication(SSLClientAuthentication.MANDATORY).build();
 
-        SeBootstrap.start(HelloWorld.class, requestedConfiguration).thenAccept(instance -> {
-            instance.stopOnShutdown(stopResult ->
-                    System.out.printf("Stop result: %s [Native stop result: %s].%n", stopResult,
-                            stopResult.unwrap(Object.class)));
-            final URI uri = instance.configuration().baseUri();
+        SeBootstrap.start(application, requestedConfiguration).thenAccept(instance -> {
+            Runtime.getRuntime()
+                    .addShutdownHook(new Thread(() -> instance.stop()
+                            .thenAccept(stopResult -> System.out.printf("Stop result: %s [Native stop result: %s].%n",
+                                    stopResult, stopResult.unwrap(Object.class)))));
+
+            final Configuration actualConfigurarion = instance.configuration();
+            final URI uri = UriBuilder.newInstance().scheme(actualConfigurarion.protocol().toLowerCase())
+                    .host(actualConfigurarion.host()).port(actualConfigurarion.port())
+                    .path(actualConfigurarion.rootPath()).build();
             System.out.printf("Instance %s running at %s [Native handle: %s].%n", instance, uri,
                     instance.unwrap(Object.class));
             System.out.println("Send SIGKILL to shutdown.");

@@ -16,12 +16,12 @@
 
 package jakarta.ws.rs.container;
 
-import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.Entity;
 
 /**
  * The resource context provides access to instances of resource classes.
  * <p>
- * This interface can be injected using the {@link Context} annotation.
+ * This interface can be injected using the {@link Entity} annotation.
  * </p>
  * <p>
  * The resource context can be utilized when instances of managed resource classes are to be returned by sub-resource

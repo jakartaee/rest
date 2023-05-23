@@ -19,7 +19,6 @@ package jakarta.ws.rs.core;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
@@ -199,7 +198,11 @@ public class Variant {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.language, this.mediaType, this.encoding);
+        int hash = 7;
+        hash = 29 * hash + (this.language != null ? this.language.hashCode() : 0);
+        hash = 29 * hash + (this.mediaType != null ? this.mediaType.hashCode() : 0);
+        hash = 29 * hash + (this.encoding != null ? this.encoding.hashCode() : 0);
+        return hash;
     }
 
     /**
@@ -217,13 +220,14 @@ public class Variant {
             return false;
         }
         final Variant other = (Variant) obj;
-        if (!Objects.equals(this.language, other.language)) {
+        if (this.language != other.language && (this.language == null || !this.language.equals(other.language))) {
             return false;
         }
-        if (!Objects.equals(this.mediaType, other.mediaType)) {
+        if (this.mediaType != other.mediaType && (this.mediaType == null || !this.mediaType.equals(other.mediaType))) {
             return false;
         }
-        return Objects.equals(this.encoding, other.encoding);
+        // noinspection StringEquality
+        return this.encoding == other.encoding || (this.encoding != null && this.encoding.equals(other.encoding));
     }
 
     @Override

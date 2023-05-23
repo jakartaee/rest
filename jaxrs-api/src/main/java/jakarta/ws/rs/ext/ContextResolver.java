@@ -16,6 +16,8 @@
 
 package jakarta.ws.rs.ext;
 
+import jakarta.ws.rs.Entity;
+
 /**
  * Contract for a provider that supplies context information to resource classes and other providers.
  *
@@ -30,7 +32,7 @@ package jakarta.ws.rs.ext;
  * @param <T> type of the context
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see jakarta.ws.rs.core.Context
+ * @see Entity
  * @see Providers#getContextResolver(Class, jakarta.ws.rs.core.MediaType)
  * @see Provider
  * @see jakarta.ws.rs.Produces

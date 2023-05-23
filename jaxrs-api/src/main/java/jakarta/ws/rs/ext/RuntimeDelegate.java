@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -23,10 +23,9 @@ import java.util.concurrent.CompletionStage;
 import jakarta.ws.rs.SeBootstrap;
 import jakarta.ws.rs.SeBootstrap.Instance;
 import jakarta.ws.rs.core.Application;
-import jakarta.ws.rs.core.EntityPart;
 import jakarta.ws.rs.core.Link;
-import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
+import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.Variant.VariantListBuilder;
 
 /**
@@ -240,8 +239,8 @@ public abstract class RuntimeDelegate {
     /**
      * Perform startup of the application in Java SE environments.
      * <p>
-     * <em>This method is not intended to be invoked by applications. Call {@link SeBootstrap#start(Application,
-     * SeBootstrap.Configuration)} instead.</em>
+     * <em>This method is not intended to be invoked by applications. Call {@link SeBootstrap#start(Application, Configuration)}
+     * instead.</em>
      * </p>
      *
      * @param application The application to start up.
@@ -250,31 +249,4 @@ public abstract class RuntimeDelegate {
      * instance}.
      */
     public abstract CompletionStage<Instance> bootstrap(Application application, SeBootstrap.Configuration configuration);
-
-    /**
-     * Perform startup of the application in Java SE environments.
-     * <p>
-     * <em>This method is not intended to be invoked by applications. Call {@link SeBootstrap#start(Class,
-     * SeBootstrap.Configuration)} instead.</em>
-     * </p>
-     *
-     * @param clazz The application class to instantiate and start.
-     * @param configuration The bootstrap configuration.
-     * @return {@code CompletionStage} asynchronously producing handle of the running application {@link SeBootstrap.Instance
-     * instance}.
-     */
-    public abstract CompletionStage<Instance> bootstrap(Class<? extends Application> clazz, SeBootstrap.Configuration configuration);
-
-    /**
-     * Create a new instance of a {@link jakarta.ws.rs.core.EntityPart.Builder}.
-     * <p>
-     * <em>This method is not intended to be invoked by applications. Call {@link EntityPart#withName(String)} instead.</em>
-     * </p>
-     *
-     * @param partName name for this part within the multipart body.
-     * @return new {@code EntityPart.Builder} instance with specified part name
-     * @throws java.lang.IllegalArgumentException if {@code partName} is {@code null}.
-     * @since 3.1
-     */
-    public abstract EntityPart.Builder createEntityPartBuilder(String partName) throws IllegalArgumentException;
 }

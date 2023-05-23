@@ -23,7 +23,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.container.AsyncResponse;
 import jakarta.ws.rs.container.CompletionCallback;
-import jakarta.ws.rs.container.Suspended;
 import jakarta.ws.rs.core.MediaType;
 
 /**
@@ -38,7 +37,7 @@ public class AsyncEventResource implements CompletionCallback {
     private static final BlockingQueue<String> MESSAGES = new ArrayBlockingQueue<String>(5);
 
     @GET
-    public void readMessage(@Suspended final AsyncResponse ar) {
+    public void readMessage(AsyncResponse ar) {
         ar.register(AsyncEventResource.class);
         Executors.newSingleThreadExecutor().submit(() -> {
             try {
@@ -51,7 +50,7 @@ public class AsyncEventResource implements CompletionCallback {
     }
 
     @POST
-    public void postMessage(final String message, @Suspended final AsyncResponse asyncResponse) {
+    public void postMessage(final String message, AsyncResponse asyncResponse) {
         Executors.newSingleThreadExecutor().submit(() -> {
             try {
                 MESSAGES.put(message);

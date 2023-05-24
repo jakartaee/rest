@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2021 Markus KARG. All rights reserved.
+    Copyright (c) 2023 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -14,7 +14,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>jakarta.ws.rs</groupId>
     <artifactId>all</artifactId>
     <version>4.0.0-SNAPSHOT</version>
@@ -35,6 +34,319 @@
             <url>https://repo.eclipse.org/content/repositories/jax-rs-api-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
+
+    <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
+
+    <organization>
+        <name>Eclipse Foundation</name>
+        <url>https://www.eclipse.org/org/foundation/</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>developers</id>
+            <name>JAX-RS API Developers</name>
+            <email>jaxrs-dev@eclipse.org</email>
+            <url>https://github.com/eclipse-ee4j/jaxrs-api/graphs/contributors</url>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/eclipse-ee4j/jaxrs-api/issues</url>
+    </issueManagement>
+
+    <mailingLists>
+        <mailingList>
+            <name>JAX-RS Developer Discussions</name>
+            <archive>jaxrs-dev@eclipse.org</archive>
+        </mailingList>
+    </mailingLists>
+
+    <licenses>
+        <license>
+            <name>EPL-2.0</name>
+            <url>http://www.eclipse.org/legal/epl-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>GPL-2.0-with-classpath-exception</name>
+            <url>https://www.gnu.org/software/classpath/license.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:https://github.com/eclipse-ee4j/jaxrs-api</connection>
+        <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <properties>
+        <java.version>17</java.version>
+
+        <apidocs.title>Jakarta RESTful Web Services ${spec.version} API Specification ${spec.version.revision}</apidocs.title>
+        <legal.doc.folder>${project.basedir}</legal.doc.folder>
+
+        <maven.bundle.plugin.version>3.5.0</maven.bundle.plugin.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.javadoc.plugin.version>3.1.0</maven.javadoc.plugin.version>
+
+        <api.package>jakarta.ws.rs</api.package>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <skip.release.tests>false</skip.release.tests>
+        <spec.version>4.0</spec.version>
+        <spec.version.revision /> <!-- e.g. (Rev a) -->
+
+        <activation.api.version>2.0.0</activation.api.version>
+        <inject.api.version>2.0.0</inject.api.version>
+        <validation.api.version>3.0.0</validation.api.version>
+        <concurrent.api.version>2.0.0</concurrent.api.version>
+        <cdi.api.version>3.0.0</cdi.api.version>
+        <junit.version>5.8.2</junit.version>
+        <hamcrest.version>2.2</hamcrest.version>
+        <mockito.version>3.6.0</mockito.version>
+    </properties>
+
+    <modules>
+        <module>jaxrs-api</module>
+        <module>examples</module>
+        <module>jaxrs-spec</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>jakarta.activation</groupId>
+                <artifactId>jakarta.activation-api</artifactId>
+                <version>${activation.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.inject</groupId>
+                <artifactId>jakarta.inject-api</artifactId>
+                <version>${inject.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.enterprise</groupId>
+                <artifactId>jakarta.enterprise.cdi-api</artifactId>
+                <version>${cdi.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>${validation.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.enterprise.concurrent</groupId>
+                <artifactId>jakarta.enterprise.concurrent-api</artifactId>
+                <version>${concurrent.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest</artifactId>
+                <version>${hamcrest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <source>17</source>
+                        <target>17</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.19.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>1.4</version>
+                    <configuration>
+                        <format>{0,date,MM/dd/yyyy hh:mm aa}</format>
+                        <items>
+                            <item>timestamp</item>
+                        </items>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>create</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>${maven.bundle.plugin.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <instructions>
+                            <_failok>true</_failok>
+                            <Build-Id>${buildNumber}</Build-Id>
+                            <Bundle-Description>Jakarta RESTful Web Services API (JAX-RS)</Bundle-Description>
+                            <Bundle-Version>${project.version}</Bundle-Version>
+                            <Bundle-SymbolicName>jakarta.ws.rs-api</Bundle-SymbolicName>
+                            <DynamicImport-Package>*</DynamicImport-Package>
+                            <Extension-Name>${api.package}</Extension-Name>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Specification-Version>${spec.version}</Specification-Version>
+                            <Specification-Vendor>Eclipse Foundation</Specification-Vendor>
+                            <specversion>${spec.version}</specversion>
+                            <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
+                            <_nodefaultversion>false</_nodefaultversion>
+                            <Require-Capability>osgi.ee;filter:="(&amp;(osgi.ee=JavaSE)(version=1.8))"</Require-Capability>
+                        </instructions>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>osgi-bundle</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>bundle</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven.javadoc.plugin.version}</version>
+                    <configuration>
+                        <doctitle>${apidocs.title}</doctitle>
+                        <docfilessubdirs>true</docfilessubdirs>
+                        <bottom>
+                            <![CDATA[<p align="left">Copyright &#169; 2018, 2020 Eclipse Foundation.<br>Use is subject to <a href="{@docRoot}/resources/EFSL.html" target="_top">license terms</a>.]]>
+                        </bottom>
+                        <docfilessubdirs>true</docfilessubdirs>
+                        <sourceFileExcludes>
+                            <fileExclude>module-info.java</fileExclude>
+                        </sourceFileExcludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <executions>
+                        <execution>
+                            <id>add-legal-resource</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>add-resource</goal>
+                            </goals>
+                            <configuration>
+                                <resources>
+                                    <resource>
+                                        <directory>${legal.doc.folder}</directory>
+                                        <includes>
+                                            <include>NOTICE.md</include>
+                                            <include>LICENSE.md</include>
+                                        </includes>
+                                        <targetPath>META-INF</targetPath>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jxr-plugin</artifactId>
+                    <version>2.5</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>jxr</goal>
+                            </goals>
+                            <phase>validate</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.1.2</version>
+                    <configuration>
+                        <outputDirectory>${project.build.directory}/checkstyle</outputDirectory>
+                        <outputFile>${project.build.directory}/checkstyle/checkstyle-result.xml</outputFile>
+                        <configLocation>${basedir}/../etc/config/checkstyle.xml</configLocation>
+                        <excludes>**/module-info.java</excludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>checkstyle</goal>
+                            </goals>
+                            <phase>validate</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.glassfish.copyright</groupId>
+                    <artifactId>glassfish-copyright-maven-plugin</artifactId>
+                    <version>1.39</version>
+                    <configuration>
+                        <excludeFile>${basedir}/../etc/config/copyright-exclude</excludeFile>
+                        <!--svn|mercurial|git - defaults to svn-->
+                        <scm>git</scm>
+                        <!-- turn on/off debugging -->
+                        <debug>false</debug>
+                        <!-- skip files not under SCM-->
+                        <scmOnly>true</scmOnly>
+                        <!-- turn off warnings -->
+                        <warn>true</warn>
+                        <!-- for use with repair -->
+                        <update>false</update>
+                        <!-- check that year is correct -->
+                        <ignoreYear>false</ignoreYear>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
     <profiles>
         <profile>

@@ -10,14 +10,11 @@
 
 package jaxrs.examples.link.clusterservice;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
-
 /**
  * Machine class.
  *
  * @author Santiago.Pericas-Geertsen@oracle.com
  */
-@XmlRootElement
 public class Machine {
 
     enum Status {

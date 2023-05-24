@@ -13,14 +13,11 @@ package jaxrs.examples.link.clusterservice;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
-
 /**
  * Cluster class.
  *
  * @author Santiago.Pericas-Geertsen@oracle.com
  */
-@XmlRootElement
 public class Cluster {
 
     enum Status {

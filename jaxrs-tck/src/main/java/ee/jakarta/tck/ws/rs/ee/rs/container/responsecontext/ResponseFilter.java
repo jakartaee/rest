@@ -317,6 +317,11 @@ public class ResponseFilter extends TemplateFilter {
         write(b);
       }
 
+      @Override
+      public void close() throws IOException {
+        stream.close();
+      }
+
       public final byte[] intToByteArray(int value) {
         return new byte[] { (byte) (value & 0xff) };
       }

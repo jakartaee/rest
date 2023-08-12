@@ -98,6 +98,7 @@
         <maven.checkstyle.plugin.version>3.3.0</maven.checkstyle.plugin.version>
         <buildnumber.maven.plugin.version>3.2.0</buildnumber.maven.plugin.version>
         <build.helper.maven.plugin.version>3.4.0</build.helper.maven.plugin.version>
+        <glassfish.copyright.maven.plugin>2.4</glassfish.copyright.maven.plugin>
 
         <api.package>jakarta.ws.rs</api.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -332,7 +333,7 @@
                 <plugin>
                     <groupId>org.glassfish.copyright</groupId>
                     <artifactId>glassfish-copyright-maven-plugin</artifactId>
-                    <version>1.39</version>
+                    <version>${glassfish.copyright.maven.plugin}</version>
                     <configuration>
                         <excludeFile>${basedir}/../etc/config/copyright-exclude</excludeFile>
                         <!--svn|mercurial|git - defaults to svn-->

@@ -95,6 +95,7 @@
         <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
         <maven.surefire.plugin.version>3.1.2</maven.surefire.plugin.version>
         <maven.jxr.plugin.version>3.3.0</maven.jxr.plugin.version>
+        <maven.checkstyle.plugin.version>3.3.0</maven.checkstyle.plugin.version>
         <buildnumber.maven.plugin.version>3.2.0</buildnumber.maven.plugin.version>
         <build.helper.maven.plugin.version>3.4.0</build.helper.maven.plugin.version>
 
@@ -312,7 +313,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>3.1.2</version>
+                    <version>${maven.checkstyle.plugin.version}</version>
                     <configuration>
                         <outputDirectory>${project.build.directory}/checkstyle</outputDirectory>
                         <outputFile>${project.build.directory}/checkstyle/checkstyle-result.xml</outputFile>

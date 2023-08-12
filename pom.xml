@@ -94,6 +94,7 @@
         <maven.javadoc.plugin.version>3.5.0</maven.javadoc.plugin.version>
         <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
         <maven.surefire.plugin.version>3.1.2</maven.surefire.plugin.version>
+        <maven.jxr.plugin.version>3.3.0</maven.jxr.plugin.version>
         <buildnumber.maven.plugin.version>3.2.0</buildnumber.maven.plugin.version>
         <build.helper.maven.plugin.version>3.4.0</build.helper.maven.plugin.version>
 
@@ -299,7 +300,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-jxr-plugin</artifactId>
-                    <version>2.5</version>
+                    <version>${maven.jxr.plugin.version}</version>
                     <executions>
                         <execution>
                             <goals>

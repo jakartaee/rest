@@ -95,6 +95,7 @@
         <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
         <maven.surefire.plugin.version>3.1.2</maven.surefire.plugin.version>
         <buildnumber.maven.plugin.version>3.2.0</buildnumber.maven.plugin.version>
+        <build.helper.maven.plugin.version>3.4.0</build.helper.maven.plugin.version>
 
         <api.package>jakarta.ws.rs</api.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -273,7 +274,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.2.0</version>
+                    <version>${build.helper.maven.plugin.version}</version>
                     <executions>
                         <execution>
                             <id>add-legal-resource</id>

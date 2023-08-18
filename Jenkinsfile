@@ -14,7 +14,7 @@ pipeline {
 		stage('Nightly Build') {
 			when {
 				anyOf {
-					branch 'master'
+					branch 'master'; branch 'release-4.0'
 				}
 			}
 			steps {

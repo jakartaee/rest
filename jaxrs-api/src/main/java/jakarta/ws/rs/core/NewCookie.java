@@ -38,7 +38,7 @@ public class NewCookie extends Cookie {
     public static final int DEFAULT_MAX_AGE = -1;
 
     /**
-     * @deprecated This field will be removed in a future version. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
+     * @deprecated This field will be removed in a future version. See https://github.com/jakartaee/rest/issues/607
      */
     @Deprecated
     private static final HeaderDelegate<NewCookie> DELEGATE = RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class);

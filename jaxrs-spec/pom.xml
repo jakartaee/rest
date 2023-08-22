@@ -45,14 +45,14 @@
     </properties>
 
     <scm>
-        <connection>scm:git:https://github.com/eclipse-ee4j/jaxrs-api</connection>
-        <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
+        <connection>scm:git:https://github.com/jakartaee/rest</connection>
+        <url>https://github.com/jakartaee/rest</url>
         <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
         <site>
-            <url>scm:git:https://github.com/eclipse-ee4j/jaxrs-api</url>
+            <url>scm:git:https://github.com/jakartaee/rest</url>
         </site>
     </distributionManagement>
 

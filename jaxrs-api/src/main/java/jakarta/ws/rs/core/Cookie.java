@@ -35,7 +35,7 @@ public class Cookie {
      */
     public static final int DEFAULT_VERSION = 1;
     /**
-     * @deprecated This field will be removed in a future version. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
+     * @deprecated This field will be removed in a future version. See https://github.com/jakartaee/rest/issues/607
      */
     @Deprecated
     private static final HeaderDelegate<Cookie> HEADER_DELEGATE = RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class);

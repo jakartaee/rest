@@ -6,7 +6,7 @@ description: [Oracle Technology Compatibility Kit User's Guide for Jakarta RESTf
 
 # sidebar links url
 links:
-  source: https://github.com/eclipse-ee4j/jaxrs-api
+  source: https://github.com/jakartaee/rest
   download: https://jakarta.ee/specifications/restful-ws/3.1/
   #mailinglist: https://javaee.groups.io/g/tck_jaxrs_v2_1
   #javadocs:

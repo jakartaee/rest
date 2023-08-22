@@ -48,7 +48,7 @@
 
     <distributionManagement>
         <site>
-            <url>scm:git:git@github.com:eclipse-ee4j/jaxrs-api.git</url>
+            <url>scm:git:git@github.com:jakartaee/rest.git</url>
         </site>
     </distributionManagement>
 

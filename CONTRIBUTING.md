@@ -19,7 +19,7 @@ more.
 
 The project maintains the following source code repositories
 
-* https://github.com/eclipse-ee4j/jaxrs-api
+* https://github.com/jakartaee/rest
 
 ## Eclipse Contributor Agreement
 

@@ -31,7 +31,7 @@
         <version>3.1.0</version>
     </parent>
 
-    <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
+    <url>https://github.com/jakartaee/rest</url>
 
     <organization>
         <name>Eclipse Foundation</name>
@@ -43,13 +43,13 @@
             <id>developers</id>
             <name>JAX-RS API Developers</name>
             <email>jaxrs-dev@eclipse.org</email>
-            <url>https://github.com/eclipse-ee4j/jaxrs-api/graphs/contributors</url>
+            <url>https://github.com/jakartaee/rest/graphs/contributors</url>
         </developer>
     </developers>
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/eclipse-ee4j/jaxrs-api/issues</url>
+        <url>https://github.com/jakartaee/rest/issues</url>
     </issueManagement>
 
     <mailingLists>
@@ -73,8 +73,8 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/eclipse-ee4j/jaxrs-api</connection>
-        <url>https://github.com/eclipse-ee4j/jaxrs-api</url>
+        <connection>scm:git:https://github.com/jakartaee/rest</connection>
+        <url>https://github.com/jakartaee/rest</url>
         <tag>HEAD</tag>
     </scm>
 

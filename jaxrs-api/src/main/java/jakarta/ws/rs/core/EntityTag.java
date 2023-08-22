@@ -31,7 +31,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
  */
 public class EntityTag {
     /**
-     * @deprecated This field will be removed in a future version. See https://github.com/eclipse-ee4j/jaxrs-api/issues/607
+     * @deprecated This field will be removed in a future version. See https://github.com/jakartaee/rest/issues/607
      */
     @Deprecated
     private static final HeaderDelegate<EntityTag> HEADER_DELEGATE = RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class);

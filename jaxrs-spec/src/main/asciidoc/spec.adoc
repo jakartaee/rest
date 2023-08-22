@@ -9,7 +9,7 @@
 ////
 
 = Jakarta RESTful Web Services
-:authors: Contributors to Jakarta RESTful Web Services (https://github.com/eclipse-ee4j/jaxrs-api/graphs/contributors)
+:authors: Contributors to Jakarta RESTful Web Services (https://github.com/jakartaee/rest/graphs/contributors)
 :email: jaxrs-dev@eclipse.org
 :version-label!:
 :doctype: book

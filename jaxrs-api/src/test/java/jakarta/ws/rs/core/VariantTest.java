@@ -16,9 +16,9 @@
 
 package jakarta.ws.rs.core;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertNull;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Variant regression unit tests.

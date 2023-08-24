@@ -19,7 +19,9 @@ package jakarta.ws.rs.client;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import java.net.URL;
+import java.security.AccessController;
 import java.security.KeyStore;
+import java.security.PrivilegedAction;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -59,16 +61,14 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
         try {
             Object delegate = FactoryFinder.find(JAXRS_DEFAULT_CLIENT_BUILDER_PROPERTY, ClientBuilder.class);
             if (!(delegate instanceof ClientBuilder)) {
-                Class pClass = ClientBuilder.class;
-                String classnameAsResource = pClass.getName().replace('.', '/') + ".class";
-                ClassLoader loader = pClass.getClassLoader();
-                if (loader == null) {
-                    loader = ClassLoader.getSystemClassLoader();
+                final CreateErrorMessageAction action = new CreateErrorMessageAction(delegate);
+                final String errorMessage;
+                if (System.getSecurityManager() == null) {
+                    errorMessage = action.run();
+                } else {
+                    errorMessage = AccessController.doPrivileged(action);
                 }
-                URL targetTypeURL = loader.getResource(classnameAsResource);
-                throw new LinkageError("ClassCastException: attempting to cast"
-                        + delegate.getClass().getClassLoader().getResource(classnameAsResource)
-                        + " to " + targetTypeURL);
+                throw new LinkageError(errorMessage);
             }
             return (ClientBuilder) delegate;
         } catch (Exception ex) {
@@ -271,4 +271,26 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
      * @return a new client instance.
      */
     public abstract Client build();
+
+    private static final class CreateErrorMessageAction implements PrivilegedAction<String> {
+        private final Object delegate;
+
+        private CreateErrorMessageAction(final Object delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public String run() {
+            Class<?> pClass = ClientBuilder.class;
+            String classnameAsResource = pClass.getName().replace('.', '/') + ".class";
+            ClassLoader loader = pClass.getClassLoader();
+            if (loader == null) {
+                loader = ClassLoader.getSystemClassLoader();
+            }
+            URL targetTypeURL = loader.getResource(classnameAsResource);
+            return "ClassCastException: attempting to cast"
+                    + delegate.getClass().getClassLoader().getResource(classnameAsResource)
+                    + " to " + targetTypeURL;
+        }
+    }
 }

@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
 import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
@@ -339,15 +340,8 @@ public class CacheControl {
      */
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + (this.privateFlag ? 1 : 0);
-        hash = 41 * hash + (this.noCache ? 1 : 0);
-        hash = 41 * hash + (this.noStore ? 1 : 0);
-        hash = 41 * hash + (this.noTransform ? 1 : 0);
-        hash = 41 * hash + (this.mustRevalidate ? 1 : 0);
-        hash = 41 * hash + (this.proxyRevalidate ? 1 : 0);
-        hash = 41 * hash + this.maxAge;
-        hash = 41 * hash + this.sMaxAge;
+        int hash = Objects.hash(this.privateFlag, this.noCache, this.noStore, this.noTransform, this.mustRevalidate,
+                this.proxyRevalidate, this.maxAge, this.sMaxAge);
         hash = 41 * hash + hashCodeOf(this.privateFields);
         hash = 41 * hash + hashCodeOf(this.noCacheFields);
         hash = 41 * hash + hashCodeOf(this.cacheExtension);

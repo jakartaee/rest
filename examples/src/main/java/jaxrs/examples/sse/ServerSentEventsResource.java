@@ -22,7 +22,6 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.sse.Sse;
 import jakarta.ws.rs.sse.SseEventSink;
@@ -48,7 +47,7 @@ public class ServerSentEventsResource {
 
     @GET
     @Produces(MediaType.SERVER_SENT_EVENTS)
-    public void getMessageQueue(@Context SseEventSink sseEventSink) {
+    public void getMessageQueue(SseEventSink sseEventSink) {
         synchronized (outputLock) {
             if (this.eventSink != null) {
                 throw new IllegalStateException("Server sink already served.");
@@ -78,8 +77,7 @@ public class ServerSentEventsResource {
     @POST
     @Path("domains/{id}")
     @Produces(MediaType.SERVER_SENT_EVENTS)
-    public void startDomain(@PathParam("id") final String id,
-            @Context SseEventSink sseEventSink) {
+    public void startDomain(@PathParam("id") final String id, SseEventSink sseEventSink) {
 
         executorService.submit(() -> {
             try {

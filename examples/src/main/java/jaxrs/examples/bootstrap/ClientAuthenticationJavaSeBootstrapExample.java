@@ -31,8 +31,11 @@ import jakarta.ws.rs.SeBootstrap.Configuration.SSLClientAuthentication;
  * (e. g. 443, 8443, or someting completely different). The actual configuration needs to be queried after
  * bootstrapping, otherwise callers would be unaware of the actual chosen port. If the client's certificate is invalid
  * or cannot be validated, the server will reject the connection.
+ * </p>
  * <p>
  * This example uses some basic <em>external</em> JSSE configuration:
+ * </p>
+ * <p>
  * <ul>
  * <li>{@code javax.net.ssl.keyStore=~/.keystore} - HTTPS: Path to a keystore holding an X.509 certificate for
  * {@code CN=localhost}</li>
@@ -40,6 +43,7 @@ import jakarta.ws.rs.SeBootstrap.Configuration.SSLClientAuthentication;
  * <li>Client Authentication: The default truststore ({@code $JAVA_HOME/lib/security/cacerts}) must hold the root
  * certificate of the CA and all intermediate certificates used for signing the client's certificate.</li>
  * </ul>
+ * </p>
  *
  * @author Markus KARG (markus@headcrashing.eu)
  * @since 3.1

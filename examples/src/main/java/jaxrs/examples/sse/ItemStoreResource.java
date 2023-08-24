@@ -27,7 +27,6 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.ServiceUnavailableException;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.sse.OutboundSseEvent;
@@ -136,7 +135,7 @@ public class ItemStoreResource {
     @Produces(MediaType.SERVER_SENT_EVENTS)
     public void itemEvents(
             @HeaderParam(HttpHeaders.LAST_EVENT_ID_HEADER) @DefaultValue("-1") int lastEventId,
-            @Context SseEventSink serverSink) {
+            SseEventSink serverSink) {
 
         if (lastEventId >= 0) {
             LOGGER.info("Received last event id :" + lastEventId);

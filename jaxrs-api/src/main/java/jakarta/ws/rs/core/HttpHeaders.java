@@ -22,13 +22,15 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import jakarta.ws.rs.client.Entity;
+
 /**
  * An injectable interface that provides access to HTTP header information. All methods throw
  * {@link java.lang.IllegalStateException} if called outside the scope of a request (e.g. from a provider constructor).
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see Context
+ * @see Entity
  * @since 1.0
  */
 public interface HttpHeaders {

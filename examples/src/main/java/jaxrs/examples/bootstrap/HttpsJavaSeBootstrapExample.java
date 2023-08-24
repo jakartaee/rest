@@ -29,13 +29,17 @@ import jakarta.ws.rs.core.Application;
  * {@code https://localhost/} on an implementation-specific default IP port (e. g. 443, 8443, or someting completely
  * different). The actual configuration needs to be queried after bootstrapping, otherwise callers would be unaware of
  * the actual chosen port.
+ * </p>
  * <p>
  * This example uses some basic <em>external</em> JSSE configuration:
+ * </p>
+ * <p>
  * <ul>
  * <li>{@code javax.net.ssl.keyStore=~/.keystore} - HTTPS: Path to a keystore holding an X.509 certificate for
  * {@code CN=localhost}</li>
  * <li>{@code javax.net.ssl.keyStorePassword=...} - HTTPS: Password of that keystore</li>
  * </ul>
+ * </p>
  *
  * @author Markus KARG (markus@headcrashing.eu)
  * @since 3.1

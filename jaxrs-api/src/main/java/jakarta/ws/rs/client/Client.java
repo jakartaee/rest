@@ -16,10 +16,9 @@
 
 package jakarta.ws.rs.client;
 
-import java.net.URI;
-
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import java.net.URI;
 
 import jakarta.ws.rs.core.Configurable;
 import jakarta.ws.rs.core.Link;

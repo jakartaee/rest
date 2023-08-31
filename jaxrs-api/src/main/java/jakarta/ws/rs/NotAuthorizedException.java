@@ -16,15 +16,15 @@
 
 package jakarta.ws.rs;
 
-import static jakarta.ws.rs.core.HttpHeaders.WWW_AUTHENTICATE;
-import static jakarta.ws.rs.core.Response.Status.UNAUTHORIZED;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import jakarta.ws.rs.core.Response;
+
+import static jakarta.ws.rs.core.HttpHeaders.WWW_AUTHENTICATE;
+import static jakarta.ws.rs.core.Response.Status.UNAUTHORIZED;
 
 /**
  * A runtime exception indicating request authorization failure caused by one of the following scenarios:

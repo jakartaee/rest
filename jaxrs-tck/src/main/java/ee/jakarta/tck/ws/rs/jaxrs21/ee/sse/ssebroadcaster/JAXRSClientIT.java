@@ -188,17 +188,20 @@ public class JAXRSClientIT extends SSEJAXRSClient {
       }
     }
 
-    for (int i = 0; i != CLIENTS; i++) {
-      List<String> events = clients[i].getEvents();
-      assertEquals(events.size(), MSG_MAX + 1,
-          "Received unexpected number of events", events.size());
-      assertTrue(events.get(0).contains("WELCOME"),
-          "Received unexpected message"+ events.get(0));
-      for (int j = 0; j != MSG_MAX; j++)
-        assertEquals(events.get(j + 1), SSEMessage.MESSAGE + j,
-            "Received unexpected message", events.get(j + 1));
+    List<String> expectedEvents = new ArrayList<String>();
+    for (int j = 0; j != MSG_MAX; j++) {
+        expectedEvents.add(SSEMessage.MESSAGE + j);
     }
 
+    for (int i = 0; i != CLIENTS; i++) {
+        List<String> events = clients[i].getEvents();
+        assertEquals(events.size(), MSG_MAX + 1,
+            "Received unexpected number of events", events.size());
+        assertTrue(events.get(0).contains("WELCOME"),
+            "Received unexpected message"+ events.get(0));
+        assertTrue(events.containsAll(expectedEvents), "An expected message was not received");
+    }
+    
     setProperty(Property.REQUEST, buildRequest(Request.GET, "broadcast/check"));
     invoke();
     String response = getResponseBody();

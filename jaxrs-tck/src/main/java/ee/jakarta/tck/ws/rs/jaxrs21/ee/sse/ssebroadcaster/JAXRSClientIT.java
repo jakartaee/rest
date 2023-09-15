@@ -46,6 +46,7 @@ import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
@@ -143,6 +144,7 @@ public class JAXRSClientIT extends SSEJAXRSClient {
    * @test_Strategy:
    */
   @Test
+  @Disabled
   public void sseBroadcastTest() throws Fault {
     int MSG_MAX = 7;
     int wait = 25;

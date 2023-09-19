@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-# Copyright (c) 2022 Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2023 Oracle and/or its affiliates. All rights reserved.
 #
 # This program and the accompanying materials are made available under the
 # terms of the Eclipse Public License v. 2.0, which is available at
@@ -23,7 +23,7 @@ cd $WORKSPACE
 export VERSION="$2"
 
 if [ -z "$VERSION" ]; then
-  export VERSION="3.1.3"
+  export VERSION="3.1.4"
 fi
 
 if [[ "$1" == "epl" || "$1" == "EPL" ]]; then
@@ -59,9 +59,19 @@ cd $WORKSPACE/bundle
 if [[ "$1" == "epl" || "$1" == "EPL" ]]; then
     cp $WORKSPACE/LICENSE.md $WORKSPACE/bundle/LICENSE.md
     cp $WORKSPACE/jaxrs-tck/pom.epl.xml $WORKSPACE/bundle/restful-ws-tck-"$VERSION".pom
+    cd $WORKSPACE/jaxrs-tck/target/
+    mkdir -p $WORKSPACE/jaxrs-tck/target/META-INF
+    cp $WORKSPACE/jaxrs-tck-docs/LICENSE.md  $WORKSPACE/jaxrs-tck/target/META-INF/
+    jar uf restful-ws-tck-"$VERSION".jar META-INF/LICENSE.md
+    cd $WORKSPACE/bundle
     zip -r restful-ws-tck-"$VERSION".zip *
 else
     cp $WORKSPACE/jaxrs-tck-docs/LICENSE_EFTL.md $WORKSPACE/bundle/LICENSE.md
     cp $WORKSPACE/jaxrs-tck/pom.xml $WORKSPACE/bundle/jakarta-restful-ws-tck-"$VERSION".pom
+    cd $WORKSPACE/jaxrs-tck/target/
+    mkdir -p $WORKSPACE/jaxrs-tck/target/META-INF
+    cp $WORKSPACE/jaxrs-tck-docs/LICENSE_EFTL.md  $WORKSPACE/jaxrs-tck/target/META-INF/LICENSE.md
+    jar uf jakarta-restful-ws-tck-"$VERSION".jar META-INF/LICENSE.md
+    cd $WORKSPACE/bundle
     zip -r jakarta-restful-ws-tck-"$VERSION".zip * 
 fi

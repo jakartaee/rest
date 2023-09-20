@@ -63,11 +63,13 @@ if [[ "$1" == "epl" || "$1" == "EPL" ]]; then
     cp $WORKSPACE/LICENSE.md $WORKSPACE/bundle/META-INF/LICENSE.md
     cp $WORKSPACE/jaxrs-tck/pom.epl.xml $WORKSPACE/bundle/restful-ws-tck-"$VERSION".pom
     jar -uvf restful-ws-tck-"$VERSION".jar META-INF/LICENSE.md
+    rm -rf $WORKSPACE/bundle/META-INF
     zip -r restful-ws-tck-"$VERSION".zip *
 else
     cp $WORKSPACE/jaxrs-tck-docs/LICENSE_EFTL.md $WORKSPACE/bundle/LICENSE.md
     cp $WORKSPACE/jaxrs-tck-docs/LICENSE_EFTL.md $WORKSPACE/bundle/META-INF/LICENSE.md
     cp $WORKSPACE/jaxrs-tck/pom.xml $WORKSPACE/bundle/jakarta-restful-ws-tck-"$VERSION".pom
     jar -uvf jakarta-restful-ws-tck-"$VERSION".jar META-INF/LICENSE.md
+    rm -rf $WORKSPACE/bundle/META-INF
     zip -r jakarta-restful-ws-tck-"$VERSION".zip * 
 fi

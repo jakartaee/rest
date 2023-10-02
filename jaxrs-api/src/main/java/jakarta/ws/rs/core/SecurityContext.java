@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2023 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,14 +18,11 @@ package jakarta.ws.rs.core;
 
 import java.security.Principal;
 
-import jakarta.ws.rs.Entity;
-
 /**
  * An injectable interface that provides access to security related information.
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see Entity
  * @since 1.0
  */
 public interface SecurityContext {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2023 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -19,8 +19,6 @@ package jakarta.ws.rs.core;
 import java.net.URI;
 import java.util.List;
 
-import jakarta.ws.rs.Entity;
-
 /**
  * An injectable interface that provides access to application and request URI information. Relative URIs are relative
  * to the base URI of the application, see {@link #getBaseUri}.
@@ -32,7 +30,6 @@ import jakarta.ws.rs.Entity;
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see Entity
  * @since 1.0
  */
 public interface UriInfo {

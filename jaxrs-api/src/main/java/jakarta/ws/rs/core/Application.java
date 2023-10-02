@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2023 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -20,14 +20,12 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-import jakarta.ws.rs.Entity;
-
 /**
  * Defines the components of a JAX-RS application and supplies additional meta-data. A JAX-RS application or
  * implementation supplies a concrete subclass of this abstract class.
  * <p>
- * The implementation-created instance of an Application subclass may be injected into resource classes and providers
- * using {@link Entity}.
+ * The implementation-created instance of an Application subclass may be injected into resource classes and
+ * providers using {@link jakarta.inject.Inject}.
  * </p>
  * <p>
  * In case any of the {@code Application} subclass methods or it's constructor throws a {@link RuntimeException}, the
@@ -64,7 +62,7 @@ public class Application {
     /**
      * Get a set of root resource, provider and {@link Feature feature} instances.
      *
-     * Fields and properties of returned instances are injected with their declared dependencies (see {@link Entity}) by
+     * Fields and properties of returned instances are injected with their declared dependencies by
      * the runtime prior to use.
      * <p>
      * Implementations should warn about and ignore classes that do not conform to the requirements of root resource or

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2023 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,8 +16,6 @@
 
 package jakarta.ws.rs.ext;
 
-import jakarta.ws.rs.Entity;
-
 /**
  * Contract for a provider that supplies context information to resource classes and other providers.
  *
@@ -32,7 +30,6 @@ import jakarta.ws.rs.Entity;
  * @param <T> type of the context
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see Entity
  * @see Providers#getContextResolver(Class, jakarta.ws.rs.core.MediaType)
  * @see Provider
  * @see jakarta.ws.rs.Produces

@@ -1,5 +1,5 @@
 /*******************************************************************
-* Copyright (c) 2021 Eclipse Foundation
+* Copyright (c) 2021, 2023 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -22,6 +22,7 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.EntityPart;
+import jakarta.ws.rs.core.GenericEntity;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -34,7 +35,7 @@ public class MultipartClient {
         List<EntityPart> parts = Files.list(dir).map(this::toPart).collect(Collectors.toList());
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:9080/multipart?dirName=abc");
-        Entity<List<EntityPart>> entity = Entity.entity(parts, MediaType.MULTIPART_FORM_DATA);
+        Entity<GenericEntity<List<EntityPart>>> entity = Entity.entity(new GenericEntity<>(parts) { }, MediaType.MULTIPART_FORM_DATA);
         Response response = target.request().post(entity);
         return response.getStatus() == 200;
     }

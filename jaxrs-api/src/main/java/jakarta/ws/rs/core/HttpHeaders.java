@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2023 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -22,15 +22,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import jakarta.ws.rs.client.Entity;
-
 /**
  * An injectable interface that provides access to HTTP header information. All methods throw
  * {@link java.lang.IllegalStateException} if called outside the scope of a request (e.g. from a provider constructor).
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see Entity
  * @since 1.0
  */
 public interface HttpHeaders {

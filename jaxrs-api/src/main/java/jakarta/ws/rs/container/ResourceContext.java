@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2023 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,12 +16,10 @@
 
 package jakarta.ws.rs.container;
 
-import jakarta.ws.rs.Entity;
-
 /**
  * The resource context provides access to instances of resource classes.
  * <p>
- * This interface can be injected using the {@link Entity} annotation.
+ * This interface can be injected using the {@link jakarta.inject.Inject} annotation.
  * </p>
  * <p>
  * The resource context can be utilized when instances of managed resource classes are to be returned by sub-resource

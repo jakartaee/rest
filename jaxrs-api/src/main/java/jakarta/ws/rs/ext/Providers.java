@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2023 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -19,7 +19,6 @@ package jakarta.ws.rs.ext;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import jakarta.ws.rs.Entity;
 import jakarta.ws.rs.core.MediaType;
 
 /**
@@ -27,7 +26,6 @@ import jakarta.ws.rs.core.MediaType;
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see Entity
  * @see MessageBodyReader
  * @see MessageBodyWriter
  * @see ContextResolver

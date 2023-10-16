@@ -715,29 +715,29 @@ public abstract class JAXRSCommonClient {
       assertEquals(T first, T second, Object... message)   {
     if (first == null && second == null)
       return;
-    assertFalse(first == null && second != null, message.toString());
-    assertFalse(first != null && second == null, message.toString());
+    assertFalse(first == null && second != null, objectsToString(message));
+    assertFalse(first != null && second == null, objectsToString(message));
     if (first instanceof Comparable)
-      assertTrue(((Comparable<T>) first).compareTo(second) == 0, message.toString());
+      assertTrue(((Comparable<T>) first).compareTo(second) == 0, objectsToString(message));
     else
-      assertTrue(first.equals(second), message.toString());
+      assertTrue(first.equals(second), objectsToString(message));
   }
 
   public static <T> void //
       assertEqualsInt(int first, int second, Object... message)   {
-    assertTrue(first == second, message.toString());
+    assertTrue(first == second, objectsToString(message));
   }
 
   public static <T> void //
       assertEqualsLong(long first, long second, Object... message)
             {
-    assertTrue(first == second, message.toString());
+    assertTrue(first == second, objectsToString(message));
   }
 
   public static <T> void //
       assertEqualsBool(boolean first, boolean second, Object... message)
             {
-    assertTrue(first == second, message.toString());
+    assertTrue(first == second, objectsToString(message));
   }
 
   /**
@@ -751,7 +751,7 @@ public abstract class JAXRSCommonClient {
    */
   public static void //
       assertNull(Object object, Object... message) {
-    assertTrue(object == null, message.toString());
+    assertTrue(object == null, objectsToString(message));
   }
 
   /**
@@ -765,7 +765,7 @@ public abstract class JAXRSCommonClient {
    */
   public static void //
       assertNotNull(Object object, Object... message) {
-    assertTrue(object != null, message.toString());
+    assertTrue(object != null, objectsToString(message));
   }
 
   /**
@@ -795,7 +795,7 @@ public abstract class JAXRSCommonClient {
    */
   public static void assertContains(String string, String substring,
       Object... message)   {
-    assertTrue(string.contains(substring), message.toString());
+    assertTrue(string.contains(substring), objectsToString(message));
   }
 
   /**
@@ -812,7 +812,7 @@ public abstract class JAXRSCommonClient {
    */
   public static void assertContainsIgnoreCase(String string, String substring,
       Object... message)   {
-    assertTrue(string.toLowerCase().contains(substring.toLowerCase()), message.toString());
+    assertTrue(string.toLowerCase().contains(substring.toLowerCase()), objectsToString(message));
   }
 
   /**
@@ -828,7 +828,7 @@ public abstract class JAXRSCommonClient {
    */
   public static <T> void assertContains(T text, T subtext, Object... message)
         {
-    assertContains(text.toString(), subtext.toString(), message.toString());
+    assertContains(text.toString(), subtext.toString(), objectsToString(message));
   }
 
   /**
@@ -845,7 +845,7 @@ public abstract class JAXRSCommonClient {
    */
   public static <T> void assertContainsIgnoreCase(T text, T subtext,
       Object... message)   {
-    assertContainsIgnoreCase(text.toString(), subtext.toString(), message.toString());
+    assertContainsIgnoreCase(text.toString(), subtext.toString(), objectsToString(message));
   }
 
   /**

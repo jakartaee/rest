@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2023 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -30,7 +30,7 @@ Let us illustrate these concepts via an example:
 public class MyResource {
 
     @GET
-    public void longRunningOp(@Suspended final AsyncResponse ar) {
+    public void longRunningOp(final AsyncResponse ar) {
         executor.submit(
             new Runnable() {
                 public void run() {
@@ -44,14 +44,14 @@ public class MyResource {
 ----
 
 A resource method that elects to produce a response asynchronously must
-inject as a method parameter an instance of the class `AsyncResponse`
-using the special annotation `@Suspended`. In the example above, the
-method `longRunningOp` is called upon receiving a `GET` request. Rather
-than producing a response immediately, this method forks a (non-request)
-thread to execute a long running operation and returns immediately. Once
-the execution of the long running operation is complete, the connection
-is resumed and the response returned by calling `resume` on the injected
-instance of `AsyncResponse`.
+have an instance of the class `AsyncResponse` as a method parameter.
+
+In the example above, the method `longRunningOp` is called upon receiving
+a `GET` request. Rather than producing a response immediately, this method
+forks a (non-request) thread to execute a long running operation and returns
+immediately. Once the execution of the long running operation is complete,
+the connection is resumed and the response returned by calling `resume` on
+the injected instance of `AsyncResponse`.
 
 For more information on executors, concurrency and thread management in
 a Jakarta EE environment, the reader is referred to Jakarta Concurrency
@@ -71,7 +71,7 @@ is resumed.
 [source,java]
 ----
 @GET
-public void longRunningOp(@Suspended final AsyncResponse ar) {
+public void longRunningOp(final AsyncResponse ar) {
     // Register handler and set timeout
     ar.setTimeoutHandler(new TimeoutHandler() {
         public void handleTimeout(AsyncResponse ar) {

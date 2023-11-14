@@ -30,7 +30,7 @@ import jakarta.inject.Qualifier;
  * <p>
  * The JAX-RS runtime will instantiate the object and inject all it's fields and properties annotated with either one of
  * the {@code @XxxParam} annotation ({@link PathParam &#64;PathParam}, {@link FormParam &#64;FormParam} ...) or the
- * {@link Entity &#64;Entity} annotation. For the POJO classes same instantiation and injection rules
+ * {@link Body &#64;Body} annotation. For the POJO classes same instantiation and injection rules
  * apply as in case of instantiation and injection of request-scoped root resource classes.
  * </p>
  * For example:

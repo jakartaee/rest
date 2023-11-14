@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.Body;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
@@ -13,7 +14,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.container.AsyncResponse;
-import jakarta.ws.rs.Entity;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;
 import jakarta.ws.rs.sse.Sse;
@@ -49,10 +49,10 @@ public class SampleResource {
         return bean.getMessage(lang) + " " + who;
     }
 
-    // Use of @Entity is required
+    // Use of @Body is required
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
-    public void putMessage(@QueryParam("override") boolean override, @Entity String message) {
+    public void putMessage(@QueryParam("override") boolean override, @Body String message) {
         if (bean.getMessage(lang).isEmpty() || override) {
             bean.setMessage(message);
         }
@@ -62,7 +62,7 @@ public class SampleResource {
     @POST
     @Path("async")
     @Consumes(MediaType.TEXT_PLAIN)
-    public void putMessageAsync(@QueryParam("override") boolean override, @Entity String message, AsyncResponse ar) {
+    public void putMessageAsync(@QueryParam("override") boolean override, @Body String message, AsyncResponse ar) {
         Executors.newSingleThreadExecutor().submit(() -> {
             if (bean.getMessage(lang).isEmpty() || override) {
                 bean.setMessage(message);

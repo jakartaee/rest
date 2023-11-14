@@ -55,7 +55,8 @@ parameters. See <<consuming_multipart_formdata>> for more details.
 
 The value of a parameter not annotated with `@FormParam` or any of the
 annotations listed in in <<resource_field>>, called the entity
-parameter, is mapped from the request entity body. Conversion between an
+parameter, is mapped from the request entity body. This parameter MUST
+be annotated with the `@Body` annotation. Conversion between an
 entity body and a Java type is the responsibility of an entity provider,
 see <<entity_providers>>. Resource methods MUST have at most one
 entity parameter.

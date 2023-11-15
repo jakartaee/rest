@@ -25,12 +25,11 @@ according to the semantics of the annotation:
   Extracts the value of a cookie.
 `@HeaderParam`::
   Extracts the value of a header.
-`@Context`::
-  Injects an instance of a supported resource, see chapters <<context>>
-  and <<environment>> for more details.
+`@Inject`::
+  Injects an instance of a supported resource.
 
 Because injection occurs at object creation time, use of these
-annotations (with the exception of `@Context`) on resource class fields
+annotations (with the exception of `@Inject`) on resource class fields
 and bean properties is only supported for the default per-request
 resource class lifecycle. An implementation SHOULD warn if resource
 classes with other lifecycles use these annotations on resource class
@@ -42,7 +41,7 @@ returned by sub-resource locators (see <<sub_resources>>) are
 expected to be initialized by their creator.
 
 Valid parameter types for each of the above annotations are listed in
-the corresponding Javadoc, however in general (excluding `@Context`) the
+the corresponding Javadoc, however in general (excluding `@Inject`) the
 following types are supported:
 
 1.  Types for which a `ParamConverter` is available via

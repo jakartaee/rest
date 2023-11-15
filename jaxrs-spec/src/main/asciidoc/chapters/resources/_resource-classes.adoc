@@ -40,10 +40,10 @@ parameter values. Note that a zero argument constructor is permissible
 under this rule.
 
 A public constructor MAY include parameters annotated with one of the
-following: `@Context`, `@HeaderParam`, `@CookieParam`, `@MatrixParam`,
-`@QueryParam` or `@PathParam`. However, depending on the resource class
-lifecycle and concurrency, per-request information may not make sense in
-a constructor. If more than one public constructor is suitable then an
+following: `@HeaderParam`, `@CookieParam`, `@MatrixParam`, `@QueryParam` or
+`@PathParam`. However, depending on the resource class lifecycle and
+concurrency, per-request information may not make sense in a
+constructor. If more than one public constructor is suitable then an
 implementation MUST use the one with the most parameters. Choosing
 amongst suitable constructors with the same number of parameters is
 implementation specific, implementations SHOULD generate a warning about

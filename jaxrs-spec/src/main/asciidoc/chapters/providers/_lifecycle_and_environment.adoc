@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2023 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -14,11 +14,10 @@
 By default a single instance of each provider class is instantiated for
 each JAX-RS application. First the constructor (see
 <<provider_class_constructor>>) is called, then any requested dependencies
-are injected (see Chapter <<context>>), then the appropriate provider
-methods may be called multiple times (simultaneously), and finally the
-object is made available for garbage collection.
-<<providercontext>> describes how a provider obtains access to other
-providers via dependency injection.
+are injected, then the appropriate provider methods may be called multiple
+times (simultaneously), and finally the object is made available for
+garbage collection. <<providercontext>> describes how a provider obtains
+access to other providers via dependency injection.
 
 An implementation MAY offer other provider lifecycles, mechanisms for
 specifying these are outside the scope of this specification. E.g. an
@@ -63,11 +62,10 @@ have a public constructor for which the JAX-RS runtime can provide all
 parameter values. Note that a zero argument constructor is permissible
 under this rule.
 
-A public constructor MAY include parameters annotated with
-`@Context`—Chapter <<context>> defines the parameter types permitted for
-this annotation. Since providers may be created outside the scope of a
-particular request, only deployment-specific properties may be available
-from injected interfaces at construction time; request-specific
+A public constructor MAY include injected parameters, provided the
+parameter type is a CDI bean. Since providers may be created outside the
+scope of a particular request, only deployment-specific properties may
+be available from injected interfaces at construction time; request-specific
 properties are available when a provider method is called. If more than
 one public constructor can be used then an implementation MUST use the
 one with the most parameters. Choosing amongst constructors with the

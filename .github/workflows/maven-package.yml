@@ -23,4 +23,22 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: 'temurin'
     - name: Build with Maven
-      run: mvn -B verify
+      run: |
+        mvn -B verify
+        cd jaxrs-spec && mvn install
+    - name: Move Javadoc into documentation directory
+      # if: github.ref == 'refs/heads/master'
+      run: |
+        mv jaxrs-api/target/ docs/jaxrs-api/target/
+        mv examples/target/ docs/examples/target/
+        mv jaxrs-tck-docs/ docs/jaxrs-tck-docs/
+        mv jaxrs-spec/target/generated-docs/ docs/jaxrs-spec/target/generated-docs/
+    - name: Publish all docs to GitHub Pages
+      # if: github.ref == 'refs/heads/master'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: docs
+        enable_jekyll: false
+        user_name: QubitPi
+        user_email: jack20220723@gmail.com

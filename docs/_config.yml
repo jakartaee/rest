@@ -1,0 +1,13 @@
+remote_theme: jakartaee/jekyll-theme-jakarta-ee
+
+title: [Jakarta RESTful Web Services]
+description: [Jakarta RESTful Web Services provides a specification document, TCK and foundational API to develop web services following the Representational State Transfer (REST) architectural pattern.]
+
+latestVersion: 3.1.0
+
+links:
+  source: https://github.com/QubitPi/jakartaee-rest
+  javadocs: https://qubitpi.github.io/jakartaee-rest/apidocs
+  docs: https://jakarta.ee/specifications/restful-ws/3.0/jakarta-restful-ws-spec-3.0.html
+  download: https://github.com/jakartaee/rest/releases
+  mailinglist: https://accounts.eclipse.org/mailing-list/jaxrs-dev

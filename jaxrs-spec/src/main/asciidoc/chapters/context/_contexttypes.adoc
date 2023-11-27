@@ -21,7 +21,7 @@ other types are server-side only.
 ==== Application
 
 The instance of the application-supplied `Application` subclass can be
-injected a method parameter, since it is a CDI bean, or injected into
+injected into a resource method parameter, since it is a CDI bean, or injected into
 a class field using the`@Inject` annotation. Access to the
 `Application` subclass instance allows configuration information to be
 centralized in that class. Note that this cannot be injected into the
@@ -30,7 +30,7 @@ centralized in that class. Note that this cannot be injected into the
 [[uris-and-uri-templates]]
 ==== URIs and URI Templates
 
-An instance of `UriInfo` can be injected into a method parameter, since it
+An instance of `UriInfo` can be injected into a resource method parameter, since it
 is a CDI bean, or injected into a class field using the `@Inject` annotation.
 `UriInfo` provides both static and dynamic, per-request information, about
 the components of a request URI. E.g. the following would return the names of
@@ -56,7 +56,7 @@ information following the pre-processing described in <<reqpreproc>>.
 [[httpheaders]]
 ==== Headers
 
-An instance of `HttpHeaders` can be injected into a method parameter,
+An instance of `HttpHeaders` can be injected into a resource method parameter,
 since it is a CDI bean, or injected into a class field using the
 `@Inject` annotation. `HttpHeaders` provides access to request header
 information either in map form or via strongly typed convenience methods.

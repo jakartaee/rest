@@ -1,5 +1,6 @@
 target/
 .classpath
+.factorypath
 .project
 .settings/
 *.iml

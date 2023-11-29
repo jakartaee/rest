@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2023 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -633,8 +633,6 @@ public class JAXRSClientIT extends SSEJAXRSClient {
     source.open();
     sleepUntilHolderGetsFilled(holder);
     assertNotNull(holder.get(), "Message was not received");
-    for (InboundSseEvent e : holder)
-      logMsg("Received message no", e.readData());
 
     // check the session is opened
     setProperty(Property.REQUEST, buildRequest(Request.GET, "repeat/isopen"));
@@ -646,8 +644,6 @@ public class JAXRSClientIT extends SSEJAXRSClient {
     for (int i = 0; i != 3; i++) {
       holder.clear();
       sleepUntilHolderGetsFilled(holder);
-      for (InboundSseEvent e : holder)
-        logMsg("Received message no", e.readData());
     }
     // close
     source.close();

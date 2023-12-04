@@ -1,6 +1,6 @@
 ﻿////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2023 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -85,9 +85,6 @@ interface.
 |`NameBinding`  |Annotation |Meta-annotation to create annotations for
 binding filters or interceptors to resource methods and applications.
 Name binding is only supported as part of the Server API.
-|`Suspended`    |Parameter |Indicates that a resource method is asynchronous. I.e., that
-it does not produce a response upon returning. JAX-RS implementations
-will suspend the incoming connection until a response becomes available.
 |`PreMatching`  |Type   |Global binding annotation that can be applied to
 a container filter to indicate that it should be applied globally and
 before the resource method is matched.
@@ -101,4 +98,7 @@ API. If omitted, a provider can be used in either context.
 |`ParamConverter.Lazy`  |Type   |Indicates that a conversion of a default
 value delegated to a `ParamConverter` SHOULD occur only when the value
 is actually requested.
+3+|*Since JAX-RS 3.1*
+|`Body`  |Annotation |Indicates the entity parameter mapped from the
+request entity body.
 |===============================================

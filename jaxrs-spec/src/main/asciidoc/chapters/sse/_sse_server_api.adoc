@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2023 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -24,8 +24,8 @@ thread to send 3 events before closing the connection:
 @GET
 @Path("eventStream")
 @Produces(MediaType.SERVER_SENT_EVENTS)
-public void eventStream(@Context SseEventSink eventSink,
-                        @Context Sse sse) {
+public void eventStream(SseEventSink eventSink,
+                        Sse sse) {
     executor.execute(() -> {
         try (SseEventSink sink = eventSink) {
             eventSink.send(sse.newEvent("event1"));

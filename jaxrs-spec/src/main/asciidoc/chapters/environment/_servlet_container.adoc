@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2023 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -11,7 +11,7 @@
 [[servlet_container]]
 === Servlet Container
 
-The `@Context` annotation can be used to indicate a dependency on a
+The `@Inject` annotation can be used to indicate a dependency on a
 Servlet-defined resource. A Servlet-based implementation MUST support
 injection of the following Servlet-defined types: `ServletConfig`,
 `ServletContext`, `HttpServletRequest` and `HttpServletResponse`.

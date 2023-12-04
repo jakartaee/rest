@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019, 2020 Eclipse Foundation
+* Copyright (c) 2019, 2023 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -31,7 +31,7 @@ JAX-RS implementation to support asynchronous processing when running on
 a Servlet container whose version is prior to 3.
 
 As explained in <<servlet_container>>, injection of
-Servlet-defined types is possible using the `@Context` annotation.
+Servlet-defined types is possible using the `@Inject` annotation.
 Additionally, web application’s `<context-param>` and servlet’s
 `<init-param>` can be used to define application properties passed to
 server-side features or injected into server-side JAX-RS components. See

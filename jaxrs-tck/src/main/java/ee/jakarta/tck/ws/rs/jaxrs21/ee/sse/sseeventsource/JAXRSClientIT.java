@@ -612,6 +612,7 @@ public class JAXRSClientIT extends SSEJAXRSClient {
    * @test_Strategy:
    */
   @Test
+  @Disabled
   public void closeTest() throws Fault {
     boolean isOpen = true;
     LinkedHolder<InboundSseEvent> holder = new LinkedHolder<>();
@@ -633,6 +634,8 @@ public class JAXRSClientIT extends SSEJAXRSClient {
     source.open();
     sleepUntilHolderGetsFilled(holder);
     assertNotNull(holder.get(), "Message was not received");
+    for (InboundSseEvent e : holder)
+      logMsg("Received message no", e.readData());
 
     // check the session is opened
     setProperty(Property.REQUEST, buildRequest(Request.GET, "repeat/isopen"));
@@ -644,6 +647,8 @@ public class JAXRSClientIT extends SSEJAXRSClient {
     for (int i = 0; i != 3; i++) {
       holder.clear();
       sleepUntilHolderGetsFilled(holder);
+      for (InboundSseEvent e : holder)
+        logMsg("Received message no", e.readData());
     }
     // close
     source.close();

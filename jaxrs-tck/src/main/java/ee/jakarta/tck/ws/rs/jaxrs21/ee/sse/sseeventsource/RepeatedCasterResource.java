@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2023 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -54,10 +54,10 @@ public class RepeatedCasterResource {
           isOpen = !sink.isClosed();
         }
         while (!sink.isClosed() && cast) {
+          sink.send(sse.newEvent(String.valueOf(cnt++)));
           try {
-            sink.send(sse.newEvent(String.valueOf(cnt++)));
-            Thread.sleep(1L);
-          } catch (Exception e1) {
+            Thread.sleep(500L);
+          } catch (InterruptedException e1) {
             cast = false;
           }
           synchronized (isOpen) {

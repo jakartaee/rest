@@ -28,7 +28,7 @@
     <parent>
         <groupId>jakarta.ws.rs</groupId>
         <artifactId>all</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
+        <version>4.0.0-M1</version>
     </parent>
 
     <name>Jakarta RESTful WS Compliance</name>

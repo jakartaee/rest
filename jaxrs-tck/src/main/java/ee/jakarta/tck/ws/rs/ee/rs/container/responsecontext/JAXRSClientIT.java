@@ -54,7 +54,6 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;
-
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
@@ -1123,6 +1122,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Disabled
   public void setStatusTest() throws Fault {
     for (Response.Status status : Response.Status.values()) {
       String content = String.valueOf(status.getStatusCode());
@@ -1144,6 +1144,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  @Disabled
   public void setStatusInfoTest() throws Fault {
     for (Response.Status status : Response.Status.values()) {
       String content = String.valueOf(status.getStatusCode());

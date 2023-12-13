@@ -83,7 +83,10 @@
     </scm>
 
     <properties>
-        <java.version>21</java.version>
+        <!-- Used in the enforcer plugin to require the minimum Java version -->
+        <jdk.min.version>21</jdk.min.version>
+        <!-- used in the compiler plugin for the release level -->
+        <maven.compiler.release>17</maven.compiler.release>
 
         <apidocs.title>Jakarta RESTful Web Services ${spec.version} API Specification ${spec.version.revision}</apidocs.title>
         <legal.doc.folder>${project.basedir}</legal.doc.folder>
@@ -174,10 +177,6 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven.compiler.plugin.version}</version>
-                    <configuration>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
@@ -352,6 +351,28 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-java-version</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <message>To build this project JDK ${jdk.min.version} (or greater) is required.</message>
+                                    <version>${jdk.min.version}</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <profiles>

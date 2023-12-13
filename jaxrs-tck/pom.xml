@@ -35,7 +35,8 @@
     </parent>
 
     <properties>
-        <maven.compiler.release>21</maven.compiler.release>
+        <!-- Explicitly set the release level to Java SE 17 -->
+        <maven.compiler.release>17</maven.compiler.release>
         <junit.jupiter.version>[5.7.2, 5.8-A00)</junit.jupiter.version>
         <tck.artifactId>jakarta-restful-ws-tck</tck.artifactId>
     </properties>

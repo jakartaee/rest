@@ -11,14 +11,14 @@
 [[status]]
 === Status
 
-This is the final release of version 3.1. The issue tracking system for
+This is the final release of version 3.2. The issue tracking system for
 this release can be found at:
 
 https://github.com/jakartaee/rest/issues
 
 The corresponding Javadocs can be found online at:
 
-https://jakarta.ee/specifications/restful-ws/3.1/apidocs/
+https://jakarta.ee/specifications/restful-ws/4.0/apidocs/
 
 A compatible implementation can be obtained from:
 

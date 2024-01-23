@@ -23,7 +23,7 @@ cd $WORKSPACE
 export VERSION="$2"
 
 if [ -z "$VERSION" ]; then
-  export VERSION="3.1.2"
+  export VERSION="3.2.0-SNAPSHOT"
 fi
 
 if [[ "$1" == "epl" || "$1" == "EPL" ]]; then

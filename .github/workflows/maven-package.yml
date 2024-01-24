@@ -3,9 +3,9 @@ name: Jakarta REST CI
 
 on:
   push:
-    branches: [ '3.2.0-SNAPSHOT' ]
+    branches: [ 'release-3.2' ]
   pull_request:
-    branches: [ '3.2.0-SNAPSHOT' ]
+    branches: [ 'release-3.2' ]
 
 jobs:
   build:

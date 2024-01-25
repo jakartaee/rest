@@ -41,7 +41,6 @@ import jakarta.ws.rs.ext.ReaderInterceptor;
 import jakarta.ws.rs.ext.ReaderInterceptorContext;
 import jakarta.ws.rs.ext.WriterInterceptor;
 import jakarta.ws.rs.ext.WriterInterceptorContext;
-import jakarta.xml.bind.annotation.XmlRootElement;
 import jaxrs.examples.client.custom.ThrottledClient;
 
 import static jakarta.ws.rs.client.Entity.form;
@@ -59,7 +58,6 @@ public class BasicExamples {
     /**
      * Customer bean.
      */
-    @XmlRootElement
     public static class Customer {
 
         private final String name;

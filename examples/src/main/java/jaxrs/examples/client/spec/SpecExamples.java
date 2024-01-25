@@ -21,7 +21,6 @@ import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
 import static jakarta.ws.rs.client.Entity.entity;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
 import jaxrs.examples.client.custom.ThrottledClient;
 
 /**
@@ -33,7 +32,6 @@ public class SpecExamples {
     /**
      * Customer bean.
      */
-    @XmlRootElement
     public static class Customer {
 
         private final String name;

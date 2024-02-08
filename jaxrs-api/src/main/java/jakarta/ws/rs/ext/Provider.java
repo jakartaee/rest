@@ -22,6 +22,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Stereotype;
+
 /**
  * Marks an implementation of an extension interface that should be discoverable by JAX-RS runtime during a provider
  * scanning phase.
@@ -33,5 +36,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Stereotype
+@ApplicationScoped
 public @interface Provider {
 }

@@ -20,6 +20,9 @@
 module jakarta.ws.rs {
 
     requires static jakarta.xml.bind;
+    // These two modules are not required on the client side
+    requires static jakarta.cdi;
+    requires static jakarta.inject;
 
     requires java.logging;
 

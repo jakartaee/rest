@@ -22,6 +22,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Stereotype;
+
 /**
  * Identifies the application path that serves as the base URI for all resource URIs provided by
  * {@link jakarta.ws.rs.Path}. May only be applied to a subclass of {@link jakarta.ws.rs.core.Application}.
@@ -40,6 +43,8 @@ import java.lang.annotation.Target;
 @Documented
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
+@Stereotype
+@ApplicationScoped
 public @interface ApplicationPath {
 
     /**

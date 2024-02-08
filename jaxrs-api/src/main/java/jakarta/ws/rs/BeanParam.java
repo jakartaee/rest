@@ -22,6 +22,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import jakarta.inject.Qualifier;
+
 /**
  * The annotation that may be used to inject custom JAX-RS "parameter aggregator" value object into a resource class
  * field, property or resource method parameter.
@@ -68,5 +70,6 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface BeanParam {
 }

@@ -22,6 +22,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import jakarta.inject.Qualifier;
+
 /**
  * Binds the value(s) of a URI matrix parameter to a resource method parameter, resource class field, or resource class
  * bean property. Values are URL decoded unless this is disabled using the {@link Encoded} annotation. A default value
@@ -66,6 +68,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface MatrixParam {
 
     /**

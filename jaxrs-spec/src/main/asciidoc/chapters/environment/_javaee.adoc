@@ -1,6 +1,6 @@
 ////
 *******************************************************************
-* Copyright (c) 2019, 2020 Eclipse Foundation
+* Copyright (c) 2019, 2024 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -36,43 +36,6 @@ Additionally, web application’s `<context-param>` and servlet’s
 `<init-param>` can be used to define application properties passed to
 server-side features or injected into server-side JAX-RS components. See
 Javadoc for `Application.getProperties` for more information.
-
-[[managed_beans]]
-==== Managed Beans
-
-In a product that supports Managed Beans, implementations MUST support
-the use of Managed Beans as root resource classes, providers and
-`Application` subclasses.
-
-For example, a bean that uses a managed-bean interceptor can be defined
-as a JAX-RS resource as follows:
-
-[source,java]
-----
-@ManagedBean
-@Path("/managedbean")
-public class ManagedBeanResource {
-
-    public static class MyInterceptor {
-        @AroundInvoke
-        public String around(InvocationContext ctx) throws Exception {
-            System.out.println("around() called");
-            return (String) ctx.proceed();
-        }
-    }
-
-    @GET
-    @Produces("text/plain")
-    @Interceptors(MyInterceptor.class)
-    public String getIt() {
-        return "Hi managedbean!";
-    }
-}
-----
-
-The example above uses a managed-bean interceptor to intercept calls to
-the resource method `getIt`. See <<additional_reqs>> for
-additional requirements on Managed Beans.
 
 [[cdi]]
 ==== Context and Dependency Injection (CDI)
@@ -203,8 +166,7 @@ form `application/*+xml`.
 [[additional_reqs]]
 ==== Additional Requirements
 
-The following additional requirements apply when using Managed Beans,
-CDI-style Beans or EJBs as resource classes, providers or `Application`
+The following additional requirements apply when using CDI-style Beans or EJBs as resource classes, providers or `Application`
 subclasses:
 
 * For JAX-RS resources and providers where the JAX-RS implementation 

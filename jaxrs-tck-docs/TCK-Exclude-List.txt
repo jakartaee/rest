@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2021, 2023 Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2021, 2024 Oracle and/or its affiliates. All rights reserved.
 #
 # This program and the accompanying materials are made available under the
 # terms of the Eclipse Public License v. 2.0, which is available at
@@ -156,8 +156,12 @@ ee/jakarta/tck/ws/rs/jaxrs21/ee/client/rxinvoker/JAXRSClientIT.java#traceWithRes
 ee/jakarta/tck/ws/rs/jaxrs21/ee/client/rxinvoker/JAXRSClientIT.java#traceWithGenericTypeStringTest
 ee/jakarta/tck/ws/rs/jaxrs21/ee/client/rxinvoker/JAXRSClientIT.java#traceWithGenericTypeResponseTest
 
-https://github.com/jakartaee/rest/issues/1138
+# https://github.com/jakartaee/rest/issues/1138
 ee/jakarta/tck/ws/rs/ee/rs/core/uriinfo/JAXRSClientIT#getNormalizedUriTest
 
-https://github.com/jakartaee/rest/issues/1163
+# https://github.com/jakartaee/rest/issues/1163
 ee/jakarta/tck/ws/rs/ee/rs/container/responsecontext/JAXRSClientIT#setEntityStreamTest
+
+# https://github.com/jakartaee/rest/issues/1199
+ee/jakarta/tck/ws/rs/ee/rs/container/responsecontext/JAXRSClientIT#setStatusTest
+ee/jakarta/tck/ws/rs/ee/rs/container/responsecontext/JAXRSClientIT#setStatusInfoTest

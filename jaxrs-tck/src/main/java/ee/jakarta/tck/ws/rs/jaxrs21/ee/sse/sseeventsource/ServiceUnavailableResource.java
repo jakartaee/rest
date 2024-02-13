@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -31,9 +31,6 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.sse.OutboundSseEvent;
 import jakarta.ws.rs.sse.Sse;
 import jakarta.ws.rs.sse.SseEventSink;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Path("su")
 public class ServiceUnavailableResource {
@@ -46,8 +43,6 @@ public class ServiceUnavailableResource {
   private static int count = 0;
 
   static final String MESSAGE = SSEMessage.MESSAGE;
-
-  private static final Logger LOG = Logger.getLogger(ServiceUnavailableResource.class.getName());
 
   @GET
   @Path("reset")
@@ -110,8 +105,6 @@ public class ServiceUnavailableResource {
       } else {
         try (SseEventSink s = sink) {
           s.send(sse.newEvent(MESSAGE));
-        } catch (IOException e) {
-          LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
         }
       }
     }
@@ -125,11 +118,7 @@ public class ServiceUnavailableResource {
       count++;
       if (isConnectionLost != 0) {
         isConnectionLost--;
-        try {
-          sink.close();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
+        sink.close();
         /*
          * To cancel a stream from the server, respond with a non
          * "text/event-stream" Content-Type or return an HTTP status other than
@@ -138,8 +127,6 @@ public class ServiceUnavailableResource {
       } else {
         try (SseEventSink s = sink) {
           s.send(sse.newEvent(MESSAGE));
-        } catch (IOException e) {
-          LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
         }
       }
     }
@@ -151,8 +138,6 @@ public class ServiceUnavailableResource {
   public void sendRetry(@Context SseEventSink sink, @Context Sse sse) {
     try (SseEventSink s = sink) {
       s.send(sse.newEventBuilder().data(MESSAGE).reconnectDelay(3000L).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -163,8 +148,6 @@ public class ServiceUnavailableResource {
     try (SseEventSink s = sink) {
       s.send(
           (OutboundSseEvent) new OutboundSSEEventImpl(MESSAGE).setDelay(20000));
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 }

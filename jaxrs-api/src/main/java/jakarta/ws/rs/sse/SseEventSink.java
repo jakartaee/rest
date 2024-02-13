@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,7 +16,6 @@
 
 package jakarta.ws.rs.sse;
 
-import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
 /**
@@ -72,8 +71,7 @@ public interface SseEventSink extends AutoCloseable {
      * <p>
      * Subsequent calls have no effect and are ignored. Once the {@link SseEventSink} is closed, invoking any method other
      * than this one and {@link #isClosed()} would result in an {@link IllegalStateException} being thrown.
-     * @throws  IOException  if an I/O error occurs.
      */
     @Override
-    void close() throws IOException;
+    void close();
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -25,9 +25,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.sse.Sse;
 import jakarta.ws.rs.sse.SseEventSink;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Path("close")
 public class CloseResource {
@@ -35,8 +32,6 @@ public class CloseResource {
   private static volatile boolean exception = false;
 
   private static volatile boolean isClosed = false;
-
-  private static final Logger LOG = Logger.getLogger(CloseResource.class.getName());
 
   @GET
   @Path("reset")
@@ -46,8 +41,6 @@ public class CloseResource {
     isClosed = false;
     try (SseEventSink s = sink) {
       s.send(sse.newEvent("RESET"));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
     }
   }
 
@@ -59,19 +52,15 @@ public class CloseResource {
       public void run() {
         SseEventSink s = sink;
         s.send(sse.newEvent(SSEMessage.MESSAGE));
-        try {
-          s.close();
-          isClosed = s.isClosed();
-          if (!isClosed)
-            return;
-          s.close();
-          isClosed = s.isClosed();
-          if (!isClosed)
-            return;
-          s.close();
-        } catch (IOException e) {
-          //ignore this exception and isClosed will be checked later.
-        }
+        s.close();
+        isClosed = s.isClosed();
+        if (!isClosed)
+          return;
+        s.close();
+        isClosed = s.isClosed();
+        if (!isClosed)
+          return;
+        s.close();
         isClosed = s.isClosed();
         if (!isClosed)
           return;
@@ -99,8 +88,6 @@ public class CloseResource {
         return;
       }
       s.send(sse.newEvent("CHECK"));
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 

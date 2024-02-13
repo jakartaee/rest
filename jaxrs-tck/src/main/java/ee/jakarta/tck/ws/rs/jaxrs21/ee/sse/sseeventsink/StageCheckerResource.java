@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,7 +18,6 @@ package ee.jakarta.tck.ws.rs.jaxrs21.ee.sse.sseeventsink;
 
 import static ee.jakarta.tck.ws.rs.jaxrs21.ee.sse.SSEJAXRSClient.MESSAGE;
 
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 import jakarta.ws.rs.GET;
@@ -35,7 +34,7 @@ public class StageCheckerResource {
 
   @GET
   @Produces(MediaType.SERVER_SENT_EVENTS)
-  public void send(@Context SseEventSink sink, @Context Sse sse) throws IOException{
+  public void send(@Context SseEventSink sink, @Context Sse sse) {
     try (SseEventSink s = sink) {
       CompletableFuture<?> stage = s.send(sse.newEvent(MESSAGE))
           .toCompletableFuture();
@@ -49,8 +48,6 @@ public class StageCheckerResource {
         }
       }
       s.send(sse.newEvent(DONE));
-    } catch (IOException e) {
-      e.printStackTrace();
     }
   }
 }

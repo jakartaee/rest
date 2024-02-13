@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,7 +16,6 @@
 
 package ee.jakarta.tck.ws.rs.jaxrs21.ee.sse.sseeventsink;
 
-import ee.jakarta.tck.ws.rs.jaxrs21.ee.sse.sseeventsource.ServiceUnavailableResource;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -24,8 +23,6 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 
 import ee.jakarta.tck.ws.rs.common.impl.SinglevaluedMap;
@@ -49,7 +46,7 @@ import jakarta.xml.bind.JAXBElement;
 @Path("mbw")
 public class MBWCheckResource {
   static final String MESSAGE = SSEMessage.MESSAGE;
-  private static final Logger LOG = Logger.getLogger(MBWCheckResource.class.getName());
+
   @GET
   @Path("boolean")
   @Produces(MediaType.SERVER_SENT_EVENTS)
@@ -57,8 +54,6 @@ public class MBWCheckResource {
     try (SseEventSink s = sink) {
       s.send(sse.newEventBuilder().data(true)
           .mediaType(MediaType.TEXT_PLAIN_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -69,8 +64,6 @@ public class MBWCheckResource {
     try (SseEventSink s = sink) {
       s.send(sse.newEventBuilder().data(MESSAGE.getBytes())
           .mediaType(MediaType.WILDCARD_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -81,8 +74,6 @@ public class MBWCheckResource {
     try (SseEventSink s = sink) {
       s.send(sse.newEventBuilder().data(MESSAGE.charAt(0))
           .mediaType(MediaType.TEXT_PLAIN_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -94,8 +85,6 @@ public class MBWCheckResource {
       s.send(sse.newEventBuilder()
           .data(new StringDataSource(MESSAGE, MediaType.TEXT_PLAIN_TYPE))
           .mediaType(MediaType.WILDCARD_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -106,8 +95,6 @@ public class MBWCheckResource {
     try (SseEventSink s = sink) {
       s.send(sse.newEventBuilder().data(Double.MAX_VALUE)
           .mediaType(MediaType.TEXT_PLAIN_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -128,8 +115,6 @@ public class MBWCheckResource {
         s.send(sse.newEvent(e.getMessage()));
         throw new RuntimeException(e); // log to server log
       }
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -141,8 +126,6 @@ public class MBWCheckResource {
       s.send(sse.newEventBuilder()
           .data(new ByteArrayInputStream(MESSAGE.getBytes()))
           .mediaType(MediaType.WILDCARD_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -153,8 +136,6 @@ public class MBWCheckResource {
     try (SseEventSink s = sink) {
       s.send(sse.newEventBuilder().data(Integer.MIN_VALUE)
           .mediaType(MediaType.TEXT_PLAIN_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -167,8 +148,6 @@ public class MBWCheckResource {
           String.class, MESSAGE);
       s.send(sse.newEventBuilder().data(element)
           .mediaType(MediaType.APPLICATION_XML_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -181,8 +160,6 @@ public class MBWCheckResource {
       map.add("name", MESSAGE);
       s.send(sse.newEventBuilder().data(map)
           .mediaType(MediaType.APPLICATION_FORM_URLENCODED_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -195,8 +172,6 @@ public class MBWCheckResource {
           .data(new InputStreamReader(
               new ByteArrayInputStream(MESSAGE.getBytes())))
           .mediaType(MediaType.WILDCARD_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -209,8 +184,6 @@ public class MBWCheckResource {
       StringStreamingOutput output = new StringStreamingOutput(MESSAGE);
       s.send(sse.newEventBuilder().data(output)
           .mediaType(MediaType.WILDCARD_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -221,8 +194,6 @@ public class MBWCheckResource {
     try (SseEventSink s = sink) {
       s.send(sse.newEventBuilder().data(MESSAGE)
           .mediaType(MediaType.WILDCARD_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 
@@ -234,8 +205,6 @@ public class MBWCheckResource {
     try (SseEventSink s = sink) {
       s.send(sse.newEventBuilder().data(new StringSource(MESSAGE))
           .mediaType(MediaType.TEXT_XML_TYPE).build());
-    } catch (IOException e) {
-      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
     }
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2024 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -53,7 +53,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Disabled;
+
 /*
  * @class.setup_props: webServerHost;
  *                     webServerPort;
@@ -1103,7 +1103,6 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
-  @Disabled
   public void setEntityStreamTest() throws Fault {
     setProperty(Property.SEARCH_STRING, ResponseFilter.ENTITY);
     setProperty(Property.SEARCH_STRING, "OK");
@@ -1122,7 +1121,6 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
-  @Disabled
   public void setStatusTest() throws Fault {
     for (Response.Status status : Response.Status.values()) {
       String content = String.valueOf(status.getStatusCode());
@@ -1144,7 +1142,6 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
-  @Disabled
   public void setStatusInfoTest() throws Fault {
     for (Response.Status status : Response.Status.values()) {
       String content = String.valueOf(status.getStatusCode());

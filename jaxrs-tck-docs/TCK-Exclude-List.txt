@@ -76,9 +76,6 @@ ee/jakarta/tck/ws/rs/jaxrs21/ee/client/executor/async/JAXRSClientIT.java#traceWi
 ee/jakarta/tck/ws/rs/jaxrs21/ee/client/executor/async/JAXRSClientIT.java#traceWithStringCallbackWhileServerWaitTest
 ee/jakarta/tck/ws/rs/jaxrs21/ee/client/executor/async/JAXRSClientIT.java#traceWithStringClassWhileServerWaitTest
 
-# https://github.com/jakartaee/rest/issues/1162
-ee/jakarta/tck/ws/rs/jaxrs21/ee/sse/ssebroadcaster/JAXRSClientIT.java#sseBroadcastTest
-
 #
 #
 ee/jakarta/tck/ws/rs/jaxrs21/ee/sse/sseeventsource/JAXRSClientIT.java#connectionLostForDefault500msTest
@@ -158,6 +155,3 @@ ee/jakarta/tck/ws/rs/jaxrs21/ee/client/rxinvoker/JAXRSClientIT.java#traceWithGen
 
 # https://github.com/jakartaee/rest/issues/1138
 ee/jakarta/tck/ws/rs/ee/rs/core/uriinfo/JAXRSClientIT#getNormalizedUriTest
-
-# https://github.com/jakartaee/rest/issues/1163
-ee/jakarta/tck/ws/rs/ee/rs/container/responsecontext/JAXRSClientIT#setEntityStreamTest

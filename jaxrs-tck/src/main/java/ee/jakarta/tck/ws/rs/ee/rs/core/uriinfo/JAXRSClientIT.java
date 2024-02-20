@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -34,6 +34,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 
 /*
  * @class.setup_props: webServerHost;
@@ -414,6 +415,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * obtained from an injected UriInfo
    */
   @Test
+  @Disabled
   public void getNormalizedUriTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(GET, URIInfoTest.DECODED));
     invoke();

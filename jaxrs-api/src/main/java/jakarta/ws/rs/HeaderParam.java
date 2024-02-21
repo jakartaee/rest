@@ -22,6 +22,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import jakarta.inject.Qualifier;
+
 /**
  * Binds the value(s) of a HTTP header to a resource method parameter, resource class field, or resource class bean
  * property. A default value can be specified using the {@link DefaultValue} annotation.
@@ -58,6 +60,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface HeaderParam {
 
     /**

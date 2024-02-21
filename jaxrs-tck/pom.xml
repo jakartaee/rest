@@ -38,7 +38,17 @@
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>${project.version}</version>
+            <!-- Used so the TCK version can be changed without needing to change the API version -->
+            <version>${project.parent.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
         </dependency>
 
         <dependency>
@@ -97,12 +107,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.netbeans.tools</groupId>
-            <artifactId>sigtest-maven-plugin</artifactId>
-            <version>1.4</version>
-        </dependency>
-
         <!-- Test Dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -147,9 +151,9 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.netbeans.tools</groupId>
+                        <groupId>jakarta.tck</groupId>
                         <artifactId>sigtest-maven-plugin</artifactId>
-                        <version>1.4</version>
+                        <version>2.1</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -158,10 +162,16 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <FileName>${project.build.directory}/jakarta.ws.rs.sig_${project.parent.version}</FileName>
                             <packages>
-                                jakarta.ws.rs,jakarta.ws.rs.client,jakarta.ws.rs.core,jakarta.ws.rs.container,jakarta.ws.rs.ext,jakarta.ws.rs.sse
+                                jakarta.ws.rs,
+                                jakarta.ws.rs.client,
+                                jakarta.ws.rs.core,
+                                jakarta.ws.rs.container,
+                                jakarta.ws.rs.ext,
+                                jakarta.ws.rs.sse
                             </packages>
+                            <attach>false</attach>
+                            <sigfile>${project.build.directory}/jakarta.ws.rs.sig_${project.parent.version}</sigfile>
                         </configuration>
                     </plugin>
                 </plugins>

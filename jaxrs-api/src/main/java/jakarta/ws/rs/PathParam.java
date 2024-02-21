@@ -22,6 +22,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import jakarta.inject.Qualifier;
+
 /**
  * Binds the value of a URI template parameter or a path segment containing the template parameter to a resource method
  * parameter, resource class field, or resource class bean property. The value is URL decoded unless this is disabled
@@ -67,6 +69,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface PathParam {
 
     /**

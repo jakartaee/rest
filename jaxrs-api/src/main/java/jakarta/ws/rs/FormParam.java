@@ -22,6 +22,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import jakarta.inject.Qualifier;
+
 /**
  * Binds the value(s) of a form parameter contained within a request entity body to a resource method parameter. Values
  * are URL decoded unless this is disabled using the {@link Encoded} annotation. A default value can be specified using
@@ -66,6 +68,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface FormParam {
 
     /**

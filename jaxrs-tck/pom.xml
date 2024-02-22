@@ -97,12 +97,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.netbeans.tools</groupId>
-            <artifactId>sigtest-maven-plugin</artifactId>
-            <version>1.4</version>
-        </dependency>
-
         <!-- Test Dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -147,9 +141,9 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.netbeans.tools</groupId>
+                        <groupId>jakarta.tck</groupId>
                         <artifactId>sigtest-maven-plugin</artifactId>
-                        <version>1.4</version>
+                        <version>2.2</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -158,10 +152,16 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <FileName>${project.build.directory}/jakarta.ws.rs.sig_${project.parent.version}</FileName>
+                            <sigfile>${project.build.directory}/jakarta.ws.rs.sig_${project.parent.version}</sigfile>
                             <packages>
-                                jakarta.ws.rs,jakarta.ws.rs.client,jakarta.ws.rs.core,jakarta.ws.rs.container,jakarta.ws.rs.ext,jakarta.ws.rs.sse
+                                jakarta.ws.rs,
+                                jakarta.ws.rs.client,
+                                jakarta.ws.rs.core,
+                                jakarta.ws.rs.container,
+                                jakarta.ws.rs.ext,
+                                jakarta.ws.rs.sse
                             </packages>
+                            <attach>false</attach>
                         </configuration>
                     </plugin>
                 </plugins>

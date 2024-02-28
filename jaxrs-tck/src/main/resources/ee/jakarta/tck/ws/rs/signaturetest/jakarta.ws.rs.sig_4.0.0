@@ -1,5 +1,5 @@
 #Signature file v4.1
-#Version 3.1.0
+#Version 4.0.0
 
 CLSS public abstract interface !annotation jakarta.ws.rs.ApplicationPath
  anno 0 java.lang.annotation.Documented()
@@ -507,6 +507,7 @@ supr java.lang.Object
 hcls CreateErrorMessageAction
 
 CLSS public abstract interface jakarta.ws.rs.client.ClientRequestContext
+meth public abstract boolean containsHeaderString(java.lang.String,java.lang.String,java.util.function.Predicate<java.lang.String>)
 meth public abstract boolean hasEntity()
 meth public abstract jakarta.ws.rs.client.Client getClient()
 meth public abstract jakarta.ws.rs.core.Configuration getConfiguration()
@@ -536,12 +537,14 @@ meth public abstract void setEntityStream(java.io.OutputStream)
 meth public abstract void setMethod(java.lang.String)
 meth public abstract void setProperty(java.lang.String,java.lang.Object)
 meth public abstract void setUri(java.net.URI)
+meth public boolean containsHeaderString(java.lang.String,java.util.function.Predicate<java.lang.String>)
 meth public boolean hasProperty(java.lang.String)
 
 CLSS public abstract interface jakarta.ws.rs.client.ClientRequestFilter
 meth public abstract void filter(jakarta.ws.rs.client.ClientRequestContext) throws java.io.IOException
 
 CLSS public abstract interface jakarta.ws.rs.client.ClientResponseContext
+meth public abstract boolean containsHeaderString(java.lang.String,java.lang.String,java.util.function.Predicate<java.lang.String>)
 meth public abstract boolean hasEntity()
 meth public abstract boolean hasLink(java.lang.String)
 meth public abstract int getLength()
@@ -564,6 +567,7 @@ meth public abstract java.util.Set<java.lang.String> getAllowedMethods()
 meth public abstract void setEntityStream(java.io.InputStream)
 meth public abstract void setStatus(int)
 meth public abstract void setStatusInfo(jakarta.ws.rs.core.Response$StatusType)
+meth public boolean containsHeaderString(java.lang.String,java.util.function.Predicate<java.lang.String>)
 
 CLSS public abstract interface jakarta.ws.rs.client.ClientResponseFilter
 meth public abstract void filter(jakarta.ws.rs.client.ClientRequestContext,jakarta.ws.rs.client.ClientResponseContext) throws java.io.IOException
@@ -743,6 +747,8 @@ meth public abstract jakarta.ws.rs.client.WebTarget resolveTemplatesFromEncoded(
 meth public abstract jakarta.ws.rs.core.UriBuilder getUriBuilder()
 meth public abstract java.net.URI getUri()
 
+CLSS abstract interface jakarta.ws.rs.client.package-info
+
 CLSS public abstract interface jakarta.ws.rs.container.AsyncResponse
 fld public final static long NO_TIMEOUT = 0
 meth public abstract !varargs java.util.Map<java.lang.Class<?>,java.util.Collection<java.lang.Class<?>>> register(java.lang.Class<?>,java.lang.Class<?>[])
@@ -767,6 +773,7 @@ CLSS public abstract interface jakarta.ws.rs.container.ConnectionCallback
 meth public abstract void onDisconnect(jakarta.ws.rs.container.AsyncResponse)
 
 CLSS public abstract interface jakarta.ws.rs.container.ContainerRequestContext
+meth public abstract boolean containsHeaderString(java.lang.String,java.lang.String,java.util.function.Predicate<java.lang.String>)
 meth public abstract boolean hasEntity()
 meth public abstract int getLength()
 meth public abstract jakarta.ws.rs.core.MediaType getMediaType()
@@ -792,12 +799,14 @@ meth public abstract void setProperty(java.lang.String,java.lang.Object)
 meth public abstract void setRequestUri(java.net.URI)
 meth public abstract void setRequestUri(java.net.URI,java.net.URI)
 meth public abstract void setSecurityContext(jakarta.ws.rs.core.SecurityContext)
+meth public boolean containsHeaderString(java.lang.String,java.util.function.Predicate<java.lang.String>)
 meth public boolean hasProperty(java.lang.String)
 
 CLSS public abstract interface jakarta.ws.rs.container.ContainerRequestFilter
 meth public abstract void filter(jakarta.ws.rs.container.ContainerRequestContext) throws java.io.IOException
 
 CLSS public abstract interface jakarta.ws.rs.container.ContainerResponseContext
+meth public abstract boolean containsHeaderString(java.lang.String,java.lang.String,java.util.function.Predicate<java.lang.String>)
 meth public abstract boolean hasEntity()
 meth public abstract boolean hasLink(java.lang.String)
 meth public abstract int getLength()
@@ -827,6 +836,7 @@ meth public abstract void setEntity(java.lang.Object,java.lang.annotation.Annota
 meth public abstract void setEntityStream(java.io.OutputStream)
 meth public abstract void setStatus(int)
 meth public abstract void setStatusInfo(jakarta.ws.rs.core.Response$StatusType)
+meth public boolean containsHeaderString(java.lang.String,java.util.function.Predicate<java.lang.String>)
 
 CLSS public abstract interface jakarta.ws.rs.container.ContainerResponseFilter
 meth public abstract void filter(jakarta.ws.rs.container.ContainerRequestContext,jakarta.ws.rs.container.ContainerResponseContext) throws java.io.IOException
@@ -856,6 +866,8 @@ intf java.lang.annotation.Annotation
 
 CLSS public abstract interface jakarta.ws.rs.container.TimeoutHandler
 meth public abstract void handleTimeout(jakarta.ws.rs.container.AsyncResponse)
+
+CLSS abstract interface jakarta.ws.rs.container.package-info
 
 CLSS public abstract jakarta.ws.rs.core.AbstractMultivaluedMap<%0 extends java.lang.Object, %1 extends java.lang.Object>
 cons public init(java.util.Map<{jakarta.ws.rs.core.AbstractMultivaluedMap%0},java.util.List<{jakarta.ws.rs.core.AbstractMultivaluedMap%1}>>)
@@ -1114,6 +1126,7 @@ fld public final static java.lang.String SET_COOKIE = "Set-Cookie"
 fld public final static java.lang.String USER_AGENT = "User-Agent"
 fld public final static java.lang.String VARY = "Vary"
 fld public final static java.lang.String WWW_AUTHENTICATE = "WWW-Authenticate"
+meth public abstract boolean containsHeaderString(java.lang.String,java.lang.String,java.util.function.Predicate<java.lang.String>)
 meth public abstract int getLength()
 meth public abstract jakarta.ws.rs.core.MediaType getMediaType()
 meth public abstract jakarta.ws.rs.core.MultivaluedMap<java.lang.String,java.lang.String> getRequestHeaders()
@@ -1124,6 +1137,7 @@ meth public abstract java.util.List<java.lang.String> getRequestHeader(java.lang
 meth public abstract java.util.List<java.util.Locale> getAcceptableLanguages()
 meth public abstract java.util.Locale getLanguage()
 meth public abstract java.util.Map<java.lang.String,jakarta.ws.rs.core.Cookie> getCookies()
+meth public boolean containsHeaderString(java.lang.String,java.util.function.Predicate<java.lang.String>)
 
 CLSS public abstract jakarta.ws.rs.core.Link
 cons public init()
@@ -1199,6 +1213,7 @@ fld public final static jakarta.ws.rs.core.MediaType APPLICATION_JSON_PATCH_JSON
 fld public final static jakarta.ws.rs.core.MediaType APPLICATION_JSON_TYPE
 fld public final static jakarta.ws.rs.core.MediaType APPLICATION_OCTET_STREAM_TYPE
 fld public final static jakarta.ws.rs.core.MediaType APPLICATION_SVG_XML_TYPE
+ anno 0 java.lang.Deprecated(boolean forRemoval=true, java.lang.String since="")
 fld public final static jakarta.ws.rs.core.MediaType APPLICATION_XHTML_XML_TYPE
 fld public final static jakarta.ws.rs.core.MediaType APPLICATION_XML_TYPE
 fld public final static jakarta.ws.rs.core.MediaType MULTIPART_FORM_DATA_TYPE
@@ -1213,6 +1228,7 @@ fld public final static java.lang.String APPLICATION_JSON = "application/json"
 fld public final static java.lang.String APPLICATION_JSON_PATCH_JSON = "application/json-patch+json"
 fld public final static java.lang.String APPLICATION_OCTET_STREAM = "application/octet-stream"
 fld public final static java.lang.String APPLICATION_SVG_XML = "application/svg+xml"
+ anno 0 java.lang.Deprecated(boolean forRemoval=true, java.lang.String since="")
 fld public final static java.lang.String APPLICATION_XHTML_XML = "application/xhtml+xml"
 fld public final static java.lang.String APPLICATION_XML = "application/xml"
 fld public final static java.lang.String CHARSET_PARAMETER = "charset"
@@ -1636,6 +1652,8 @@ meth public abstract java.util.List<jakarta.ws.rs.core.Variant> build()
 meth public static jakarta.ws.rs.core.Variant$VariantListBuilder newInstance()
 supr java.lang.Object
 
+CLSS abstract interface jakarta.ws.rs.core.package-info
+
 CLSS public abstract interface jakarta.ws.rs.ext.ContextResolver<%0 extends java.lang.Object>
 meth public abstract {jakarta.ws.rs.ext.ContextResolver%0} getContext(java.lang.Class<?>)
 
@@ -1739,6 +1757,10 @@ meth public abstract void proceed() throws java.io.IOException
 meth public abstract void setEntity(java.lang.Object)
 meth public abstract void setOutputStream(java.io.OutputStream)
 
+CLSS abstract interface jakarta.ws.rs.ext.package-info
+
+CLSS abstract interface jakarta.ws.rs.package-info
+
 CLSS public abstract interface jakarta.ws.rs.sse.InboundSseEvent
 intf jakarta.ws.rs.sse.SseEvent
 meth public abstract <%0 extends java.lang.Object> {%%0} readData(jakarta.ws.rs.core.GenericType<{%%0}>)
@@ -1795,7 +1817,7 @@ CLSS public abstract interface jakarta.ws.rs.sse.SseEventSink
 intf java.lang.AutoCloseable
 meth public abstract boolean isClosed()
 meth public abstract java.util.concurrent.CompletionStage<?> send(jakarta.ws.rs.sse.OutboundSseEvent)
-meth public abstract void close()
+meth public abstract void close() throws java.io.IOException
 
 CLSS public abstract interface jakarta.ws.rs.sse.SseEventSource
 innr public abstract static Builder
@@ -1817,6 +1839,8 @@ meth protected abstract jakarta.ws.rs.sse.SseEventSource$Builder target(jakarta.
 meth public abstract jakarta.ws.rs.sse.SseEventSource build()
 meth public abstract jakarta.ws.rs.sse.SseEventSource$Builder reconnectingEvery(long,java.util.concurrent.TimeUnit)
 supr java.lang.Object
+
+CLSS abstract interface jakarta.ws.rs.sse.package-info
 
 CLSS public abstract jakarta.xml.bind.annotation.adapters.XmlAdapter<%0 extends java.lang.Object, %1 extends java.lang.Object>
 cons protected init()
@@ -1850,8 +1874,10 @@ meth public abstract !hasdefault java.lang.String since()
 
 CLSS public abstract java.lang.Enum<%0 extends java.lang.Enum<{java.lang.Enum%0}>>
 cons protected init(java.lang.String,int)
+innr public final static EnumDesc
 intf java.io.Serializable
 intf java.lang.Comparable<{java.lang.Enum%0}>
+intf java.lang.constant.Constable
 meth protected final java.lang.Object clone() throws java.lang.CloneNotSupportedException
 meth protected final void finalize()
 meth public final boolean equals(java.lang.Object)
@@ -1860,6 +1886,7 @@ meth public final int hashCode()
 meth public final int ordinal()
 meth public final java.lang.Class<{java.lang.Enum%0}> getDeclaringClass()
 meth public final java.lang.String name()
+meth public final java.util.Optional<java.lang.Enum$EnumDesc<{java.lang.Enum%0}>> describeConstable()
 meth public java.lang.String toString()
 meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} valueOf(java.lang.Class<{%%0}>,java.lang.String)
 supr java.lang.Object
@@ -1954,6 +1981,9 @@ CLSS public abstract interface !annotation java.lang.annotation.Target
 intf java.lang.annotation.Annotation
 meth public abstract java.lang.annotation.ElementType[] value()
 
+CLSS public abstract interface java.lang.constant.Constable
+meth public abstract java.util.Optional<? extends java.lang.constant.ConstantDesc> describeConstable()
+
 CLSS public abstract interface java.util.Map<%0 extends java.lang.Object, %1 extends java.lang.Object>
 innr public abstract interface static Entry
 meth public !varargs static <%0 extends java.lang.Object, %1 extends java.lang.Object> java.util.Map<{%%0},{%%1}> ofEntries(java.util.Map$Entry<? extends {%%0},? extends {%%1}>[])
@@ -1996,3 +2026,4 @@ meth public {java.util.Map%1} getOrDefault(java.lang.Object,{java.util.Map%1})
 meth public {java.util.Map%1} merge({java.util.Map%0},{java.util.Map%1},java.util.function.BiFunction<? super {java.util.Map%1},? super {java.util.Map%1},? extends {java.util.Map%1}>)
 meth public {java.util.Map%1} putIfAbsent({java.util.Map%0},{java.util.Map%1})
 meth public {java.util.Map%1} replace({java.util.Map%0},{java.util.Map%1})
+

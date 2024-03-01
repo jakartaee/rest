@@ -87,9 +87,17 @@
         <apidocs.title>Jakarta RESTful Web Services ${spec.version} API Specification ${spec.version.revision}</apidocs.title>
         <legal.doc.folder>${project.basedir}</legal.doc.folder>
 
-        <maven.bundle.plugin.version>3.5.0</maven.bundle.plugin.version>
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-        <maven.javadoc.plugin.version>3.1.0</maven.javadoc.plugin.version>
+        <build.helper.maven.plugin.version>3.5.0</build.helper.maven.plugin.version>
+        <buildernumber.maven.plugin.version>3.2.0</buildernumber.maven.plugin.version>
+        <glassfish.copyright.maven.plugin.version>2.4</glassfish.copyright.maven.plugin.version>
+        <maven.bundle.plugin.version>5.1.9</maven.bundle.plugin.version>
+        <maven.checkstyle.plugin.version>3.3.1</maven.checkstyle.plugin.version>
+        <maven.compiler.plugin.version>3.12.1</maven.compiler.plugin.version>
+        <maven.jar.plugin.version>3.3.0</maven.jar.plugin.version>
+        <maven.jxr.plugin.version>3.3.2</maven.jxr.plugin.version>
+        <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
+        <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
+        <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
 
         <api.package>jakarta.ws.rs</api.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -104,11 +112,11 @@
         <concurrent.api.version>2.0.0</concurrent.api.version>
         <xml.binding.api.version>4.0.0</xml.binding.api.version>
         <cdi.api.version>3.0.0</cdi.api.version>
-        <junit.version>5.8.2</junit.version>
+        <junit.version>5.10.2</junit.version>
         <org.glassfish.jaxb.version>4.0.3</org.glassfish.jaxb.version>
         <com.sun.istack.version>4.1.2</com.sun.istack.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <mockito.version>3.6.0</mockito.version>
+        <mockito.version>5.11.0</mockito.version>
 
         <!-- Documentation versions -->
         <asciidoctorj.maven.plugin.version>3.0.0</asciidoctorj.maven.plugin.version>
@@ -308,20 +316,20 @@
             <plugins>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.11.0</version>
+                    <version>${maven.compiler.plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>${maven.jar.plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.2.5</version>
+                    <version>${maven.surefire.plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>buildnumber-maven-plugin</artifactId>
-                    <version>1.4</version>
+                    <version>${buildernumber.maven.plugin.version}</version>
                     <configuration>
                         <format>{0,date,MM/dd/yyyy hh:mm aa}</format>
                         <items>
@@ -395,7 +403,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.2.1</version>
+                    <version>${maven.source.plugin.version}</version>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -408,7 +416,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.2.0</version>
+                    <version>${build.helper.maven.plugin.version}</version>
                     <executions>
                         <execution>
                             <id>add-legal-resource</id>
@@ -433,7 +441,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-jxr-plugin</artifactId>
-                    <version>2.5</version>
+                    <version>${maven.jxr.plugin.version}</version>
                     <executions>
                         <execution>
                             <goals>
@@ -445,7 +453,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>3.1.2</version>
+                    <version>${maven.checkstyle.plugin.version}</version>
                     <configuration>
                         <outputDirectory>${project.build.directory}/checkstyle</outputDirectory>
                         <outputFile>${project.build.directory}/checkstyle/checkstyle-result.xml</outputFile>
@@ -464,7 +472,7 @@
                 <plugin>
                     <groupId>org.glassfish.copyright</groupId>
                     <artifactId>glassfish-copyright-maven-plugin</artifactId>
-                    <version>1.39</version>
+                    <version>${glassfish.copyright.maven.plugin.version}</version>
                     <configuration>
                         <excludeFile>${basedir}/../etc/config/copyright-exclude</excludeFile>
                         <!--svn|mercurial|git - defaults to svn-->

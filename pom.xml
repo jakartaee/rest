@@ -109,6 +109,11 @@
         <com.sun.istack.version>4.1.2</com.sun.istack.version>
         <hamcrest.version>2.2</hamcrest.version>
         <mockito.version>3.6.0</mockito.version>
+
+        <!-- Documentation versions -->
+        <asciidoctorj.maven.plugin.version>3.0.0</asciidoctorj.maven.plugin.version>
+        <asciidoctorj.version>2.5.11</asciidoctorj.version>
+        <asciidoctorj.pdf.version>2.3.13</asciidoctorj.pdf.version>
     </properties>
 
     <modules>

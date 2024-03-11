@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2011, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,18 +16,11 @@
 
 package jakarta.ws.rs.core;
 
-import javax.xml.namespace.QName;
 import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Map.Entry;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
-import jakarta.xml.bind.annotation.XmlAnyAttribute;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * <p>
@@ -401,188 +394,5 @@ public abstract class Link {
          * @see #baseUri(java.net.URI)
          */
         public Link buildRelativized(URI uri, Object... values);
-    }
-
-    /**
-     * Value type for {@link jakarta.ws.rs.core.Link} that can be marshalled and
-     * unmarshalled by JAXB.
-     *
-     * Note that usage of this class requires the Jakarta XML Binding API and an implementation. The Jakarta RESTful Web
-     * Services implementation is not required to provide these dependencies.
-     *
-     * @see jakarta.ws.rs.core.Link.JaxbAdapter
-     * @since 2.0
-     * @deprecated
-     */
-    @Deprecated
-    public static class JaxbLink {
-
-        private URI uri;
-        private Map<QName, Object> params;
-
-        /**
-         * Default constructor needed during unmarshalling.
-         */
-        public JaxbLink() {
-        }
-
-        /**
-         * Construct an instance from a URI and no parameters.
-         *
-         * @param uri underlying URI.
-         */
-        public JaxbLink(final URI uri) {
-            this.uri = uri;
-        }
-
-        /**
-         * Construct an instance from a URI and some parameters.
-         *
-         * @param uri underlying URI.
-         * @param params parameters of this link.
-         */
-        public JaxbLink(final URI uri, final Map<QName, Object> params) {
-            this.uri = uri;
-            this.params = params;
-        }
-
-        /**
-         * Get the underlying URI for this link.
-         *
-         * @return underlying URI.
-         */
-        @XmlAttribute(name = "href")
-        public URI getUri() {
-            return uri;
-        }
-
-        /**
-         * Get the parameter map for this link.
-         *
-         * @return parameter map.
-         */
-        @XmlAnyAttribute
-        public Map<QName, Object> getParams() {
-            if (params == null) {
-                params = new HashMap<QName, Object>();
-            }
-            return params;
-        }
-
-        /**
-         * Set the underlying URI for this link.
-         *
-         * This setter is needed for JAXB unmarshalling.
-         */
-        void setUri(final URI uri) {
-            this.uri = uri;
-        }
-
-        /**
-         * Set the parameter map for this link.
-         *
-         * This setter is needed for JAXB unmarshalling.
-         */
-        void setParams(final Map<QName, Object> params) {
-            this.params = params;
-        }
-
-        @Override
-        public boolean equals(final Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (!(o instanceof JaxbLink)) {
-                return false;
-            }
-
-            JaxbLink jaxbLink = (JaxbLink) o;
-
-            if (uri != null ? !uri.equals(jaxbLink.uri) : jaxbLink.uri != null) {
-                return false;
-            }
-
-            if (params == jaxbLink.params) {
-                return true;
-            }
-            if (params == null) {
-                // if this.params is 'null', consider other.params equal to empty
-                return jaxbLink.params.isEmpty();
-            }
-            if (jaxbLink.params == null) {
-                // if other.params is 'null', consider this.params equal to empty
-                return params.isEmpty();
-            }
-
-            return params.equals(jaxbLink.params);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(uri, params);
-        }
-
-    }
-
-    /**
-     * An implementation of JAXB {@link jakarta.xml.bind.annotation.adapters.XmlAdapter} that maps the JAX-RS
-     * {@link jakarta.ws.rs.core.Link} type to a value that can be marshalled and unmarshalled by JAXB. The following example
-     * shows how to use this adapter on a JAXB bean class:
-     *
-     * <pre>
-     * &#64;XmlRootElement
-     * public class MyModel {
-     *
-     *   private Link link;
-     *
-     *   &#64;XmlElement(name="link")
-     *   &#64;XmlJavaTypeAdapter(JaxbAdapter.class)
-     *   public Link getLink() {
-     *     return link;
-     *   }
-     *   ...
-     * }
-     * </pre>
-     *
-     * Note that usage of this class requires the Jakarta XML Binding API and an implementation. The Jakarta RESTful Web
-     * Services implementation is not required to provide these dependencies.
-     *
-     * @see jakarta.ws.rs.core.Link.JaxbLink
-     * @since 2.0
-     * @deprecated
-     */
-    @Deprecated
-    public static class JaxbAdapter extends XmlAdapter<JaxbLink, Link> {
-
-        /**
-         * Convert a {@link JaxbLink} into a {@link Link}.
-         *
-         * @param v instance of type {@link JaxbLink}.
-         * @return mapped instance of type {@link JaxbLink}
-         */
-        @Override
-        public Link unmarshal(final JaxbLink v) {
-            Link.Builder lb = Link.fromUri(v.getUri());
-            for (Entry<QName, Object> e : v.getParams().entrySet()) {
-                lb.param(e.getKey().getLocalPart(), e.getValue().toString());
-            }
-            return lb.build();
-        }
-
-        /**
-         * Convert a {@link Link} into a {@link JaxbLink}.
-         *
-         * @param v instance of type {@link Link}.
-         * @return mapped instance of type {@link JaxbLink}.
-         */
-        @Override
-        public JaxbLink marshal(final Link v) {
-            JaxbLink jl = new JaxbLink(v.getUri());
-            for (Entry<String, String> e : v.getParams().entrySet()) {
-                final String name = e.getKey();
-                jl.getParams().put(new QName("", name), e.getValue());
-            }
-            return jl;
-        }
     }
 }

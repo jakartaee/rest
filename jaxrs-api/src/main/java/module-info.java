@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -19,8 +19,6 @@
  */
 module jakarta.ws.rs {
 
-    requires static jakarta.xml.bind;
-
     requires java.logging;
 
     exports jakarta.ws.rs;
@@ -33,6 +31,4 @@ module jakarta.ws.rs {
     uses jakarta.ws.rs.client.ClientBuilder;
     uses jakarta.ws.rs.ext.RuntimeDelegate;
     uses jakarta.ws.rs.sse.SseEventSource.Builder;
-
-    opens jakarta.ws.rs.core to jakarta.xml.bind;
 }

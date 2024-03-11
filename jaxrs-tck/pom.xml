@@ -34,6 +34,15 @@
         <version>4.0.0-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <json.api.version>2.0.1</json.api.version>
+        <json.bind.api.version>2.0.0</json.bind.api.version>
+        <xml.bind.api.version>4.0.0</xml.bind.api.version>
+        <servlet.api.version>6.0.0</servlet.api.version>
+        <common.httpclient.version>3.1</common.httpclient.version>
+        <arquillian.version>1.8.0.Final</arquillian.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
@@ -44,13 +53,13 @@
         <dependency>
             <groupId>jakarta.json.bind</groupId>
             <artifactId>jakarta.json.bind-api</artifactId>
-            <version>2.0.0</version>
+            <version>${json.bind.api.version}</version>
         </dependency>
 
         <dependency>
             <groupId>jakarta.json</groupId>
             <artifactId>jakarta.json-api</artifactId>
-            <version>2.0.1</version>
+            <version>${json.api.version}</version>
         </dependency>
 
         <dependency>
@@ -61,7 +70,7 @@
         <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
+            <version>${common.httpclient.version}</version>
         </dependency>
 
         <dependency>
@@ -72,7 +81,7 @@
         <dependency>
             <groupId>org.jboss.arquillian.junit5</groupId>
             <artifactId>arquillian-junit5-container</artifactId>
-            <version>1.8.0.Final</version>
+            <version>${arquillian.version}</version>
         </dependency>
 
         <dependency>
@@ -83,6 +92,7 @@
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>${xml.bind.api.version}</version>
         </dependency>
 
         <dependency>
@@ -93,7 +103,7 @@
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
-            <version>6.0.0</version>
+            <version>${servlet.api.version}</version>
             <scope>provided</scope>
         </dependency>
 

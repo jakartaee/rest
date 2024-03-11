@@ -1,6 +1,6 @@
 ﻿////
 *******************************************************************
-* Copyright (c) 2019 Eclipse Foundation
+* Copyright (c) 2019, 2024 Eclipse Foundation
 *
 * This specification document is made available under the terms
 * of the Eclipse Foundation Specification License v1.0, which is
@@ -15,14 +15,13 @@ Applications are published in different ways depending on whether the
 application is run in a Java SE environment or within a container. This
 section describes the alternate means of publication.
 
-A compliant implementation MUST support both alternatives on Java SE.
-
 [[java-se]]
 ==== Java SE
 
 There are two alternative ways of publishing on Java SE:
 Creating SE endpoints directly or using the SE bootstrap API.
-Both are described in this section.
+Both are described in this section. Any compliant implementation that 
+supports either of these alternatives on Java SE MUST support both.
 
 [[se-endpoint]]
 ===== Java SE Endpoint

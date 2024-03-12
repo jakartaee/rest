@@ -166,8 +166,8 @@ public class MultipartSupportIT {
                             part.getHeaders().size();
                     Assertions.fail(msg);
                 }
-                Assertions.assertEquals("[Test1]", part.getHeaders().get("Header1").get(0));
-                Assertions.assertEquals("[Test2]", part.getHeaders().get("Header2").get(0));
+                Assertions.assertEquals("Test1", part.getHeaders().get("Header1").get(0));
+                Assertions.assertEquals("Test2", part.getHeaders().get("Header2").get(0));
             }
         }
     }

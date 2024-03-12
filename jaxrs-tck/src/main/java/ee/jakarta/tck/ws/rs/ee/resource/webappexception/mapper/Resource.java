@@ -91,6 +91,12 @@ public class Resource {
     throw new ClassCastException("ERROR");
   }
 
+  @GET
+  @Path("throwable")
+  public String throwThrowable() throws Throwable {
+    throw new Throwable("ERROR");
+  }
+
   IOException getIOException() {
     IOException ioe = new IOException("You should NOT see this message");
     return ioe;

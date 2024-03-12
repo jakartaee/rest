@@ -30,9 +30,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import jakarta.ws.rs.core.Response.Status;
 import ee.jakarta.tck.ws.rs.common.JAXRSCommonClient;
 import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
+import jakarta.ws.rs.core.Response.Status;
 
 /*
  * @class.setup_props: webServerHost;
@@ -311,5 +311,17 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       setProperty(Property.STATUS_CODE, getStatusCode(Status.FOUND));
       invoke();
     }
+  }
+
+  /*
+   * @testName: overrideDefaultExceptionMapperTest
+   * 
+   * @test_Strategy: The default ExceptionMapper must be able to be overridden.
+   */
+  @Test
+  public void overrideDefaultExceptionMapperTest() throws Fault {
+    setProperty(REQUEST, buildRequest(GET, "throwable"));
+    setProperty(STATUS_CODE, "512");
+    invoke();
   }
 }

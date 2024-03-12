@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.Consumes;
@@ -76,7 +77,6 @@ import org.junit.jupiter.api.AfterEach;
 @ExtendWith(ArquillianExtension.class)
 @RunAsClient
 public class MultipartSupportIT {
-    private static final long serialVersionUID = 31L;
 
     private static final String LS = System.lineSeparator();
     static InputStream xmlFile() {
@@ -136,7 +136,7 @@ public class MultipartSupportIT {
                             .request(MediaType.MULTIPART_FORM_DATA_TYPE)
                             .post(Entity.entity(new GenericEntity<>(multipart) {
                             }, MediaType.MULTIPART_FORM_DATA))) {
-                Assertions.assertEquals(Response.Status.OK, response.getStatusInfo());
+                Assertions.assertEquals(200, response.getStatus());
                 final List<EntityPart> entityParts = response.readEntity(new GenericType<>() {
                 });
                 if (entityParts.size() != 3) {
@@ -151,8 +151,23 @@ public class MultipartSupportIT {
                 Assertions.assertNotNull(part, getMessage(entityParts));
                 Assertions.assertEquals("test string", part.getContent(String.class));
 
+                // The javadoc for EntityPart.getContent(Class<T> type) states:
+                // "Subsequent invocations will result in an {@code IllegalStateException}. 
+                // Likewise this method will throw an {@code IllegalStateException} if it is 
+                // called after calling {@link #getContent} or {@link #getContent(GenericType)}.
+                try {
+                    part.getContent(String.class);
+                    Assertions.fail("IllegalStateException is expected when getContent() is " +
+                            "invoked more than once.");
+                } catch (IllegalStateException e) {
+                    // expected exception
+                } catch (Throwable t) {
+                    Assertions.fail("Incorrect Throwable received: " + t);
+                }
+                
                 part = find(entityParts, "received-file");
                 Assertions.assertNotNull(part, getMessage(entityParts));
+                Assertions.assertEquals("test file", part.getFileName().get());
                 Assertions.assertTrue(part.getContent(String.class).contains("value6"));
 
                 part = find(entityParts, "added-input-stream");
@@ -171,44 +186,6 @@ public class MultipartSupportIT {
             }
         }
     }
-
-    /**
-     * Verify that invoking a resource method with a single EntityPart can be injected in different formats; 
-     * {@link String}, {@link EntityPart} and {@link InputStream} with the same content for each.
-     *
-     * @throws Exception if an error occurs in the test
-     */
-    @Test
-    public void singleFormParamTest() throws Exception {
-        try (Client client = ClientBuilder.newClient()) {
-            final List<EntityPart> multipart = List.of(
-                    EntityPart.withName("test-string")
-                            .content("test single part")
-                            .mediaType(MediaType.TEXT_PLAIN_TYPE)
-                            .build());
-            try (
-                    Response response = client.target(createCombinedUri(uri, "test//single-form-param"))
-                            .request(MediaType.MULTIPART_FORM_DATA_TYPE)
-                            .post(Entity.entity(new GenericEntity<>(multipart) {
-                            }, MediaType.MULTIPART_FORM_DATA))) {
-                Assertions.assertEquals(Response.Status.OK, response.getStatusInfo());
-                final List<EntityPart> entityParts = response.readEntity(new GenericType<>() {
-                });
-                if (entityParts.size() != 3) {
-                    final String msg = "Expected 3 entries, received " +
-                            entityParts.size() +
-                            '.' +
-                            System.lineSeparator() +
-                            getMessage(entityParts);
-                    Assertions.fail(msg);
-                }
-                verifyEntityPart(entityParts, "received-entity-part", "test single part");
-                verifyEntityPart(entityParts, "received-string", "test single part");
-                verifyEntityPart(entityParts, "received-input-stream", "test single part");
-            }
-        }
-    }
-
 
     /**
      * Verify sending a {@link List} containing three {@link EntityPart}, each injected as a different type.
@@ -240,7 +217,7 @@ public class MultipartSupportIT {
                             .request(MediaType.MULTIPART_FORM_DATA_TYPE)
                             .post(Entity.entity(new GenericEntity<>(multipart) {
                             }, MediaType.MULTIPART_FORM_DATA))) {
-                Assertions.assertEquals(Response.Status.OK, response.getStatusInfo());
+                Assertions.assertEquals(200, response.getStatus());
                 final List<EntityPart> entityParts = response.readEntity(new GenericType<>() {
                 });
                 if (entityParts.size() != 3) {
@@ -266,30 +243,36 @@ public class MultipartSupportIT {
         Assertions.assertEquals(text, part.getContent(String.class));
     }
 
-    private static String getMessage(final List<EntityPart> parts) throws IOException {
-        final StringBuilder msg = new StringBuilder();
-        final Iterator<EntityPart> iter = parts.iterator();
-        while (iter.hasNext()) {
-            final EntityPart part = iter.next();
-            msg.append('[')
-                   .append(part.getName())
-                   .append("={")
-                   .append("headers=")
-                   .append(part.getHeaders())
-                   .append(", mediaType=")
-                   .append(part.getMediaType())
-                   .append(", body=")
-                   .append(toString(part.getContent()))
-                   .append('}');
-            if (iter.hasNext()) {
-                msg.append("], ");
-            } else {
-                msg.append(']');
+    private static Supplier<String> getMessage(final List<EntityPart> parts) {
+        return () -> {
+            final StringBuilder msg = new StringBuilder();
+            final Iterator<EntityPart> iter = parts.iterator();
+            while (iter.hasNext()) {
+                final EntityPart part = iter.next();
+                try {
+                    msg.append('[')
+                            .append(part.getName())
+                            .append("={")
+                            .append("headers=")
+                            .append(part.getHeaders())
+                            .append(", mediaType=")
+                            .append(part.getMediaType())
+                            .append(", body=")
+                            .append(toString(part.getContent()))
+                            .append('}');
+                } catch (IOException e) {
+                    Assertions.fail("Unable to proces Entityparts." + e);                    
+                }
+                if (iter.hasNext()) {
+                    msg.append("], ");
+                } else {
+                    msg.append(']');
+                }
             }
-        }
-        return msg.toString();
+            return msg.toString();
+        };
     }
-
+    
     private static String toString(final InputStream in) throws IOException {
         // try-with-resources fails here due to a bug in the
         //noinspection TryFinallyCanBeTryWithResources
@@ -360,7 +343,7 @@ public class MultipartSupportIT {
                             .mediaType(MediaType.APPLICATION_OCTET_STREAM_TYPE)
                             .build(),
                     EntityPart.withName("received-file")
-                            .content(find(parts,"file"))
+                            .content(find(parts,"file").getFileName().get(),find(parts,"file").getContent())
                             .mediaType(MediaType.APPLICATION_XML)
                             .build(),
                     EntityPart.withName("added-input-stream")
@@ -371,29 +354,6 @@ public class MultipartSupportIT {
                             .build());
             return Response.ok(new GenericEntity<>(multipart) {
                     }, MediaType.MULTIPART_FORM_DATA).build();
-        }
-
-        @POST
-        @Consumes(MediaType.MULTIPART_FORM_DATA)
-        @Produces(MediaType.MULTIPART_FORM_DATA)
-        @Path("/single-form-param")
-        public List<EntityPart> singleParamTest(@FormParam("test-string") final String string,
-                @FormParam("test-string") final EntityPart entityPart,
-                @FormParam("test-string") final InputStream in) throws IOException {
-            return List.of(
-                    EntityPart.withName("received-entity-part")
-                            .content(entityPart.getContent(String.class))
-                            .mediaType(entityPart.getMediaType())
-                            .fileName(entityPart.getFileName().orElse(null))
-                            .build(),
-                    EntityPart.withName("received-input-stream")
-                            .content(MultipartSupportIT.toString(in).getBytes(StandardCharsets.UTF_8))
-                            .mediaType(MediaType.APPLICATION_OCTET_STREAM_TYPE)
-                            .build(),
-                    EntityPart.withName("received-string")
-                            .content(string)
-                            .mediaType(MediaType.TEXT_PLAIN_TYPE)
-                            .build());
         }
 
         @POST

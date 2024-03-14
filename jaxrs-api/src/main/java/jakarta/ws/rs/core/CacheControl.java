@@ -54,6 +54,8 @@ public class CacheControl {
     private int maxAge = -1;
     private int sMaxAge = -1;
 
+    private int staleWhileRevalidate = -1;
+
     /**
      * Create a new instance of CacheControl. The new instance will have the following default settings:
      *
@@ -179,6 +181,14 @@ public class CacheControl {
         this.sMaxAge = smaxAge;
     }
 
+    /**
+     * Corresponds to the stale-while-revalidate cache control directive.
+     *
+     * @param staleWhileRevalidate the value of the stale-while-revalidate cache control directive, a value of -1 will disable the directive.
+     */
+    public void setStaleWhileRevalidate(int staleWhileRevalidate) {
+        this.staleWhileRevalidate = staleWhileRevalidate;
+    }
     /**
      * Corresponds to the value of the no-cache cache control directive.
      *
@@ -341,7 +351,7 @@ public class CacheControl {
     @Override
     public int hashCode() {
         int hash = Objects.hash(this.privateFlag, this.noCache, this.noStore, this.noTransform, this.mustRevalidate,
-                this.proxyRevalidate, this.maxAge, this.sMaxAge);
+                this.proxyRevalidate, this.maxAge, this.sMaxAge, this.staleWhileRevalidate);
         hash = 41 * hash + hashCodeOf(this.privateFields);
         hash = 41 * hash + hashCodeOf(this.noCacheFields);
         hash = 41 * hash + hashCodeOf(this.cacheExtension);
@@ -385,6 +395,9 @@ public class CacheControl {
             return false;
         }
         if (this.sMaxAge != other.sMaxAge) {
+            return false;
+        }
+        if (this.staleWhileRevalidate != other.staleWhileRevalidate) {
             return false;
         }
         if (notEqual(this.privateFields, other.privateFields)) {

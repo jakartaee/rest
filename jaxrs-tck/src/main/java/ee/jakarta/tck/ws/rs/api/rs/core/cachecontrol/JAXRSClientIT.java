@@ -563,6 +563,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
         ccl8.setMustRevalidate(false);
         ccl8.setSMaxAge(-1);
         ccl8.setMaxAge(200);
+        ccl8.setStaleWhileRevalidate(200);
 
         String value = ccl8.toString().toLowerCase();
         sb.append(value + newline);
@@ -595,6 +596,11 @@ public class JAXRSClientIT extends JAXRSCommonClient {
         if (!value.contains("max-age=200")) {
             pass = false;
             sb.append("ToString test failed in max-age=200" + newline);
+        }
+
+        if (!value.contains("stale-while-revalidate=200")) {
+            pass = false;
+            sb.append("ToString test failed in stale-while-revalidate=200" + newline);
         }
 
         if (value.contains("s-maxage")) {

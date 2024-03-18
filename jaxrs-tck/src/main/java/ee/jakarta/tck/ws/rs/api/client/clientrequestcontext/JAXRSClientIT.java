@@ -861,6 +861,59 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   }
 
   /*
+   * @testName: containsHeaderStringTest
+   * 
+   * @assertion_ids: JAXRS:JAVADOC:???; 
+   * 
+   * @test_Strategy: Check if the specified headers a specified value.
+   * 
+   * ClientRequestFilter.abortWith
+   */
+  @Test
+  public void containsHeaderStringTest() throws Fault {
+    ContextProvider provider = new ContextProvider() {
+      @Override
+      protected void checkFilterContext(ClientRequestContext context) throws Fault {
+          boolean testCacheControlSingle = context.containsHeaderString("cache-control", "no-store"::equalsIgnoreCase);
+          boolean testCacheControlMultiple = context.containsHeaderString("CACHE-CONTROL", ",", "no-transform"::equalsIgnoreCase);
+          boolean testCacheControlWhiteSpaceFail = !(context.containsHeaderString("CACHE-CONTROL", ",", "Max-Age"::equalsIgnoreCase));
+          boolean testCacheControlCaseFail = !(context.containsHeaderString("cache-control", ",", "no-transform"::equals));
+          boolean testCacheControlSeparator = context.containsHeaderString("cache-control2", ";", "no-transform"::equalsIgnoreCase);
+          boolean testCacheControlSeparatorFail = !(context.containsHeaderString("cache-control2", ",", "no-transform"::equalsIgnoreCase));
+          String entity = "testCache-control-single = " +
+                  testCacheControlSingle +
+                  ", testCache-control-multiple = " +
+                  testCacheControlMultiple +
+                  ", testCache-control-fail-white-space = " +
+                  testCacheControlWhiteSpaceFail +
+                  ", testCache-control-fail-case = " +
+                  testCacheControlCaseFail +
+                   ", testCache-control-separator = " +
+                  testCacheControlSeparator +
+                  ", testCache-control-fail-separator = " +
+                  testCacheControlSeparatorFail;
+          Response r = Response.ok(entity).build();
+          context.abortWith(r);
+      }
+    };
+    Invocation invocation = buildBuilder(provider)
+        .header("cache-control", "no-store")
+        .header("cache-control", "{Max - Age, no-transform}")
+        .header("cache-control2", "{no-store;no-transform}")
+        .buildGet();
+    Response response = invoke(invocation);
+
+    String entity = response.readEntity(String.class);
+    assertTrue(entity.contains("testCache-control-single =  true"));
+    assertTrue(entity.contains("testCache-control-multiple =  true"));
+    assertTrue(entity.contains("testCache-control-fail-white-space =  true"));
+    assertTrue(entity.contains("testCache-control-fail-case =  true"));
+    assertTrue(entity.contains("testCache-control-separator =  true"));
+    assertTrue(entity.contains("testCache-control-fail-separator =  true"));
+  }
+
+  
+  /*
    * @testName: getHeaderStringTest
    * 
    * @assertion_ids: JAXRS:JAVADOC:440; JAXRS:JAVADOC:455; JAXRS:JAVADOC:456;

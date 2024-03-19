@@ -427,6 +427,45 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   }
 
   /*
+   * @testName: containsHeaderStringTest
+   * 
+   * @assertion_ids: JAXRS:JAVADOC:???; 
+   * 
+   * @test_Strategy: Check if the specified headers a specified value.
+   * 
+   * ClientRequestFilter.abortWith
+   */
+  @Test
+  public void containsHeaderStringTest() throws Fault {
+      final String header1 = "cache-control";
+      final String value1 = "no-store";
+      final String value2 = "{Max - Age, no-transform}";
+      final String header2 = "header2";
+      final String value3 = "{no-store;no-transform}";
+      
+      ContextProvider in = new ContextProvider() {
+          @Override
+          protected void checkFilterContext(ClientRequestContext requestContext,
+                  ClientResponseContext responseContext) throws Fault {
+              assertTrue(responseContext.containsHeaderString("cache-control", "no-store"::equalsIgnoreCase));
+              assertTrue(responseContext.containsHeaderString("CACHE-CONTROL", ",", "no-transform"::equalsIgnoreCase));
+              assertTrue(!(responseContext.containsHeaderString("CACHE-CONTROL", ",", "Max-Age"::equalsIgnoreCase)));
+              assertTrue(!(responseContext.containsHeaderString("cache-control", ",", "no-transform"::equals)));
+              assertTrue(responseContext.containsHeaderString("header2", ";", "no-transform"::equalsIgnoreCase));
+              assertTrue(!(responseContext.containsHeaderString("Header2", ",", "no-transform"::equalsIgnoreCase)));
+          }
+      };
+      Response response = Response.ok()
+              .header(header1, value1)
+              .header(header1, value2)
+              .header(header2, value3)
+              .build();
+      invokeWithResponseAndAssertStatus(response, Status.OK, in);
+  }
+
+
+  
+  /*
    * @testName: getLanguageTest
    * 
    * @assertion_ids: JAXRS:JAVADOC:464; JAXRS:JAVADOC:479; JAXRS:JAVADOC:480;

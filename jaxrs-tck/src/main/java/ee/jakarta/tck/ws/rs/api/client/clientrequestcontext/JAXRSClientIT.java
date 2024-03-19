@@ -874,24 +874,14 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     ContextProvider provider = new ContextProvider() {
       @Override
       protected void checkFilterContext(ClientRequestContext context) throws Fault {
-          boolean testCacheControlSingle = context.containsHeaderString("cache-control", "no-store"::equalsIgnoreCase);
-          boolean testCacheControlMultiple = context.containsHeaderString("CACHE-CONTROL", ",", "no-transform"::equalsIgnoreCase);
-          boolean testCacheControlWhiteSpaceFail = !(context.containsHeaderString("CACHE-CONTROL", ",", "Max-Age"::equalsIgnoreCase));
-          boolean testCacheControlCaseFail = !(context.containsHeaderString("cache-control", ",", "no-transform"::equals));
-          boolean testCacheControlSeparator = context.containsHeaderString("cache-control2", ";", "no-transform"::equalsIgnoreCase);
-          boolean testCacheControlSeparatorFail = !(context.containsHeaderString("cache-control2", ",", "no-transform"::equalsIgnoreCase));
-          String entity = "testCache-control-single = " +
-                  testCacheControlSingle +
-                  ", testCache-control-multiple = " +
-                  testCacheControlMultiple +
-                  ", testCache-control-fail-white-space = " +
-                  testCacheControlWhiteSpaceFail +
-                  ", testCache-control-fail-case = " +
-                  testCacheControlCaseFail +
-                   ", testCache-control-separator = " +
-                  testCacheControlSeparator +
-                  ", testCache-control-fail-separator = " +
-                  testCacheControlSeparatorFail;
+          assertTrue(context.containsHeaderString("cache-control", "no-store"::equalsIgnoreCase));
+          assertTrue(context.containsHeaderString("CACHE-CONTROL", ",", "no-transform"::equalsIgnoreCase));
+          assertTrue(!(context.containsHeaderString("CACHE-CONTROL", ",", "Max-Age"::equalsIgnoreCase)));
+          assertTrue(!(context.containsHeaderString("cache-control", ",", "no-transform"::equals)));
+          assertTrue(context.containsHeaderString("cache-control2", ";", "no-transform"::equalsIgnoreCase));
+          assertTrue(!(context.containsHeaderString("cache-control2", ",", 
+                  "no-transform"::equalsIgnoreCase)));
+          String entity = "Success";
           Response r = Response.ok(entity).build();
           context.abortWith(r);
       }
@@ -904,12 +894,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     Response response = invoke(invocation);
 
     String entity = response.readEntity(String.class);
-    assertTrue(entity.contains("testCache-control-single =  true"));
-    assertTrue(entity.contains("testCache-control-multiple =  true"));
-    assertTrue(entity.contains("testCache-control-fail-white-space =  true"));
-    assertTrue(entity.contains("testCache-control-fail-case =  true"));
-    assertTrue(entity.contains("testCache-control-separator =  true"));
-    assertTrue(entity.contains("testCache-control-fail-separator =  true"));
+    assertTrue(entity.contains("Sucess"));
   }
 
   

@@ -17,6 +17,7 @@
 package ee.jakarta.tck.ws.rs.api.client.clientrequestcontext;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.ByteArrayInputStream;
 import java.lang.annotation.Annotation;
@@ -874,22 +875,31 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     ContextProvider provider = new ContextProvider() {
       @Override
       protected void checkFilterContext(ClientRequestContext context) throws Fault {
-          assertTrue(context.containsHeaderString("cache-control", "no-store"::equalsIgnoreCase));
-          assertTrue(context.containsHeaderString("CACHE-CONTROL", ",", "no-transform"::equalsIgnoreCase));
-          assertTrue(!(context.containsHeaderString("CACHE-CONTROL", ",", "Max-Age"::equalsIgnoreCase)));
-          assertTrue(!(context.containsHeaderString("cache-control", ",", "no-transform"::equals)));
-          assertTrue(context.containsHeaderString("cache-control2", ";", "no-transform"::equalsIgnoreCase));
-          assertTrue(!(context.containsHeaderString("cache-control2", ",", 
-                  "no-transform"::equalsIgnoreCase)));
+          assertTrue(context.containsHeaderString("header1", "value"::equalsIgnoreCase));
+          assertTrue(context.containsHeaderString("HEADER1", ",", "value2"::equals));
+          //Incorrect separator character
+          assertFalse(context.containsHeaderString("header1", ";", "value2"::equalsIgnoreCase));
+          //Shouldn't find first value when separator character is incorrect
+          assertFalse(context.containsHeaderString("header1", ";", "value1"::equalsIgnoreCase));
+          //Test regular expression
+          assertFalse(context.containsHeaderString("header1", "; | ,", "value2"::equalsIgnoreCase));
+          //White space in value not trimmed
+          assertFalse(context.containsHeaderString("header1", "whitespace"::equalsIgnoreCase));
+          //Multiple character separator
+          assertTrue(context.containsHeaderString("header2", "::", "Value5"::equalsIgnoreCase));
+          //Test default separator is comma
+          assertFalse(context.containsHeaderString("header3","value6"::equalsIgnoreCase));
           String entity = "Success";
           Response r = Response.ok(entity).build();
           context.abortWith(r);
       }
     };
     Invocation invocation = buildBuilder(provider)
-        .header("cache-control", "no-store")
-        .header("cache-control", "{Max - Age, no-transform}")
-        .header("cache-control2", "{no-store;no-transform}")
+        .header("header1", "value")
+        .header("header1", "value1 , value2")
+        .header("header1", "Value3,white space ")
+        .header("header2", "Value4::Value5")
+        .header("header3", "value6;value7")
         .buildGet();
     Response response = invoke(invocation);
 

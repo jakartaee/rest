@@ -99,7 +99,8 @@ public interface ClientResponseContext {
      * (missing comma), or the value {@code no - store} (whitespace within value).
      *
      * @param name the message header.
-     * @param valueSeparatorRegex Separates the header value into single values. {@code null} does not split.
+     * @param valueSeparatorRegex String or regular expression that separates the header value into single values. 
+     * {@code null} does not split.
      * @param valuePredicate value must fulfil this predicate.
      * @return {@code true} if and only if a header with the given name exists, having either a whitespace-trimmed value
      * matching the predicate, or having at least one whitespace-trimmed single value in a token-separated list of single values.

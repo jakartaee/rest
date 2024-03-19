@@ -16,6 +16,7 @@
 
 package ee.jakarta.tck.ws.rs.api.client.clientresponsecontext;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedReader;
@@ -437,7 +438,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    */
   @Test
   public void containsHeaderStringTest() throws Fault {
-      final String header1 = "cache-control";
+      final String header1 = "Header1";
       final String value1 = "no-store";
       final String value2 = "{Max - Age, no-transform}";
       final String header2 = "header2";
@@ -447,18 +448,28 @@ public class JAXRSClientIT extends JAXRSCommonClient {
           @Override
           protected void checkFilterContext(ClientRequestContext requestContext,
                   ClientResponseContext responseContext) throws Fault {
-              assertTrue(responseContext.containsHeaderString("cache-control", "no-store"::equalsIgnoreCase));
-              assertTrue(responseContext.containsHeaderString("CACHE-CONTROL", ",", "no-transform"::equalsIgnoreCase));
-              assertTrue(!(responseContext.containsHeaderString("CACHE-CONTROL", ",", "Max-Age"::equalsIgnoreCase)));
-              assertTrue(!(responseContext.containsHeaderString("cache-control", ",", "no-transform"::equals)));
-              assertTrue(responseContext.containsHeaderString("header2", ";", "no-transform"::equalsIgnoreCase));
-              assertTrue(!(responseContext.containsHeaderString("Header2", ",", "no-transform"::equalsIgnoreCase)));
+              assertTrue(responseContext.containsHeaderString("header1", "value"::equalsIgnoreCase));
+              assertTrue(responseContext.containsHeaderString("HEADER1", ",", "value2"::equals));
+              //Incorrect separator character
+              assertFalse(responseContext.containsHeaderString("header1", ";", "value2"::equalsIgnoreCase));
+              //Shouldn't find first value when separator character is incorrect
+              assertFalse(responseContext.containsHeaderString("header1", ";", "value1"::equalsIgnoreCase));
+              //Test regular expression
+              assertFalse(responseContext.containsHeaderString("header1", "; | ,", "value2"::equalsIgnoreCase));
+              //White space in value not trimmed
+              assertFalse(responseContext.containsHeaderString("header1", "whitespace"::equalsIgnoreCase));
+              //Multiple character separator
+              assertTrue(responseContext.containsHeaderString("header2", "::", "Value5"::equalsIgnoreCase));
+              //Test default separator is comma
+              assertFalse(responseContext.containsHeaderString("header3","value6"::equalsIgnoreCase));
           }
       };
       Response response = Response.ok()
-              .header(header1, value1)
-              .header(header1, value2)
-              .header(header2, value3)
+              .header("header1", "value")
+              .header("header1", "value1 , value2")
+              .header("header1", "Value3,white space ")
+              .header("header2", "Value4::Value5")
+              .header("header3", "value6;value7")
               .build();
       invokeWithResponseAndAssertStatus(response, Status.OK, in);
   }

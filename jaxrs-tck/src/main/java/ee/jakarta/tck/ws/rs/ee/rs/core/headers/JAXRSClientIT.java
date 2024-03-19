@@ -140,7 +140,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   public void contentLanguageTest() throws Fault {
     setProperty(Property.REQUEST_HEADERS,
         buildAccept(MediaType.TEXT_PLAIN_TYPE));
-    Variant variant = new Variant(MediaType.WILDCARD_TYPE, "en-US", null);
+    Variant variant = new Variant(MediaType.WILDCARD_TYPE, "en", "US", null);
     Entity<String> entity = Entity.entity("anything", variant);
     setRequestContentEntity(entity);
     setProperty(Property.REQUEST, buildRequest(Request.PUT, ""));

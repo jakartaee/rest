@@ -207,7 +207,7 @@ public interface ClientRequestContext {
      * (missing comma), or the value {@code no - store} (whitespace within value).
      *
      * @param name the message header.
-     * @param valueSeparatorRegex String or regular expression that separates the header value into single values. 
+     * @param valueSeparatorRegex Regular expression that separates the header value into single values. 
      * {@code null} does not split.
      * @param valuePredicate value must fulfil this predicate.
      * @return {@code true} if and only if a header with the given name exists, having either a whitespace-trimmed value

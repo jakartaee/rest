@@ -882,7 +882,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
           //Shouldn't find first value when separator character is incorrect
           assertFalse(context.containsHeaderString("header1", ";", "value1"::equalsIgnoreCase));
           //Test regular expression
-          assertFalse(context.containsHeaderString("header1", "; | ,", "value2"::equalsIgnoreCase));
+          assertTrue(context.containsHeaderString("header1", ";|,", "value2"::equalsIgnoreCase));
           //White space in value not trimmed
           assertFalse(context.containsHeaderString("header1", "whitespace"::equalsIgnoreCase));
           //Multiple character separator
@@ -904,7 +904,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     Response response = invoke(invocation);
 
     String entity = response.readEntity(String.class);
-    assertTrue(entity.contains("Sucess"));
+    assertTrue(entity.contains("Success"));
   }
 
   

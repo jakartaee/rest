@@ -113,7 +113,7 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>LICENSE_${license}.md</include>
-                    <include>com/</include>
+                    <include>ee/</include>
                 </includes>
             </resource>
         </resources>

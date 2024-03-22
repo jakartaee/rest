@@ -19,6 +19,7 @@ package jakarta.ws.rs.core;
 import java.net.URI;
 import java.util.List;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.ApplicationPath;
 
 /**
  * An injectable interface that provides access to application and request URI information. Relative URIs are relative
@@ -233,13 +234,14 @@ public interface UriInfo {
 
     /**
      * <p>
-     * Get a template concatenated of all {@link Path Paths} matched by all the resources when matching the current request.
+     * Get a URI template that includes all {@link Path Paths} (including {@link ApplicationPath})
+     * matched by the current request's URI.
      * </p>
      * <p>
      * Each {@link Path} value used to match a resource class, a sub-resource method or a sub-resource locator is concatenated
-     * to a single {@code String} value. The template does not include query parameters but do include matrix parameters
+     * into a single {@code String} value. The template does not include query parameters but does include matrix parameters
      * if present in the request URI. The concatenation is ordered in the request URI matching order, with the current resource
-     * URI last.  E.g. given the following resource classes:
+     * URI last. E.g. given the following resource classes:
      * </p>
      *
      * <pre>

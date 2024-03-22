@@ -430,9 +430,9 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   /*
    * @testName: containsHeaderStringTest
    * 
-   * @assertion_ids: JAXRS:JAVADOC:???; 
+   * @assertion_ids:  JAXRS:JAVADOC:1355; JAXRS:JAVADOC:1356; 
    * 
-   * @test_Strategy: Check if the specified headers a specified value.
+   * @test_Strategy: Check if the specified header contains a specified value.
    * 
    * ClientRequestFilter.abortWith
    */

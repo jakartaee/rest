@@ -35,15 +35,12 @@ import java.io.IOException;
  *                     webServerPort;
  */
 @ExtendWith(ArquillianExtension.class)
-public class JAXRSClientIT extends JAXRSCommonClient {
-
-  private static final long serialVersionUID = 40L;
-
+public class UriInfo40ClientIT extends JAXRSCommonClient {
   protected static final String ROOT = "jaxrs40_ee_core_uriinfo_web";
 
   protected static final String RESOURCE = "app/resource";
 
-  public JAXRSClientIT() {
+  public UriInfo40ClientIT() {
     setup();
     setContextRoot("/" + ROOT + "/" + RESOURCE);
   }

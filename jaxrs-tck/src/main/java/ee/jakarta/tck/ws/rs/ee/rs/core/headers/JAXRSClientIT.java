@@ -225,8 +225,13 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     setProperty(Property.REQUEST_HEADERS,
         "Content-Type:application/xml;charset=utf8");
     setProperty(Property.REQUEST_HEADERS,
-        "Header3:value1 ** value2 **value 3");
+        "Header3:value1 ;; Value2 ;;value 3");
     setProperty(Property.REQUEST, buildRequest(Request.GET, "contains-headers"));
+    setProperty(Property.SEARCH_STRING, "Test1");
+    setProperty(Property.SEARCH_STRING, "Test2");
+    setProperty(Property.SEARCH_STRING, "Test3");
+    setProperty(Property.SEARCH_STRING, "Test4");
+    setProperty(Property.SEARCH_STRING, "Test5");
     invoke();
   }
 

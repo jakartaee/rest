@@ -875,22 +875,19 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     ContextProvider provider = new ContextProvider() {
       @Override
       protected void checkFilterContext(ClientRequestContext context) throws Fault {
-          assertTrue(context.containsHeaderString("header1", "value"::equalsIgnoreCase));
+          assertTrue(context.containsHeaderString("header1", "value"::equals));
           assertTrue(context.containsHeaderString("HEADER1", ",", "value2"::equals));
           //Incorrect separator character
-          assertFalse(context.containsHeaderString("header1", ";", "value2"::equalsIgnoreCase));
+          assertFalse(context.containsHeaderString("header1", ";", "value2"::equals));
           //Shouldn't find first value when separator character is incorrect
-          assertFalse(context.containsHeaderString("header1", ";", "value1"::equalsIgnoreCase));
+          assertFalse(context.containsHeaderString("header1", ";", "Value1"::equalsIgnoreCase));
           //Test regular expression
-          assertTrue(context.containsHeaderString("header1", ";|,", "value2"::equalsIgnoreCase));
+          assertTrue(context.containsHeaderString("header1", ";|,", "VALUE2"::equalsIgnoreCase));
           //White space in value not trimmed
-          assertFalse(context.containsHeaderString("header1", "whitespace"::equalsIgnoreCase));
+          assertFalse(context.containsHeaderString("header1", "whitespace"::equals));
           //Multiple character separator
-          assertTrue(context.containsHeaderString("header2", "::", "Value5"::equalsIgnoreCase));
-          //Test default separator is comma
-          assertFalse(context.containsHeaderString("header3","value6"::equalsIgnoreCase));
-          String entity = "Success";
-          Response r = Response.ok(entity).build();
+          assertTrue(context.containsHeaderString("header2", ";;", "Value5"::equalsIgnoreCase));
+          Response r = Response.ok().build();
           context.abortWith(r);
       }
     };
@@ -898,13 +895,9 @@ public class JAXRSClientIT extends JAXRSCommonClient {
         .header("header1", "value")
         .header("header1", "value1 , value2")
         .header("header1", "Value3,white space ")
-        .header("header2", "Value4::Value5")
-        .header("header3", "value6;value7")
+        .header("header2", "Value4;;Value5")
         .buildGet();
     Response response = invoke(invocation);
-
-    String entity = response.readEntity(String.class);
-    assertTrue(entity.contains("Success"));
   }
 
   

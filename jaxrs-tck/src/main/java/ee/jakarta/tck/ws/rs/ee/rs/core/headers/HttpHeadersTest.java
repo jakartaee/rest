@@ -74,27 +74,32 @@ public class HttpHeadersTest {
   @Path("/contains-headers")
   public String containsHeadersGet() {
     sb = new StringBuffer();
-    List<String> myHeaders = Arrays.asList("Accept", "Content-Type", "Header3");
+    sb.append("containsHeaderString= ");
 
     try {
-        assertTrue(hs.containsHeaderString("accept", "text/html"::equalsIgnoreCase));
-        sb.append("Header: accept contains text/html; ");
+        if(hs.containsHeaderString("accept", "text/html"::equals)) {
+            sb.append("Test1: accept contains text/html; ");
+        }
       
         //Verify Predicate and separator character usage
-        assertTrue(hs.containsHeaderString("Accept", ",", "Text/html;Level=1"::equalsIgnoreCase));
-        sb.append("Header: accept contains text/html;level=1; ");
+        if (hs.containsHeaderString("Accept", ",", "Text/html;Level=1"::equalsIgnoreCase)) {
+            sb.append("Test2: accept contains text/html;level=1; ");
+        }
         
         //Verify incorrect separator character fails
-        assertFalse(hs.containsHeaderString("Accept", ";", "text/html;level=1"::equals));
-        sb.append("Incorrect separator character fails as expected; ");
+        if (!(hs.containsHeaderString("Accept", ";", "text/html;level=1"::equals))) {
+            sb.append("Test3: Incorrect separator character fails as expected; ");
+        }
         
-        //Verify white space in parameter not trimmed
-        assertFalse(hs.containsHeaderString("header3", "**", "value3"::equalsIgnoreCase));
-        sb.append("White space not trimmed from parameter as expected; ");
+        //Verify white space in value not trimmed and double character separator
+        if (!(hs.containsHeaderString("header3", ";;", "value3"::equals))) {
+            sb.append("Test4: White space not trimmed from value as expected; ");
+        }
         
         //Verify white space in front and back of value trimmed
-        assertTrue(hs.containsHeaderString("HEADER3", "**", "value2"::equalsIgnoreCase));
-        sb.append("White space trimmed around value as expected; ");  
+        if (hs.containsHeaderString("HEADER3", ";;", "value2"::equalsIgnoreCase)) {
+            sb.append("Test5: White space trimmed around value as expected; ");  
+        }
     } catch (Throwable ex) {
       sb.append("Unexpected exception thrown in containsHeadersGet: "
           + ex.getMessage());

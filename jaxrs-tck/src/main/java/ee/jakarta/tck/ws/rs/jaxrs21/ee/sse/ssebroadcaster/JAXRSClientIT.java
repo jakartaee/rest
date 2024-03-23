@@ -70,10 +70,9 @@ public class JAXRSClientIT extends SSEJAXRSClient {
 
   public JAXRSClientIT() {
     setContextRoot("/jaxrs_jaxrs21_ee_sse_ssebroadcaster_web");
-    setup();
   }
 
-  @Override
+  @BeforeEach
   public void setup() {
     super.setup();
     target = ClientBuilder.newClient()

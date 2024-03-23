@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -46,8 +46,12 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   private static final long serialVersionUID = 204493956987397506L;
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_ee_rs_delete_web");
+  }
+
+  @BeforeEach
+  public void setup() {
+    super.setup();
   }
 
   @BeforeEach

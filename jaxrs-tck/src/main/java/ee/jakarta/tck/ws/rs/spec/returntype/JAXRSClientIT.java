@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -51,10 +51,13 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   private static final long serialVersionUID = ReturnTypeTest.serialVersionUID;
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_spec_returntype_web/ReturnTypeTest");
   }
 
+  @BeforeEach
+  public void setup() {
+    super.setup();
+  }
   
  
   @Deployment(testable = false)

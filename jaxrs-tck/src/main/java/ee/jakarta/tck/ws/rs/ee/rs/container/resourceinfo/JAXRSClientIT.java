@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -47,9 +47,13 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   private static final long serialVersionUID = -2900337741491627385L;
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_ee_rs_container_resourceinfo_web/resource");
     setPrintEntity(true);
+  }
+
+  @BeforeEach
+  public void setup() {
+    super.setup();
   }
 
   @BeforeEach

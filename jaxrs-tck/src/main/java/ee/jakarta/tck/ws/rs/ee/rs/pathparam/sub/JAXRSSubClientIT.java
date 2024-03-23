@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -17,6 +17,7 @@
 package ee.jakarta.tck.ws.rs.ee.rs.pathparam.sub;
 
 import java.io.InputStream;
+import java.net.URL;
 import java.io.IOException;
 
 import ee.jakarta.tck.ws.rs.ee.rs.ParamEntityPrototype;
@@ -33,11 +34,14 @@ import ee.jakarta.tck.ws.rs.ee.rs.pathparam.PathParamTest;
 import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
 
 import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
@@ -58,18 +62,30 @@ public class JAXRSSubClientIT
   private static final long serialVersionUID = 1L;
 
   public JAXRSSubClientIT() {
-    setup();
     setContextRoot("/jaxrs_ee_rs_pathparam_sub_web/resource/subresource");
   }
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
 
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
+  @ArquillianResource
+  @OperateOnDeployment("jaxrs_ee_rs_pathparam_sub_deployment")
+  private URL url;
+
+  @BeforeEach
+  public void setup() {
+
+    TestUtil.logTrace("setup method JAXRSSubClientIT");
+
+    assertFalse((url==null), "[JAXRSSubClientIT] 'url' was not injected.");
+    
+    String hostname = url.getHost();
+    String portnum = Integer.toString(url.getPort());
+    
+    assertFalse(isNullOrEmpty(hostname), "[JAXRSSubClientIT] 'webServerHost' was not set.");
+    _hostname = hostname.trim();
+    assertFalse(isNullOrEmpty(portnum), "[JAXRSSubClientIT] 'webServerPort' was not set.");
+    _port = Integer.parseInt(portnum.trim());
+    TestUtil.logMsg("[JAXRSSubClientIT] Test setup OK");
+
   }
 
   @Deployment(testable = false, name = "jaxrs_ee_rs_pathparam_sub_deployment")

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -76,8 +76,12 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   private final static String NONEXISTING_SITE = "somenonexisting.domain-site";
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_jaxrs21_ee_client_rxinvoker_web/resource");
+  }
+
+  @BeforeEach
+  public void setup() {
+    super.setup();
   }
 
   @BeforeEach

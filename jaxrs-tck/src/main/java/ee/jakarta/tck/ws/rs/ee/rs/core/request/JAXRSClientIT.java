@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2011, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -52,10 +52,13 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   private static final String IF_NONE_MATCH = "If-None-Match: \"AAA\"";
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_ee_core_request_web/RequestTest");
   }
 
+  @BeforeEach
+  public void setup() {
+    super.setup();
+  }
 
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{

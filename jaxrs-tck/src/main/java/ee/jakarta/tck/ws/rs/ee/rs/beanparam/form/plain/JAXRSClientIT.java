@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -62,8 +62,12 @@ public class JAXRSClientIT extends BeanParamCommonClient {
   private static final long serialVersionUID = 201L;
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_ee_rs_beanparam_form_plain_web/resource");
+  }
+
+  @BeforeEach
+  public void setup() {
+    super.setup();
   }
 
   @BeforeEach

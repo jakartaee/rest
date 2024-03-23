@@ -50,10 +50,13 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   protected static final String RESOURCE = "resource";
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/" + ROOT + "/" + RESOURCE);
   }
 
+  @BeforeEach
+  public void setup() {
+    super.setup();
+  }
   
   @BeforeEach
   void logStartTest(TestInfo testInfo) {

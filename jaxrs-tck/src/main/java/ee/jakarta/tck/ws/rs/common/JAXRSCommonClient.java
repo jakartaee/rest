@@ -18,6 +18,7 @@ package ee.jakarta.tck.ws.rs.common;
 
 import java.io.*;
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -35,6 +36,9 @@ import ee.jakarta.tck.ws.rs.common.webclient.validation.CheckOneOfStatusesTokeni
 import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpState;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -239,36 +243,29 @@ public abstract class JAXRSCommonClient {
     return _contextRoot;
   }
 
+  @ArquillianResource
+  @OperateOnDeployment("_DEFAULT_")
+  private URL url;
+  
   /**
-   * <code>setup</code> is by the test harness to initialize the tests.
+   * <code>setup</code> is run by the test files to initialize the tests.
    * 
-   * @param args
-   *          a <code>String[]</code> value
-   * @param p
-   *          a <code>Properties</code> value
-   * @exception Fault
-   *              if an error occurs
    */
-  //public void setup(String[] args, Properties p)   {
-  public void setup()   {
+  public void setup() {
+
     TestUtil.logTrace("setup method JAXRSCommonClient");
 
-    String hostname = System.getProperty(SERVLETHOSTPROP);
-    String portnum = System.getProperty(SERVLETPORTPROP);
-    //String tshome = p.getProperty(TSHOME);
-
-    assertTrue(!isNullOrEmpty(hostname),
-        "[JAXRSCommonClient] 'webServerHost' was not set.");
+    assertFalse((url==null), "[JAXRSCommonClient] 'url' was not injected.");
+    
+    String hostname = url.getHost();
+    String portnum = Integer.toString(url.getPort());
+    
+    assertFalse(isNullOrEmpty(hostname), "[JAXRSCommonClient] 'webServerHost' was not set.");
     _hostname = hostname.trim();
-    assertTrue(!isNullOrEmpty(portnum),
-        "[JAXRSCommonClient] 'webServerPort' was not set.");
+    assertFalse(isNullOrEmpty(portnum), "[JAXRSCommonClient] 'webServerPort' was not set.");
     _port = Integer.parseInt(portnum.trim());
-
-    //assertTrue(!isNullOrEmpty(tshome),
-    //    "[JAXRSCommonClient] 'tshome' was not set in the build.properties.");
-    //_tsHome = tshome.trim();
-
     TestUtil.logMsg("[JAXRSCommonClient] Test setup OK");
+
   }
 
   /**

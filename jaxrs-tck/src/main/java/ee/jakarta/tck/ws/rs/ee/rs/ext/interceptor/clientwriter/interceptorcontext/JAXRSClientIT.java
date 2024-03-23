@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -59,10 +59,14 @@ public class JAXRSClientIT extends WriterClient<ContextOperation> {
   private static final long serialVersionUID = -5479399808367387477L;
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot(
         "/jaxrs_ee_rs_ext_interceptor_clientwriter_interceptorcontext_web/resource");
     addProviders();
+  }
+
+  @BeforeEach
+  public void setup() {
+    super.setup();
   }
 
   @BeforeEach

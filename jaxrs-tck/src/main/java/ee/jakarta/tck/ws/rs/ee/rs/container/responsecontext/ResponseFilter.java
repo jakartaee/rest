@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2024 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -157,23 +157,23 @@ public class ResponseFilter extends TemplateFilter {
       sb.append("containsHeaderString= ");
 
       try {
-          assertTrue(requestContext.containsHeaderString("accept", "text/html"::equals));
+          assertTrue(responseContext.containsHeaderString("accept", "text/html"::equals));
           sb.append("Test1: accept contains text/html; ");
         
           //Verify Predicate and separator character usage
-          assertTrue(requestContext.containsHeaderString("Accept", ",", "Text/html;Level=1"::equalsIgnoreCase));
+          assertTrue(responseContext.containsHeaderString("Accept", ",", "Text/html;Level=1"::equalsIgnoreCase));
           sb.append("Test2: accept contains text/html;level=1; ");
           
           //Verify incorrect separator character fails
-          assertTrue(!(requestContext.containsHeaderString("Accept", ";", "text/html;level=1"::equals))); 
+          assertTrue(!(responseContext.containsHeaderString("Accept", ";", "text/html;level=1"::equals))); 
           sb.append("Test3: Incorrect separator character fails as expected; ");
           
           //Verify white space in value not trimmed and double character separator
-          assertTrue(!(requestContext.containsHeaderString("header3", ";;", "value3"::equals))); 
+          assertTrue(!(responseContext.containsHeaderString("header3", ";;", "value3"::equals))); 
           sb.append("Test4: White space not trimmed from value as expected; ");
           
           //Verify white space in front and back of value trimmed
-          assertTrue(requestContext.containsHeaderString("HEADER3", ";;", "value2"::equalsIgnoreCase));
+          assertTrue(responseContext.containsHeaderString("HEADER3", ";;", "value2"::equalsIgnoreCase));
           sb.append("Test5: White space trimmed around value as expected; ");  
       } catch (Throwable ex) {
         sb.append("Unexpected exception thrown in containsHeaderString: "
@@ -184,9 +184,9 @@ public class ResponseFilter extends TemplateFilter {
     }
   
   public void getHeaders() {
-      MultivaluedMap<String, Object> headers = responseContext.getHeaders();
-      setEntity(collectionToString(headers.keySet()));
-    }
+    MultivaluedMap<String, Object> headers = responseContext.getHeaders();
+    setEntity(collectionToString(headers.keySet()));
+  }
 
   public void getHeadersIsMutable() {
     MultivaluedMap<String, Object> headers = responseContext.getHeaders();

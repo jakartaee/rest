@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -336,7 +336,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   /*
    * @testName: containsHeaderStringTest
    * 
-   * @assertion_ids: JAXRS:JAVADOC:???
+   * @assertion_ids: JAXRS:JAVADOC:JAXRS:JAVADOC:1359; JAXRS:JAVADOC:1360
    * 
    * @test_Strategy: Check if the specified header contains a specified value.
    * 

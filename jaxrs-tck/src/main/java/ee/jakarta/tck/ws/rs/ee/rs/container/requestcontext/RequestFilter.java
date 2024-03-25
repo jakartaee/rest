@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -175,13 +175,12 @@ public class RequestFilter extends TemplateFilter {
     MultivaluedMap<String, String> headers = requestContext.getHeaders();
     StringBuilder sb = new StringBuilder();
     for (Entry<String, List<String>> set : headers.entrySet()) {
-       String first = headers.getFirst(set.getKey());
+      String first = headers.getFirst(set.getKey());
       sb.append(set.getKey()).append(":").append(first).append(";");
     }
     abortWithEntity(sb.toString());
   }
-
-  
+ 
   public void getHeadersIsMutable() {
     String key = "KEY";
     MultivaluedMap<String, String> headers = requestContext.getHeaders();

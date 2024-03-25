@@ -1145,8 +1145,6 @@ fld public final static java.lang.String REL = "rel"
 fld public final static java.lang.String TITLE = "title"
 fld public final static java.lang.String TYPE = "type"
 innr public abstract interface static Builder
-innr public static JaxbAdapter
-innr public static JaxbLink
 meth public abstract jakarta.ws.rs.core.UriBuilder getUriBuilder()
 meth public abstract java.lang.String getRel()
 meth public abstract java.lang.String getTitle()
@@ -1180,27 +1178,6 @@ meth public abstract jakarta.ws.rs.core.Link$Builder type(java.lang.String)
 meth public abstract jakarta.ws.rs.core.Link$Builder uri(java.lang.String)
 meth public abstract jakarta.ws.rs.core.Link$Builder uri(java.net.URI)
 meth public abstract jakarta.ws.rs.core.Link$Builder uriBuilder(jakarta.ws.rs.core.UriBuilder)
-
-CLSS public static jakarta.ws.rs.core.Link$JaxbAdapter
- outer jakarta.ws.rs.core.Link
- anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
-cons public init()
-meth public jakarta.ws.rs.core.Link unmarshal(jakarta.ws.rs.core.Link$JaxbLink)
-meth public jakarta.ws.rs.core.Link$JaxbLink marshal(jakarta.ws.rs.core.Link)
-supr jakarta.xml.bind.annotation.adapters.XmlAdapter<jakarta.ws.rs.core.Link$JaxbLink,jakarta.ws.rs.core.Link>
-
-CLSS public static jakarta.ws.rs.core.Link$JaxbLink
- outer jakarta.ws.rs.core.Link
- anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="")
-cons public init()
-cons public init(java.net.URI)
-cons public init(java.net.URI,java.util.Map<javax.xml.namespace.QName,java.lang.Object>)
-meth public boolean equals(java.lang.Object)
-meth public int hashCode()
-meth public java.net.URI getUri()
-meth public java.util.Map<javax.xml.namespace.QName,java.lang.Object> getParams()
-supr java.lang.Object
-hfds params,uri
 
 CLSS public jakarta.ws.rs.core.MediaType
 cons public init()
@@ -1842,12 +1819,6 @@ supr java.lang.Object
 
 CLSS abstract interface jakarta.ws.rs.sse.package-info
 
-CLSS public abstract jakarta.xml.bind.annotation.adapters.XmlAdapter<%0 extends java.lang.Object, %1 extends java.lang.Object>
-cons protected init()
-meth public abstract {jakarta.xml.bind.annotation.adapters.XmlAdapter%0} marshal({jakarta.xml.bind.annotation.adapters.XmlAdapter%1}) throws java.lang.Exception
-meth public abstract {jakarta.xml.bind.annotation.adapters.XmlAdapter%1} unmarshal({jakarta.xml.bind.annotation.adapters.XmlAdapter%0}) throws java.lang.Exception
-supr java.lang.Object
-
 CLSS public java.io.IOException
 cons public init()
 cons public init(java.lang.String)
@@ -1863,14 +1834,6 @@ meth public abstract void close() throws java.lang.Exception
 
 CLSS public abstract interface java.lang.Comparable<%0 extends java.lang.Object>
 meth public abstract int compareTo({java.lang.Comparable%0})
-
-CLSS public abstract interface !annotation java.lang.Deprecated
- anno 0 java.lang.annotation.Documented()
- anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
- anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, MODULE, PARAMETER, TYPE])
-intf java.lang.annotation.Annotation
-meth public abstract !hasdefault boolean forRemoval()
-meth public abstract !hasdefault java.lang.String since()
 
 CLSS public abstract java.lang.Enum<%0 extends java.lang.Enum<{java.lang.Enum%0}>>
 cons protected init(java.lang.String,int)

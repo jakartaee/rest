@@ -71,12 +71,12 @@ public class JAXRSSubClientIT extends JAXRSClientIT {
     assertFalse((url==null), "[JAXRSSubClientIT] 'url' was not injected.");
     
     String hostname = url.getHost();
-    String portnum = Integer.toString(url.getPort());
+    int portnum = url.getPort();
     
     assertFalse(isNullOrEmpty(hostname), "[JAXRSSubClientIT] 'webServerHost' was not set.");
     _hostname = hostname.trim();
-    assertFalse(isNullOrEmpty(portnum), "[JAXRSSubClientIT] 'webServerPort' was not set.");
-    _port = Integer.parseInt(portnum.trim());
+    assertFalse(isPortInvalid(portnum), "[JAXRSSubClientIT] 'webServerPort' was not set.");
+    _port = portnum;
     TestUtil.logMsg("[JAXRSSubClientIT] Test setup OK");
 
   }

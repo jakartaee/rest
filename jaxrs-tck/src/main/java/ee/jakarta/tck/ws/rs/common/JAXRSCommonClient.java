@@ -258,12 +258,12 @@ public abstract class JAXRSCommonClient {
     assertFalse((url==null), "[JAXRSCommonClient] 'url' was not injected.");
     
     String hostname = url.getHost();
-    String portnum = Integer.toString(url.getPort());
+    int portnum = url.getPort();
     
     assertFalse(isNullOrEmpty(hostname), "[JAXRSCommonClient] 'webServerHost' was not set.");
     _hostname = hostname.trim();
-    assertFalse(isNullOrEmpty(portnum), "[JAXRSCommonClient] 'webServerPort' was not set.");
-    _port = Integer.parseInt(portnum.trim());
+    assertFalse(isPortInvalid(portnum), "[JAXRSCommonClient] 'webServerPort' was not set.");
+    _port = portnum;
     TestUtil.logMsg("[JAXRSCommonClient] Test setup OK");
 
   }
@@ -922,6 +922,11 @@ public abstract class JAXRSCommonClient {
   protected boolean isNullOrEmpty(String val) {
     return val == null || val.trim().equals("");
   }
+
+  protected boolean isPortInvalid(int val) {
+    return val <= 0 || val > 65535 ;
+  }
+  
 
   private InetAddress[] _addrs = null;
 

@@ -75,12 +75,12 @@ public class JAXRSLocatorClientIT extends JAXRSClientIT {
     assertFalse((url==null), "[JAXRSLocatorClientIT] 'url' was not injected.");
     
     String hostname = url.getHost();
-    String portnum = Integer.toString(url.getPort());
+    int portnum = url.getPort();
     
     assertFalse(isNullOrEmpty(hostname), "[JAXRSLocatorClientIT] 'webServerHost' was not set.");
     _hostname = hostname.trim();
-    assertFalse(isNullOrEmpty(portnum), "[JAXRSLocatorClientIT] 'webServerPort' was not set.");
-    _port = Integer.parseInt(portnum.trim());
+    assertFalse(isPortInvalid(portnum), "[JAXRSLocatorClientIT] 'webServerPort' was not set.");
+    _port = portnum;
     TestUtil.logMsg("[JAXRSLocatorClientIT] Test setup OK");
 
   }

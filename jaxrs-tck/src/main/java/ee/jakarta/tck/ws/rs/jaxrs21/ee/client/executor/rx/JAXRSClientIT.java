@@ -78,12 +78,12 @@ public class JAXRSClientIT
     assertFalse((url==null), "[JAXRSClientIT] 'url' was not injected.");
     
     String hostname = url.getHost();
-    String portnum = Integer.toString(url.getPort());
+    int portnum = url.getPort();
     
     assertFalse(isNullOrEmpty(hostname), "[JAXRSClientIT] 'webServerHost' was not set.");
     _hostname = hostname.trim();
-    assertFalse(isNullOrEmpty(portnum), "[JAXRSClientIT] 'webServerPort' was not set.");
-    _port = Integer.parseInt(portnum.trim());
+    assertFalse(isPortInvalid(portnum), "[JAXRSClientIT] 'webServerPort' was not set.");
+    _port = portnum;
     TestUtil.logMsg("[JAXRSClientIT] Test setup OK");
 
   }

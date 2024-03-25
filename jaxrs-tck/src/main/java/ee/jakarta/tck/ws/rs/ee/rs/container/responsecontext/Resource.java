@@ -180,6 +180,17 @@ public class Resource {
   }
 
   @POST
+  @Path("containsheaderstring")
+  public Response containsHeaderString(String header) {
+    ResponseBuilder builder = createResponseWithHeader();
+    builder = builder.header("Accept", "text/html, text/html;level=1, */*");
+    builder = builder.header("Content-Type", "application/xml;charset=utf8");
+    builder = builder.header("Header3", "value1 ;; Value2 ;;value 3");
+    Response response = builder.build();
+    return response;   
+  }
+
+  @POST
   @Path("getheaders")
   public Response getHeaders(String header) {
     ResponseBuilder builder = createResponseWithHeader();

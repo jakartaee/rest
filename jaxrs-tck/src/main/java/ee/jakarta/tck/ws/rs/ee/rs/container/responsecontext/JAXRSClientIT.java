@@ -456,6 +456,25 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * Throws IOException.
    */
   @Test
+  public void containsHeaderStringTest() throws Fault {
+    String header = "Test";
+    for (int i = 1; i != 6; i++)
+      setProperty(Property.UNORDERED_SEARCH_STRING, header + i);
+    setProperty(Property.CONTENT, header);
+    invokeRequestAndCheckResponse(ContextOperation.CONTAINSHEADERSTRING);
+  }
+
+  /*
+   * @testName: getHeadersTest
+   * 
+   * @assertion_ids: JAXRS:JAVADOC:688; JAXRS:JAVADOC:707; JAXRS:JAVADOC:708;
+   * 
+   * @test_Strategy: Get the mutable response headers multivalued map.
+   *
+   * Filter method called after a response has been provided for a request.
+   * Throws IOException.
+   */
+  @Test
   public void getHeadersTest() throws Fault {
     String header = "header";
     for (int i = 0; i != 5; i++)

@@ -140,16 +140,48 @@ public class RequestFilter extends TemplateFilter {
     abortWithEntity(entity);
   }
 
+  public void containsHeaderString() {
+      StringBuffer sb = new StringBuffer();
+      sb.append("containsHeaderString= ");
+
+      try {
+          assertTrue(requestContext.containsHeaderString("accept", "text/html"::equals));
+          sb.append("Test1: accept contains text/html; ");
+        
+          //Verify Predicate and separator character usage
+          assertTrue(requestContext.containsHeaderString("Accept", ",", "Text/html;Level=1"::equalsIgnoreCase));
+          sb.append("Test2: accept contains text/html;level=1; ");
+          
+          //Verify incorrect separator character fails
+          assertTrue(!(requestContext.containsHeaderString("Accept", ";", "text/html;level=1"::equals))); 
+          sb.append("Test3: Incorrect separator character fails as expected; ");
+          
+          //Verify white space in value not trimmed and double character separator
+          assertTrue(!(requestContext.containsHeaderString("header3", ";;", "value3"::equals))); 
+          sb.append("Test4: White space not trimmed from value as expected; ");
+          
+          //Verify white space in front and back of value trimmed
+          assertTrue(requestContext.containsHeaderString("HEADER3", ";;", "value2"::equalsIgnoreCase));
+          sb.append("Test5: White space trimmed around value as expected; ");  
+      } catch (Throwable ex) {
+        sb.append("Unexpected exception thrown in containsHeaderString: "
+            + ex.getMessage());
+        ex.printStackTrace();
+      }
+      abortWithEntity(sb.toString());
+  }
+
   public void getHeaders() {
     MultivaluedMap<String, String> headers = requestContext.getHeaders();
     StringBuilder sb = new StringBuilder();
     for (Entry<String, List<String>> set : headers.entrySet()) {
-      String first = headers.getFirst(set.getKey());
+       String first = headers.getFirst(set.getKey());
       sb.append(set.getKey()).append(":").append(first).append(";");
     }
     abortWithEntity(sb.toString());
   }
 
+  
   public void getHeadersIsMutable() {
     String key = "KEY";
     MultivaluedMap<String, String> headers = requestContext.getHeaders();

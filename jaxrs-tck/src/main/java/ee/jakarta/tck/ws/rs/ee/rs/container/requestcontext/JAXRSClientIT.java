@@ -334,6 +334,34 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   }
 
   /*
+   * @testName: containsHeaderStringTest
+   * 
+   * @assertion_ids: JAXRS:JAVADOC:???
+   * 
+   * @test_Strategy: Check if the specified header contains a specified value.
+   * 
+   * Filter method called before a request has been dispatched to a resource.
+   * Throws IOException.
+   */
+  @Test
+  @Tag("servlet")
+  public void containsHeaderStringTest() throws Fault {    
+      setProperty(Property.REQUEST_HEADERS,
+              "Accept:text/*, text/html, text/html;level=1, */*");
+      setProperty(Property.REQUEST_HEADERS,
+              "Content-Type:application/xml;charset=utf8");
+      setProperty(Property.REQUEST_HEADERS,
+              "Header3:value1 ;; Value2 ;;value 3");
+      setProperty(Property.SEARCH_STRING, "Test1");
+      setProperty(Property.SEARCH_STRING, "Test2");
+      setProperty(Property.SEARCH_STRING, "Test3");
+      setProperty(Property.SEARCH_STRING, "Test4");
+      setProperty(Property.SEARCH_STRING, "Test5");
+
+      invokeRequestAndCheckResponse(ContextOperation.CONTAINSHEADERSTRING);
+  }
+
+  /*
    * @testName: getHeadersTest
    * 
    * @assertion_ids: JAXRS:JAVADOC:655; JAXRS:JAVADOC:677; JAXRS:JAVADOC:678;

@@ -308,7 +308,7 @@ public interface UriInfo {
      * </table>
      *
      * In case the method is invoked prior to the request matching (e.g. from a pre-matching filter), the method returns an
-     * empty string.
+     * empty list.
      *
      * @return A list of {@link Path} templates.
      */

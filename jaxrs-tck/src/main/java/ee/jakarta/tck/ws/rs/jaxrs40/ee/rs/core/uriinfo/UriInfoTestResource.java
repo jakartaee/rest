@@ -35,6 +35,7 @@ public class UriInfoTestResource {
 
     public static class SubGet {
         @PUT
+        @Path(THREE_SUB)
         public String get(@Context UriInfo uriInfo) {
             return listToString(uriInfo.getMatchedResourceTemplates());
         }
@@ -64,6 +65,6 @@ public class UriInfoTestResource {
     }
 
     private static String listToString(List<String> list) {
-        return list.stream().reduce("", (a, b) -> a + "|" + b);
+        return list.stream().reduce("", (a, b) -> a + ";" + b);
     }
 }

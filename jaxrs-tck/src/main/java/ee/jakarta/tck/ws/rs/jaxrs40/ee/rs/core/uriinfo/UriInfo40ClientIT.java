@@ -81,7 +81,7 @@ public class UriInfo40ClientIT extends JAXRSCommonClient {
   @Test
   public void getMatchedResourceTemplateOneTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "one/azazaz00"));
-    setProperty(Property.SEARCH_STRING, "|/app|/resource|/one|/" + UriInfoTestResource.ONE_POST);
+    setProperty(Property.SEARCH_STRING, "/app;/resource;/one/" + UriInfoTestResource.ONE_POST);
     invoke();
 
   }
@@ -96,7 +96,7 @@ public class UriInfo40ClientIT extends JAXRSCommonClient {
   @Test
   public void getMatchedResourceTemplateTwoGetTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "two/P/abc/MyNumber"));
-    setProperty(Property.SEARCH_STRING, "/app|/resource|/two|/" + UriInfoTestResource.TWO_GET);
+    setProperty(Property.SEARCH_STRING, "/app;/resource;/two/" + UriInfoTestResource.TWO_GET);
     invoke();
   }
 
@@ -110,7 +110,7 @@ public class UriInfo40ClientIT extends JAXRSCommonClient {
   @Test
   public void getMatchedResourceTemplateTwoPostTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "two/P/abc/MyNumber"));
-    setProperty(Property.SEARCH_STRING, "/app|/resource|/two|/" + UriInfoTestResource.TWO_POST);
+    setProperty(Property.SEARCH_STRING, "/app;/resource;/two/" + UriInfoTestResource.TWO_POST);
     invoke();
   }
 
@@ -123,8 +123,9 @@ public class UriInfo40ClientIT extends JAXRSCommonClient {
    */
   @Test
   public void getMatchedResourceTemplateSubTest() throws Fault {
-    setProperty(Property.REQUEST, buildRequest(Request.PUT, "three/a"));
-    setProperty(Property.SEARCH_STRING, "/app|/resource|/three|/" + UriInfoTestResource.THREE_SUB);
+    setProperty(Property.REQUEST, buildRequest(Request.PUT, "three/a/z"));
+    setProperty(Property.SEARCH_STRING,
+            "/app;/resource;/three/" + UriInfoTestResource.THREE_SUB + ";/" + UriInfoTestResource.THREE_SUB);
     invoke();
   }
 }

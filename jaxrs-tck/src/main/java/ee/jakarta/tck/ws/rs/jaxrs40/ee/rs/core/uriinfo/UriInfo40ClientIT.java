@@ -18,6 +18,7 @@ package ee.jakarta.tck.ws.rs.jaxrs40.ee.rs.core.uriinfo;
 
 import ee.jakarta.tck.ws.rs.common.JAXRSCommonClient;
 import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
+import jakarta.ws.rs.core.UriInfo;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -116,8 +117,9 @@ public class UriInfo40ClientIT extends JAXRSCommonClient {
    */
   @Test
   public void getMatchedResourceTemplateSubTest() throws Fault {
-    setProperty(Property.REQUEST, buildRequest(Request.PUT, "three/a"));
-    setProperty(Property.SEARCH_STRING, "/app/resource/three/" + UriInfoTestResource.THREE_SUB);
+    setProperty(Property.REQUEST, buildRequest(Request.PUT, "three/a/z"));
+    setProperty(Property.SEARCH_STRING,
+            "/app/resource/three/" + UriInfoTestResource.THREE_SUB + "/" + UriInfoTestResource.THREE_SUB);
     invoke();
   }
 }

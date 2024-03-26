@@ -240,8 +240,8 @@ public interface UriInfo {
      * <p>
      * Each {@link Path} value used to match a resource class, a sub-resource method or a sub-resource locator is concatenated
      * into a single {@code String} value. The template does not include query parameters but does include matrix parameters
-     * if present in the request URI. The concatenation is ordered in the request URI matching order, with the current resource
-     * URI last. E.g. given the following resource classes:
+     * if present in the request URI. The concatenation is ordered in the request URI matching order, with the
+     * {@link ApplicationPath} value first and current resource URI last. E.g. given the following resource classes:
      * </p>
      *
      * <pre>

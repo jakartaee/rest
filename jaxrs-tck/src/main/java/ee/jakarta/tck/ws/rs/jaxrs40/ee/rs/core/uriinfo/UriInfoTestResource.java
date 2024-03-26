@@ -33,6 +33,7 @@ public class UriInfoTestResource {
 
     public static class SubGet {
         @PUT
+        @Path(THREE_SUB)
         public String get(@Context UriInfo uriInfo) {
             return uriInfo.getMatchedResourceTemplate();
         }

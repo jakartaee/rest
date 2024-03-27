@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010  Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -164,6 +164,14 @@ public class MediaType {
      * A {@link MediaType} constant representing {@value #APPLICATION_JSON_PATCH_JSON} media type.
      */
     public static final MediaType APPLICATION_JSON_PATCH_JSON_TYPE = new MediaType("application", "json-patch+json");
+    /**
+    * {@link String} representation of {@value #APPLICATION_MERGE_PATCH_JSON} media type..
+    */
+    public static final String APPLICATION_MERGE_PATCH_JSON = "application/merge-patch+json";
+    /**
+    * A {@link MediaType} constant representing {@value #APPLICATION_MERGE_PATCH_JSON} media type.
+    */
+    public static final MediaType APPLICATION_MERGE_PATCH_JSON_TYPE = new MediaType("application", "merge-patch+json");
 
     /**
      * Creates a new instance of {@code MediaType} by parsing the supplied string.

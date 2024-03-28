@@ -47,15 +47,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     setContextRoot("/jaxrs_spec_client_webtarget_web/resource");
   }
  
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
 
   /* Run test */

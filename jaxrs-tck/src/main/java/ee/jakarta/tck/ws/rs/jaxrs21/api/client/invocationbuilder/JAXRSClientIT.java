@@ -58,15 +58,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     super.setup();
   }
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException {

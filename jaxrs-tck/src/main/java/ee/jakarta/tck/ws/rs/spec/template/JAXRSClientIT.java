@@ -57,15 +57,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     return archive;
   }
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   /*
    * @class.setup_props: webServerHost; webServerPort; ts_home;

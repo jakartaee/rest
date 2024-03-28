@@ -50,15 +50,6 @@ public class JAXRSClientIT extends ReaderClient<ContextOperation> {
 
   private static final long serialVersionUID = -8828149277776372718L;
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   @BeforeEach
   public void setup() {

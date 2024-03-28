@@ -13,3 +13,5 @@
 
 * <<javaee>>: Removal of `@ManagedBean`
 annotation support.  Managed bean support is now part of CDI.
+* <<java-se>>: Clarified when the two alternative ways of publishing on 
+Java SE must be supported.

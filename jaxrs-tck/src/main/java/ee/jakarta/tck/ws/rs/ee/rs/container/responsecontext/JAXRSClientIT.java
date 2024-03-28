@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -443,6 +443,25 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     setProperty(Property.CONTENT, "inputstream");
     setProperty(Property.SEARCH_STRING, ByteArrayInputStream.class.getName());
     invokeRequestAndCheckResponse(ContextOperation.GETENTITYTYPE);
+  }
+
+  /*
+   * @testName: getHeadersTest
+   * 
+   * @assertion_ids: JAXRS:JAVADOC:1357; JAXRS:JAVADOC:1358;
+   * 
+   * @test_Strategy: Get the mutable response headers multivalued map.
+   *
+   * Filter method called after a response has been provided for a request.
+   * Throws IOException.
+   */
+  @Test
+  public void containsHeaderStringTest() throws Fault {
+    String header = "Test";
+    for (int i = 1; i != 6; i++)
+      setProperty(Property.UNORDERED_SEARCH_STRING, header + i);
+    setProperty(Property.CONTENT, header);
+    invokeRequestAndCheckResponse(ContextOperation.CONTAINSHEADERSTRING);
   }
 
   /*

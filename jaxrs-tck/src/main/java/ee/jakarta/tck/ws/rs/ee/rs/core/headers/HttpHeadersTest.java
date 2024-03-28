@@ -16,6 +16,9 @@
 
 package ee.jakarta.tck.ws.rs.ee.rs.core.headers;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
@@ -61,6 +64,44 @@ public class HttpHeadersTest {
       }
     } catch (Throwable ex) {
       sb.append("Unexpected exception thrown in getRequestHeaders: "
+          + ex.getMessage());
+      ex.printStackTrace();
+    }
+    return sb.toString();
+  }
+
+  @GET
+  @Path("/contains-headers")
+  public String containsHeadersGet() {
+    sb = new StringBuffer();
+    sb.append("containsHeaderString= ");
+
+    try {
+        if(hs.containsHeaderString("accept", "text/html"::equals)) {
+            sb.append("Test1: accept contains text/html; ");
+        }
+      
+        //Verify Predicate and separator character usage
+        if (hs.containsHeaderString("Accept", ",", "Text/html;Level=1"::equalsIgnoreCase)) {
+            sb.append("Test2: accept contains text/html;level=1; ");
+        }
+        
+        //Verify incorrect separator character fails
+        if (!(hs.containsHeaderString("Accept", ";", "text/html;level=1"::equals))) {
+            sb.append("Test3: Incorrect separator character fails as expected; ");
+        }
+        
+        //Verify white space in value not trimmed and double character separator
+        if (!(hs.containsHeaderString("header3", ";;", "value3"::equals))) {
+            sb.append("Test4: White space not trimmed from value as expected; ");
+        }
+        
+        //Verify white space in front and back of value trimmed
+        if (hs.containsHeaderString("HEADER3", ";;", "value2"::equalsIgnoreCase)) {
+            sb.append("Test5: White space trimmed around value as expected; ");  
+        }
+    } catch (Throwable ex) {
+      sb.append("Unexpected exception thrown in containsHeadersGet: "
           + ex.getMessage());
       ex.printStackTrace();
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -207,7 +207,8 @@ public interface ClientRequestContext {
      * (missing comma), or the value {@code no - store} (whitespace within value).
      *
      * @param name the message header.
-     * @param valueSeparatorRegex Separates the header value into single values. {@code null} does not split.
+     * @param valueSeparatorRegex Regular expression that separates the header value into single values. 
+     * {@code null} does not split.
      * @param valuePredicate value must fulfil this predicate.
      * @return {@code true} if and only if a header with the given name exists, having either a whitespace-trimmed value
      * matching the predicate, or having at least one whitespace-trimmed single value in a token-separated list of single values.

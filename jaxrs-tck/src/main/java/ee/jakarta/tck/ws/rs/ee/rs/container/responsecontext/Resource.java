@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -177,6 +177,17 @@ public class Resource {
     ResponseBuilder builder = createResponseWithHeader();
     Response response = builder.build();
     return response;
+  }
+
+  @POST
+  @Path("containsheaderstring")
+  public Response containsHeaderString(String header) {
+    ResponseBuilder builder = createResponseWithHeader();
+    builder = builder.header("Accept", "text/html, text/html;level=1, */*");
+    builder = builder.header("Content-Type", "application/xml;charset=utf8");
+    builder = builder.header("Header3", "value1 ;; Value2 ;;value 3");
+    Response response = builder.build();
+    return response;   
   }
 
   @POST

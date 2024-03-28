@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -331,6 +331,34 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     setProperty(Property.SEARCH_STRING, entity);
     invokeRequestAndCheckResponse(Request.POST,
         ContextOperation.GETENTITYSTREAM);
+  }
+
+  /*
+   * @testName: containsHeaderStringTest
+   * 
+   * @assertion_ids: JAXRS:JAVADOC:JAXRS:JAVADOC:1359; JAXRS:JAVADOC:1360
+   * 
+   * @test_Strategy: Check if the specified header contains a specified value.
+   * 
+   * Filter method called before a request has been dispatched to a resource.
+   * Throws IOException.
+   */
+  @Test
+  @Tag("servlet")
+  public void containsHeaderStringTest() throws Fault {    
+      setProperty(Property.REQUEST_HEADERS,
+              "Accept:text/*, text/html, text/html;level=1, */*");
+      setProperty(Property.REQUEST_HEADERS,
+              "Content-Type:application/xml;charset=utf8");
+      setProperty(Property.REQUEST_HEADERS,
+              "Header3:value1 ;; Value2 ;;value 3");
+      setProperty(Property.SEARCH_STRING, "Test1");
+      setProperty(Property.SEARCH_STRING, "Test2");
+      setProperty(Property.SEARCH_STRING, "Test3");
+      setProperty(Property.SEARCH_STRING, "Test4");
+      setProperty(Property.SEARCH_STRING, "Test5");
+
+      invokeRequestAndCheckResponse(ContextOperation.CONTAINSHEADERSTRING);
   }
 
   /*

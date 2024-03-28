@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
 
-    Copyright (c) 2021, 2022 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2021 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Public License v. 2.0, which is available at
@@ -35,16 +35,24 @@
     <description>This test verifies the compliance of Eclipse Jersey with Jakarta REST</description>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <jersey.version>3.1.0-M3</jersey.version>
-        <glassfish.container.version>6.2.5</glassfish.container.version>
-        <glassfish.home>${project.build.directory}/glassfish6</glassfish.home>
-        <jakarta.platform.version>10.0.0-RC1</jakarta.platform.version>
-        <junit.jupiter.version>5.7.2</junit.jupiter.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <jersey.version>4.0-M1-GF1</jersey.version>
+        <glassfish.container.version>8.0.0-M1</glassfish.container.version>
+        <glassfish.home>${project.build.directory}/glassfish7</glassfish.home>
+        <jakarta.platform.version>11.0.0-M1</jakarta.platform.version>
+        <junit.jupiter.version>5.9.3</junit.jupiter.version>
         <jakarta.rest.version>4.0.0-SNAPSHOT</jakarta.rest.version>
         <tck.artifactId>jakarta-restful-ws-tck</tck.artifactId>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jakarta-snapshots</id>
+            <url>https://jakarta.oss.sonatype.org/content/repositories/staging/</url>
+        </repository>
+    </repositories>
+
 
     <dependencyManagement>
         <dependencies>
@@ -55,13 +63,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
+            <!-- <dependency>
                 <groupId>org.glassfish.jersey</groupId>
                 <artifactId>jersey-bom</artifactId>
-                <version>${jersey.version}</version>
+                <version>4.0-M1-GF</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
+            </dependency> -->
         </dependencies>
     </dependencyManagement>
 
@@ -101,7 +109,7 @@
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -149,10 +157,17 @@
             <version>${jersey.version}</version>
             <scope>test</scope>
         </dependency> 
+
         <dependency>
-            <groupId>org.netbeans.tools</groupId>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>4.0-M1-GF1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.tck</groupId>
             <artifactId>sigtest-maven-plugin</artifactId>
-            <version>1.4</version>
+            <version>2.2</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
@@ -160,6 +175,7 @@
             <version>${jersey.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-jaxb</artifactId>
@@ -201,7 +217,8 @@
                             </artifactItems>
                         </configuration>
                     </execution>
-                    <execution>
+
+                    <!-- <execution>
                         <id>copy</id>
                         <phase>pre-integration-test</phase>
                         <goals>
@@ -292,9 +309,29 @@
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
+                    </execution> -->
+                </executions>
+            </plugin>
+                        <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <target>
+                                <!-- <echo message="unzipping file"></echo> -->
+                                <!-- <unzip dest="target/" src="target/glassfish.zip"></unzip> -->
+                                <chmod dir="target/glassfish7/glassfish/bin/asadmin" perm="777"></chmod>
+                            </target>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <artifactId>exec-maven-plugin</artifactId>
                 <groupId>org.codehaus.mojo</groupId>
@@ -306,7 +343,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
+                            <executable>${glassfish.home}/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>stop-domain</argument>
                             </arguments>
@@ -319,7 +356,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
+                            <executable>${glassfish.home}/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>start-domain</argument>
                             </arguments>
@@ -332,7 +369,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
+                            <executable>${glassfish.home}/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>set</argument>
                                 <argument>server-config.network-config.protocols.protocol.http-listener-1.http.trace-enabled=true</argument>
@@ -346,7 +383,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
+                            <executable>${glassfish.home}/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>--passwordfile</argument>
                                 <argument>${project.basedir}/j2ee.pass</argument>
@@ -366,7 +403,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
+                            <executable>${glassfish.home}/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>--passwordfile</argument>
                                 <argument>${project.basedir}/j2ee.pass</argument>
@@ -384,7 +421,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
+                            <executable>${glassfish.home}/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>--passwordfile</argument>
                                 <argument>${project.basedir}/javajoe.pass</argument>
@@ -404,7 +441,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
+                            <executable>${glassfish.home}/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>--passwordfile</argument>
                                 <argument>${project.basedir}/javajoe.pass</argument>
@@ -422,7 +459,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
+                            <executable>${glassfish.home}/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>list-file-users</argument>
                             </arguments>
@@ -435,7 +472,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${project.build.directory}/glassfish6/glassfish/bin/asadmin</executable>
+                            <executable>${glassfish.home}/glassfish/bin/asadmin</executable>
                             <arguments>
                                 <argument>stop-domain</argument>
                             </arguments>
@@ -462,8 +499,6 @@
                             <systemPropertyVariables>
                                 <GLASSFISH_HOME>${glassfish.home}</GLASSFISH_HOME>
                                 <servlet_adaptor>org.glassfish.jersey.servlet.ServletContainer</servlet_adaptor>
-                                <webServerHost>localhost</webServerHost>
-                                <webServerPort>8080</webServerPort>
                                 <junit.log.traceflag>true</junit.log.traceflag>
                                 <user>j2ee</user>
                                 <password>j2ee</password>

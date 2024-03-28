@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,6 +16,7 @@
 
 package ee.jakarta.tck.ws.rs.api.client.clientresponsecontext;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedReader;
@@ -426,6 +427,47 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     invokeWithResponseAndAssertStatus(response, Status.OK, in);
   }
 
+  /*
+   * @testName: containsHeaderStringTest
+   * 
+   * @assertion_ids:  JAXRS:JAVADOC:1355; JAXRS:JAVADOC:1356; 
+   * 
+   * @test_Strategy: Check if the specified header contains a specified value.
+   * 
+   * ClientRequestFilter.abortWith
+   */
+  @Test
+  public void containsHeaderStringTest() throws Fault {
+      
+      ContextProvider in = new ContextProvider() {
+          @Override
+          protected void checkFilterContext(ClientRequestContext requestContext,
+                  ClientResponseContext responseContext) throws Fault {
+              assertTrue(responseContext.containsHeaderString("header1", "value"::equals));
+              assertTrue(responseContext.containsHeaderString("HEADER1", ",", "value2"::equals));
+              //Incorrect separator character
+              assertFalse(responseContext.containsHeaderString("header1", ";", "value2"::equals));
+              //Shouldn't find first value when separator character is incorrect
+              assertFalse(responseContext.containsHeaderString("header1", ";", "Value1"::equalsIgnoreCase));
+              //Test regular expression
+              assertTrue(responseContext.containsHeaderString("header1", ";|,", "VALUE2"::equalsIgnoreCase));
+              //White space in value not trimmed
+              assertFalse(responseContext.containsHeaderString("header1", "whitespace"::equalsIgnoreCase));
+              //Multiple character separator
+              assertTrue(responseContext.containsHeaderString("header2", ";;", "Value5"::equalsIgnoreCase));
+          }
+      };
+      Response response = Response.ok()
+              .header("header1", "value")
+              .header("header1", "value1 , value2")
+              .header("header1", "Value3,white space ")
+              .header("header2", "Value4;;Value5")
+              .build();
+      invokeWithResponseAndAssertStatus(response, Status.OK, in);
+  }
+
+
+  
   /*
    * @testName: getLanguageTest
    * 

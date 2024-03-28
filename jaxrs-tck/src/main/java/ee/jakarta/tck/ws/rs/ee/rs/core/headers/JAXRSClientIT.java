@@ -211,6 +211,31 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   }
 
   /*
+   * @testName: requestHeadersTest
+   * 
+   * @assertion_ids: JAXRS:JAVADOC:1361; JAXRS:JAVADOC:1362;
+   * 
+   * @test_Strategy: HttpHeaders.containsHeaderString used to confirm that a given header contains
+   * a specified value with the appropriate value separator.
+   */
+  @Test
+  public void containsHeaderStringTest() throws Fault {
+    setProperty(Property.REQUEST_HEADERS,
+        "Accept:text/*, text/html, text/html;level=1, */*");
+    setProperty(Property.REQUEST_HEADERS,
+        "Content-Type:application/xml;charset=utf8");
+    setProperty(Property.REQUEST_HEADERS,
+        "Header3:value1 ;; Value2 ;;value 3");
+    setProperty(Property.REQUEST, buildRequest(Request.GET, "contains-headers"));
+    setProperty(Property.SEARCH_STRING, "Test1");
+    setProperty(Property.SEARCH_STRING, "Test2");
+    setProperty(Property.SEARCH_STRING, "Test3");
+    setProperty(Property.SEARCH_STRING, "Test4");
+    setProperty(Property.SEARCH_STRING, "Test5");
+    invoke();
+  }
+
+  /*
    * @testName: getDateTest
    * 
    * @assertion_ids: JAXRS:JAVADOC:779;

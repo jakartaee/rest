@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -17,6 +17,7 @@
 package ee.jakarta.tck.ws.rs.api.client.clientrequestcontext;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.ByteArrayInputStream;
 import java.lang.annotation.Annotation;
@@ -860,6 +861,46 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     assertContains(entity, "Accept");
   }
 
+  /*
+   * @testName: containsHeaderStringTest
+   * 
+   * @assertion_ids:  JAXRS:JAVADOC:1353; JAXRS:JAVADOC:1354; 
+   * 
+   * @test_Strategy: Check if the specified header contains a specified value.
+   * 
+   * ClientRequestFilter.abortWith
+   */
+  @Test
+  public void containsHeaderStringTest() throws Fault {
+    ContextProvider provider = new ContextProvider() {
+      @Override
+      protected void checkFilterContext(ClientRequestContext context) throws Fault {
+          assertTrue(context.containsHeaderString("header1", "value"::equals));
+          assertTrue(context.containsHeaderString("HEADER1", ",", "value2"::equals));
+          //Incorrect separator character
+          assertFalse(context.containsHeaderString("header1", ";", "value2"::equals));
+          //Shouldn't find first value when separator character is incorrect
+          assertFalse(context.containsHeaderString("header1", ";", "Value1"::equalsIgnoreCase));
+          //Test regular expression
+          assertTrue(context.containsHeaderString("header1", ";|,", "VALUE2"::equalsIgnoreCase));
+          //White space in value not trimmed
+          assertFalse(context.containsHeaderString("header1", "whitespace"::equals));
+          //Multiple character separator
+          assertTrue(context.containsHeaderString("header2", ";;", "Value5"::equalsIgnoreCase));
+          Response r = Response.ok().build();
+          context.abortWith(r);
+      }
+    };
+    Invocation invocation = buildBuilder(provider)
+        .header("header1", "value")
+        .header("header1", "value1 , value2")
+        .header("header1", "Value3,white space ")
+        .header("header2", "Value4;;Value5")
+        .buildGet();
+    Response response = invoke(invocation);
+  }
+
+  
   /*
    * @testName: getHeaderStringTest
    * 

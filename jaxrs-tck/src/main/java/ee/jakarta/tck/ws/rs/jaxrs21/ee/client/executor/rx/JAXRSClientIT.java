@@ -66,26 +66,9 @@ public class JAXRSClientIT
   }
 
   
-  @ArquillianResource
-  @OperateOnDeployment("jaxrs21_ee_client_executor_rx_deployment")
-  private URL url;
-
   @BeforeEach
   public void setup() {
-
-    TestUtil.logTrace("setup method JAXRSClientIT");
-
-    assertFalse((url==null), "[JAXRSClientIT] 'url' was not injected.");
-    
-    String hostname = url.getHost();
-    int portnum = url.getPort();
-    
-    assertFalse(isNullOrEmpty(hostname), "[JAXRSClientIT] 'webServerHost' was not set.");
-    _hostname = hostname.trim();
-    assertFalse(isPortInvalid(portnum), "[JAXRSClientIT] 'webServerPort' was not set.");
-    _port = portnum;
-    TestUtil.logMsg("[JAXRSClientIT] Test setup OK");
-
+    super.setup();
   }
 
   @Deployment(testable = false, name = "jaxrs21_ee_client_executor_rx_deployment")

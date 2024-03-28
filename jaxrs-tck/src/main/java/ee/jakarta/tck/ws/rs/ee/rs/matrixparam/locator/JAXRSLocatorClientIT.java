@@ -67,26 +67,9 @@ public class JAXRSLocatorClientIT
   }
 
 
-  @ArquillianResource
-  @OperateOnDeployment("jaxrs_ee_rs_matrixparam_locator_deployment")
-  private URL url;
-
   @BeforeEach
   public void setup() {
-
-    TestUtil.logTrace("setup method JAXRSLocatorClientIT");
-
-    assertFalse((url==null), "[JAXRSLocatorClientIT] 'url' was not injected.");
-    
-    String hostname = url.getHost();
-    int portnum = url.getPort();
-    
-    assertFalse(isNullOrEmpty(hostname), "[JAXRSLocatorClientIT] 'webServerHost' was not set.");
-    _hostname = hostname.trim();
-    assertFalse(isPortInvalid(portnum), "[JAXRSLocatorClientIT] 'webServerPort' was not set.");
-    _port = portnum;
-    TestUtil.logMsg("[JAXRSLocatorClientIT] Test setup OK");
-
+    super.setup();
   }
 
   @Deployment(testable = false, name = "jaxrs_ee_rs_matrixparam_locator_deployment")

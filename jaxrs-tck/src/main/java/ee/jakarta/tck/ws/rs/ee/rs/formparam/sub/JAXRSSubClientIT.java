@@ -59,26 +59,10 @@ public class JAXRSSubClientIT extends JAXRSClientIT {
     setContextRoot("/jaxrs_ee_formparam_sub_web/resource/sub");
   }
 
-  @ArquillianResource
-  @OperateOnDeployment("jaxrs_ee_formparam_sub_deployment")
-  private URL url;
 
   @BeforeEach
   public void setup() {
-
-    TestUtil.logTrace("setup method JAXRSSubClientIT");
-
-    assertFalse((url==null), "[JAXRSSubClientIT] 'url' was not injected.");
-    
-    String hostname = url.getHost();
-    int portnum = url.getPort();
-    
-    assertFalse(isNullOrEmpty(hostname), "[JAXRSSubClientIT] 'webServerHost' was not set.");
-    _hostname = hostname.trim();
-    assertFalse(isPortInvalid(portnum), "[JAXRSSubClientIT] 'webServerPort' was not set.");
-    _port = portnum;
-    TestUtil.logMsg("[JAXRSSubClientIT] Test setup OK");
-
+    super.setup();
   }
 
   private static final long serialVersionUID = 1L;

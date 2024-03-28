@@ -244,7 +244,6 @@ public abstract class JAXRSCommonClient {
   }
 
   @ArquillianResource
-  @OperateOnDeployment("_DEFAULT_")
   private URL url;
   
   /**

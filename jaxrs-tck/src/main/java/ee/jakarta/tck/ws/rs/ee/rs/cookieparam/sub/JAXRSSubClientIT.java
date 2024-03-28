@@ -65,26 +65,9 @@ public class JAXRSSubClientIT
     setContextRoot("/jaxrs_ee_rs_cookieparam_sub_web/Resource/subresource");
   }
 
-  @ArquillianResource
-  @OperateOnDeployment("jaxrs_ee_rs_cookieparam_sub_web")
-  private URL url;
-
   @BeforeEach
   public void setup() {
-
-    TestUtil.logTrace("setup method JAXRSSubClientIT");
-
-    assertFalse((url==null), "[JAXRSSubClientIT] 'url' was not injected.");
-    
-    String hostname = url.getHost();
-    int portnum = url.getPort();
-    
-    assertFalse(isNullOrEmpty(hostname), "[JAXRSSubClientIT] 'webServerHost' was not set.");
-    _hostname = hostname.trim();
-    assertFalse(isPortInvalid(portnum), "[JAXRSSubClientIT] 'webServerPort' was not set.");
-    _port = portnum;
-    TestUtil.logMsg("[JAXRSSubClientIT] Test setup OK");
-
+    super.setup();
   }
 
   @Deployment(testable = false, name = "jaxrs_ee_rs_cookieparam_sub_web")

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,6 +18,8 @@ package jakarta.ws.rs.core;
 
 import java.net.URI;
 import java.util.List;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.ApplicationPath;
 
 /**
  * An injectable interface that provides access to application and request URI information. Relative URIs are relative
@@ -229,6 +231,71 @@ public interface UriInfo {
      * @return a read-only list of URI paths for matched resources.
      */
     public List<String> getMatchedURIs();
+
+    /**
+     * <p>
+     * Get a URI template that includes all {@link Path Paths} (including {@link ApplicationPath})
+     * matched by the current request's URI.
+     * </p>
+     * <p>
+     * Each {@link Path} value used to match a resource class, a sub-resource method or a sub-resource locator is concatenated
+     * into a single {@code String} value. The template does not include query parameters but does include matrix parameters
+     * if present in the request URI. The concatenation is ordered in the request URI matching order, with the
+     * {@link ApplicationPath} value first and current resource URI last. E.g. given the following resource classes:
+     * </p>
+     *
+     * <pre>
+     * &#064;Path("foo")
+     * public class FooResource {
+     *  &#064;GET
+     *  &#064;Path("{foo:[f-z][a-z]*}")
+     *  public String getFoo() {...}
+     *
+     *  &#064;Path("{bar:[b-e][a-z]*}")
+     *  public BarResource getBarResource() {...}
+     * }
+     *
+     * public class BarResource {
+     *  &#064;GET
+     *  &#064;Path("{id}{id:[0-9]}")
+     *  public String getBar() {...}
+     * }
+     * </pre>
+     *
+     * <p>
+     * The values returned by this method based on request uri and where the method is called from are:
+     * </p>
+     *
+     * <table border="1">
+     * <caption>Matched URIs from requests</caption>
+     * <tr>
+     * <th>Request</th>
+     * <th>Called from</th>
+     * <th>Value(s)</th>
+     * </tr>
+     * <tr>
+     * <td>GET /foo</td>
+     * <td>FooResource.getFoo</td>
+     * <td>/foo/{foo:[f-z][a-z]*}</td>
+     * </tr>
+     * <tr>
+     * <td>GET /foo/bar</td>
+     * <td>FooResource.getBarResource</td>
+     * <td>/foo/{bar:[b-e][a-z]*}</td>
+     * </tr>
+     * <tr>
+     * <td>GET /foo/bar/id0</td>
+     * <td>BarResource.getBar</td>
+     * <td>/foo/{bar:[b-e][a-z]*}/{id}{id:[0-9]}</td>
+     * </tr>
+     * </table>
+     *
+     * In case the method is invoked prior to the request matching (e.g. from a pre-matching filter), the method returns an
+     * empty string.
+     *
+     * @return A concatenated string of {@link Path} templates.
+     */
+    public String getMatchedResourceTemplate();
 
     /**
      * Get a read-only list of URIs for matched resources.

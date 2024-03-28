@@ -1188,6 +1188,7 @@ fld public final static jakarta.ws.rs.core.MediaType APPLICATION_ATOM_XML_TYPE
 fld public final static jakarta.ws.rs.core.MediaType APPLICATION_FORM_URLENCODED_TYPE
 fld public final static jakarta.ws.rs.core.MediaType APPLICATION_JSON_PATCH_JSON_TYPE
 fld public final static jakarta.ws.rs.core.MediaType APPLICATION_JSON_TYPE
+fld public final static jakarta.ws.rs.core.MediaType APPLICATION_MERGE_PATCH_JSON_TYPE
 fld public final static jakarta.ws.rs.core.MediaType APPLICATION_OCTET_STREAM_TYPE
 fld public final static jakarta.ws.rs.core.MediaType APPLICATION_SVG_XML_TYPE
  anno 0 java.lang.Deprecated(boolean forRemoval=true, java.lang.String since="")
@@ -1203,6 +1204,7 @@ fld public final static java.lang.String APPLICATION_ATOM_XML = "application/ato
 fld public final static java.lang.String APPLICATION_FORM_URLENCODED = "application/x-www-form-urlencoded"
 fld public final static java.lang.String APPLICATION_JSON = "application/json"
 fld public final static java.lang.String APPLICATION_JSON_PATCH_JSON = "application/json-patch+json"
+fld public final static java.lang.String APPLICATION_MERGE_PATCH_JSON = "application/merge-patch+json"
 fld public final static java.lang.String APPLICATION_OCTET_STREAM = "application/octet-stream"
 fld public final static java.lang.String APPLICATION_SVG_XML = "application/svg+xml"
  anno 0 java.lang.Deprecated(boolean forRemoval=true, java.lang.String since="")
@@ -1586,6 +1588,7 @@ meth public abstract jakarta.ws.rs.core.MultivaluedMap<java.lang.String,java.lan
 meth public abstract jakarta.ws.rs.core.UriBuilder getAbsolutePathBuilder()
 meth public abstract jakarta.ws.rs.core.UriBuilder getBaseUriBuilder()
 meth public abstract jakarta.ws.rs.core.UriBuilder getRequestUriBuilder()
+meth public abstract java.lang.String getMatchedResourceTemplate()
 meth public abstract java.lang.String getPath()
 meth public abstract java.lang.String getPath(boolean)
 meth public abstract java.net.URI getAbsolutePath()

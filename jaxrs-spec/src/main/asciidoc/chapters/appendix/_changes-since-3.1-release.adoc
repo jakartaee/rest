@@ -16,7 +16,7 @@ annotation support.  Managed bean support is now part of CDI.
 * <<java-se>>: Clarified when the two alternative ways of publishing on 
 Java SE must be supported.
 * Removed `Link.JaxbLink` and `Link.JaxbAdapter` inner classes.
-* Added `getHeaderString()` method to `ClientRequestContext`, `ClientResponseContext`,
+* Added `containsHeaderString()` method to `ClientRequestContext`, `ClientResponseContext`,
 `ContainerRequestContext`, `ContainerResponseContext`, and `HttpHeaders`.
-* Added `APPLICATION_MERGE_PATCH_JSON` to `MediaType`
+* Added `APPLICATION_MERGE_PATCH_JSON` and `APPLICATION_MERGE_PATCH_JSON_TYPE` to `MediaType`
 * Added `getMatchedResourceTemplates()` method to `UriInfo`.

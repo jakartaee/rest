@@ -2,7 +2,7 @@
 <!DOCTYPE spec SYSTEM "https://raw.githubusercontent.com/eclipse-ee4j/jakartaee-tck/master/internal/docs/dtd/spec_assertions.dtd">
 <!--
 
-    Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2024 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Public License v. 2.0, which is available at
@@ -25,7 +25,7 @@
     <technology>RESTful Web Services</technology>
     <id>JAX-RS</id>
     <name>Java(TM) API for RESTful Web Services</name>
-    <version>3.1</version>
+    <version>4.0</version>
     <location-names>
         <chapters>
             <chapter id="2" name="Applications">
@@ -1399,7 +1399,7 @@
         <!-- JAXRS 3.1-->
         <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">
             <id>JAXRS:SPEC:131</id>
-            <description>There are two alternative ways of publishing on Java SE: Creating SE endpoints directly or using the SE bootstrap API. A compliant implementation MUST support both alternatives on Java SE.</description>
+            <description>There are two alternative ways of publishing on Java SE: Creating SE endpoints directly or using the SE bootstrap API. Any compliant implementation that supports either of these alternatives on Java SE MUST support both.</description>
             <location chapter="2" section="3.1"/>
         </assertion>
         <assertion required="true" impl-spec="false" defined-by="technology" status="active" testable="true">

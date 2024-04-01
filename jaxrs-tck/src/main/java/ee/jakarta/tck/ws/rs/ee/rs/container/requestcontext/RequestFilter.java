@@ -180,7 +180,7 @@ public class RequestFilter extends TemplateFilter {
     }
     abortWithEntity(sb.toString());
   }
- 
+
   public void getHeadersIsMutable() {
     String key = "KEY";
     MultivaluedMap<String, String> headers = requestContext.getHeaders();

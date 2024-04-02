@@ -102,11 +102,11 @@
         <api.package>jakarta.ws.rs</api.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skip.release.tests>false</skip.release.tests>
-        <spec.version>3.2</spec.version>
+        <spec.version>4.0</spec.version>
         <spec.version.revision /> <!-- e.g. (Rev a) -->
 
-        <annotation.api.version>2.1.1</annotation.api.version>
-        <activation.api.version>2.0.0</activation.api.version>
+        <annotation.api.version>3.0.0-M1</annotation.api.version>
+        <activation.api.version>2.1.3</activation.api.version>
         <inject.api.version>2.0.0</inject.api.version>
         <validation.api.version>3.0.0</validation.api.version>
         <concurrent.api.version>2.0.0</concurrent.api.version>
@@ -139,31 +139,37 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- Used only in the examples -->
             <dependency>
                 <groupId>jakarta.annotation</groupId>
                 <artifactId>jakarta.annotation-api</artifactId>
                 <version>${annotation.api.version}</version>
             </dependency>
+            <!-- Required for the TCK -->
             <dependency>
                 <groupId>jakarta.activation</groupId>
                 <artifactId>jakarta.activation-api</artifactId>
                 <version>${activation.api.version}</version>
             </dependency>
+            <!-- Used onlu in the examples -->
             <dependency>
                 <groupId>jakarta.inject</groupId>
                 <artifactId>jakarta.inject-api</artifactId>
                 <version>${inject.api.version}</version>
             </dependency>
+            <!-- Used only in the examples -->
             <dependency>
                 <groupId>jakarta.enterprise</groupId>
                 <artifactId>jakarta.enterprise.cdi-api</artifactId>
                 <version>${cdi.api.version}</version>
             </dependency>
+            <!-- Used only in the examples -->
             <dependency>
                 <groupId>jakarta.validation</groupId>
                 <artifactId>jakarta.validation-api</artifactId>
                 <version>${validation.api.version}</version>
             </dependency>
+            <!-- Used only in the examples -->
             <dependency>
                 <groupId>jakarta.enterprise.concurrent</groupId>
                 <artifactId>jakarta.enterprise.concurrent-api</artifactId>

@@ -26,12 +26,12 @@
     <name>Jakarta RESTful WS TCK</name>
     <description>Technology Compatibility Kit for Jakarta RESTful Web Services</description>
     <url>https://github.com/jakartaee/rest</url>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>4.0.0</version>
 
     <parent>
         <groupId>jakarta.ws.rs</groupId>
         <artifactId>all</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
+        <version>4.0.0</version>
     </parent>
 
     <properties>

@@ -221,13 +221,31 @@ public interface ContainerRequestContext {
     /**
      * Get a message header as a single string value.
      *
+     * This is a convenience method for {@code getHeaderString(name, ",")}.
+     *
      * @param name the message header.
      * @return the message header value. If the message header is not present then {@code null} is returned. If the message
      * header is present but has no value then the empty string is returned. If the message header is present more than once
      * then the values of joined together and separated by a ',' character.
      * @see #getHeaders()
+     * @see #getHeaderString(String, String)
      */
-    public String getHeaderString(String name);
+    public default String getHeaderString(String name) {
+        return getHeaderString(name, ",");
+    }
+
+    /**
+     * Get a message header as a single string value.
+     *
+     * @param name the message header.
+     * @param separator the separation character.
+     * @return the message header value. If the message header is not present then {@code null} is returned. If the message
+     * header is present but has no value then the empty string is returned. If the message header is present more than once
+     * then the values of joined together and separated by the provided separation character.
+     * @see #getHeaders()
+     * @since 4.0
+     */
+    public String getHeaderString(String name, String separator);
 
     /**
      * Checks whether a header with a specific name and value (or item of the token-separated value list) exists.

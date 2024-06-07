@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -61,20 +61,15 @@ public class JAXRSClientIT extends ee.jakarta.tck.ws.rs.ee.rs.ext.interceptor.co
   private static final long serialVersionUID = 3006391868445878375L;
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot(
         "/jaxrs_ee_rs_ext_interceptor_containerreader_readerinterceptorcontext_web/resource");
   }
 
   @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  public void setup() {
+    super.setup();
   }
 
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{

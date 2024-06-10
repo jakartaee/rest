@@ -429,7 +429,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     invoke();
     boolean foundGet = false;
     for (String header : getResponseHeaders())
-      if (header.startsWith(HttpHeaders.ALLOW))
+      if (header.toLowerCase().startsWith(HttpHeaders.ALLOW.toLowerCase()))
         foundGet |= header.contains(Request.GET.name());
     assertTrue(foundGet, "Header Allow: GET was not found");
     logMsg("Header Allow: GET found as expected");

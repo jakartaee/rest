@@ -21,8 +21,8 @@ import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Stack;
 
 /**
  * Represents a generic message entity type {@code T}.
@@ -198,7 +198,7 @@ public class GenericType<T> {
      */
     static Type getTypeArgument(final Class<?> clazz, final Class<?> baseClass) {
         // collect superclasses
-        Stack<Type> superclasses = new Stack<Type>();
+        ArrayDeque<Type> superclasses = new ArrayDeque<>();
         Type currentType;
         Class<?> currentClass = clazz;
         do {

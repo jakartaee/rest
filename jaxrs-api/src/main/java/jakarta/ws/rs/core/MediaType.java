@@ -101,6 +101,14 @@ public class MediaType {
      */
     public static final MediaType APPLICATION_JSON_TYPE = new MediaType("application", "json");
     /**
+     * A {@code String} constant representing {@value #APPLICATION_YAML} media type.
+     */
+    public static final String APPLICATION_YAML = "application/yaml";
+    /**
+     * A {@link MediaType} constant representing {@value #APPLICATION_YAML} media type.
+     */
+    public static final MediaType APPLICATION_YAML_TYPE = new MediaType("application", "yaml");
+    /**
      * A {@code String} constant representing {@value #APPLICATION_FORM_URLENCODED} media type.
      */
     public static final String APPLICATION_FORM_URLENCODED = "application/x-www-form-urlencoded";

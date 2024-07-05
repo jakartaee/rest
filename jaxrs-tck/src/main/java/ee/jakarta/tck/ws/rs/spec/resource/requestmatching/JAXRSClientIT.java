@@ -17,6 +17,7 @@
 package ee.jakarta.tck.ws.rs.spec.resource.requestmatching;
 
 import java.io.InputStream;
+import java.util.Locale;
 import java.io.IOException;
 
 import ee.jakarta.tck.ws.rs.common.JAXRSCommonClient;
@@ -429,7 +430,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     invoke();
     boolean foundGet = false;
     for (String header : getResponseHeaders())
-      if (header.startsWith(HttpHeaders.ALLOW))
+      if (header.toLowerCase(Locale.ROOT).startsWith(HttpHeaders.ALLOW.toLowerCase(Locale.ROOT)))
         foundGet |= header.contains(Request.GET.name());
     assertTrue(foundGet, "Header Allow: GET was not found");
     logMsg("Header Allow: GET found as expected");

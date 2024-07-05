@@ -47,7 +47,7 @@
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <dependency>

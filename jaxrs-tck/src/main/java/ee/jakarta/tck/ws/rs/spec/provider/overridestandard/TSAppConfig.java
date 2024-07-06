@@ -29,6 +29,7 @@ public class TSAppConfig extends Application {
     resources.add(TckByteArrayProvider.class);
     resources.add(TckDataSourceProvider.class);
     resources.add(TckFileProvider.class);
+    resources.add(TckPathProvider.class);
     resources.add(TckInputStreamProvider.class);
     resources.add(TckJaxbProvider.class);
     resources.add(TckMapProvider.class);

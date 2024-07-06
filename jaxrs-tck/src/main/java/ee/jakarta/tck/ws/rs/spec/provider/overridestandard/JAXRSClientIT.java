@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -82,7 +82,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   }
 
   String[] methodsAll = { "bytearray", "string", "inputstream", "reader",
-      "file", "datasource", "source", "jaxb", "streamingoutput" };
+      "file", "path", "datasource", "source", "jaxb", "streamingoutput" };
 
  
   @Deployment(testable = false)
@@ -94,7 +94,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       AbstractProvider.class, TckBooleanProvider.class, 
       TckByteArrayProvider.class, TckCharacterProvider.class, 
       TckDataSourceProvider.class, TckDataSourceProvider.class, 
-      TckFileProvider.class, TckInputStreamProvider.class, 
+      TckFileProvider.class, TckPathProvider.class, TckInputStreamProvider.class, 
       TckJaxbProvider.class, TckMapProvider.class, 
       TckNumberProvider.class, TckReaderProvider.class, 
       TckSourceProvider.class, TckStreamingOutputProvider.class, 
@@ -193,6 +193,22 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Tag("xml_binding")
   public void readWriteFileProviderTest() throws Fault {
     setPropertyAndInvoke("file", MediaType.APPLICATION_XML_TYPE);
+  }
+
+  /*
+   * @testName: readWritePathProviderTest
+   * 
+   * @assertion_ids: JAXRS:SPEC:35
+   * 
+   * @test_Strategy: An implementation MUST support application-provided entity
+   * providers and MUST use those in preference to its own pre-packaged
+   * providers when either could handle the same request.
+   * 
+   */
+  @Test
+  @Tag("xml_binding")
+  public void readWritePathProviderTest() throws Fault {
+    setPropertyAndInvoke("path", MediaType.APPLICATION_XML_TYPE);
   }
 
   /*

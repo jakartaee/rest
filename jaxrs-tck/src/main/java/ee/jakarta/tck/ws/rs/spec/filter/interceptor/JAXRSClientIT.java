@@ -549,7 +549,7 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   @Test
   @Tag("xml_binding")
   public void fileReaderNoInterceptorTest() throws Fault {
-    setProperty(Property.REQUEST, buildRequest(Request.POST, "postpath"));
+    setProperty(Property.REQUEST, buildRequest(Request.POST, "postfile"));
     setRequestContentEntity(content);
     setProperty(Property.SEARCH_STRING, content);
     invoke();

@@ -15,7 +15,7 @@ the Representational State Transfer (REST) architectural pattern.
 Information regarding source code management, builds, coding standards, and
 more.
 
-* https://projects.eclipse.org/projects/ee4j.jaxrs/developer
+* https://projects.eclipse.org/projects/ee4j.rest/developer
 
 The project maintains the following source code repositories
 

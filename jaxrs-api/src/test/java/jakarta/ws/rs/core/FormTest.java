@@ -38,10 +38,8 @@ public class FormTest {
     @Test
     public void testDifferentObjectTypeEquals() {
         Form form = new Form("field", "value");
-        Cookie cookie = new Cookie.Builder("field")
-            .value("value")
-            .build();
-        assertFalse(form.equals(cookie));
+        Boolean booleanValue = new Boolean(false);
+        assertFalse(form.equals(booleanValue));
     }
 
     @Test

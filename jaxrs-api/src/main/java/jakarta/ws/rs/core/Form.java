@@ -93,4 +93,19 @@ public class Form {
     public MultivaluedMap<String, String> asMap() {
         return parameters;
     }
+
+    /**
+     * Compare for equality
+     * 
+     * @param object the object to compare to.
+     * @return {@code true}, if the object is a {@code Form} with the same form parameters, {@code false} otherwise.
+     */
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) return false;
+        if (object == this) return true;
+        if (getClass() != object.getClass()) return false;
+        Form form = (Form) object;
+        return parameters.equals(form.asMap());
+    }
 }

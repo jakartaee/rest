@@ -106,6 +106,16 @@ public class Form {
         if (object == this) return true;
         if (getClass() != object.getClass()) return false;
         Form form = (Form) object;
-        return parameters.equals(form.asMap());
+        return parameters.equals(form.parameters);
+    }
+
+    /**
+     * Returns the hashCode of the underlying form parameters.
+     * 
+     * @return a hash code value for the underlying form parameters.
+     */
+    @Override
+    public int hashCode() {
+        return parameters.hashCode();
     }
 }

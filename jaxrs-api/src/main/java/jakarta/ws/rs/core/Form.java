@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2011 Oracle and/or its affiliates and others. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -92,5 +92,30 @@ public class Form {
      */
     public MultivaluedMap<String, String> asMap() {
         return parameters;
+    }
+
+    /**
+     * Compare for equality
+     * 
+     * @param object the object to compare to.
+     * @return {@code true}, if the object is a {@code Form} with the same form parameters, {@code false} otherwise.
+     */
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) return false;
+        if (object == this) return true;
+        if (getClass() != object.getClass()) return false;
+        Form form = (Form) object;
+        return parameters.equals(form.parameters);
+    }
+
+    /**
+     * Returns the hashCode of the underlying form parameters.
+     * 
+     * @return a hash code value for the underlying form parameters.
+     */
+    @Override
+    public int hashCode() {
+        return parameters.hashCode();
     }
 }

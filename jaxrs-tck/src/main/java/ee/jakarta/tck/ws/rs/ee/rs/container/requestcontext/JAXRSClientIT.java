@@ -56,20 +56,15 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   private static final long serialVersionUID = 111355567568365703L;
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_ee_rs_container_requestcontext_web/resource");
     setPrintEntity(true);
   }
 
   @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  public void setup() {
+    super.setup();
   }
 
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException {

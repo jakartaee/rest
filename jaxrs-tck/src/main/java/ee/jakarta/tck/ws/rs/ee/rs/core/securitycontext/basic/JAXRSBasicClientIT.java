@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -56,19 +56,14 @@ public class JAXRSBasicClientIT
   private static final long serialVersionUID = 340277879725875946L;
 
   public JAXRSBasicClientIT() {
-    setup();
     setContextRoot("/jaxrs_ee_core_securitycontext_basic_web/Servlet");
   }
 
   @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  public void setup() {
+    super.setup();
   }
 
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   @Deployment(testable = true)
   public static WebArchive createDeployment() throws IOException {

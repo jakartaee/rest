@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,7 +16,6 @@
 
 package jakarta.ws.rs.ext;
 
-import java.lang.reflect.ReflectPermission;
 import java.net.URL;
 import java.util.concurrent.CompletionStage;
 
@@ -46,7 +45,6 @@ public abstract class RuntimeDelegate {
      */
     public static final String JAXRS_RUNTIME_DELEGATE_PROPERTY = "jakarta.ws.rs.ext.RuntimeDelegate";
     private static final Object RD_LOCK = new Object();
-    private static ReflectPermission suppressAccessChecksPermission = new ReflectPermission("suppressAccessChecks");
     private static volatile RuntimeDelegate cachedDelegate;
 
     /**
@@ -124,14 +122,8 @@ public abstract class RuntimeDelegate {
      * {@link #getInstance} then an implementation will be sought as described in {@link #getInstance}.
      *
      * @param rd the runtime delegate instance
-     * @throws SecurityException if there is a security manager and the permission ReflectPermission("suppressAccessChecks")
-     * has not been granted.
      */
     public static void setInstance(final RuntimeDelegate rd) {
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-            security.checkPermission(suppressAccessChecksPermission);
-        }
         synchronized (RD_LOCK) {
             RuntimeDelegate.cachedDelegate = rd;
         }

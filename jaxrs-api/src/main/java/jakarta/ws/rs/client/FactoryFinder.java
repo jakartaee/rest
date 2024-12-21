@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -19,8 +19,6 @@ package jakarta.ws.rs.client;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.Properties;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
@@ -43,23 +41,7 @@ final class FactoryFinder {
     }
 
     static ClassLoader getContextClassLoader() {
-        // For performance reasons, check if a security manager is installed. If not there is no need to use a
-        // privileged action.
-        if (System.getSecurityManager() == null) {
-            return Thread.currentThread().getContextClassLoader();
-        }
-        return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) () -> {
-            ClassLoader cl = null;
-            try {
-                cl = Thread.currentThread().getContextClassLoader();
-            } catch (SecurityException ex) {
-                LOGGER.log(
-                        Level.WARNING,
-                        "Unable to get context classloader instance.",
-                        ex);
-            }
-            return cl;
-        });
+        return Thread.currentThread().getContextClassLoader();
     }
 
     /**
@@ -165,27 +147,18 @@ final class FactoryFinder {
     }
 
     private static ClassLoader getClassLoader() {
-        if (System.getSecurityManager() == null) {
-            return FactoryFinder.class.getClassLoader();
-        }
-        return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) FactoryFinder.class::getClassLoader);
+        return FactoryFinder.class.getClassLoader();
     }
 
     private static <T> T findFirstService(final String factoryId, final ClassLoader cl, final Class<T> service) {
-        final PrivilegedAction<T> action = () -> {
-            try {
-                final ServiceLoader<T> loader = ServiceLoader.load(service, cl);
-                if (loader.iterator().hasNext()) {
-                    return loader.iterator().next();
-                }
-            } catch (Exception e) {
-                LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", e);
+        try {
+            final ServiceLoader<T> loader = ServiceLoader.load(service, cl);
+            if (loader.iterator().hasNext()) {
+                return loader.iterator().next();
             }
-            return null;
-        };
-        if (System.getSecurityManager() == null) {
-            return action.run();
+        } catch (Exception e) {
+            LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", e);
         }
-        return AccessController.doPrivileged(action);
+        return null;
     }
 }

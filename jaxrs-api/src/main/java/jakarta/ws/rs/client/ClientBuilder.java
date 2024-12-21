@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2011 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -19,9 +19,7 @@ package jakarta.ws.rs.client;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import java.net.URL;
-import java.security.AccessController;
 import java.security.KeyStore;
-import java.security.PrivilegedAction;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -61,14 +59,17 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
         try {
             Object delegate = FactoryFinder.find(JAXRS_DEFAULT_CLIENT_BUILDER_PROPERTY, ClientBuilder.class);
             if (!(delegate instanceof ClientBuilder)) {
-                final CreateErrorMessageAction action = new CreateErrorMessageAction(delegate);
-                final String errorMessage;
-                if (System.getSecurityManager() == null) {
-                    errorMessage = action.run();
-                } else {
-                    errorMessage = AccessController.doPrivileged(action);
+                Class<?> pClass = ClientBuilder.class;
+                String classnameAsResource = pClass.getName().replace('.', '/') + ".class";
+                ClassLoader loader = pClass.getClassLoader();
+                if (loader == null) {
+                    loader = ClassLoader.getSystemClassLoader();
                 }
-                throw new LinkageError(errorMessage);
+                URL targetTypeURL = loader.getResource(classnameAsResource);
+                final String errorMessage = "ClassCastException: attempting to cast"
+                        + delegate.getClass().getClassLoader().getResource(classnameAsResource)
+                        + " to " + targetTypeURL;
+                    throw new LinkageError(errorMessage);
             }
             return (ClientBuilder) delegate;
         } catch (Exception ex) {
@@ -271,26 +272,4 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
      * @return a new client instance.
      */
     public abstract Client build();
-
-    private static final class CreateErrorMessageAction implements PrivilegedAction<String> {
-        private final Object delegate;
-
-        private CreateErrorMessageAction(final Object delegate) {
-            this.delegate = delegate;
-        }
-
-        @Override
-        public String run() {
-            Class<?> pClass = ClientBuilder.class;
-            String classnameAsResource = pClass.getName().replace('.', '/') + ".class";
-            ClassLoader loader = pClass.getClassLoader();
-            if (loader == null) {
-                loader = ClassLoader.getSystemClassLoader();
-            }
-            URL targetTypeURL = loader.getResource(classnameAsResource);
-            return "ClassCastException: attempting to cast"
-                    + delegate.getClass().getClassLoader().getResource(classnameAsResource)
-                    + " to " + targetTypeURL;
-        }
-    }
 }

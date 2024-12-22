@@ -16,7 +16,6 @@
 
 package jakarta.ws.rs.core;
 
-import java.io.StringWriter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -228,15 +227,14 @@ public class Variant {
 
     @Override
     public String toString() {
-        StringWriter w = new StringWriter();
-        w.append("Variant[mediaType=");
-        w.append(mediaType == null ? "null" : mediaType.toString());
-        w.append(", language=");
-        w.append(language == null ? "null" : language.toString());
-        w.append(", encoding=");
-        w.append(encoding == null ? "null" : encoding);
-        w.append("]");
-        return w.toString();
+        StringBuilder sb = new StringBuilder("Variant[mediaType=");
+        sb.append(mediaType);
+        sb.append(", language=");
+        sb.append(language);
+        sb.append(", encoding=");
+        sb.append(encoding);
+        sb.append(']');
+        return sb.toString();
     }
 
     /**

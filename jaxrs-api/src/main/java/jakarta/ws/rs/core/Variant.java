@@ -227,14 +227,14 @@ public class Variant {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Variant[mediaType=");
-        sb.append(mediaType);
-        sb.append(", language=");
-        sb.append(language);
-        sb.append(", encoding=");
-        sb.append(encoding);
-        sb.append(']');
-        return sb.toString();
+        return new StringBuilder("Variant[mediaType=")
+                .append(mediaType)
+                .append(", language=")
+                .append(language)
+                .append(", encoding=")
+                .append(encoding)
+                .append(']')
+                .toString();
     }
 
     /**

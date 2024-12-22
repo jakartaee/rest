@@ -19,6 +19,8 @@ package jakarta.ws.rs.ext;
 import java.lang.reflect.ReflectPermission;
 import java.net.URL;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import jakarta.ws.rs.SeBootstrap;
 import jakarta.ws.rs.SeBootstrap.Instance;
@@ -45,7 +47,7 @@ public abstract class RuntimeDelegate {
      * {@link RuntimeDelegate#getInstance()}.
      */
     public static final String JAXRS_RUNTIME_DELEGATE_PROPERTY = "jakarta.ws.rs.ext.RuntimeDelegate";
-    private static final Object RD_LOCK = new Object();
+    private static final Lock RD_LOCK = new ReentrantLock();
     private static ReflectPermission suppressAccessChecksPermission = new ReflectPermission("suppressAccessChecks");
     private static volatile RuntimeDelegate cachedDelegate;
 
@@ -82,12 +84,15 @@ public abstract class RuntimeDelegate {
         // Local variable is used to limit the number of more expensive accesses to a volatile field.
         RuntimeDelegate result = cachedDelegate;
         if (result == null) { // First check (no locking)
-            synchronized (RD_LOCK) {
+            RD_LOCK.lock();
+            try {
                 result = cachedDelegate;
                 if (result == null) { // Second check (with locking)
                     result = findDelegate();
                     cachedDelegate = result;
                 }
+            } finally {
+                RD_LOCK.unlock();
             }
         }
         return result;
@@ -132,8 +137,11 @@ public abstract class RuntimeDelegate {
         if (security != null) {
             security.checkPermission(suppressAccessChecksPermission);
         }
-        synchronized (RD_LOCK) {
+        RD_LOCK.lock();
+        try {
             RuntimeDelegate.cachedDelegate = rd;
+        } finally {
+            RD_LOCK.unlock();
         }
     }
 

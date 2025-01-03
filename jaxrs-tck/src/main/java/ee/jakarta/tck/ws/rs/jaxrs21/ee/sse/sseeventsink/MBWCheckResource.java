@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -123,6 +123,28 @@ public class MBWCheckResource {
             StandardOpenOption.APPEND);
         f.deleteOnExit();
         s.send(sse.newEventBuilder().data(f).mediaType(MediaType.WILDCARD_TYPE)
+            .build());
+      } catch (IOException e) {
+        s.send(sse.newEvent(e.getMessage()));
+        throw new RuntimeException(e); // log to server log
+      }
+    } catch (IOException e) {
+      LOG.log(Level.WARNING, "Failed to close SseEventSink", e);
+    }
+  }
+
+  @GET
+  @Path("path")
+  @Produces(MediaType.SERVER_SENT_EVENTS)
+  public void sendPath(@Context SseEventSink sink, @Context Sse sse) {
+    java.nio.file.Path p;
+    try (SseEventSink s = sink) {
+      try {
+        p = Files.createTempFile("tck", "temppath");
+        Files.write(p, MESSAGE.getBytes(), StandardOpenOption.CREATE,
+            StandardOpenOption.APPEND);
+        p.toFile().deleteOnExit();
+        s.send(sse.newEventBuilder().data(p).mediaType(MediaType.WILDCARD_TYPE)
             .build());
       } catch (IOException e) {
         s.send(sse.newEvent(e.getMessage()));

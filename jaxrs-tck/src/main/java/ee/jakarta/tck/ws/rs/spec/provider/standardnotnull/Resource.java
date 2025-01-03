@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -70,6 +70,12 @@ public class Resource {
   @POST
   public String file(File file) {
     return isNull(file);
+  }
+
+  @Path("path")
+  @POST
+  public String path(java.nio.file.Path path) {
+    return isNull(path);
   }
 
   @Path("datasource")

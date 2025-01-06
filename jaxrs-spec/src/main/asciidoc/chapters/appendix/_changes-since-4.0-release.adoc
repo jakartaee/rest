@@ -1,0 +1,15 @@
+////
+*******************************************************************
+* Copyright (c) 2025 Eclipse Foundation
+*
+* This specification document is made available under the terms
+* of the Eclipse Foundation Specification License v1.0, which is
+* available at https://www.eclipse.org/legal/efsl.php.
+*******************************************************************
+////
+
+[[changes-since-4.0-release]]
+=== Changes Since 4.0 Release
+
+* <<annotationinheritance>>: `ResourceInfo` has new method `getAnnotation` to
+get annotation on request target, respecting annotation inheritance.

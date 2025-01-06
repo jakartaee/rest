@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2011 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,6 +16,7 @@
 
 package jakarta.ws.rs.container;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
@@ -43,4 +44,45 @@ public interface ResourceInfo {
      * @see #getResourceMethod()
      */
     Class<?> getResourceClass();
+
+    /**
+     * How to handle inheritance of custom annotations
+     *
+     * @author Markus KARG (markus@headcrashing.eu)
+     * @since 4.1
+     */
+    public static enum CustomAnnotationsInheritancePolicy {
+
+        /**
+         * Treat custom annotations as JAX-RS annotations according Jakarta REST Specification.
+         */
+        JAX_RS,
+
+        /**
+         * Inherit custom annotations but do not treat them as JAX-RS annotation.
+         */
+        INHERIT,
+
+        /**
+         * Do not inherit custom annoations.
+         */
+        NONE
+    }
+
+    /**
+     * Get the annotation of specified type from the target of a request, or {@code null} if this information is not available.
+     *
+     * This method respects the JAX-RS Annotation Inheritance Policy.
+     * The inheritance policy for custom annotations is to be provided.
+     *
+     * @param <A> the type of the annotation to query for and return if present
+     * @param annotationClass the Class object corresponding to the annotation type
+     * @param customAnnotationInheritancePolicy specifies how to handle inheritance if {@code annotationClass}
+     *        is a custom annotation (ignored for JAX-RS annotations)
+     * @return this element's annotation for the specified annotation type if present, else {@code null}
+     *
+     * @since 4.1
+     */
+    <A extends Annotation> A getResourceAnnotation(Class<A> annotationClass,
+            CustomAnnotationsInheritancePolicy customAnnotationsInheritancePolicy);
 }

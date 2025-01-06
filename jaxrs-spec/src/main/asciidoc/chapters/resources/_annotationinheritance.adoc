@@ -56,3 +56,27 @@ method designator since it redefines the `@Produces` annotation.
 
 For consistency with other Jakarta EE specifications, it is recommended to
 always repeat annotations instead of relying on annotation inheritance.
+
+This policy can also be applied to _custom_ annotation types provided to
+`ResourceInfo.getAnnotation()`:
+
+[source,java]
+----
+var Tracing tracing = resourceInfo.getAnnotation(Tracing.class, JAX_RS);
+----
+
+In the above, a custom ´@Tracing` annotation on a request target is considered
+_as_ a JAX-RS annotation, effectively being not inherited when a resource method
+holds _any_ JAX-RS annotations, but being inherited _if not_.
+
+Consequently, for _custom_ annotations only, inheritance can optionally be
+"always on" or "always off" instead, effectively ignoring the policy laid out
+above:
+
+[source,java]
+----
+var RolesAllowed rolesAllowed = resourceInfo.getAnnotation(RolesAllowed.class, INHERIT);
+----
+
+In the above, the `@RolesAllowed` annotation is inherited, _even if_ a JAX-RS
+annotation is found directly on the resource method.

@@ -16,9 +16,10 @@
 
 package jakarta.ws.rs.sse;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Properties;
@@ -123,15 +124,14 @@ final class FactoryFinder {
         }
 
         // try to read from $java.home/lib/jaxrs.properties
-        FileInputStream inputStream = null;
-        String configFile = null;
+        Path configFile = null;
+        InputStream inputStream = null;
         try {
             String javah = System.getProperty("java.home");
-            configFile = javah + File.separator + "lib" + File.separator + "jaxrs.properties";
-            File f = new File(configFile);
-            if (f.exists()) {
+            configFile = Path.of(javah, "lib", "jaxrs.properties");
+            if (Files.exists(configFile)) {
                 Properties props = new Properties();
-                inputStream = new FileInputStream(f);
+                inputStream = Files.newInputStream(configFile);
                 props.load(inputStream);
                 String factoryClassName = props.getProperty(factoryId);
                 return newInstance(factoryClassName, classLoader);

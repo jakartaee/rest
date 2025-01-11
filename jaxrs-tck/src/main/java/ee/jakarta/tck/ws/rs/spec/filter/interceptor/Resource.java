@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.file.Files;
 import java.util.List;
 
 import javax.xml.namespace.QName;
@@ -130,6 +131,21 @@ public class Resource {
   @Path("postfile")
   public Response postFile(File file) throws IOException {
     String text = JaxrsUtil.readFromFile(file);
+    return buildResponse(text);
+  }
+
+  @GET
+  @Path("getpath")
+  public Response getPath() throws IOException {
+    java.nio.file.Path path = Files.createTempFile("filter", "tmp");
+    Files.writeString(path, getName());
+    return buildResponse(path);
+  }
+
+  @POST
+  @Path("postpath")
+  public Response postPath(java.nio.file.Path path) throws IOException {
+    String text = Files.readString(path);
     return buildResponse(text);
   }
 

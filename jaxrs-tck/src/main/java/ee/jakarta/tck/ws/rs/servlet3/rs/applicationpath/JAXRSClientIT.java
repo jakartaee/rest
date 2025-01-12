@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -45,8 +45,12 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   private static final long serialVersionUID = 1L;
     
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_ee_applicationpath");
+  }
+
+  @BeforeEach
+  public void setup() {
+    super.setup();
   }
 
   @Deployment(testable = false)
@@ -57,15 +61,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     return archive;
   }
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   /*
    * @testName: applicationPathAnnotationEncodedTest

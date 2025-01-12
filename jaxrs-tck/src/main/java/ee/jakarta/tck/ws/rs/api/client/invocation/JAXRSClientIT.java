@@ -57,15 +57,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
 
   private static final long serialVersionUID = -7647322937577043460L;
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   /*
    * @testName: invokePlainTest

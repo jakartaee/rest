@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -20,6 +20,7 @@
 package ee.jakarta.tck.ws.rs.ee.rs.queryparam.sub;
 
 import java.io.InputStream;
+import java.net.URL;
 import java.io.IOException;
 
 import ee.jakarta.tck.ws.rs.ee.rs.JaxrsParamClient;
@@ -37,11 +38,14 @@ import ee.jakarta.tck.ws.rs.ee.rs.queryparam.QueryParamTest;
 import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
 
 import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
@@ -61,20 +65,15 @@ public class JAXRSSubClientIT
   private static final long serialVersionUID = 1L;
 
   public JAXRSSubClientIT() {
-    setup();
     setContextRoot("/jaxrs_ee_rs_queryparam_sub_web/resource/subresource");
   }
 
+  
   @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  public void setup() {
+    super.setup();
   }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
-
+  
   @Deployment(testable = false, name = "jaxrs_ee_rs_queryparam_sub_deployment")
   public static WebArchive createDeployment() throws IOException{
 

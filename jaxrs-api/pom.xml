@@ -24,6 +24,7 @@
     <packaging>bundle</packaging>
     <name>Jakarta RESTful WS API</name>
     <description>Jakarta RESTful Web Services</description>
+	<version>3.1.99</version>
 
     <parent>
         <groupId>jakarta.ws.rs</groupId>
@@ -139,7 +140,13 @@
                             <specversion>${spec.version}</specversion>
                             <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
                             <_nodefaultversion>false</_nodefaultversion>
-                            <Require-Capability>osgi.ee;filter:="(&amp;(osgi.ee=JavaSE)(version=1.8))"</Require-Capability>
+                            <!-- Needed to integrate ServiceLoader mechanism with OSGi -->
+                            <Require-Capability><![CDATA[
+                            osgi.extender;filter:="(&(osgi.extender=osgi.serviceloader.processor)(version>=1.0.0)(!(version>=2.0.0)))",
+                            osgi.serviceloader;filter:="(osgi.serviceloader=jakarta.ws.rs.ext.RuntimeDelegate)";osgi.serviceloader="jakarta.ws.rs.ext.RuntimeDelegate",
+                            osgi.serviceloader;filter:="(osgi.serviceloader=jakarta.ws.rs.client.ClientBuilder)";osgi.serviceloader="jakarta.ws.rs.client.ClientBuilder",
+                            osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+                            ]]></Require-Capability>
                         </instructions>
                     </configuration>
                     <executions>

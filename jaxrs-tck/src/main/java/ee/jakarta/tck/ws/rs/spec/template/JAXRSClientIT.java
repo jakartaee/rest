@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -38,8 +38,12 @@ import org.junit.jupiter.api.AfterEach;
 public class JAXRSClientIT extends JAXRSCommonClient {
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_spec_templateTest_web");
+  }
+
+  @BeforeEach
+  public void setup() {
+    super.setup();
   }
 
 
@@ -53,15 +57,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     return archive;
   }
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   /*
    * @class.setup_props: webServerHost; webServerPort; ts_home;

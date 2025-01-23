@@ -54,15 +54,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
     setClientAndWebTarget();
   }
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   protected transient WebTarget target;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -62,19 +62,14 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   protected long millis;
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_ee_rs_client_syncinvoker_web/resource");
   }
 
   @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  public void setup() {
+    super.setup();
   }
 
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{

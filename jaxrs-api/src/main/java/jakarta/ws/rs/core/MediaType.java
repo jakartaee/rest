@@ -16,6 +16,8 @@
 
 package jakarta.ws.rs.core;
 
+import java.nio.charset.Charset;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -304,6 +306,19 @@ public class MediaType {
      */
     public Map<String, String> getParameters() {
         return parameters;
+    }
+
+    /**
+     * Getter for the media type {@code charset} parameter value.
+     *
+     * @return charset built from the {@value #CHARSET_PARAMETER} parameter value. {@code null} if the parameter
+     * is {@code null}, empty or blank.
+     * @throws UnsupportedCharsetException if the charset from the {@value #CHARSET_PARAMETER} parameter value
+     * is not supported.
+     */
+    public Charset getCharsetParameter() throws UnsupportedCharsetException {
+        final var charset = parameters.get(CHARSET_PARAMETER);
+        return charset == null || charset.isEmpty() ? null : Charset.forName(charset);
     }
 
     /**

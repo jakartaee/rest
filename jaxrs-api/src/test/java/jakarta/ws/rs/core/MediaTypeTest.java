@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -19,12 +19,16 @@ package jakarta.ws.rs.core;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.hamcrest.Description;
 import org.hamcrest.DiagnosingMatcher;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.Test;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.Map;
 
 /**
@@ -33,6 +37,22 @@ import java.util.Map;
  * @author Marek Potociar
  */
 public class MediaTypeTest {
+
+    /**
+     * Test {@link MediaType#getCharsetParameter()} method.
+     */
+    @Test
+    public void testGetCharsetParameter() {
+        assertEquals(StandardCharsets.UTF_8,
+                MediaType.APPLICATION_XML_TYPE.withCharset("UTF-8")
+                        .getCharsetParameter(),
+                "Unexpected produced media type charset parameter.");
+        try {
+            MediaType.APPLICATION_XML_TYPE.withCharset("UTF-8").withCharset("unsupported-charset")
+                    .getCharsetParameter();
+            fail("Unexpected produced media type charset parameter.");
+        } catch (final UnsupportedCharsetException expectedException) {}
+    }
 
     /**
      * Test {@link MediaType#withCharset(String)} method.

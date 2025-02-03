@@ -24,7 +24,6 @@
     <packaging>bundle</packaging>
     <name>Jakarta RESTful WS API</name>
     <description>Jakarta RESTful Web Services</description>
-	<version>3.1.99</version>
 
     <parent>
         <groupId>jakarta.ws.rs</groupId>

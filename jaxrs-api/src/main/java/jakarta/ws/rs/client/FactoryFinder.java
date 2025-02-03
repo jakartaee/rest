@@ -20,8 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.Properties;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
@@ -41,26 +39,6 @@ final class FactoryFinder {
 
     private FactoryFinder() {
         // prevents instantiation
-    }
-
-    static ClassLoader getContextClassLoader() {
-        // For performance reasons, check if a security manager is installed. If not there is no need to use a
-        // privileged action.
-        if (System.getSecurityManager() == null) {
-            return Thread.currentThread().getContextClassLoader();
-        }
-        return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) () -> {
-            ClassLoader cl = null;
-            try {
-                cl = Thread.currentThread().getContextClassLoader();
-            } catch (SecurityException ex) {
-                LOGGER.log(
-                        Level.WARNING,
-                        "Unable to get context classloader instance.",
-                        ex);
-            }
-            return cl;
-        });
     }
 
     /**
@@ -109,7 +87,7 @@ final class FactoryFinder {
      * @throws ClassNotFoundException if the given class could not be found or could not be instantiated.
      */
     static <T> Object find(final String factoryId, final Class<T> service) throws ClassNotFoundException {
-        ClassLoader classLoader = getContextClassLoader();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
         // First try the TCCL
         Object result = findFirstService(factoryId, classLoader, service);
@@ -118,7 +96,7 @@ final class FactoryFinder {
         }
 
         // Next try the class loader from the FactoryFinder
-        result = findFirstService(factoryId, getClassLoader(), service);
+        result = findFirstService(factoryId, FactoryFinder.class.getClassLoader(), service);
         if (result != null) {
             return result;
         }
@@ -164,25 +142,12 @@ final class FactoryFinder {
                 "Provider for " + factoryId + " cannot be found", null);
     }
 
-    private static ClassLoader getClassLoader() {
-        if (System.getSecurityManager() == null) {
-            return FactoryFinder.class.getClassLoader();
-        }
-        return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) FactoryFinder.class::getClassLoader);
-    }
-
     private static <T> T findFirstService(final String factoryId, final ClassLoader cl, final Class<T> service) {
-        final PrivilegedAction<T> action = () -> {
-            try {
-                return ServiceLoader.load(service, cl).findFirst().orElse(null);
-            } catch (Exception e) {
-                LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", e);
-            }
-            return null;
-        };
-        if (System.getSecurityManager() == null) {
-            return action.run();
+        try {
+            return ServiceLoader.load(service, cl).findFirst().orElse(null);
+        } catch (Exception e) {
+            LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", e);
         }
-        return AccessController.doPrivileged(action);
+        return null;
     }
 }

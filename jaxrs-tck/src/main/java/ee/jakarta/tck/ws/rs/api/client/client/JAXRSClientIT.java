@@ -73,7 +73,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -92,7 +92,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -112,7 +112,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -132,7 +132,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -151,7 +151,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -171,7 +171,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -191,7 +191,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -211,7 +211,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -232,7 +232,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -252,7 +252,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -274,7 +274,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -295,7 +295,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -315,7 +315,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -337,7 +337,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -358,7 +358,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalTStateException being thrown. Calling this method effectively
@@ -379,7 +379,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -398,7 +398,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -417,7 +417,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -436,7 +436,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -456,7 +456,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -475,7 +475,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -495,7 +495,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -515,7 +515,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -535,7 +535,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -556,7 +556,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -576,7 +576,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -598,7 +598,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -619,7 +619,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -639,7 +639,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -661,7 +661,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -680,7 +680,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -700,7 +700,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -720,7 +720,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -740,7 +740,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -761,7 +761,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -781,7 +781,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -802,7 +802,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -823,7 +823,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively
@@ -844,7 +844,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
    * 
    * @assertion_ids: JAXRS:JAVADOC:409;
    * 
-   * @test_Strategy: Close client instance and all it's associated resources.
+   * @test_Strategy: Close client instance and all its associated resources.
    * Subsequent calls have no effect and are ignored. Once the client is closed,
    * invoking any other method on the client instance would result in an
    * IllegalStateException being thrown. Calling this method effectively

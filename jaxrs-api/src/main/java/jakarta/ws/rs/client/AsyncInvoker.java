@@ -107,7 +107,7 @@ public interface AsyncInvoker {
      * processing exception will be of {@link ResponseProcessingException} type and will contain the {@link Response}
      * instance whose processing has failed.
      *
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @return invocation response {@link Future future}.
@@ -126,7 +126,7 @@ public interface AsyncInvoker {
      * type and will contain the {@link Response} instance whose processing has failed.
      *
      * @param <T> response entity type.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType Java type the response entity will be converted to.
@@ -146,7 +146,7 @@ public interface AsyncInvoker {
      * type and will contain the {@link Response} instance whose processing has failed.
      *
      * @param <T> generic response entity type.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType representation of a generic Java type the response entity will be converted to.
@@ -166,7 +166,7 @@ public interface AsyncInvoker {
      * {@link ResponseProcessingException} type and will contain the {@link Response} instance whose processing has failed.
      *
      * @param <T> generic response entity type.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param callback asynchronous invocation callback.
@@ -185,7 +185,7 @@ public interface AsyncInvoker {
      * processing exception will be of {@link ResponseProcessingException} type and will contain the {@link Response}
      * instance whose processing has failed.
      *
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @return invocation response {@link Future future}.
@@ -205,7 +205,7 @@ public interface AsyncInvoker {
      * type and will contain the {@link Response} instance whose processing has failed.
      *
      * @param <T> response entity type.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType Java type the response entity will be converted to.
@@ -225,7 +225,7 @@ public interface AsyncInvoker {
      * type and will contain the {@link Response} instance whose processing has failed.
      *
      * @param <T> generic response entity type.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType representation of a generic Java type the response entity will be converted to.
@@ -245,7 +245,7 @@ public interface AsyncInvoker {
      * {@link ResponseProcessingException} type and will contain the {@link Response} instance whose processing has failed.
      *
      * @param <T> generic response entity type.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param callback asynchronous invocation callback.
@@ -560,7 +560,7 @@ public interface AsyncInvoker {
      * instance whose processing has failed.
      *
      * @param name method name.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @return invocation response {@link Future future}.
@@ -580,7 +580,7 @@ public interface AsyncInvoker {
      *
      * @param <T> response entity type.
      * @param name method name.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType Java type the response entity will be converted to.
@@ -601,7 +601,7 @@ public interface AsyncInvoker {
      *
      * @param <T> generic response entity type.
      * @param name method name.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType representation of a generic Java type the response entity will be converted to.
@@ -622,7 +622,7 @@ public interface AsyncInvoker {
      *
      * @param <T> generic response entity type.
      * @param name method name.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param callback asynchronous invocation callback.

@@ -74,7 +74,7 @@ public interface SyncInvoker {
     /**
      * Invoke HTTP PUT method for the current request synchronously.
      *
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @return invocation response.
@@ -88,7 +88,7 @@ public interface SyncInvoker {
      * Invoke HTTP PUT method for the current request synchronously.
      *
      * @param <T> response entity type.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType Java type the response entity will be converted to.
@@ -106,7 +106,7 @@ public interface SyncInvoker {
      * Invoke HTTP PUT method for the current request synchronously.
      *
      * @param <T> generic response entity type.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType representation of a generic Java type the response entity will be converted to.
@@ -125,7 +125,7 @@ public interface SyncInvoker {
     /**
      * Invoke HTTP POST method for the current request synchronously.
      *
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @return invocation response.
@@ -139,7 +139,7 @@ public interface SyncInvoker {
      * Invoke HTTP POST method for the current request synchronously.
      *
      * @param <T> response entity type.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType Java type the response entity will be converted to.
@@ -157,7 +157,7 @@ public interface SyncInvoker {
      * Invoke HTTP POST method for the current request synchronously.
      *
      * @param <T> generic response entity type.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType representation of a generic Java type the response entity will be converted to.
@@ -358,7 +358,7 @@ public interface SyncInvoker {
      * Invoke an arbitrary method for the current request synchronously.
      *
      * @param name method name.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @return invocation response.
@@ -373,7 +373,7 @@ public interface SyncInvoker {
      *
      * @param <T> response entity type.
      * @param name method name.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType Java type the response entity will be converted to.
@@ -392,7 +392,7 @@ public interface SyncInvoker {
      *
      * @param <T> generic response entity type.
      * @param name method name.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType representation of a generic Java type the response entity will be converted to.

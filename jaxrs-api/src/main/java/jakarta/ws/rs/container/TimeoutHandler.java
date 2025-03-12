@@ -86,8 +86,8 @@ public interface TimeoutHandler {
      * A custom time-out handler may decide to either
      * </p>
      * <ul>
-     * <li>resume the suspended response using one of it's {@code resume(...)} methods,</li>
-     * <li>cancel the suspended response using one of it's {@code cancel(...)} methods, or</li>
+     * <li>resume the suspended response using one of its {@code resume(...)} methods,</li>
+     * <li>cancel the suspended response using one of its {@code cancel(...)} methods, or</li>
      * <li>extend the suspend period by {@link AsyncResponse#setTimeout(long, java.util.concurrent.TimeUnit) setting a new
      * suspend time-out}</li>
      * </ul>

@@ -3064,7 +3064,7 @@
 </TR>
 <TR>
 <TD align="center" valign="center"><a name="JAXRS:JAVADOC:409"></a><font size="1PT">JAXRS:JAVADOC:409</font></TD><TD align="center" valign="center"><font size="1PT">void</font></TD><TD align="left" valign="center"><font size="1PT">jakarta.ws.rs.client.Client.close<br>
-</font></TD><TD align="left" valign="center"><font size="1PT">Close client instance and all it's associated resources. Subsequent calls have no effect and are ignored. Once the client is closed, invoking any other method on the client instance would result in an IllegalStateException being thrown. Calling this method effectively invalidates all WebTarget resource targets produced by the client instance. Invoking any method on such targets once the client is closed would result in an IllegalStateException being thrown.</font></TD><TD align="center" valign="center"><font size="1PT">true</font></TD><TD align="center" valign="center"><font size="1PT">
+</font></TD><TD align="left" valign="center"><font size="1PT">Close client instance and all its associated resources. Subsequent calls have no effect and are ignored. Once the client is closed, invoking any other method on the client instance would result in an IllegalStateException being thrown. Calling this method effectively invalidates all WebTarget resource targets produced by the client instance. Invoking any method on such targets once the client is closed would result in an IllegalStateException being thrown.</font></TD><TD align="center" valign="center"><font size="1PT">true</font></TD><TD align="center" valign="center"><font size="1PT">
 <br>
 </font></TD><TD align="center" valign="center"><font size="1PT">true</font></TD>
 </TR>
@@ -4589,7 +4589,7 @@
 	(
 		AsyncResponse
 	)
-	</font></TD><TD align="left" valign="center"><font size="1PT">Invoked when the suspended asynchronous response is about to time out. Implementing time-out handlers may use the callback method to change the default time-out strategy defined by JAX-RS specification (see jakarta.ws.rs.container.AsyncResponse API documentation). A custom time-out handler may decide to either resume the suspended response using one of it's resume(...) methods, cancel the suspended response using one of it's cancel(...) methods, or extend the suspend period by AsyncResponse#setTimeout(long, java.util.concurrent.TimeUnit) setting a new suspend time-out In case the time-out handler does not take any of the actions mentioned above, a default time-out strategy is executed by the JAX-RS runtime.</font></TD><TD align="center" valign="center"><font size="1PT">true</font></TD><TD align="center" valign="center"><font size="1PT">
+	</font></TD><TD align="left" valign="center"><font size="1PT">Invoked when the suspended asynchronous response is about to time out. Implementing time-out handlers may use the callback method to change the default time-out strategy defined by JAX-RS specification (see jakarta.ws.rs.container.AsyncResponse API documentation). A custom time-out handler may decide to either resume the suspended response using one of its resume(...) methods, cancel the suspended response using one of its cancel(...) methods, or extend the suspend period by AsyncResponse#setTimeout(long, java.util.concurrent.TimeUnit) setting a new suspend time-out In case the time-out handler does not take any of the actions mentioned above, a default time-out strategy is executed by the JAX-RS runtime.</font></TD><TD align="center" valign="center"><font size="1PT">true</font></TD><TD align="center" valign="center"><font size="1PT">
 <br>
 </font></TD><TD align="center" valign="center"><font size="1PT">true</font></TD>
 </TR>
@@ -6508,7 +6508,7 @@
 	(
 		HostnameVerifier
 	)
-	</font></TD><TD align="left" valign="center"><font size="1PT">Set the hostname verifier to be used by the client to verify the endpoint's hostname against it's identification information.</font></TD><TD align="center" valign="center"><font size="1PT">true</font></TD><TD align="center" valign="center"><font size="1PT">
+	</font></TD><TD align="left" valign="center"><font size="1PT">Set the hostname verifier to be used by the client to verify the endpoint's hostname against its identification information.</font></TD><TD align="center" valign="center"><font size="1PT">true</font></TD><TD align="center" valign="center"><font size="1PT">
 <br>
 </font></TD><TD align="center" valign="center"><font size="1PT">true</font></TD>
 </TR>

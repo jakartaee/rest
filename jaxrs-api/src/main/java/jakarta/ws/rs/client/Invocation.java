@@ -102,7 +102,7 @@ public interface Invocation {
          * Build a request invocation using an arbitrary request method name and request entity.
          *
          * @param method request method name.
-         * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+         * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
          * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
          * be overwritten using the entity variant information.
          * @return invocation encapsulating the built request.
@@ -126,7 +126,7 @@ public interface Invocation {
         /**
          * Build a POST request invocation.
          *
-         * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+         * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
          * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
          * be overwritten using the entity variant information.
          * @return invocation encapsulating the built POST request.
@@ -136,7 +136,7 @@ public interface Invocation {
         /**
          * Build a PUT request invocation.
          *
-         * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+         * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
          * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
          * be overwritten using the entity variant information.
          * @return invocation encapsulating the built PUT request.

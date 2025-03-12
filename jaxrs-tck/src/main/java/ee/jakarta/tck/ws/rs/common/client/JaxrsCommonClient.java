@@ -232,7 +232,7 @@ public class JaxrsCommonClient extends JAXRSCommonClient {
     super.cleanup();
     // The client.close has to be called on cleanup, because after invoke,
     // some methods are called and resources might not be available then
-    // (javadoc: Close client instance and all it's associated resources).
+    // (javadoc: Close client instance and all its associated resources).
     // Since more invoke() invocations are possible, the clients are stored
     // in a list to be closed on cleanup
     for (Client c : clients)

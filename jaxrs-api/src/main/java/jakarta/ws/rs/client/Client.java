@@ -43,7 +43,7 @@ public interface Client extends Configurable<Client>, AutoCloseable {
 
     /**
      * <p>
-     * Close client instance and all it's associated resources. Subsequent calls have no effect and are ignored. Once the
+     * Close client instance and all its associated resources. Subsequent calls have no effect and are ignored. Once the
      * client is closed, invoking any other method on the client instance would result in an {@link IllegalStateException}
      * being thrown.
      * </p>

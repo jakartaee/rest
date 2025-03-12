@@ -136,7 +136,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
      * 
      * @test_Strategy: Register a feature. In case the registered provider is a
      * client-side Feature feature, this object instantiates the feature and invokes
-     * the Feature#configure(FeatureContext) method and lets the feature update it's
+     * the Feature#configure(FeatureContext) method and lets the feature update its
      * internal configuration state.
      */
     @Test

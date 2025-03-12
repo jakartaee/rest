@@ -94,7 +94,7 @@ public class JAXRSSigTestIT extends SigTestEE {
   /***** Abstract Method Implementation *****/
   /**
    * Returns a list of strings where each string represents a package name. Each
-   * package name will have it's signature tested by the signature test
+   * package name will have its signature tested by the signature test
    * framework.
    * 
    * @return String[] The names of the packages whose signatures should be
@@ -169,7 +169,7 @@ public class JAXRSSigTestIT extends SigTestEE {
 
   /**
    * Returns a list of strings where each string represents a package name. Each
-   * package name will have it's signature tested by the signature test
+   * package name will have its signature tested by the signature test
    * framework.
    * 
    * @param vehicleName

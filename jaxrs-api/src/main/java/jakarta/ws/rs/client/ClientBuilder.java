@@ -194,7 +194,7 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
     public abstract ClientBuilder trustStore(final KeyStore trustStore);
 
     /**
-     * Set the hostname verifier to be used by the client to verify the endpoint's hostname against it's identification
+     * Set the hostname verifier to be used by the client to verify the endpoint's hostname against its identification
      * information.
      *
      * @param verifier hostname verifier.

@@ -74,7 +74,7 @@ public interface RxInvoker<T> {
     /**
      * Invoke HTTP PUT method for the current request.
      *
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @return invocation response wrapped in the completion aware type.
@@ -87,7 +87,7 @@ public interface RxInvoker<T> {
     /**
      * Invoke HTTP PUT method for the current request.
      *
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType Java type the response entity will be converted to.
@@ -105,7 +105,7 @@ public interface RxInvoker<T> {
     /**
      * Invoke HTTP PUT method for the current request.
      *
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType representation of a generic Java type the response entity will be converted to.
@@ -123,7 +123,7 @@ public interface RxInvoker<T> {
     /**
      * Invoke HTTP POST method for the current request.
      *
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @return invocation response wrapped in the completion aware type.
@@ -136,7 +136,7 @@ public interface RxInvoker<T> {
     /**
      * Invoke HTTP POST method for the current request.
      *
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType Java type the response entity will be converted to.
@@ -154,7 +154,7 @@ public interface RxInvoker<T> {
     /**
      * Invoke HTTP POST method for the current request.
      *
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType representation of a generic Java type the response entity will be converted to.
@@ -346,7 +346,7 @@ public interface RxInvoker<T> {
      * Invoke an arbitrary method for the current request.
      *
      * @param name method name.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @return invocation response wrapped in the completion aware type..
@@ -360,7 +360,7 @@ public interface RxInvoker<T> {
      * Invoke an arbitrary method for the current request.
      *
      * @param name method name.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType Java type the response entity will be converted to.
@@ -379,7 +379,7 @@ public interface RxInvoker<T> {
      * Invoke an arbitrary method for the current request.
      *
      * @param name method name.
-     * @param entity request entity, including it's full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
      * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
      * be overwritten using the entity variant information.
      * @param responseType representation of a generic Java type the response entity will be converted to.

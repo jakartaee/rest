@@ -33,7 +33,7 @@ package jakarta.ws.rs;
  * <p>
  * Note that the exception is used to indicate (internal) JAX-RS processing errors. It is not used to indicate HTTP
  * error response states. A HTTP error response is represented by a {@link jakarta.ws.rs.WebApplicationException} class or
- * one of it's sub-classes.
+ * one of its sub-classes.
  * </p>
  *
  * @author Marek Potociar

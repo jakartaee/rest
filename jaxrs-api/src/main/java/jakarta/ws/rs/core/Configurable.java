@@ -104,7 +104,7 @@ import java.util.Map;
  * config.register(ClientLoggingFilter.class, ClientResponseFilter.class);
  *
  * // override the priority of registered GzipInterceptor
- * // and both of it's provider contracts
+ * // and both of its provider contracts
  * config.register(GzipInterceptor.class, 6500);
  * </pre>
  * <p>

@@ -83,7 +83,7 @@ class PackageList {
 
   /**
    * Creates an instance of the PackageList class. The PackageList instance
-   * reads the specified package file and populates it's internal state with the
+   * reads the specified package file and populates its internal state with the
    * package names found in this file. Users should use this c'tor when playing
    * back signature files. Users can init the PackageList instance then use the
    * "String[] getSubPackages(String packageName)" method to get the list of
@@ -110,7 +110,7 @@ class PackageList {
 
   /**
    * Creates an instance of the PackageList class. The PackageList instance
-   * reads the contents of the packageFileName and stores it in it's internal
+   * reads the contents of the packageFileName and stores it in its internal
    * state. Next, any packages whos name starts with the specified packageName
    * are removed from the internal package list. This is done because this is
    * the package being recorded and we need to remove any previously recorded

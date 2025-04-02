@@ -1183,7 +1183,7 @@ public abstract class Response implements AutoCloseable {
          */
         RESET_CONTENT(205, "Reset Content"),
         /**
-         * 206 Reset Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.7">HTTP/1.1
+         * 206 Partial Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.7">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
@@ -1350,6 +1350,13 @@ public abstract class Response implements AutoCloseable {
          * @since 2.1
          */
         PRECONDITION_REQUIRED(428, "Precondition Required"),
+        /**
+         * 422 Unprocessable Entity, see <a href="https://httpwg.org/specs/rfc9110.html#status.422">RFC 9110: 
+         * 422 Unprocessable Content</a>.
+         *
+         * @since 4.0
+         */    
+        UNPROCESSABLE_ENTITY(422, "Unprocessable Entity"),
         /**
          * 429 Too Many Requests, see <a href="https://tools.ietf.org/html/rfc6585#section-4">RFC 6585: Additional HTTP Status
          * Codes</a>.

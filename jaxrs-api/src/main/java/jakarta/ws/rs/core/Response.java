@@ -1351,8 +1351,8 @@ public abstract class Response implements AutoCloseable {
          */
         PRECONDITION_REQUIRED(428, "Precondition Required"),
         /**
-         * 422 Unprocessable Entity, see <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-11.2">RFC 4918: 
-         * HTTP Extensions for Web Distributed Authoring and Versioning (WebDAV)</a>.
+         * 422 Unprocessable Entity, see <a href="https://httpwg.org/specs/rfc9110.html#status.422">RFC 9110: 
+         * 422 Unprocessable Content</a>.
          *
          * @since 4.0
          */    

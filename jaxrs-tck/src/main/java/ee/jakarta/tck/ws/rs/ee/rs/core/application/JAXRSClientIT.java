@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2007 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -50,8 +50,12 @@ import org.junit.jupiter.api.AfterEach;
 public class JAXRSClientIT extends JAXRSCommonClient {
   
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_ee_core_application_web/ApplicationTest");
+  }
+
+  @BeforeEach
+  public void setup() {
+    super.setup();
   }
 
   private static final long serialVersionUID = 1L;
@@ -60,15 +64,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
 
   protected int expectedClasses = 1;
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{

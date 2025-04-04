@@ -35,15 +35,6 @@ public class JAXRSClientIT extends JAXRSDelegateClient {
 
   private static final long serialVersionUID = -5586431064207012301L;
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   /*
    * @testName: askForTckRuntimeDelegateGivenBySetInstanceTest

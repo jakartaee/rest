@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2024 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -70,10 +70,9 @@ public class JAXRSClientIT extends SSEJAXRSClient {
 
   public JAXRSClientIT() {
     setContextRoot("/jaxrs_jaxrs21_ee_sse_ssebroadcaster_web");
-    setup();
   }
 
-  @Override
+  @BeforeEach
   public void setup() {
     super.setup();
     target = ClientBuilder.newClient()
@@ -82,15 +81,6 @@ public class JAXRSClientIT extends SSEJAXRSClient {
   }
 
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException {

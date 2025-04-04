@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -68,7 +68,6 @@ public class JAXRSProvidersClientIT
   protected int expectedClasses = 1;
 
   public JAXRSProvidersClientIT() {
-    setup();
     TSAppConfig cfg = new TSAppConfig();
     setContextRoot("/jaxrs_ee_ext_providers_web/ProvidersServlet");
     expectedClasses = cfg.getClasses().size();
@@ -76,14 +75,10 @@ public class JAXRSProvidersClientIT
   }
 
   @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  public void setup() {
+    super.setup();
   }
 
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   @Deployment(testable = false)
   public static WebArchive createDeployment() throws IOException{

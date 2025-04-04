@@ -47,19 +47,14 @@ public class JAXRSClientIT extends JaxrsCommonClient {
   private static final long serialVersionUID = 31L;
 
   public JAXRSClientIT() {
-    setup();
     setContextRoot("/jaxrs_jaxrs31_spec_jdkservices_web");
   }
 
   @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  public void setup() {
+    super.setup();
   }
 
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
 
   @Deployment(testable = false)

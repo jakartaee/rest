@@ -40,15 +40,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   private static final long serialVersionUID = -4533695636737308500L;
 
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   // name it to ensure sorting
   static final int[] status_codes = { 200, 201, 202, 204, 205, 206, 301, 302,

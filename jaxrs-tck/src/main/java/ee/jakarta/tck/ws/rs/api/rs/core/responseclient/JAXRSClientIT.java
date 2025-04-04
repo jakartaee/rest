@@ -146,15 +146,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       "Network Authentication Required" };
 
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   /*
    * @class.setup_props: webServerHost; webServerPort; 

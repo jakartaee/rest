@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -38,19 +38,20 @@ public class JAXRSClientIT extends ReaderClient<ContextOperation> {
 
   private static final long serialVersionUID = -6962070973647934636L;
 
-  public JAXRSClientIT() {
-    setup();
-  }
-
   @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
+  public void setup() {
+
+    // Only the values are verified, using verifySettings() in JaxrWebTestCase.java
+    // but the URL with these values is not required to work. 
+    // TODO: remove validation of these values for the tests in this file.
+    _hostname = "localhost";
+    _port = 8080;
+
+    String property = System.getProperty("cts.tmp", "/tmp");
+    if (property != null) 
+      System.setProperty("java.io.tmpdir", property);
   }
 
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   /*
    * @testName: getHeadersOperationSetTest

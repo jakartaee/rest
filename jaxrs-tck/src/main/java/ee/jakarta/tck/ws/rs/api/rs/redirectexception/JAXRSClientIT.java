@@ -48,15 +48,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
 
   protected static final String HOST = "www.jcp.org";
 
-  @BeforeEach
-  void logStartTest(TestInfo testInfo) {
-    TestUtil.logMsg("STARTING TEST : "+testInfo.getDisplayName());
-  }
-
-  @AfterEach
-  void logFinishTest(TestInfo testInfo) {
-    TestUtil.logMsg("FINISHED TEST : "+testInfo.getDisplayName());
-  }
 
   /*
    * @testName: constructorStatusUriTest

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import javax.xml.transform.Source;
 
@@ -308,6 +309,53 @@ public class JAXRSClientIT extends JaxrsCommonClient {
       }
     assertTrue(content == null || content.length() == 0,
         "File reader gets unexpected"+ content);
+  }
+
+  /*
+   * @testName: serverPathProviderTest
+   * 
+   * @assertion_ids: JAXRS:SPEC:33; JAXRS:SPEC:33.5; JAXRS:SPEC:75;
+   * 
+   * @test_Strategy: java.nio.file.Path All media types.
+   * 
+   * When reading zero-length request entities, all implementation-supplied
+   * MessageBodyReader implementations except the JAXB-related one MUST create a
+   * corresponding Java object that represents zero-length data; they MUST NOT
+   * return null.
+   */
+  @Test
+  @Tag("xml_binding")
+  public void serverPathProviderTest() throws Fault {
+    setProperty(Property.SEARCH_STRING, Resource.NOTNULL);
+    setProperty(Property.REQUEST, buildRequest(Request.POST, "path"));
+    invoke();
+  }
+
+  /*
+   * @testName: clientPathProviderTest
+   * 
+   * @assertion_ids: JAXRS:JAVADOC:863;
+   * 
+   * @test_Strategy: java.io.File All media types.
+   * 
+   * for a zero-length response entities returns null or a corresponding Java
+   * object that represents zero-length data.
+   */
+  @Test
+  @Tag("xml_binding")
+  public void clientPathProviderTest() throws Fault {
+    setProperty(Property.REQUEST, buildRequest(Request.GET, "entity"));
+    invoke();
+    java.nio.file.Path entity = getResponseBody(java.nio.file.Path.class);
+    String content = null;
+    if (entity != null)
+      try {
+        content = Files.readString(entity);
+      } catch (Exception e) {
+        throw new Fault(e);
+      }
+    assertTrue(content == null || content.length() == 0,
+        "Path reader gets unexpected"+ content);
   }
 
   /*

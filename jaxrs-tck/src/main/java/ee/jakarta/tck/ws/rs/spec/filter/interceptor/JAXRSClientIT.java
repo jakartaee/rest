@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -22,6 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.InputStream;
+import java.nio.file.Files;
 
 import javax.xml.namespace.QName;
 
@@ -618,6 +619,110 @@ public class JAXRSClientIT extends JaxrsCommonClient {
     setProperty(Property.UNEXPECTED_RESPONSE_MATCH, Resource.DIRECTION);
     invoke();
     logMsg("JAXRS called registered writer interceptor for file provider");
+  }
+
+  // ------------------------- Path -----------------------------------
+
+  /*
+   * @testName: pathReaderContainerInterceptorTest
+   * 
+   * @assertion_ids: JAXRS:SPEC:84;
+   * 
+   * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
+   * interceptors when mapping representations to Java types and vice versa.
+   */
+  @Test
+  @Tag("xml_binding")
+  public void pathReaderContainerInterceptorTest() throws Fault {
+    addInterceptors(EntityReaderInterceptor.class);
+    setProperty(Property.REQUEST, buildRequest(Request.POST, "postpath"));
+    setRequestContentEntity(content);
+    setProperty(Property.SEARCH_STRING,
+        EntityReaderInterceptor.class.getName());
+    setProperty(Property.UNEXPECTED_RESPONSE_MATCH, Resource.DIRECTION);
+    invoke();
+    logMsg("JAXRS called registered reader interceptor for path provider");
+  }
+
+  /*
+   * @testName: pathReaderNoInterceptorTest
+   * 
+   * @assertion_ids: JAXRS:SPEC:84;
+   * 
+   * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
+   * interceptors when mapping representations to Java types and vice versa.
+   */
+  @Test
+  @Tag("xml_binding")
+  public void pathReaderNoInterceptorTest() throws Fault {
+    setProperty(Property.REQUEST, buildRequest(Request.POST, "postpath"));
+    setRequestContentEntity(content);
+    setProperty(Property.SEARCH_STRING, content);
+    invoke();
+  }
+
+  /*
+   * @testName: pathWriterContainerInterceptorTest
+   * 
+   * @assertion_ids: JAXRS:SPEC:84;
+   * 
+   * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
+   * interceptors when mapping representations to Java types and vice versa.
+   */
+  @Test
+  @Tag("xml_binding")
+  public void pathWriterContainerInterceptorTest() throws Fault {
+    addInterceptors(EntityWriterInterceptor.class);
+    setProperty(Property.REQUEST, buildRequest(Request.GET, "getpath"));
+    setProperty(Property.SEARCH_STRING,
+        EntityWriterInterceptor.class.getName());
+    setProperty(Property.SEARCH_STRING, Resource.DIRECTION);
+    invoke();
+    logMsg("JAXRS called registered writer interceptor for path provider");
+  }
+
+  /*
+   * @testName: pathWriterNoInterceptorTest
+   * 
+   * @assertion_ids: JAXRS:SPEC:84;
+   * 
+   * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
+   * interceptors when mapping representations to Java types and vice versa.
+   */
+  @Test
+  @Tag("xml_binding")
+  public void pathWriterNoInterceptorTest() throws Fault {
+    setProperty(Property.REQUEST, buildRequest(Request.GET, "getpath"));
+    setProperty(Property.SEARCH_STRING, Resource.getName());
+    invoke();
+  }
+
+  /*
+   * @testName: pathWriterClientInterceptorTest
+   * 
+   * @assertion_ids: JAXRS:SPEC:84;
+   * 
+   * @test_Strategy: JAX-RS implementations are REQUIRED to call registered
+   * interceptors when mapping representations to Java types and vice versa.
+   */
+  @Test
+  @Tag("xml_binding")
+  public void pathWriterClientInterceptorTest() throws Fault {
+    try {
+      java.nio.file.Path path = Files.createTempFile("temp", "tmp");
+      Files.writeString(path, content);
+      setRequestContentEntity(path);
+    } catch (IOException e) {
+      throw new Fault(e);
+    }
+    addProvider(EntityWriterInterceptor.class);
+    addInterceptors(EntityWriterInterceptor.class);
+    setProperty(Property.REQUEST, buildRequest(Request.POST, "poststring"));
+    setProperty(Property.SEARCH_STRING,
+        EntityWriterInterceptor.class.getName());
+    setProperty(Property.UNEXPECTED_RESPONSE_MATCH, Resource.DIRECTION);
+    invoke();
+    logMsg("JAXRS called registered writer interceptor for path provider");
   }
 
   // ------------------------- DataSource -----------------------------------

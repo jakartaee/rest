@@ -74,7 +74,7 @@ public abstract class RuntimeDelegate {
      * class.</li>
      * <li>If a system property with the name {@code jakarta.ws.rs.ext.RuntimeDelegate} is defined, then its value is used as
      * the name of the implementation class.</li>
-     * <li>Finally, a default implementation class name is used.</li>
+     * <li>A {@code java.lang.ClassNotFoundException} is thrown if none of the above rules leads to any result.</li>
      * </ul>
      *
      * @return an instance of {@code RuntimeDelegate}.

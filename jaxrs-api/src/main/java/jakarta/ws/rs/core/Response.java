@@ -1171,6 +1171,19 @@ public abstract class Response implements AutoCloseable {
          */
         ACCEPTED(202, "Accepted"),
         /**
+         * 203 Non-Authoritative Information.
+         * <p>
+         * Indicates that the request was successful but the enclosed content has been modified from that of the origin
+         * server's 200 (OK) response by a transforming proxy (Section 7.7). This status code allows the proxy to notify
+         * recipients when a transformation has been applied, since that knowledge might impact later decisions regarding
+         * the content. For example, future cache validation requests for the content might only be applicable along the
+         * same request path (through the same proxies).
+         * </p>
+         *
+         * @see <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-203-non-authoritative-infor">HTTP/1.1 documentation</a>
+         */
+        NON_AUTHORITATIVE_INFORMATION(203, "Non-Authoritative Information"),
+        /**
          * 204 No Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">HTTP/1.1
          * documentation</a>.
          */
@@ -1337,12 +1350,64 @@ public abstract class Response implements AutoCloseable {
          */
         REQUESTED_RANGE_NOT_SATISFIABLE(416, "Requested Range Not Satisfiable"),
         /**
-         * 417 Expectation Failed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.18">HTTP/1.1
-         * documentation</a>.
+         * 417 Expectation Failed.
+         * <p>
+         * The 417 (Expectation Failed) status code indicates that the expectation given in the request's Expect header
+         * field (Section 10.1.1) could not be met by at least one of the inbound servers.
+         * </p>
          *
-         * @since 2.0
+         * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.18">HTTP/1.1 documentation</a>
          */
         EXPECTATION_FAILED(417, "Expectation Failed"),
+        /**
+         * 421 Misdirected Request.
+         * <p>
+         * The 421 (Misdirected Request) status code indicates that the request was directed at a server that is unable
+         * or unwilling to produce an authoritative response for the target URI. An origin server (or gateway acting on
+         * behalf of the origin server) sends 421 to reject a target URI that does not match an origin for which the
+         * server has been configured (Section 4.3.1) or does not match the connection context over which the request
+         * was received (Section 7.4).
+         * </p>
+         *
+         * @see <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-421-misdirected-request">HTTP/1.1 documentation</a>
+         */
+        MISDIRECTED_REQUEST(421, "Misdirected Request"),
+        /**
+         * 422 Unprocessable Content.
+         * <p>
+         * The 422 (Unprocessable Content) status code indicates that the server understands the content type of the
+         * request content (hence a 415 (Unsupported Media Type) status code is inappropriate), and the syntax of the
+         * request content is correct, but it was unable to process the contained instructions. For example, this status
+         * code can be sent if an XML request content contains well-formed (i.e., syntactically correct), but semantically
+         * erroneous XML instructions.
+         * </p>
+         *
+         * @see <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-422-unprocessable-content">HTTP/1.1 documentation</a>
+         */
+        UNPROCESSABLE_CONTENT(422, "Unprocessable Content"),
+        /**
+         * 426 Upgrade Required.
+         * <p>
+         * The 426 (Upgrade Required) status code indicates that the server refuses to perform the request using the
+         * current protocol but might be willing to do so after the client upgrades to a different protocol. The server
+         * MUST send an Upgrade header field in a 426 response to indicate the required protocol(s) (Section 7.8).
+         * </p>
+         * <p>
+         * Example:
+         * </p>
+         * <pre>{@code
+         * HTTP/1.1 426 Upgrade Required
+         * Upgrade: HTTP/3.0
+         * Connection: Upgrade
+         * Content-Length: 53
+         * Content-Type: text/plain
+         *
+         * This service requires use of the HTTP/3.0 protocol.
+         * }</pre>
+         *
+         * @see <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-426-upgrade-required">HTTP/1.1 documentation</a>
+         */
+        UPGRADE_REQUIRED(426, "Upgrade Required"),
         /**
          * 428 Precondition required, see <a href="https://tools.ietf.org/html/rfc6585#section-3">RFC 6585: Additional HTTP
          * Status Codes</a>.

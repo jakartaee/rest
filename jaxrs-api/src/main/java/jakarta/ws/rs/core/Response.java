@@ -1344,6 +1344,13 @@ public abstract class Response implements AutoCloseable {
          */
         EXPECTATION_FAILED(417, "Expectation Failed"),
         /**
+         * 423 Locked, see <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-9.8.5">RFC 4918: HTTP Extensions
+         * for Web Distributed Authoring and Versioning</a>.
+         *
+         * @since 3.2
+         */
+        LOCKED(423, "LOCKED"),
+        /**
          * 428 Precondition required, see <a href="https://tools.ietf.org/html/rfc6585#section-3">RFC 6585: Additional HTTP
          * Status Codes</a>.
          *

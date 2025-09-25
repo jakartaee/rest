@@ -20,6 +20,8 @@
 :sectnumlevels: 4
 :sectanchors:
 :stem:
+:description: Jakarta RESTful Web Services specification defines a set of Java APIs for the development of Web services built according to the Representational State Transfer (REST) architectural style. This specification provides annotations, APIs, and runtime services for building RESTful web services and clients in Java.
+:keywords: Jakarta EE, REST, RESTful Web Services, JAX-RS, Java API, Web Services, HTTP, JSON, XML, Annotations, Enterprise Java
 ifdef::backend-pdf[]
 :pagenums:
 :numbered:

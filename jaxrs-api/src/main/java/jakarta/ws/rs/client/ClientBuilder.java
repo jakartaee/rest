@@ -19,9 +19,7 @@ package jakarta.ws.rs.client;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import java.net.URL;
-import java.security.AccessController;
 import java.security.KeyStore;
-import java.security.PrivilegedAction;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -62,12 +60,7 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
             Object delegate = FactoryFinder.find(JAXRS_DEFAULT_CLIENT_BUILDER_PROPERTY, ClientBuilder.class);
             if (!(delegate instanceof ClientBuilder)) {
                 final CreateErrorMessageAction action = new CreateErrorMessageAction(delegate);
-                final String errorMessage;
-                if (System.getSecurityManager() == null) {
-                    errorMessage = action.run();
-                } else {
-                    errorMessage = AccessController.doPrivileged(action);
-                }
+                final String errorMessage = action.run();
                 throw new LinkageError(errorMessage);
             }
             return (ClientBuilder) delegate;
@@ -272,14 +265,13 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
      */
     public abstract Client build();
 
-    private static final class CreateErrorMessageAction implements PrivilegedAction<String> {
+    private static final class CreateErrorMessageAction {
         private final Object delegate;
 
         private CreateErrorMessageAction(final Object delegate) {
             this.delegate = delegate;
         }
 
-        @Override
         public String run() {
             Class<?> pClass = ClientBuilder.class;
             String classnameAsResource = pClass.getName().replace('.', '/') + ".class";

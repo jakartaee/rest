@@ -37,6 +37,9 @@ import ee.jakarta.tck.ws.rs.common.util.JaxrsUtil;
 import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
 
 import org.junit.jupiter.api.Test;
+
+import static jakarta.ws.rs.core.Response.Status.PRECONDITION_REQUIRED;
+import static jakarta.ws.rs.core.Response.Status.UNPROCESSABLE_CONTENT;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.BeforeEach;
@@ -83,7 +86,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       Response.Status.REQUEST_URI_TOO_LONG,
       Response.Status.UNSUPPORTED_MEDIA_TYPE,
       Response.Status.REQUESTED_RANGE_NOT_SATISFIABLE,
-      Response.Status.EXPECTATION_FAILED, Response.Status.PRECONDITION_REQUIRED,
+      Response.Status.EXPECTATION_FAILED, Response.Status.UNPROCESSABLE_CONTENT, Response.Status.PRECONDITION_REQUIRED,
       Response.Status.TOO_MANY_REQUESTS,
       Response.Status.REQUEST_HEADER_FIELDS_TOO_LARGE,
       Response.Status.UNAVAILABLE_FOR_LEGAL_REASONS,
@@ -96,7 +99,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   // name it to ensure sorting
   protected final int[] status_codes = { 200, 201, 202, 204, 205, 206, 300, 301, 302,
       303, 304, 305, 307, 308, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410,
-      411, 412, 413, 414, 415, 416, 417, 428, 429, 431, 451, 500, 501, 502, 503, 504,
+      411, 412, 413, 414, 415, 416, 417, 422, 428, 429, 431, 451, 500, 501, 502, 503, 504,
       505, 511 };
 
   // name it to ensure sorting
@@ -138,7 +141,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       "Proxy Authentication Required", "Request Timeout", "Conflict", "Gone",
       "Length Required", "Precondition Failed", "Request Entity Too Large",
       "Request-URI Too Long", "Unsupported Media Type",
-      "Requested Range Not Satisfiable", "Expectation Failed",
+      "Requested Range Not Satisfiable", "Expectation Failed", "Unprocessable Content",
       "Precondition Required", "Too Many Requests",
       "Request Header Fields Too Large", "Unavailable For Legal Reasons", "Internal Server Error",
       "Not Implemented", "Bad Gateway", "Service Unavailable",

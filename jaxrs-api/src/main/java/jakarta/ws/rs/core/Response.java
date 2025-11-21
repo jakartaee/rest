@@ -1344,6 +1344,12 @@ public abstract class Response implements AutoCloseable {
          */
         EXPECTATION_FAILED(417, "Expectation Failed"),
         /**
+         * 422 Unprocessable Content, see <a href="https://datatracker.ietf.org/doc/html/rfc9110#name-422-unprocessable-content">RFC 9110:
+         * HTTP Semantics</a>.
+         *
+         */
+        UNPROCESSABLE_CONTENT(422, "Unprocessable Content"),
+        /**
          * 428 Precondition required, see <a href="https://tools.ietf.org/html/rfc6585#section-3">RFC 6585: Additional HTTP
          * Status Codes</a>.
          *

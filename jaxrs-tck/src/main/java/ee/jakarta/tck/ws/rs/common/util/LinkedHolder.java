@@ -16,13 +16,15 @@
 
 package ee.jakarta.tck.ws.rs.common.util;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Hold multiple instances of TYPE in a {@link LinkedList} structure, last one
  * accessible by {@link #get()}.
- * 
+ *
  * @param <TYPE>
  */
 public class LinkedHolder<TYPE> extends Holder<TYPE> implements Iterable<TYPE> {
@@ -36,7 +38,7 @@ public class LinkedHolder<TYPE> extends Holder<TYPE> implements Iterable<TYPE> {
   public LinkedHolder() {
   }
 
-  public void add(TYPE value) {
+  public synchronized void add(TYPE value) {
     list.add(value);
     super.set(value);
   }
@@ -45,7 +47,7 @@ public class LinkedHolder<TYPE> extends Holder<TYPE> implements Iterable<TYPE> {
    * Replace the last item in the list
    */
   @Override
-  public void set(TYPE value) {
+  public synchronized void set(TYPE value) {
     if (list.size() != 0) {
       list.set(list.size() - 1, value);
       super.set(value);
@@ -57,27 +59,30 @@ public class LinkedHolder<TYPE> extends Holder<TYPE> implements Iterable<TYPE> {
     }
   }
 
-  public TYPE get(int index) {
+  public synchronized TYPE get(int index) {
     if (index >= list.size())
       return null;
     return list.get(index);
   }
 
-  public int size() {
+  public synchronized int size() {
     return list.size();
   }
 
-  public void clear() {
+  public synchronized void clear() {
     super.set(null);
     list.clear();
   }
 
   @Override
-  public Iterator<TYPE> iterator() {
-    return list.iterator();
+  public synchronized Iterator<TYPE> iterator() {
+    // Fix for https://github.com/jakartaee/rest/issues/1322
+    // Create a copy to avoid ConcurrentModificationException when iterating while another thread modifies the list
+    List<TYPE> iteratorCopy = new ArrayList<>(list);
+    return iteratorCopy.iterator();
   }
 
-  public LinkedList<TYPE> asList() {
+  public synchronized LinkedList<TYPE> asList() {
     return list;
   }
 

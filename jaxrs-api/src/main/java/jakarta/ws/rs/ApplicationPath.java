@@ -16,11 +16,16 @@
 
 package jakarta.ws.rs;
 
+import java.io.Serial;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Stereotype;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 /**
  * Identifies the application path that serves as the base URI for all resource URIs provided by
@@ -40,6 +45,8 @@ import java.lang.annotation.Target;
 @Documented
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
+@ApplicationScoped
+@Stereotype
 public @interface ApplicationPath {
 
     /**
@@ -55,4 +62,41 @@ public @interface ApplicationPath {
      * @return base URI.
      */
     String value();
+
+    /**
+     * Supports inline instantiation of the {@link ApplicationPath} annotation.
+     *
+     * @since 5.0
+     */
+    final class Literal extends AnnotationLiteral<ApplicationPath> implements ApplicationPath {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Default ApplicationPath literal
+         */
+        public static final ApplicationPath INSTANCE = of("");
+
+        private final String value;
+
+        private Literal(final String value) {
+            this.value = value;
+        }
+
+        /**
+         * Obtain the literal of a ApplicationPath annotation.
+         *
+         * @param value the base path value
+         *
+         * @return the new literal ApplicationPath
+         */
+        public static ApplicationPath of(final String value) {
+            return new Literal(value);
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
+    }
 }

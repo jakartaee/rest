@@ -16,11 +16,16 @@
 
 package jakarta.ws.rs;
 
+import java.io.Serial;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import jakarta.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.util.Nonbinding;
+import jakarta.inject.Qualifier;
 
 /**
  * Binds the value(s) of a HTTP header to a resource method parameter, resource class field, or resource class bean
@@ -58,6 +63,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface HeaderParam {
 
     /**
@@ -66,5 +72,43 @@ public @interface HeaderParam {
      *
      * @return HTTP header name.
      */
+    @Nonbinding
     String value();
+
+    /**
+     * Supports inline instantiation of the {@link HeaderParam} annotation.
+     *
+     * @since 5.0
+     */
+    final class Literal extends AnnotationLiteral<HeaderParam> implements HeaderParam {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Default HeaderParam literal
+         */
+        public static final HeaderParam INSTANCE = of("");
+
+        private final String value;
+
+        private Literal(final String value) {
+            this.value = value;
+        }
+
+        /**
+         * Obtain the literal of a HeaderParam annotation.
+         *
+         * @param value the header value
+         *
+         * @return the new literal header param
+         */
+        public static HeaderParam of(final String value) {
+            return new Literal(value);
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
+    }
 }

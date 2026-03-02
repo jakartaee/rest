@@ -16,11 +16,16 @@
 
 package jakarta.ws.rs.ext;
 
+import java.io.Serial;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Stereotype;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 /**
  * Marks an implementation of an extension interface that should be discoverable by JAX-RS runtime during a provider
@@ -33,5 +38,25 @@ import java.lang.annotation.Target;
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@ApplicationScoped
+@Stereotype
 public @interface Provider {
+
+    /**
+     * Supports inline instantiation of the {@link Provider} annotation.
+     *
+     * @since 5.0
+     */
+    final class Literal extends AnnotationLiteral<Provider> implements Provider {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Default Provider literal
+         */
+        public static final Provider INSTANCE = new Literal();
+
+        private Literal() {
+        }
+    }
 }

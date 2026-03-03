@@ -53,12 +53,29 @@ parameters. See <<consuming_multipart_formdata>> for more details.
 [[entity_parameters]]
 ===== Entity Parameters
 
-The value of a parameter not annotated with `@FormParam` or any of the
-annotations listed in in <<resource_field>>, called the entity
-parameter, is mapped from the request entity body. Conversion between an
-entity body and a Java type is the responsibility of an entity provider,
-see <<entity_providers>>. Resource methods MUST have at most one
-entity parameter.
+The entity parameter represents the request entity body and is mapped from the
+request entity body using an entity provider. Conversion between an entity body
+and a Java type is the responsibility of an entity provider, see
+<<entity_providers>>.
+
+The entity parameter is identified as a parameter that is NOT annotated with `@FormParam`
+or any of the annotations listed in <<resource_field>>, is NOT a Jakarta REST context
+type (such as `UriInfo`, `HttpHeaders`, `Request`, etc.), and is NOT `AsyncResponse`
+or `SseEventSink`.
+
+Resource methods MUST have at most one entity parameter.
+
+Example:
+
+[source,java]
+----
+@POST
+@Consumes(MediaType.APPLICATION_JSON)
+public Response create(final Customer customer, final HttpHeaders headers) {
+    // customer is deserialized from request body
+    return Response.ok().build();
+}
+----
 
 [[resource_method_return]]
 ==== Return Type

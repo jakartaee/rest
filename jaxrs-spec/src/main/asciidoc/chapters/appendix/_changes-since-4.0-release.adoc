@@ -1,0 +1,35 @@
+////
+*******************************************************************
+* Copyright (c) 2026 Eclipse Foundation
+*
+* This specification document is made available under the terms
+* of the Eclipse Foundation Specification License v1.0, which is
+* available at https://www.eclipse.org/legal/efsl.php.
+*******************************************************************
+////
+
+[[changes-since-4.0-release]]
+=== Changes Since 4.0 Release
+
+* <<cdi>>: Required CDI 5.0 or later for proper integration of Jakarta REST and CDI injection (https://github.com/jakartaee/rest/issues/569[#569])
+* <<cdi-injection-model>>: Documented comprehensive CDI injection model for resources and providers (https://github.com/jakartaee/rest/issues/569[#569])
+* <<cdi>>: Updated `@ApplicationPath`, `@Path`, and `@Provider` annotations to be CDI stereotype
+annotations with default scopes (`@ApplicationScoped` for `@ApplicationPath` and `@Provider`,
+`@RequestScoped` for `@Path`) (https://github.com/jakartaee/rest/issues/556[#556], https://github.com/jakartaee/rest/issues/952[#952])
+* <<cdi-injection-model>>: Parameter extraction annotations (`@QueryParam`, `@PathParam`,
+`@HeaderParam`, `@MatrixParam`, `@CookieParam`, `@FormParam`) now act as CDI qualifiers (https://github.com/jakartaee/rest/issues/569[#569])
+* <<cdi-injection-model>>: Fields in CDI-managed beans must use `@Inject` instead of the
+deprecated `@Context` annotation (https://github.com/jakartaee/rest/issues/569[#569], https://github.com/jakartaee/rest/issues/1209[#1209])
+* <<cdi-injection-model>>: Resource method parameters support only Jakarta REST context types,
+parameter extraction annotations, entity parameters, `AsyncResponse`, and `SseEventSink`;
+arbitrary CDI beans must be injected via fields or constructors (https://github.com/jakartaee/rest/issues/569[#569])
+* <<cdi-injection-model>>: Clarified that `AsyncResponse` and `SseEventSink` can only be
+used as resource method parameters, not as injectable fields (https://github.com/jakartaee/rest/issues/569[#569])
+* <<cdi-producers>>: Required CDI producers for Jakarta REST context types and parameter
+extraction annotations (https://github.com/jakartaee/rest/issues/569[#569])
+* Deprecated `@Context` annotation for removal in a future release (https://github.com/jakartaee/rest/issues/569[#569], https://github.com/jakartaee/rest/issues/1209[#1209])
+* Deprecated `@Suspended` annotation in 5.0 for removal in a future release; use type-alone approach
+for `AsyncResponse` in CDI environments (https://github.com/jakartaee/rest/issues/1209[#1209])
+* <<servlet_container>>: Deprecated `@Context` injection for Servlet-defined types; use CDI
+injection (`@Inject`) as specified by Jakarta Servlet and Jakarta EE Platform specifications (https://github.com/jakartaee/rest/issues/1214[#1214])
+* Removed Additional Requirements section; CDI specification defines bean lifecycle behaviors (https://github.com/jakartaee/rest/issues/1215[#1215])

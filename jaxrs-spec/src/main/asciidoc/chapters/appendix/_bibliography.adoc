@@ -47,8 +47,8 @@
 - [[[bib13,13]]]  Jakarta^®^ Concurrency Specification, Version 2.0. Available at:
                https://jakarta.ee/specifications/concurrency/2.0/
 
-- [[[bib14,14]]]  Jakarta^®^ Contexts and Dependency Injection Specification, Version 2.0. Available at:
-               https://jakarta.ee/specifications/cdi/2.0/
+- [[[bib14,14]]]  Jakarta^®^ Contexts and Dependency Injection Specification, Version 5.0. Available at:
+               https://jakarta.ee/specifications/cdi/5.0/
 
 - [[[bib15,15]]]  Jakarta^®^ Annotations Specification, Version 2.0. Available at:
                https://jakarta.ee/specifications/annotations/2.0/

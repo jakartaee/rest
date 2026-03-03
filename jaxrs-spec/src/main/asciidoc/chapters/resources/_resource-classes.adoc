@@ -39,15 +39,26 @@ have a public constructor for which the JAX-RS runtime can provide all
 parameter values. Note that a zero argument constructor is permissible
 under this rule.
 
-A public constructor MAY include parameters annotated with one of the
-following: `@Context`, `@HeaderParam`, `@CookieParam`, `@MatrixParam`,
-`@QueryParam` or `@PathParam`. However, depending on the resource class
-lifecycle and concurrency, per-request information may not make sense in
-a constructor. If more than one public constructor is suitable then an
-implementation MUST use the one with the most parameters. Choosing
-amongst suitable constructors with the same number of parameters is
-implementation specific, implementations SHOULD generate a warning about
-such ambiguity.
+In CDI-enabled environments where the resource class is a CDI-managed bean,
+the CDI container manages instantiation and constructor injection follows
+CDI rules as described in <<cdi-injection-model>>. Constructor parameters
+are injected by CDI, and Jakarta REST-specific types are made available
+via CDI producers as specified in <<cdi-producers>>.
+
+In non-CDI environments, or for resources not managed by CDI, a public
+constructor MAY include parameters annotated with one of the following:
+`@HeaderParam`, `@CookieParam`, `@MatrixParam`, `@QueryParam` or `@PathParam`.
+However, depending on the resource class lifecycle and concurrency, per-request
+information may not make sense in a constructor.
+
+NOTE: The use of `@Context` in constructors is deprecated. Applications should
+use CDI constructor injection in CDI-enabled environments, or use field/property
+injection in non-CDI environments.
+
+In non-CDI environments if more than one public constructor is suitable then an
+implementation MUST use the one with the most parameters. Choosing amongst suitable
+constructors with the same number of parameters is implementation specific,
+implementations SHOULD generate a warning about such ambiguity.
 
 Non-root resource classes are instantiated by an application and do not
 require the above-described public constructor.

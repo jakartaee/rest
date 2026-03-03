@@ -11,6 +11,13 @@
 [[servlet_container]]
 === Servlet Container
 
+
+NOTE: The use of `@Context` for injecting Servlet-defined types is deprecated.
+In environments that support CDI and Jakarta Servlet, applications should use
+CDI injection (`@Inject`) for Servlet-defined types as specified by the Jakarta
+Servlet and Jakarta EE Platform specifications. Consult those specifications for
+details on which Servlet types are available as CDI built-in beans.
+
 The `@Context` annotation can be used to indicate a dependency on a
 Servlet-defined resource. A Servlet-based implementation MUST support
 injection of the following Servlet-defined types: `ServletConfig`,

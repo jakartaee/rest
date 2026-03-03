@@ -32,7 +32,6 @@ import jakarta.ws.rs.ApplicationPath;
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see Context
  * @since 1.0
  */
 public interface UriInfo {

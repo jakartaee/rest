@@ -24,8 +24,8 @@ thread to send 3 events before closing the connection:
 @GET
 @Path("eventStream")
 @Produces(MediaType.SERVER_SENT_EVENTS)
-public void eventStream(@Context SseEventSink eventSink,
-                        @Context Sse sse) {
+public void eventStream(SseEventSink eventSink,
+                        Sse sse) {
     executor.execute(() -> {
         try (SseEventSink sink = eventSink) {
             eventSink.send(sse.newEvent("event1"));

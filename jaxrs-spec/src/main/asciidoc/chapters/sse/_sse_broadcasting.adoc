@@ -27,7 +27,7 @@ note the `@Singleton` annotation on the resource class:
 @Singleton
 public class SseResource {
 
-    @Context
+    @Inject
     private Sse sse;
 
     private volatile SseBroadcaster sseBroadcaster;
@@ -40,7 +40,7 @@ public class SseResource {
     @GET
     @Path("register")
     @Produces(MediaType.SERVER_SENT_EVENTS)
-    public void register(@Context SseEventSink eventSink) {
+    public void register(SseEventSink eventSink) {
         eventSink.send(sse.newEvent("welcome!"));
         sseBroadcaster.register(eventSink);
     }

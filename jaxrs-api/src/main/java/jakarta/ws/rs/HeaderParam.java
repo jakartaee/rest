@@ -64,7 +64,15 @@ public @interface HeaderParam {
      * Defines the name of the HTTP header whose value will be used to initialize the value of the annotated method
      * argument, class field or bean property. Case insensitive.
      *
-     * @return HTTP header name.
+     * <p>
+     * If the value is not specified (empty string), the name of the annotated element (parameter, field, or property)
+     * will be used as the parameter name. This requires that parameter names are preserved in the bytecode, which can be
+     * enabled using the {@code -parameters} compiler flag in Java 8+. If parameter names are not available at runtime
+     * and no explicit value is provided, implementations MUST throw a deployment-time exception with a clear error message
+     * indicating that either an explicit parameter name must be provided or the {@code -parameters} compiler flag must be enabled.
+     * </p>
+     *
+     * @return HTTP header name, or an empty string to use the annotated element's name.
      */
-    String value();
+    String value() default "";
 }

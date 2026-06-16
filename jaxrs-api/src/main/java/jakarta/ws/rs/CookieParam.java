@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2026 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -69,7 +69,7 @@ public @interface CookieParam {
      * indicating that either an explicit parameter name must be provided or the {@code -parameters} compiler flag must be enabled.
      * </p>
      *
-     * @return HTTP cookie name, or an empty string to use the annotated element's name.
+     * @return HTTP cookie name, or an empty string indicating that the annotated element's name should be used.
      */
     String value() default "";
 }

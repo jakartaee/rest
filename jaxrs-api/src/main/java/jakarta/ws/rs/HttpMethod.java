@@ -36,6 +36,7 @@ import java.lang.annotation.Target;
  * @see PATCH
  * @see HEAD
  * @see OPTIONS
+ * @see QUERY
  * @since 1.0
  */
 @Target({ ElementType.ANNOTATION_TYPE })
@@ -74,7 +75,7 @@ public @interface HttpMethod {
      */
     public static final String OPTIONS = "OPTIONS";
     /**
-     * HTTP OPTIONS method.
+     * HTTP QUERY method.
      */
     public static final String QUERY = "QUERY";
 

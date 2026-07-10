@@ -117,6 +117,13 @@ public interface Invocation {
         public Invocation buildGet();
 
         /**
+         * Build a QUERY request invocation.
+         *
+         * @return invocation encapsulating the built QUERY request.
+         */
+        public Invocation buildQuery();
+
+        /**
          * Build a DELETE request invocation.
          *
          * @return invocation encapsulating the built DELETE request.

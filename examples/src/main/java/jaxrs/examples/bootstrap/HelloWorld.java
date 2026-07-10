@@ -20,8 +20,11 @@ import java.util.Collections;
 import java.util.Set;
 
 import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QUERY;
 import jakarta.ws.rs.core.Application;
 
 /**
@@ -50,4 +53,10 @@ public class HelloWorld extends Application {
         return "Hello, World!";
     }
 
+    @QUERY
+    @Consumes("application/json")
+    @Produces("text/plain")
+    public String queryIt(final String message) {
+        return String.format("Got it from query! <%s>", message);
+    }
 }

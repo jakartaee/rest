@@ -23,3 +23,11 @@ Contributions are welcome, please sign the Eclipse Contributor Agreement before 
 Project page: https://projects.eclipse.org/projects/ee4j.jaxrs
 
 Mailinglist: https://accounts.eclipse.org/mailing-list/jaxrs-dev
+
+
+# Introduction
+
+Jakarta REST is the solution for development of building Representational State Transfer web services on the Jakarta EE Platform. The specification is easy to learn, and it enables one to construct powerful REST APIs and it also includes APIs for working with web services as a client. As such, this specification is key to the development of microservices and cloud based applications, and it is part of the Jakarta EE Web Profile as well as the full platform.
+
+Using the API, a web service can be developed by placing just a few annotations on a plain old Java object (POJO). The API includes annotations for performing many tasks, such as producing REST responses in specified format(s), consuming data, and performing standard data operations such as CREATE, READ, UPDATE, and DELETE. The specification also includes advanced features for development of robust REST APIs.
+

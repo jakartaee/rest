@@ -31,3 +31,25 @@ Jakarta REST is the solution for development of building Representational State 
 
 Using the API, a web service can be developed by placing just a few annotations on a plain old Java object (POJO). The API includes annotations for performing many tasks, such as producing REST responses in specified format(s), consuming data, and performing standard data operations such as CREATE, READ, UPDATE, and DELETE. The specification also includes advanced features for development of robust REST APIs.
 
+## Overview of the API
+
+A minimal resource class only needs two annotations: `@Path`, to declare the URI segment that exposes the resource, and `@GET`, to mark a method as handling HTTP GET requests.
+
+```java
+@Path("hello")
+public class HelloResource {
+
+    @GET
+    public Response ping() {
+        return Response.ok("pong").build();
+    }
+}
+```
+
+Jakarta REST also provides annotations for the other common HTTP verbs — `@PUT`, `@POST`, `@DELETE`, `@PATCH`, `@HEAD`, and `@OPTIONS` — along with `@Produces` and `@Consumes` to control the media type returned or accepted by a resource method.
+
+Parameters can be extracted from the request in several ways:
+
+- `@PathParam` — values embedded in the URI path (e.g. `/hello/{name}`)
+- `@QueryParam` — values passed as query string parameters
+- `@FormParam` — values submitted through an HTML form

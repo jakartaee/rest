@@ -632,7 +632,6 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * interceptors when mapping representations to Java types and vice versa.
    */
   @Test
-  @Tag("xml_binding")
   public void pathReaderContainerInterceptorTest() throws Fault {
     addInterceptors(EntityReaderInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postpath"));
@@ -653,7 +652,6 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * interceptors when mapping representations to Java types and vice versa.
    */
   @Test
-  @Tag("xml_binding")
   public void pathReaderNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.POST, "postpath"));
     setRequestContentEntity(content);
@@ -670,7 +668,6 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * interceptors when mapping representations to Java types and vice versa.
    */
   @Test
-  @Tag("xml_binding")
   public void pathWriterContainerInterceptorTest() throws Fault {
     addInterceptors(EntityWriterInterceptor.class);
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getpath"));
@@ -690,7 +687,6 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * interceptors when mapping representations to Java types and vice versa.
    */
   @Test
-  @Tag("xml_binding")
   public void pathWriterNoInterceptorTest() throws Fault {
     setProperty(Property.REQUEST, buildRequest(Request.GET, "getpath"));
     setProperty(Property.SEARCH_STRING, Resource.getName());
@@ -706,7 +702,6 @@ public class JAXRSClientIT extends JaxrsCommonClient {
    * interceptors when mapping representations to Java types and vice versa.
    */
   @Test
-  @Tag("xml_binding")
   public void pathWriterClientInterceptorTest() throws Fault {
     try {
       java.nio.file.Path path = Files.createTempFile("temp", "tmp");

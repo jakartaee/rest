@@ -38,9 +38,11 @@ import java.lang.annotation.Target;
  * @see SecurityContext
  * @see jakarta.ws.rs.ext.Providers
  * @since 1.0
+ * @deprecated use Jakarta Context and Dependency injection
  */
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Deprecated(forRemoval = true, since = "5.0")
 public @interface Context {
 }

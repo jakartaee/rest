@@ -17,12 +17,22 @@ subclasses (server only). Except for `Configuration` and `Providers`,
 which are injectable in both client and server-side providers, all the
 other types are server-side only.
 
+[NOTE]
+====
+In CDI-enabled environments, these context types MUST be made available
+for injection via CDI producers as specified in <<cdi-producers>>. The
+use of `@Context` annotation is deprecated in favor of CDI injection using
+`@Inject` (for fields and constructors) or type-based injection (for
+resource method parameters). See <<cdi-injection-model>> for details on
+the CDI injection model for Jakarta REST.
+====
+
 [[application]]
 ==== Application
 
 The instance of the application-supplied `Application` subclass can be
-injected into a class field or method parameter using the
-`@Context` annotation. Access to the `Application` subclass instance
+injected into a class field using the `@Inject` annotation or as a resource
+method parameter. Access to the `Application` subclass instance
 allows configuration information to be centralized in that class. Note
 that this cannot be injected into the `Application` subclass itself
 since this would create a circular dependency.
@@ -30,9 +40,9 @@ since this would create a circular dependency.
 [[uris-and-uri-templates]]
 ==== URIs and URI Templates
 
-An instance of `UriInfo` can be injected into a class field or method
-parameter using the `@Context` annotation. `UriInfo` provides both
-static and dynamic, per-request information, about the components of a
+An instance of `UriInfo` can be injected into a class field using the
+`@Inject` annotation or as a resource method parameter.
+`UriInfo` provides both static and dynamic, per-request information, about the components of a
 request URI. E.g. the following would return the names of any query
 parameters in a request:
 
@@ -40,11 +50,29 @@ parameters in a request:
 ----
 @GET
 @Produces("text/plain")
-public String listQueryParamNames(@Context UriInfo info) {
+public String listQueryParamNames(UriInfo info) {
     StringBuilder buf = new StringBuilder();
     for (String param: info.getQueryParameters().keySet()) {
         buf.append(param);
-        buf.append("\n");
+        buf.append('\n');
+    }
+    return buf.toString();
+}
+----
+
+[source,java]
+----
+
+@Inject
+UriInfo info;
+
+@GET
+@Produces("text/plain")
+public String listQueryParamNames() {
+    StringBuilder buf = new StringBuilder();
+    for (String param: info.getQueryParameters().keySet()) {
+        buf.append(param);
+        buf.append('\n');
     }
     return buf.toString();
 }
@@ -56,8 +84,8 @@ information following the pre-processing described in <<reqpreproc>>.
 [[httpheaders]]
 ==== Headers
 
-An instance of `HttpHeaders` can be injected into a class field or
-method parameter using the `@Context` annotation. `HttpHeaders` provides
+An instance of `HttpHeaders` can be injected into a class field using the
+`@Inject` annotation or as a resource method parameter. `HttpHeaders` provides
 access to request header information either in map form or via strongly
 typed convenience methods. E.g. the following would return the names of
 all the headers in a request:
@@ -66,11 +94,28 @@ all the headers in a request:
 ----
 @GET
 @Produces("text/plain")
-public String listHeaderNames(@Context HttpHeaders headers) {
+public String listHeaderNames(HttpHeaders headers) {
     StringBuilder buf = new StringBuilder();
     for (String header: headers.getRequestHeaders().keySet()) {
         buf.append(header);
-        buf.append("\n");
+        buf.append('\n');
+    }
+    return buf.toString();
+}
+----
+
+[source,java]
+----
+@Inject
+HttpHeaders headers;
+
+@GET
+@Produces("text/plain")
+public String listHeaderNames() {
+    StringBuilder buf = new StringBuilder();
+    for (String header: headers.getRequestHeaders().keySet()) {
+        buf.append(header);
+        buf.append('\n');
     }
     return buf.toString();
 }
@@ -86,8 +131,9 @@ Response headers may be provided using the `Response` class, see
 ==== Content Negotiation and Preconditions
 
 JAX-RS simplifies support for content negotiation and preconditions
-using the `Request` interface. An instance of `Request` can be injected
-into a class field or method parameter using the `@Context` annotation.
+using the `Request` interface. An instance of `Request` can be injected
+into a class field using the `@Inject` annotation or as a resource method
+parameter.
 The methods of `Request` allow a caller to determine the best matching
 representation variant and to evaluate whether the current state of the
 resource matches any preconditions in the request. Precondition support
@@ -99,7 +145,23 @@ the request before updating the resource:
 [source,java]
 ----
 @PUT
-public Response updateFoo(@Context Request request, Foo foo) {
+public Response updateFoo(Request request, Foo foo) {
+    EntityTag tag = getCurrentTag();
+    ResponseBuilder responseBuilder = request.evaluatePreconditions(tag);
+    if (responseBuilder != null)
+        return responseBuilder.build();
+    else
+        return doUpdate(foo);
+}
+----
+
+[source,java]
+----
+@Inject
+Request request;
+
+@PUT
+public Response updateFoo(Foo foo) {
     EntityTag tag = getCurrentTag();
     ResponseBuilder responseBuilder = request.evaluatePreconditions(tag);
     if (responseBuilder != null)
@@ -118,22 +180,57 @@ building the response.
 
 The `SecurityContext` interface provides access to information about the
 security context of the current request. An instance of
-`SecurityContext` can be injected into a class field or method parameter
-using the `@Context` annotation. The methods of
-`SecurityContext` provide access to the current user principal,
+`SecurityContext` can be injected into a class field
+using the `@Inject` annotation or as a resource method parameter.
+The methods of `SecurityContext` provide access to the current user principal,
 information about roles assumed by the requester, whether the request
 arrived over a secure channel and the authentication scheme used.
+
+[source,java]
+----
+@Inject
+SecurityContext securityContext;
+
+@GET
+@Produces("text/plain")
+public String getSecureData() {
+    if (securityContext.isUserInRole("admin")) {
+        return "Sensitive admin data";
+    }
+    return "Public data";
+}
+----
 
 [[providercontext]]
 ==== Providers
 
 The `Providers` interface allows for lookup of provider instances based
 on a set of search criteria. An instance of `Providers` can be injected
-into a class field or method parameter using the `@Context` annotation.
+into a class field or method parameter using the `@Inject` annotation.
 
 This interface is expected to be primarily of interest to provider
 authors wishing to use other providers functionality. It is injectable
 in both client and server providers.
+
+[source,java]
+----
+@Provider
+public class CustomMessageBodyWriter implements MessageBodyWriter<MyType> {
+    @Inject
+    Providers providers;
+
+    @Override
+    public void writeTo(MyType t, Class<?> type, Type genericType,
+                        Annotation[] annotations, MediaType mediaType,
+                        MultivaluedMap<String, Object> httpHeaders,
+                        OutputStream entityStream) throws IOException {
+        MessageBodyWriter<String> stringWriter =
+            providers.getMessageBodyWriter(String.class, String.class,
+                                           annotations, mediaType);
+        // Use the string writer to serialize MyType as a string
+    }
+}
+----
 
 [[resource_context]]
 ==== Resource Context
@@ -151,7 +248,7 @@ modifications:
 ----
 @Path("widgets")
 public class WidgetsResource {
-    @Context
+    @Inject
     private ResourceContext rc;
 
     @Path("{id}")
@@ -161,7 +258,7 @@ public class WidgetsResource {
 }
 
 public class WidgetResource {
-    @Context
+    @Inject
     private HttpHeaders headers;
 
     public WidgetResource(String id) {...}
@@ -180,7 +277,7 @@ before it is returned. Without this step, the `headers` field in
 ==== Configuration
 
 Both the client and the server runtime configurations are available for
-injection via `@Context`. These configurations are available for
+injection via `@Inject`. These configurations are available for
 injection in providers (client or server) and resource classes (server
 only).
 
@@ -190,9 +287,10 @@ enabled during the processing of a request:
 
 [source,java]
 ----
+@Provider
 public class LoggingFilter implements ClientRequestFilter {
 
-    @Context
+    @Inject
     private Configuration config;
 
     @Override

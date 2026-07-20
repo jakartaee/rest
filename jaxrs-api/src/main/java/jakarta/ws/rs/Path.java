@@ -16,11 +16,16 @@
 
 package jakarta.ws.rs;
 
+import java.io.Serial;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.inject.Stereotype;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 /**
  * Identifies the URI path that a resource class or class method will serve requests for.
@@ -65,6 +70,8 @@ import java.lang.annotation.Target;
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@RequestScoped
+@Stereotype
 public @interface Path {
 
     /**
@@ -105,4 +112,41 @@ public @interface Path {
      * @return URI template.
      */
     String value();
+
+    /**
+     * Supports inline instantiation of the {@link Path} annotation.
+     *
+     * @since 5.0
+     */
+    final class Literal extends AnnotationLiteral<Path> implements Path {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Default Path literal
+         */
+        public static final Path INSTANCE = of("");
+
+        private final String value;
+
+        private Literal(final String value) {
+            this.value = value;
+        }
+
+        /**
+         * Obtain the literal of a Path annotation.
+         *
+         * @param value the base path value
+         *
+         * @return the new literal Path
+         */
+        public static Path of(final String value) {
+            return new Literal(value);
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
+    }
 }

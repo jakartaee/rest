@@ -16,11 +16,15 @@
 
 package jakarta.ws.rs;
 
+import java.io.Serial;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import jakarta.enterprise.util.AnnotationLiteral;
+import jakarta.inject.Qualifier;
 
 /**
  * The annotation that may be used to inject custom JAX-RS "parameter aggregator" value object into a resource class
@@ -28,7 +32,7 @@ import java.lang.annotation.Target;
  * <p>
  * The JAX-RS runtime will instantiate the object and inject all its fields and properties annotated with either one of
  * the {@code @XxxParam} annotation ({@link PathParam &#64;PathParam}, {@link FormParam &#64;FormParam} ...) or the
- * {@link jakarta.ws.rs.core.Context &#64;Context} annotation. For the POJO classes same instantiation and injection rules
+ * {@link jakarta.inject.Inject &#64;Inject} annotation. For the POJO classes same instantiation and injection rules
  * apply as in case of instantiation and injection of request-scoped root resource classes.
  * </p>
  * For example:
@@ -68,5 +72,22 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface BeanParam {
+
+    /**
+     * Supports inline instantiation of the {@link BeanParam} annotation.
+     * @since 5.0
+     */
+    final class Literal extends AnnotationLiteral<BeanParam> implements BeanParam {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Default BeanParam literal
+         */
+        public static final BeanParam INSTANCE = new Literal();
+
+        private Literal() {}
+    }
 }

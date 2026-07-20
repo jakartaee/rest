@@ -15,6 +15,11 @@ When a resource class is instantiated, the values of fields and bean
 properties annotated with one the following annotations are set
 according to the semantics of the annotation:
 
+NOTE: In CDI environments, field and bean property injection is handled by CDI
+using the injection model described in <<cdi-injection-model>>. This section
+describes parameter extraction behavior that applies in both CDI and non-CDI
+environments.
+
 `@MatrixParam`::
   Extracts the value of a URI matrix parameter.
 `@QueryParam`::
@@ -25,25 +30,24 @@ according to the semantics of the annotation:
   Extracts the value of a cookie.
 `@HeaderParam`::
   Extracts the value of a header.
-`@Context`::
+`@Inject`::
   Injects an instance of a supported resource, see chapters <<context>>
   and <<environment>> for more details.
 
 Because injection occurs at object creation time, use of these
-annotations (with the exception of `@Context`) on resource class fields
-and bean properties is only supported for the default per-request
-resource class lifecycle. An implementation SHOULD warn if resource
-classes with other lifecycles use these annotations on resource class
-fields or bean properties.
+annotations on resource class fields and bean properties may depend on
+resource class lifecycle and scope. See <<cdi-injection-model>> for
+details on scope considerations in CDI environments.
 
-A JAX-RS implementation is only required to set the annotated field and
-bean property values of instances created by its runtime. Objects
-returned by sub-resource locators (see <<sub_resources>>) are
-expected to be initialized by their creator.
+In non-CDI environments, a JAX-RS implementation is only required to
+set the annotated field and bean property values of instances created
+by its runtime. Objects returned by sub-resource locators (see <<sub_resources>>)
+are expected to be initialized by their creator. In CDI environments, CDI manages
+injection for all CDI beans including sub-resources.
 
 Valid parameter types for each of the above annotations are listed in
-the corresponding Javadoc, however in general (excluding `@Context`) the
-following types are supported:
+the corresponding Javadoc, however in general the following types are
+supported:
 
 1.  Types for which a `ParamConverter` is available via
 a registered `ParamConverterProvider`. See Javadoc for these classes for

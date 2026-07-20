@@ -26,10 +26,8 @@ import jakarta.ws.rs.core.MediaType;
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see jakarta.ws.rs.core.Context
  * @see MessageBodyReader
  * @see MessageBodyWriter
- * @see ContextResolver
  * @see ExceptionMapper
  * @since 1.0
  */

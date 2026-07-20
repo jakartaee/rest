@@ -16,11 +16,16 @@
 
 package jakarta.ws.rs;
 
+import java.io.Serial;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import jakarta.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.util.Nonbinding;
+import jakarta.inject.Qualifier;
 
 /**
  * Binds the value(s) of a HTTP query parameter to a resource method parameter, resource class field, or resource class
@@ -60,6 +65,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface QueryParam {
 
     /**
@@ -70,5 +76,43 @@ public @interface QueryParam {
      *
      * @return HTTP query parameter name.
      */
+    @Nonbinding
     String value();
+
+    /**
+     * Supports inline instantiation of the {@link QueryParam} annotation.
+     *
+     * @since 5.0
+     */
+    final class Literal extends AnnotationLiteral<QueryParam> implements QueryParam {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Default QueryParam literal
+         */
+        public static final QueryParam INSTANCE = of("");
+
+        private final String value;
+
+        private Literal(final String value) {
+            this.value = value;
+        }
+
+        /**
+         * Obtain the literal of a QueryParam annotation.
+         *
+         * @param value the query value
+         *
+         * @return the new literal query param
+         */
+        public static QueryParam of(final String value) {
+            return new Literal(value);
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
+    }
 }

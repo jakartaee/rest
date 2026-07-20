@@ -63,16 +63,19 @@ have a public constructor for which the JAX-RS runtime can provide all
 parameter values. Note that a zero argument constructor is permissible
 under this rule.
 
-A public constructor MAY include parameters annotated with
-`@Context`—Chapter <<context>> defines the parameter types permitted for
-this annotation. Since providers may be created outside the scope of a
-particular request, only deployment-specific properties may be available
-from injected interfaces at construction time; request-specific
-properties are available when a provider method is called. If more than
-one public constructor can be used then an implementation MUST use the
-one with the most parameters. Choosing amongst constructors with the
-same number of parameters is implementation specific, implementations
-SHOULD generate a warning about such ambiguity.
+In CDI environments, a constructor MUST be annotated with `@Inject` and MAY
+include parameters for Jakarta REST context types and parameter extraction as
+described in <<cdi-injection-model>>. In non-CDI environments, a public constructor
+MAY include parameters annotated with `@Context`—Chapter <<context>> defines the
+parameter types permitted for this annotation.
+
+Since providers may be created outside the scope of a particular request, only
+deployment-specific properties may be available from injected interfaces at
+construction time; request-specific properties are available when a provider
+method is called. If more than one public constructor can be used then an
+implementation MUST use the one with the most parameters in non-CDI environments.
+Choosing amongst constructors with the same number of parameters is
+implementation specific, implementations SHOULD generate a warning about such ambiguity.
 
 [[provider_priorities]]
 ==== Priorities

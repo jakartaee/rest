@@ -25,7 +25,7 @@ import java.util.Set;
  * implementation supplies a concrete subclass of this abstract class.
  * <p>
  * The implementation-created instance of an Application subclass may be injected into resource classes and providers
- * using {@link jakarta.ws.rs.core.Context}.
+ * using {@link jakarta.inject.Inject}.
  * </p>
  * <p>
  * In case any of the {@code Application} subclass methods or its constructor throws a {@link RuntimeException}, the

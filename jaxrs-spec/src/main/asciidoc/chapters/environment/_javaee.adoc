@@ -31,7 +31,7 @@ JAX-RS implementation to support asynchronous processing when running on
 a Servlet container whose version is prior to 3.
 
 As explained in <<servlet_container>>, injection of
-Servlet-defined types is possible using the `@Context` annotation.
+Servlet-defined types is possible using the `@Inject` annotation.
 Additionally, web application’s `<context-param>` and servlet’s
 `<init-param>` can be used to define application properties passed to
 server-side features or injected into server-side JAX-RS components. See
@@ -44,6 +44,10 @@ In a product that supports CDI, implementations MUST support the use of
 CDI-style Beans as root resource classes, providers and `Application`
 subclasses. Providers and `Application` subclasses MUST be singletons or
 use application scope.
+
+Implementations MUST support Jakarta CDI 5.0 or later. This version of CDI
+is required for proper integration of Jakarta REST injection and CDI dependency
+injection as described in <<cdi-injection-model>>.
 
 For example, assuming CDI is enabled via the inclusion of a `beans.xml`
 file, a CDI-style bean that can be defined as a JAX-RS resource as
@@ -66,8 +70,341 @@ public class CdiBeanResource {
 
 The example above takes advantage of the type-safe dependency injection
 provided in CDI by using another bean, of type `MyOtherCdiBean`, in
-order to return a resource representation. See <<additional_reqs>>
-for additional requirements on CDI-style Beans.
+order to return a resource representation. See <<cdi-injection-model>>
+for details on the CDI injection model.
+
+[[cdi-injection-model]]
+===== Injection Model for CDI-Managed Resources
+
+When Jakarta REST resources and providers are managed as CDI beans, a hybrid
+injection model applies that combines Jakarta REST parameter extraction with
+CDI dependency injection.
+
+====== Bean Lifecycle
+
+CDI manages the bean lifecycle, including bean instantiation and destruction.
+Jakarta REST defines the following CDI stereotype annotations that enable automatic
+CDI discovery:
+
+* `@ApplicationPath` - annotated with `@ApplicationScoped`, applied to `Application`
+  subclasses to define the base URI for all resource URIs
+* `@Path` - annotated with `@RequestScoped`, applied to resource classes to define
+  URI path templates
+* `@Provider` - annotated with `@ApplicationScoped`, applied to provider classes
+  (message body readers/writers, exception mappers, filters, interceptors, etc.)
+
+The defined scopes ensure proper lifecycle management: `@ApplicationPath` and
+`@Provider` annotated classes are application-scoped singletons, while `@Path`
+annotated resource classes are request-scoped and created per-request by default.
+Applications MAY override these default scopes by explicitly annotating classes
+with different CDI scope annotations.
+
+====== Field Injection
+
+Fields in CDI-managed beans MUST use `@Inject` instead of the deprecated `@Context`
+annotation. This applies to both Jakarta REST context types and Jakarta REST parameter
+extraction:
+
+[source,java]
+----
+@Path("/items")
+public class ItemResource {
+    @Inject  // Context type injection
+    UriInfo uriInfo;
+
+    @Inject  // CDI bean injection
+    ItemService service;
+
+    @Inject
+    @QueryParam("filter")  // Parameter extraction
+    String filter;
+
+    @Inject
+    @PathParam("id")  // Parameter extraction
+    String id;
+}
+----
+
+All field injection is handled by CDI. Jakarta REST parameter annotations (`@QueryParam`,
+`@PathParam`, `@HeaderParam`, `@MatrixParam`, `@CookieParam`, `@FormParam`) act as CDI
+qualifiers. Implementations MUST provide CDI producers that can resolve these qualified
+injection points by extracting values from the current request context. These producers
+MUST be `@Dependent` scoped and use the CDI `InjectionPoint` API to determine the
+parameter name from the qualifier annotation.
+
+====== Constructor Injection
+
+Constructor parameters in CDI-managed beans are injected using CDI. The constructor
+MUST be annotated with `@Inject`. Jakarta REST-specific types (UriInfo, HttpHeaders,
+etc.) and parameter annotations (`@QueryParam`, `@PathParam`, etc.) are made available
+via CDI producers as described in <<cdi-producers>>.
+
+[source,java]
+----
+@Path("/items")
+public class ItemResource {
+    private final ItemService service;
+    private final UriInfo uriInfo;
+    private final String category;
+
+    @Inject
+    public ItemResource(ItemService service,
+                        UriInfo uriInfo,
+                        @QueryParam("category") String category) {
+        this.service = service;
+        this.uriInfo = uriInfo;
+        this.category = category;
+    }
+}
+----
+
+NOTE: Jakarta REST parameter annotations (`@QueryParam`, `@PathParam`, etc.) in
+constructors depend on request context. Using these in application-scoped beans
+will result in undefined behavior since the constructor is invoked once at application
+startup, not per-request.
+
+====== Setter Method Injection
+
+CDI-managed beans MAY use setter methods annotated with `@Inject` to receive
+Jakarta REST parameter values. The parameter annotation (`@PathParam`, `@QueryParam`,
+etc.) may be placed on either the method or the method parameter:
+
+[source,java]
+----
+@Path("/items/{id}")
+public class ItemResource {
+
+    private String id;
+    private String filter;
+
+    // Annotation on parameter (recommended for CDI)
+    @Inject
+    public void setId(@PathParam("id") String id) {
+        this.id = id;
+    }
+
+    // Annotation on method (legacy form)
+    @Inject
+    @QueryParam("filter")
+    public void setFilter(String filter) {
+        this.filter = filter;
+    }
+}
+----
+
+When a parameter annotation is placed on the method rather than the parameter,
+implementations MUST treat the annotation as if it were present on the method's
+parameter for CDI qualifier resolution purposes. Only a single parameter is allowed
+if annotations are placed on a method. Both forms are valid; the
+parameter-level placement is the natural fit for CDI environments since CDI resolves
+qualifiers from injection points (parameters), not from the enclosing method.
+
+====== Resource Method Parameter Injection
+
+Resource method parameters are resolved using a combination of Jakarta REST
+parameter extraction and CDI producers. Implementations MAY use CDI to invoke
+resource methods, but only the following parameter types are supported:
+
+Parameters are categorized as follows:
+
+* **Path, query, header, matrix, cookie, and form parameters**: Annotated with
+  `@PathParam`, `@QueryParam`, `@HeaderParam`, `@MatrixParam`, `@CookieParam`,
+  or `@FormParam`. These annotations are CDI qualifiers. Implementations MUST
+  provide CDI producers (typically `@Dependent` scoped) that use the `InjectionPoint`
+  API to extract the parameter name from the qualifier and retrieve the value from
+  the request context.
+
+* **Bean parameters**: Annotated with `@BeanParam` to inject a custom parameter
+  aggregator object. The `@BeanParam` annotation is a CDI qualifier. Implementations
+  MUST provide a CDI producer that instantiates the bean and populates its fields
+  annotated with `@Inject` and parameter extraction annotations.
+
+* **Jakarta REST context types**: `Application`, `Configuration`, `HttpHeaders`,
+  `Providers`, `Request`, `ResourceContext`, `ResourceInfo`, `SecurityContext`,
+  `Sse`, and `UriInfo`. These types are identified by type alone. Implementations MUST
+  provide CDI producers as specified in <<cdi-producers>>.
+
+* **Entity parameter**: The request entity body, deserialized using a `MessageBodyReader`.
+  Identified as a parameter that is NOT annotated with any Jakarta REST parameter annotation,
+  is NOT a Jakarta REST context type (listed above), and is NOT `AsyncResponse` or `SseEventSink`.
+  Only one entity parameter is allowed per resource method.
+
+* **Jakarta REST-managed special parameters**: The following parameters are NOT
+  CDI beans and are handled directly by the Jakarta REST implementation:
+  ** **AsyncResponse**: Used for asynchronous processing. Identified by type alone
+     (no annotation required). Can only be injected as a resource method parameter.
+  ** **SseEventSink**: Used for server-sent events. Identified by type alone
+     (no annotation required). Can only be injected as a resource method parameter.
+
+NOTE: In previous versions, `AsyncResponse` required the `@Suspended` annotation.
+This annotation is deprecated for removal in Jakarta REST 6.0. In CDI environments,
+the type-alone approach (no annotation) is the recommended pattern. The `@Suspended`
+annotation continues to work for backward compatibility.
+
+IMPORTANT: Application-provided CDI beans CANNOT be injected as resource method
+parameters. To inject CDI beans into resources, use field injection with `@Inject`
+or constructor injection as shown in <<cdi-injection-model>>.
+
+[source,java]
+----
+@GET
+@Path("{id}")
+public Item get(@PathParam("id") String id,
+                @QueryParam("expand") String expand,
+                UriInfo uriInfo) {
+    return findItem(id, expand, uriInfo);
+}
+
+@POST
+@Consumes(MediaType.APPLICATION_JSON)
+public Response create(Customer customer,       // Jakarta REST deserializes from request body
+                        UriInfo uriInfo) {
+    return Response.created(uriInfo.getAbsolutePath()).build();
+}
+
+@POST
+@Path("async")
+public void createAsync(Customer customer,
+                        AsyncResponse asyncResponse) {  // Type-checked, no annotation needed
+    asyncResponse.resume(Response.ok().build());
+}
+
+// Bean parameter example
+public class SearchParams {
+    @Inject
+    @QueryParam("q")
+    String query;
+
+    @Inject
+    @QueryParam("limit")
+    @DefaultValue("10")
+    int limit;
+
+    @Inject
+    @HeaderParam("Accept-Language")
+    String language;
+}
+
+@GET
+@Path("search")
+public List<Item> search(@BeanParam SearchParams params) {  // Jakarta REST creates and populates
+    // params is created by Jakarta REST, not CDI
+    return searchItems(params.query, params.limit, params.language);
+}
+----
+
+NOTE: Jakarta CDI 5.0 provides method invokers (`jakarta.enterprise.invoke.Invoker`)
+that enable frameworks to invoke methods with automatic CDI-based parameter injection.
+Implementations MAY use this API to integrate Jakarta REST parameter conversion with
+CDI injection.
+
+[[cdi-producers]]
+====== Required CDI Producers
+
+Implementations MUST provide CDI producers for Jakarta REST context types and
+parameter extraction to enable their injection into CDI-managed beans.
+
+**Context Type Producers**
+
+The following context types MUST be made available for CDI injection. The suggested
+scope for each type is listed, though implementations MAY use different scopes if
+appropriate:
+
+.Required CDI Producers for Jakarta REST Types
+|===
+|Type |Suggested Scope |Description
+
+|`Application`
+|`@ApplicationScoped`
+|Application configuration and metadata
+
+|`Configuration`
+|`@Dependent`
+|Runtime configuration
+
+|`HttpHeaders`
+|`@RequestScoped`
+|Request HTTP headers
+
+|`Providers`
+|`@ApplicationScoped`
+|Provider instance lookup
+
+|`Request`
+|`@RequestScoped`
+|Request information for content negotiation
+
+|`ResourceContext`
+|`@ApplicationScoped`
+|Resource instance creation and initialization
+
+|`ResourceInfo`
+|`@RequestScoped`
+|Matched resource class and method information
+
+|`SecurityContext`
+|`@RequestScoped`
+|Security context of current request
+
+|`Sse`
+|`@ApplicationScoped`
+|Server-sent events support
+
+|`UriInfo`
+|`@RequestScoped`
+|URI and path information
+|===
+
+NOTE: The types `AsyncResponse` and `SseEventSink` are method-parameter-only types
+and do NOT require CDI producers. These types are only available for injection as
+resource method parameters and cannot be injected into fields or constructors. The
+Jakarta REST implementation handles these types directly.
+
+**Parameter Extraction Producers**
+
+Implementations MUST provide CDI producers for Jakarta REST parameter annotations
+that act as CDI qualifiers:
+
+* `@PathParam` - Extract path parameter values from URI path templates
+* `@QueryParam` - Extract query parameter values from the request URI
+* `@HeaderParam` - Extract HTTP header values
+* `@MatrixParam` - Extract matrix parameter values from URI path segments
+* `@CookieParam` - Extract cookie values
+* `@FormParam` - Extract form parameter values from request entity
+* `@BeanParam` - Create and populate a parameter aggregator bean
+
+These producers MUST be `@Dependent` scoped and could use the CDI `InjectionPoint`
+API to:
+
+1. Inspect the qualifier annotation to determine the parameter name
+2. Extract the value from the current request context
+3. Convert the value to the target type using the same conversion rules as
+   specified in <<resource_field>>
+
+NOTE: Entity parameters do NOT require a CDI producer. They are handled directly
+by the Jakarta REST implementation using `MessageBodyReader` instances to deserialize
+the request body.
+
+NOTE: Parameter extraction producers are `@Dependent` scoped and extract values
+from the current request context. CDI manages injection of these values into beans
+according to CDI specification scope compatibility rules. Resource method parameters
+are the recommended pattern as they are always evaluated during request processing,
+regardless of bean scope. For advanced scenarios involving non-request-scoped beans,
+consult the CDI specification regarding scope compatibility and the `Instance<T>`
+pattern for deferred resolution.
+
+[[cdi-application-methods]]
+===== CDI Bean Discovery and Application Methods
+
+In CDI-enabled environments, `@Path` and `@Provider` annotated classes are
+CDI-managed beans, independent of what `Application.getClasses()` returns.
+The `getClasses()` method controls which classes are used for Jakarta REST
+request processing, not which classes are managed by CDI. Implementations MUST
+obtain resource and provider instances from CDI for classes that are CDI beans.
+For classes excluded from CDI bean management (e.g., via `@Vetoed`),
+implementations MAY instantiate them directly.
+
+Instances from `Application.getSingletons()` are not CDI-managed.
 
 [[ejbs]]
 ==== Enterprise Java Beans (EJBs)
@@ -115,9 +452,7 @@ If an `ExceptionMapper` for a `EJBException` or subclass is not included
 with an application then exceptions thrown by an EJB resource class or
 provider method MUST be unwrapped and processed as described in <<method_exc>>.
 
-See <<async_ejbs>> for more information on asynchronous EJB
-methods and <<additional_reqs>> for additional requirements on
-EJBs.
+See <<async_ejbs>> for more information on asynchronous EJB methods.
 
 [[bv_support]]
 ==== Bean Validation
@@ -163,24 +498,3 @@ in combination with the following XML-based media types:
 `text/xml` and `application/xml` and media types of the
 form `application/*+xml`.
 
-[[additional_reqs]]
-==== Additional Requirements
-
-The following additional requirements apply when using CDI-style Beans or EJBs as resource classes, providers or `Application`
-subclasses:
-
-* For JAX-RS resources and providers where the JAX-RS implementation 
-participates in their creation and initialization, field and property
-injection in these resources and providers MUST be performed prior to the
-container invoking any `@PostConstruct` annotated method. For resources
-and providers created by the application (e.g. instances returned via the
-`Application.getSingletons()` method, or instances passed via
-`Configurable.register`), this requirement does not apply.
-* Support for constructor injection of JAX-RS resources is OPTIONAL.
-Portable applications MUST instead use fields or bean properties in
-conjunction with a `@PostConstruct` annotated method. Implementations
-SHOULD warn users about use of non-portable constructor injection.
-* Implementations MUST NOT require use of `@Inject` or `@Resource` to
-trigger injection of JAX-RS annotated fields or properties.
-Implementations MAY support such usage but SHOULD warn users about
-non-portability.

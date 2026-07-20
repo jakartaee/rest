@@ -16,11 +16,16 @@
 
 package jakarta.ws.rs;
 
+import java.io.Serial;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import jakarta.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.util.Nonbinding;
+import jakarta.inject.Qualifier;
 
 /**
  * Binds the value of a HTTP cookie to a resource method parameter, resource class field, or resource class bean
@@ -55,6 +60,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface CookieParam {
 
     /**
@@ -63,5 +69,43 @@ public @interface CookieParam {
      *
      * @return HTTP cookie name.
      */
+    @Nonbinding
     String value();
+
+    /**
+     * Supports inline instantiation of the {@link CookieParam} annotation.
+     *
+     * @since 5.0
+     */
+    final class Literal extends AnnotationLiteral<CookieParam> implements CookieParam {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Default CookieParam literal
+         */
+        public static final CookieParam INSTANCE = of("");
+
+        private final String value;
+
+        private Literal(final String value) {
+            this.value = value;
+        }
+
+        /**
+         * Obtain the literal of a CookieParam annotation.
+         *
+         * @param value the cookie value
+         *
+         * @return the new literal cookie param
+         */
+        public static CookieParam of(final String value) {
+            return new Literal(value);
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
+    }
 }

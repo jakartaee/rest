@@ -29,7 +29,7 @@ import jakarta.ws.rs.QueryParam;
 /**
  * Examples demonstrating optional parameter names in Jakarta REST annotations.
  * 
- * <p>Starting with Jakarta REST 4.0, parameter binding annotations support optional
+ * <p>Starting with Jakarta REST 5.0, parameter binding annotations support optional
  * parameter names. When the annotation value is omitted, the parameter name is
  * inferred from the annotated element.</p>
  * 
@@ -39,9 +39,8 @@ import jakarta.ws.rs.QueryParam;
  * without this flag.</p>
  * 
  * <h4>Maven Configuration:</h4>
- * <pre>{@code
+ * {@snippet :
  * <plugin>
- *     <groupId>org.apache.maven.plugins</groupId>
  *     <artifactId>maven-compiler-plugin</artifactId>
  *     <configuration>
  *         <compilerArgs>
@@ -49,9 +48,7 @@ import jakarta.ws.rs.QueryParam;
  *         </compilerArgs>
  *     </configuration>
  * </plugin>
- * }</pre>
- * 
- * @see <a href="https://github.com/jakartaee/rest/issues/579">Issue #579</a>
+ * }
  */
 @Path("examples")
 public class OptionalParamNameExample {
@@ -60,15 +57,15 @@ public class OptionalParamNameExample {
      * Example 1: Path parameters with optional names.
      * 
      * <p><strong>Before (explicit names required):</strong></p>
-     * <pre>{@code
-     * public String hello(@PathParam("name") String name, 
-     *                    @PathParam("surname") String surname)
-     * }</pre>
-     * 
+     * {@snippet :
+     * public String hello(@PathParam("name") String name,
+     *                     @PathParam("surname") String surname)
+     * }
+     *
      * <p><strong>After (optional names):</strong></p>
-     * <pre>{@code
+     * {@snippet :
      * public String hello(@PathParam String name, @PathParam String surname)
-     * }</pre>
+     * }
      */
     @GET
     @Path("hello/{name}/{surname}")
@@ -102,9 +99,9 @@ public class OptionalParamNameExample {
      */
     @GET
     @Path("matrix/{path}")
-    public String matrix(@PathParam String path, 
-                        @MatrixParam String color,
-                        @MatrixParam String size) {
+    public String matrix(@PathParam String path,
+                         @MatrixParam String color,
+                         @MatrixParam String size) {
         return "Path: " + path + ", Color: " + color + ", Size: " + size;
     }
 
@@ -135,8 +132,8 @@ public class OptionalParamNameExample {
     @GET
     @Path("mixed/{id}")
     public String mixed(@PathParam String id,
-                       @QueryParam("q") String query,
-                       @HeaderParam String userAgent) {
+                        @QueryParam("q") String query,
+                        @HeaderParam String userAgent) {
         return "ID: " + id + ", Query: " + query + ", User-Agent: " + userAgent;
     }
 
@@ -163,10 +160,9 @@ public class OptionalParamNameExample {
     @GET
     @Path("profile/{userId}")
     public String profile(@PathParam String userId,
-                         @QueryParam String tab,
-                         @QueryParam String section,
-                         @HeaderParam String accept) {
-        return String.format("User: %s, Tab: %s, Section: %s, Accept: %s",
-                           userId, tab, section, accept);
+                          @QueryParam String tab,
+                          @QueryParam String section,
+                          @HeaderParam String accept) {
+        return "User: %s, Tab: %s, Section: %s, Accept: %s".formatted(userId, tab, section, accept);
     }
 }

@@ -26,35 +26,42 @@ Mailinglist: https://accounts.eclipse.org/mailing-list/jaxrs-dev
 
 
 # Introduction
-
+ 
 Jakarta REST is the solution for development of building Representational State Transfer web services on the Jakarta EE Platform. The specification is easy to learn, and it enables one to construct powerful REST APIs and it also includes APIs for working with web services as a client. As such, this specification is key to the development of microservices and cloud based applications, and it is part of the Jakarta EE Web Profile as well as the full platform.
-
+ 
 Using the API, a web service can be developed by placing just a few annotations on a plain old Java object (POJO). The API includes annotations for performing many tasks, such as producing REST responses in specified format(s), consuming data, and performing standard data operations such as CREATE, READ, UPDATE, and DELETE. The specification also includes advanced features for development of robust REST APIs.
-
+ 
+## Configuration
+ 
+When using the Jakarta EE Web Profile or the full Jakarta EE Platform, Jakarta REST is already bundled, so no additional dependency is required. Otherwise, add the following to your build:
+ 
+```xml
+<dependency>
+    <groupId>jakarta.ws.rs</groupId>
+    <artifactId>jakarta.ws.rs-api</artifactId>
+    <version>3.1.0</version>
+</dependency>
+```
+ 
+To enable Jakarta REST in an application, create a class that extends `jakarta.ws.rs.core.Application`, annotated with `@ApplicationPath`, supplying the root URI path under which the RESTful resources will be exposed. For an application named `HelloWorld` with `@ApplicationPath("resources")`, a resource would be reachable at a URI such as `http://hostname:port/HelloWorld/resources/{service-path}`. The `Application` class can also be used to enable all resources automatically, or to register individual resource classes explicitly.
+ 
 ## Overview of the API
-
+ 
 A minimal resource class only needs two annotations: `@Path`, to declare the URI segment that exposes the resource, and `@GET`, to mark a method as handling HTTP GET requests.
-
+ 
 ```java
 @Path("hello")
 public class HelloResource {
-
+ 
     @GET
     public Response ping() {
         return Response.ok("pong").build();
     }
 }
 ```
-
+ 
 Jakarta REST also provides annotations for the other common HTTP verbs — `@PUT`, `@POST`, `@DELETE`, `@PATCH`, `@HEAD`, and `@OPTIONS` — along with `@Produces` and `@Consumes` to control the media type returned or accepted by a resource method.
-
-Parameters can be extracted from the request in several ways:
-
-- `@PathParam` — values embedded in the URI path (e.g. `/hello/{name}`)
-- `@QueryParam` — values passed as query string parameters
-- `@FormParam` — values submitted through an HTML form
-
-
+ 
 Parameters can be extracted from the request in several ways:
  
 - `@PathParam` — values embedded in the URI path (e.g. `/hello/{name}`)
@@ -111,4 +118,22 @@ Jakarta REST offers several advanced capabilities for building robust APIs:
 ## Conclusion
  
 Jakarta REST provides an easy-to-use API for developing RESTful web services on Jakarta EE. An application is configured by declaring an `Application` subclass with a root path, resource classes are marked with `@Path`, and methods annotated with `@GET`, `@POST`, and the other HTTP verbs expose the actual endpoints — producing or consuming data as needed. A full-featured client is also available, along with advanced features such as asynchronous invocation and Server-Sent Events.
+ 
+## Code of Conduct
+ 
+This project is governed by the Eclipse Foundation Community Code of Conduct. By participating, you are expected to uphold this code of conduct. Please report unacceptable behavior to [codeofconduct@eclipse.org](mailto:codeofconduct@eclipse.org).
+ 
+## Getting Help
+ 
+Having trouble with Jakarta REST? We'd love to help!
+ 
+Report Jakarta REST bugs at https://github.com/jakartaee/rest/issues.
+ 
+## Building from Source
+ 
+You don't need to build from source to use the project, but you can do so with Maven and Java 17 or higher.
+ 
+```
+mvn package
+```
  

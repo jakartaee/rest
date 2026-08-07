@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -77,8 +77,17 @@ public @interface PathParam {
      * <p>
      * E.g. a class annotated with: {@code @Path("widgets/{id}")} can have methods annotated whose arguments are annotated
      * with {@code @PathParam("id")}.
+     * </p>
      *
-     * @return resource URI template parameter name.
+     * <p>
+     * If the value is not specified (empty string), the name of the annotated element (parameter, field, or property)
+     * will be used as the parameter name. This requires that parameter names are preserved in the bytecode, which can be
+     * enabled using the {@code -parameters} compiler flag in Java 8+. If parameter names are not available at runtime
+     * and no explicit value is provided, implementations MUST throw an exception during initialization with a clear error message
+     * indicating that either an explicit parameter name must be provided or the {@code -parameters} compiler flag must be enabled.
+     * </p>
+     *
+     * @return resource URI template parameter name, or an empty string indicating that the annotated element's name should be used.
      */
-    String value();
+    String value() default "";
 }

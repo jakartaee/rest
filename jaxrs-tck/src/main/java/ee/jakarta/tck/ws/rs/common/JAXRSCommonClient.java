@@ -33,8 +33,8 @@ import ee.jakarta.tck.ws.rs.common.webclient.http.HttpRequest;
 import ee.jakarta.tck.ws.rs.common.webclient.http.HttpResponse;
 import ee.jakarta.tck.ws.rs.common.webclient.validation.CheckOneOfStatusesTokenizedValidator;
 import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpState;
+import org.apache.hc.client5.http.protocol.HttpClientContext;
+import org.apache.hc.core5.http.Header;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -169,7 +169,7 @@ public abstract class JAXRSCommonClient {
   /**
    * HttpState that may be used for multiple invocations requiring state.
    */
-  protected HttpState _state = null;
+  protected HttpClientContext _state = null;
 
   /**
    * Test case.

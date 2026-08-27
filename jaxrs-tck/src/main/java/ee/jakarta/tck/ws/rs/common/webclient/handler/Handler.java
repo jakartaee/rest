@@ -58,7 +58,7 @@
  */
 package ee.jakarta.tck.ws.rs.common.webclient.handler;
 
-import org.apache.commons.httpclient.Header;
+import org.apache.hc.core5.http.Header;
 
 /**
  * Handler interface.

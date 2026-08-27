@@ -16,19 +16,17 @@
 
 package ee.jakarta.tck.ws.rs.jaxrs21.ee.patch.server;
 
-import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
+import java.net.URI;
 
-public class PatchMethod extends EntityEnclosingMethod {
+import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
+
+public class PatchMethod extends HttpUriRequestBase {
+
   public PatchMethod() {
-    super();
+    this("/");
   }
 
   public PatchMethod(String uri) {
-    super(uri);
-  }
-
-  @Override
-  public String getName() {
-    return "PATCH";
+    super("PATCH", URI.create(uri));
   }
 }

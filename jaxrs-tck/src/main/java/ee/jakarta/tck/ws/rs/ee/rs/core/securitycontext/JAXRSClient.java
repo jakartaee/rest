@@ -16,7 +16,7 @@
 
 package ee.jakarta.tck.ws.rs.ee.rs.core.securitycontext;
 
-import org.apache.commons.httpclient.Header;
+import org.apache.hc.core5.http.Header;
 
 import ee.jakarta.tck.ws.rs.common.webclient.http.HttpResponse;
 import ee.jakarta.tck.ws.rs.common.JAXRSCommonClient;

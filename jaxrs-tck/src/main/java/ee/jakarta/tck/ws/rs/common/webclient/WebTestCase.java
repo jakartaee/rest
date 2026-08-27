@@ -30,8 +30,9 @@ import ee.jakarta.tck.ws.rs.common.webclient.http.HttpRequest;
 import ee.jakarta.tck.ws.rs.common.webclient.http.HttpResponse;
 import ee.jakarta.tck.ws.rs.common.webclient.validation.ValidationFactory;
 import ee.jakarta.tck.ws.rs.common.webclient.validation.ValidationStrategy;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpState;
+import org.apache.hc.client5.http.protocol.HttpClientContext;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.message.BasicHeader;
 
 import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
 
@@ -476,7 +477,7 @@ public class WebTestCase implements TestCase {
    *          test state
    */
   public void setState(Object state) {
-    _request.setState((HttpState) state);
+    _request.setState((HttpClientContext) state);
   }
 
   /**
@@ -553,7 +554,7 @@ public class WebTestCase implements TestCase {
       if (header != null) {
         map.put(name, createNewHeader(value, header));
       } else {
-        map.put(name, new Header(name, value));
+        map.put(name, new BasicHeader(name, value));
       }
     }
   }
@@ -569,7 +570,7 @@ public class WebTestCase implements TestCase {
    */
   private Header createNewHeader(String newValue, Header header) {
     String oldValue = header.getValue();
-    return new Header(header.getName(), oldValue + ", " + newValue);
+    return new BasicHeader(header.getName(), oldValue + ", " + newValue);
   }
 
   /**

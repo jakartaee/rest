@@ -22,7 +22,7 @@ package ee.jakarta.tck.ws.rs.common.webclient.handler;
 
 import java.util.StringTokenizer;
 
-import org.apache.commons.httpclient.Header;
+import org.apache.hc.core5.http.Header;
 
 import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
 

@@ -39,7 +39,7 @@
         <json.bind.api.version>3.0.1</json.bind.api.version>
         <xml.bind.api.version>4.0.4</xml.bind.api.version>
         <servlet.api.version>6.1.0</servlet.api.version>
-        <common.httpclient.version>3.1</common.httpclient.version>
+        <httpcomponents.client5.version>5.4.2</httpcomponents.client5.version>
         <arquillian.version>1.10.0.Final</arquillian.version>
     </properties>
 
@@ -68,9 +68,9 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>${common.httpclient.version}</version>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>${httpcomponents.client5.version}</version>
         </dependency>
 
         <dependency>

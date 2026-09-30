@@ -96,6 +96,84 @@ public interface AsyncInvoker {
      */
     <T> Future<T> get(InvocationCallback<T> callback);
 
+    // QUERY
+
+    /**
+     * Invoke HTTP QUERY method for the current request asynchronously.
+     * <p>
+     * Note that calling the {@link java.util.concurrent.Future#get()} method on the returned {@code Future} instance may
+     * throw an {@link java.util.concurrent.ExecutionException} that wraps a {@link jakarta.ws.rs.ProcessingException} thrown
+     * in case of an invocation processing failure. In case a processing of a properly received response fails, the wrapped
+     * processing exception will be of {@link ResponseProcessingException} type and will contain the {@link Response}
+     * instance whose processing has failed.
+     *
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
+     * be overwritten using the entity variant information.
+     * @return invocation response {@link Future future}.
+     */
+    Future<Response> query(Entity<?> entity);
+
+    /**
+     * Invoke HTTP QUERY method for the current request asynchronously.
+     * <p>
+     * Note that calling the {@link java.util.concurrent.Future#get()} method on the returned {@code Future} instance may
+     * throw an {@link java.util.concurrent.ExecutionException} that wraps either a {@link jakarta.ws.rs.ProcessingException}
+     * thrown in case of an invocation processing failure or a {@link WebApplicationException} or one of its subclasses
+     * thrown in case the received response status code is not {@link jakarta.ws.rs.core.Response.Status.Family#SUCCESSFUL
+     * successful} and the specified response type is not {@link jakarta.ws.rs.core.Response}. In case a processing of a
+     * properly received response fails, the wrapped processing exception will be of {@link ResponseProcessingException}
+     * type and will contain the {@link Response} instance whose processing has failed.
+     *
+     * @param <T> response entity type.
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
+     * be overwritten using the entity variant information.
+     * @param responseType Java type the response entity will be converted to.
+     * @return invocation response {@link Future future}.
+     */
+    <T> Future<T> query(Entity<?> entity, Class<T> responseType);
+
+    /**
+     * Invoke HTTP QUERY method for the current request asynchronously.
+     * <p>
+     * Note that calling the {@link java.util.concurrent.Future#get()} method on the returned {@code Future} instance may
+     * throw an {@link java.util.concurrent.ExecutionException} that wraps either a {@link jakarta.ws.rs.ProcessingException}
+     * thrown in case of an invocation processing failure or a {@link WebApplicationException} or one of its subclasses
+     * thrown in case the received response status code is not {@link jakarta.ws.rs.core.Response.Status.Family#SUCCESSFUL
+     * successful} and the specified response type is not {@link jakarta.ws.rs.core.Response}. In case a processing of a
+     * properly received response fails, the wrapped processing exception will be of {@link ResponseProcessingException}
+     * type and will contain the {@link Response} instance whose processing has failed.
+     *
+     * @param <T> generic response entity type.
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
+     * be overwritten using the entity variant information.
+     * @param responseType representation of a generic Java type the response entity will be converted to.
+     * @return invocation response {@link Future future}.
+     */
+    <T> Future<T> query(Entity<?> entity, GenericType<T> responseType);
+
+    /**
+     * Invoke HTTP QUERY method for the current request asynchronously.
+     * <p>
+     * Note that calling the {@link java.util.concurrent.Future#get()} method on the returned {@code Future} instance may
+     * throw an {@link java.util.concurrent.ExecutionException} that wraps either a {@link jakarta.ws.rs.ProcessingException}
+     * thrown in case of an invocation processing failure or a {@link WebApplicationException} or one of its subclasses
+     * thrown in case the received response status code is not {@link jakarta.ws.rs.core.Response.Status.Family#SUCCESSFUL
+     * successful} and the generic type of the supplied response callback is not {@link jakarta.ws.rs.core.Response}. In case
+     * a processing of a properly received response fails, the wrapped processing exception will be of
+     * {@link ResponseProcessingException} type and will contain the {@link Response} instance whose processing has failed.
+     *
+     * @param <T> generic response entity type.
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
+     * be overwritten using the entity variant information.
+     * @param callback asynchronous invocation callback.
+     * @return invocation response {@link Future future}.
+     */
+    <T> Future<T> query(Entity<?> entity, InvocationCallback<T> callback);
+
     // PUT
 
     /**

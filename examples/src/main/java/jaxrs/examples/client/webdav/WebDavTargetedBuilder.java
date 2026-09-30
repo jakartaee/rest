@@ -56,6 +56,11 @@ public class WebDavTargetedBuilder implements Invocation.Builder, WebDavSyncInvo
     }
 
     @Override
+    public Invocation buildQuery() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public Invocation buildPost(Entity<?> entity) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -132,6 +137,21 @@ public class WebDavTargetedBuilder implements Invocation.Builder, WebDavSyncInvo
 
     @Override
     public <T> T get(GenericType<T> responseType) throws ProcessingException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Response query(Entity<?> entity) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public <T> T query(Entity<?> entity, Class<T> responseType) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public <T> T query(Entity<?> entity, GenericType<T> responseType) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

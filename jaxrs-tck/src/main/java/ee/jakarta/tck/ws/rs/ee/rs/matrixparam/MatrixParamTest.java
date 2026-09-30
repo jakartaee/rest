@@ -62,10 +62,10 @@ public class MatrixParamTest extends ParamTest {
   List<ParamEntityWithFromString> fieldListParamEntityWithFromString;
 
   @MatrixParam("FieldParamEntityThrowingWebApplicationException")
-  public ParamEntityThrowingWebApplicationException fieldEntityThrowingWebApplicationException;
+  ParamEntityThrowingWebApplicationException fieldEntityThrowingWebApplicationException;
 
   @MatrixParam("FieldParamEntityThrowingExceptionGivenByName")
-  public ParamEntityThrowingExceptionGivenByName fieldEntityThrowingExceptionGivenByName;
+  ParamEntityThrowingExceptionGivenByName fieldEntityThrowingExceptionGivenByName;
 
   @GET
   public String stringParamHandling(

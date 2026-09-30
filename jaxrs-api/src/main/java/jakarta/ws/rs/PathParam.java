@@ -16,11 +16,16 @@
 
 package jakarta.ws.rs;
 
+import java.io.Serial;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import jakarta.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.util.Nonbinding;
+import jakarta.inject.Qualifier;
 
 /**
  * Binds the value of a URI template parameter or a path segment containing the template parameter to a resource method
@@ -67,6 +72,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface PathParam {
 
     /**
@@ -80,5 +86,43 @@ public @interface PathParam {
      *
      * @return resource URI template parameter name.
      */
+    @Nonbinding
     String value();
+
+    /**
+     * Supports inline instantiation of the {@link PathParam} annotation.
+     *
+     * @since 5.0
+     */
+    final class Literal extends AnnotationLiteral<PathParam> implements PathParam {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Default PathParam literal
+         */
+        public static final PathParam INSTANCE = of("");
+
+        private final String value;
+
+        private Literal(final String value) {
+            this.value = value;
+        }
+
+        /**
+         * Obtain the literal of a PathParam annotation.
+         *
+         * @param value the path value
+         *
+         * @return the new literal path param
+         */
+        public static PathParam of(final String value) {
+            return new Literal(value);
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
+    }
 }

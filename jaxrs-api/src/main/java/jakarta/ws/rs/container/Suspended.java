@@ -76,9 +76,11 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Marek Potociar
  * @since 2.0
+ * @deprecated use Jakarta Context and Dependency injection
  */
 @Target({ ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Deprecated(forRemoval = true, since = "5.0")
 public @interface Suspended {
 }

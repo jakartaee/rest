@@ -32,7 +32,7 @@ import jakarta.ws.rs.RuntimeType;
  * component classes and/or instances.
  * </p>
  * <p>
- * This interface can be injected using the {@link Context} annotation.
+ * This interface can be injected using the {@link jakarta.inject.Inject} annotation.
  * </p>
  *
  * @author Marek Potociar
@@ -174,7 +174,7 @@ public interface Configuration {
     /**
      * Get the immutable set of registered JAX-RS component (such as provider or {@link Feature feature}) instances to be
      * utilized by the configurable instance. Fields and properties of returned instances are injected with their declared
-     * dependencies (see {@link Context}) by the runtime prior to use.
+     * dependencies by the runtime prior to use.
      * <p>
      * For each component type, there can be only a single class-based or instance-based registration present in the
      * configuration context at any given time.

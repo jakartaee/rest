@@ -28,7 +28,7 @@ import java.util.concurrent.CompletionStage;
  * &#64;GET
  * &#64;Path("eventStream")
  * &#64;Produces(MediaType.SERVER_SENT_EVENTS)
- * public void eventStream(@Context SseEventSink eventSink) {
+ * public void eventStream(SseEventSink eventSink) {
  *     // ...
  * }
  * </pre>

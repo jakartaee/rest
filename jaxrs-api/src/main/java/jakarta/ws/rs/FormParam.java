@@ -16,11 +16,16 @@
 
 package jakarta.ws.rs;
 
+import java.io.Serial;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import jakarta.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.util.Nonbinding;
+import jakarta.inject.Qualifier;
 
 /**
  * Binds the value(s) of a form parameter contained within a request entity body to a resource method parameter. Values
@@ -66,6 +71,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface FormParam {
 
     /**
@@ -76,5 +82,43 @@ public @interface FormParam {
      *
      * @return form parameter name.
      */
+    @Nonbinding
     String value();
+
+    /**
+     * Supports inline instantiation of the {@link FormParam} annotation.
+     *
+     * @since 5.0
+     */
+    final class Literal extends AnnotationLiteral<FormParam> implements FormParam {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Default FormParam literal
+         */
+        public static final FormParam INSTANCE = of("");
+
+        private final String value;
+
+        private Literal(final String value) {
+            this.value = value;
+        }
+
+        /**
+         * Obtain the literal of a FormParam annotation.
+         *
+         * @param value the form value
+         *
+         * @return the new literal form param
+         */
+        public static FormParam of(final String value) {
+            return new Literal(value);
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
+    }
 }

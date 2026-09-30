@@ -16,11 +16,16 @@
 
 package jakarta.ws.rs;
 
+import java.io.Serial;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import jakarta.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.util.Nonbinding;
+import jakarta.inject.Qualifier;
 
 /**
  * Binds the value(s) of a URI matrix parameter to a resource method parameter, resource class field, or resource class
@@ -66,6 +71,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Qualifier
 public @interface MatrixParam {
 
     /**
@@ -76,5 +82,43 @@ public @interface MatrixParam {
      *
      * @return URI matrix parameter name.
      */
+    @Nonbinding
     String value();
+
+    /**
+     * Supports inline instantiation of the {@link MatrixParam} annotation.
+     *
+     * @since 5.0
+     */
+    final class Literal extends AnnotationLiteral<MatrixParam> implements MatrixParam {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Default MatrixParam literal
+         */
+        public static final MatrixParam INSTANCE = of("");
+
+        private final String value;
+
+        private Literal(final String value) {
+            this.value = value;
+        }
+
+        /**
+         * Obtain the literal of a MatrixParam annotation.
+         *
+         * @param value the matrix value
+         *
+         * @return the new literal matrix param
+         */
+        public static MatrixParam of(final String value) {
+            return new Literal(value);
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
+    }
 }

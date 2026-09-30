@@ -20,18 +20,20 @@
 
 package ee.jakarta.tck.ws.rs.common.webclient.http;
 
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpMethodBase;
-import org.apache.commons.httpclient.HttpVersion;
-import org.apache.commons.httpclient.methods.DeleteMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.HeadMethod;
-import org.apache.commons.httpclient.methods.OptionsMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
+import org.apache.hc.client5.http.classic.methods.HttpDelete;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpHead;
+import org.apache.hc.client5.http.classic.methods.HttpOptions;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
+import org.apache.hc.core5.http.HttpVersion;
 
 import ee.jakarta.tck.ws.rs.lib.porting.TSURL;
 
@@ -76,6 +78,17 @@ public class MethodFactory {
    */
   private static final String OPTIONS_METHOD = "OPTIONS";
 
+  private static final Map<String, Class<? extends HttpUriRequestBase>> METHOD_MAP = new HashMap<String, Class<? extends HttpUriRequestBase>>();
+
+  static {
+    METHOD_MAP.put(GET_METHOD, HttpGet.class);
+    METHOD_MAP.put(POST_METHOD, HttpPost.class);
+    METHOD_MAP.put(PUT_METHOD, HttpPut.class);
+    METHOD_MAP.put(DELETE_METHOD, HttpDelete.class);
+    METHOD_MAP.put(HEAD_METHOD, HttpHead.class);
+    METHOD_MAP.put(OPTIONS_METHOD, HttpOptions.class);
+  }
+
   /**
    * TSURL implementation
    */
@@ -86,6 +99,10 @@ public class MethodFactory {
    * getInstance() method.
    */
   private MethodFactory() {
+  }
+
+  public static Map<String, Class<? extends HttpUriRequestBase>> getMethodMap() {
+    return METHOD_MAP;
   }
 
   /*
@@ -100,10 +117,9 @@ public class MethodFactory {
    *
    * @return HttpMethod based in request.
    */
-  public static HttpMethod getInstance(String request) {
+  public static HttpUriRequestBase getInstance(String request) {
     StringTokenizer st = new StringTokenizer(request);
     String method;
-    String query = null;
     String uri;
     String version;
     try {
@@ -115,38 +131,21 @@ public class MethodFactory {
           "Request provided: " + request + " is malformed.");
     }
 
-    // check to see if there is a query string appended
-    // to the URI
-    int queryStart = uri.indexOf('?');
-    if (queryStart != -1) {
-      query = uri.substring(queryStart + 1);
-      uri = uri.substring(0, queryStart);
-    }
-
-    HttpMethodBase req;
-
-    if (method.equals(GET_METHOD)) {
-      req = new GetMethod(uri);
-    } else if (method.equals(POST_METHOD)) {
-      req = new PostMethod(uri);
-    } else if (method.equals(PUT_METHOD)) {
-      req = new PutMethod(uri);
-    } else if (method.equals(DELETE_METHOD)) {
-      req = new DeleteMethod(uri);
-    } else if (method.equals(HEAD_METHOD)) {
-      req = new HeadMethod(uri);
-    } else if (method.equals(OPTIONS_METHOD)) {
-      req = new OptionsMethod(uri);
-    } else {
+    HttpUriRequestBase req;
+    Class<? extends HttpUriRequestBase> methodClass = METHOD_MAP.get(method);
+    if (methodClass == null) {
       throw new IllegalArgumentException("Invalid method: " + method);
     }
 
-    setHttpVersion(version, req);
-
-    if (query != null) {
-      req.setQueryString(query);
+    try {
+      Constructor<? extends HttpUriRequestBase> constructor = methodClass
+          .getDeclaredConstructor(String.class);
+      req = constructor.newInstance(uri);
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
     }
 
+    setHttpVersion(version, req);
     return req;
   }
 
@@ -163,9 +162,9 @@ public class MethodFactory {
    * @param method
    *          method to adjust HTTP version
    */
-  private static void setHttpVersion(String version, HttpMethodBase method) {
+  private static void setHttpVersion(String version, HttpUriRequestBase method) {
     final String oneOne = "HTTP/1.1";
-    method.getParams().setVersion(
+    method.setVersion(
         (version.equals(oneOne) ? HttpVersion.HTTP_1_1 : HttpVersion.HTTP_1_0));
   }
 }

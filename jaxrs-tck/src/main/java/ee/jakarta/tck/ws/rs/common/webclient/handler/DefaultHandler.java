@@ -60,8 +60,10 @@
 
 package ee.jakarta.tck.ws.rs.common.webclient.handler;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HeaderElement;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.apache.hc.core5.http.Header;
 
 import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
 
@@ -120,26 +122,23 @@ public class DefaultHandler implements Handler {
    */
   protected boolean areHeadersEqual(Header h1, Header h2) {
 
-    HeaderElement[] h1Values = h1.getElements();
-    HeaderElement[] h2Values = h2.getElements();
+    String[] h1Values = h1.getValue().split(",");
+    String[] h2Values = h2.getValue().split(",");
 
     if (h1Values.length == h2Values.length) {
-      for (HeaderElement h1Value : h1Values) {
-        String h1Val = h1Value.getName();
-        boolean found = false;
-        for (HeaderElement h2Value : h2Values) {
-          if (h1Val.equals(h2Value.getName())) {
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          return false;
-        }
-      }
-      return true;
+      Set<String> h1Names = normalizeHeaderElements(h1Values);
+      Set<String> h2Names = normalizeHeaderElements(h2Values);
+      return h1Names.equals(h2Names);
     } else {
       return false;
     }
+  }
+
+  private Set<String> normalizeHeaderElements(String[] values) {
+    Set<String> normalized = new HashSet<String>();
+    for (String value : values) {
+      normalized.add(value.trim().split(";")[0].trim());
+    }
+    return normalized;
   }
 }

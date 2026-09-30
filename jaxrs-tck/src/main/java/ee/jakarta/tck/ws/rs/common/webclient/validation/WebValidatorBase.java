@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.httpclient.Header;
+import org.apache.hc.core5.http.Header;
 
 import ee.jakarta.tck.ws.rs.lib.util.TestUtil;
 import ee.jakarta.tck.ws.rs.common.webclient.WebTestCase;
@@ -575,14 +575,14 @@ public abstract class WebValidatorBase implements ValidationStrategy {
         StringBuffer sb = new StringBuffer(255);
         sb.append("[WebValidatorBase] Unable to find the following header");
         sb.append(" in the server's response: ");
-        sb.append(currentHeader.toExternalForm()).append("\n");
+        sb.append(formatHeader(currentHeader)).append("\n");
         sb.append("[WebValidatorBase] Response headers recieved from");
         sb.append(" server:");
 
         Header[] resHeaders = _res.getResponseHeaders();
         for (int i = 0; i < resHeaders.length; i++) {
           sb.append("\n\tResponseHeader -> ");
-          sb.append(resHeaders[i].toExternalForm());
+          sb.append(formatHeader(resHeaders[i]));
         }
         sb.append("\n");
         TestUtil.logErr(sb.toString());
@@ -590,7 +590,7 @@ public abstract class WebValidatorBase implements ValidationStrategy {
         return false;
       } else {
         TestUtil.logTrace("[WebValidatorBase] Found expected header: "
-            + currentHeader.toExternalForm());
+            + formatHeader(currentHeader));
         return true;
       }
     }
@@ -635,14 +635,14 @@ public abstract class WebValidatorBase implements ValidationStrategy {
             StringBuffer sb = new StringBuffer(255);
             sb.append("[WebValidatorBase] Unexpected header found in the ");
             sb.append("server's response: ");
-            sb.append(currentHeader.toExternalForm()).append("\n");
+            sb.append(formatHeader(currentHeader)).append("\n");
             sb.append("[WebValidatorBase] Response headers recieved from");
             sb.append("server:");
 
             Header[] resHeaders = _res.getResponseHeaders();
             for (int j = 0; j < resHeaders.length; j++) {
               sb.append("\n\tResponseHeader -> ");
-              sb.append(resHeaders[j].toExternalForm());
+              sb.append(formatHeader(resHeaders[j]));
             }
             sb.append("\n");
             TestUtil.logErr(sb.toString());
@@ -665,5 +665,9 @@ public abstract class WebValidatorBase implements ValidationStrategy {
     } else {
       return false;
     }
+  }
+
+  private String formatHeader(Header header) {
+    return header.getName() + ": " + header.getValue();
   }
 }

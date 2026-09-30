@@ -16,7 +16,7 @@
 
 package ee.jakarta.tck.ws.rs.ee.rs.core.request;
 
-import org.apache.commons.httpclient.Header;
+import org.apache.hc.core5.http.Header;
 
 import java.io.InputStream;
 import java.io.IOException;

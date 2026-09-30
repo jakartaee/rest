@@ -17,18 +17,24 @@
 package ee.jakarta.tck.ws.rs.common.client;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 
 import ee.jakarta.tck.ws.rs.common.webclient.http.HttpResponse;
-import org.apache.commons.httpclient.Header;
+import org.apache.hc.client5.http.protocol.HttpClientContext;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpVersion;
+import org.apache.hc.core5.http.message.BasicHeader;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 public class ApacheResponseAdapter extends HttpResponse {
 
   public ApacheResponseAdapter(jakarta.ws.rs.core.Response response, String host,
       int port) {
-    super(host, port, port == 443, null, null);
+    super(host, port, port == 443, null, HttpVersion.HTTP_1_1, response.getStatus(),
+        response.getStatusInfo().getReasonPhrase(), new Header[0], new byte[0],
+        HttpClientContext.create());
     this.response = response;
     this.caser = TextCaser.NONE;
   }
@@ -78,7 +84,7 @@ public class ApacheResponseAdapter extends HttpResponse {
     String[] sHeaders = JaxrsCommonClient.getMetadata(mHeaders);
     for (String header : sHeaders) {
       String[] split = header.split(":", 2);
-      headers.add(new Header(split[0], split[1]));
+      headers.add(new BasicHeader(split[0], split[1]));
     }
     return headers.toArray(new Header[headers.size()]);
   }
@@ -104,5 +110,10 @@ public class ApacheResponseAdapter extends HttpResponse {
       }
     }
     return encoding;
+  }
+
+  @Override
+  public byte[] getResponseBodyAsRawBytes() throws IOException {
+    return getResponseBodyAsString().getBytes(StandardCharsets.ISO_8859_1);
   }
 }

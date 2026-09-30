@@ -118,11 +118,6 @@ public class HttpRequest {
   private boolean _useCookies = false;
 
   /**
-   * Content length of request body.
-   */
-  private int _contentLength = 0;
-
-  /**
    * FollowRedirects
    */
   private boolean _redirect = false;
@@ -211,7 +206,6 @@ public class HttpRequest {
     if (isEntityEnclosingMethod()) {
       _method.setEntity(new StringEntity(content, StandardCharsets.ISO_8859_1));
     }
-    _contentLength = content.length();
   }
 
   /**
@@ -393,11 +387,6 @@ public class HttpRequest {
       }
     }
 
-    if (_contentLength != 0) {
-      sb.append("       [REQUEST BODY LENGTH] -> ").append(_contentLength);
-      sb.append('\n');
-    }
-
     return sb.toString();
 
   }
@@ -457,9 +446,6 @@ public class HttpRequest {
     // available on the system where the container is running.
     setHostHeader();
 
-    // Content length header
-    setContentLengthHeader();
-
     // Cookies
     setCookieHeader();
   }
@@ -478,15 +464,6 @@ public class HttpRequest {
       _method.setHeader("Authorization", authString);
     } else {
       TestUtil.logTrace("[HttpRequest] NULL CREDENTIALS");
-    }
-  }
-
-  /**
-   * Sets a Content-Length header in the request if content is present
-   */
-  private void setContentLengthHeader() {
-    if (_contentLength > 0) {
-      _method.setHeader("Content-Length", Integer.toString(_contentLength));
     }
   }
 

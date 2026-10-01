@@ -39,7 +39,7 @@ public class TckPathProvider extends AbstractProvider
   @Override
   public boolean isWriteable(Class<?> type, Type genericType,
       Annotation[] annotations, MediaType mediaType) {
-    return type == Path.class;
+    return Path.class.isAssignableFrom(type);
   }
 
   @Override

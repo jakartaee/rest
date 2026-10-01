@@ -63,10 +63,10 @@ public class QueryParamTest extends ParamTest {
   List<ParamEntityWithFromString> fieldListParamEntityWithFromString;
 
   @QueryParam("FieldParamEntityThrowingWebApplicationException")
-  public ParamEntityThrowingWebApplicationException fieldEntityThrowingWebApplicationException;
+  ParamEntityThrowingWebApplicationException fieldEntityThrowingWebApplicationException;
 
   @QueryParam("FieldParamEntityThrowingExceptionGivenByName")
-  public ParamEntityThrowingExceptionGivenByName fieldEntityThrowingExceptionGivenByName;
+  ParamEntityThrowingExceptionGivenByName fieldEntityThrowingExceptionGivenByName;
 
   @GET
   @Produces("text/plain")

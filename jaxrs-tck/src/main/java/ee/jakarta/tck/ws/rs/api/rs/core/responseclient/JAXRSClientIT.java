@@ -111,7 +111,7 @@ public class JAXRSClientIT extends JAXRSCommonClient {
       Response.Status.Family.REDIRECTION, Response.Status.Family.REDIRECTION,
       Response.Status.Family.REDIRECTION, Response.Status.Family.REDIRECTION,
       Response.Status.Family.REDIRECTION, Response.Status.Family.REDIRECTION,
-      Response.Status.Family.CLIENT_ERROR,
+      Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
       Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
       Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,
       Response.Status.Family.CLIENT_ERROR, Response.Status.Family.CLIENT_ERROR,

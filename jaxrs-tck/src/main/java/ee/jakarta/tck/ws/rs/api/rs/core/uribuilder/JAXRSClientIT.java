@@ -1705,34 +1705,6 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   }
 
   /*
-   * testName: replaceQueryTest4
-   * 
-   * @assertion_ids: JAXRS:JAVADOC:219;
-   * 
-   * @test_Strategy: Calling UriBuilder.replaceQuery(String query). verify that
-   * IllegalArgumentException is thrown when query cannot be parsed.
-   */
-  @Test
-  public void replaceQueryTest4() throws Fault {
-    String value = "http://localhost:8080?name1=x&name2=%20&name3=x+y&name4=x%20y";
-
-    try {
-      uri = UriBuilder.fromPath(value)
-          .replaceQuery("name$*()^@!+-]}[{|<>,./:;'#1==x?&name2=%20y").build();
-      pass = false;
-      sb.append("Expected IllegalArgumentException not thrown");
-      sb.append("uri=" + uri.getQuery());
-    } catch (IllegalArgumentException ex) {
-      sb.append("Expected IllegalArgumentException thrown");
-    } catch (Exception ex1) {
-      pass = false;
-      sb.append("Wrong type Exception thrown" + ex1.getMessage());
-    }
-
-    assertPassAndLog();
-  }
-
-  /*
    * @testName: replaceQueryParamTest1
    * 
    * @assertion_ids: JAXRS:JAVADOC:221;

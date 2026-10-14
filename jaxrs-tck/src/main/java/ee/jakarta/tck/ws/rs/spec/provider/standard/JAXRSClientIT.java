@@ -257,8 +257,8 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void dataSourceProviderTest() throws Fault {
     for (MediaType media : getMediaTypes(MediaType.class))
-      setEntityAndPropertyAndInvoke(methodsAll[4], media); // All media
-    setPropertyAndInvoke(methodsAll[4] + "svg"); // just the one
+      setEntityAndPropertyAndInvoke(methodsAll[5], media); // All media
+    setPropertyAndInvoke(methodsAll[5] + "svg"); // just the one
   }
 
   /*
@@ -292,8 +292,8 @@ public class JAXRSClientIT extends JAXRSCommonClient {
   @Test
   public void streamingOutputProviderTest() throws Fault {
     for (MediaType media : getMediaTypes(MediaType.class))
-      setEntityAndPropertyAndInvoke(methodsAll[5], media); // All media
-    setPropertyAndInvoke(methodsAll[5] + "svg"); // just the one
+      setEntityAndPropertyAndInvoke(methodsAll[6], media); // All media
+    setPropertyAndInvoke(methodsAll[6] + "svg"); // just the one
   }
   /*
    * JAXRS:SPEC:36

@@ -60,10 +60,10 @@ public class HeaderParamTest extends ParamTest {
   List<ParamEntityWithFromString> fieldListParamEntityWithFromString;
 
   @HeaderParam("FieldParamEntityThrowingWebApplicationException")
-  public ParamEntityThrowingWebApplicationException fieldEntityThrowingWebApplicationException;
+  ParamEntityThrowingWebApplicationException fieldEntityThrowingWebApplicationException;
 
   @HeaderParam("FieldParamEntityThrowingExceptionGivenByName")
-  public ParamEntityThrowingExceptionGivenByName fieldEntityThrowingExceptionGivenByName;
+  ParamEntityThrowingExceptionGivenByName fieldEntityThrowingExceptionGivenByName;
 
   @GET
   public String stringParamHandling(

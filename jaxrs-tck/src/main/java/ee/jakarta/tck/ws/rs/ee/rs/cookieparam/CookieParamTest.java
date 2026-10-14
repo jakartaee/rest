@@ -65,10 +65,10 @@ public class CookieParamTest extends ParamTest {
   List<ParamEntityWithFromString> fieldListParamEntityWithFromString;
 
   @CookieParam("FieldParamEntityThrowingWebApplicationException")
-  public ParamEntityThrowingWebApplicationException fieldParamEntityThrowingWebApplicationException;
+  ParamEntityThrowingWebApplicationException fieldParamEntityThrowingWebApplicationException;
 
   @CookieParam("FieldParamEntityThrowingExceptionGivenByName")
-  public ParamEntityThrowingExceptionGivenByName fieldParamEntityThrowingExceptionGivenByName;
+  ParamEntityThrowingExceptionGivenByName fieldParamEntityThrowingExceptionGivenByName;
 
   @GET
   public Response cookieParamHandling(@QueryParam("todo") String todo,

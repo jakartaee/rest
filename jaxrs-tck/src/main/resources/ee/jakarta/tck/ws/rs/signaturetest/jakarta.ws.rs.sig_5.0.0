@@ -1,12 +1,72 @@
 #Signature file v4.1
-#Version 4.0.0
+#Version 5.0.0
+
+CLSS public abstract interface !annotation jakarta.enterprise.context.ApplicationScoped
+ anno 0 jakarta.enterprise.context.NormalScope(boolean passivating=false)
+ anno 0 java.lang.annotation.Documented()
+ anno 0 java.lang.annotation.Inherited()
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD, FIELD])
+innr public final static Literal
+intf java.lang.annotation.Annotation
+
+CLSS public abstract interface !annotation jakarta.enterprise.context.NormalScope
+ anno 0 java.lang.annotation.Documented()
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[ANNOTATION_TYPE])
+intf java.lang.annotation.Annotation
+meth public abstract !hasdefault boolean passivating()
+
+CLSS public abstract interface !annotation jakarta.enterprise.context.RequestScoped
+ anno 0 jakarta.enterprise.context.NormalScope(boolean passivating=false)
+ anno 0 java.lang.annotation.Documented()
+ anno 0 java.lang.annotation.Inherited()
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD, FIELD])
+innr public final static Literal
+intf java.lang.annotation.Annotation
+
+CLSS public abstract interface !annotation jakarta.enterprise.inject.Stereotype
+ anno 0 java.lang.annotation.Documented()
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[ANNOTATION_TYPE])
+intf java.lang.annotation.Annotation
+
+CLSS public abstract jakarta.enterprise.util.AnnotationLiteral<%0 extends java.lang.annotation.Annotation>
+cons protected init()
+intf java.io.Serializable
+intf java.lang.annotation.Annotation
+meth public boolean equals(java.lang.Object)
+meth public int hashCode()
+meth public java.lang.Class<? extends java.lang.annotation.Annotation> annotationType()
+meth public java.lang.String toString()
+supr java.lang.Object
+hfds annotationType,cachedHashCode,members,serialVersionUID
+
+CLSS public abstract interface !annotation jakarta.inject.Qualifier
+ anno 0 java.lang.annotation.Documented()
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[ANNOTATION_TYPE])
+intf java.lang.annotation.Annotation
 
 CLSS public abstract interface !annotation jakarta.ws.rs.ApplicationPath
+ anno 0 jakarta.enterprise.context.ApplicationScoped()
+ anno 0 jakarta.enterprise.inject.Stereotype()
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+innr public final static Literal
 intf java.lang.annotation.Annotation
 meth public abstract java.lang.String value()
+
+CLSS public final static jakarta.ws.rs.ApplicationPath$Literal
+ outer jakarta.ws.rs.ApplicationPath
+fld public final static jakarta.ws.rs.ApplicationPath INSTANCE
+intf jakarta.ws.rs.ApplicationPath
+meth public java.lang.String value()
+meth public static jakarta.ws.rs.ApplicationPath of(java.lang.String)
+supr jakarta.enterprise.util.AnnotationLiteral<jakarta.ws.rs.ApplicationPath>
+hfds serialVersionUID,value
 
 CLSS public jakarta.ws.rs.BadRequestException
 cons public init()
@@ -21,10 +81,19 @@ supr jakarta.ws.rs.ClientErrorException
 hfds serialVersionUID
 
 CLSS public abstract interface !annotation jakarta.ws.rs.BeanParam
+ anno 0 jakarta.inject.Qualifier()
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[PARAMETER, METHOD, FIELD])
+innr public final static Literal
 intf java.lang.annotation.Annotation
+
+CLSS public final static jakarta.ws.rs.BeanParam$Literal
+ outer jakarta.ws.rs.BeanParam
+fld public final static jakarta.ws.rs.BeanParam INSTANCE
+intf jakarta.ws.rs.BeanParam
+supr jakarta.enterprise.util.AnnotationLiteral<jakarta.ws.rs.BeanParam>
+hfds serialVersionUID
 
 CLSS public jakarta.ws.rs.ClientErrorException
 cons public init(int)
@@ -58,11 +127,22 @@ intf java.lang.annotation.Annotation
 meth public abstract !hasdefault java.lang.String[] value()
 
 CLSS public abstract interface !annotation jakarta.ws.rs.CookieParam
+ anno 0 jakarta.inject.Qualifier()
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[PARAMETER, METHOD, FIELD])
+innr public final static Literal
 intf java.lang.annotation.Annotation
 meth public abstract java.lang.String value()
+
+CLSS public final static jakarta.ws.rs.CookieParam$Literal
+ outer jakarta.ws.rs.CookieParam
+fld public final static jakarta.ws.rs.CookieParam INSTANCE
+intf jakarta.ws.rs.CookieParam
+meth public java.lang.String value()
+meth public static jakarta.ws.rs.CookieParam of(java.lang.String)
+supr jakarta.enterprise.util.AnnotationLiteral<jakarta.ws.rs.CookieParam>
+hfds serialVersionUID,value
 
 CLSS public abstract interface !annotation jakarta.ws.rs.DELETE
  anno 0 jakarta.ws.rs.HttpMethod(java.lang.String value="DELETE")
@@ -97,11 +177,22 @@ supr jakarta.ws.rs.ClientErrorException
 hfds serialVersionUID
 
 CLSS public abstract interface !annotation jakarta.ws.rs.FormParam
+ anno 0 jakarta.inject.Qualifier()
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[PARAMETER, METHOD, FIELD])
+innr public final static Literal
 intf java.lang.annotation.Annotation
 meth public abstract java.lang.String value()
+
+CLSS public final static jakarta.ws.rs.FormParam$Literal
+ outer jakarta.ws.rs.FormParam
+fld public final static jakarta.ws.rs.FormParam INSTANCE
+intf jakarta.ws.rs.FormParam
+meth public java.lang.String value()
+meth public static jakarta.ws.rs.FormParam of(java.lang.String)
+supr jakarta.enterprise.util.AnnotationLiteral<jakarta.ws.rs.FormParam>
+hfds serialVersionUID,value
 
 CLSS public abstract interface !annotation jakarta.ws.rs.GET
  anno 0 jakarta.ws.rs.HttpMethod(java.lang.String value="GET")
@@ -118,11 +209,22 @@ CLSS public abstract interface !annotation jakarta.ws.rs.HEAD
 intf java.lang.annotation.Annotation
 
 CLSS public abstract interface !annotation jakarta.ws.rs.HeaderParam
+ anno 0 jakarta.inject.Qualifier()
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[PARAMETER, METHOD, FIELD])
+innr public final static Literal
 intf java.lang.annotation.Annotation
 meth public abstract java.lang.String value()
+
+CLSS public final static jakarta.ws.rs.HeaderParam$Literal
+ outer jakarta.ws.rs.HeaderParam
+fld public final static jakarta.ws.rs.HeaderParam INSTANCE
+intf jakarta.ws.rs.HeaderParam
+meth public java.lang.String value()
+meth public static jakarta.ws.rs.HeaderParam of(java.lang.String)
+supr jakarta.enterprise.util.AnnotationLiteral<jakarta.ws.rs.HeaderParam>
+hfds serialVersionUID,value
 
 CLSS public abstract interface !annotation jakarta.ws.rs.HttpMethod
  anno 0 java.lang.annotation.Documented()
@@ -151,11 +253,22 @@ supr jakarta.ws.rs.ServerErrorException
 hfds serialVersionUID
 
 CLSS public abstract interface !annotation jakarta.ws.rs.MatrixParam
+ anno 0 jakarta.inject.Qualifier()
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[PARAMETER, METHOD, FIELD])
+innr public final static Literal
 intf java.lang.annotation.Annotation
 meth public abstract java.lang.String value()
+
+CLSS public final static jakarta.ws.rs.MatrixParam$Literal
+ outer jakarta.ws.rs.MatrixParam
+fld public final static jakarta.ws.rs.MatrixParam INSTANCE
+intf jakarta.ws.rs.MatrixParam
+meth public java.lang.String value()
+meth public static jakarta.ws.rs.MatrixParam of(java.lang.String)
+supr jakarta.enterprise.util.AnnotationLiteral<jakarta.ws.rs.MatrixParam>
+hfds serialVersionUID,value
 
 CLSS public abstract interface !annotation jakarta.ws.rs.NameBinding
  anno 0 java.lang.annotation.Documented()
@@ -253,18 +366,41 @@ CLSS public abstract interface !annotation jakarta.ws.rs.PUT
 intf java.lang.annotation.Annotation
 
 CLSS public abstract interface !annotation jakarta.ws.rs.Path
+ anno 0 jakarta.enterprise.context.RequestScoped()
+ anno 0 jakarta.enterprise.inject.Stereotype()
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD])
+innr public final static Literal
 intf java.lang.annotation.Annotation
 meth public abstract java.lang.String value()
 
+CLSS public final static jakarta.ws.rs.Path$Literal
+ outer jakarta.ws.rs.Path
+fld public final static jakarta.ws.rs.Path INSTANCE
+intf jakarta.ws.rs.Path
+meth public java.lang.String value()
+meth public static jakarta.ws.rs.Path of(java.lang.String)
+supr jakarta.enterprise.util.AnnotationLiteral<jakarta.ws.rs.Path>
+hfds serialVersionUID,value
+
 CLSS public abstract interface !annotation jakarta.ws.rs.PathParam
+ anno 0 jakarta.inject.Qualifier()
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[PARAMETER, METHOD, FIELD])
+innr public final static Literal
 intf java.lang.annotation.Annotation
 meth public abstract java.lang.String value()
+
+CLSS public final static jakarta.ws.rs.PathParam$Literal
+ outer jakarta.ws.rs.PathParam
+fld public final static jakarta.ws.rs.PathParam INSTANCE
+intf jakarta.ws.rs.PathParam
+meth public java.lang.String value()
+meth public static jakarta.ws.rs.PathParam of(java.lang.String)
+supr jakarta.enterprise.util.AnnotationLiteral<jakarta.ws.rs.PathParam>
+hfds serialVersionUID,value
 
 CLSS public final jakarta.ws.rs.Priorities
 fld public final static int AUTHENTICATION = 1000
@@ -290,11 +426,22 @@ intf java.lang.annotation.Annotation
 meth public abstract !hasdefault java.lang.String[] value()
 
 CLSS public abstract interface !annotation jakarta.ws.rs.QueryParam
+ anno 0 jakarta.inject.Qualifier()
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[PARAMETER, METHOD, FIELD])
+innr public final static Literal
 intf java.lang.annotation.Annotation
 meth public abstract java.lang.String value()
+
+CLSS public final static jakarta.ws.rs.QueryParam$Literal
+ outer jakarta.ws.rs.QueryParam
+fld public final static jakarta.ws.rs.QueryParam INSTANCE
+intf jakarta.ws.rs.QueryParam
+meth public java.lang.String value()
+meth public static jakarta.ws.rs.QueryParam of(java.lang.String)
+supr jakarta.enterprise.util.AnnotationLiteral<jakarta.ws.rs.QueryParam>
+hfds serialVersionUID,value
 
 CLSS public jakarta.ws.rs.RedirectionException
 cons public init(int,java.net.URI)
@@ -504,7 +651,6 @@ meth public static jakarta.ws.rs.client.Client newClient()
 meth public static jakarta.ws.rs.client.Client newClient(jakarta.ws.rs.core.Configuration)
 meth public static jakarta.ws.rs.client.ClientBuilder newBuilder()
 supr java.lang.Object
-hcls CreateErrorMessageAction
 
 CLSS public abstract interface jakarta.ws.rs.client.ClientRequestContext
 meth public abstract boolean containsHeaderString(java.lang.String,java.lang.String,java.util.function.Predicate<java.lang.String>)
@@ -518,7 +664,7 @@ meth public abstract java.io.OutputStream getEntityStream()
 meth public abstract java.lang.Class<?> getEntityClass()
 meth public abstract java.lang.Object getEntity()
 meth public abstract java.lang.Object getProperty(java.lang.String)
-meth public abstract java.lang.String getHeaderString(java.lang.String)
+meth public abstract java.lang.String getHeaderString(java.lang.String,java.lang.String)
 meth public abstract java.lang.String getMethod()
 meth public abstract java.lang.annotation.Annotation[] getEntityAnnotations()
 meth public abstract java.lang.reflect.Type getEntityType()
@@ -539,6 +685,7 @@ meth public abstract void setProperty(java.lang.String,java.lang.Object)
 meth public abstract void setUri(java.net.URI)
 meth public boolean containsHeaderString(java.lang.String,java.util.function.Predicate<java.lang.String>)
 meth public boolean hasProperty(java.lang.String)
+meth public java.lang.String getHeaderString(java.lang.String)
 
 CLSS public abstract interface jakarta.ws.rs.client.ClientRequestFilter
 meth public abstract void filter(jakarta.ws.rs.client.ClientRequestContext) throws java.io.IOException
@@ -556,7 +703,7 @@ meth public abstract jakarta.ws.rs.core.MediaType getMediaType()
 meth public abstract jakarta.ws.rs.core.MultivaluedMap<java.lang.String,java.lang.String> getHeaders()
 meth public abstract jakarta.ws.rs.core.Response$StatusType getStatusInfo()
 meth public abstract java.io.InputStream getEntityStream()
-meth public abstract java.lang.String getHeaderString(java.lang.String)
+meth public abstract java.lang.String getHeaderString(java.lang.String,java.lang.String)
 meth public abstract java.net.URI getLocation()
 meth public abstract java.util.Date getDate()
 meth public abstract java.util.Date getLastModified()
@@ -568,6 +715,7 @@ meth public abstract void setEntityStream(java.io.InputStream)
 meth public abstract void setStatus(int)
 meth public abstract void setStatusInfo(jakarta.ws.rs.core.Response$StatusType)
 meth public boolean containsHeaderString(java.lang.String,java.util.function.Predicate<java.lang.String>)
+meth public java.lang.String getHeaderString(java.lang.String)
 
 CLSS public abstract interface jakarta.ws.rs.client.ClientResponseFilter
 meth public abstract void filter(jakarta.ws.rs.client.ClientRequestContext,jakarta.ws.rs.client.ClientResponseContext) throws java.io.IOException
@@ -783,7 +931,7 @@ meth public abstract jakarta.ws.rs.core.SecurityContext getSecurityContext()
 meth public abstract jakarta.ws.rs.core.UriInfo getUriInfo()
 meth public abstract java.io.InputStream getEntityStream()
 meth public abstract java.lang.Object getProperty(java.lang.String)
-meth public abstract java.lang.String getHeaderString(java.lang.String)
+meth public abstract java.lang.String getHeaderString(java.lang.String,java.lang.String)
 meth public abstract java.lang.String getMethod()
 meth public abstract java.util.Collection<java.lang.String> getPropertyNames()
 meth public abstract java.util.Date getDate()
@@ -801,6 +949,7 @@ meth public abstract void setRequestUri(java.net.URI,java.net.URI)
 meth public abstract void setSecurityContext(jakarta.ws.rs.core.SecurityContext)
 meth public boolean containsHeaderString(java.lang.String,java.util.function.Predicate<java.lang.String>)
 meth public boolean hasProperty(java.lang.String)
+meth public java.lang.String getHeaderString(java.lang.String)
 
 CLSS public abstract interface jakarta.ws.rs.container.ContainerRequestFilter
 meth public abstract void filter(jakarta.ws.rs.container.ContainerRequestContext) throws java.io.IOException
@@ -821,7 +970,7 @@ meth public abstract jakarta.ws.rs.core.Response$StatusType getStatusInfo()
 meth public abstract java.io.OutputStream getEntityStream()
 meth public abstract java.lang.Class<?> getEntityClass()
 meth public abstract java.lang.Object getEntity()
-meth public abstract java.lang.String getHeaderString(java.lang.String)
+meth public abstract java.lang.String getHeaderString(java.lang.String,java.lang.String)
 meth public abstract java.lang.annotation.Annotation[] getEntityAnnotations()
 meth public abstract java.lang.reflect.Type getEntityType()
 meth public abstract java.net.URI getLocation()
@@ -837,6 +986,7 @@ meth public abstract void setEntityStream(java.io.OutputStream)
 meth public abstract void setStatus(int)
 meth public abstract void setStatusInfo(jakarta.ws.rs.core.Response$StatusType)
 meth public boolean containsHeaderString(java.lang.String,java.util.function.Predicate<java.lang.String>)
+meth public java.lang.String getHeaderString(java.lang.String)
 
 CLSS public abstract interface jakarta.ws.rs.container.ContainerResponseFilter
 meth public abstract void filter(jakarta.ws.rs.container.ContainerRequestContext,jakarta.ws.rs.container.ContainerResponseContext) throws java.io.IOException
@@ -859,6 +1009,7 @@ meth public abstract java.lang.Class<?> getResourceClass()
 meth public abstract java.lang.reflect.Method getResourceMethod()
 
 CLSS public abstract interface !annotation jakarta.ws.rs.container.Suspended
+ anno 0 java.lang.Deprecated(boolean forRemoval=true, java.lang.String since="5.0")
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[PARAMETER])
@@ -966,6 +1117,7 @@ meth public abstract java.util.Set<java.lang.Object> getInstances()
 meth public boolean hasProperty(java.lang.String)
 
 CLSS public abstract interface !annotation jakarta.ws.rs.core.Context
+ anno 0 java.lang.Deprecated(boolean forRemoval=true, java.lang.String since="5.0")
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[PARAMETER, METHOD, FIELD])
@@ -1063,6 +1215,8 @@ CLSS public jakarta.ws.rs.core.Form
 cons public init()
 cons public init(jakarta.ws.rs.core.MultivaluedMap<java.lang.String,java.lang.String>)
 cons public init(java.lang.String,java.lang.String)
+meth public boolean equals(java.lang.Object)
+meth public int hashCode()
 meth public jakarta.ws.rs.core.Form param(java.lang.String,java.lang.String)
 meth public jakarta.ws.rs.core.MultivaluedMap<java.lang.String,java.lang.String> asMap()
 supr java.lang.Object
@@ -1130,7 +1284,7 @@ meth public abstract boolean containsHeaderString(java.lang.String,java.lang.Str
 meth public abstract int getLength()
 meth public abstract jakarta.ws.rs.core.MediaType getMediaType()
 meth public abstract jakarta.ws.rs.core.MultivaluedMap<java.lang.String,java.lang.String> getRequestHeaders()
-meth public abstract java.lang.String getHeaderString(java.lang.String)
+meth public abstract java.lang.String getHeaderString(java.lang.String,java.lang.String)
 meth public abstract java.util.Date getDate()
 meth public abstract java.util.List<jakarta.ws.rs.core.MediaType> getAcceptableMediaTypes()
 meth public abstract java.util.List<java.lang.String> getRequestHeader(java.lang.String)
@@ -1138,6 +1292,7 @@ meth public abstract java.util.List<java.util.Locale> getAcceptableLanguages()
 meth public abstract java.util.Locale getLanguage()
 meth public abstract java.util.Map<java.lang.String,jakarta.ws.rs.core.Cookie> getCookies()
 meth public boolean containsHeaderString(java.lang.String,java.util.function.Predicate<java.lang.String>)
+meth public java.lang.String getHeaderString(java.lang.String)
 
 CLSS public abstract jakarta.ws.rs.core.Link
 cons public init()
@@ -1194,6 +1349,7 @@ fld public final static jakarta.ws.rs.core.MediaType APPLICATION_SVG_XML_TYPE
  anno 0 java.lang.Deprecated(boolean forRemoval=true, java.lang.String since="")
 fld public final static jakarta.ws.rs.core.MediaType APPLICATION_XHTML_XML_TYPE
 fld public final static jakarta.ws.rs.core.MediaType APPLICATION_XML_TYPE
+fld public final static jakarta.ws.rs.core.MediaType APPLICATION_YAML_TYPE
 fld public final static jakarta.ws.rs.core.MediaType MULTIPART_FORM_DATA_TYPE
 fld public final static jakarta.ws.rs.core.MediaType SERVER_SENT_EVENTS_TYPE
 fld public final static jakarta.ws.rs.core.MediaType TEXT_HTML_TYPE
@@ -1210,6 +1366,7 @@ fld public final static java.lang.String APPLICATION_SVG_XML = "application/svg+
  anno 0 java.lang.Deprecated(boolean forRemoval=true, java.lang.String since="")
 fld public final static java.lang.String APPLICATION_XHTML_XML = "application/xhtml+xml"
 fld public final static java.lang.String APPLICATION_XML = "application/xml"
+fld public final static java.lang.String APPLICATION_YAML = "application/yaml"
 fld public final static java.lang.String CHARSET_PARAMETER = "charset"
 fld public final static java.lang.String MEDIA_TYPE_WILDCARD = "*"
 fld public final static java.lang.String MULTIPART_FORM_DATA = "multipart/form-data"
@@ -1227,6 +1384,7 @@ meth public jakarta.ws.rs.core.MediaType withCharset(java.lang.String)
 meth public java.lang.String getSubtype()
 meth public java.lang.String getType()
 meth public java.lang.String toString()
+meth public java.nio.charset.Charset getCharsetParameter()
 meth public java.util.Map<java.lang.String,java.lang.String> getParameters()
 meth public static jakarta.ws.rs.core.MediaType valueOf(java.lang.String)
 supr java.lang.Object
@@ -1480,6 +1638,7 @@ fld public final static jakarta.ws.rs.core.Response$Status TEMPORARY_REDIRECT
 fld public final static jakarta.ws.rs.core.Response$Status TOO_MANY_REQUESTS
 fld public final static jakarta.ws.rs.core.Response$Status UNAUTHORIZED
 fld public final static jakarta.ws.rs.core.Response$Status UNAVAILABLE_FOR_LEGAL_REASONS
+fld public final static jakarta.ws.rs.core.Response$Status UNPROCESSABLE_CONTENT
 fld public final static jakarta.ws.rs.core.Response$Status UNSUPPORTED_MEDIA_TYPE
 fld public final static jakarta.ws.rs.core.Response$Status USE_PROXY
 innr public final static !enum Family
@@ -1680,10 +1839,20 @@ CLSS public abstract interface jakarta.ws.rs.ext.ParamConverterProvider
 meth public abstract <%0 extends java.lang.Object> jakarta.ws.rs.ext.ParamConverter<{%%0}> getConverter(java.lang.Class<{%%0}>,java.lang.reflect.Type,java.lang.annotation.Annotation[])
 
 CLSS public abstract interface !annotation jakarta.ws.rs.ext.Provider
+ anno 0 jakarta.enterprise.context.ApplicationScoped()
+ anno 0 jakarta.enterprise.inject.Stereotype()
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+innr public final static Literal
 intf java.lang.annotation.Annotation
+
+CLSS public final static jakarta.ws.rs.ext.Provider$Literal
+ outer jakarta.ws.rs.ext.Provider
+fld public final static jakarta.ws.rs.ext.Provider INSTANCE
+intf jakarta.ws.rs.ext.Provider
+supr jakarta.enterprise.util.AnnotationLiteral<jakarta.ws.rs.ext.Provider>
+hfds serialVersionUID
 
 CLSS public abstract interface jakarta.ws.rs.ext.Providers
 meth public abstract <%0 extends java.lang.Object> jakarta.ws.rs.ext.ContextResolver<{%%0}> getContextResolver(java.lang.Class<{%%0}>,jakarta.ws.rs.core.MediaType)
@@ -1718,7 +1887,7 @@ meth public abstract java.util.concurrent.CompletionStage<jakarta.ws.rs.SeBootst
 meth public static jakarta.ws.rs.ext.RuntimeDelegate getInstance()
 meth public static void setInstance(jakarta.ws.rs.ext.RuntimeDelegate)
 supr java.lang.Object
-hfds RD_LOCK,cachedDelegate,suppressAccessChecksPermission
+hfds RD_LOCK,cachedDelegate
 
 CLSS public abstract interface static jakarta.ws.rs.ext.RuntimeDelegate$HeaderDelegate<%0 extends java.lang.Object>
  outer jakarta.ws.rs.ext.RuntimeDelegate
@@ -1828,7 +1997,6 @@ cons public init(java.lang.String)
 cons public init(java.lang.String,java.lang.Throwable)
 cons public init(java.lang.Throwable)
 supr java.lang.Exception
-hfds serialVersionUID
 
 CLSS public abstract interface java.io.Serializable
 
@@ -1838,6 +2006,14 @@ meth public abstract void close() throws java.lang.Exception
 CLSS public abstract interface java.lang.Comparable<%0 extends java.lang.Object>
 meth public abstract int compareTo({java.lang.Comparable%0})
 
+CLSS public abstract interface !annotation java.lang.Deprecated
+ anno 0 java.lang.annotation.Documented()
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, MODULE, PARAMETER, TYPE])
+intf java.lang.annotation.Annotation
+meth public abstract !hasdefault boolean forRemoval()
+meth public abstract !hasdefault java.lang.String since()
+
 CLSS public abstract java.lang.Enum<%0 extends java.lang.Enum<{java.lang.Enum%0}>>
 cons protected init(java.lang.String,int)
 innr public final static EnumDesc
@@ -1846,6 +2022,7 @@ intf java.lang.Comparable<{java.lang.Enum%0}>
 intf java.lang.constant.Constable
 meth protected final java.lang.Object clone() throws java.lang.CloneNotSupportedException
 meth protected final void finalize()
+ anno 0 java.lang.Deprecated(boolean forRemoval=true, java.lang.String since="18")
 meth public final boolean equals(java.lang.Object)
 meth public final int compareTo({java.lang.Enum%0})
 meth public final int hashCode()
@@ -1856,7 +2033,6 @@ meth public final java.util.Optional<java.lang.Enum$EnumDesc<{java.lang.Enum%0}>
 meth public java.lang.String toString()
 meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} valueOf(java.lang.Class<{%%0}>,java.lang.String)
 supr java.lang.Object
-hfds name,ordinal
 
 CLSS public java.lang.Exception
 cons protected init(java.lang.String,java.lang.Throwable,boolean,boolean)
@@ -1865,13 +2041,12 @@ cons public init(java.lang.String)
 cons public init(java.lang.String,java.lang.Throwable)
 cons public init(java.lang.Throwable)
 supr java.lang.Throwable
-hfds serialVersionUID
 
 CLSS public java.lang.Object
 cons public init()
 meth protected java.lang.Object clone() throws java.lang.CloneNotSupportedException
 meth protected void finalize() throws java.lang.Throwable
- anno 0 java.lang.Deprecated(boolean forRemoval=false, java.lang.String since="9")
+ anno 0 java.lang.Deprecated(boolean forRemoval=true, java.lang.String since="9")
 meth public boolean equals(java.lang.Object)
 meth public final java.lang.Class<?> getClass()
 meth public final void notify()
@@ -1889,7 +2064,6 @@ cons public init(java.lang.String)
 cons public init(java.lang.String,java.lang.Throwable)
 cons public init(java.lang.Throwable)
 supr java.lang.Exception
-hfds serialVersionUID
 
 CLSS public java.lang.Throwable
 cons protected init(java.lang.String,java.lang.Throwable,boolean,boolean)
@@ -1912,8 +2086,6 @@ meth public void printStackTrace(java.io.PrintStream)
 meth public void printStackTrace(java.io.PrintWriter)
 meth public void setStackTrace(java.lang.StackTraceElement[])
 supr java.lang.Object
-hfds CAUSE_CAPTION,EMPTY_THROWABLE_ARRAY,NULL_CAUSE_MESSAGE,SELF_SUPPRESSION_MESSAGE,SUPPRESSED_CAPTION,SUPPRESSED_SENTINEL,UNASSIGNED_STACK,backtrace,cause,depth,detailMessage,serialVersionUID,stackTrace,suppressedExceptions
-hcls PrintStreamOrWriter,SentinelHolder,WrappedPrintStream,WrappedPrintWriter
 
 CLSS public abstract interface java.lang.annotation.Annotation
 meth public abstract boolean equals(java.lang.Object)

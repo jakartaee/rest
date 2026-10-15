@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-name: org.eclipse.ee4j:project
+      - dependency-name: org.asciidoctor:*
+      - dependency-name: org.jboss.arquillian:*
+      - dependency-name: org.junit:*
+      - dependency-name: org.apache.maven.plugins:*
+      - dependency-name: org.apache.felix:*
+      - dependency-name: org.codehaus.mojo:*
+      - dependency-name: org.glassfish.copyright:*
+    open-pull-requests-limit: 10
+  - package-ecosystem: "github-actions"
+    # Workflow files stored in the
+    # default location of `.github/workflows`
+    directory: "/"
+    schedule:
+      interval: "daily"
+    groups:
+      dependencies:
+        patterns:
+          - "*"

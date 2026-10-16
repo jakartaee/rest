@@ -36,12 +36,24 @@
 
     <properties>
         <json.api.version>2.1.3</json.api.version>
-        <json.bind.api.version>3.0.1</json.bind.api.version>
-        <xml.bind.api.version>4.0.4</xml.bind.api.version>
+        <json.bind.api.version>3.0.4</json.bind.api.version>
+        <xml.bind.api.version>4.0.5</xml.bind.api.version>
         <servlet.api.version>6.1.0</servlet.api.version>
         <common.httpclient.version>3.1</common.httpclient.version>
-        <arquillian.version>1.10.0.Final</arquillian.version>
+        <arquillian.version>1.10.2.Final</arquillian.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>${arquillian.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -81,7 +93,6 @@
         <dependency>
             <groupId>org.jboss.arquillian.junit5</groupId>
             <artifactId>arquillian-junit5-container</artifactId>
-            <version>${arquillian.version}</version>
         </dependency>
 
         <dependency>

@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.FeatureContext;
 import jakarta.ws.rs.ext.Provider;
 
 /**
- * Dynamic feature for a enabling a logging request/response post-matching filter that dynamically decides to bind the
+ * Dynamic feature for enabling a logging request/response post-matching filter that dynamically decides to bind the
  * logging filter only to GET processing resource methods on all subclasses of {@link MyResourceClass} and the
  * {@code MyResourceClass} itself.
  *

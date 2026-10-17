@@ -43,7 +43,7 @@ public interface UriInfo {
      * @return the relative URI path.
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
-    public String getPath();
+    String getPath();
 
     /**
      * Get the path of the current request relative to the base URI as a string.
@@ -52,7 +52,7 @@ public interface UriInfo {
      * @return the relative URI path
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
-    public String getPath(boolean decode);
+    String getPath(boolean decode);
 
     /**
      * Get the path of the current request relative to the base URI as a list of {@link PathSegment}. This method is useful
@@ -63,9 +63,9 @@ public interface UriInfo {
      * unmodifiable.
      * @throws IllegalStateException if called outside the scope of a request
      * @see PathSegment
-     * @see <a href="http://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
+     * @see <a href="https://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
      */
-    public List<PathSegment> getPathSegments();
+    List<PathSegment> getPathSegments();
 
     /**
      * Get the path of the current request relative to the base URI as a list of {@link PathSegment}. This method is useful
@@ -77,9 +77,9 @@ public interface UriInfo {
      * unmodifiable.
      * @throws java.lang.IllegalStateException if called outside the scope of a request
      * @see PathSegment
-     * @see <a href="http://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
+     * @see <a href="https://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
      */
-    public List<PathSegment> getPathSegments(boolean decode);
+    List<PathSegment> getPathSegments(boolean decode);
 
     /**
      * Get the absolute request URI including any query parameters.
@@ -87,7 +87,7 @@ public interface UriInfo {
      * @return the absolute request URI
      * @throws java.lang.IllegalStateException if called outside the scope of a request
      */
-    public URI getRequestUri();
+    URI getRequestUri();
 
     /**
      * Get the absolute request URI in the form of a UriBuilder.
@@ -95,39 +95,39 @@ public interface UriInfo {
      * @return a UriBuilder initialized with the absolute request URI.
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
-    public UriBuilder getRequestUriBuilder();
+    UriBuilder getRequestUriBuilder();
 
     /**
-     * Get the absolute path of the request. This includes everything preceding the path (host, port etc) but excludes query
+     * Get the absolute path of the request. This includes everything preceding the path (host, port, etc) but excludes query
      * parameters. This is a shortcut for {@code uriInfo.getBaseUri().resolve(uriInfo.getPath(false))}.
      *
      * @return the absolute path of the request.
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
-    public URI getAbsolutePath();
+    URI getAbsolutePath();
 
     /**
      * Get the absolute path of the request in the form of a UriBuilder. This includes everything preceding the path (host,
-     * port etc) but excludes query parameters.
+     * port, etc) but excludes query parameters.
      *
      * @return a UriBuilder initialized with the absolute path of the request.
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
-    public UriBuilder getAbsolutePathBuilder();
+    UriBuilder getAbsolutePathBuilder();
 
     /**
      * Get the base URI of the application. URIs of root resource classes are all relative to this base URI.
      *
      * @return the base URI of the application.
      */
-    public URI getBaseUri();
+    URI getBaseUri();
 
     /**
      * Get the base URI of the application in the form of a UriBuilder.
      *
      * @return a UriBuilder initialized with the base URI of the application.
      */
-    public UriBuilder getBaseUriBuilder();
+    UriBuilder getBaseUriBuilder();
 
     /**
      * Get the values of any embedded URI template parameters. All sequences of escaped octets are decoded, equivalent to
@@ -138,7 +138,7 @@ public interface UriInfo {
      * @see jakarta.ws.rs.Path
      * @see jakarta.ws.rs.PathParam
      */
-    public MultivaluedMap<String, String> getPathParameters();
+    MultivaluedMap<String, String> getPathParameters();
 
     /**
      * Get the values of any embedded URI template parameters.
@@ -149,7 +149,7 @@ public interface UriInfo {
      * @see jakarta.ws.rs.Path
      * @see jakarta.ws.rs.PathParam
      */
-    public MultivaluedMap<String, String> getPathParameters(boolean decode);
+    MultivaluedMap<String, String> getPathParameters(boolean decode);
 
     /**
      * Get the URI query parameters of the current request. The map keys are the names of the query parameters with any
@@ -159,7 +159,7 @@ public interface UriInfo {
      * @return an unmodifiable map of query parameter names and values.
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
-    public MultivaluedMap<String, String> getQueryParameters();
+    MultivaluedMap<String, String> getQueryParameters();
 
     /**
      * Get the URI query parameters of the current request. The map keys are the names of the query parameters with any
@@ -170,7 +170,7 @@ public interface UriInfo {
      * @return an unmodifiable map of query parameter names and values.
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
-    public MultivaluedMap<String, String> getQueryParameters(boolean decode);
+    MultivaluedMap<String, String> getQueryParameters(boolean decode);
 
     /**
      * Get a read-only list of URIs for matched resources.
@@ -229,7 +229,7 @@ public interface UriInfo {
      *
      * @return a read-only list of URI paths for matched resources.
      */
-    public List<String> getMatchedURIs();
+    List<String> getMatchedURIs();
 
     /**
      * <p>
@@ -294,7 +294,7 @@ public interface UriInfo {
      *
      * @return A concatenated string of {@link Path} templates.
      */
-    public String getMatchedResourceTemplate();
+    String getMatchedResourceTemplate();
 
     /**
      * Get a read-only list of URIs for matched resources.
@@ -310,7 +310,7 @@ public interface UriInfo {
      * @param decode controls whether sequences of escaped octets are decoded ({@code true}) or not ({@code false}).
      * @return a read-only list of URI paths for matched resources.
      */
-    public List<String> getMatchedURIs(boolean decode);
+    List<String> getMatchedURIs(boolean decode);
 
     /**
      * Get a read-only list of the currently matched resource class instances.
@@ -368,7 +368,7 @@ public interface UriInfo {
      *
      * @return a read-only list of matched resource class instances.
      */
-    public List<Object> getMatchedResources();
+    List<Object> getMatchedResources();
 
     /**
      * Resolve a relative URI with respect to the base URI of the application. The resolved URI returned by this method is
@@ -378,7 +378,7 @@ public interface UriInfo {
      * @return newly resolved URI or supplied URI if already resolved.
      * @since 2.0
      */
-    public URI resolve(URI uri);
+    URI resolve(URI uri);
 
     /**
      * Relativize a URI with respect to the current request URI. Relativization works as follows:
@@ -410,6 +410,6 @@ public interface UriInfo {
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      * @since 2.0
      */
-    public URI relativize(URI uri);
+    URI relativize(URI uri);
 
 }

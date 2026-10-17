@@ -27,7 +27,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see <a href="http://www.ietf.org/rfc/rfc2109.txt">IETF RFC 2109</a>
+ * @see <a href="https://www.rfc-editor.org/info/rfc2109/">IETF RFC 2109</a>
  * @since 1.0
  */
 public class NewCookie extends Cookie {
@@ -327,7 +327,7 @@ public class NewCookie extends Cookie {
     }
 
     /**
-     * Get the maximum age of the the cookie in seconds. Cookies older than the maximum age are discarded. A cookie can be
+     * Get the maximum age of the cookie in seconds. Cookies older than the maximum age are discarded. A cookie can be
      * unset by sending a new cookie with maximum age of 0 since it will overwrite any existing cookie and then be
      * immediately discarded. The default value of {@code -1} indicates that the cookie will be discarded at the end of the
      * browser/application session.
@@ -370,7 +370,7 @@ public class NewCookie extends Cookie {
 
     /**
      * Returns {@code true} if this cookie contains the {@code HttpOnly} attribute. This means that the cookie should not be
-     * accessible to scripting engines, like javascript.
+     * accessible to scripting engines, like JavaScript.
      *
      * @return {@code true} if this cookie should be considered http only, {@code false} otherwise.
      * @since 2.0
@@ -604,7 +604,7 @@ public class NewCookie extends Cookie {
         }
 
         /**
-         * Set the maximum age of the the cookie in seconds. Cookies older than the maximum age are discarded. A cookie can be
+         * Set the maximum age of the cookie in seconds. Cookies older than the maximum age are discarded. A cookie can be
          * unset by sending a new cookie with maximum age of 0 since it will overwrite any existing cookie and then be
          * immediately discarded. The default value of {@code -1} indicates that the cookie will be discarded at the end of the
          * browser/application session.

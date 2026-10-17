@@ -29,8 +29,8 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  * <p>
  * Builder methods perform contextual encoding of characters not permitted in the corresponding URI component following
  * the rules of the
- * <a href="http://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1">application/x-www-form-urlencoded</a> media type
- * for query parameters and <a href="http://ietf.org/rfc/rfc3986.txt">RFC 3986</a> for all other components. Note that
+ * <a href="https://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1">application/x-www-form-urlencoded</a> media type
+ * for query parameters and <a href="https://www.rfc-editor.org/info/rfc3986/">RFC 3986</a> for all other components. Note that
  * only characters not permitted in a particular component are subject to encoding so, e.g., a path supplied to one of
  * the {@code path} methods may contain matrix parameters or multiple path segments since the separators are legal
  * characters and will not be encoded. Percent encoded values are also recognized where allowed and will not be double
@@ -181,7 +181,7 @@ public abstract class UriBuilder {
      * Set the URI scheme.
      *
      * @param scheme the URI scheme, may contain URI template parameters. A {@code null} value will unset the URI scheme,
-     * but will not unset the any scheme-specific-part components.
+     * but will not unset any scheme-specific-part components.
      * @return the updated UriBuilder.
      * @throws IllegalArgumentException if scheme is invalid.
      */
@@ -304,7 +304,7 @@ public abstract class UriBuilder {
      * parameters of the current final segment of the current URI path.
      * @return the updated UriBuilder.
      * @throws IllegalArgumentException if matrix cannot be parsed.
-     * @see <a href="http://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
+     * @see <a href="https://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
      */
     public abstract UriBuilder replaceMatrix(String matrix);
 
@@ -318,7 +318,7 @@ public abstract class UriBuilder {
      * {@code toString()} method. Stringified values may contain URI template parameters.
      * @return the updated UriBuilder.
      * @throws IllegalArgumentException if name or values is {@code null}.
-     * @see <a href="http://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
+     * @see <a href="https://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
      */
     public abstract UriBuilder matrixParam(String name, Object... values);
 
@@ -333,7 +333,7 @@ public abstract class UriBuilder {
      * {@code null} then all current values of the parameter are removed.
      * @return the updated UriBuilder.
      * @throws IllegalArgumentException if name is {@code null}.
-     * @see <a href="http://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
+     * @see <a href="https://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
      */
     public abstract UriBuilder replaceMatrixParam(String name, Object... values);
 
@@ -553,7 +553,7 @@ public abstract class UriBuilder {
      * <p>
      * All instances of the same template parameter will be replaced by the same value that corresponds to the position of
      * the first instance of the template parameter. e.g. the template "{a}/{b}/{a}" with values {"x", "y", "z"} will result
-     * in the the URI "x/y/x", <i>not</i> "x/y/z".
+     * in the URI "x/y/x", <i>not</i> "x/y/z".
      * </p>
      * <p>
      * NOTE: By default all {@code '/'} characters in the stringified values will be encoded in path templates, i.e. the
@@ -580,7 +580,7 @@ public abstract class UriBuilder {
      * <p>
      * All instances of the same template parameter will be replaced by the same value that corresponds to the position of
      * the first instance of the template parameter. e.g. the template "{a}/{b}/{a}" with values {"x", "y", "z"} will result
-     * in the the URI "x/y/x", <i>not</i> "x/y/z".
+     * in the URI "x/y/x", <i>not</i> "x/y/z".
      * </p>
      * <p>
      * The {@code encodeSlashInPath} parameter may be used to override the default encoding of {@code '/'} characters in the
@@ -615,7 +615,7 @@ public abstract class UriBuilder {
      * <p>
      * All instances of the same template parameter will be replaced by the same value that corresponds to the position of
      * the first instance of the template parameter. e.g. the template "{a}/{b}/{a}" with values {"x", "y", "z"} will result
-     * in the the URI "x/y/x", <i>not</i> "x/y/z".
+     * in the URI "x/y/x", <i>not</i> "x/y/z".
      *
      * @param values a list of URI template parameter values.
      * @return the URI built from the UriBuilder.

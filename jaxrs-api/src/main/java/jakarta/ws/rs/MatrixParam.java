@@ -65,7 +65,7 @@ import jakarta.inject.Qualifier;
  * @author Marc Hadley
  * @see DefaultValue
  * @see Encoded
- * @see <a href="http://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
+ * @see <a href="https://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
  * @since 1.0
  */
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })

@@ -1,4 +1,4 @@
 # About
 
-The {{site.title}} project contains the [AsciiDoc](http://asciidoc.org/)
+The {{site.title}} project contains the [AsciiDoc](https://asciidoc.org/)
 source code for the ...

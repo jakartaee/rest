@@ -616,7 +616,7 @@ public abstract class Response implements AutoCloseable {
     }
 
     /**
-     * Create a new ResponseBuilder with an server error status.
+     * Create a new ResponseBuilder with a server error status.
      *
      * @return a new response builder.
      */
@@ -1119,24 +1119,24 @@ public abstract class Response implements AutoCloseable {
          *
          * @return the status code.
          */
-        public int getStatusCode();
+        int getStatusCode();
 
         /**
          * Get the class of status code.
          *
          * @return the class of status code.
          */
-        public Status.Family getFamily();
+        Status.Family getFamily();
 
         /**
          * Get the reason phrase.
          *
          * @return the reason phrase.
          */
-        public String getReasonPhrase();
+        String getReasonPhrase();
 
         /**
-         * Get the this Status Type as a {@link Status}.
+         * Get this Status Type as a {@link Status}.
          * <p>
          * Please note that returned status contains only a status code, the reason phrase is set to default one (corresponding
          * to the status code).
@@ -1144,265 +1144,265 @@ public abstract class Response implements AutoCloseable {
          * @return {@link Status} representing this status type.
          * @since 2.1
          */
-        public default Status toEnum() {
+        default Status toEnum() {
             return Status.fromStatusCode(getStatusCode());
         }
     }
 
     /**
      * Commonly used status codes defined by HTTP, see
-     * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10">HTTP/1.1 documentation</a> for the complete
+     * <a href="https://www.rfc-editor.org/info/rfc2616/#section-10">HTTP/1.1 documentation</a> for the complete
      * list. Additional status codes can be added by applications by creating an implementation of {@link StatusType}.
      */
     public enum Status implements StatusType {
 
         /**
-         * 200 OK, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">HTTP/1.1 documentation</a>.
+         * 200 OK, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.2.1">HTTP/1.1 documentation</a>.
          */
         OK(200, "OK"),
         /**
-         * 201 Created, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">HTTP/1.1
+         * 201 Created, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.2.2">HTTP/1.1
          * documentation</a>.
          */
         CREATED(201, "Created"),
         /**
-         * 202 Accepted, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.3">HTTP/1.1
+         * 202 Accepted, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.2.3">HTTP/1.1
          * documentation</a>.
          */
         ACCEPTED(202, "Accepted"),
         /**
-         * 204 No Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">HTTP/1.1
+         * 204 No Content, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.2.5">HTTP/1.1
          * documentation</a>.
          */
         NO_CONTENT(204, "No Content"),
         /**
-         * 205 Reset Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.6">HTTP/1.1
+         * 205 Reset Content, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.2.6">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
          */
         RESET_CONTENT(205, "Reset Content"),
         /**
-         * 206 Reset Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.7">HTTP/1.1
+         * 206 Reset Content, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.2.7">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
          */
         PARTIAL_CONTENT(206, "Partial Content"),
         /**
-         * 300 Multiple Choices, see <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-6.4.1">HTTP/1.1:
+         * 300 Multiple Choices, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.3.1">HTTP/1.1:
          * Semantics and Content</a>.
          *
          * @since 3.1
          */
         MULTIPLE_CHOICES(300, "Multiple Choices"),
         /**
-         * 301 Moved Permanently, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.2">HTTP/1.1
+         * 301 Moved Permanently, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.3.2">HTTP/1.1
          * documentation</a>.
          */
         MOVED_PERMANENTLY(301, "Moved Permanently"),
         /**
-         * 302 Found, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.3">HTTP/1.1 documentation</a>.
+         * 302 Found, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.3.3">HTTP/1.1 documentation</a>.
          *
          * @since 2.0
          */
         FOUND(302, "Found"),
         /**
-         * 303 See Other, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.4">HTTP/1.1
+         * 303 See Other, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.3.4">HTTP/1.1
          * documentation</a>.
          */
         SEE_OTHER(303, "See Other"),
         /**
-         * 304 Not Modified, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.5">HTTP/1.1
+         * 304 Not Modified, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.3.5">HTTP/1.1
          * documentation</a>.
          */
         NOT_MODIFIED(304, "Not Modified"),
         /**
-         * 305 Use Proxy, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.6">HTTP/1.1
+         * 305 Use Proxy, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.3.6">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
          */
         USE_PROXY(305, "Use Proxy"),
         /**
-         * 307 Temporary Redirect, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.8">HTTP/1.1
+         * 307 Temporary Redirect, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.3.8">HTTP/1.1
          * documentation</a>.
          */
         TEMPORARY_REDIRECT(307, "Temporary Redirect"),
         /**
-         * 308 Permanent Redirect, see <a href="https://tools.ietf.org/html/rfc7538">RFC 7538:
+         * 308 Permanent Redirect, see <a href="https://www.rfc-editor.org/info/rfc7538/#section-3">RFC 7538:
          * The Hypertext Transfer Protocol Status Code 308 (Permanent Redirect)</a>.
          *
          * @since 3.1
          */
         PERMANENT_REDIRECT(308, "Permanent Redirect"),
         /**
-         * 400 Bad Request, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">HTTP/1.1
+         * 400 Bad Request, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.1">HTTP/1.1
          * documentation</a>.
          */
         BAD_REQUEST(400, "Bad Request"),
         /**
-         * 401 Unauthorized, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">HTTP/1.1
+         * 401 Unauthorized, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.2">HTTP/1.1
          * documentation</a>.
          */
         UNAUTHORIZED(401, "Unauthorized"),
         /**
-         * 402 Payment Required, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.3">HTTP/1.1
+         * 402 Payment Required, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.3">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
          */
         PAYMENT_REQUIRED(402, "Payment Required"),
         /**
-         * 403 Forbidden, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">HTTP/1.1
+         * 403 Forbidden, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.4">HTTP/1.1
          * documentation</a>.
          */
         FORBIDDEN(403, "Forbidden"),
         /**
-         * 404 Not Found, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">HTTP/1.1
+         * 404 Not Found, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.5">HTTP/1.1
          * documentation</a>.
          */
         NOT_FOUND(404, "Not Found"),
         /**
-         * 405 Method Not Allowed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.6">HTTP/1.1
+         * 405 Method Not Allowed, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.6">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
          */
         METHOD_NOT_ALLOWED(405, "Method Not Allowed"),
         /**
-         * 406 Not Acceptable, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.7">HTTP/1.1
+         * 406 Not Acceptable, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.7">HTTP/1.1
          * documentation</a>.
          */
         NOT_ACCEPTABLE(406, "Not Acceptable"),
         /**
          * 407 Proxy Authentication Required, see
-         * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.8">HTTP/1.1 documentation</a>.
+         * <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.8">HTTP/1.1 documentation</a>.
          *
          * @since 2.0
          */
         PROXY_AUTHENTICATION_REQUIRED(407, "Proxy Authentication Required"),
         /**
-         * 408 Request Timeout, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.9">HTTP/1.1
+         * 408 Request Timeout, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.9">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
          */
         REQUEST_TIMEOUT(408, "Request Timeout"),
         /**
-         * 409 Conflict, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.10">HTTP/1.1
+         * 409 Conflict, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.10">HTTP/1.1
          * documentation</a>.
          */
         CONFLICT(409, "Conflict"),
         /**
-         * 410 Gone, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.11">HTTP/1.1 documentation</a>.
+         * 410 Gone, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.11">HTTP/1.1 documentation</a>.
          */
         GONE(410, "Gone"),
         /**
-         * 411 Length Required, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.12">HTTP/1.1
+         * 411 Length Required, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.12">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
          */
         LENGTH_REQUIRED(411, "Length Required"),
         /**
-         * 412 Precondition Failed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.13">HTTP/1.1
+         * 412 Precondition Failed, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.13">HTTP/1.1
          * documentation</a>.
          */
         PRECONDITION_FAILED(412, "Precondition Failed"),
         /**
          * 413 Request Entity Too Large, see
-         * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.14">HTTP/1.1 documentation</a>.
+         * <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.14">HTTP/1.1 documentation</a>.
          *
          * @since 2.0
          */
         REQUEST_ENTITY_TOO_LARGE(413, "Request Entity Too Large"),
         /**
-         * 414 Request-URI Too Long, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.15">HTTP/1.1
+         * 414 Request-URI Too Long, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.15">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
          */
         REQUEST_URI_TOO_LONG(414, "Request-URI Too Long"),
         /**
-         * 415 Unsupported Media Type, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.16">HTTP/1.1
+         * 415 Unsupported Media Type, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.16">HTTP/1.1
          * documentation</a>.
          */
         UNSUPPORTED_MEDIA_TYPE(415, "Unsupported Media Type"),
         /**
          * 416 Requested Range Not Satisfiable, see
-         * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.17">HTTP/1.1 documentation</a>.
+         * <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.17">HTTP/1.1 documentation</a>.
          *
          * @since 2.0
          */
         REQUESTED_RANGE_NOT_SATISFIABLE(416, "Requested Range Not Satisfiable"),
         /**
-         * 417 Expectation Failed, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.18">HTTP/1.1
+         * 417 Expectation Failed, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.4.18">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
          */
         EXPECTATION_FAILED(417, "Expectation Failed"),
         /**
-         * 422 Unprocessable Content, see <a href="https://datatracker.ietf.org/doc/html/rfc9110#name-422-unprocessable-content">RFC 9110:
+         * 422 Unprocessable Content, see <a href="https://www.rfc-editor.org/info/rfc9110/#section-15.5.21">RFC 9110:
          * HTTP Semantics</a>.
          *
          */
         UNPROCESSABLE_CONTENT(422, "Unprocessable Content"),
         /**
-         * 428 Precondition required, see <a href="https://tools.ietf.org/html/rfc6585#section-3">RFC 6585: Additional HTTP
+         * 428 Precondition required, see <a href="https://www.rfc-editor.org/info/rfc6585/#section-3">RFC 6585: Additional HTTP
          * Status Codes</a>.
          *
          * @since 2.1
          */
         PRECONDITION_REQUIRED(428, "Precondition Required"),
         /**
-         * 429 Too Many Requests, see <a href="https://tools.ietf.org/html/rfc6585#section-4">RFC 6585: Additional HTTP Status
+         * 429 Too Many Requests, see <a href="https://www.rfc-editor.org/info/rfc6585/#section-4">RFC 6585: Additional HTTP Status
          * Codes</a>.
          *
          * @since 2.1
          */
         TOO_MANY_REQUESTS(429, "Too Many Requests"),
         /**
-         * 431 Request Header Fields Too Large, see <a href="https://tools.ietf.org/html/rfc6585#section-5">RFC 6585: Additional
+         * 431 Request Header Fields Too Large, see <a href="https://www.rfc-editor.org/info/rfc6585/#section-5">RFC 6585: Additional
          * HTTP Status Codes</a>.
          *
          * @since 2.1
          */
         REQUEST_HEADER_FIELDS_TOO_LARGE(431, "Request Header Fields Too Large"),
         /**
-         * 451 Unavailable For Legal Reasons, see <a href="https://tools.ietf.org/html/rfc7725">RFC 7725:
+         * 451 Unavailable For Legal Reasons, see <a href="https://www.rfc-editor.org/info/rfc7725/#page-3">RFC 7725:
          * An HTTP Status Code to Report Legal Obstacles</a>.
          *
          * @since 3.1
          */
         UNAVAILABLE_FOR_LEGAL_REASONS(451, "Unavailable For Legal Reasons"),
         /**
-         * 500 Internal Server Error, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">HTTP/1.1
+         * 500 Internal Server Error, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.5.1">HTTP/1.1
          * documentation</a>.
          */
         INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
         /**
-         * 501 Not Implemented, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.2">HTTP/1.1
+         * 501 Not Implemented, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.5.2">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
          */
         NOT_IMPLEMENTED(501, "Not Implemented"),
         /**
-         * 502 Bad Gateway, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.3">HTTP/1.1
+         * 502 Bad Gateway, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.5.3">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
          */
         BAD_GATEWAY(502, "Bad Gateway"),
         /**
-         * 503 Service Unavailable, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">HTTP/1.1
+         * 503 Service Unavailable, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.5.4">HTTP/1.1
          * documentation</a>.
          */
         SERVICE_UNAVAILABLE(503, "Service Unavailable"),
         /**
-         * 504 Gateway Timeout, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.5">HTTP/1.1
+         * 504 Gateway Timeout, see <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.5.5">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0
@@ -1410,13 +1410,13 @@ public abstract class Response implements AutoCloseable {
         GATEWAY_TIMEOUT(504, "Gateway Timeout"),
         /**
          * 505 HTTP Version Not Supported, see
-         * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.6">HTTP/1.1 documentation</a>.
+         * <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.5.6">HTTP/1.1 documentation</a>.
          *
          * @since 2.0
          */
         HTTP_VERSION_NOT_SUPPORTED(505, "HTTP Version Not Supported"),
         /**
-         * 511 Network Authentication Required, see <a href="https://tools.ietf.org/html/rfc6585#section-6">RFC 6585: Additional
+         * 511 Network Authentication Required, see <a href="https://www.rfc-editor.org/info/rfc6585/#section-6">RFC 6585: Additional
          * HTTP Status Codes</a>.
          *
          * @since 2.1

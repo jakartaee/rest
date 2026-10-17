@@ -31,7 +31,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9">HTTP/1.1 section 14.9</a>
+ * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9">HTTP/1.1 section 14.9</a>
  * @since 1.0
  */
 public class CacheControl {
@@ -98,7 +98,7 @@ public class CacheControl {
      *
      * @return true if the must-revalidate cache control directive will be included in the response, false otherwise.
      *
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.4">HTTP/1.1 section 14.9.4</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.4">HTTP/1.1 section 14.9.4</a>
      */
     public boolean isMustRevalidate() {
         return mustRevalidate;
@@ -109,7 +109,7 @@ public class CacheControl {
      *
      * @param mustRevalidate true if the must-revalidate cache control directive should be included in the response, false
      * otherwise.
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.4">HTTP/1.1 section 14.9.4</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.4">HTTP/1.1 section 14.9.4</a>
      */
     public void setMustRevalidate(final boolean mustRevalidate) {
         this.mustRevalidate = mustRevalidate;
@@ -120,7 +120,7 @@ public class CacheControl {
      *
      * @return true if the proxy-revalidate cache control directive will be included in the response, false otherwise.
      *
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.4">HTTP/1.1 section 14.9.4</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.4">HTTP/1.1 section 14.9.4</a>
      */
     public boolean isProxyRevalidate() {
         return proxyRevalidate;
@@ -131,7 +131,7 @@ public class CacheControl {
      *
      * @param proxyRevalidate true if the proxy-revalidate cache control directive should be included in the response, false
      * otherwise.
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.4">HTTP/1.1 section 14.9.4</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.4">HTTP/1.1 section 14.9.4</a>
      */
     public void setProxyRevalidate(final boolean proxyRevalidate) {
         this.proxyRevalidate = proxyRevalidate;
@@ -142,7 +142,7 @@ public class CacheControl {
      *
      * @return the value of the max-age cache control directive, -1 if the directive is disabled.
      *
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.3">HTTP/1.1 section 14.9.3</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.3">HTTP/1.1 section 14.9.3</a>
      */
     public int getMaxAge() {
         return maxAge;
@@ -152,7 +152,7 @@ public class CacheControl {
      * Corresponds to the max-age cache control directive.
      *
      * @param maxAge the value of the max-age cache control directive, a value of -1 will disable the directive.
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.3">HTTP/1.1 section 14.9.3</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.3">HTTP/1.1 section 14.9.3</a>
      */
     public void setMaxAge(final int maxAge) {
         this.maxAge = maxAge;
@@ -163,7 +163,7 @@ public class CacheControl {
      *
      * @return the value of the s-maxage cache control directive, -1 if the directive is disabled.
      *
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.3">HTTP/1.1 section 14.9.3</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.3">HTTP/1.1 section 14.9.3</a>
      */
     public int getSMaxAge() {
         return sMaxAge;
@@ -173,7 +173,7 @@ public class CacheControl {
      * Corresponds to the s-maxage cache control directive.
      *
      * @param smaxAge the value of the s-maxage cache control directive, a value of -1 will disable the directive.
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.3">HTTP/1.1 section 14.9.3</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.3">HTTP/1.1 section 14.9.3</a>
      */
     public void setSMaxAge(final int smaxAge) {
         this.sMaxAge = smaxAge;
@@ -187,7 +187,7 @@ public class CacheControl {
      *
      * @see #isNoCache()
      * @see #setNoCache(boolean)
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1">HTTP/1.1 section 14.9.1</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.1">HTTP/1.1 section 14.9.1</a>
      */
     public List<String> getNoCacheFields() {
         if (noCacheFields == null) {
@@ -201,7 +201,7 @@ public class CacheControl {
      *
      * @param noCache true if the no-cache cache control directive should be included in the response, false otherwise.
      * @see #getNoCacheFields()
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1">HTTP/1.1 section 14.9.1</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.1">HTTP/1.1 section 14.9.1</a>
      */
     public void setNoCache(final boolean noCache) {
         this.noCache = noCache;
@@ -213,7 +213,7 @@ public class CacheControl {
      * @return true if the no-cache cache control directive will be included in the response, false otherwise.
      *
      * @see #getNoCacheFields()
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1">HTTP/1.1 section 14.9.1</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.1">HTTP/1.1 section 14.9.1</a>
      */
     public boolean isNoCache() {
         return noCache;
@@ -225,7 +225,7 @@ public class CacheControl {
      * @return true if the private cache control directive will be included in the response, false otherwise.
      *
      * @see #getPrivateFields()
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1">HTTP/1.1 section 14.9.1</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.1">HTTP/1.1 section 14.9.1</a>
      */
     public boolean isPrivate() {
         return privateFlag;
@@ -239,7 +239,7 @@ public class CacheControl {
      *
      * @see #isPrivate()
      * @see #setPrivate(boolean)
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1">HTTP/1.1 section 14.9.1</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.1">HTTP/1.1 section 14.9.1</a>
      */
     public List<String> getPrivateFields() {
         if (privateFields == null) {
@@ -253,7 +253,7 @@ public class CacheControl {
      *
      * @param flag true if the private cache control directive should be included in the response, false otherwise.
      * @see #getPrivateFields()
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1">HTTP/1.1 section 14.9.1</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.1">HTTP/1.1 section 14.9.1</a>
      */
     public void setPrivate(final boolean flag) {
         this.privateFlag = flag;
@@ -264,7 +264,7 @@ public class CacheControl {
      *
      * @return true if the no-transform cache control directive will be included in the response, false otherwise.
      *
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.5">HTTP/1.1 section 14.9.5</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.5">HTTP/1.1 section 14.9.5</a>
      */
     public boolean isNoTransform() {
         return noTransform;
@@ -275,7 +275,7 @@ public class CacheControl {
      *
      * @param noTransform true if the no-transform cache control directive should be included in the response, false
      * otherwise.
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.5">HTTP/1.1 section 14.9.5</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.5">HTTP/1.1 section 14.9.5</a>
      */
     public void setNoTransform(final boolean noTransform) {
         this.noTransform = noTransform;
@@ -286,7 +286,7 @@ public class CacheControl {
      *
      * @return true if the no-store cache control directive will be included in the response, false otherwise.
      *
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.2">HTTP/1.1 section 14.9.2</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.2">HTTP/1.1 section 14.9.2</a>
      */
     public boolean isNoStore() {
         return noStore;
@@ -296,7 +296,7 @@ public class CacheControl {
      * Corresponds to the no-store cache control directive.
      *
      * @param noStore true if the no-store cache control directive should be included in the response, false otherwise.
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.2">HTTP/1.1 section 14.9.2</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.2">HTTP/1.1 section 14.9.2</a>
      */
     public void setNoStore(final boolean noStore) {
         this.noStore = noStore;
@@ -310,7 +310,7 @@ public class CacheControl {
      * name=value pair. If a key has a value that contains whitespace then the directive will appear as a quoted
      * name="value" pair.
      *
-     * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.6">HTTP/1.1 section 14.9.6</a>
+     * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-14.9.6">HTTP/1.1 section 14.9.6</a>
      */
     public Map<String, String> getCacheExtension() {
         if (cacheExtension == null) {

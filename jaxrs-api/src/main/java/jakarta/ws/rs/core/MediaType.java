@@ -30,7 +30,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.7">HTTP/1.1 section 3.7</a>
+ * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-3.7">HTTP/1.1 section 3.7</a>
  * @since 1.0
  */
 @SuppressWarnings("JavaDoc")
@@ -361,7 +361,7 @@ public class MediaType {
      * <p>
      * Compares {@code obj} to this media type to see if they are the same by comparing type, subtype and parameters. Note
      * that the case-sensitivity of parameter values is dependent on the semantics of the parameter name, see
-     * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.7">HTTP/1.1</a>. This method assumes that values
+     * <a href="https://www.rfc-editor.org/info/rfc2616/#section-3.7">HTTP/1.1</a>. This method assumes that values
      * are case-sensitive.
      * </p>
      * Note that the {@code equals(...)} implementation does not perform a class equality check

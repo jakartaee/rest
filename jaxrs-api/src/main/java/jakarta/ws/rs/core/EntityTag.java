@@ -26,7 +26,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
  *
  * @author Paul Sandoz
  * @author Marc Hadley
- * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.11">HTTP/1.1 section 3.11</a>
+ * @see <a href="https://www.rfc-editor.org/info/rfc2616/#section-3.11">HTTP/1.1 section 3.11</a>
  * @since 1.0
  */
 public class EntityTag {

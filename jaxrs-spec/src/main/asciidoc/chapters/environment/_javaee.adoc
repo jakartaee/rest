@@ -413,6 +413,12 @@ appropriate:
 |URI and path information
 |===
 
+An injected context object always reflects the request, or client invocation, in
+which it is used, regardless of when it was injected. For example, an injected
+`Configuration` reflects the providers and properties registered by a
+`DynamicFeature` for the matched resource method, although the resource is
+injected before the method is matched.
+
 NOTE: The types `AsyncResponse` and `SseEventSink` are method-parameter-only types
 and do NOT require CDI producers. These types are only available for injection as
 resource method parameters and cannot be injected into fields or constructors. The

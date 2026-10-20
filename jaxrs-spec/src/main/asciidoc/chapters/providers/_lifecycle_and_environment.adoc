@@ -33,6 +33,12 @@ discover provider classes via mechanisms such as class scanning. A
 JAX-RS implementation that supports automatic discovery of classes MUST
 process only those classes that are annotated with `@Provider`.
 
+Providers discovered through `@Provider` are registered with the server runtime
+of the application. Whether they are also applied to clients created in the
+application is implementation-specific. Portable applications register client
+providers explicitly, e.g. with `Configurable.register()` or in a `@Default`
+`ClientBuilder` bean, see <<cdi-client>>.
+
 [[services]]
 ==== Services
 On runtime initialization, an implementation MUST discover and register certain

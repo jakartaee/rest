@@ -516,6 +516,52 @@ discover the class, or return it from `Application.getClasses()`, instead.
 Registering a CDI contextual reference with a `Client`, `ClientBuilder` or
 `WebTarget` is portable, see <<cdi-client>>.
 
+[[cdi-client]]
+===== Client
+
+Implementations MUST provide a bean of type `Client` with the `@Default`
+qualifier and the scope `@ApplicationScoped`, unless the application defines a
+`@Default` bean of type `Client`. This `Client` is closed when the application is
+shut down. If the application defines a `@Default` bean of type `ClientBuilder`,
+implementations MUST build this `Client` from it, and obtain the `ClientBuilder`
+bean only once. A `ClientBuilder` is mutable and not thread-safe, so such a bean
+should be `@Dependent`.
+
+[source,java]
+----
+@ApplicationScoped
+public class ClientBuilderProducer {
+
+    @Produces
+    @Dependent
+    public ClientBuilder clientBuilder(AuthFilter authFilter) {
+        // AuthFilter is a CDI bean that is not annotated with @Provider
+        return ClientBuilder.newBuilder()
+                .register(authFilter);
+    }
+}
+
+@Path("/orders")
+public class OrderResource {
+
+    @Inject
+    Client client;
+    ...
+}
+----
+
+Applications that need clients with a different configuration define their own
+`Client` beans with a qualifier. Only the `@Default` `Client` bean is defined by
+this specification.
+
+A provider registered with a `Client`, `ClientBuilder` or `WebTarget` applies
+only to that client. Several clients may share an instance of the provider, e.g.
+an `@ApplicationScoped` bean registered with each of them, so portable providers
+do not rely on having an instance per client. Providers registered by class that
+are CDI beans are obtained from CDI, see <<cdi-application-methods>>. A
+CDI-managed provider instance may also be registered, e.g. one injected into a
+`ClientBuilder` producer as shown above.
+
 [[additional_reqs]]
 ==== Additional Requirements for Non-CDI Environments
 

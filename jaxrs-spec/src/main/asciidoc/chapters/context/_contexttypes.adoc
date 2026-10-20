@@ -17,6 +17,14 @@ subclasses (server only). Except for `Configuration` and `Providers`,
 which are injectable in both client and server-side providers, all the
 other types are server-side only.
 
+In a provider, an injected `Configuration` or `Providers` resolves, on each
+invocation of a provider method, to that of the runtime invoking the provider:
+the `Client` for a client invocation, and the server runtime for a server
+request. A provider used by the server and by clients, or by several clients,
+therefore obtains the matching instance on each invocation. Outside a provider
+method invocation, e.g. in a constructor, only deployment-specific properties
+may be available, see <<lifecycle_and_environment>>.
+
 [NOTE]
 ====
 In CDI-enabled environments, these context types MUST be made available
@@ -310,5 +318,6 @@ public class LoggingFilter implements ClientRequestFilter {
 }
 ----
 
-A client runtime configuration is injected in the filter shown above and
-its `isEnabled` method called to check if `MyFeature` is enabled.
+When the filter shown above is registered with a `Client`, the runtime
+configuration of that `Client` is injected, and its `isEnabled` method is called
+to check if `MyFeature` is enabled.

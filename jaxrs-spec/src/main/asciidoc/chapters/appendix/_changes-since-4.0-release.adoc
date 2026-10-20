@@ -19,8 +19,18 @@ annotations with default scopes (`@ApplicationScoped` for `@ApplicationPath` and
 `@RequestScoped` for `@Path`) (https://github.com/jakartaee/rest/issues/556[#556], https://github.com/jakartaee/rest/issues/952[#952])
 * <<cdi-injection-model>>: Parameter extraction annotations (`@QueryParam`, `@PathParam`,
 `@HeaderParam`, `@MatrixParam`, `@CookieParam`, `@FormParam`) now act as CDI qualifiers (https://github.com/jakartaee/rest/issues/569[#569])
-* <<cdi-injection-model>>: Fields in CDI-managed beans must use `@Inject` instead of the
-deprecated `@Context` annotation (https://github.com/jakartaee/rest/issues/569[#569], https://github.com/jakartaee/rest/issues/1209[#1209])
+* <<cdi-injection-model>>: In environments that support CDI, only injection performed by CDI is portable;
+a field or bean property annotated with `@Context` or a parameter extraction annotation but not `@Inject`
+is not portable in CDI-managed beans (https://github.com/jakartaee/rest/issues/569[#569], https://github.com/jakartaee/rest/issues/1209[#1209])
+* <<cdi-injection-model>>: The class of a `@BeanParam` aggregator should be a `@Dependent` bean, which
+implementations obtain from CDI; an aggregator whose class is not a bean is not portable
+* <<cdi-application-methods>>: Injection into classes excluded from CDI bean management, into
+application-supplied instances and into `Feature` and `DynamicFeature` instances loaded with `ServiceLoader` is
+implementation-specific; these instances are not CDI-managed, even if their class is a CDI bean. Supplying a CDI
+contextual reference through `getSingletons()`, or through `register(Object)` for the server runtime, is not portable;
+registering one with a client is portable
+* <<services>>: A class loaded with `ServiceLoader` that is also discovered as a provider, e.g. through `@Provider`,
+is registered only as the loaded instance
 * <<cdi-injection-model>>: Resource method parameters support only Jakarta REST context types,
 parameter extraction annotations, entity parameters, `AsyncResponse`, and `SseEventSink`;
 arbitrary CDI beans must be injected via fields or constructors (https://github.com/jakartaee/rest/issues/569[#569])
@@ -28,9 +38,21 @@ arbitrary CDI beans must be injected via fields or constructors (https://github.
 used as resource method parameters, not as injectable fields (https://github.com/jakartaee/rest/issues/569[#569])
 * <<cdi-producers>>: Required CDI producers for Jakarta REST context types and parameter
 extraction annotations (https://github.com/jakartaee/rest/issues/569[#569])
-* Deprecated `@Context` annotation for removal in a future release (https://github.com/jakartaee/rest/issues/569[#569], https://github.com/jakartaee/rest/issues/1209[#1209])
+* <<context-qualifier>>: `@Context` is a CDI qualifier; `@Inject @Context` resolves to the instance
+managed by the Jakarta REST implementation. Implementations must make context types resolvable with
+both `@Default` and `@Context`, and applications must not define beans for them
+* <<cdi>>: `Application` subclasses that are CDI beans must be `@ApplicationScoped` or `@Singleton`; a subclass that does
+not declare a scope is `@ApplicationScoped`
+* <<cdi>>: The portable scopes for providers that are CDI beans are `@ApplicationScoped` and `@Singleton`;
+a provider that does not declare a scope is `@ApplicationScoped`, and other scopes, including `@Dependent`, are not
+portable
+* <<ejbs>>: The default scopes of the `@ApplicationPath`, `@Path` and `@Provider` stereotypes do not
+apply to stateless and singleton session beans; a session bean that does not declare a scope is `@Dependent`
+* <<context-qualifier>>: `@Inject @Context Application` injects the deployed `Application`;
+each deployed `Application` subclass annotated with `@ApplicationPath`, or discovered by CDI, is a CDI bean
+and can be injected by its own type
 * Deprecated `@Suspended` annotation in 5.0 for removal in a future release; use type-alone approach
 for `AsyncResponse` in CDI environments (https://github.com/jakartaee/rest/issues/1209[#1209])
-* <<servlet_container>>: Deprecated `@Context` injection for Servlet-defined types; use CDI
-injection (`@Inject`) as specified by Jakarta Servlet and Jakarta EE Platform specifications (https://github.com/jakartaee/rest/issues/1214[#1214])
+* <<servlet_container>>: Implementations must register `@Context`-qualified beans for Servlet-defined
+types; applications should use `@Inject @Context` for these types (https://github.com/jakartaee/rest/issues/1214[#1214])
 * Scoped Additional Requirements section to non-CDI environments; CDI specification defines bean lifecycle behaviors for CDI-managed beans (https://github.com/jakartaee/rest/issues/1215[#1215])

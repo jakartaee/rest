@@ -47,13 +47,13 @@ via CDI producers as specified in <<cdi-producers>>.
 
 In non-CDI environments, or for resources not managed by CDI, a public
 constructor MAY include parameters annotated with one of the following:
-`@HeaderParam`, `@CookieParam`, `@MatrixParam`, `@QueryParam` or `@PathParam`.
+`@Context`, `@HeaderParam`, `@CookieParam`, `@MatrixParam`, `@QueryParam` or
+`@PathParam`.
 However, depending on the resource class lifecycle and concurrency, per-request
 information may not make sense in a constructor.
 
-NOTE: The use of `@Context` in constructors is deprecated. Applications should
-use CDI constructor injection in CDI-enabled environments, or use field/property
-injection in non-CDI environments.
+NOTE: In CDI-enabled environments, parameters of an `@Inject` constructor MAY be
+qualified with `@Context`, see <<context-qualifier>>.
 
 In non-CDI environments if more than one public constructor is suitable then an
 implementation MUST use the one with the most parameters. Choosing amongst suitable

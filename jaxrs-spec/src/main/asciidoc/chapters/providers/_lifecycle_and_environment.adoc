@@ -47,6 +47,13 @@ MUST be determined as follows:
 * first, register all providers discovered with `ServiceLoader.load(X.class)`
 * additionally, register all providers discovered with `ServiceLoader.load(X.class, X.class.getClassLoader())`
 
+In environments that support CDI, the instances loaded this way are not
+CDI-managed, even if their class is a CDI bean, see <<cdi-application-methods>>.
+If a class is loaded this way and is also discovered as a provider, e.g. because
+it is annotated with `@Provider`, implementations MUST register the loaded
+instance and MUST NOT also register the class. Applications SHOULD NOT annotate
+classes they make available for service loading with `@Provider`.
+
 Note that service loading allows libraries to be self-sufficient: it allows them
 to register what they need with the JAX-RS implementation without intervention
 from the application. From the viewpoint of an application developer, this means

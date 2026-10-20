@@ -76,7 +76,8 @@ corresponding form parameter is not in the request entity body, or if
 the corresponding HTTP header is not included in the request.
 |`Context`  |Field, method or parameter |Identifies an injection target for one of
 the types listed in <<contexttypes>> or the applicable section of
-Chapter <<environment>>.
+Chapter <<environment>>. In CDI environments, a CDI qualifier, see
+<<context-qualifier>>.
 |`HttpMethod`   |Annotation     |Specifies the HTTP
 method for a request method designator annotation.
 |`Provider`     |Type   |Specifies that the annotated class implements a JAX-RS extension

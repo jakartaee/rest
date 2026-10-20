@@ -20,16 +20,16 @@ other types are server-side only.
 [NOTE]
 ====
 In CDI-enabled environments, these context types MUST be made available
-for injection via CDI producers as specified in <<cdi-producers>>. The
-use of `@Context` annotation is deprecated in favor of CDI injection using
-`@Inject` (for fields and constructors) or type-based injection (for
-resource method parameters). See <<cdi-injection-model>> for details on
-the CDI injection model for Jakarta REST.
+for injection via CDI producers as specified in <<cdi-producers>>. They are
+injected using `@Inject` (for fields, bean properties and constructors),
+optionally qualified with `@Context`, or by type alone (for resource method
+parameters). See <<cdi-injection-model>> for details on the CDI injection
+model for Jakarta REST, and <<context-qualifier>> for the `@Context` qualifier.
 
 For `Client` instances and `SeBootstrap`-based deployments, `@Inject` for
 `Configuration` and `Providers` MUST be supported when CDI is available.
-Where no CDI container is present, the deprecated `@Context` annotation
-remains fully supported for these types.
+Where no CDI container is present, the `@Context` annotation is used to
+inject these types.
 ====
 
 [[application]]

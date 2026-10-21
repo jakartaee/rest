@@ -366,7 +366,8 @@ parameter extraction to enable their injection into CDI-managed beans.
 
 The following context types MUST be made available for CDI injection. The suggested
 scope for each type is listed, though implementations MAY use different scopes if
-appropriate:
+appropriate. Regardless of scope, each type MUST behave as described following the
+table:
 
 .Required CDI Producers for Jakarta REST Types
 |===
@@ -381,7 +382,7 @@ appropriate:
 |Runtime configuration
 
 |`HttpHeaders`
-|`@RequestScoped`
+|`@Dependent`
 |Request HTTP headers
 
 |`Providers`
@@ -389,7 +390,7 @@ appropriate:
 |Provider instance lookup
 
 |`Request`
-|`@RequestScoped`
+|`@Dependent`
 |Request information for content negotiation
 
 |`ResourceContext`
@@ -397,11 +398,11 @@ appropriate:
 |Resource instance creation and initialization
 
 |`ResourceInfo`
-|`@RequestScoped`
+|`@Dependent`
 |Matched resource class and method information
 
 |`SecurityContext`
-|`@RequestScoped`
+|`@Dependent`
 |Security context of current request
 
 |`Sse`
@@ -409,15 +410,21 @@ appropriate:
 |Server-sent events support
 
 |`UriInfo`
-|`@RequestScoped`
+|`@Dependent`
 |URI and path information
 |===
 
-An injected context object always reflects the request, or client invocation, in
-which it is used, regardless of when it was injected. For example, an injected
-`Configuration` reflects the providers and properties registered by a
-`DynamicFeature` for the matched resource method, although the resource is
-injected before the method is matched.
+The Jakarta REST context types listed above always reflect the request, or client
+invocation, being processed when they are used by code the implementation invokes,
+regardless of when they were injected. For example, an injected `Configuration`
+reflects the providers and properties registered by a `DynamicFeature` for the
+matched resource method, although the resource is injected before the method is
+matched. This includes providers invoked to complete a response after asynchronous
+processing resumes (see <<async_response>> and <<completionstage>>), which may run
+on a thread other than the one on which the request was dispatched. When a Jakarta
+REST context type is used from a thread managed by the application, such as one
+started by a resource method before it resumes an `AsyncResponse`, its behavior is
+not specified.
 
 NOTE: The types `AsyncResponse` and `SseEventSink` are method-parameter-only types
 and do NOT require CDI producers. These types are only available for injection as

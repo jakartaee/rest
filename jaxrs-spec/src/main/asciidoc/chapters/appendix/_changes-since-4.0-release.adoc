@@ -38,8 +38,12 @@ arbitrary CDI beans must be injected via fields or constructors (https://github.
 used as resource method parameters, not as injectable fields (https://github.com/jakartaee/rest/issues/569[#569])
 * <<cdi-producers>>: Required CDI producers for Jakarta REST context types and parameter
 extraction annotations (https://github.com/jakartaee/rest/issues/569[#569])
-* <<cdi-producers>>: An injected context object reflects the request in which it is used, regardless of
-when it was injected
+* <<cdi-producers>>: Jakarta REST context types reflect the request being processed when used by code the
+implementation invokes, regardless of when they were injected, including providers invoked after asynchronous
+processing resumes; the suggested scope for request-specific context types is `@Dependent` rather than
+`@RequestScoped`
+* <<async_cdi_contexts>>: Beans with a normal scope other than `@ApplicationScoped` are not guaranteed to be
+usable in code that runs after asynchronous processing resumes
 * <<context-qualifier>>: `@Context` is a CDI qualifier; `@Inject @Context` resolves to the instance
 managed by the Jakarta REST implementation. Implementations must make context types resolvable with
 both `@Default` and `@Context`, and applications must not define beans for them

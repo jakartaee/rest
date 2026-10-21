@@ -141,3 +141,17 @@ public class MyResource {
 In this example, a `CompletableFuture` instance is created and returned
 in the resource method; the call to method `complete` on that instance
 is executed only after the long running operation terminates.
+
+[[async_cdi_contexts]]
+==== CDI Contexts
+
+CDI contexts are bound to threads. Code that runs after asynchronous processing
+resumes, including providers invoked to complete the response, may run on a thread
+where the CDI request context is not active. Beans with `@RequestScoped`, or with any
+other normal scope except `@ApplicationScoped`, are not guaranteed to be usable in
+such code. Applications should obtain the values they need from such beans before
+handing processing to another thread. Implementations MAY provide stronger
+guarantees.
+
+The Jakarta REST context types are not subject to this limitation when used by code
+the implementation invokes; see <<cdi-producers>>.

@@ -69,3 +69,11 @@ for `AsyncResponse` in CDI environments (https://github.com/jakartaee/rest/issue
 * <<servlet_container>>: Implementations must register `@Context`-qualified beans for Servlet-defined
 types; applications should use `@Inject @Context` for these types (https://github.com/jakartaee/rest/issues/1214[#1214])
 * Scoped Additional Requirements section to non-CDI environments; CDI specification defines bean lifecycle behaviors for CDI-managed beans (https://github.com/jakartaee/rest/issues/1215[#1215])
+* <<validation_and_error_reporting>>: Replaced the recommended validation phases with requirements: implementations
+must validate the fields and properties of the resource instances they create that are injected with parameter
+extraction annotations, as well as resource method parameters and returned values; validating other fields,
+properties and class-level constraints, and the instances returned from sub-resource locators, is optional
+* <<validation_and_error_reporting>>: Implementations may skip values already validated for the same request, e.g. by
+the CDI method validation defined by Jakarta Validation, but must still validate every value they are required to validate
+* <<default_validation_mode>>: A resource method whose signature obeys the rules for getters follows the default
+validation rules of Jakarta Validation and is no longer always validated

@@ -22,26 +22,51 @@ values).
 The default resource class instance lifecycle is per-request in JAX-RS.
 Implementations MAY support other lifecycles; the same caveats related
 to the use of other JAX-RS annotations in resource classes apply to
-constraint annotations. For example, a constraint validation annotating
-a constructor parameter in a resource class whose lifecycle is singleton
-will only be executed once.
+constraint annotations.
 
-JAX-RS implementations SHOULD use the following process to validate
-resource class instances after they have been instantiated:
+In a product that supports Bean Validation <<bib16>>, implementations
+MUST validate the following against their constraints:
 
-Phase 1::
-  Inject field values and initialize bean properties as described in
-  Section <<resource_field>>.
-Phase 2::
-  Validate annotations on fields, property getters (if enabled) and the
-  resource class. The order in which these validations are executed is
-  implementation dependent.
-Phase 3::
-  Validate annotations on parameters passed to the resource method
-  matched.
-Phase 4::
-  If no constraint violations found thus far, invoke resource method and
-  validate returned value.
+* The value of a field of a resource class instance annotated with
+`@MatrixParam`, `@QueryParam`, `@PathParam`, `@CookieParam`,
+`@HeaderParam`, `@FormParam` or `@BeanParam` (see Section
+<<resource_field>>), before the resource method is invoked. As defined
+by <<bib16>>, a value annotated with `@Valid`, such as a `@BeanParam`
+value, is validated as well.
+* The value of a property of a resource class instance whose setter is
+annotated with one of these annotations, against the constraints
+declared on the property, before the resource method is invoked.
+* The parameters of the matched resource method, including entity and
+`@BeanParam` parameters, before the method is invoked.
+* The value returned by the resource method.
+
+Whether the parameters and the returned value of a resource method are
+validated follows the rules of <<bib16>> for method validation, see
+<<default_validation_mode>>.
+
+The fields and properties listed above MUST be validated for the
+resource class instances an implementation creates. Implementations
+MAY validate them for other instances, e.g. instances supplied by the
+application or returned from a sub-resource locator.
+
+If a constraint violation is found before the resource method is
+invoked, the resource method MUST NOT be invoked. Implementations are
+not required to report violations of injected values together with
+violations of the resource method parameters.
+
+Implementations MAY validate the constraints on other fields and on
+property getters of a resource class, and the constraints on the
+resource class itself, as these values are not derived from the
+request. Validating a property invokes its getter. If the resource
+instance is a CDI bean, the getter is invoked through the bean's
+interceptors, which include method validation if the getter is
+validated (see <<default_validation_mode>>).
+
+<<bib16>> defines method and constructor validation of CDI beans. An
+implementation MAY skip validating a value that has already been
+validated against the same constraints for the same request, e.g. by
+that method validation, but MUST still validate every value this
+section requires.
 
 The exception model in <<bib16>> defines a base class
 `jakarta.validation.ValidationException` and a few subclasses to report

@@ -16,14 +16,18 @@ the so called _constrained_ methods. Getter methods as defined by the
 Java Beans specification are not constrained methods, so they will not
 be validated by default. The special annotation `@ValidateOnExecution`
 defined in <<bib16>> can be used to selectively enable and disable
-validation. For example, you can enable validation on method `getEmail`
-shown above as follows:
+validation. These rules apply to resource methods as well: a resource
+method whose signature obeys the rules for getters is not validated by
+default. For example, you can enable validation of the value returned
+by resource method `getEmail` as follows:
 
 [source,java]
 ----
 @Path("/")
 class MyResourceClass {
 
+    @GET
+    @Path("email")
     @Email
     @ValidateOnExecution
     public String getEmail() {
@@ -35,13 +39,12 @@ class MyResourceClass {
 
 The default value for the `type` attribute of `@ValidateOnExecution` is
 `IMPLICIT` which, in the example above, results in method `getEmail`
-being validated. See <<bib16>> for more information on other uses
-of this annotation.
+being validated. Validation of getter methods can also be enabled for
+an application with the `default-validated-executable-types` element of
+`META-INF/validation.xml`. See <<bib16>> for more information on other
+uses of this annotation.
 
 Note that if validation for getter methods is _enabled_ and a resource
-method’s signature obeys the rules for getters, the resource method may
-be (unintentionally) invoked during validation. Conversely, if
-validation for getter methods is _disabled_ and the _matching_ resource
-method’s signature obeys the rules for getters, the JAX-RS runtime will
-still validate the method (i.e., the validation preference will be
-ignored) before invocation.
+method's signature obeys the rules for getters, the resource method may
+be (unintentionally) invoked when an implementation validates the
+properties of a resource class (see <<validation_and_error_reporting>>).

@@ -33,6 +33,8 @@ jaxrs-dev@eclipse.org
 ==== Support for @Context Injection
 
 As part of an effort to better align with https://jakarta.ee/specifications/cdi/[Jakarta CDI],
-future versions of this API will no longer support `@Context` injection and related types such as
-`ContextResolver`. As much as possible, all injection tasks will be delegated to
-Jakarta CDI for a better integration into the https://jakarta.ee/[Jakarta EE] ecosystem.
+as much as possible, all injection tasks are delegated to Jakarta CDI for a better integration
+into the https://jakarta.ee/[Jakarta EE] ecosystem. In CDI environments, `@Context` is a CDI
+qualifier that is combined with `@Inject`, see <<context-qualifier>>. In environments without
+CDI, `@Context` continues to identify injection targets. Future versions of this API will no
+longer support related types such as `ContextResolver`.

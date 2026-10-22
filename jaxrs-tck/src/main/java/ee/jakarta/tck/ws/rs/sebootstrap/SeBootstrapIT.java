@@ -349,7 +349,7 @@ public final class SeBootstrapIT {
     }
 
     @ApplicationPath("application")
-    public static final class StaticApplication extends Application {
+    public static class StaticApplication extends Application {
 
         private final StaticResource staticResource;
 
@@ -358,12 +358,12 @@ public final class SeBootstrapIT {
         }
 
         @Override
-        public final Set<Object> getSingletons() {
+        public Set<Object> getSingletons() {
             return Collections.<Object>singleton(staticResource);
         }
 
         @Path("resource")
-        public static final class StaticResource {
+        public static class StaticResource {
 
             private final long staticResponse;
 
@@ -372,7 +372,7 @@ public final class SeBootstrapIT {
             }
 
             @GET
-            public final long staticResponse() {
+            public long staticResponse() {
                 return this.staticResponse;
             }
         }

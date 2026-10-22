@@ -31,7 +31,7 @@ JAX-RS implementation to support asynchronous processing when running on
 a Servlet container whose version is prior to 3.
 
 As explained in <<servlet_container>>, injection of
-Servlet-defined types is possible using the `@Inject` annotation.
+Servlet-defined types is possible using `@Inject @Context`.
 Additionally, web application’s `<context-param>` and servlet’s
 `<init-param>` can be used to define application properties passed to
 server-side features or injected into server-side JAX-RS components. See
@@ -42,18 +42,33 @@ Javadoc for `Application.getProperties` for more information.
 
 In a product that supports CDI, implementations MUST support the use of
 CDI-style Beans as root resource classes, providers and `Application`
-subclasses. Providers and `Application` subclasses default to application
-scope (see <<cdi-injection-model>>); it is RECOMMENDED that these classes
-remain application-scoped, since they are typically stateless, but
-applications MAY override the default with an explicit CDI scope.
+subclasses. Providers default to application scope (see
+<<cdi-injection-model>>); it is RECOMMENDED that they remain
+application-scoped, since they are typically stateless.
+
+The portable scopes for a provider that is a CDI bean are `@ApplicationScoped`
+and `@Singleton`. A provider that does not declare a scope, directly or through a
+stereotype, is `@ApplicationScoped`. Other scopes, including `@Dependent`, are
+provider lifecycles offered by the implementation, see
+<<lifecycle_and_environment>>, and are not portable. Implementations MAY treat
+such a scope as a definition error. These
+requirements apply to providers whose instances the implementation obtains from
+CDI, not to instances returned by `Application.getSingletons()` or loaded with
+`java.util.ServiceLoader`.
+
+`Application` subclasses that are CDI beans MUST be `@ApplicationScoped` or
+`@Singleton`. An `Application` subclass that is a CDI bean and does not declare
+a scope is `@ApplicationScoped`. Implementations SHOULD treat any other declared
+scope as a definition error. See <<context-qualifier>> for the `Application`
+subclasses that are CDI beans.
 
 Implementations MUST support Jakarta CDI 5.0 or later. This version of CDI
 is required for proper integration of Jakarta REST injection and CDI dependency
 injection as described in <<cdi-injection-model>>.
 
-For example, assuming CDI is enabled via the inclusion of a `beans.xml`
-file, a CDI-style bean that can be defined as a JAX-RS resource as
-follows:
+For example, the following Jakarta REST resource is a CDI bean that uses CDI
+injection. Neither a `beans.xml` file nor a bean defining annotation is
+required, see <<cdi-application-methods>>:
 
 [source,java]
 ----
@@ -82,6 +97,11 @@ When Jakarta REST resources and providers are managed as CDI beans, a hybrid
 injection model applies that combines Jakarta REST parameter extraction with
 CDI dependency injection.
 
+In environments that support CDI, only injection performed by CDI is portable.
+Implementations MAY additionally perform injection as in environments that do
+not support CDI, e.g. for classes excluded from CDI bean management or instances
+supplied by the application, see <<cdi-application-methods>>.
+
 ====== Bean Lifecycle
 
 CDI manages the bean lifecycle, including bean instantiation and destruction.
@@ -98,14 +118,16 @@ CDI discovery:
 The defined scopes ensure proper lifecycle management: `@ApplicationPath` and
 `@Provider` annotated classes are application-scoped singletons, while `@Path`
 annotated resource classes are request-scoped and created per-request by default.
-Applications MAY override these default scopes by explicitly annotating classes
-with different CDI scope annotations.
+Resource classes MAY override their default scope by explicitly declaring a
+different CDI scope. The scopes of providers and `Application` subclasses are
+restricted as described in <<cdi>>.
 
 ====== Field Injection
 
-Fields in CDI-managed beans MUST use `@Inject` instead of the deprecated `@Context`
-annotation. This applies to both Jakarta REST context types and Jakarta REST parameter
-extraction:
+Fields in CDI-managed beans MUST use `@Inject`. This applies to both Jakarta REST
+context types and Jakarta REST parameter extraction. The `@Context` annotation is a
+CDI qualifier and MAY be combined with `@Inject` to require the instance managed by
+the Jakarta REST implementation, see <<context-qualifier>>:
 
 [source,java]
 ----
@@ -113,6 +135,10 @@ extraction:
 public class ItemResource {
     @Inject  // Context type injection
     UriInfo uriInfo;
+
+    @Inject
+    @Context  // The ServletConfig of the Jakarta REST application
+    ServletConfig servletConfig;
 
     @Inject  // CDI bean injection
     ItemService service;
@@ -133,10 +159,17 @@ act as CDI qualifiers. Implementations MUST make these qualified injection point
 resolvable through CDI, extracting the value from the current request context at
 injection time, for any type a resource or provider declares—including
 application-defined converter types and generic collections. Implementations MAY
-satisfy this requirement using CDI producer methods, synthetic beans, or portable
-extensions, as appropriate to the declared type. Where a producer method is used, it
+satisfy this requirement using CDI producer methods, synthetic beans, build
+compatible extensions or portable extensions, as appropriate to the declared type. Where a producer method is used, it
 MUST be `@Dependent` scoped and MAY use the CDI `InjectionPoint` API to determine the
 parameter name from the qualifier annotation.
+
+A field or bean property annotated with `@Context` or a parameter extraction
+annotation, but not with `@Inject`, is not an injection point in a CDI-managed
+bean. For backward compatibility, implementations MAY inject it, e.g. by treating
+it as if it were annotated with `@Inject`. Portable applications MUST NOT rely on
+this and SHOULD add `@Inject`, e.g. `@Inject @Context` or
+`@Inject @QueryParam("q")`.
 
 ====== Constructor Injection
 
@@ -208,6 +241,11 @@ if annotations are placed on a method. Both forms are valid; the
 parameter-level placement is the natural fit for CDI environments since CDI resolves
 qualifiers from injection points (parameters), not from the enclosing method.
 
+The same applies to a bean property annotated with `@Context`. The annotation is
+placed on the setter method, i.e. a method `setX` with a single parameter. When
+the method is also annotated with `@Inject`, implementations MUST treat its
+parameter as `@Context`-qualified.
+
 ====== Resource Method Parameter Injection
 
 Resource method parameters are resolved using a combination of Jakarta REST
@@ -224,20 +262,29 @@ Parameters are categorized as follows:
   the request context.
 
 * **Bean parameters**: Annotated with `@BeanParam` to inject a custom parameter
-  aggregator object. The `@BeanParam` annotation is a CDI qualifier. When running
-  with an active CDI container, the aggregator bean is created and injected by CDI
-  like any other CDI-managed type: `@Inject` fields are injected normally, and
-  fields annotated with parameter extraction annotations are resolved via the same
-  qualifier mechanism used for resource method parameters (see <<cdi-producers>>).
+  aggregator object. The `@BeanParam` annotation is a CDI qualifier. The class of
+  the aggregator SHOULD be a `@Dependent` bean, e.g. by annotating it with
+  `@Dependent`. If it is a bean, implementations MUST obtain the aggregator from CDI,
+  which injects it like any other bean: `@Inject` fields are injected normally, and
+  `@Inject` fields annotated with parameter extraction annotations are resolved via
+  the same qualifier mechanism used for resource method parameters (see
+  <<cdi-producers>>). The aggregator SHOULD NOT have a normal scope, as the client
+  proxy injected for it does not hold the parameter values in its fields, e.g. when
+  it is validated. If the class of the aggregator is not a bean, implementations MAY
+  make it a `@Dependent` bean, or create and inject it as in an environment without
+  CDI; such an aggregator is not portable.
 
 * **Jakarta REST context types**: `Application`, `Configuration`, `HttpHeaders`,
   `Providers`, `Request`, `ResourceContext`, `ResourceInfo`, `SecurityContext`,
-  `Sse`, and `UriInfo`. These types are identified by type alone. Implementations MUST
-  provide CDI producers as specified in <<cdi-producers>>.
+  `Sse`, and `UriInfo`. These types are identified by type alone, optionally
+  qualified with `@Context`. Implementations MUST provide CDI producers as specified
+  in <<cdi-producers>>. In a Servlet container, the Servlet-defined types listed in
+  <<servlet_container>> are identified the same way.
 
 * **Entity parameter**: The request entity body, deserialized using a `MessageBodyReader`.
-  Identified as a parameter that is NOT annotated with any Jakarta REST parameter annotation,
-  is NOT a Jakarta REST context type (listed above), and is NOT `AsyncResponse` or `SseEventSink`.
+  Identified as a parameter that is NOT annotated with any Jakarta REST parameter annotation
+  or with `@Context`, is NOT a Jakarta REST context type (listed above) or, in a Servlet
+  container, a Servlet-defined type, and is NOT `AsyncResponse` or `SseEventSink`.
   Only one entity parameter is allowed per resource method.
 
 * **Jakarta REST-managed special parameters**: The following parameters are NOT
@@ -281,6 +328,7 @@ public void createAsync(Customer customer,
 }
 
 // Bean parameter example
+@Dependent
 public class SearchParams {
     @Inject
     @QueryParam("q")
@@ -318,7 +366,8 @@ parameter extraction to enable their injection into CDI-managed beans.
 
 The following context types MUST be made available for CDI injection. The suggested
 scope for each type is listed, though implementations MAY use different scopes if
-appropriate:
+appropriate. Regardless of scope, each type MUST behave as described following the
+table:
 
 .Required CDI Producers for Jakarta REST Types
 |===
@@ -333,7 +382,7 @@ appropriate:
 |Runtime configuration
 
 |`HttpHeaders`
-|`@RequestScoped`
+|`@Dependent`
 |Request HTTP headers
 
 |`Providers`
@@ -341,7 +390,7 @@ appropriate:
 |Provider instance lookup
 
 |`Request`
-|`@RequestScoped`
+|`@Dependent`
 |Request information for content negotiation
 
 |`ResourceContext`
@@ -349,11 +398,11 @@ appropriate:
 |Resource instance creation and initialization
 
 |`ResourceInfo`
-|`@RequestScoped`
+|`@Dependent`
 |Matched resource class and method information
 
 |`SecurityContext`
-|`@RequestScoped`
+|`@Dependent`
 |Security context of current request
 
 |`Sse`
@@ -361,14 +410,66 @@ appropriate:
 |Server-sent events support
 
 |`UriInfo`
-|`@RequestScoped`
+|`@Dependent`
 |URI and path information
 |===
+
+The Jakarta REST context types listed above always reflect the request, or client
+invocation, being processed when they are used by code the implementation invokes,
+regardless of when they were injected. For example, an injected `Configuration`
+reflects the providers and properties registered by a `DynamicFeature` for the
+matched resource method, although the resource is injected before the method is
+matched. This includes providers invoked to complete a response after asynchronous
+processing resumes (see <<async_response>> and <<completionstage>>), which may run
+on a thread other than the one on which the request was dispatched. When a Jakarta
+REST context type is used from a thread managed by the application, such as one
+started by a resource method before it resumes an `AsyncResponse`, its behavior is
+not specified.
 
 NOTE: The types `AsyncResponse` and `SseEventSink` are method-parameter-only types
 and do NOT require CDI producers. These types are only available for injection as
 resource method parameters and cannot be injected into fields or constructors. The
 Jakarta REST implementation handles these types directly.
+
+[[context-qualifier,The @Context Qualifier]]
+**The `@Context` Qualifier**
+
+`@Context` is a CDI qualifier. An injection point qualified with `@Context`
+resolves to the instance managed by the Jakarta REST implementation, independent of
+any other bean of the same type in the deployment.
+
+* The context types listed in <<cdi-producers>>, except `Application`, MUST be
+  resolvable both with the `@Default` qualifier and with the `@Context` qualifier.
+  These types are defined by
+  Jakarta REST, so `@Inject UriInfo` and `@Inject @Context UriInfo` resolve to the
+  same context object.
+* For the Servlet-defined types, implementations MUST register `@Context`-qualified
+  beans as specified in <<servlet_container>>.
+* For `Application`, implementations MUST register a `@Context`-qualified bean
+  that resolves to the `Application` instance deployed by the implementation.
+  Implementations MUST make each deployed `Application` subclass annotated with
+  `@ApplicationPath` a CDI bean, unless it is excluded from CDI bean management,
+  e.g. via `@Vetoed`. Any other deployed `Application` subclass, e.g. one
+  deployed through the `web.xml`, is a CDI bean only if CDI discovers it, e.g.
+  because it declares a bean defining annotation such as `@ApplicationScoped`;
+  otherwise implementations MAY instantiate it directly. Implementations MUST
+  obtain the deployed instance from CDI if its subclass is a CDI bean, unless an
+  instance was passed to `SeBootstrap`.
+  When an `Application` instance is passed to
+  `SeBootstrap`, implementations SHOULD make that instance the bean for its type,
+  e.g. as a `@Singleton` synthetic bean. Implementations MUST only register a
+  `@Default` bean for `Application` if no bean of that type exists.
+
+NOTE: Use `@Inject @Context Application` to inject the deployed `Application`, and
+`@Inject MyApplication` to inject the application's own subclass.
+
+Beans for the context types listed in <<cdi-producers>>, except `Application`, are
+reserved for the implementation. Applications MUST NOT define a bean, with any qualifier, for these
+types. A CDI container only reports such a bean as an ambiguous dependency at an
+injection point resolving to both beans; otherwise the application's bean is
+silently ignored. Implementations SHOULD therefore treat an application-defined
+`@Default` or `@Context`-qualified bean for one of these types as a definition
+error.
 
 **Parameter Extraction Producers**
 
@@ -381,7 +482,7 @@ that act as CDI qualifiers:
 * `@MatrixParam` - Extract matrix parameter values from URI path segments
 * `@CookieParam` - Extract cookie values
 * `@FormParam` - Extract form parameter values from request entity
-* `@BeanParam` - Create and populate a parameter aggregator bean
+* `@BeanParam` - Obtain a parameter aggregator, see the bean parameters in <<cdi-injection-model>>
 
 These producers MUST be `@Dependent` scoped and could use the CDI `InjectionPoint`
 API to:
@@ -410,11 +511,69 @@ In CDI-enabled environments, `@Path` and `@Provider` annotated classes are
 CDI-managed beans, independent of what `Application.getClasses()` returns.
 The `getClasses()` method controls which classes are used for Jakarta REST
 request processing, not which classes are managed by CDI. Implementations MUST
-obtain resource and provider instances from CDI for classes that are CDI beans.
+obtain resource and provider instances from CDI for classes that are CDI beans,
+except for classes loaded with `java.util.ServiceLoader`, see <<services>>.
 For classes excluded from CDI bean management (e.g., via `@Vetoed`),
-implementations MAY instantiate them directly.
+implementations MAY instantiate them directly. Whether the implementation
+performs field and property injection on these instances is
+implementation-specific.
 
-Instances from `Application.getSingletons()` are not CDI-managed.
+Instances returned from `Application.getSingletons()`, passed to
+`Configurable.register(Object)` or loaded with `java.util.ServiceLoader` (see
+<<services>>) are used as-is and are not CDI-managed, even if their class is a
+CDI bean. Whether the implementation performs field and property injection on
+them is implementation-specific. Supplying a CDI contextual reference through
+`Application.getSingletons()`, or through `Configurable.register(Object)` for
+the server runtime, e.g. in a `Feature`, is not portable. Applications let CDI
+discover the class, or return it from `Application.getClasses()`, instead.
+Registering a CDI contextual reference with a `Client`, `ClientBuilder` or
+`WebTarget` is portable, see <<cdi-client>>.
+
+[[cdi-client]]
+===== Client
+
+Implementations MUST provide a bean of type `Client` with the `@Default`
+qualifier and the scope `@ApplicationScoped`, unless the application defines a
+`@Default` bean of type `Client`. This `Client` is closed when the application is
+shut down. If the application defines a `@Default` bean of type `ClientBuilder`,
+implementations MUST build this `Client` from it, and obtain the `ClientBuilder`
+bean only once. A `ClientBuilder` is mutable and not thread-safe, so such a bean
+should be `@Dependent`.
+
+[source,java]
+----
+@ApplicationScoped
+public class ClientBuilderProducer {
+
+    @Produces
+    @Dependent
+    public ClientBuilder clientBuilder(AuthFilter authFilter) {
+        // AuthFilter is a CDI bean that is not annotated with @Provider
+        return ClientBuilder.newBuilder()
+                .register(authFilter);
+    }
+}
+
+@Path("/orders")
+public class OrderResource {
+
+    @Inject
+    Client client;
+    ...
+}
+----
+
+Applications that need clients with a different configuration define their own
+`Client` beans with a qualifier. Only the `@Default` `Client` bean is defined by
+this specification.
+
+A provider registered with a `Client`, `ClientBuilder` or `WebTarget` applies
+only to that client. Several clients may share an instance of the provider, e.g.
+an `@ApplicationScoped` bean registered with each of them, so portable providers
+do not rely on having an instance per client. Providers registered by class that
+are CDI beans are obtained from CDI, see <<cdi-application-methods>>. A
+CDI-managed provider instance may also be registered, e.g. one injected into a
+`ClientBuilder` producer as shown above.
 
 [[additional_reqs]]
 ==== Additional Requirements for Non-CDI Environments
@@ -444,11 +603,18 @@ non-portability.
 
 In a product that supports EJBs, an implementation MUST support the use
 of stateless and singleton session beans as root resource classes,
-providers and `Application` subclasses. JAX-RS annotations can be
+providers and `Application` subclasses. Jakarta REST annotations can be
 applied to methods in an EJB’s local interface or directly to methods in
 a no-interface EJB. Resource class annotations (like `@Path`) MUST be
 applied to an EJB’s class directly following the annotation inheritance
 rules defined in <<annotationinheritance>>.
+
+The default scopes of the `@ApplicationPath`, `@Path` and `@Provider` stereotypes do not apply to
+stateless and singleton session beans. A stateless or singleton session bean used as a root
+resource class, provider or `Application` subclass that does not declare a scope has the scope
+the CDI specification defines for a bean that declares none, i.e. `@Dependent`. The scope
+requirements for providers and `Application` subclasses in <<cdi>> do not apply to these session
+beans.
 
 For example, a stateless EJB that implements a local interface can be
 defined as a JAX-RS resource class as follows:

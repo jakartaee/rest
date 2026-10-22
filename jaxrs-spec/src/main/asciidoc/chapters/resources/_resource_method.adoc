@@ -60,8 +60,8 @@ and a Java type is the responsibility of an entity provider, see
 
 The entity parameter is identified as a parameter that is NOT annotated with `@FormParam`
 or any of the annotations listed in <<resource_field>>, is NOT a Jakarta REST context
-type (such as `UriInfo`, `HttpHeaders`, `Request`, etc.), and is NOT `AsyncResponse`
-or `SseEventSink`.
+type (such as `UriInfo`, `HttpHeaders`, `Request`, etc.) or a Servlet-defined type, see
+<<servlet_container>>, and is NOT `AsyncResponse` or `SseEventSink`.
 
 Resource methods MUST have at most one entity parameter.
 

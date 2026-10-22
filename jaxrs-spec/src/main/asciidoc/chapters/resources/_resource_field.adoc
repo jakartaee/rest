@@ -31,9 +31,12 @@ extraction annotations listed below apply in both CDI and non-CDI environments.
   Extracts the value of a header.
 `@Inject`::
   Injects an instance of a supported resource, see chapters <<context>>
-  and <<environment>> for more details. In non-CDI environments, the
-  deprecated `@Context` annotation may be used instead; see
-  <<additional_reqs>> for additional requirements.
+  and <<environment>> for more details.
+`@Context`::
+  Identifies the injection of a context type, see chapter <<context>>. In
+  CDI environments, `@Context` is a CDI qualifier combined with `@Inject`,
+  see <<context-qualifier>>. In non-CDI environments, `@Context` is used
+  without `@Inject`; see <<additional_reqs>> for additional requirements.
 
 Because injection occurs at object creation time, use of these
 annotations on resource class fields and bean properties may depend on

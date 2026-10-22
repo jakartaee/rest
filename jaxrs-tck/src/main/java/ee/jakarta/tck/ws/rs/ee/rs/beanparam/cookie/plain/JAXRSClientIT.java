@@ -325,7 +325,10 @@ public class JAXRSClientIT extends BeanParamCommonClient {
 
   @Override
   protected void invoke() throws Fault {
-    setProperty(Property.CONTENT, "Anything");
+    // Don't add new content if content is already added
+    if (!TEST_PROPS.containsKey(Property.CONTENT)) {
+      setProperty(Property.CONTENT, "Anything");
+    }
     super.invoke();
   }
 

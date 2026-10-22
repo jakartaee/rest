@@ -14,16 +14,19 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 
-package ee.jakarta.tck.ws.rs.spec.client.inject;
+package ee.jakarta.tck.ws.rs.spec.context.cdi.scope;
 
-import jakarta.ws.rs.core.Configuration;
-import jakarta.ws.rs.ext.Providers;
+import jakarta.ws.rs.ext.Provider;
 
-public record ClientInjectionDescriptor(String configuration, String providers) {
+/**
+ * A provider which does not declare a scope.
+ */
+@Provider
+public class DefaultScopeFilter extends InstanceIdFilter {
 
-    public static ClientInjectionDescriptor of(final Configuration configuration, final Providers providers) {
-        return new ClientInjectionDescriptor(
-                configuration == null ? null : String.valueOf(configuration.getRuntimeType()),
-                providers == null ? null : providers.getClass().getName());
+    public static final String HEADER = "default-scope-instance";
+
+    public DefaultScopeFilter() {
+        super(HEADER);
     }
 }

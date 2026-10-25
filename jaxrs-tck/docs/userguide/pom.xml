@@ -36,7 +36,7 @@
         <maven.site.skip>true</maven.site.skip>
         <asciidoctorj.diagram.version>2.1.0</asciidoctorj.diagram.version>
         <jbake.maven.plugin.version>0.3.3</jbake.maven.plugin.version>
-        <freemarker.version>2.3.30</freemarker.version>
+        <freemarker.version>2.3.35</freemarker.version>
         <!-- status: DRAFT, BETA, etc., or blank for final -->
         <status></status>
         <doc.pdf>Jakarta-RESTful-Web-Services-TCK-Users-Guide.pdf</doc.pdf>

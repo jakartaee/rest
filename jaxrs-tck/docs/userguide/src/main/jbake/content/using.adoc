@@ -113,9 +113,89 @@ The tests in the directory and its subdirectories are run.
 [NOTE]
 =======================================================================
 
-The Junit test tags(groups) available in the TCK are `xml_binding`, 
-`security`, `servlet` and `se_bootstrap`. These can be used to select or 
-deselect the tests for the execution. 
+The Junit test tags(groups) available in the TCK are `xml_binding`,
+`security`, `servlet`, `se_bootstrap`, `cdi` and `validation`. These can be used to select or
+deselect the tests for the execution.
+
+=======================================================================
+
+[NOTE]
+=======================================================================
+
+The `se_bootstrap` tests start the application with `SeBootstrap` in the
+test JVM, so the class path of the test run is the class path of the
+application. If the implementation starts a CDI container that discovers
+beans by scanning the class path, the container also discovers the
+resources, providers and `Application` subclasses of every other test in
+the TCK jar, which may cause deployment errors such as ambiguous
+dependencies. Run the `se_bootstrap` tests separately, with only the
+`ee/jakarta/tck/ws/rs/sebootstrap` and `ee/jakarta/tck/ws/rs/common/util`
+packages of the TCK jar on the class path.
+
+The following Maven configuration is one way to do this. The TCK jar is
+unpacked with only those packages, the default execution excludes the
+`se_bootstrap` tests, and a second execution runs them with the TCK jar
+removed from the class path. Each execution needs its own `summaryFile`,
+otherwise the second execution overwrites the results of the first.
+
+[source,xml]
+----
+<plugin>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <executions>
+        <execution>
+            <id>unpack-se-bootstrap-tests</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+                <goal>unpack</goal>
+            </goals>
+            <configuration>
+                <artifactItems>
+                    <artifactItem>
+                        <groupId>jakarta.ws.rs</groupId>
+                        <artifactId>jakarta-restful-ws-tck</artifactId>
+                    </artifactItem>
+                </artifactItems>
+                <includes>ee/jakarta/tck/ws/rs/sebootstrap/**,ee/jakarta/tck/ws/rs/common/util/**</includes>
+                <outputDirectory>${project.build.directory}/se-bootstrap-tests</outputDirectory>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+<plugin>
+    <artifactId>maven-failsafe-plugin</artifactId>
+    <executions>
+        <execution>
+            <id>default</id>
+            <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+            </goals>
+            <configuration>
+                <dependenciesToScan>
+                    <dependency>jakarta.ws.rs:jakarta-restful-ws-tck</dependency>
+                </dependenciesToScan>
+                <excludedGroups>se_bootstrap</excludedGroups>
+            </configuration>
+        </execution>
+        <execution>
+            <id>se-bootstrap</id>
+            <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+            </goals>
+            <configuration>
+                <testClassesDirectory>${project.build.directory}/se-bootstrap-tests</testClassesDirectory>
+                <classpathDependencyExcludes>
+                    <exclude>jakarta.ws.rs:jakarta-restful-ws-tck</exclude>
+                </classpathDependencyExcludes>
+                <groups>se_bootstrap</groups>
+                <summaryFile>${project.build.directory}/failsafe-reports/failsafe-summary-se-bootstrap.xml</summaryFile>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+----
 
 =======================================================================
 

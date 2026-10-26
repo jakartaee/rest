@@ -16,18 +16,22 @@
 
 package jakarta.ws.rs.core;
 
+import java.io.Serial;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import jakarta.enterprise.util.AnnotationLiteral;
+import jakarta.inject.Qualifier;
+
 /**
  * <p>This annotation is used to inject information into a class field, bean property or method parameter.</p>
  *
- * <p>Note that future versions of this API will stop supporting injection via
- * {@code Context} as part of a tighter integration and alignment with
- * <a href="https://jakarta.ee/specifications/cdi/">Jakarta CDI</a>.</p>
+ * <p>In a <a href="https://jakarta.ee/specifications/cdi/">Jakarta CDI</a> environment, {@code Context} is a CDI
+ * qualifier. An injection point qualified with {@code Context}, e.g. {@code @Inject @Context UriInfo}, resolves to the
+ * instance managed by the Jakarta REST implementation.</p>
  *
  * @author Paul Sandoz
  * @author Marc Hadley
@@ -38,11 +42,28 @@ import java.lang.annotation.Target;
  * @see SecurityContext
  * @see jakarta.ws.rs.ext.Providers
  * @since 1.0
- * @deprecated use Jakarta Context and Dependency injection
  */
 @Target({ ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Deprecated(forRemoval = true, since = "5.0")
+@Qualifier
 public @interface Context {
+
+    /**
+     * Supports inline instantiation of the {@link Context} annotation.
+     *
+     * @since 5.0
+     */
+    final class Literal extends AnnotationLiteral<Context> implements Context {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Default Context literal
+         */
+        public static final Context INSTANCE = new Literal();
+
+        private Literal() {
+        }
+    }
 }

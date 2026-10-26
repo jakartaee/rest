@@ -1117,11 +1117,19 @@ meth public abstract java.util.Set<java.lang.Object> getInstances()
 meth public boolean hasProperty(java.lang.String)
 
 CLSS public abstract interface !annotation jakarta.ws.rs.core.Context
- anno 0 java.lang.Deprecated(boolean forRemoval=true, java.lang.String since="5.0")
+ anno 0 jakarta.inject.Qualifier()
  anno 0 java.lang.annotation.Documented()
  anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
  anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[PARAMETER, METHOD, FIELD])
+innr public final static Literal
 intf java.lang.annotation.Annotation
+
+CLSS public final static jakarta.ws.rs.core.Context$Literal
+ outer jakarta.ws.rs.core.Context
+fld public final static jakarta.ws.rs.core.Context INSTANCE
+intf jakarta.ws.rs.core.Context
+supr jakarta.enterprise.util.AnnotationLiteral<jakarta.ws.rs.core.Context>
+hfds serialVersionUID
 
 CLSS public jakarta.ws.rs.core.Cookie
 cons protected init(jakarta.ws.rs.core.Cookie$AbstractCookieBuilder<?>)

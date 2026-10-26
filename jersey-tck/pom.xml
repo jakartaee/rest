@@ -436,7 +436,7 @@
             
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.5.4</version>
+                <version>3.6.1</version>
                 <executions>
                     <execution>
                         <id>gf-tests</id>

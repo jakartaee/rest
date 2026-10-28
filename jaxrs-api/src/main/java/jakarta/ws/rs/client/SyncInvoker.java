@@ -69,6 +69,57 @@ public interface SyncInvoker {
      */
     <T> T get(GenericType<T> responseType);
 
+    // QUERY
+
+    /**
+     * Invoke HTTP QUERY method for the current request synchronously.
+     *
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
+     * be overwritten using the entity variant information.
+     * @return invocation response.
+     * @throws ResponseProcessingException in case processing of a received HTTP response fails (e.g. in a filter or during
+     * conversion of the response entity data to an instance of a particular Java type).
+     * @throws ProcessingException in case the request processing or subsequent I/O operation fails.
+     */
+    Response query(Entity<?> entity);
+
+    /**
+     * Invoke HTTP QUERY method for the current request synchronously.
+     *
+     * @param <T> response entity type.
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
+     * be overwritten using the entity variant information.
+     * @param responseType Java type the response entity will be converted to.
+     * @return invocation response.
+     * @throws ResponseProcessingException in case processing of a received HTTP response fails (e.g. in a filter or during
+     * conversion of the response entity data to an instance of a particular Java type).
+     * @throws ProcessingException in case the request processing or subsequent I/O operation fails.
+     * @throws WebApplicationException in case the response status code of the response returned by the server is not
+     * {@link jakarta.ws.rs.core.Response.Status.Family#SUCCESSFUL successful} and the specified response type is not
+     * {@link jakarta.ws.rs.core.Response}.
+     */
+    <T> T query(Entity<?> entity, Class<T> responseType);
+
+    /**
+     * Invoke HTTP QUERY method for the current request synchronously.
+     *
+     * @param <T> generic response entity type.
+     * @param entity request entity, including its full {@link jakarta.ws.rs.core.Variant} information. Any variant-related
+     * HTTP headers previously set (namely {@code Content-Type}, {@code Content-Language} and {@code Content-Encoding}) will
+     * be overwritten using the entity variant information.
+     * @param responseType representation of a generic Java type the response entity will be converted to.
+     * @return invocation response.
+     * @throws ResponseProcessingException in case processing of a received HTTP response fails (e.g. in a filter or during
+     * conversion of the response entity data to an instance of a particular Java type).
+     * @throws ProcessingException in case the request processing or subsequent I/O operation fails.
+     * @throws WebApplicationException in case the response status code of the response returned by the server is not
+     * {@link jakarta.ws.rs.core.Response.Status.Family#SUCCESSFUL successful} and the specified generic response type does
+     * not represent {@link jakarta.ws.rs.core.Response}.
+     */
+    <T> T query(Entity<?> entity, GenericType<T> responseType);
+
     // PUT
 
     /**

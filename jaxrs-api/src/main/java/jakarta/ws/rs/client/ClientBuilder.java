@@ -266,10 +266,24 @@ public abstract class ClientBuilder implements Configurable<ClientBuilder> {
      */
     public abstract ClientBuilder readTimeout(long timeout, TimeUnit unit);
 
+     /**
+     * Register a {@link ClientListener} to receive client lifecycle events.
+     * <p>
+     * The listener will be notified of events such as connection closure
+     * </p>
+     *
+     * @param listener the client listener to register
+     * @return an updated client builder instance
+     * @since 5.0
+     */
+    public abstract ClientBuilder listener(ClientListener listener);
+
     /**
      * Build a new client instance using all the configuration previously specified in this client builder.
      *
      * @return a new client instance.
      */
     public abstract Client build();
+
+   
 }

@@ -1183,7 +1183,7 @@ public abstract class Response implements AutoCloseable {
          */
         RESET_CONTENT(205, "Reset Content"),
         /**
-         * 206 Reset Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.7">HTTP/1.1
+         * 206 Partial Content, see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.7">HTTP/1.1
          * documentation</a>.
          *
          * @since 2.0

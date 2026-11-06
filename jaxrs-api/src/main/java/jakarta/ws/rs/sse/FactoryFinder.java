@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2026 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -153,8 +153,9 @@ final class FactoryFinder {
     private static <T> T findFirstService(final String factoryId, final ClassLoader cl, final Class<T> service) {
         try {
             final ServiceLoader<T> loader = ServiceLoader.load(service, cl);
-            if (loader.iterator().hasNext()) {
-                return loader.iterator().next();
+            final var iterator = loader.iterator();
+            if (iterator.hasNext()) {
+                return iterator.next();
             }
         } catch (Exception e) {
             LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", e);

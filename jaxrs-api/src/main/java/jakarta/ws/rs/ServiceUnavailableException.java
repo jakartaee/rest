@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2026 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -17,6 +17,7 @@
 package jakarta.ws.rs;
 
 import java.util.Date;
+import java.util.Objects;
 
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.RuntimeDelegate;
@@ -204,16 +205,23 @@ public class ServiceUnavailableException extends ServerErrorException {
      * @throws NullPointerException in case the {@code requestTime} parameter is {@code null}.
      */
     public Date getRetryTime(final Date requestTime) {
+        Objects.requireNonNull(requestTime, "requestTime");
         final String value = getResponse().getHeaderString(RETRY_AFTER);
         if (value == null) {
             return null;
         }
 
         try {
-            Long interval = Long.parseLong(value);
-            return new Date(requestTime.getTime() + interval * 1000);
+            final long intervalSeconds = Long.parseLong(value);
+            try {
+                final long deltaMillis = Math.multiplyExact(intervalSeconds, 1000L);
+                return new Date(Math.addExact(requestTime.getTime(), deltaMillis));
+            } catch (ArithmeticException overflow) {
+                // Saturate instead of wrapping to a past/nonsensical instant.
+                return new Date(intervalSeconds >= 0L ? Long.MAX_VALUE : Long.MIN_VALUE);
+            }
         } catch (NumberFormatException ex) {
-            // not an decimal value; ignoring exception and parsing as date
+            // not a decimal value; ignoring exception and parsing as date
         }
 
         final RuntimeDelegate.HeaderDelegate<Date> dateDelegate = RuntimeDelegate.getInstance().createHeaderDelegate(Date.class);

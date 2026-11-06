@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2010, 2026 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -19,7 +19,6 @@ package jakarta.ws.rs.core;
 import java.util.Objects;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
-import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
 
 /**
  * Represents the value of a HTTP cookie, transferred in a request. RFC 2109 specifies the legal characters for name,
@@ -36,11 +35,6 @@ public class Cookie {
      * Cookies using the default version correspond to RFC 2109.
      */
     public static final int DEFAULT_VERSION = 1;
-    /**
-     * @deprecated This field will be removed in a future version. See https://github.com/jakartaee/rest/issues/607
-     */
-    @Deprecated
-    private static final HeaderDelegate<Cookie> HEADER_DELEGATE = RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class);
     private final String name;
     private final String value;
     private final int version;
@@ -130,7 +124,7 @@ public class Cookie {
      */
     @Deprecated
     public static Cookie valueOf(final String value) {
-        return HEADER_DELEGATE.fromString(value);
+        return RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class).fromString(value);
     }
 
     /**
@@ -189,7 +183,7 @@ public class Cookie {
     @Override
     @Deprecated
     public String toString() {
-        return HEADER_DELEGATE.toString(this);
+        return RuntimeDelegate.getInstance().createHeaderDelegate(Cookie.class).toString(this);
     }
 
     /**

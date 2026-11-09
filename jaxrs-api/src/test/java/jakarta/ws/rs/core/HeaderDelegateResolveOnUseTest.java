@@ -19,7 +19,6 @@ package jakarta.ws.rs.core;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.AfterEach;
@@ -29,9 +28,9 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
 import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
 
 /**
- * PoC: deprecated {@code toString}/{@code valueOf} must resolve the header delegate
- * from the current {@link RuntimeDelegate}, not a static snapshot from class init
- * (see https://github.com/jakartaee/rest/issues/607).
+ * Proof that deprecated {@code toString} follows the current {@link RuntimeDelegate}
+ * after {@link RuntimeDelegate#setInstance}, instead of a delegate captured when the
+ * class was initialized. See https://github.com/jakartaee/rest/issues/607.
  */
 public class HeaderDelegateResolveOnUseTest {
 
@@ -42,51 +41,63 @@ public class HeaderDelegateResolveOnUseTest {
 
     @Test
     @SuppressWarnings("deprecation")
-    public void cookieToStringUsesDelegateFromCurrentRuntimeDelegate() {
-        @SuppressWarnings("unchecked")
-        final HeaderDelegate<Cookie> first = mock(HeaderDelegate.class);
-        @SuppressWarnings("unchecked")
-        final HeaderDelegate<Cookie> second = mock(HeaderDelegate.class);
-
-        final RuntimeDelegate rd1 = mock(RuntimeDelegate.class);
-        when(rd1.createHeaderDelegate(Cookie.class)).thenReturn(first);
-        when(first.toString(any(Cookie.class))).thenReturn("from-first");
-        RuntimeDelegate.setInstance(rd1);
-
-        final Cookie cookie = new Cookie("n", "v");
-        assertEquals("from-first", cookie.toString());
-        verify(first).toString(cookie);
-
-        final RuntimeDelegate rd2 = mock(RuntimeDelegate.class);
-        when(rd2.createHeaderDelegate(Cookie.class)).thenReturn(second);
-        when(second.toString(any(Cookie.class))).thenReturn("from-second");
-        RuntimeDelegate.setInstance(rd2);
-
-        assertEquals("from-second", cookie.toString());
-        verify(second).toString(cookie);
+    public void cookieToStringFollowsTheCurrentDelegate() {
+        assertSecondDelegate(new Cookie("n", "v"), Cookie.class);
     }
 
     @Test
     @SuppressWarnings("deprecation")
-    public void entityTagToStringFollowsSetInstance() {
-        @SuppressWarnings("unchecked")
-        final HeaderDelegate<EntityTag> first = mock(HeaderDelegate.class);
-        @SuppressWarnings("unchecked")
-        final HeaderDelegate<EntityTag> second = mock(HeaderDelegate.class);
+    public void newCookieToStringFollowsTheCurrentDelegate() {
+        assertSecondDelegate(new NewCookie("n", "v"), NewCookie.class);
+    }
+
+    @Test
+    @SuppressWarnings("deprecation")
+    public void cacheControlToStringFollowsTheCurrentDelegate() {
+        assertSecondDelegate(new CacheControl(), CacheControl.class);
+    }
+
+    @Test
+    @SuppressWarnings("deprecation")
+    public void entityTagToStringFollowsTheCurrentDelegate() {
+        assertSecondDelegate(new EntityTag("abc"), EntityTag.class);
+    }
+
+    @Test
+    @SuppressWarnings({"deprecation", "unchecked"})
+    public void cookieValueOfFollowsTheCurrentDelegate() {
+        final HeaderDelegate<Cookie> first = mock(HeaderDelegate.class);
+        final HeaderDelegate<Cookie> second = mock(HeaderDelegate.class);
+        final Cookie parsed = new Cookie("n", "v");
+        when(first.fromString("cookie-text")).thenReturn(parsed);
+        when(second.fromString("cookie-text")).thenReturn(parsed);
 
         final RuntimeDelegate rd1 = mock(RuntimeDelegate.class);
-        when(rd1.createHeaderDelegate(EntityTag.class)).thenReturn(first);
-        when(first.toString(any(EntityTag.class))).thenReturn("etag-1");
+        when(rd1.createHeaderDelegate(Cookie.class)).thenReturn(first);
         RuntimeDelegate.setInstance(rd1);
-
-        final EntityTag tag = new EntityTag("abc");
-        assertEquals("etag-1", tag.toString());
+        assertEquals(parsed, Cookie.valueOf("cookie-text"));
 
         final RuntimeDelegate rd2 = mock(RuntimeDelegate.class);
-        when(rd2.createHeaderDelegate(EntityTag.class)).thenReturn(second);
-        when(second.toString(any(EntityTag.class))).thenReturn("etag-2");
+        when(rd2.createHeaderDelegate(Cookie.class)).thenReturn(second);
         RuntimeDelegate.setInstance(rd2);
+        assertEquals(parsed, Cookie.valueOf("cookie-text"));
+    }
 
-        assertEquals("etag-2", tag.toString());
+    @SuppressWarnings({"unchecked", "deprecation"})
+    private static <T> void assertSecondDelegate(final T value, final Class<T> type) {
+        final HeaderDelegate<T> first = mock(HeaderDelegate.class);
+        final HeaderDelegate<T> second = mock(HeaderDelegate.class);
+        when(first.toString(any())).thenReturn("from-first");
+        when(second.toString(any())).thenReturn("from-second");
+
+        final RuntimeDelegate rd1 = mock(RuntimeDelegate.class);
+        when(rd1.createHeaderDelegate(type)).thenReturn(first);
+        RuntimeDelegate.setInstance(rd1);
+        assertEquals("from-first", value.toString());
+
+        final RuntimeDelegate rd2 = mock(RuntimeDelegate.class);
+        when(rd2.createHeaderDelegate(type)).thenReturn(second);
+        RuntimeDelegate.setInstance(rd2);
+        assertEquals("from-second", value.toString());
     }
 }

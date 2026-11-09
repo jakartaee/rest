@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.Objects;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
-import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
 
 /**
  * Used to create a new HTTP cookie, transferred in a response.
@@ -36,12 +35,6 @@ public class NewCookie extends Cookie {
      * Specifies that the cookie expires with the current application/browser session.
      */
     public static final int DEFAULT_MAX_AGE = -1;
-
-    /**
-     * @deprecated This field will be removed in a future version. See https://github.com/jakartaee/rest/issues/607
-     */
-    @Deprecated
-    private static final HeaderDelegate<NewCookie> DELEGATE = RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class);
 
     private final String comment;
     private final int maxAge;
@@ -314,7 +307,7 @@ public class NewCookie extends Cookie {
      */
     @Deprecated
     public static NewCookie valueOf(final String value) {
-        return DELEGATE.fromString(value);
+        return RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class).fromString(value);
     }
 
     /**
@@ -414,7 +407,7 @@ public class NewCookie extends Cookie {
     @Override
     @Deprecated
     public String toString() {
-        return DELEGATE.toString(this);
+        return RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class).toString(this);
     }
 
     /**

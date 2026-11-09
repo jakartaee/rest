@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
-import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
 
 /**
  * An abstraction for the value of a HTTP Cache-Control response header.
@@ -36,11 +35,6 @@ import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
  */
 public class CacheControl {
 
-    /**
-     * @deprecated This field will be removed in a future version. See https://github.com/jakartaee/rest/issues/607
-     */
-    @Deprecated
-    private static final HeaderDelegate<CacheControl> HEADER_DELEGATE = RuntimeDelegate.getInstance().createHeaderDelegate(CacheControl.class);
     private List<String> privateFields;
     private List<String> noCacheFields;
     private Map<String, String> cacheExtension;
@@ -90,7 +84,7 @@ public class CacheControl {
      */
     @Deprecated
     public static CacheControl valueOf(final String value) {
-        return HEADER_DELEGATE.fromString(value);
+        return RuntimeDelegate.getInstance().createHeaderDelegate(CacheControl.class).fromString(value);
     }
 
     /**
@@ -330,7 +324,7 @@ public class CacheControl {
     @Override
     @Deprecated
     public String toString() {
-        return HEADER_DELEGATE.toString(this);
+        return RuntimeDelegate.getInstance().createHeaderDelegate(CacheControl.class).toString(this);
     }
 
     /**

@@ -19,7 +19,6 @@ package jakarta.ws.rs.core;
 import java.util.Objects;
 
 import jakarta.ws.rs.ext.RuntimeDelegate;
-import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
 
 /**
  * An abstraction for the value of a HTTP Entity Tag, used as the value of an ETag response header.
@@ -30,11 +29,6 @@ import jakarta.ws.rs.ext.RuntimeDelegate.HeaderDelegate;
  * @since 1.0
  */
 public class EntityTag {
-    /**
-     * @deprecated This field will be removed in a future version. See https://github.com/jakartaee/rest/issues/607
-     */
-    @Deprecated
-    private static final HeaderDelegate<EntityTag> HEADER_DELEGATE = RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class);
     private String value;
     private boolean weak;
 
@@ -74,7 +68,7 @@ public class EntityTag {
      */
     @Deprecated
     public static EntityTag valueOf(final String value) {
-        return HEADER_DELEGATE.fromString(value);
+        return RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class).fromString(value);
     }
 
     /**
@@ -132,6 +126,6 @@ public class EntityTag {
     @Override
     @Deprecated
     public String toString() {
-        return HEADER_DELEGATE.toString(this);
+        return RuntimeDelegate.getInstance().createHeaderDelegate(EntityTag.class).toString(this);
     }
 }

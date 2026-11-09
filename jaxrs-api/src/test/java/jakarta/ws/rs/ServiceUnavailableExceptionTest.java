@@ -35,7 +35,8 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.RuntimeDelegate;
 
 /**
- * Unit tests for {@link ServiceUnavailableException}, including Retry-After interval overflow.
+ * Unit tests for {@link ServiceUnavailableException}, including a proof that
+ * {@code interval * 1000} wraps and that {@code getRetryTime} no longer returns that wrapped instant.
  */
 public class ServiceUnavailableExceptionTest {
 
@@ -59,17 +60,43 @@ public class ServiceUnavailableExceptionTest {
         assertEquals(requestTime.getTime() + 120_000L, retryAt.getTime());
     }
 
+    /**
+     * Proof of the old bug: {@code interval * 1000} wraps once the header is past
+     * {@code Long.MAX_VALUE / 1000} seconds, and adding that product to the request
+     * time lands before the request. The fixed method must not return that instant.
+     */
     @Test
-    public void getRetryTimeDoesNotWrapOnLargePositiveInterval() {
-        // interval * 1000 overflows long arithmetic when computed naively
-        final long intervalSeconds = Long.MAX_VALUE / 500L;
-        final ServiceUnavailableException ex = exceptionWithRetryAfter(Long.toString(intervalSeconds));
+    public void getRetryTimeDoesNotReturnTheWrappedProduct() {
+        final long intervalSeconds = Long.MAX_VALUE / 1000L + 1L;
+        final long wrappedDelta = intervalSeconds * 1000L;
         final Date requestTime = new Date(1_700_000_000_000L);
+        final long wrappedInstant = requestTime.getTime() + wrappedDelta;
 
+        assertTrue(wrappedDelta < 0L, "old interval * 1000 must wrap negative for this header");
+        assertTrue(wrappedInstant < requestTime.getTime(), "old formula must land before the request");
+
+        final ServiceUnavailableException ex = exceptionWithRetryAfter(Long.toString(intervalSeconds));
         final Date retryAt = ex.getRetryTime(requestTime);
 
         assertEquals(Long.MAX_VALUE, retryAt.getTime());
         assertTrue(retryAt.getTime() > requestTime.getTime());
+    }
+
+    /**
+     * The product itself still fits, but adding it to a normal request time overflows.
+     */
+    @Test
+    public void getRetryTimeDoesNotWrapWhenAddingALargeButSafeProduct() {
+        final long intervalSeconds = Long.MAX_VALUE / 1000L;
+        final long deltaMillis = intervalSeconds * 1000L;
+        final Date requestTime = new Date(1_700_000_000_000L);
+
+        assertTrue(deltaMillis > 0L);
+        assertTrue(requestTime.getTime() + deltaMillis < 0L, "old addition wraps for this pair");
+
+        final Date retryAt = exceptionWithRetryAfter(Long.toString(intervalSeconds)).getRetryTime(requestTime);
+
+        assertEquals(Long.MAX_VALUE, retryAt.getTime());
     }
 
     @Test

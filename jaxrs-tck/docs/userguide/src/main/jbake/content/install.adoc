@@ -62,7 +62,7 @@ Follow these steps:
 
 .  Install the Java SE {SEversion} software, if it is not already installed. +
 Download and install the Java SE {SEversion} software from
-http://www.oracle.com/technetwork/java/javase/downloads/index.html.
+https://www.oracle.com/java/technologies/downloads/.
 Refer to the installation instructions that accompany the software for
 additional information.
 

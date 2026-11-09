@@ -16,7 +16,7 @@ import jakarta.ws.rs.ext.RuntimeDelegate;
 
 /**
  * A {@code EntityPart} is one part of a multipart entity. As defined in
- * <a href="https://tools.ietf.org/html/rfc7578">RFC 7578</a>, a multipart
+ * <a href="https://www.rfc-editor.org/info/rfc7578/">RFC 7578</a>, a multipart
  * request or response must have a content type of "multipart/form-data" with a
  * {@code boundary} parameter indicating where one part ends the next may begin.
  * <p>

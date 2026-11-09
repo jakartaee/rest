@@ -201,7 +201,7 @@ public interface WebTarget extends Configurable<WebTarget> {
      * @return a new target instance.
      * @throws NullPointerException if the parameter name is {@code null} or if there are multiple values present and any of
      * those values is {@code null}.
-     * @see <a href="http://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
+     * @see <a href="https://www.w3.org/DesignIssues/MatrixURIs.html">Matrix URIs</a>
      */
     public WebTarget matrixParam(String name, Object... values);
 

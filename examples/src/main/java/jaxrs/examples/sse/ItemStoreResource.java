@@ -91,7 +91,7 @@ public class ItemStoreResource {
      * <ul>
      * <li><b>disconnect</b> - disconnect all registered event streams.</li>
      * <li><b>reconnect now</b> - enable client reconnecting.</li>
-     * <li><b>reconnect &lt;seconds&gt;</b> - disable client reconnecting. Reconnecting clients will receive a HTTP 503
+     * <li><b>reconnect &lt;seconds&gt;</b> - disable client reconnecting. Reconnecting clients will receive an HTTP 503
      * response with {@value jakarta.ws.rs.core.HttpHeaders#RETRY_AFTER} set to the amount of milliseconds specified.</li>
      * </ul>
      *

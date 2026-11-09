@@ -129,7 +129,7 @@ public abstract class Link {
      * link-param ::= name '=' quoted-string
      * </pre>
      *
-     * See <a href="http://tools.ietf.org/html/rfc5988">RFC 5988</a> for more information.
+     * See <a href="https://www.rfc-editor.org/info/rfc5988/">RFC 5988</a> for more information.
      *
      * @param value String representation.
      * @return newly parsed link.
@@ -265,7 +265,7 @@ public abstract class Link {
          * link-param ::= name '=' quoted-string
          * </pre>
          *
-         * See <a href="http://tools.ietf.org/html/rfc5988">RFC 5988</a> for more information.
+         * See <a href="https://www.rfc-editor.org/info/rfc5988/">RFC 5988</a> for more information.
          *
          * @param link other link in string representation.
          * @return the updated builder.

@@ -25,8 +25,8 @@ import jakarta.ws.rs.core.Application;
  * Java SE bootstrap example demonstrating the use of native properties.
  * <p>
  * This example demonstrates bootstrapping on Java SE platforms with native properties, in particular by explicitly
- * selecting the Grizzly2 backend in Jersey. It will effectively startup the {@link HelloWorld} application at the URL
- * {@code http://localhost:80/}, i. e. the Grizzly2 backend selects exactly port 80 as this is its default IP port. The
+ * selecting the Grizzly2 backend in Jersey. It will effectively start up the {@link HelloWorld} application at the URL
+ * {@code http://localhost:80/}, i.e. the Grizzly2 backend selects exactly port 80 as this is its default IP port. The
  * actual configuration needs to be queried after bootstrapping, otherwise callers would be unaware of the actual chosen
  * port, as Grizzly2's default behavior is not publicly documented.
  * </p>

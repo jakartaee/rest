@@ -29,9 +29,9 @@ import jakarta.ws.rs.core.Response.ResponseBuilder;
  * value to indicate that preconditions have been met and that the request should continue, or a non-{@code null} return
  * value to indicate that preconditions were not met. In the event that preconditions were not met, the returned
  * {@code ResponseBuilder} instance will have an appropriate status and will also include a {@code Vary} header if the
- * {@link #selectVariant(List)} method was called prior to to calling {@code evaluatePreconditions}. It is the
+ * {@link #selectVariant(List)} method was called prior to calling {@code evaluatePreconditions}. It is the
  * responsibility of the caller to check the status and add additional metadata if required. E.g., see
- * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.5">HTTP/1.1, section 10.3.5</a> for details
+ * <a href="https://www.rfc-editor.org/info/rfc2616/#section-10.3.5">HTTP/1.1, section 10.3.5</a> for details
  * of the headers that are expected to accompany a {@code 304 Not Modified} response.
  *
  * @author Paul Sandoz
@@ -47,7 +47,7 @@ public interface Request {
      * @return the request method.
      * @see jakarta.ws.rs.HttpMethod
      */
-    public String getMethod();
+    String getMethod();
 
     /**
      * Select the representation variant that best matches the request. Returns {@code null} in case there is no matching
@@ -63,7 +63,7 @@ public interface Request {
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      * @see Variant.VariantListBuilder
      */
-    public Variant selectVariant(List<Variant> variants);
+    Variant selectVariant(List<Variant> variants);
 
     /**
      * Evaluate request preconditions based on the passed in value.
@@ -76,7 +76,7 @@ public interface Request {
      * @throws java.lang.IllegalArgumentException if eTag is {@code null}.
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
-    public ResponseBuilder evaluatePreconditions(EntityTag eTag);
+    ResponseBuilder evaluatePreconditions(EntityTag eTag);
 
     /**
      * Evaluate request preconditions based on the passed in value.
@@ -87,7 +87,7 @@ public interface Request {
      * @throws java.lang.IllegalArgumentException if lastModified is {@code null}.
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
-    public ResponseBuilder evaluatePreconditions(Date lastModified);
+    ResponseBuilder evaluatePreconditions(Date lastModified);
 
     /**
      * Evaluate request preconditions based on the passed in value.
@@ -101,12 +101,12 @@ public interface Request {
      * @throws java.lang.IllegalArgumentException if lastModified or eTag is {@code null}.
      * @throws java.lang.IllegalStateException if called outside the scope of a request.
      */
-    public ResponseBuilder evaluatePreconditions(Date lastModified, EntityTag eTag);
+    ResponseBuilder evaluatePreconditions(Date lastModified, EntityTag eTag);
 
     /**
      * Evaluate request preconditions for a resource that does not currently exist. The primary use of this method is to
-     * support the <a href="https://tools.ietf.org/html/rfc7232#section-3.1"> If-Match: *</a> and
-     * <a href="https://tools.ietf.org/html/rfc7232#section-3.2"> If-None-Match: *</a> preconditions.
+     * support the <a href="https://www.rfc-editor.org/info/rfc7232/#section-3.1"> If-Match: *</a> and
+     * <a href="https://www.rfc-editor.org/info/rfc7232/#section-3.2"> If-None-Match: *</a> preconditions.
      *
      * <p>
      * Note that precondition <code>If-None-Match: <i>something</i></code> will never be
@@ -121,6 +121,6 @@ public interface Request {
      * @throws IllegalStateException if called outside the scope of a request.
      * @since 1.1
      */
-    public ResponseBuilder evaluatePreconditions();
+    ResponseBuilder evaluatePreconditions();
 
 }

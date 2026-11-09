@@ -88,15 +88,15 @@ public @interface Path {
      * </pre>
      *
      * <p>
-     * See <a href="http://tools.ietf.org/html/rfc5234">RFC 5234</a> for a description of the syntax used above and the
+     * See <a href="https://www.rfc-editor.org/info/rfc5234/">RFC 5234</a> for a description of the syntax used above and the
      * expansions of {@code WSP}, {@code ALPHA} and {@code DIGIT}. In the above {@code name} is the template parameter name
      * and the optional {@code regex} specifies the contents of the capturing group for the parameter. If {@code regex} is
      * not supplied then a default value of {@code [^/]+} which terminates at a path segment boundary, is used. Matching of
      * request URIs to URI templates is performed against encoded path values and implementations will not escape literal
      * characters in regex automatically, therefore any literals in {@code regex} should be escaped by the author according
-     * to the rules of <a href="http://tools.ietf.org/html/rfc3986#section-3.3">RFC 3986 section 3.3</a>. Caution is
+     * to the rules of <a href="https://www.rfc-editor.org/info/rfc3986/#section-3.3">RFC 3986 section 3.3</a>. Caution is
      * recommended in the use of {@code regex}, incorrect use can lead to a template parameter matching unexpected URI
-     * paths. See <a href="http://download.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html">Pattern</a> for
+     * paths. See <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/regex/Pattern.html">Pattern</a> for
      * further information on the syntax of regular expressions. Values of template parameters may be extracted using
      * {@link PathParam}.
      * </p>
@@ -104,7 +104,7 @@ public @interface Path {
      * <p>
      * The literal part of the supplied value (those characters that are not part of a template parameter) is automatically
      * percent encoded to conform to the {@code path} production of
-     * <a href="http://tools.ietf.org/html/rfc3986#section-3.3">RFC 3986 section 3.3</a>. Note that percent encoded values
+     * <a href="https://www.rfc-editor.org/info/rfc3986/#section-3.3">RFC 3986 section 3.3</a>. Note that percent encoded values
      * are allowed in the literal part of the value, an implementation will recognize such values and will not double encode
      * the '%' character.
      * </p>

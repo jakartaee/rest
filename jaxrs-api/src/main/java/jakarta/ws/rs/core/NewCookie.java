@@ -212,6 +212,13 @@ public class NewCookie extends Cookie {
 
     /**
      * Create a new instance copying the information in the supplied cookie.
+     * <p>
+     * When {@code cookie} is a {@link NewCookie}, the comment, maximum age, expiry, {@code Secure}, {@code HttpOnly},
+     * and {@code SameSite} attributes are copied. The expiry {@link Date} is copied, so later changes to the original
+     * date do not change this cookie. When {@code cookie} is not a {@link NewCookie}, those attributes keep their
+     * defaults: a {@code null} comment, {@link #DEFAULT_MAX_AGE}, no expiry, {@code Secure} and {@code HttpOnly}
+     * {@code false}, and {@code SameSite} unset.
+     * </p>
      *
      * @param cookie the cookie to clone.
      * @throws IllegalArgumentException if cookie is {@code null}.
@@ -219,7 +226,8 @@ public class NewCookie extends Cookie {
      */
     @Deprecated
     public NewCookie(final Cookie cookie) {
-        this(cookie, null, DEFAULT_MAX_AGE, null, false, false, null);
+        this(cookie, copiedComment(cookie), copiedMaxAge(cookie), copiedExpiry(cookie), copiedSecure(cookie),
+                copiedHttpOnly(cookie), copiedSameSite(cookie));
     }
 
     /**
@@ -284,6 +292,34 @@ public class NewCookie extends Cookie {
         this.secure = secure;
         this.httpOnly = httpOnly;
         this.sameSite = sameSite;
+    }
+
+    private static String copiedComment(final Cookie cookie) {
+        return cookie instanceof NewCookie ? ((NewCookie) cookie).getComment() : null;
+    }
+
+    private static int copiedMaxAge(final Cookie cookie) {
+        return cookie instanceof NewCookie ? ((NewCookie) cookie).getMaxAge() : DEFAULT_MAX_AGE;
+    }
+
+    private static Date copiedExpiry(final Cookie cookie) {
+        if (!(cookie instanceof NewCookie)) {
+            return null;
+        }
+        Date expiry = ((NewCookie) cookie).getExpiry();
+        return expiry == null ? null : new Date(expiry.getTime());
+    }
+
+    private static boolean copiedSecure(final Cookie cookie) {
+        return cookie instanceof NewCookie && ((NewCookie) cookie).isSecure();
+    }
+
+    private static boolean copiedHttpOnly(final Cookie cookie) {
+        return cookie instanceof NewCookie && ((NewCookie) cookie).isHttpOnly();
+    }
+
+    private static SameSite copiedSameSite(final Cookie cookie) {
+        return cookie instanceof NewCookie ? ((NewCookie) cookie).getSameSite() : null;
     }
 
     /**
@@ -537,7 +573,12 @@ public class NewCookie extends Cookie {
         }
 
         /**
-         * Create a new instance supplementing the information in the supplied cookie.
+         * Create a new instance copying the information in the supplied cookie.
+         * <p>
+         * When {@code cookie} is a {@link NewCookie}, the comment, maximum age, expiry, {@code Secure},
+         * {@code HttpOnly}, and {@code SameSite} attributes are copied. A plain {@link Cookie} supplies only the name,
+         * value, path, domain, and version.
+         * </p>
          *
          * @param cookie the cookie to clone.
          */
@@ -578,7 +619,13 @@ public class NewCookie extends Cookie {
         }
 
         /**
-         * Create a new instance supplementing the information in the supplied cookie.
+         * Create a new instance copying the information in the supplied cookie.
+         * <p>
+         * When {@code cookie} is a {@link NewCookie}, the comment, maximum age, expiry, {@code Secure},
+         * {@code HttpOnly}, and {@code SameSite} attributes are copied. The expiry {@link Date} is copied, so later
+         * changes to the original date do not change the cookie built from this builder. A plain {@link Cookie}
+         * supplies only the name, value, path, domain, and version.
+         * </p>
          *
          * @param cookie the cookie to clone.
          */
@@ -589,6 +636,15 @@ public class NewCookie extends Cookie {
                 path(cookie.getPath());
                 domain(cookie.getDomain());
                 version(cookie.getVersion());
+                if (cookie instanceof NewCookie) {
+                    NewCookie newCookie = (NewCookie) cookie;
+                    comment(newCookie.getComment());
+                    maxAge(newCookie.getMaxAge());
+                    expiry(copiedExpiry(newCookie));
+                    secure(newCookie.isSecure());
+                    httpOnly(newCookie.isHttpOnly());
+                    sameSite(newCookie.getSameSite());
+                }
             }
         }
 

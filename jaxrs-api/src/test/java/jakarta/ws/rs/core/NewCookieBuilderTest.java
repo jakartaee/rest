@@ -18,8 +18,13 @@ package jakarta.ws.rs.core;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
@@ -52,6 +57,47 @@ public final class NewCookieBuilderTest extends BaseDelegateTest {
         assertEquals(expectedVersion, newCookie.getVersion());
         assertEquals(expectedPath, newCookie.getPath());
         assertEquals(expectedDomain, newCookie.getDomain());
+        assertNull(newCookie.getComment());
+        assertEquals(NewCookie.DEFAULT_MAX_AGE, newCookie.getMaxAge());
+        assertNull(newCookie.getExpiry());
+        assertFalse(newCookie.isSecure());
+        assertFalse(newCookie.isHttpOnly());
+        assertNull(newCookie.getSameSite());
+    }
+
+    @Test
+    public final void shouldPreserveSecurityAttributesWhenBuiltFromNewCookie() {
+        Date expiry = new Date(1_700_000_000_000L);
+        NewCookie source = new NewCookie.Builder("session")
+                .value("abc")
+                .path("/")
+                .domain("example.com")
+                .version(1)
+                .comment("browser session")
+                .maxAge(3600)
+                .expiry(expiry)
+                .secure(true)
+                .httpOnly(true)
+                .sameSite(NewCookie.SameSite.STRICT)
+                .build();
+
+        NewCookie copy = new NewCookie.Builder(source).build();
+
+        assertEquals(source.getName(), copy.getName());
+        assertEquals(source.getValue(), copy.getValue());
+        assertEquals(source.getPath(), copy.getPath());
+        assertEquals(source.getDomain(), copy.getDomain());
+        assertEquals(source.getVersion(), copy.getVersion());
+        assertEquals("browser session", copy.getComment());
+        assertEquals(3600, copy.getMaxAge());
+        assertEquals(expiry, copy.getExpiry());
+        assertNotSame(expiry, copy.getExpiry());
+        assertTrue(copy.isSecure());
+        assertTrue(copy.isHttpOnly());
+        assertEquals(NewCookie.SameSite.STRICT, copy.getSameSite());
+
+        expiry.setTime(0L);
+        assertEquals(new Date(1_700_000_000_000L), copy.getExpiry());
     }
 
     @Test

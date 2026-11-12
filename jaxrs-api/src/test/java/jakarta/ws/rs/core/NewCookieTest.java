@@ -21,8 +21,9 @@ import java.util.Date;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -120,6 +121,34 @@ public class NewCookieTest extends BaseDelegateTest {
         assertEquals(newCookie.getPath(), cookie.getPath());
         assertEquals(newCookie.getDomain(), cookie.getDomain());
         assertEquals(newCookie.getVersion(), cookie.getVersion());
+        assertFalse(newCookie.isSecure());
+        assertFalse(newCookie.isHttpOnly());
+        assertNull(newCookie.getSameSite());
+    }
+
+    @Test
+    public final void shouldPreserveSecurityAttributesWhenConstructedFromNewCookie() {
+        Date expiry = new Date(1_700_000_000_000L);
+        NewCookie source = new NewCookie("session", "abc", "/", "example.com", 1, "browser session", 3600, expiry, true, true,
+                SameSite.LAX);
+
+        NewCookie copy = new NewCookie(source);
+
+        assertEquals(source.getName(), copy.getName());
+        assertEquals(source.getValue(), copy.getValue());
+        assertEquals(source.getPath(), copy.getPath());
+        assertEquals(source.getDomain(), copy.getDomain());
+        assertEquals(source.getVersion(), copy.getVersion());
+        assertEquals("browser session", copy.getComment());
+        assertEquals(3600, copy.getMaxAge());
+        assertEquals(expiry, copy.getExpiry());
+        assertNotSame(expiry, copy.getExpiry());
+        assertTrue(copy.isSecure());
+        assertTrue(copy.isHttpOnly());
+        assertEquals(SameSite.LAX, copy.getSameSite());
+
+        expiry.setTime(0L);
+        assertEquals(new Date(1_700_000_000_000L), copy.getExpiry());
     }
 
     @Test

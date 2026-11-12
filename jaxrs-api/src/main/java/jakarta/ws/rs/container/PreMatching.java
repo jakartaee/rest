@@ -31,6 +31,11 @@ import java.lang.annotation.Target;
  * before the incoming request has been matched to a particular resource method. Any {@link jakarta.ws.rs.NameBinding
  * named binding annotations} will be ignored on a component annotated with the {@code @PreMatching} annotation.
  * </p>
+ * <p>
+ * {@link ContainerRequestContext#abortWith} on a pre-match filter skips post-match request filters, including a
+ * name-bound authorization filter. An authorization filter that must not be skipped belongs on this extension point,
+ * ahead of any pre-match filter that may abort the chain.
+ * </p>
  *
  * @author Marek Potociar
  */

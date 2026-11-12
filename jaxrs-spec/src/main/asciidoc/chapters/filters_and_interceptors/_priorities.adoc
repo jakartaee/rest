@@ -47,3 +47,8 @@ filter or interceptor registered with the Client API.
 
 The order in which filters and interceptors that belong to the same
 priority class are executed is implementation dependent.
+
+Priority never moves a filter from the post-match chain into the
+pre-match chain. A pre-match filter that calls `abortWith` has already
+finished before any post-match filter, including one annotated with
+`@Priority(Priorities.AUTHORIZATION)`, is considered. See <<filters>>.

@@ -63,6 +63,14 @@ public interface ContainerRequestFilter {
      * response filters. Note however that a responses produced in this manner would still be processed by the pre-match
      * response filter chain.
      * </p>
+     * <p>
+     * That skip includes a name-bound authorization filter. {@link jakarta.ws.rs.Priorities#AUTHORIZATION} orders
+     * filters only inside the chain they belong to. It does not run a post-match filter before a pre-match filter, and
+     * it does not run a post-match filter after a pre-match filter has aborted the request. An authorization filter
+     * that must see every request, including one answered by a pre-match cache or method override, has to be annotated
+     * with {@link PreMatching} and ordered ahead of any pre-match filter that may call
+     * {@link ContainerRequestContext#abortWith}.
+     * </p>
      *
      * @param requestContext request context.
      * @throws IOException if an I/O exception occurs.

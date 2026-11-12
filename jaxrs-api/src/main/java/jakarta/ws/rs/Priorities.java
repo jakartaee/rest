@@ -47,6 +47,11 @@ public final class Priorities {
     public static final int AUTHENTICATION = 1000;
     /**
      * Security authorization filter/interceptor priority.
+     * <p>
+     * This constant orders a filter only among the other filters in the same chain. A post-match filter that uses it
+     * still runs after every pre-match filter, and it does not run when a pre-match filter aborts the request. An
+     * authorization filter that must run in that case has to be {@link jakarta.ws.rs.container.PreMatching &#64;PreMatching}.
+     * </p>
      */
     public static final int AUTHORIZATION = 2000;
     /**

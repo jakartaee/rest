@@ -34,3 +34,4 @@ for `AsyncResponse` in CDI environments (https://github.com/jakartaee/rest/issue
 * <<servlet_container>>: Deprecated `@Context` injection for Servlet-defined types; use CDI
 injection (`@Inject`) as specified by Jakarta Servlet and Jakarta EE Platform specifications (https://github.com/jakartaee/rest/issues/1214[#1214])
 * Scoped Additional Requirements section to non-CDI environments; CDI specification defines bean lifecycle behaviors for CDI-managed beans (https://github.com/jakartaee/rest/issues/1215[#1215])
+* <<filters>>: Clarified that `abortWith` on a pre-match filter skips post-match request filters, including name-bound authorization. An authorization filter that must run for those requests has to be `@PreMatching` and ordered ahead of any pre-match filter that may abort

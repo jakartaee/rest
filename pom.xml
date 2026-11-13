@@ -82,7 +82,7 @@
         <legal.doc.folder>${project.basedir}</legal.doc.folder>
 
         <build.helper.maven.plugin.version>3.6.2</build.helper.maven.plugin.version>
-        <buildernumber.maven.plugin.version>3.3.1</buildernumber.maven.plugin.version>
+        <buildernumber.maven.plugin.version>3.4.0</buildernumber.maven.plugin.version>
         <glassfish.copyright.maven.plugin.version>2.4</glassfish.copyright.maven.plugin.version>
         <maven.bundle.plugin.version>6.2.0</maven.bundle.plugin.version>
         <maven.checkstyle.plugin.version>3.6.0</maven.checkstyle.plugin.version>
